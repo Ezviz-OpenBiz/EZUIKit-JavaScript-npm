@@ -75,7 +75,8 @@
       // 对讲插件依赖
       isReliesReady: false,
       template: 'simple',
-      audio: 0,// 声音id -1-不开启 0-第一路 1-第二路 
+      uikitModule: ["video"],
+      audio: 0,// 声音id -1-不开启 0-第一路 1-第二路
     },
     state: {
       countTimer: undefined,// countTime 计时器
@@ -110,6 +111,9 @@
     }
     if (params.template) {
       EZUIKit.opt.template = params.template;
+    }
+    if(params.uikitModule){
+      EZUIKit.opt.uikitModule = params.uikitModule;
     }
 
     let id = EZUIKit.opt.id;
@@ -340,7 +344,7 @@
           }
           return result;
         }
-        if (matchFooterOpt().footerContainer) {
+        if (matchFooterOpt().footerContainer || EZUIKit.opt.uikitModule.indexOf('talk') !== -1) {
           var recoderCSS = EZUIKit.opt.filePath + '/npm/css/recoder.css';
           var recoderJs = EZUIKit.opt.filePath + '/npm/js/recoder.js';
           var recorderJs = EZUIKit.opt.filePath + '/recorder.js';

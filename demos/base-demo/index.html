@@ -33,6 +33,7 @@
       header: ['capturePicture','save','zoom'],            // 如果templete参数不为simple,该字段将被覆盖
       // 视频下方底部控件
       footer: ['talk','broadcast','hd','fullScreen'],      // 如果template参数不为simple,该字段将被覆盖
+      uikitModule: ['video','talk'],                       // 子模块，默认为视频模块["video"] video-视频；talk-对讲
       openSoundCallBack: (data) => console.log("开启声音回调",data),
       closeSoundCallBack: (data) => console.log("关闭声音回调",data),
       startSaveCallBack: (data) => console.log("开始录像回调",data),
