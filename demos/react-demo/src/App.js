@@ -17,6 +17,7 @@ class App extends React.Component{
       template: 'simple', // simple - 极简版;standard-标准版;security - 安防版(预览回放);vioce-语音版；  
       // 视频上方头部控件
       header: ['capturePicture','save','zoom'],            // 如果templete参数不为simple,该字段将被覆盖
+      plugin: ['talk'],                       // 加载插件，talk-对讲
       // 视频下方底部控件
       footer: ['talk','broadcast','hd','fullScreen'],      // 如果template参数不为simple,该字段将被覆盖
       openSoundCallBack: (data) => console.log("开启声音回调",data),
@@ -47,6 +48,8 @@ class App extends React.Component{
           <button onClick={()=> this.playr.capturePicture()}>capturePicture</button>
           <button onClick={()=> this.playr.fullScreen()}>fullScreen</button>
           <button onClick={()=> this.playr.getOSDTime()}>getOSDTime</button>
+          <button onClick={()=> this.playr.startTalk()}>开始对讲</button>
+          <button onClick={()=> this.playr.stopTalk()}>结束对讲</button>
         </div>
       </div>
     )
