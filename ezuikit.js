@@ -76,7 +76,7 @@
       isReliesReady: false,
       template: 'simple',
       plugin: [],                       // 加载插件，talk-对讲
-      audio: 0,// 声音id -1-不开启 0-第一路 1-第二路
+      audio: 1,// 声音id  0-不开启 1-开启
     },
     state: {
       countTimer: undefined,// countTime 计时器
@@ -103,6 +103,9 @@
     }
     if (params.accessToken) {
       EZUIKit.opt.accessToken = params.accessToken;
+    }
+    if (typeof params.audio !== 'undefined') {
+      EZUIKit.opt.audio = params.audio;
     }
     if (params.url) {
       EZUIKit.opt.url = params.url;
@@ -151,6 +154,7 @@
     iframe.id = 'EZUIKitPlayer-' + id;
     // 部分iframe属性
     iframe.setAttribute("allowfullscreen", true)
+    iframe.setAttribute("allow", "autoplay")
     iframe.setAttribute("frameborder", 0)
     console.log("iframe", iframe)
     domElement.appendChild(iframe)
@@ -375,9 +379,44 @@
                       } else {
                         EZUIKit.opt.url = EZUIKit.opt.url.replace('.hd.live', '.live')
                       }
-                      iframe.src = "https://open.ys7.com/ezopen/h5/iframe?url=" + EZUIKit.opt.url.replace('.hd.live', '.live') + "&autoplay=1&accessToken=at.bprcrj6c4pi47z4w4usxf4ce7q1ey6mi-5q5mxnkbif-1ej0zrx-frepmdcwl&templete=0";
+                      iframe.src = "https://open.ys7.com/ezopen/h5/iframe?url=" + EZUIKit.opt.url.replace('.hd.live', '.live') + "&autoplay=1&audio="+EZUIKit.opt.audio+"&accessToken="+EZUIKit.opt.accessToken+"&templete="+0;
                     }
                     rightContros.appendChild(hdDom);
+                  }
+                  if (matchFooterOpt().fullScreenModule) {
+                    // 声音控制
+                    var openSoundDOM = document.createElement('span');
+                    openSoundDOM.setAttribute('class', 'hide');
+                    openSoundDOM.setAttribute('id', 'ezuikit-open-sound');
+                    openSoundDOM.setAttribute('title', '打开声音');
+                    openSoundDOM.setAttribute('style', 'vertical-align: top;');
+                    openSoundDOM.innerHTML = '<svg t="1590414410633" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="20545" width="16" height="16"><path d="M840.533333 98.133333c-17.066667-17.066667-42.666667-17.066667-59.733333 0-17.066667 17.066667-17.066667 42.666667 0 59.733334C883.2 256 938.666667 392.533333 938.666667 533.333333c0 140.8-55.466667 277.333333-157.866667 375.466667-17.066667 17.066667-17.066667 42.666667 0 59.733333 8.533333 8.533333 21.333333 12.8 29.866667 12.8 8.533333 0 21.333333-4.266667 29.866666-12.8 115.2-110.933333 183.466667-268.8 183.466667-435.2 0-166.4-68.266667-324.266667-183.466667-435.2zM571.733333 12.8c-17.066667-8.533333-34.133333-4.266667-46.933333 8.533333L281.6 256H42.666667c-25.6 0-42.666667 17.066667-42.666667 42.666667v426.666666c0 25.6 17.066667 42.666667 42.666667 42.666667h238.933333l243.2 234.666667c8.533333 8.533333 17.066667 12.8 29.866667 12.8 4.266667 0 12.8 0 17.066666-4.266667 17.066667-8.533333 25.6-21.333333 25.6-38.4V51.2c0-17.066667-8.533333-34.133333-25.6-38.4zM512 870.4l-183.466667-179.2c-8.533333-4.266667-17.066667-8.533333-29.866666-8.533333H85.333333V341.333333h213.333334c12.8 0 21.333333-4.266667 29.866666-12.8L512 153.6v716.8z" p-id="20546" fill="#ffffff"></path><path d="M759.466667 349.866667c-12.8-21.333333-38.4-25.6-59.733334-8.533334-21.333333 12.8-25.6 38.4-8.533333 59.733334 21.333333 29.866667 34.133333 76.8 34.133333 123.733333 0 46.933333-12.8 93.866667-34.133333 123.733333-12.8 21.333333-8.533333 46.933333 8.533333 59.733334 8.533333 4.266667 17.066667 8.533333 25.6 8.533333 12.8 0 25.6-4.266667 34.133334-17.066667 34.133333-46.933333 51.2-106.666667 51.2-174.933333 0-68.266667-17.066667-128-51.2-174.933333z" p-id="20547" fill="#ffffff"></path></svg>'
+                    openSoundDOM.onclick = function () {
+                      _this.openSound(0);
+                      openSoundDOM.setAttribute('class', 'hide');
+                      closeSoundDOM.setAttribute('class', '');
+                    }
+                    // 声音控制
+                    var closeSoundDOM = document.createElement('span');
+                    openSoundDOM.setAttribute('id', 'ezuikit-close-sound');
+                    closeSoundDOM.setAttribute('class', 'hide');
+                    closeSoundDOM.setAttribute('title', '关闭声音');
+                    closeSoundDOM.setAttribute('style', 'vertical-align: top;');
+                    closeSoundDOM.innerHTML = '<svg t="1590476263239" class="icon" viewBox="0 0 1178 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2273" width="16" height="16"><path d="M665.6 51.2 665.6 51.2c-10.24-30.72-40.96-51.2-71.68-51.2-5.12 0-15.36 0-20.48 5.12l0 0L358.4 153.6 51.2 209.92l0 0C20.48 220.16 0 250.88 0 281.6 0 286.72 0 291.84 0 307.2l0 0 0 409.6 0 0c0 15.36 0 20.48 0 25.6 0 30.72 20.48 61.44 51.2 71.68l0 0L358.4 870.4l97.28 71.68 107.52 76.8 0 0c5.12 5.12 15.36 5.12 25.6 5.12 40.96 0 76.8-35.84 76.8-76.8 0-10.24 0-10.24 0-25.6l0 0L665.6 51.2zM563.2 870.4l-153.6-102.4-307.2-51.2L102.4 307.2l307.2-51.2 153.6-102.4L563.2 870.4z" p-id="2274" fill="#ffffff"></path><path d="M1049.6 537.6l112.64-112.64c20.48-20.48 20.48-56.32 0-76.8-20.48-20.48-56.32-20.48-76.8 0L972.8 460.8l-112.64-112.64c0 0 0 0 0 0-20.48-20.48-56.32-20.48-76.8 0 0 0 0 0 0 0-20.48 20.48-20.48 56.32 0 76.8l112.64 112.64-112.64 112.64c-20.48 20.48-20.48 56.32 0 76.8 20.48 20.48 56.32 20.48 76.8 0L972.8 614.4l112.64 112.64c20.48 20.48 56.32 20.48 76.8 0s20.48-56.32 0-76.8L1049.6 537.6z" p-id="2275" fill="#ffffff"></path></svg>'
+                    closeSoundDOM.onclick = function () {
+                      _this.closeSound(0);
+                      openSoundDOM.setAttribute('class', '');
+                      closeSoundDOM.setAttribute('class', 'hide');
+                    }
+                    rightContros.appendChild(openSoundDOM);
+                    rightContros.appendChild(closeSoundDOM);
+                  }
+                  // 根据当前音频配置展示
+                  if(EZUIKit.opt.audio == 1){
+                    closeSoundDOM.setAttribute('class', '');
+                  }else {
+                    openSoundDOM.setAttribute('class', '');
+                    _this.closeSound(0);
                   }
                   if (matchFooterOpt().fullScreenModule) {
                     // 全屏控制
@@ -389,7 +428,7 @@
                       _this.fullScreen();
                     }
                     rightContros.appendChild(fullScreenDOM);
-                  }
+                  }                 
                 }
                 if (matchFooterOpt().talkModule) {
                   // 对讲
