@@ -131,6 +131,7 @@
       switch (EZUIKit.opt.template) {
         case 'simple':
           return "https://open.ys7.com/ezopen/h5/iframe?url=" + EZUIKit.opt.url + "&autoplay=" + EZUIKit.opt.autoplay + "&audio=" + EZUIKit.opt.audio + "&accessToken=" + params.accessToken + "&templete=0";
+          // return "https://open.ys7.com/ezopen/h5/iframe?url=" + EZUIKit.opt.url + "&autoplay=" + EZUIKit.opt.autoplay + "&audio=" + EZUIKit.opt.audio + "&accessToken=" + params.accessToken + "&templete=0";
         case 'standard':
           return "https://open.ys7.com/ezopen/h5/iframe?url=" + EZUIKit.opt.url + "&autoplay=" + EZUIKit.opt.autoplay + "&audio=" + EZUIKit.opt.audio + "&accessToken=" + params.accessToken + "&templete=1";
         case 'security':
@@ -1000,6 +1001,16 @@
             case 'getOSDTime':
               if (params.getOSDTimeCallBack) {
                 params.getOSDTimeCallBack(event.data)
+              }
+              break;
+            case 'handleSuccess':
+              if (params.handleSuccess) {
+                params.handleSuccess(event.data)
+              }
+              break;
+            case 'handleError':
+              if (params.handleError) {
+                params.handleError(event.data)
               }
               break;
           }

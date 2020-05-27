@@ -130,7 +130,7 @@
     function matchIframeUrl() {
       switch (EZUIKit.opt.template) {
         case 'simple':
-          return "http://y.ys7.com:3100/ezopen/h5/iframe?url=" + EZUIKit.opt.url + "&autoplay=" + EZUIKit.opt.autoplay + "&audio=" + EZUIKit.opt.audio + "&accessToken=" + params.accessToken + "&templete=0";
+          return "https://open.ys7.com/ezopen/h5/iframe?url=" + EZUIKit.opt.url + "&autoplay=" + EZUIKit.opt.autoplay + "&audio=" + EZUIKit.opt.audio + "&accessToken=" + params.accessToken + "&templete=0";
           // return "https://open.ys7.com/ezopen/h5/iframe?url=" + EZUIKit.opt.url + "&autoplay=" + EZUIKit.opt.autoplay + "&audio=" + EZUIKit.opt.audio + "&accessToken=" + params.accessToken + "&templete=0";
         case 'standard':
           return "https://open.ys7.com/ezopen/h5/iframe?url=" + EZUIKit.opt.url + "&autoplay=" + EZUIKit.opt.autoplay + "&audio=" + EZUIKit.opt.audio + "&accessToken=" + params.accessToken + "&templete=1";
