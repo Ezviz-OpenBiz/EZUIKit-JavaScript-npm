@@ -16,10 +16,9 @@ class App extends React.Component{
       url: 'ezopen://open.ys7.com/D88600067/1.live',
       template: 'simple', // simple - 极简版;standard-标准版;security - 安防版(预览回放);vioce-语音版；  
       // 视频上方头部控件
-      header: ['capturePicture','save','zoom'],            // 如果templete参数不为simple,该字段将被覆盖
-      plugin: ['talk'],                       // 加载插件，talk-对讲
-      // 视频下方底部控件
-      footer: ['talk','broadcast','hd','fullScreen'],      // 如果template参数不为simple,该字段将被覆盖
+      // header: ['capturePicture','save','zoom'],            // 如果templete参数不为simple,该字段将被覆盖
+      // // 视频下方底部控件
+      // footer: ['talk','broadcast','hd','fullScreen'],      // 如果template参数不为simple,该字段将被覆盖
       audio: 1, // 是否默认开启声音 0 - 关闭 1 - 开启
       openSoundCallBack: (data) => console.log("开启声音回调",data),
       closeSoundCallBack: (data) => console.log("关闭声音回调",data),
