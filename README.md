@@ -1,7 +1,10 @@
 #  [EZUIKit-JavaScript-npm][ezuikit-js]
 >轻应用npm版本，降低接入难度，适配自定义UI，适配主流框架
+
 > 低延时预览，云存储回放，SD卡回放
+
 > 功能API丰富，如：播放控制，音频控制，视频截图，实时获取视频OSDTime，视频录制，设备对讲，电子放大，全屏等
+
 
 
 ### 获取ezuikit-js
@@ -38,7 +41,6 @@ import  EZUIKit from 'ezuikit-js';
       url: 'ezopen://open.ys7.com/203751922/1.live',
     })
 ```
->初始化参数
 
 ### 方法调用
 > 示例： 停止播放
