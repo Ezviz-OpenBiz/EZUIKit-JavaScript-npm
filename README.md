@@ -55,15 +55,41 @@ import  EZUIKit from 'ezuikit-js';
 |id|	String| 播放器容器DOM的id|	Y|
 |accessToken|	String|	授权过程获取的access_token|	Y|
 |url	|String|	视频ezopen协议播放地址	|Y|
-||	int	|通道号，IPC设备填1	|Y|
-| |int	|地址过期时间：`单位秒数，最大默认2592000（即30天），最小默认300（即5分钟）`	|Y|
+|audio|	int	| 是否默认开启声音 1：打开（默认） 0：关闭	|N|
+|width |int	| 视频宽度，默认值为容器容器DOM宽度	|N|
+|height |int	| 视频高度，默认值为容器容器DOM高度	|N|
+|templete |string	| 播放器模板，可以通过选定模板，使用内置的播放器样式，组件 simple：极简版;standard：标准版;security：安防版(预览回放);vioce：语音版 |N|
+|header |Array	| 视频头部可选UI组件，可选值：capturePicture：截图,save：录像保存,zoom：电子放大 |N|
+|footer |Array	| 视频底部部可选UI组件，可选值：talk：对讲,broadcast：语音播报,hd：高清标清切换,fullScreen：全屏 |N|
+|plugin |Array	| 按需加载插件，可选值： talk：对讲 |N|
+|handleSuccess |function	| 播放成功回调 |N|
+|handleError |function	| 播放错误回调 |N|
+|openSoundCallBack |function	| 开启声音回调 |N|
+|closeSoundCallBack |function	| 关闭回调 |N|
+|startSaveCallBack |function	| 开始录像回调 |N|
+|stopSaveCallBack |function	| 结束录像回调 |N|
+|capturePictureCallBack |function	| 截图回调 |N|
+|fullScreenCallBack |function	| 全屏回调 |N|
+|getOSDTimeCallBack |function	| 获取OSD时间回调 |N|
+
 
 #### 方法集合
 
 |方法名|类型|描述|使用示例|
 |:--|:--|:--|:--|
-|id|	String| 播放器容器DOM的id|	Y|
-|accessToken|	String|	授权过程获取的access_token|	Y|
-|url	|String|	视频ezopen协议播放地址	|Y|
-||	int	|通道号，IPC设备填1	|Y|
-| |int	|地址过期时间：`单位秒数，最大默认2592000（即30天），最小默认300（即5分钟）`	|Y|
+|stop|	function| 结束播放|	`player.stop()`|
+|openSound|	String|	开启声音|`player.openSound()`|
+|closeSound	|String|关闭声音	|`player.closeSound()`|
+|startSave|	int	|开始录像|`player.startSave()`|
+|stopSave|int	|结束录像|`player.stopSave()`|
+|capturePicture|	function| 视频截图|	`player.capturePicture()`|
+|fullScreen|	function| 全屏|	`player.fullScreen()`|
+|getOSDTime|	function| 获取播放时间回调|	`player.getOSDTime()`|
+|startTalk|	function| 开始对讲|	`player.startTalk()`|
+|stopTalk|	function| 结束对讲|	`player.stopTalk()`|
+
+### 使用示例
+
+> 如果使用原生js，可参考demos => base-demo
+> 如果使用react，可参考demos => react-demo
+> 如果使用vue，可参考demos => vue-demo
