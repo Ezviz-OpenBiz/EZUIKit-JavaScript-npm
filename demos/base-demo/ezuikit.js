@@ -92,7 +92,7 @@
   /**
    * 视频播放器-开始
    */
-  var domain = "http://open.ys7.com";
+  var domain = "https://open.ys7.com";
 
 
   var EZUIKitPlayer = function (params) {
@@ -367,7 +367,7 @@
           addCss(recoderCSS, function () {
             addJs(recoderJs, function () {
               addJs(recorderJs, function () {
-                // test
+                // 对讲模块
                 if (EZUIKit.opt.plugin.indexOf('talk') !== -1 || matchFooterOpt().talkModule) {
                   function apiSuccess(data) {
                     console.log("data", data);
@@ -439,7 +439,6 @@
                     apiError
                   );
                 }
-                // test
                 if (matchFooterOpt().footerContainer) {
                   // 底部容器
                   var footerContainer = document.createElement('div');
@@ -1072,8 +1071,13 @@
         }
       })
   }
-
+  
   // 播放相关API
+  EZUIKitPlayer.prototype.play = function () {
+    var id = 'EZUIKitPlayer-' + EZUIKit.opt.id;
+    var player = document.getElementById(id).contentWindow;
+    player.postMessage("play", domain + "/ezopen/h5/iframe")
+  }
   EZUIKitPlayer.prototype.stop = function () {
     var id = 'EZUIKitPlayer-' + EZUIKit.opt.id;
     var player = document.getElementById(id).contentWindow;

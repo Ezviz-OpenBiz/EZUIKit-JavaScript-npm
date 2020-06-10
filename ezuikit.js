@@ -1071,8 +1071,13 @@
         }
       })
   }
-
+  
   // 播放相关API
+  EZUIKitPlayer.prototype.play = function () {
+    var id = 'EZUIKitPlayer-' + EZUIKit.opt.id;
+    var player = document.getElementById(id).contentWindow;
+    player.postMessage("play", domain + "/ezopen/h5/iframe")
+  }
   EZUIKitPlayer.prototype.stop = function () {
     var id = 'EZUIKitPlayer-' + EZUIKit.opt.id;
     var player = document.getElementById(id).contentWindow;
