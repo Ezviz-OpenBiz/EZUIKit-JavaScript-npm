@@ -77,6 +77,7 @@
       template: 'simple',
       plugin: [],                       // 加载插件，talk-对讲
       audio: 1,// 声音id  0-不开启 1-开启
+      autoplay: 1,
     },
     state: {
       countTimer: undefined,// countTime 计时器
@@ -112,11 +113,14 @@
       EZUIKit.opt.deviceSerial = params.url.split("/")[3];
       EZUIKit.opt.channelNo = params.url.split("/")[4].split(".")[0];
     }
-    if (params.template) {
+    if (typeof params.template !== 'undefined') {
       EZUIKit.opt.template = params.template;
     }
     if (params.plugin) {
       EZUIKit.opt.plugin = params.plugin;
+    }
+    if (typeof params.autoplay !== 'undefined') {
+      EZUIKit.opt.autoplay = params.autoplay ? 1 : 0;
     }
 
     let id = EZUIKit.opt.id;
