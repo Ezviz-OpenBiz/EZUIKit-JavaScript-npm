@@ -14,7 +14,7 @@ class App extends React.Component{
       id: 'video-container', // 视频容器ID
       accessToken: 'at.9ymd5rys4lk1zv6o2rtr51a624s9gl56-5fitodjuss-0tkvm8j-hras1ewfu',
       url: 'ezopen://open.ys7.com/203751922/1.live',
-      template: 'security', // simple - 极简版;standard-标准版;security - 安防版(预览回放);vioce-语音版；  
+      template: 'security', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版；  
       // 视频上方头部控件
       // header: ['capturePicture','save','zoom'],            // 如果templete参数不为simple,该字段将被覆盖
       // // 视频下方底部控件

@@ -12,9 +12,6 @@
     <div id="video-container"
       style="width:600px;height:600px;">
     </div>
-    <div id="video-container2"
-    style="width:600px;height:600px;">
-  </div>
     <div>
       <!-- <button onClick={()=> this.playr.stop()}>stop</button>
       <button onClick={()=> this.playr.openSound()}>openSound</button>
@@ -32,9 +29,10 @@
   <script>
     var playr = new EZUIKit.EZUIKitPlayer({
       id: 'video-container', // 视频容器ID
-      accessToken: 'at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz',
-      url: 'ezopen://open.ys7.com/D88600067/1.live',
-      template: 'voice', // simple - 极简版;standard-标准版;security - 安防版(预览回放);vioce-语音版；  
+      accessToken: 'at.5eust80k28pq5i8w7blbhl8e4vft3bwq-7slhtrs9dm-1fhprbb-tafuv0h5j',
+      url: 'ezopen://open.ys7.com/203751922/1.live',
+      template: 'simple', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版；
+      autoplay: true,
       // 视频上方头部控件
       //header: ['capturePicture','save','zoom'],            // 如果templete参数不为simple,该字段将被覆盖
       // 视频下方底部控件
