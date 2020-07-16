@@ -99,50 +99,31 @@
   var EZUIKitPlayer = function (params) {
     var _this = this;
     console.log("params", params);
-    this.opt = {
-      id:  params.id,
-      apiDomain: 'https://open.ys7.com/api/lapp/live/talk/url',
-      filePath: 'https://open.ys7.com/assets/ezuikit_v2.6.4',
-      accessToken: '',
-      url: '',
-      deviceSerial: '',
-      channelNo: '',
-      talkLink: '',
-      rtcUrl: '',
-      ttsUrl: '',
-      stream: '',
-      // 对讲插件依赖
-      isReliesReady: false,
-      template: 'simple',
-      plugin: [],                       // 加载插件，talk-对讲
-      audio: 1,// 声音id  0-不开启 1-开启
-      autoplay: 1,
-    }
     if (params.id) {
-      this.opt.id = params.id;
+      EZUIKit.opt.id = params.id;
     }
     if (params.accessToken) {
-      this.opt.accessToken = params.accessToken;
+      EZUIKit.opt.accessToken = params.accessToken;
     }
     if (typeof params.audio !== 'undefined') {
-      this.opt.audio = params.audio;
+      EZUIKit.opt.audio = params.audio;
     }
     if (params.url) {
-      this.opt.url = params.url;
-      this.opt.deviceSerial = params.url.split("/")[3];
-      this.opt.channelNo = params.url.split("/")[4].split(".")[0];
+      EZUIKit.opt.url = params.url;
+      EZUIKit.opt.deviceSerial = params.url.split("/")[3];
+      EZUIKit.opt.channelNo = params.url.split("/")[4].split(".")[0];
     }
     if (typeof params.template !== 'undefined') {
-      this.opt.template = params.template;
+      EZUIKit.opt.template = params.template;
     }
     if (params.plugin) {
-      this.opt.plugin = params.plugin;
+      EZUIKit.opt.plugin = params.plugin;
     }
     if (typeof params.autoplay !== 'undefined') {
-      this.opt.autoplay = params.autoplay ? 1 : 0;
+      EZUIKit.opt.autoplay = params.autoplay ? 1 : 0;
     }
 
-    let id = this.opt.id;
+    let id = EZUIKit.opt.id;
     var domElement = document.getElementById(id);
     // 间隙
     domElement.style.fontSize = 0;
@@ -151,16 +132,16 @@
      */
     var iframe = document.createElement('iframe');
     function matchIframeUrl() {
-      switch (_this.opt.template) {
+      switch (EZUIKit.opt.template) {
         case 'simple':
-          return domain + "/ezopen/h5/iframe?url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0";
-        // return "https://open.ys7.com/ezopen/h5/iframe?url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0";
+          return domain + "/ezopen/h5/iframe?url=" + EZUIKit.opt.url + "&autoplay=" + EZUIKit.opt.autoplay + "&audio=" + EZUIKit.opt.audio + "&accessToken=" + params.accessToken + "&templete=0";
+        // return "https://open.ys7.com/ezopen/h5/iframe?url=" + EZUIKit.opt.url + "&autoplay=" + EZUIKit.opt.autoplay + "&audio=" + EZUIKit.opt.audio + "&accessToken=" + params.accessToken + "&templete=0";
         case 'standard':
-          return domain + "/ezopen/h5/iframe?url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=1";
+          return domain + "/ezopen/h5/iframe?url=" + EZUIKit.opt.url + "&autoplay=" + EZUIKit.opt.autoplay + "&audio=" + EZUIKit.opt.audio + "&accessToken=" + params.accessToken + "&templete=1";
         case 'security':
-          return domain + "/ezopen/h5/iframe_se?url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0";
+          return domain + "/ezopen/h5/iframe_se?url=" + EZUIKit.opt.url + "&autoplay=" + EZUIKit.opt.autoplay + "&audio=" + EZUIKit.opt.audio + "&accessToken=" + params.accessToken + "&templete=0";
         default:
-          return domain + "/ezopen/h5/iframe?url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0";
+          return domain + "/ezopen/h5/iframe?url=" + EZUIKit.opt.url + "&autoplay=" + EZUIKit.opt.autoplay + "&audio=" + EZUIKit.opt.audio + "&accessToken=" + params.accessToken + "&templete=0";
       }
     }
     iframe.src = matchIframeUrl();
@@ -182,9 +163,9 @@
     iframe.setAttribute("frameborder", 0)
     console.log("iframe", iframe)
     domElement.appendChild(iframe)
-    var jqueryJS = _this.opt.filePath + '/js/jquery.js';
+    var jqueryJS = EZUIKit.opt.filePath + '/js/jquery.js';
     var layerJs = 'https://open.ys7.com/assets/layer/layer.js';
-    var recoderCSS = _this.opt.filePath + '/npm/css/recoder.css';
+    var recoderCSS = EZUIKit.opt.filePath + '/npm/css/recoder.css';
     addCss(recoderCSS, function () {
 
     })
@@ -306,7 +287,7 @@
             hdModule: false,
             fullScreenModule: false,
           }
-          var template = _this.opt.template;
+          var template = EZUIKit.opt.template;
           switch (template) {
             case 'simple':
               if (params.footer && params.footer instanceof Array) {
@@ -354,7 +335,7 @@
             saveModule: false,
             zoomModule: false,
           }
-          var template = _this.opt.template;
+          var template = EZUIKit.opt.template;
           switch (template) {
             case 'simple':
               if (params.header && params.header instanceof Array) {
@@ -382,16 +363,16 @@
           }
           return result;
         }
-        if (matchFooterOpt().footerContainer || _this.opt.plugin.indexOf('talk') !== -1) {
-          var recoderCSS = _this.opt.filePath + '/npm/css/recoder.css';
-          var recoderJs = _this.opt.filePath + '/npm/js/recoder.js';
-          var recorderJs = _this.opt.filePath + '/recorder.js';
+        if (matchFooterOpt().footerContainer || EZUIKit.opt.plugin.indexOf('talk') !== -1) {
+          var recoderCSS = EZUIKit.opt.filePath + '/npm/css/recoder.css';
+          var recoderJs = EZUIKit.opt.filePath + '/npm/js/recoder.js';
+          var recorderJs = EZUIKit.opt.filePath + '/recorder.js';
           // addCss()
           addCss(recoderCSS, function () {
             addJs(recoderJs, function () {
               addJs(recorderJs, function () {
                 // 对讲模块
-                if (_this.opt.plugin.indexOf('talk') !== -1 || matchFooterOpt().talkModule) {
+                if (EZUIKit.opt.plugin.indexOf('talk') !== -1 || matchFooterOpt().talkModule) {
                   function apiSuccess(data) {
                     console.log("data", data);
                     if (data.code == 200) {
@@ -402,17 +383,17 @@
                         if (rtcTrunk.indexOf("ws") === -1) {
                           rtcTrunk = rtcTrunk.replace("https", "wss").replace("rtcgw", "rtcgw-ws");
                         }
-                        _this.opt.rtcUrl = rtcTrunk;
-                        _this.opt.ttsUrl = "tts://" + apiResult.ttsUrl;
-                        var talk = "talk://" + _this.opt.deviceSerial + ":0:" + _this.opt.channelNo + ":cas.ys7.com:6500";
-                        _this.opt.talkLink = _this.opt.ttsUrl + "/" + talk;
-                        _this.opt.stream = apiResult.stream;
-                        console.log("_this.opt", _this.opt)
+                        EZUIKit.opt.rtcUrl = rtcTrunk;
+                        EZUIKit.opt.ttsUrl = "tts://" + apiResult.ttsUrl;
+                        var talk = "talk://" + EZUIKit.opt.deviceSerial + ":0:" + EZUIKit.opt.channelNo + ":cas.ys7.com:6500";
+                        EZUIKit.opt.talkLink = EZUIKit.opt.ttsUrl + "/" + talk;
+                        EZUIKit.opt.stream = apiResult.stream;
+                        console.log("EZUIKit.opt", EZUIKit.opt)
                         // 加载依赖
-                        if (!_this.opt.isReliesReady) {
-                          var adapeterJS = _this.opt.filePath + '/npm/js/adapeter.js';
-                          var janusJS = _this.opt.filePath + '/npm/js/janus.js';
-                          var ttsJS = _this.opt.filePath + '/npm/js/tts.js';
+                        if (!EZUIKit.opt.isReliesReady) {
+                          var adapeterJS = EZUIKit.opt.filePath + '/npm/js/adapeter.js';
+                          var janusJS = EZUIKit.opt.filePath + '/npm/js/janus.js';
+                          var ttsJS = EZUIKit.opt.filePath + '/npm/js/tts.js';
                           console.log("加载jquery.js");
                           addJs(adapeterJS, function () {
                             console.log("加载adapeter.js");
@@ -421,7 +402,7 @@
                               addJs(ttsJS, function () {
                                 console.log("加载tts.js");
                                 // 文件加载完毕;
-                                _this.opt.isReliesReady = true;
+                                EZUIKit.opt.isReliesReady = true;
                               })
                             })
                           })
@@ -450,12 +431,12 @@
 
                   }
                   request(
-                    _this.opt.apiDomain,
+                    EZUIKit.opt.apiDomain,
                     'POST',
                     {
-                      accessToken: _this.opt.accessToken,
-                      deviceSerial: _this.opt.deviceSerial,
-                      channelNo: _this.opt.channelNo
+                      accessToken: EZUIKit.opt.accessToken,
+                      deviceSerial: EZUIKit.opt.deviceSerial,
+                      channelNo: EZUIKit.opt.channelNo
                     },
                     '',
                     apiSuccess,
@@ -476,17 +457,17 @@
                       // 高清-标清切换
                       var hdDom = document.createElement('span');
                       hdDom.setAttribute('id', 'video-hd');
-                      hdDom.innerHTML = _this.opt.url.indexOf('.hd') === -1 ? '标清' : '高清';
+                      hdDom.innerHTML = EZUIKit.opt.url.indexOf('.hd') === -1 ? '标清' : '高清';
                       hdDom.onclick = function () {
                         // 停止
                         _this.stop();
-                        if (_this.opt.url.indexOf('.hd') === -1) {
-                          _this.opt.url = _this.opt.url.replace('.live', '.hd.live');
-                          hdDom.innerHTML = _this.opt.url.indexOf('.hd') === -1 ? '标清' : '高清';
+                        if (EZUIKit.opt.url.indexOf('.hd') === -1) {
+                          EZUIKit.opt.url = EZUIKit.opt.url.replace('.live', '.hd.live');
+                          hdDom.innerHTML = EZUIKit.opt.url.indexOf('.hd') === -1 ? '标清' : '高清';
                         } else {
-                          _this.opt.url = _this.opt.url.replace('.hd.live', '.live')
+                          EZUIKit.opt.url = EZUIKit.opt.url.replace('.hd.live', '.live')
                         }
-                        iframe.src = "https://open.ys7.com/ezopen/h5/iframe?url=" + _this.opt.url.replace('.hd.live', '.live') + "&autoplay=1&audio=" + _this.opt.audio + "&accessToken=" + _this.opt.accessToken + "&templete=" + 0;
+                        iframe.src = "https://open.ys7.com/ezopen/h5/iframe?url=" + EZUIKit.opt.url.replace('.hd.live', '.live') + "&autoplay=1&audio=" + EZUIKit.opt.audio + "&accessToken=" + EZUIKit.opt.accessToken + "&templete=" + 0;
                       }
                       rightContros.appendChild(hdDom);
                     }
@@ -519,7 +500,7 @@
                       rightContros.appendChild(closeSoundDOM);
                     }
                     // 根据当前音频配置展示
-                    if (_this.opt.audio == 1) {
+                    if (EZUIKit.opt.audio == 1) {
                       closeSoundDOM.setAttribute('class', '');
                     } else {
                       openSoundDOM.setAttribute('class', '');
@@ -686,7 +667,7 @@
                         'https://open.ys7.com/api/lapp/voice/query',
                         'POST',
                         {
-                          accessToken: _this.opt.accessToken,
+                          accessToken: EZUIKit.opt.accessToken,
                           pageStart: page,
                           pageSize: EZUIKit.state.pageSize,
                           default: EZUIKit.state.fetchDefaultList ? 'true' : 'false'
@@ -742,9 +723,9 @@
                         'https://open.ys7.com/api/lapp/voice/send',
                         'POST',
                         {
-                          accessToken: _this.opt.accessToken,
-                          deviceSerial: _this.opt.deviceSerial,
-                          channelNo: _this.opt.channelNo,
+                          accessToken: EZUIKit.opt.accessToken,
+                          deviceSerial: EZUIKit.opt.deviceSerial,
+                          channelNo: EZUIKit.opt.channelNo,
                           fileUrl: voiceUrl,
                         },
                         '',
@@ -902,9 +883,9 @@
                             countTime('sub', EZUIKit.state.recodeTime + 2); // 延时
                             var formdata = new FormData(); // form 表单 {key:value}
                             formdata.append("voiceFile", wav_file); // form input type="file"
-                            formdata.append("accessToken", _this.opt.accessToken);
-                            formdata.append("deviceSerial", _this.opt.deviceSerial);
-                            formdata.append("channelNo", _this.opt.channelNo);
+                            formdata.append("accessToken", EZUIKit.opt.accessToken);
+                            formdata.append("deviceSerial", EZUIKit.opt.deviceSerial);
+                            formdata.append("channelNo", EZUIKit.opt.channelNo);
                             // padding = true;
 
                             function apiSuccess(data) {
@@ -928,9 +909,9 @@
                               'POST',
                               {
                                 voiceFile: wav_file,
-                                accessToken: _this.opt.accessToken,
-                                deviceSerial: _this.opt.deviceSerial,
-                                channelNo: _this.opt.channelNo,
+                                accessToken: EZUIKit.opt.accessToken,
+                                deviceSerial: EZUIKit.opt.deviceSerial,
+                                channelNo: EZUIKit.opt.channelNo,
                               },
                               '',
                               apiSuccess,
@@ -1097,57 +1078,57 @@
   
   // 播放相关API
   EZUIKitPlayer.prototype.play = function () {
-    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var id = 'EZUIKitPlayer-' + EZUIKit.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("play", domain + "/ezopen/h5/iframe")
   }
   EZUIKitPlayer.prototype.stop = function () {
-    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var id = 'EZUIKitPlayer-' + EZUIKit.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("stop", domain + "/ezopen/h5/iframe")
   }
   EZUIKitPlayer.prototype.openSound = function () {
-    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var id = 'EZUIKitPlayer-' + EZUIKit.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("openSound", domain + "/ezopen/h5/iframe");
   }
   EZUIKitPlayer.prototype.closeSound = function () {
-    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var id = 'EZUIKitPlayer-' + EZUIKit.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("closeSound", domain + "/ezopen/h5/iframe")
   }
   EZUIKitPlayer.prototype.startSave = function () {
-    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var id = 'EZUIKitPlayer-' + EZUIKit.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("startSave", domain + "/ezopen/h5/iframe")
   }
   EZUIKitPlayer.prototype.stopSave = function () {
-    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var id = 'EZUIKitPlayer-' + EZUIKit.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("stopSave", domain + "/ezopen/h5/iframe")
   }
   EZUIKitPlayer.prototype.fullScreen = function () {
-    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var id = 'EZUIKitPlayer-' + EZUIKit.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("fullScreen", domain + "/ezopen/h5/iframe")
   }
   EZUIKitPlayer.prototype.capturePicture = function () {
-    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var id = 'EZUIKitPlayer-' + EZUIKit.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("capturePicture", domain + "/ezopen/h5/iframe")
   }
   EZUIKitPlayer.prototype.enableZoom = function () {
-    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var id = 'EZUIKitPlayer-' + EZUIKit.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("enableZoom", domain + "/ezopen/h5/iframe")
   }
   EZUIKitPlayer.prototype.closeZoom = function () {
-    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var id = 'EZUIKitPlayer-' + EZUIKit.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("closeZoom", domain + "/ezopen/h5/iframe")
   }
   EZUIKitPlayer.prototype.getOSDTime = function () {
-    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var id = 'EZUIKitPlayer-' + EZUIKit.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("getOSDTime", domain + "/ezopen/h5/iframe")
   }
