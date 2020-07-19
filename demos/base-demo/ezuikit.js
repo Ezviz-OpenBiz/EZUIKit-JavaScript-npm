@@ -56,7 +56,7 @@
     }
     http_request.send(data);
   };
-
+  // 全局属性
   var EZUIKit = {
     EZUIKitPlayer: undefined,
     EZUIKitTalk: undefined,
@@ -1152,11 +1152,13 @@
     player.postMessage("getOSDTime", domain + "/ezopen/h5/iframe")
   }
   EZUIKitPlayer.prototype.startTalk = function () {
-    console.log("执行开始对讲")
+    console.log("执行开始对讲");
+    console.log(this.opt);
+    EZUIKit.opt = this.opt;
     window.startTalk();
   }
   EZUIKitPlayer.prototype.stopTalk = function () {
-    console.log("执行结束对讲")
+    console.log("执行结束对讲");
     window.stopTalk();
   }
   /**
