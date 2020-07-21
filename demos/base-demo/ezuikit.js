@@ -113,7 +113,6 @@
    */
   var domain = "https://open.ys7.com";
 
-
   var EZUIKitPlayer = function (params) {
     var _this = this;
     console.log("params", params);
@@ -197,8 +196,7 @@
     // 部分iframe属性
     iframe.setAttribute("allowfullscreen", true)
     iframe.setAttribute("allow", "autoplay")
-    iframe.setAttribute("frameborder", 0)
-    console.log("iframe", iframe)
+    iframe.setAttribute("frameborder", 0);
     domElement.appendChild(iframe)
     var jqueryJS = _this.opt.filePath + '/js/jquery.js';
     var layerJs = 'https://open.ys7.com/assets/layer/layer.js';
@@ -1112,7 +1110,7 @@
   EZUIKitPlayer.prototype.play = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
-    player.postMessage("play", domain + "/ezopen/h5/iframe")
+    player.postMessage({action:"play",accessToken: this.opt.accessToken,url:this.opt.url}, domain + "/ezopen/h5/iframe")
   }
   EZUIKitPlayer.prototype.stop = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
@@ -1129,10 +1127,11 @@
     var player = document.getElementById(id).contentWindow;
     player.postMessage("closeSound", domain + "/ezopen/h5/iframe")
   }
-  EZUIKitPlayer.prototype.startSave = function () {
+  EZUIKitPlayer.prototype.startSave = function (fileName) {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
-    player.postMessage("startSave", domain + "/ezopen/h5/iframe")
+   
+    player.postMessage({action: "startSave",fileName: fileName || 'default'}, domain + "/ezopen/h5/iframe")
   }
   EZUIKitPlayer.prototype.stopSave = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
@@ -1144,10 +1143,10 @@
     var player = document.getElementById(id).contentWindow;
     player.postMessage("fullScreen", domain + "/ezopen/h5/iframe")
   }
-  EZUIKitPlayer.prototype.capturePicture = function () {
+  EZUIKitPlayer.prototype.capturePicture = function (fileName) {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
-    player.postMessage("capturePicture", domain + "/ezopen/h5/iframe")
+    player.postMessage({action: "capturePicture",fileName: fileName || 'default'}, domain + "/ezopen/h5/iframe")
   }
   EZUIKitPlayer.prototype.enableZoom = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
