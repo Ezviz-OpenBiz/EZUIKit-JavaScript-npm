@@ -835,7 +835,7 @@
             // startRecording();
             voiceInit();
             countTime('add', 0);
-            setTimeout(() => {
+            setTimeout(function(){
               EZUIKit.state.recodeTime = 0;
               startRecording();
             }, 1000)
