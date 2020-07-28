@@ -1111,13 +1111,13 @@
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     if((typeof data === 'object') && data.url){
-      url = this.opt.url = data.url;
+      this.opt.url = data.url;
     }
     if(typeof data === 'object' && data.accessToken){
-      accessToken = this.opt.accessToken = data.accessToken;
+      this.opt.accessToken = data.accessToken;
     }
     if(typeof data === 'string') {
-      url = this.opt.url = data;
+      this.opt.url = data;
     }
     player.postMessage({action:"play",accessToken: this.opt.accessToken,url:this.opt.url}, domain + "/ezopen/h5/iframe")
   }
