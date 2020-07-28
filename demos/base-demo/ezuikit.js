@@ -835,7 +835,7 @@
             // startRecording();
             voiceInit();
             countTime('add', 0);
-            setTimeout(() => {
+            setTimeout(function(){
               EZUIKit.state.recodeTime = 0;
               startRecording();
             }, 1000)
@@ -1107,9 +1107,18 @@
   }
   
   // 播放相关API
-  EZUIKitPlayer.prototype.play = function () {
+  EZUIKitPlayer.prototype.play = function (data) {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
+    if((typeof data === 'object') && data.url){
+      url = this.opt.url = data.url;
+    }
+    if(typeof data === 'object' && data.accessToken){
+      accessToken = this.opt.accessToken = data.accessToken;
+    }
+    if(typeof data === 'string') {
+      url = this.opt.url = data;
+    }
     player.postMessage({action:"play",accessToken: this.opt.accessToken,url:this.opt.url}, domain + "/ezopen/h5/iframe")
   }
   EZUIKitPlayer.prototype.stop = function () {
