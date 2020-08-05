@@ -1,24 +1,31 @@
 <template>
   <div class="hello-ezuikit-js">
     <div id="video-container" style="width:600px;height:600px"></div>
+      <button @click="change">按钮</button>
   </div>
 </template>
 
 <script>
 import EZUIKit from "ezuikit-js";
+var player = null;
 
 export default {
   name: "HelloWorld",
+  // data:function () {
+  //     return {
+  //         player: null,
+  //     }
+  // },
   props: {
     msg: String
   },
   mounted: () => {
     console.group("mounted 组件挂载完毕状态===============》");
-    var player =  new EZUIKit.EZUIKitPlayer({
+     player =  new EZUIKit.EZUIKitPlayer({
       autoplay: true,
       id: "video-container",
-      accessToken:"at.5eust80k28pq5i8w7blbhl8e4vft3bwq-7slhtrs9dm-1fhprbb-tafuv0h5j",
-      url: "ezopen://open.ys7.com/203751922/1.live",
+      accessToken:"at.ciwomi1k3lklzen416tqflyu4fm7cqvc-32g97d9qk2-15iad60-l2vw2olyd",
+      url: "ezopen://open.ys7.com/244640009/1.rec",
       template: "simple", // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版；
       // 视频上方头部控件
       //header: ["capturePicture", "save", "zoom"], // 如果templete参数不为simple,该字段将被覆盖
@@ -36,10 +43,26 @@ export default {
       width: 600,
       height: 400
     });
-    console.log("player",player);
+    // console.log("player",player);
     // setTimeout(()=>{
     //   player.stop(); // 方法调用示例，10秒后关闭视频
     // },10000)
+  },
+  methods: {
+    change() {
+      player.stop();
+      // 切换为直播
+      player.play({
+        url:"ezopen://open.ys7.com/244640009/1.live"
+      })
+   
+      // setTimeout(()=>{
+      //   player.play({
+      //     url:"ezopen://open.ys7.com/244640009/1.live"
+      //   })      
+      // },1000)
+    },
+
   }
 };
 </script>
