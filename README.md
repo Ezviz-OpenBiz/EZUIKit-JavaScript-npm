@@ -48,6 +48,15 @@ import  EZUIKit from 'ezuikit-js';
 ```
   player.stop();
 ```
+> 示例： 执行播放（自动播放为false,自定义触发播放/切换播放地址）
+
+```
+  player.play();
+  // 切换播放地址场景（建议先执行stop方法停止上次取流）
+  player.play({
+   url: 'ezopen://open.ys7.com/203751922/1.rec?begin=202001000000&end=202001235959'
+  });
+```
 
 ### 使用说明
 #### 初始化
