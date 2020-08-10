@@ -29,14 +29,14 @@
   <script>
     var playr = new EZUIKit.EZUIKitPlayer({
       id: 'video-container', // 视频容器ID
-      accessToken: 'at.5eust80k28pq5i8w7blbhl8e4vft3bwq-7slhtrs9dm-1fhprbb-tafuv0h5j',
+      accessToken: 'ra.52gypyk3aknyzoau0r1vw8dxblo9ph7k-7lib2notqo-12ewigo-5vamn2b8q',
       url: 'ezopen://open.ys7.com/203751922/1.live',
       template: 'simple', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版；
       autoplay: true,
       // 视频上方头部控件
       //header: ['capturePicture','save','zoom'],            // 如果templete参数不为simple,该字段将被覆盖
       // 视频下方底部控件
-      //footer: ['talk','broadcast','hd','fullScreen'],      // 如果template参数不为simple,该字段将被覆盖
+      footer: ['talk','broadcast','hd','fullScreen'],      // 如果template参数不为simple,该字段将被覆盖
       audio: 1, // 是否默认开启声音 0 - 关闭 1 - 开启
       plugin: ['talk'],                       // 加载插件，talk-对讲
       openSoundCallBack: (data) => console.log("开启声音回调",data),

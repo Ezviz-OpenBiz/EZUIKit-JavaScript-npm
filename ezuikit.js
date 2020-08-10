@@ -1202,7 +1202,21 @@
   EZUIKitPlayer.prototype.fullScreen = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
-    player.postMessage("fullScreen", domain + "/ezopen/h5/iframe");
+    var requestFullScreen = function(element) {
+      var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+      if (requestMethod) {
+          requestMethod.call(element);
+     } else if (typeof window.ActiveXObject !== "undefined") {
+         var wscript = new ActiveXObject("WScript.Shell");
+          if (wscript !== null) {
+              wscript.SendKeys("{F11}");
+         }
+      }
+  }
+    requestFullScreen(document.getElementById(id));
+    setTimeout(function(){
+    player.postMessage("autoResize", domain + "/ezopen/h5/iframe")
+    },100)
   };
 
   EZUIKitPlayer.prototype.capturePicture = function (fileName) {
