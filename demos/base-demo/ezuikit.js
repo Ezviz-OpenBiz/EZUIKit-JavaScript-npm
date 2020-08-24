@@ -1071,74 +1071,72 @@
     })
     // iframe 传递数据
 
-
+    var _this = this;
     window.addEventListener("message", function (event) {
       console.log("EZUIKitPlayer收到反馈", event);
       var origin = event.origin;
-
+      var id = _this.opt.id;
       if (event.data.type) {
         switch (event.data.type) {
           case 'openSound':
-            if (params.openSoundCallBack) {
+            if (id == event.data.id && params.openSoundCallBack) {
               params.openSoundCallBack(event.data);
             }
 
             break;
 
           case 'closeSound':
-            if (params.closeSoundCallBack) {
+            if (id == event.data.id && params.closeSoundCallBack) {
               params.closeSoundCallBack(event.data);
             }
 
             break;
 
           case 'capturePicture':
-            if (params.capturePictureCallBack) {
+            if (id == event.data.id && params.capturePictureCallBack) {
               params.capturePictureCallBack(event.data);
             }
 
             break;
 
           case 'startSave':
-            if (params.startSaveCallBack) {
+            if (id == event.data.id && params.startSaveCallBack) {
               params.startSaveCallBack(event.data);
             }
 
             break;
 
           case 'stopSave':
-            if (params.stopSaveCallBack) {
+            if (id == event.data.id && params.stopSaveCallBack) {
               params.stopSaveCallBack(event.data);
             }
 
             break;
 
           case 'fullScreen':
-            if (params.fullScreenCallBack) {
+            if (id == event.data.id && params.fullScreenCallBack) {
               params.fullScreenCallBack(event.data);
             }
 
             break;
 
           case 'getOSDTime':
-            if (params.getOSDTimeCallBack) {
+            if (id == event.data.id && params.getOSDTimeCallBack) {
               params.getOSDTimeCallBack(event.data);
             }
 
             break;
 
           case 'handleSuccess':
-            if (params.handleSuccess) {
+            if (id == event.data.id && params.handleSuccess) {
               params.handleSuccess(event.data);
             }
-
             break;
 
           case 'handleError':
-            if (params.handleError) {
+            if (id == event.data.id && params.handleError) {
               params.handleError(event.data);
             }
-
             break;
         }
       }
@@ -1247,6 +1245,30 @@
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("getOSDTime", domain + "/ezopen/h5/iframe");
+  };
+
+  EZUIKitPlayer.prototype.autoResize = function () {
+    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var player = document.getElementById(id).contentWindow;
+    player.postMessage("autoResize", domain + "/ezopen/h5/iframe")
+  };
+
+  EZUIKitPlayer.prototype.reSize = function (width,height) {
+    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var player = document.getElementById(id).contentWindow;
+    var containerDOM = document.getElementById(this.opt.id);
+    containerDOM.style.width = width + 'px';
+    containerDOM.style.height = height +  'px';
+
+    var playDOM  = document.getElementById(id);
+    playDOM.setAttribute("width",width);
+    playDOM.setAttribute("height",height);
+
+    setTimeout(()=>{
+      player.postMessage({
+        action: 'autoResize',
+      }, domain + "/ezopen/h5/iframe");
+    },200)
   };
 
   EZUIKitPlayer.prototype.startTalk = function () {
