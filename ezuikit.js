@@ -124,7 +124,9 @@
       page: 0,
       // 语音当前页
       pageSize: 5
-    }
+    },
+    handleTalkSuccess: function(){},
+    handleTalkError: function(){},
   };
   /**
    * 视频播放器-开始
@@ -186,6 +188,13 @@
 
     if (typeof params.autoplay !== 'undefined') {
       this.opt.autoplay = params.autoplay ? 1 : 0;
+    }
+
+    if (typeof params.handleTalkSuccess !== 'undefined') {
+      window.EZUIKit.handleTalkSuccess = params.handleTalkSuccess;
+    }
+    if (typeof params.handleTalkError !== 'undefined') {
+      window.EZUIKit.handleTalkError = params.handleTalkError;
     }
 
     var id = this.opt.id;

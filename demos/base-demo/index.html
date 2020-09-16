@@ -29,8 +29,8 @@
   <script>
     var playr = new EZUIKit.EZUIKitPlayer({
       id: 'video-container', // 视频容器ID
-      accessToken: 'ra.52gypyk3aknyzoau0r1vw8dxblo9ph7k-7lib2notqo-12ewigo-5vamn2b8q',
-      url: 'ezopen://open.ys7.com/203751922/1.live',
+      accessToken: 'at.cjmuwh413lljm6jw1mir4u9fbpm4g9vk-6ez1aw1pk9-1uf4k1l-cipwouvzo',
+      url: 'ezopen://open.ys7.com/E21631277/1.live',
       template: 'simple', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版；
       autoplay: true,
       // 视频上方头部控件
@@ -48,6 +48,8 @@
       getOSDTimeCallBack: (data) => console.log("获取OSDTime回调",data),
       handleSuccess: (data) = function(){console.log("播放成功回调",data)},
       handleError: (data) => console.log("播放失败回调",data),
+      handleTalkSuccess: () => console.log("对讲成功回掉"),
+      handleTalkError: (data) = function(){console.log("对讲失败",data)},
       width:600,
       height:400,
     })
