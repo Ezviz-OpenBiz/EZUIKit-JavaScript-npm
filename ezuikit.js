@@ -1229,12 +1229,13 @@
     }, 100)
   };
 
-  EZUIKitPlayer.prototype.capturePicture = function (fileName) {
+  EZUIKitPlayer.prototype.capturePicture = function (fileName,isUndownload) {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage({
       action: "capturePicture",
-      fileName: fileName || 'default'
+      fileName: fileName || 'default',
+      isUndownload: isUndownload,
     }, domain + "/ezopen/h5/iframe");
   };
 
