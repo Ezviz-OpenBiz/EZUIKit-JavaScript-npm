@@ -1221,22 +1221,99 @@
   EZUIKitPlayer.prototype.fullScreen = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
-    var requestFullScreen = function (element) {
-      var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
-      if (requestMethod) {
-        requestMethod.call(element);
-      } else if (typeof window.ActiveXObject !== "undefined") {
-        var wscript = new ActiveXObject("WScript.Shell");
-        if (wscript !== null) {
-          wscript.SendKeys("{F11}");
-        }
+    if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+      // console.log('移动端全屏');
+      let width = document.documentElement.clientWidth;
+      let height = document.documentElement.clientHeight;
+      // wrapper = document.getElementById("test"),
+      let wrapper = document.body;//document.body 属性返回 <body> 元素， document.documentElement 属性返回 <html> 元素。
+      wrapper =document.getElementById(id);
+      let style = "";
+      if (width >= height) { // 竖屏
+          style += "width:" + width + "px;";
+          style += "height:" + height + "px;";
+          style += "-webkit-transform: rotate(0); transform: rotate(0);";
+          style += "-webkit-transform-origin: 0 0;";
+          style += "transform-origin: 0 0;";
+      } else { // 横屏
+          style += "width:" + height + "px;";// 注意旋转后的宽高切换
+          style += "height:" + width + "px;";
+          style += "-webkit-transform: rotate(90deg); transform: rotate(90deg);";
+          // 注意旋转中点的处理
+          style += "-webkit-transform-origin: " + width / 2 + "px " + width / 2 + "px;";
+          style += "transform-origin: " + width / 2 + "px " + width / 2 + "px;";
       }
+      style += 'position: fixed;top: 0;left: 0;z-index:10';
+      wrapper.style.cssText = style;
+      setTimeout(function () {
+        player.postMessage({
+          action:'reSize',
+          width:  Math.max(width,height),
+          height: Math.min(width,height),
+        }, domain + "/ezopen/h5/iframe")
+      }, 200)
+
+    } else {
+        // console.log('pc端全屏');
+        var requestFullScreen = function (element) {
+          var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+          if (requestMethod) {
+            requestMethod.call(element);
+          } else if (typeof window.ActiveXObject !== "undefined") {
+            var wscript = new ActiveXObject("WScript.Shell");
+            if (wscript !== null) {
+              wscript.SendKeys("{F11}");
+            }
+          }
+        }
+        requestFullScreen(document.getElementById(id));
+        setTimeout(function () {
+          player.postMessage("autoResize", domain + "/ezopen/h5/iframe")
+        }, 200)
     }
-    requestFullScreen(document.getElementById(id));
-    setTimeout(function () {
-      player.postMessage("autoResize", domain + "/ezopen/h5/iframe")
-    }, 100)
   };
+  EZUIKitPlayer.prototype.cancelFullScreen = function () {
+    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var player = document.getElementById(id).contentWindow;
+    if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+      let width = document.getElementById(id).width;
+      let height = document.getElementById(id).height;
+      // wrapper = document.getElementById("test"),
+      let wrapper = document.body;//document.body 属性返回 <body> 元素， document.documentElement 属性返回 <html> 元素。
+      wrapper =document.getElementById(id);
+      let style = "";
+      if (width >= height) { // 竖屏
+          style += "width:" + width + "px;";
+          style += "height:" + height + "px;";
+          style += "-webkit-transform: rotate(0); transform: rotate(0);";
+          style += "-webkit-transform-origin: 0 0;";
+          style += "transform-origin: 0 0;";
+      } else { // 横屏
+          style += "width:" + height + "px;";// 注意旋转后的宽高切换
+          style += "height:" + width + "px;";
+          style += "-webkit-transform: rotate(90deg); transform: rotate(90deg);";
+          // 注意旋转中点的处理
+          style += "-webkit-transform-origin: " + width / 2 + "px " + width / 2 + "px;";
+          style += "transform-origin: " + width / 2 + "px " + width / 2 + "px;";
+      }
+      wrapper.style.cssText = style;
+      setTimeout(function () {
+        player.postMessage({
+          action:'reSize',
+          width:  width,
+          height: height,
+        }, domain + "/ezopen/h5/iframe")
+      }, 200)
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        }
+    }
+  }
 
   EZUIKitPlayer.prototype.capturePicture = function (fileName,isUndownload) {
     var id = 'EZUIKitPlayer-' + this.opt.id;
