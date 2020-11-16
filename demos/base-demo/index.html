@@ -29,16 +29,17 @@
   <script>
     var playr = new EZUIKit.EZUIKitPlayer({
       id: 'video-container', // 视频容器ID
-      accessToken: 'at.cjmuwh413lljm6jw1mir4u9fbpm4g9vk-6ez1aw1pk9-1uf4k1l-cipwouvzo',
-      url: 'ezopen://open.ys7.com/E21631277/1.live',
+      accessToken: 'at.9qq8pk2c1b678ko06xs3p7emcbs0esju-2o9y4h8ra2-0o71n3u-pzelt3dwv',
+      url: 'ezopen://open.ys7.com/D88600067/1.live',
       template: 'simple', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版；
       autoplay: true,
       // 视频上方头部控件
-      //header: ['capturePicture','save','zoom'],            // 如果templete参数不为simple,该字段将被覆盖
+      header: ['capturePicture','save','zoom'],            // 如果templete参数不为simple,该字段将被覆盖
       // 视频下方底部控件
-      footer: ['talk','broadcast','hd','fullScreen'],      // 如果template参数不为simple,该字段将被覆盖
-      audio: 1, // 是否默认开启声音 0 - 关闭 1 - 开启
+      footer: ['talk','broadcast'],      // 如果template参数不为simple,该字段将被覆盖
+      // audio: 1, // 是否默认开启声音 0 - 关闭 1 - 开启
       plugin: ['talk'],                       // 加载插件，talk-对讲
+      controls: true,//['play','voice','hd','fullScreen'], // 视频控制相关控件，如果template参数不为simple,该字段将被覆盖
       openSoundCallBack: (data) => console.log("开启声音回调",data),
       closeSoundCallBack: (data) => console.log("关闭声音回调",data),
       startSaveCallBack: (data) => console.log("开始录像回调",data),

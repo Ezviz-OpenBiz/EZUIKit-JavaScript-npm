@@ -201,6 +201,7 @@
     var domElement = document.getElementById(id); // 间隙
 
     domElement.style.fontSize = 0;
+    domElement.style.position = 'relative';
     /**
      * 渲染iframe视频框
      */
@@ -210,9 +211,17 @@
     function matchIframeUrl() {
       switch (_this.opt.template) {
         case 'simple':
-          return domain + "/ezopen/h5/iframe?url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
-        // return "https://open.ys7.com/ezopen/h5/iframe?url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0";
-
+          var iframeUrl = domain + "/ezopen/h5/iframe?url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
+          var controlsValue = "";
+          if(typeof params.controls !== 'undefined' && params.controls){
+            console.log("typeof" ,typeof params.controls)
+            controlsValue = "play,voice,hd,fullScreen";
+            if(params.controls.length > 0){
+              controlsValue = params.controls.join(",")
+            }
+          }
+          iframeUrl += ('&controls=' + controlsValue);
+          return iframeUrl;
         case 'standard':
           return domain + "/ezopen/h5/iframe?url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=1" + "&id=" + id;
 
