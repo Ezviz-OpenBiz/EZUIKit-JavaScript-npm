@@ -132,7 +132,7 @@
    * 视频播放器-开始
    */
 
-  var domain = "http://y.ys7.com:3100";
+  var domain = "https://open.ys7.com";
 
   var EZUIKitPlayer = function EZUIKitPlayer(params) {
     var _this = this;
@@ -1164,17 +1164,6 @@
         }
       }
     });
-    // 双击全屏/退出全屏
-    var touchtime = new Date().getTime();
-    console.log( document.getElementById(_this.opt.id))
-    document.body.click = function (e) {
-      console.log("单击")
-      if (new Date().getTime() - touchtime < 500) {
-        console.log("双击")
-      }else {
-        touchtime = new Date().getTime();
-      }
-    }
   }; // 播放相关API
 
 
