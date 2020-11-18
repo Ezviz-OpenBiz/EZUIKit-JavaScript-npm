@@ -132,7 +132,7 @@
    * 视频播放器-开始
    */
 
-  var domain = "https://open.ys7.com";
+  var domain = "http://y.ys7.com:3100";
 
   var EZUIKitPlayer = function EZUIKitPlayer(params) {
     var _this = this;
@@ -1156,9 +1156,25 @@
               params.handleError(event.data);
             }
             break;
+          case 'dblclick':
+            if (id == event.data.id && params.handleError) {
+              _this.fullScreen();
+            }
+            break;
         }
       }
     });
+    // 双击全屏/退出全屏
+    var touchtime = new Date().getTime();
+    console.log( document.getElementById(_this.opt.id))
+    document.body.click = function (e) {
+      console.log("单击")
+      if (new Date().getTime() - touchtime < 500) {
+        console.log("双击")
+      }else {
+        touchtime = new Date().getTime();
+      }
+    }
   }; // 播放相关API
 
 
@@ -1219,6 +1235,7 @@
   };
 
   EZUIKitPlayer.prototype.fullScreen = function () {
+    var _this = this;
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
@@ -1245,6 +1262,16 @@
       }
       style += 'position: fixed;top: 0;left: 0;z-index:10';
       wrapper.style.cssText = style;
+      var cancelFullDOM = document.createElement('div');
+      var cancelFullDOMStyle="width:30px;height:"+height+"px;z-index:1000;position:fixed;top:0px;right:0px;";
+      cancelFullDOMStyle += "background-image: url(https://resource.ys7cloud.com/group1/M00/00/7E/CtwQE1-01qeAH2wAAAABOliqQ5g167.png);"
+      cancelFullDOMStyle += "background-size: contain;background-repeat:no-repeat;background-color:rgba(0,0,0,0.2)"
+      cancelFullDOM.style = cancelFullDOMStyle;
+      cancelFullDOM.onclick = function(){
+        _this.cancelFullScreen();
+        document.body.removeChild(cancelFullDOM)
+      }
+      document.body.appendChild(cancelFullDOM);
       setTimeout(function () {
         player.postMessage({
           action:'reSize',
