@@ -95,7 +95,7 @@ import  EZUIKit from 'ezuikit-js';
 |stopSave|int	|结束录像|`player.stopSave()`|
 |capturePicture|	function| 视频截图|	`player.capturePicture()`|
 |fullScreen|	function| 全屏（自动适配移动端pc端全屏）|	`player.fullScreen()`|
-|fullScreen|	function| 取消全屏|	`player.cancelFullScreen()`|
+|cancelFullScreen|	function| 取消全屏|	`player.cancelFullScreen()`|
 |getOSDTime|	function| 获取播放时间回调|	`player.getOSDTime()`|
 |startTalk|	function| 开始对讲|	`player.startTalk()`|
 |stopTalk|	function| 结束对讲|	`player.stopTalk()`|
