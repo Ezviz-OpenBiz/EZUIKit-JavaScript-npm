@@ -203,6 +203,7 @@
     var domElement = document.getElementById(id); // 间隙
 
     domElement.style.fontSize = 0;
+    domElement.style.overflowY = 'auto';
     domElement.style.position = 'relative';
     /**
      * 渲染iframe视频框
@@ -527,7 +528,6 @@
           }
 
           if (matchFooterOpt().footerContainer) {
-            debugger
             // 底部容器
             var footerContainer = document.createElement('div');
             footerContainer.setAttribute("class", 'audio-controls');
