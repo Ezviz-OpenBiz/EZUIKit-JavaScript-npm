@@ -27,6 +27,7 @@
     for (var i = 0; i < headerScript.length; i++) {
       if (headerScript[i].getAttribute("src") == filepath) {
         isReady = true;
+        callback();
       }
     }
 
@@ -46,6 +47,7 @@
     for (var i = 0; i < headerLink.length; i++) {
       if (headerLink[i].getAttribute("href") == filepath) {
         isReady = true;
+        callback();
       }
     }
 
@@ -258,7 +260,6 @@
     var layerJs = 'https://open.ys7.com/assets/layer/layer.js';
     addJs(jqueryJS, function () {
       addJs(layerJs, function () {
-
         //   });
         // });
         /**
@@ -397,7 +398,6 @@
               };
               break;
           }
-
           return result;
         }
         /** 根据配置匹配底部渲染 */
@@ -527,6 +527,7 @@
           }
 
           if (matchFooterOpt().footerContainer) {
+            debugger
             // 底部容器
             var footerContainer = document.createElement('div');
             footerContainer.setAttribute("class", 'audio-controls');
