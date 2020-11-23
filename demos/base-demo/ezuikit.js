@@ -134,7 +134,7 @@
    * 视频播放器-开始
    */
 
-  var domain = "http://y.ys7.com:3100";
+  var domain = "https://open.ys7.com";
 
   var EZUIKitPlayer = function EZUIKitPlayer(params) {
     var _this = this;
