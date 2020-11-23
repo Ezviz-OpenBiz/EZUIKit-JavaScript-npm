@@ -134,7 +134,7 @@
    * 视频播放器-开始
    */
 
-  var domain = "https://open.ys7.com";
+  var domain = "http://y.ys7.com:3100";
 
   var EZUIKitPlayer = function EZUIKitPlayer(params) {
     var _this = this;
@@ -1183,30 +1183,69 @@
     if (typeof data === 'string') {
       this.opt.url = data;
     }
-
     player.postMessage({
       action: "play",
       accessToken: this.opt.accessToken,
       url: this.opt.url
     }, domain + "/ezopen/h5/iframe");
+    var _this = this;
+    var promise = new Promise(function(resolve,reject) {
+      window.addEventListener("message", function (event) {
+        var playId = _this.opt.id;
+        if (playId == event.data.id && event.data.type === 'handleSuccess') {
+          resolve(event.data);
+        }
+      });
+    });
+    return promise;
   };
 
   EZUIKitPlayer.prototype.stop = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("stop", domain + "/ezopen/h5/iframe");
+    var _this = this;
+    var promise = new Promise(function(resolve,reject) {
+      window.addEventListener("message", function (event) {
+        var playId = _this.opt.id;
+        if (playId == event.data.id && event.data.type === 'stop') {
+          resolve(event.data);
+        }
+      });
+    });
+    return promise;
   };
 
   EZUIKitPlayer.prototype.openSound = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("openSound", domain + "/ezopen/h5/iframe");
+    var _this = this;
+    var promise = new Promise(function(resolve,reject) {
+      window.addEventListener("message", function (event) {
+        var playId = _this.opt.id;
+        if (playId == event.data.id && event.data.type === 'openSound') {
+          resolve(event.data);
+        }
+      });
+    });
+    return promise;
   };
 
   EZUIKitPlayer.prototype.closeSound = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("closeSound", domain + "/ezopen/h5/iframe");
+    var _this = this;
+    var promise = new Promise(function(resolve,reject) {
+      window.addEventListener("message", function (event) {
+        var playId = _this.opt.id;
+        if (playId == event.data.id && event.data.type === 'closeSound') {
+          resolve(event.data);
+        }
+      });
+    });
+    return promise;
   };
 
   EZUIKitPlayer.prototype.startSave = function (fileName) {
@@ -1216,12 +1255,32 @@
       action: "startSave",
       fileName: fileName || 'default'
     }, domain + "/ezopen/h5/iframe");
+    var _this = this;
+    var promise = new Promise(function(resolve,reject) {
+      window.addEventListener("message", function (event) {
+        var playId = _this.opt.id;
+        if (playId == event.data.id && event.data.type === 'startSave') {
+          resolve(event.data);
+        }
+      });
+    });
+    return promise;
   };
 
   EZUIKitPlayer.prototype.stopSave = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("stopSave", domain + "/ezopen/h5/iframe");
+    var _this = this;
+    var promise = new Promise(function(resolve,reject) {
+      window.addEventListener("message", function (event) {
+        var playId = _this.opt.id;
+        if (playId == event.data.id && event.data.type === 'stopSave') {
+          resolve(event.data);
+        }
+      });
+    });
+    return promise;
   };
 
   EZUIKitPlayer.prototype.fullScreen = function () {
@@ -1340,6 +1399,16 @@
       fileName: fileName || 'default',
       isUndownload: isUndownload,
     }, domain + "/ezopen/h5/iframe");
+    var _this = this;
+    var promise = new Promise(function(resolve,reject) {
+      window.addEventListener("message", function (event) {
+        var playId = _this.opt.id;
+        if (playId == event.data.id && event.data.type === 'capturePicture') {
+          resolve(event.data);
+        }
+      });
+    });
+    return promise;
   };
 
   EZUIKitPlayer.prototype.enableZoom = function () {
@@ -1358,6 +1427,16 @@
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("getOSDTime", domain + "/ezopen/h5/iframe");
+    var _this = this;
+    var promise = new Promise(function(resolve,reject) {
+      window.addEventListener("message", function (event) {
+        var playId = _this.opt.id;
+        if (playId == event.data.id && event.data.type === 'getOSDTime') {
+          resolve(event.data);
+        }
+      });
+    });
+    return promise;
   };
 
   EZUIKitPlayer.prototype.autoResize = function () {
