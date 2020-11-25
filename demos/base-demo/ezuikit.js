@@ -135,6 +135,7 @@
    */
 
   var domain = "https://open.ys7.com";
+  var filePathDomain = domain;
 
   var EZUIKitPlayer = function EZUIKitPlayer(params) {
     var _this = this;
@@ -142,8 +143,8 @@
     console.log("params", params);
     this.opt = {
       id: params.id,
-      apiDomain: 'https://open.ys7.com/api/lapp/live/talk/url',
-      filePath: 'https://open.ys7.com/assets/ezuikit_v2.6.4',
+      apiDomain:  domain + '/api/lapp/live/talk/url',
+      filePath:  filePathDomain + '/assets/ezuikit_v2.6.4',
       accessToken: '',
       url: '',
       deviceSerial: '',
@@ -173,6 +174,16 @@
     if (typeof params.audio !== 'undefined') {
       this.opt.audio = params.audio;
     }
+    if (typeof params.env !== 'undefined') {
+      if(typeof params.env.domain !== 'undefined'){
+        domain = params.env.domain;
+        this.opt.apiDomain = domain + '/api/lapp/live/talk/url';
+      }
+      if(typeof params.env.filePathDomain !== 'undefined'){
+        filePathDomain = params.env.filePathDomain;
+        this.opt.filePathDomain =  params.env.filePathDomain;
+      }
+    }
 
     if (params.url) {
       this.opt.url = params.url;
@@ -198,7 +209,6 @@
     if (typeof params.handleTalkError !== 'undefined') {
       window.EZUIKit.handleTalkError = params.handleTalkError;
     }
-
     var id = this.opt.id;
     var domElement = document.getElementById(id); // 间隙
 
@@ -212,6 +222,9 @@
     var iframe = document.createElement('iframe');
 
     function matchIframeUrl() {
+      if (params.websocketParams) {
+
+      }
       switch (_this.opt.template) {
         case 'simple':
           var iframeUrl = domain + "/ezopen/h5/iframe?url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
@@ -220,10 +233,13 @@
             console.log("typeof" ,typeof params.controls)
             controlsValue = "play,voice,hd,fullScreen";
             if(params.controls.length > 0){
-              controlsValue = params.controls.join(",")
+              controlsValue = params.controls.join(",");
+              iframeUrl += ('&controls=' + controlsValue);
             }
           }
-          iframeUrl += ('&controls=' + controlsValue);
+          if (params.websocketParams) {
+            iframeUrl += ('&websocketParams=' + JSON.stringify(params.websocketParams))
+          }
           return iframeUrl;
         case 'standard':
           return domain + "/ezopen/h5/iframe?url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=1" + "&id=" + id;
@@ -512,6 +528,7 @@
                   }
                 }
               }
+              EZUIKit.opt = _this.opt;
             }
 
             function apiError(err) {
@@ -556,7 +573,7 @@
                     _this.opt.url = _this.opt.url.replace('.hd.live', '.live');
                   }
 
-                  iframe.src = "https://open.ys7.com/ezopen/h5/iframe?url=" + _this.opt.url.replace('.hd.live', '.live') + "&autoplay=1&audio=" + _this.opt.audio + "&accessToken=" + _this.opt.accessToken + "&templete=" + 0;
+                  iframe.src = domain +"/ezopen/h5/iframe?url=" + _this.opt.url.replace('.hd.live', '.live') + "&autoplay=1&audio=" + _this.opt.audio + "&accessToken=" + _this.opt.accessToken + "&templete=" + 0;
                 };
 
                 rightContros.appendChild(hdDom);
@@ -722,7 +739,7 @@
                   console.log("err", err);
                 }
 
-                request('https://open.ys7.com/api/lapp/voice/query', 'POST', {
+                request( domain + '/api/lapp/voice/query', 'POST', {
                   accessToken: _this.opt.accessToken,
                   pageStart: page,
                   pageSize: EZUIKit.state.pageSize,
@@ -778,7 +795,7 @@
                   console.log("err", err);
                 }
 
-                request('https://open.ys7.com/api/lapp/voice/send', 'POST', {
+                request( domain + '/api/lapp/voice/send', 'POST', {
                   accessToken: _this.opt.accessToken,
                   deviceSerial: _this.opt.deviceSerial,
                   channelNo: _this.opt.channelNo,
@@ -969,7 +986,7 @@
                         console.log("err", err);
                       }
 
-                      request('https://open.ys7.com/api/lapp/voice/sendonce', 'POST', {
+                      request(domain + '/api/lapp/voice/sendonce', 'POST', {
                         voiceFile: wav_file,
                         accessToken: _this.opt.accessToken,
                         deviceSerial: _this.opt.deviceSerial,
