@@ -139,8 +139,6 @@
 
   var EZUIKitPlayer = function EZUIKitPlayer(params) {
     var _this = this;
-
-    console.log("params", params);
     this.opt = {
       id: params.id,
       apiDomain:  domain + '/api/lapp/live/talk/url',
@@ -162,6 +160,7 @@
       // 声音id  0-不开启 1-开启
       autoplay: 1
     };
+    this.params = params;
 
     if (params.id) {
       this.opt.id = params.id;
@@ -1329,13 +1328,13 @@
       style += 'position: fixed;top: 0;left: 0;z-index:10';
       wrapper.style.cssText = style;
       var cancelFullDOM = document.createElement('div');
+      cancelFullDOM.id = id + "cancel-full-screen"
       var cancelFullDOMStyle="width:30px;height:"+height+"px;z-index:1000;position:fixed;top:0px;right:0px;";
       cancelFullDOMStyle += "background-image: url(https://resource.ys7cloud.com/group1/M00/00/7E/CtwQE1-01qeAH2wAAAABOliqQ5g167.png);"
       cancelFullDOMStyle += "background-size: contain;background-repeat:no-repeat;background-color:rgba(0,0,0,0.2)"
       cancelFullDOM.style = cancelFullDOMStyle;
       cancelFullDOM.onclick = function(){
         _this.cancelFullScreen();
-        document.body.removeChild(cancelFullDOM)
       }
       document.body.appendChild(cancelFullDOM);
       setTimeout(function () {
@@ -1363,6 +1362,9 @@
         setTimeout(function () {
           player.postMessage("autoResize", domain + "/ezopen/h5/iframe")
         }, 200)
+    }
+    if (this.params.fullScreenCallBack) {
+      this.params.fullScreenCallBack(this.opt.id);
     }
   };
   EZUIKitPlayer.prototype.cancelFullScreen = function () {
@@ -1396,7 +1398,12 @@
           width:  width,
           height: height,
         }, domain + "/ezopen/h5/iframe")
-      }, 200)
+      }, 200);
+      var cancelFullDOMId = id + "cancel-full-screen";
+      var cancelFullDOM = document.getElementById(cancelFullDOMId);
+      if(cancelFullDOM){
+        document.body.removeChild(cancelFullDOM)
+      }
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
@@ -1405,6 +1412,9 @@
         } else if (document.mozCancelFullScreen) {
             document.mozCancelFullScreen();
         }
+    }
+    if (this.params.cancelFullScreenCallBack) {
+      this.params.cancelFullScreenCallBack(this.opt.id);
     }
   }
 
