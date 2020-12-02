@@ -135,15 +135,14 @@
    */
 
   var domain = "https://open.ys7.com";
+  var filePathDomain = domain;
 
   var EZUIKitPlayer = function EZUIKitPlayer(params) {
     var _this = this;
-
-    console.log("params", params);
     this.opt = {
       id: params.id,
-      apiDomain: 'https://open.ys7.com/api/lapp/live/talk/url',
-      filePath: 'https://open.ys7.com/assets/ezuikit_v2.6.4',
+      apiDomain:  domain + '/api/lapp/live/talk/url',
+      filePath:  filePathDomain + '/assets/ezuikit_v2.6.4',
       accessToken: '',
       url: '',
       deviceSerial: '',
@@ -161,6 +160,7 @@
       // 声音id  0-不开启 1-开启
       autoplay: 1
     };
+    this.params = params;
 
     if (params.id) {
       this.opt.id = params.id;
@@ -172,6 +172,16 @@
 
     if (typeof params.audio !== 'undefined') {
       this.opt.audio = params.audio;
+    }
+    if (typeof params.env !== 'undefined') {
+      if(typeof params.env.domain !== 'undefined'){
+        domain = params.env.domain;
+        this.opt.apiDomain = domain + '/api/lapp/live/talk/url';
+      }
+      if(typeof params.env.filePathDomain !== 'undefined'){
+        filePathDomain = params.env.filePathDomain;
+        this.opt.filePathDomain =  params.env.filePathDomain;
+      }
     }
 
     if (params.url) {
@@ -198,7 +208,6 @@
     if (typeof params.handleTalkError !== 'undefined') {
       window.EZUIKit.handleTalkError = params.handleTalkError;
     }
-
     var id = this.opt.id;
     var domElement = document.getElementById(id); // 间隙
 
@@ -214,25 +223,28 @@
     function matchIframeUrl() {
       switch (_this.opt.template) {
         case 'simple':
-          var iframeUrl = domain + "/ezopen/h5/iframe?url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
+          var iframeUrl = domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
           var controlsValue = "";
           if(typeof params.controls !== 'undefined' && params.controls){
             console.log("typeof" ,typeof params.controls)
             controlsValue = "play,voice,hd,fullScreen";
             if(params.controls.length > 0){
-              controlsValue = params.controls.join(",")
+              controlsValue = params.controls.join(",");
+              iframeUrl += ('&controls=' + controlsValue);
             }
           }
-          iframeUrl += ('&controls=' + controlsValue);
+          if (params.websocketParams) {
+            iframeUrl += ('&websocketParams=' + JSON.stringify(params.websocketParams))
+          }
           return iframeUrl;
         case 'standard':
-          return domain + "/ezopen/h5/iframe?url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=1" + "&id=" + id;
+          return domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=1" + "&id=" + id;
 
         case 'security':
-          return domain + "/ezopen/h5/iframe_se?url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
+          return domain + "/ezopen/h5/iframe_se?bSupporDoubleClickFull=0&url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
 
         default:
-          return domain + "/ezopen/h5/iframe?url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
+          return domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
       }
     }
 
@@ -512,6 +524,7 @@
                   }
                 }
               }
+              EZUIKit.opt = _this.opt;
             }
 
             function apiError(err) {
@@ -556,7 +569,7 @@
                     _this.opt.url = _this.opt.url.replace('.hd.live', '.live');
                   }
 
-                  iframe.src = "https://open.ys7.com/ezopen/h5/iframe?url=" + _this.opt.url.replace('.hd.live', '.live') + "&autoplay=1&audio=" + _this.opt.audio + "&accessToken=" + _this.opt.accessToken + "&templete=" + 0;
+                  iframe.src = domain +"/ezopen/h5/iframe?url=" + _this.opt.url.replace('.hd.live', '.live') + "&autoplay=1&audio=" + _this.opt.audio + "&accessToken=" + _this.opt.accessToken + "&templete=" + 0;
                 };
 
                 rightContros.appendChild(hdDom);
@@ -722,7 +735,7 @@
                   console.log("err", err);
                 }
 
-                request('https://open.ys7.com/api/lapp/voice/query', 'POST', {
+                request( domain + '/api/lapp/voice/query', 'POST', {
                   accessToken: _this.opt.accessToken,
                   pageStart: page,
                   pageSize: EZUIKit.state.pageSize,
@@ -778,7 +791,7 @@
                   console.log("err", err);
                 }
 
-                request('https://open.ys7.com/api/lapp/voice/send', 'POST', {
+                request( domain + '/api/lapp/voice/send', 'POST', {
                   accessToken: _this.opt.accessToken,
                   deviceSerial: _this.opt.deviceSerial,
                   channelNo: _this.opt.channelNo,
@@ -969,7 +982,7 @@
                         console.log("err", err);
                       }
 
-                      request('https://open.ys7.com/api/lapp/voice/sendonce', 'POST', {
+                      request(domain + '/api/lapp/voice/sendonce', 'POST', {
                         voiceFile: wav_file,
                         accessToken: _this.opt.accessToken,
                         deviceSerial: _this.opt.deviceSerial,
@@ -1312,13 +1325,13 @@
       style += 'position: fixed;top: 0;left: 0;z-index:10';
       wrapper.style.cssText = style;
       var cancelFullDOM = document.createElement('div');
+      cancelFullDOM.id = id + "cancel-full-screen"
       var cancelFullDOMStyle="width:30px;height:"+height+"px;z-index:1000;position:fixed;top:0px;right:0px;";
       cancelFullDOMStyle += "background-image: url(https://resource.ys7cloud.com/group1/M00/00/7E/CtwQE1-01qeAH2wAAAABOliqQ5g167.png);"
       cancelFullDOMStyle += "background-size: contain;background-repeat:no-repeat;background-color:rgba(0,0,0,0.2)"
       cancelFullDOM.style = cancelFullDOMStyle;
       cancelFullDOM.onclick = function(){
         _this.cancelFullScreen();
-        document.body.removeChild(cancelFullDOM)
       }
       document.body.appendChild(cancelFullDOM);
       setTimeout(function () {
@@ -1346,6 +1359,9 @@
         setTimeout(function () {
           player.postMessage("autoResize", domain + "/ezopen/h5/iframe")
         }, 200)
+    }
+    if (this.params.fullScreenCallBack) {
+      this.params.fullScreenCallBack(this.opt.id);
     }
   };
   EZUIKitPlayer.prototype.cancelFullScreen = function () {
@@ -1379,7 +1395,12 @@
           width:  width,
           height: height,
         }, domain + "/ezopen/h5/iframe")
-      }, 200)
+      }, 200);
+      var cancelFullDOMId = id + "cancel-full-screen";
+      var cancelFullDOM = document.getElementById(cancelFullDOMId);
+      if(cancelFullDOM){
+        document.body.removeChild(cancelFullDOM)
+      }
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
@@ -1388,6 +1409,9 @@
         } else if (document.mozCancelFullScreen) {
             document.mozCancelFullScreen();
         }
+    }
+    if (this.params.cancelFullScreenCallBack) {
+      this.params.cancelFullScreenCallBack(this.opt.id);
     }
   }
 
