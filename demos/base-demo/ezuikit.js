@@ -111,7 +111,7 @@
       // 加载插件，talk-对讲
       audio: 1,
       // 声音id  0-不开启 1-开启
-      autoplay: 1
+      autoplay: 1,
     },
     state: {
       countTimer: undefined,
@@ -158,7 +158,9 @@
       // 加载插件，talk-对讲
       audio: 1,
       // 声音id  0-不开启 1-开启
-      autoplay: 1
+      autoplay: 1,
+      fullScreenStatus: 0,
+      bSupporDoubleClickFull: true,
     };
     this.params = params;
 
@@ -201,6 +203,10 @@
     if (typeof params.autoplay !== 'undefined') {
       this.opt.autoplay = params.autoplay ? 1 : 0;
     }
+    if (typeof params.bSupporDoubleClickFull !== 'undefined') {
+      this.opt.bSupporDoubleClickFull = params.bSupporDoubleClickFull;
+    }
+
 
     if (typeof params.handleTalkSuccess !== 'undefined') {
       window.EZUIKit.handleTalkSuccess = params.handleTalkSuccess;
@@ -208,6 +214,8 @@
     if (typeof params.handleTalkError !== 'undefined') {
       window.EZUIKit.handleTalkError = params.handleTalkError;
     }
+    
+
     var id = this.opt.id;
     var domElement = document.getElementById(id); // 间隙
 
@@ -999,7 +1007,7 @@
             /* 时间计数 */
 
 
-            function countTime(type, start = 0) {
+            function countTime(type, start) {
               clearInterval(EZUIKit.state.countTimer);
 
               if (type === 'add') {
@@ -1171,8 +1179,12 @@
             }
             break;
           case 'dblclick':
-            if (id == event.data.id && params.handleError) {
-              _this.fullScreen();
+            if (id == event.data.id && _this.opt.bSupporDoubleClickFull) {
+              if(_this.opt.fullScreenStatus === 0){
+                _this.fullScreen();
+              } else {
+                _this.cancelFullScreen();
+              }
             }
             break;
         }
@@ -1297,31 +1309,26 @@
   };
 
   EZUIKitPlayer.prototype.fullScreen = function () {
+    if(this.opt.fullScreenStatus === 1){
+      return false
+    }
     var _this = this;
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
       // console.log('移动端全屏');
-      let width = document.documentElement.clientWidth;
-      let height = document.documentElement.clientHeight;
+      var width = document.documentElement.clientWidth;
+      var height = document.documentElement.clientHeight;
       // wrapper = document.getElementById("test"),
-      let wrapper = document.body;//document.body 属性返回 <body> 元素， document.documentElement 属性返回 <html> 元素。
+      var wrapper = document.body;//document.body 属性返回 <body> 元素， document.documentElement 属性返回 <html> 元素。
       wrapper =document.getElementById(id);
-      let style = "";
-      if (width >= height) { // 竖屏
-          style += "width:" + width + "px;";
-          style += "height:" + height + "px;";
-          style += "-webkit-transform: rotate(0); transform: rotate(0);";
-          style += "-webkit-transform-origin: 0 0;";
-          style += "transform-origin: 0 0;";
-      } else { // 横屏
-          style += "width:" + height + "px;";// 注意旋转后的宽高切换
-          style += "height:" + width + "px;";
-          style += "-webkit-transform: rotate(90deg); transform: rotate(90deg);";
-          // 注意旋转中点的处理
-          style += "-webkit-transform-origin: " + width / 2 + "px " + width / 2 + "px;";
-          style += "transform-origin: " + width / 2 + "px " + width / 2 + "px;";
-      }
+      var style = "";
+      style += "width:" + height + "px;";// 注意旋转后的宽高切换
+      style += "height:" + width + "px;";
+      style += "-webkit-transform: rotate(90deg); transform: rotate(90deg);";
+      // 注意旋转中点的处理
+      style += "-webkit-transform-origin: " + width / 2 + "px " + width / 2 + "px;";
+      style += "transform-origin: " + width / 2 + "px " + width / 2 + "px;";
       style += 'position: fixed;top: 0;left: 0;z-index:10';
       wrapper.style.cssText = style;
       var cancelFullDOM = document.createElement('div');
@@ -1335,11 +1342,7 @@
       }
       document.body.appendChild(cancelFullDOM);
       setTimeout(function () {
-        player.postMessage({
-          action:'reSize',
-          width:  Math.max(width,height),
-          height: Math.min(width,height),
-        }, domain + "/ezopen/h5/iframe")
+        player.postMessage('autoResize', domain + "/ezopen/h5/iframe")
       }, 200)
 
     } else {
@@ -1363,38 +1366,29 @@
     if (this.params.fullScreenCallBack) {
       this.params.fullScreenCallBack(this.opt.id);
     }
+    this.opt.fullScreenStatus = 1;
   };
   EZUIKitPlayer.prototype.cancelFullScreen = function () {
+    if(this.opt.fullScreenStatus === 0){
+      return false
+    }
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
-      let width = document.getElementById(id).width;
-      let height = document.getElementById(id).height;
+      var width = document.getElementById(id).width;
+      var height = document.getElementById(id).height;
       // wrapper = document.getElementById("test"),
-      let wrapper = document.body;//document.body 属性返回 <body> 元素， document.documentElement 属性返回 <html> 元素。
+      var wrapper = document.body;//document.body 属性返回 <body> 元素， document.documentElement 属性返回 <html> 元素。
       wrapper =document.getElementById(id);
-      let style = "";
-      if (width >= height) { // 竖屏
-          style += "width:" + width + "px;";
-          style += "height:" + height + "px;";
-          style += "-webkit-transform: rotate(0); transform: rotate(0);";
-          style += "-webkit-transform-origin: 0 0;";
-          style += "transform-origin: 0 0;";
-      } else { // 横屏
-          style += "width:" + height + "px;";// 注意旋转后的宽高切换
-          style += "height:" + width + "px;";
-          style += "-webkit-transform: rotate(90deg); transform: rotate(90deg);";
-          // 注意旋转中点的处理
-          style += "-webkit-transform-origin: " + width / 2 + "px " + width / 2 + "px;";
-          style += "transform-origin: " + width / 2 + "px " + width / 2 + "px;";
-      }
+      var style = "";
+      style += "width:" + width + "px;";
+      style += "height:" + height + "px;";
+      style += "-webkit-transform: rotate(0); transform: rotate(0);";
+      style += "-webkit-transform-origin: 0 0;";
+      style += "transform-origin: 0 0;";
       wrapper.style.cssText = style;
       setTimeout(function () {
-        player.postMessage({
-          action:'reSize',
-          width:  width,
-          height: height,
-        }, domain + "/ezopen/h5/iframe")
+        player.postMessage("autoResize",  domain + "/ezopen/h5/iframe")
       }, 200);
       var cancelFullDOMId = id + "cancel-full-screen";
       var cancelFullDOM = document.getElementById(cancelFullDOMId);
@@ -1413,6 +1407,7 @@
     if (this.params.cancelFullScreenCallBack) {
       this.params.cancelFullScreenCallBack(this.opt.id);
     }
+    this.opt.fullScreenStatus = 0;
   }
 
   EZUIKitPlayer.prototype.capturePicture = function (fileName,isUndownload) {
@@ -1480,7 +1475,7 @@
     playDOM.setAttribute("width",width);
     playDOM.setAttribute("height",height);
 
-    setTimeout(()=>{
+    setTimeout(function(){
       player.postMessage({
         action: 'autoResize',
       }, domain + "/ezopen/h5/iframe");
