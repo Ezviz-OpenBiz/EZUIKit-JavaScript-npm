@@ -112,6 +112,7 @@
       audio: 1,
       // 声音id  0-不开启 1-开启
       autoplay: 1,
+      videoLoading: false,
     },
     state: {
       countTimer: undefined,
@@ -161,6 +162,7 @@
       autoplay: 1,
       fullScreenStatus: 0,
       bSupporDoubleClickFull: true,
+      videoLoading: false,
     };
     this.params = params;
 
@@ -568,16 +570,28 @@
 
                 hdDom.onclick = function () {
                   // 停止
-                  _this.stop();
-
-                  if (_this.opt.url.indexOf('.hd') === -1) {
-                    _this.opt.url = _this.opt.url.replace('.live', '.hd.live');
-                    hdDom.innerHTML = _this.opt.url.indexOf('.hd') === -1 ? '标清' : '高清';
-                  } else {
-                    _this.opt.url = _this.opt.url.replace('.hd.live', '.live');
-                  }
-
-                  iframe.src = domain +"/ezopen/h5/iframe?url=" + _this.opt.url.replace('.hd.live', '.live') + "&autoplay=1&audio=" + _this.opt.audio + "&accessToken=" + _this.opt.accessToken + "&templete=" + 0;
+                  if(_this.opt.videoLoading){
+                    layer.msg("视频加载中，请稍后");
+                    return false;
+                  }else {
+                  var stopPromise  = _this.stop();
+                  _this.opt.videoLoading = true;
+                  stopPromise.then((data)=>{
+                    _this.opt.videoLoading = false;
+                    if (_this.opt.url.indexOf('.hd') === -1) {
+                      _this.opt.url = _this.opt.url.replace('.live', '.hd.live');
+                      hdDom.innerHTML = _this.opt.url.indexOf('.hd') === -1 ? '标清' : '高清';
+                    } else {
+                      _this.opt.url = _this.opt.url.replace('.hd.live', '.live');
+                      hdDom.innerHTML = _this.opt.url.indexOf('.hd') === -1 ? '标清' : '高清';
+                    }
+                    _this.play(_this.opt.url)
+                  })
+                  .catch((error)=>{
+                    console.log("error",error)
+                  })
+                }
+                //iframe.src = domain +"/ezopen/h5/iframe?url=" + _this.opt.url.replace('.hd.live', '.live') + "&autoplay=1&audio=" + _this.opt.audio + "&accessToken=" + _this.opt.accessToken + "&templete=" + 0;
                 };
 
                 rightContros.appendChild(hdDom);
@@ -1214,10 +1228,14 @@
       url: this.opt.url
     }, domain + "/ezopen/h5/iframe");
     var _this = this;
+    this.opt.videoLoading = true;
     var promise = new Promise(function(resolve,reject) {
       window.addEventListener("message", function (event) {
         var playId = _this.opt.id;
         if (playId == event.data.id && event.data.type === 'handleSuccess') {
+          setTimeout(()=>{
+            _this.opt.videoLoading = false;
+          },1000)
           resolve(event.data);
         }
       });
