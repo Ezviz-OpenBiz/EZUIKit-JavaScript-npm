@@ -1503,8 +1503,34 @@
   EZUIKitPlayer.prototype.startTalk = function () {
     console.log("执行开始对讲");
     console.log(this.opt);
+    var _this = this;
     EZUIKit.opt = this.opt;
-    window.startTalk();
+    var apiSuccess = function(data) {
+      if (data.code == 200) {
+        var apiResult = data.data;
+        if (apiResult) {
+          // 临时将https转换为websocket
+          var rtcTrunk = apiResult.rtcUrl;
+          if (rtcTrunk.indexOf("ws") === -1) {
+            rtcTrunk = rtcTrunk.replace("https", "wss").replace("rtcgw", "rtcgw-ws");
+          }
+          _this.opt.rtcUrl = rtcTrunk;
+          _this.opt.ttsUrl = "tts://" + apiResult.ttsUrl;
+          var talk = "talk://" + _this.opt.deviceSerial + ":0:" + _this.opt.channelNo + ":cas.ys7.com:6500";
+          _this.opt.talkLink = _this.opt.ttsUrl + "/" + talk;
+          _this.opt.stream = apiResult.stream;
+          window.startTalk();
+        }
+      }
+    }
+    var apiError = function() {
+      layer.msg("获取对讲token失败")
+    }
+    request(_this.opt.apiDomain, 'POST', {
+      accessToken: _this.opt.accessToken,
+      deviceSerial: _this.opt.deviceSerial,
+      channelNo: _this.opt.channelNo
+    }, '', apiSuccess, apiError);
   };
 
   EZUIKitPlayer.prototype.stopTalk = function () {

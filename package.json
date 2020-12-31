@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "description": "ezuikit javascript for npm",
   "main": "ezuikit.js",
   "scripts": {
