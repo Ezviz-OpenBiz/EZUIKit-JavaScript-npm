@@ -117,7 +117,6 @@
     state: {
       countTimer: undefined,
       // countTime 计时器
-      recodeTime: 0,
       // 录音时间
       recodeTimer: undefined,
       //录音时长 计时器
