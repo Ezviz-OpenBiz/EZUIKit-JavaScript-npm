@@ -233,7 +233,7 @@
     function matchIframeUrl() {
       switch (_this.opt.template) {
         case 'simple':
-          var iframeUrl = domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
+          var iframeUrl = domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?","&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
           var controlsValue = "";
           if(typeof params.controls !== 'undefined' && params.controls){
             console.log("typeof" ,typeof params.controls)
@@ -248,13 +248,13 @@
           }
           return iframeUrl;
         case 'standard':
-          return domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=1" + "&id=" + id;
+          return domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?","&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=1" + "&id=" + id;
 
         case 'security':
-          return domain + "/ezopen/h5/iframe_se?bSupporDoubleClickFull=0&url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
+          return domain + "/ezopen/h5/iframe_se?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?","&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
 
         default:
-          return domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
+          return domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?","&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
       }
     }
 
