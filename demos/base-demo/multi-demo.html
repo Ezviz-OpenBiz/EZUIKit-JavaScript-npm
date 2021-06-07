@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>Document</title>
+  <script src="./ezuikit.js"></script>
+</head>
+
+<body>
+  <div className="demo">
+    <h2>多个视频窗口模式使用示例：</h2>
+    <div style="display: inline-block;vertical-align: top;width: 40%;">
+      <h3>窗口1：</h3>
+      <div id="video-container" style="width:400px;">
+      </div>
+      <div>
+        <button onClick="play()">play</button>
+        <button onClick="stop()">stop</button>
+        <button onClick="getOSDTime()">getOSDTime</button>
+        <button onClick="capturePicture()">capturePicture</button>
+        <button onClick="openSound()">openSound</button>
+        <button onClick="closeSound()">closeSound</button>
+        <button onClick="startSave()">startSave</button>
+        <button onClick="stopSave()">stopSave</button>
+      </div>
+    </div>
+    <div style="display: inline-block;vertical-align: top;width: 40%;">
+      <h3>窗口2：</h3>
+      <div id="video-container2" style="width:400px;">
+      </div>
+      <div>
+        <button onClick="play2()">play</button>
+        <button onClick="stop2()">stop</button>
+        <button onClick="getOSDTime2()">getOSDTime2</button>
+        <button onClick="capturePicture2()">capturePicture</button>
+        <button onClick="openSound2()">openSound</button>
+        <button onClick="closeSound2()">closeSound</button>
+        <button onClick="startSave2()">startSave</button>
+        <button onClick="stopSave2()">stopSave</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    var playr1 = new EZUIKit.EZUIKitPlayer({
+      id: 'video-container', // 视频容器ID
+      accessToken: 'xx.16xf4zx0598fciw0delqzohqxxz6u8ei-1vxaom5kzu-1lz6z9x-uboj6tj3a',
+      url: 'ezopen://open.ys7.com/xxx/1.live',
+      template: 'simple', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版；
+      autoplay: true,
+      // 视频上方头部控件
+      header: ['capturePicture', 'save', 'zoom'],            // 如果templete参数不为simple,该字段将被覆盖
+      // 视频下方底部控件
+      footer: ['talk', 'broadcast', 'hd', 'fullScreen'],      // 如果template参数不为simple,该字段将被覆盖
+      // audio: 1, // 是否默认开启声音 0 - 关闭 1 - 开启
+      // plugin: ['talk'],                       // 加载插件，talk-对讲
+      // controls: true, //['play','voice','hd','fullScreen'], // 视频控制相关控件，如果template参数不为simple,该字段将被覆盖
+      openSoundCallBack: (data) => console.log("开启声音回调", data),
+      closeSoundCallBack: (data) => console.log("关闭声音回调", data),
+      startSaveCallBack: (data) => console.log("开始录像回调", data),
+      stopSaveCallBack: (data) => console.log("录像回调", data),
+      capturePictureCallBack: (data) => console.log("截图成功回调", data),
+      fullScreenCallBack: (data) => console.log("全屏回调", data),
+      getOSDTimeCallBack: (data) => console.log("获取OSDTime回调", data),
+      handleSuccess: (data) = function () { console.log("播放成功回调", data) },
+      handleError: (data) => console.log("播放失败回调", data),
+      handleTalkSuccess: () => console.log("对讲成功回掉"),
+      handleTalkError: (data) = function () { console.log("对讲失败", data) },
+      width: 400,
+      height: 300,
+    });
+    function play() {
+      var playPromise = playr.play();
+      playPromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function stop() {
+      var stopPromise = playr.stop();
+      stopPromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function getOSDTime() {
+      var getOSDTimePromise = playr.getOSDTime();
+      getOSDTimePromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function getOSDTime2() {
+      var getOSDTimePromise = playr2.getOSDTime();
+      getOSDTimePromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function capturePicture() {
+      var capturePicturePromise = playr.capturePicture();
+      capturePicturePromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function openSound() {
+      var openSoundPromise = playr.openSound();
+      openSoundPromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function closeSound() {
+      var closeSoundPromise = playr.closeSound();
+      closeSoundPromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function startSave() {
+      var startSavePromise = playr.startSave();
+      startSavePromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function stopSave() {
+      var stopSavePromise = playr.stopSave();
+      stopSavePromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+  </script>
+  <script>
+    var playr2 = new EZUIKit.EZUIKitPlayer({
+      id: 'video-container2', // 视频容器ID
+      accessToken: 'xx.16xf4zx0598fciw0delqzohqxxz6u8ei-1vxaom5kzu-1lz6z9x-uboj6tj3aa',
+      url: 'ezopen://open.ys7.com/xxx/1.live',
+      template: 'simple', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版；
+      autoplay: true,
+      // 视频上方头部控件
+      header: ['capturePicture', 'save', 'zoom'],            // 如果templete参数不为simple,该字段将被覆盖
+      // 视频下方底部控件
+      footer: ['talk', 'broadcast', 'hd', 'fullScreen'],      // 如果template参数不为simple,该字段将被覆盖
+      // audio: 1, // 是否默认开启声音 0 - 关闭 1 - 开启
+      // plugin: ['talk'],                       // 加载插件，talk-对讲
+      // controls: true, //['play','voice','hd','fullScreen'], // 视频控制相关控件，如果template参数不为simple,该字段将被覆盖
+      openSoundCallBack: (data) => console.log("开启声音回调", data),
+      closeSoundCallBack: (data) => console.log("关闭声音回调", data),
+      startSaveCallBack: (data) => console.log("开始录像回调", data),
+      stopSaveCallBack: (data) => console.log("录像回调", data),
+      capturePictureCallBack: (data) => console.log("截图成功回调", data),
+      fullScreenCallBack: (data) => console.log("全屏回调", data),
+      getOSDTimeCallBack: (data) => console.log("获取OSDTime回调", data),
+      handleSuccess: (data) = function () { console.log("播放成功回调", data) },
+      handleError: (data) => console.log("播放失败回调", data),
+      handleTalkSuccess: () => console.log("对讲成功回掉"),
+      handleTalkError: (data) = function () { console.log("对讲失败", data) },
+      width: 400,
+      height: 300,
+    });
+    function play2() {
+      var playPromise = playr2.play();
+      playPromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function stop2() {
+      var stopPromise = playr2.stop();
+      stopPromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function getOSDTime2() {
+      var getOSDTimePromise = playr2.getOSDTime();
+      getOSDTimePromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function getOSDTime2() {
+      var getOSDTimePromise = playr2.getOSDTime();
+      getOSDTimePromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function capturePicture2() {
+      var capturePicturePromise = playr2.capturePicture();
+      capturePicturePromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function openSound2() {
+      var openSoundPromise = playr2.openSound();
+      openSoundPromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function closeSound2() {
+      var closeSoundPromise = playr2.closeSound();
+      closeSoundPromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function startSave2() {
+      var startSavePromise = playr2.startSave();
+      startSavePromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+    function stopSave2() {
+      var stopSavePromise = playr2.stopSave();
+      stopSavePromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
+  </script>
+</body>
+
+</html>
