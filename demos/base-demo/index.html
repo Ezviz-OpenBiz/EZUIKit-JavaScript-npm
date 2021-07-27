@@ -31,8 +31,8 @@
   <script>
     var playr = new EZUIKit.EZUIKitPlayer({
       id: 'video-container', // 视频容器ID
-      accessToken: 'xxx',
-      url: 'ezopen://open.ys7.com/Cxxxxxxxx/1.live',
+      accessToken: 'at.37xkb1049n2wcwwwdseys2bia0wpohl6-4n6euy2q2j-0k0eng6-yqmv5ipwp',
+      url: 'ezopen://open.ys7.com/C69594192/1.live',
       template: 'simple', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版；
       autoplay: true,
       // 视频上方头部控件
@@ -53,6 +53,7 @@
       handleError: (data) => console.log("播放失败回调",data),
       handleTalkSuccess: () => console.log("对讲成功回掉"),
       handleTalkError: (data) = function(){console.log("对讲失败",data)},
+      decoderVersion: "v2.6.4",
       width:375,
       height:400,
     });

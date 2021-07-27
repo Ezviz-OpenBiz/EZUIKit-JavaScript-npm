@@ -144,6 +144,7 @@
       id: params.id,
       apiDomain:  domain + '/api/lapp/live/talk/url',
       filePath:  filePathDomain + '/assets/ezuikit_v2.6.4',
+      decoderVersion: '',
       accessToken: '',
       url: '',
       deviceSerial: '',
@@ -176,6 +177,9 @@
 
     if (typeof params.audio !== 'undefined') {
       this.opt.audio = params.audio;
+    }
+    if (typeof params.decoderVersion !== 'undefined') {
+      this.opt.decoderVersion = params.decoderVersion;
     }
     if (typeof params.env !== 'undefined') {
       if(typeof params.env.domain !== 'undefined'){
@@ -233,7 +237,7 @@
     function matchIframeUrl() {
       switch (_this.opt.template) {
         case 'simple':
-          var iframeUrl = domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?","&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
+          var iframeUrl = domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?","&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id + "&decoderVersion=" + _this.opt.decoderVersion;
           var controlsValue = "";
           if(typeof params.controls !== 'undefined' && params.controls){
             console.log("typeof" ,typeof params.controls)
@@ -248,13 +252,13 @@
           }
           return iframeUrl;
         case 'standard':
-          return domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?","&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=1" + "&id=" + id;
+          return domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?","&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=1" + "&id=" + id + "&decoderVersion=" + _this.opt.decoderVersion;
 
         case 'security':
-          return domain + "/ezopen/h5/iframe_se?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?","&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
+          return domain + "/ezopen/h5/iframe_se?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?","&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id + "&decoderVersion=" + _this.opt.decoderVersion;
 
         default:
-          return domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?","&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id;
+          return domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?","&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id + "&decoderVersion=" + _this.opt.decoderVersion;
       }
     }
 
