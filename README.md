@@ -81,6 +81,7 @@ import  EZUIKit from 'ezuikit-js';
 |stopSaveCallBack |function	| 结束录像回调 |N|
 |capturePictureCallBack |function	| 截图回调 |N|
 |fullScreenCallBack |function	| 全屏回调 |N|
+|fullScreenChangeCallBack |function	| 全屏变化回调-全局（含ESC退出全屏等） |N|
 |getOSDTimeCallBack |function	| 获取OSD时间回调 |N|
 
 

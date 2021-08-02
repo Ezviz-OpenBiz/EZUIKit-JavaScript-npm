@@ -1177,7 +1177,6 @@
             }
 
             break;
-
           case 'getOSDTime':
             if (id == event.data.id && params.getOSDTimeCallBack) {
               params.getOSDTimeCallBack(event.data);
@@ -1208,6 +1207,29 @@
         }
       }
     });
+    // 全屏变化回调
+    function fullscreenchange(data) {
+      _this.opt.fullScreenStatus = data ? 1 : 0;
+      if (params.fullScreenChangeCallBack) {
+        params.fullScreenChangeCallBack({data:data,id: _this.opt.id});
+      }
+    }
+    if (typeof document.fullScreen !== "undefined") {
+      document.addEventListener("fullscreenchange", function() {
+        var e = document.fullscreen || false;
+        fullscreenchange(e)
+      })
+    } else if (typeof document.webkitIsFullScreen !== "undefined") {
+      document.addEventListener("webkitfullscreenchange", function() {
+        var e = document.webkitIsFullScreen || false;
+        fullscreenchange(e)
+      })
+    } else if (typeof document.mozFullScreen !== "undefined") {
+      document.addEventListener("mozfullscreenchange", function() {
+        var e = document.mozFullScreen || false;
+        fullscreenchange(e)
+      })
+    }
   }; // 播放相关API
 
 
