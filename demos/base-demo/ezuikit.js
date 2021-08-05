@@ -1387,7 +1387,7 @@
       document.body.appendChild(cancelFullDOM);
       setTimeout(function () {
         player.postMessage('autoResize', domain + "/ezopen/h5/iframe")
-      }, 200)
+      }, 500)
 
     } else {
         // console.log('pc端全屏');
@@ -1405,7 +1405,7 @@
         requestFullScreen(document.getElementById(id));
         setTimeout(function () {
           player.postMessage("autoResize", domain + "/ezopen/h5/iframe")
-        }, 200)
+        }, 500)
     }
     if (this.params.fullScreenCallBack) {
       this.params.fullScreenCallBack(this.opt.id);
@@ -1433,7 +1433,7 @@
       wrapper.style.cssText = style;
       setTimeout(function () {
         player.postMessage("autoResize",  domain + "/ezopen/h5/iframe")
-      }, 200);
+      }, 500);
       var cancelFullDOMId = id + "cancel-full-screen";
       var cancelFullDOM = document.getElementById(cancelFullDOMId);
       if(cancelFullDOM){
@@ -1523,7 +1523,7 @@
       player.postMessage({
         action: 'autoResize',
       }, domain + "/ezopen/h5/iframe");
-    },200)
+    },500)
   };
 
   EZUIKitPlayer.prototype.startTalk = function () {
