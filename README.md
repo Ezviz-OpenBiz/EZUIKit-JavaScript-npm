@@ -46,7 +46,13 @@ import  EZUIKit from 'ezuikit-js';
 > 示例： 停止播放
 
 ```
-  player.stop();
+  1. player.stop();
+
+  2. player.stop()
+  .then(()=>{
+    console.log("执行播放成功后其他动作");
+  });
+
 ```
 > 示例： 执行播放（自动播放为false,自定义触发播放/切换播放地址）
 
@@ -61,14 +67,14 @@ import  EZUIKit from 'ezuikit-js';
 切换地址播放（注意需要先执行stop方法停止上次取流）
 
 ```
-  player.stop
+  player.stop()
   .then(()=>{
     player.play('ezopen://open.ys7.com/{其他设备}/{其他通道}.live');
   });
 
   // 其他账号下设备
   
-  player.stop
+  player.stop()
   .then(()=>{
     player.play({url:'ezopen://open.ys7.com/{其他设备}/{其他通道}.live',accessToken: 'xxxx'});
   });
