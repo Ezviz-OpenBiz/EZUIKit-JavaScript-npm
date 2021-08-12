@@ -52,10 +52,27 @@ import  EZUIKit from 'ezuikit-js';
 
 ```
   player.play();
-  // 切换播放地址场景（建议先执行stop方法停止上次取流）
+  // 切换播放地址场景（注意先执行stop方法停止上次取流）
   player.play({
    url: 'ezopen://open.ys7.com/203751922/1.rec?begin=202001000000&end=202001235959'
   });
+```
+
+切换地址播放（注意需要先执行stop方法停止上次取流）
+
+```
+  player.stop
+  .then(()=>{
+    player.play('ezopen://open.ys7.com/{其他设备}/{其他通道}.live');
+  });
+
+  // 其他账号下设备
+  
+  player.stop
+  .then(()=>{
+    player.play({url:'ezopen://open.ys7.com/{其他设备}/{其他通道}.live',accessToken: 'xxxx'});
+  });
+  
 ```
 
 ### 使用说明
