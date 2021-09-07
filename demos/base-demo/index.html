@@ -10,7 +10,7 @@
   <div className="demo">
     <h2>视频模式使用示例：</h2>
     <div id="video-container"
-      style="width:375px;"
+      style="width:800px;"
       >
     </div>
     <div>
@@ -25,14 +25,15 @@
     <button onClick="stopSave()">stopSave</button>
     <button onClick="startTalk()">开始对讲</button>
     <button onClick="stopTalk()">结束对讲</button>
+    <button onClick="fullScreen()">全屏</button>
     </div>
     <p style="font-style: italic;">播放多个视频，可初始化多个实例，参考：/demos/base-demo/multi-demo</p>
   </div>
   <script>
     var playr = new EZUIKit.EZUIKitPlayer({
       id: 'video-container', // 视频容器ID
-      accessToken: 'at.8x4s0qfo28pq5i8w75o85fb224s9gl56-5bzotmogxc-0coxgke-e9jw98glk',
-      url: 'ezopen://open.ys7.com/C69594192/1.live',
+      accessToken: 'at.1yjuprkk36992fts8qw4f0ladd9lju2y-1744sk6eh7-00cbr9r-ypsznozt8',
+      url: 'ezopen://open.ys7.com/203751922/1.live',
       template: 'simple', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版；
       autoplay: true,
       // 视频上方头部控件
@@ -51,13 +52,19 @@
       fullScreenChangeCallBack: (data) => console.log("全屏变化回调",data),
       getOSDTimeCallBack: (data) => console.log("获取OSDTime回调",data),
       handleSuccess: (data) = function(){console.log("播放成功回调",data)},
-      handleError: (data) => console.log("播放失败回调",data),
+      handleError: (data) => console.log("播放失败回调1",data),
       handleTalkSuccess: () => console.log("对讲成功回掉"),
       handleTalkError: (data) = function(){console.log("对讲失败",data)},
       decoderVersion: "v3.4",
-      width:375,
-      height:400,
+      width:800,
+      height:600,
     });
+    function fullScreen(){
+      var playPromise = playr.fullScreen();
+      playPromise.then((data)=>{
+        console.log("promise 获取 数据",data)
+      })      
+    }
     function play() {
       var playPromise = playr.play();
       playPromise.then((data)=>{

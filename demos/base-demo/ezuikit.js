@@ -1403,9 +1403,6 @@
           }
         }
         requestFullScreen(document.getElementById(id));
-        setTimeout(function () {
-          player.postMessage("autoResize", domain + "/ezopen/h5/iframe")
-        }, 500)
     }
     if (this.params.fullScreenCallBack) {
       this.params.fullScreenCallBack(this.opt.id);
