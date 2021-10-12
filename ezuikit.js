@@ -269,10 +269,16 @@
 
     if (params.height) {
       iframeHeight = parseInt(params.height);
+      if(/\%$/.test(params.height)) {
+        iframeWidth = document.getElementById(id).offsetWidth * (parseInt(params.height) /100);
+      }
     }
 
     if (params.width) {
       iframeWidth = parseInt(params.width);
+      if(/\%$/.test(params.width)) {
+        iframeWidth = document.getElementById(id).offsetWidth * (parseInt(params.width) /100);
+      }
     }
 
     iframe.width = iframeWidth;
