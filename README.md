@@ -90,6 +90,7 @@ import  EZUIKit from 'ezuikit-js';
 |accessToken|	String|	授权过程获取的access_token|	Y|
 |url	|String|	视频ezopen协议播放地址	|Y|
 |audio|	int	| 是否默认开启声音 1：打开（默认） 0：关闭	|N|
+|autoplay|	int	| 是否自动播放 1：开启 0：关闭	|N|
 |width |int	| 视频宽度，默认值为容器容器DOM宽度	|N|
 |height |int	| 视频高度，默认值为容器容器DOM高度	|N|
 |templete |string	| 播放器模板，可以通过选定模板，使用内置的播放器样式，组件 simple：极简版;standard：标准版;security：安防版(预览回放);vioce：语音版 |N|
