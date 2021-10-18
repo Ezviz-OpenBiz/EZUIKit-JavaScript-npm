@@ -1521,7 +1521,8 @@
     var playDOM  = document.getElementById(id);
     playDOM.setAttribute("width",width);
     playDOM.setAttribute("height",height);
-
+    playDOM.style.width = width + 'px';
+    playDOM.style.height = height +  'px';
     setTimeout(function(){
       player.postMessage({
         action: 'autoResize',
