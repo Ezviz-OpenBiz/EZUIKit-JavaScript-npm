@@ -93,9 +93,9 @@ import  EZUIKit from 'ezuikit-js';
 |autoplay|	int	| 是否自动播放 1：开启 0：关闭	|N|
 |width |int	| 视频宽度，默认值为容器容器DOM宽度	|N|
 |height |int	| 视频高度，默认值为容器容器DOM高度	|N|
-|templete |string	| 播放器模板，可以通过选定模板，使用内置的播放器样式，组件 simple：极简版;standard：标准版;security：安防版(预览回放);vioce：语音版 |N|
-|header |Array	| 视频头部可选UI组件，可选值：capturePicture：截图,save：录像保存,zoom：电子放大 |N|
-|footer |Array	| 视频底部部可选UI组件，可选值：talk：对讲,broadcast：语音播报,hd：高清标清切换,fullScreen：全屏 |N|
+|templete |string	| 播放器模板，可以通过选定模板，使用内置的播放器样式，组件 simple：极简版;standard：标准版;security：安防版(预览回放);vioce：语音版 |N|thme：自定义主题（v0.3.0版本及以上支持）
+|header |Array	|  simple：极简版 视频头部可选UI组件，可选值：capturePicture：截图,save：录像保存,zoom：电子放大 |N|
+|footer |Array	|  simple：极简版 视频底部部可选UI组件，可选值：talk：对讲,broadcast：语音播报,hd：高清标清切换,fullScreen：全屏 |N|
 |plugin |Array	| 按需加载插件，可选值： talk：对讲 |N|
 |handleSuccess |function	| 播放成功回调 |N|
 |handleError |function	| 播放错误回调 |N|
