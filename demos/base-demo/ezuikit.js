@@ -86,6 +86,17 @@
 
     http_request.send(data);
   }
+  var requestFullScreen = function (element) {
+    var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+    if (requestMethod) {
+      requestMethod.call(element);
+    } else if (typeof window.ActiveXObject !== "undefined") {
+      var wscript = new ActiveXObject("WScript.Shell");
+      if (wscript !== null) {
+        wscript.SendKeys("{F11}");
+      }
+    }
+  }
 
   ; // 全局属性
 
@@ -191,6 +202,9 @@
         this.opt.filePathDomain =  params.env.filePathDomain;
       }
     }
+    // if(typeof params.domain !== 'undefined'){
+    //   this.opt.apiDomain = params.domain + '/api/lapp/live/talk/url';
+    // }
 
     if (params.url) {
       this.opt.url = params.url;
@@ -256,6 +270,30 @@
 
         case 'security':
           return domain + "/ezopen/h5/iframe_se?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?","&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id + "&decoderVersion=" + _this.opt.decoderVersion;
+
+        case 'theme':
+          iframeUrl = domain +`/jssdk/theme.html?url=${params.url}&accessToken=${params.accessToken}&id=${id}&isMobile=${params.isMobile}`;
+          if(typeof params.isMobile !== 'undefined') {
+            iframeUrl += '&isMobile=' + params.isMobile;
+          } 
+          if(typeof params.autoplay !== 'undefined') {
+            iframeUrl += '&autoplay=' + params.autoplay;
+          } 
+          if(typeof params.domain !== 'undefined') {
+            if(params.domain == 'https://test12open.ys7.com')
+            iframeUrl += '&env=' + 'test12';
+          }
+          if (typeof params.env !== 'undefined') {
+            if(typeof params.env.domain !== 'undefined'){
+              if(params.env.domain == 'https://test12open.ys7.com'){
+              iframeUrl += '&env=' + 'test12';
+            }
+            }
+          }
+          if(typeof params.header !== 'undefined') {
+            iframeUrl += '&header=' + params.header;
+          }
+          return iframeUrl;
 
         default:
           return domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?","&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id + "&decoderVersion=" + _this.opt.decoderVersion;
@@ -552,7 +590,6 @@
                 params.handleError(err);
               }
             }
-
             request(_this.opt.apiDomain, 'POST', {
               accessToken: _this.opt.accessToken,
               deviceSerial: _this.opt.deviceSerial,
@@ -1137,7 +1174,6 @@
 
     var _this = this;
     window.addEventListener("message", function (event) {
-      console.log("EZUIKitPlayer收到反馈", event);
       var origin = event.origin;
       var id = _this.opt.id;
       if (event.data.type) {
@@ -1210,6 +1246,32 @@
               }
             }
             break;
+            case 'startTalk':
+                _this.startTalk();
+                // params.startTalk();
+                _this.closeSound();
+              break;
+              case 'stopTalk':
+                // window.stopTalk()
+                // params.stopTalk();
+                _this.openSound();
+                break;
+              case 'clickEventHandle':
+                console.log("event.data",event.data);
+                if(params.clickEventHandle) {
+                  params.clickEventHandle(event.data);
+                }
+                break;
+              case 'removeEventHandle':
+                if(params.removeEventHandle) {
+                  params.removeEventHandle(event.data);
+                }
+              break;
+              case 'esc':
+                if(params.clickEventHandle) {
+                  params.clickEventHandle(event.data);
+                }
+              break;
         }
       }
     });
@@ -1381,16 +1443,16 @@
       style += "transform-origin: " + width / 2 + "px " + width / 2 + "px;";
       style += 'position: fixed;top: 0;left: 0;z-index:10';
       wrapper.style.cssText = style;
-      var cancelFullDOM = document.createElement('div');
-      cancelFullDOM.id = id + "cancel-full-screen"
-      var cancelFullDOMStyle="width:30px;height:"+height+"px;z-index:1000;position:fixed;top:0px;right:0px;";
-      cancelFullDOMStyle += "background-image: url(https://resource.ys7cloud.com/group1/M00/00/7E/CtwQE1-01qeAH2wAAAABOliqQ5g167.png);"
-      cancelFullDOMStyle += "background-size: contain;background-repeat:no-repeat;background-color:rgba(0,0,0,0.2)"
-      cancelFullDOM.style = cancelFullDOMStyle;
-      cancelFullDOM.onclick = function(){
-        _this.cancelFullScreen();
-      }
-      document.body.appendChild(cancelFullDOM);
+      // var cancelFullDOM = document.createElement('div');
+      // cancelFullDOM.id = id + "cancel-full-screen"
+      // var cancelFullDOMStyle="width:30px;height:"+height+"px;z-index:1000;position:fixed;top:0px;right:0px;";
+      // cancelFullDOMStyle += "background-image: url(https://resource.ys7cloud.com/group1/M00/00/7E/CtwQE1-01qeAH2wAAAABOliqQ5g167.png);"
+      // cancelFullDOMStyle += "background-size: contain;background-repeat:no-repeat;background-color:rgba(0,0,0,0.2)"
+      // cancelFullDOM.style = cancelFullDOMStyle;
+      // cancelFullDOM.onclick = function(){
+      //   _this.cancelFullScreen();
+      // }
+      // document.body.appendChild(cancelFullDOM);
       setTimeout(function () {
         player.postMessage('autoResize', domain + "/ezopen/h5/iframe")
       }, 500)
@@ -1517,6 +1579,8 @@
     var containerDOM = document.getElementById(this.opt.id);
     containerDOM.style.width = width + 'px';
     containerDOM.style.height = height +  'px';
+    document.getElementById(this.opt.id).style.width = width + 'px';
+    document.getElementById(this.opt.id).style.height =  height +  'px';
 
     var playDOM  = document.getElementById(id);
     playDOM.setAttribute("width",width);
@@ -1566,6 +1630,31 @@
   EZUIKitPlayer.prototype.stopTalk = function () {
     console.log("执行结束对讲");
     window.stopTalk();
+  };
+  EZUIKitPlayer.prototype.edit = function () {
+    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var player = document.getElementById(id).contentWindow;
+    player.postMessage("edit", domain + "/ezopen/h5/iframe");
+  };
+  EZUIKitPlayer.prototype.btnReRender = function (data) {
+    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var player = document.getElementById(id).contentWindow;
+    player.postMessage({action: "btnReRender",data: data}, domain + "/ezopen/h5/iframe")
+  };
+  EZUIKitPlayer.prototype.changePlayUrl = function (data) {
+    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var player = document.getElementById(id).contentWindow;
+    player.postMessage({action: "changePlayUrl",data: data}, domain + "/ezopen/h5/iframe");
+  };
+  EZUIKitPlayer.prototype.fetchThemeData = function () {
+    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var player = document.getElementById(id).contentWindow;
+    player.postMessage({action: "fetchThemeData"}, domain + "/ezopen/h5/iframe")
+  };
+  EZUIKitPlayer.prototype.setThemeData = function (accessToken, header, footer) {
+    var id = 'EZUIKitPlayer-' + this.opt.id;
+    var player = document.getElementById(id).contentWindow;
+    player.postMessage({action: "setThemeData",data:{accessToken, header, footer}}, domain + "/ezopen/h5/iframe")
   };
   /**
    * 视频播放器-结束
