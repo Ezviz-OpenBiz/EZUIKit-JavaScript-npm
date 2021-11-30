@@ -81,6 +81,26 @@ import  EZUIKit from 'ezuikit-js';
   
 ```
 
+自定义主题切换播放地址
+当templete值为“theme”时，自定义主题地址切换需要同步主题中的按钮，回放控件等。如果需要同步主题控件，需要调用以下方法切换播放地址
+
+```
+player.changePlayUrl(options)
+  
+```
+options参数说明
+
+|参数名|类型|描述|是否必选|
+|:--|:--|:--|:--|
+|type|	String| 播放地址类型，"live":预览，"rec"：回放；“cloud.rec”：云存储回放|	Y|
+|accessToken|	String|	授权过程获取的access_token|	Y|
+|deviceSerial    | String    |  设备序列号,存在英文字母的设备序列号，字母需为大写   | Y |
+|channelNo    | int    | 通道号    | Y |
+|hd    | boolean    | 是否为高清 true-主码流（高清） false-子码流(标清)   | Y |
+|validCode	|String|	设备验证码（加密设备播放需要输入验证码）	|Y|
+|begin|	String	| type类型为回放有效，开始时间 格式为“YYYYMMDDHHmmss”	|N|
+|end|	String	| type类型为回放有效，结束时间 格式为 “YYYYMMDDHHmmss”	|N|
+
 ### 使用说明
 #### 初始化
 
