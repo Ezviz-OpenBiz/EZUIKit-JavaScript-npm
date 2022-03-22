@@ -317,8 +317,9 @@ class FLV {
 function insertAfter(newElement, targetElement) { var parent = targetElement.parentNode; if (parent.lastChild == targetElement) { parent.appendChild(newElement); } else { parent.insertBefore(newElement, targetElement.nextSibling); } }
 
 class Status {
-  constructor(id) {
+  constructor(jSPlugin,id) {
     this.id = id;
+    this.jSPlugin = jSPlugin;
   }
   toString() {
     return `${this.coreX}-${this.coreY}`;
@@ -340,6 +341,10 @@ class Status {
     var loadingContainerDOM = document.createElement('div');
     loadingContainerDOM.setAttribute('id', `${id}-loading-id-0`);
     var style = 'position:absolute;outline:none;pointer-events:none;';
+    console.log("this.jSPlugin",this.jSPlugin);
+    if(typeof this.jSPlugin.poster === 'string') {
+      style += `background: url(${this.jSPlugin.poster}) no-repeat;background-size: cover;`;
+    }
     style += 'width: 100%;';
     style += 'height: 100%;';
     style += 'top:' + offsetTop + ';';
@@ -400,6 +405,14 @@ class Status {
     for (var i = elements.length - 1; i >= 0; i--) {
       elements[i].parentNode.removeChild(elements[i]);
     }
+    if(document.getElementById(`${this.id}-loading-id-0`)) {
+      document.getElementById(`${this.id}-loading-id-0`).style.background = 'none';
+    }
+  }
+  setPoster(pic) {
+    if(document.getElementById(`${this.id}-loading-id-0`)) {
+      document.getElementById(`${this.id}-loading-id-0`).style.backgroundImage = `url(${pic})`;
+    }
   }
   loadingEnd() {
     var loadingItemContainerDOM = document.getElementById(`${this.id}-loading-item-0`);
@@ -410,6 +423,7 @@ class Status {
         loadingContainerDOM.parentNode.removeChild(loadingContainerDOM);
       }
     }
+    document.getElementById(`${this.id}-loading-item-0`).style.background = 'none';
   }
 }
 
@@ -23789,6 +23803,9 @@ var TimeLine$1 = function (jsPlugin) {
 class Rec {
   constructor(jSPlugin) {
     this.jSPlugin = jSPlugin;
+    if(!document.getElementById(`${this.jSPlugin.id}-audioControls`)) {
+      return false;
+    }
     this.currentTimeWidth = 1; //回放时间轴尺度 1~4
     this.timer = null;
     this.date = new Date();
@@ -23909,10 +23926,10 @@ C11.4,16.3,11,16.6,10.6,16.6z" />
     });
     this.syncTimeLine();
     // 加载日期选择器
-    addCss("https://open.ys7.com/assets/ezuikit_theme/css/datepicker.min.css");
-    addJs("https://open.ys7.com/assets/ezuikit_v2.6.4/js/jquery.min.js", () => {
-      addJs("https://open.ys7.com/assets/ezuikit_theme/js/datepicker.js", () => {
-        addJs("https://open.ys7.com/assets/ezuikit_theme/js/datepicker.zh-CN.js", () => {
+    addCss(`${this.jSPlugin.staticPath}/rec/datepicker.min.css`);
+    addJs(`${this.jSPlugin.staticPath}/rec/jquery.min.js`, () => {
+      addJs(`${this.jSPlugin.staticPath}/rec/datepicker.js`, () => {
+        addJs(`${this.jSPlugin.staticPath}/rec/datepicker.zh-CN.js`, () => {
           // 日期选择：
           $(`#${this.jSPlugin.id}-datepicker`).datepicker({
             autoShow: false,
@@ -25216,9 +25233,9 @@ class Talk {
     audioRightDOM.setAttribute("controls", true);
     audioRight.appendChild(audioRightDOM);
     
-    addJs("https://open.ys7.com/assets/ezuikit_v2.6.4/npm/js/adapeter.js", () => {
-      addJs("https://open.ys7.com/assets/ezuikit_v2.6.4/npm/js/janus.js", () => {
-        addJs("https://open.ys7.com/assets/ezuikit_v4.0/js/tts-v4.js", () => {
+    addJs(`${this.jSPlugin.staticPath}/talk/adapeter.js`, () => {
+      addJs(`${this.jSPlugin.staticPath}/talk/janus.js`, () => {
+        addJs(`${this.jSPlugin.staticPath}/talk/tts-v4.js`, () => {
           // 临时处理
           window.EZUIKit["handleTalkError"] = {
             handleTalkError: (err)=>{
@@ -26067,69 +26084,6 @@ class Theme {
      PC端 & 直播 =》 pcLive
      PC端 & 回放地址 => pcRec
     */
-    // switch (matchEzopenUrl(jSPlugin.url).type) {
-    // case 'live':
-    //   this.themeData = pcLiveData.data;
-    //   if (this.isMobile) {
-    //     this.themeData = mobileLiveData.data;
-    //   }
-    //   break;
-    // case 'rec':
-    // case 'cloud.rec':
-    //   this.themeData = pcRecData.data;
-    //   if (this.isMobile) {
-    //     this.themeData = mobileRecData.data;
-    //   }
-    //   break;
-    // default:
-    //   break;
-    // }
-    // const videoId = jSPlugin.id;
-    // this.header = defaultTheme.header;
-    // this.footer = defaultTheme.footer;
-    // if (!document.getElementById(`${this.jSPlugin.id}-headControl`)) {
-    //   const headerContainer = document.createElement('div');
-    //   headerContainer.setAttribute('id', `${this.jSPlugin.id}-headControl`);
-    //   headerContainer.setAttribute('class', 'head-message');
-    //   headerContainer.innerHTML = `<div id='${this.jSPlugin.id}}-headControl-left' style='display:flex'></div><div id='${this.jSPlugin.id}}-headControl-right' style='display:flex'></div>`;
-    //   var headerStyle = {
-    //     height: "48px",
-    //     "line-height": "48px",
-    //     display: "flex",
-    //     "justify-content": "space-between",
-    //     top: 0,
-    //     "z-index": 1,
-    //     background: "#000000",
-    //     color: "#FFFFFF",
-    //     width: "100%"
-    //   };
-    //   headerContainer.style = styleToString(headerStyle);
-    //   document.getElementById(`${videoId}-wrap`).insertBefore(headerContainer, document.getElementById(videoId));
-    // }
-    // if (!document.getElementById(`${this.jSPlugin.id}-ez-iframe-footer-container`)) {
-    //   const footerContainer = document.createElement('div');
-    //   footerContainer.setAttribute('id', `${this.jSPlugin.id}-ez-iframe-footer-container`);
-    //   footerContainer.setAttribute('class', 'ez-iframe-footer-container');
-    //   var footerStyle = {
-    //     "min-height": "48px",
-    //     "max-height": "96px",
-    //     "position": "relative",
-    //     "margin-top": "-48px",
-    //     display: "flex",
-    //     "flex-wrap": "wrap",
-    //     "justify-content": "space-between",
-    //     top: 0,
-    //     "z-index": 1,
-    //     color: "#FFFFFF",
-    //     width: "100%"
-    //   };
-    //   footerContainer.style = styleToString(footerStyle);
-    //   footerContainer.innerHTML = `<div id="${this.jSPlugin.id}-audioControls" style='display:flex;justify-content: space-between;height: 48px;width:100%;'><div id='${this.jSPlugin.id}-audioControls-left' style='display:flex'></div><div id='${this.jSPlugin.id}-audioControls-right' style='display:flex'></div></div>`;
-    //   insertAfter(footerContainer, document.getElementById(videoId));
-    // }
-    // if (!this.jSPlugin.inited) {
-    //   this.initThemeData();
-    // }
     if (this.jSPlugin.themeId) {
       switch (this.jSPlugin.themeId) {
       case 'pcLive':
@@ -26175,11 +26129,9 @@ class Theme {
         this.Ptz = new Ptz(jSPlugin);
       }
     }
-    //设备信息
-    this.getDeviceInfo();
   }
   fetchThemeData(themeId) {
-    const url = `https://open.ys7.com/jssdk/ezopen/template/getDetail?accessToken=${this.jSPlugin.accessToken}&id=${themeId}`;
+    const url = `${this.jSPlugin.env.domain}/jssdk/ezopen/template/getDetail?accessToken=${this.jSPlugin.accessToken}&id=${themeId}`;
     fetch(url, {
       method: 'GET'
     })
@@ -26351,9 +26303,16 @@ class Theme {
         }
         break;
       case 'hd':
-        if (document.getElementById(`${this.jSPlugin.id}-hd`)) {
-          document.getElementById(`${this.jSPlugin.id}-hd`).className = options[item] ? 'active' : '';
-          document.getElementById(`${this.jSPlugin.id}-hd-content`).childNodes[1].childNodes[0].style.fill = options[item] ? activeColor : color;
+        if (options[item]) {
+          if(document.getElementById(`${this.jSPlugin.id}-hd`)) {
+            document.getElementById(`${this.jSPlugin.id}-hd-content`).children[1].children[0].style = "display:block";
+            document.getElementById(`${this.jSPlugin.id}-hd-content`).children[1].children[1].style = "display:none";
+          }
+        } else {
+          if(document.getElementById(`${this.jSPlugin.id}-hd`)) {
+            document.getElementById(`${this.jSPlugin.id}-hd-content`).children[1].children[1].style = "display:block";
+            document.getElementById(`${this.jSPlugin.id}-hd-content`).children[1].children[0].style = "display:none";
+          }
         }
         break;
       case 'cloudRec':
@@ -26807,8 +26766,7 @@ class Theme {
       btnItem.onclick = (e) => {
         const { hd } = this.decoderState.state;
         // 选择清晰度选项时才触发事件
-        console.log(`选择画面清晰度-${e.target.innerHTML}`);
-        if (hd && e.target.id === 'select-sd') {
+        if (hd && e.target.id ===  `${this.jSPlugin.id}-select-sd`) {
           //decoder.changePlayUrl({ hd: false });
           console.log("切换到标清");
           this.jSPlugin.changePlayUrl({ hd: false });
@@ -27019,6 +26977,8 @@ class Theme {
       window.addEventListener(item, (data) => fullscreenchange());
     });
     this.inited = true;
+    //设备信息
+    this.getDeviceInfo();
   }
   getDeviceInfo() {
     const deviceAPISuccess = (data) => {
@@ -28639,46 +28599,100 @@ var EZUIKitV3$1 = EZUIKitV3;
 
 /* eslint-disable valid-jsdoc */
 
+// iframe模板 - 兼容旧版本
+const matchTemplate = (templateName, params) => {
+  const IFRAMETEMPLATE = ['simple', 'standard', 'security', 'vioce', 'theme'];
+  const LOCALTEMPLATE = ['pcLive', 'pcRec', 'mobileLive', 'mobileRec', 'noData'];
+  if (typeof templateName === 'undefined') {
+    return {
+      templateType: 'local',
+      templateId: ''
+    }
+  }  if (typeof templateName === 'string') {
+
+    if (templateName.length === 32) {
+      return {
+        templateType: 'remote',
+        templateId: templateName
+      }
+    } else if (IFRAMETEMPLATE.indexOf(templateName) !== -1) {
+      // 精简版且不使用头部，底部，仅播放视频，建议使用按需加载避免iframe内存额外消耗
+      if (templateName === 'simple' && typeof params.header === 'undefined' && typeof params.footer === 'undefined') {
+        return {
+          templateType: 'local',
+          templateId: ''
+        }
+      }
+      return {
+        templateType: 'iframe',
+        templateId: templateName
+      }
+    } else if (LOCALTEMPLATE.indexOf(templateName) !== -1) {
+      return {
+        templateType: 'local',
+        templateId: templateName
+      }
+    }
+  }
+};
+
 class EZUIKitPlayer {
   constructor(params) {
     const { autoplay = true } = params;
     this.params = params;
-    // 精简版且不使用头部，底部，仅播放视频，建议使用按需加载避免iframe内存额外消耗
-    if (this.params.template && this.params.template === 'simple' && typeof this.params.header === 'undefined' && typeof this.params.footer === 'undefined') {
-      this.params.themeId = "";
-      delete this.params.template;
-    }
-    window.EZUIKit[params.id] = {state: {
-      EZUIKitPlayer: {
-        init: window.EZUIKit[params.id] && window.EZUIKit[params.id].state && window.EZUIKit[params.id].state.EZUIKitPlayer.init || false,
-        themeInit: window.EZUIKit[params.id] && window.EZUIKit[params.id].state && window.EZUIKit[params.id].state.EZUIKitPlayer.themeInit || false,
-        talkInit: window.EZUIKit[params.id] && window.EZUIKit[params.id].state && window.EZUIKit[params.id].state.EZUIKitPlayer.talkInit || false
-      }}
+    window.EZUIKit[params.id] = {
+      state: {
+        EZUIKitPlayer: {
+          init: window.EZUIKit[params.id] && window.EZUIKit[params.id].state && window.EZUIKit[params.id].state.EZUIKitPlayer.init || false,
+          themeInit: window.EZUIKit[params.id] && window.EZUIKit[params.id].state && window.EZUIKit[params.id].state.EZUIKitPlayer.themeInit || false,
+          talkInit: window.EZUIKit[params.id] && window.EZUIKit[params.id].state && window.EZUIKit[params.id].state.EZUIKitPlayer.talkInit || false
+        }
+      }
     };
-    if (!(typeof this.params.template === 'string')) {
+    if (matchTemplate(this.params.template, params).templateType !== 'iframe') {
       this.id = params.id;
       this.width = params.width;
       this.height = params.height;
       this.url = params.url;
       this.accessToken = params.accessToken;
-      this.themeId = params.themeId;
+      this.themeId = matchTemplate(params.template, params).templateId;
       this.id = params.id;
       this.audio = params.audio;
-      addJs("https://open.ys7.com/assets/ezuikit_v4.0/js/AudioRenderer.js", () => {
-        addJs("https://open.ys7.com/assets/ezuikit_v4.0/js/SuperRender_10.js", () => {
-          addJs("https://open.ys7.com/assets/ezuikit_v4.0/js/jsPlugin-4.0.1.min.js", () => {
-            var initEZUIKitPlayerPromise = this.initEZUIKitPlayer(params);
-            initEZUIKitPlayerPromise.then((data) => {
-              console.log("初始化成功", data);
-              window.EZUIKit[params.id].state.EZUIKitPlayer.init = true;
-              if (document.getElementById(`${params.id}canvas_draw0`)) {
-                document.getElementById(`${params.id}canvas_draw0`).style.border = "none";
-              }
-              if (autoplay) {
-                //next version 此处可采用promise.all将播放接口部分同步到初始化阶段。
-                this.play();
-              }
-            });
+      this.poster = params.poster;
+      this.speed = 1;
+      this.staticPath = "https://open.ys7.com/assets/ezuikit_v4.0";
+      if (typeof params.staticPath === 'string') {
+        this.staticPath = params.staticPath;
+      }
+      addJs(`${this.staticPath}/js/AudioRenderer.js`, () => {
+        addJs(`${this.staticPath}/js/SuperRender_10.js`, () => {
+          addJs(`${this.staticPath}/js/jsPlugin-4.0.2.min.js`, () => {
+            if (autoplay) {
+              var initEZUIKitPlayerPromise = this.initEZUIKitPlayer(params);
+              var getRealUrlPromise = this._getRealUrlPromise(params.accessToken, params.url);
+              Promise.all([initEZUIKitPlayerPromise, getRealUrlPromise]).then(values => {
+                console.log("values", values);
+                if (values[1]) {
+                  this._pluginPlay(values[1],
+                    () => { console.log("自动播放成功"); },
+                    () => { console.log("自动播放失败"); },
+                  );
+                }
+                window.EZUIKit[params.id].state.EZUIKitPlayer.init = true;
+                if (document.getElementById(`${params.id}canvas_draw0`)) {
+                  document.getElementById(`${params.id}canvas_draw0`).style.border = "none";
+                }
+              });
+            } else {
+              var initEZUIKitPlayerPromise = this.initEZUIKitPlayer(params);
+              initEZUIKitPlayerPromise.then((data) => {
+                console.log("初始化成功", data);
+                window.EZUIKit[params.id].state.EZUIKitPlayer.init = true;
+                if (document.getElementById(`${params.id}canvas_draw0`)) {
+                  document.getElementById(`${params.id}canvas_draw0`).style.border = "none";
+                }
+              });
+            }
           });
         });
       });
@@ -28691,7 +28705,7 @@ class EZUIKitPlayer {
     }
   }
   initEZUIKitPlayer(params) {
-    const { id, themeId, width = 600, height = 400 } = params;
+    const { id, width = 600, height = 400 } = params;
     if (!document.getElementById(`${id}-wrap`)) {
       document.getElementById(id).style = `display:inline-block;width:${width}px;height:${height}px;`;
       var wapDom = document.createElement("div");
@@ -28710,6 +28724,7 @@ class EZUIKitPlayer {
         iMaxSplit: 1,
         iCurrentSplit: 1,
         szBasePath: "",
+        staticPath: params.staticPath,
         oStyle: {
           border: "none",
           background: "#000000"
@@ -28757,7 +28772,7 @@ class EZUIKitPlayer {
         }
       };
       // 增加视频容器
-      var pluginStatus = new Status(id);
+      var pluginStatus = new Status(this, id);
       pluginStatus.loadingStart(id);
       pluginStatus.loadingSetText({ text: '初始化播放器完成' });
       this.env = {
@@ -28768,7 +28783,7 @@ class EZUIKitPlayer {
       }
       this.errorHander = new Code();
       this.jSPlugin = jSPlugin;
-      if (themeId && !window.EZUIKit[params.id].state.EZUIKitPlayer.themeInit) {
+      if (this.themeId && !window.EZUIKit[params.id].state.EZUIKitPlayer.themeInit) {
         this.Theme = new Theme(this, id);
         window.EZUIKit[params.id].state.EZUIKitPlayer.themeInit = true;
       }
@@ -29082,64 +29097,136 @@ class EZUIKitPlayer {
       return new Date(date.replace(/-/g, '/')).getTime();
     }
   }
-  play() {
+  _pluginPlay(data, successCallback, errorCallback) {
+    console.log("get real url result ===", data);
+    function getPlayParams(url) {
+      var websocketConnectUrl = url.split('?')[0].replace('/live', '').replace('/playback', '');
+      var websocketStreamingParam = (url.indexOf('/live') === -1 ? (url.indexOf('cloudplayback') !== -1 ? '/cloudplayback?' : '/playback?') : '/live?') + url.split('?')[1];
+      if (websocketStreamingParam.indexOf('/playback') !== -1) {
+        websocketStreamingParam = websocketStreamingParam.replace("stream=2", 'stream=1');
+      }
+      // 本地回放仅支持主码流
+      return {
+        websocketConnectUrl: websocketConnectUrl,
+        websocketStreamingParam: websocketStreamingParam
+      };
+    }
+    var wsUrl = getPlayParams(data).websocketConnectUrl;
+    if (this.env && this.env.wsUrl) {
+      wsUrl = this.env.wsUrl;
+    }
+    var wsParams = {
+      playURL: getPlayParams(data).websocketStreamingParam
+    };
+
+    this.jSPlugin.JS_Play(wsUrl, wsParams, 0).then(() => {
+      console.log("播放成功");
+      this.pluginStatus.loadingClear();
+      if (this.Theme) {
+        this.Theme.setDecoderState({ play: true });
+      }
+      if (this.audio) {
+        setTimeout(() => {
+          this.openSound();
+        }, 500);
+      }
+      if (typeof this.params.handleSuccess === 'function') {
+        this.params.handleSuccess({
+          retcode: 0,
+          id: this.params.id,
+          type: "handleSuccess"
+        });
+      }
+      successCallback();
+    }, (err) => {
+      var errorInfo = this.errorHander.matchErrorInfo(err.oError.errorCode);
+      var msg = errorInfo ? errorInfo.description : '播放失败，请检查设备及客户端网络';
+      this.pluginStatus.loadingSetText({
+        text: msg,
+        color: 'red'
+      });
+      if (typeof this.params.handleError === 'function') {
+        this.params.handleError({
+          retcode: err.oError.errorCode,
+          msg: msg,
+          id: this.params.id,
+          type: "handleError"
+        });
+      }
+      successCallback(errorCallback);
+    });
+  }
+  play(options) {
+    if(typeof options.url === 'string') {
+      this.url = options.url;
+    }
+    if(typeof options.accessToken === 'string') {
+      this.accessToken =  options.accessToken;
+    }
+    if(this.Theme && (typeof options.url === 'string' || typeof options.accessToken === 'string')) {
+      this.Theme.getDeviceInfo();
+    }
     const promise = new Promise((resolve, reject) => {
       this._getRealUrlPromise(this.accessToken, this.url)
         .then((data) => {
-          console.log("get real url result ===", data);
-          function getPlayParams(url) {
-            var websocketConnectUrl = url.split('?')[0].replace('/live', '').replace('/playback', '');
-            var websocketStreamingParam = (url.indexOf('/live') === -1 ? (url.indexOf('cloudplayback') !== -1 ? '/cloudplayback?' : '/playback?') : '/live?') + url.split('?')[1];
-            if (websocketStreamingParam.indexOf('/playback') !== -1) {
-              websocketStreamingParam = websocketStreamingParam.replace("stream=2", 'stream=1');
-            }
-            // 本地回放仅支持主码流
-            return {
-              websocketConnectUrl: websocketConnectUrl,
-              websocketStreamingParam: websocketStreamingParam
-            };
-          }
-          var wsUrl = getPlayParams(data).websocketConnectUrl;
-          var wsParams = {
-            playURL: getPlayParams(data).websocketStreamingParam
-          };
+          this._pluginPlay(data, () => resolve(true), () => reject(false));
+          // console.log("get real url result ===", data);
+          // function getPlayParams(url) {
+          //   var websocketConnectUrl = url.split('?')[0].replace('/live', '').replace('/playback', '');
+          //   var websocketStreamingParam = (url.indexOf('/live') === -1 ? (url.indexOf('cloudplayback') !== -1 ? '/cloudplayback?' : '/playback?') : '/live?') + url.split('?')[1];
+          //   if (websocketStreamingParam.indexOf('/playback') !== -1) {
+          //     websocketStreamingParam = websocketStreamingParam.replace("stream=2", 'stream=1');
+          //   }
+          //   // 本地回放仅支持主码流
+          //   return {
+          //     websocketConnectUrl: websocketConnectUrl,
+          //     websocketStreamingParam: websocketStreamingParam
+          //   };
+          // }
+          // var wsUrl = getPlayParams(data).websocketConnectUrl;
+          // if(this.env && this.env.wsUrl) {
+          //   wsUrl = this.env.wsUrl;
+          // }
+          // var wsParams = {
+          //   playURL: getPlayParams(data).websocketStreamingParam
+          // };
 
-          this.jSPlugin.JS_Play(wsUrl, wsParams, 0).then(() => {
-            console.log("播放成功");
-            this.pluginStatus.loadingClear();
-            if (this.Theme) {
-              this.Theme.setDecoderState({ play: true });
-            }
-            if (this.audio) {
-              setTimeout(() => {
-                this.openSound();
-              }, 500);
-            }
-            if (typeof this.params.handleSuccess === 'function') {
-              this.params.handleSuccess({
-                retcode: 0,
-                id: this.params.id,
-                type: "handleSuccess"
-              });
-            }
-            resolve(true);
-          }, (err) => {
-            var errorInfo = this.errorHander.matchErrorInfo(err.oError.errorCode);
-            var msg = errorInfo ? errorInfo.description : '播放失败，请检查设备及客户端网络';
-            this.pluginStatus.loadingSetText({
-              text: msg,
-              color: 'red'
-            });
-            if (typeof this.params.handleError === 'function') {
-              this.params.handleError({
-                retcode: err.oError.errorCode,
-                msg: msg,
-                id: this.params.id,
-                type: "handleError"
-              });
-            }
-            reject(false);
-          });
+          // this.jSPlugin.JS_Play(wsUrl, wsParams, 0).then(() => {
+          //   console.log("播放成功");
+          //   this.pluginStatus.loadingClear();
+          //   if (this.Theme) {
+          //     this.Theme.setDecoderState({ play: true });
+          //   }
+          //   if (this.audio) {
+          //     setTimeout(() => {
+          //       this.openSound();
+          //     }, 500);
+          //   }
+          //   if (typeof this.params.handleSuccess === 'function') {
+          //     this.params.handleSuccess({
+          //       retcode: 0,
+          //       id: this.params.id,
+          //       type: "handleSuccess"
+          //     });
+          //   }
+          //   resolve(true);
+          // }, (err) => {
+          //   var errorInfo = this.errorHander.matchErrorInfo(err.oError.errorCode);
+          //   var msg = errorInfo ? errorInfo.description : '播放失败，请检查设备及客户端网络';
+          //   this.pluginStatus.loadingSetText({
+          //     text: msg,
+          //     color: 'red'
+          //   });
+          //   if (typeof this.params.handleError === 'function') {
+          //     this.params.handleError({
+          //       retcode: err.oError.errorCode,
+          //       msg: msg,
+          //       id: this.params.id,
+          //       type: "handleError"
+          //     });
+          //   }
+          //   reject(false);
+          // });
         })
         .catch((err) => {
           var msg = err.msg ? err.msg : '播放失败，请检查设备及客户端网络';
@@ -29255,28 +29342,45 @@ class EZUIKitPlayer {
     return promise;
   }
   getOSDTime() {
-    var promise = new Promise((resolve,reject) => {
+    var promise = new Promise((resolve, reject) => {
       this.jSPlugin.JS_GetOSDTime(0)
-        .then((data)=>{
+        .then((data) => {
           resolve({
             code: 0,
             retcode: 0,
             data: data
           });
+          // 兼容旧版本callback
+          if (typeof this.params.getOSDTimeCallBack === 'function') {
+            this.params.getOSDTimeCallBack({ id: this.id, type: 'getOSDTime', code: 0, data: data});
+          }
         })
-        .catch(err=>{
+        .catch(err => {
           reject({
             code: -1,
             retcode: -1,
             data: err
           });
+          // 兼容旧版本callback
+          if (typeof this.params.getOSDTimeCallBack === 'function') {
+            this.params.getOSDTimeCallBack({ id: this.id, type: 'getOSDTime', code: -1,data: -1 });
+          }
         });
     });
     return promise;
   }
   capturePicture(name, callback = false) {
-    var capturePictureRT = this.jSPlugin.JS_CapturePicture(0, name, "JPEG", callback);
+    var capturePictureRT = this.jSPlugin.JS_CapturePicture(0, name, "JPEG", callback, !!callback);
     if (isPromise(capturePictureRT)) {
+      // 兼容旧版本callback
+      if (typeof this.params.capturePictureCallBack === 'function') {
+        capturePictureRT.then(() => {
+          this.params.capturePictureCallBack({ id: this.id, type: 'capturePicture', code: 0 });
+        })
+          .catch(() => {
+            this.params.capturePictureCallBack({ id: this.id, type: 'capturePicture', code: -1 });
+          });
+      }
       return capturePictureRT;
     }
     return new Promise(function (resolve) {
@@ -29286,6 +29390,15 @@ class EZUIKitPlayer {
   startSave(name) {
     var startSaveRT = this.jSPlugin.JS_StartSave(0, name);
     if (isPromise(startSaveRT)) {
+      // 兼容旧版本callback
+      if (typeof this.params.startSaveCallBack === 'function') {
+        startSaveRT.then(() => {
+          this.params.startSaveCallBack({ id: this.id, type: 'startSave', code: 0 });
+        })
+          .catch(() => {
+            this.params.startSaveCallBack({ id: this.id, type: 'startSave', code: -1 });
+          });
+      }
       return startSaveRT;
     }
     if (this.Theme) {
@@ -29298,6 +29411,15 @@ class EZUIKitPlayer {
   stopSave() {
     var stopSaveRT = this.jSPlugin.JS_StopSave(0);
     if (isPromise(stopSaveRT)) {
+      // 兼容旧版本callback
+      if (typeof this.params.startSaveCallBack === 'function') {
+        stopSaveRT.then(() => {
+          this.params.stopSaveCallBack({ id: this.id, type: 'stopSave', code: 0 });
+        })
+          .catch(() => {
+            this.params.stopSaveCallBack({ id: this.id, type: 'stopSave', code: -1 });
+          });
+      }
       return stopSaveRT;
     }
     if (this.Theme) {
@@ -29316,6 +29438,10 @@ class EZUIKitPlayer {
     if (this.Theme) {
       this.Theme.setDecoderState({ sound: true });
     }
+    // 兼容旧版本callback
+    if (typeof this.params.openSoundCallBack === 'function') {
+      this.params.openSoundCallBack({ id: this.id, type: 'openSound', code: openSoundRT });
+    }
     return new Promise(function (resolve) {
       resolve(openSoundRT);
     });
@@ -29327,6 +29453,10 @@ class EZUIKitPlayer {
     }
     if (this.Theme) {
       this.Theme.setDecoderState({ sound: false });
+    }
+    // 兼容旧版本callback
+    if (typeof this.params.closeSoundCallBack === 'function') {
+      this.params.closeSoundCallBack({ id: this.id, type: 'closeSound', code: closeSoundRT });
     }
     return new Promise(function (resolve) {
       resolve(closeSoundRT);
@@ -29350,23 +29480,97 @@ class EZUIKitPlayer {
       resolve(closeZoomRT);
     });
   }
+  setPoster(url) {
+    this.pluginStatus.setPoster(url);
+  }
   reSize(width, height) {
     this.width = width;
     this.height = height;
-    document.getElementById(`${this.id}-wrap`).style.width = `${width}px;position:relative;`;
+    document.getElementById(`${this.id}-wrap`).style = `width:${width}px;position:relative;`;
     this.jSPlugin.JS_Resize(width, height);
+  }
+  fast() {
+    var speed = this.speed;
+    if (speed === 1) {
+      speed = 2;
+    } else if (speed === 2) {
+      speed = 4;
+    } else {
+      if (typeof this.params.handleError === 'function') {
+        this.params.handleError({
+          msg: "播放速度最大为4倍速度",
+          retcode: 1003,
+          id: this.id,
+          type: "handleError"
+        });
+      }
+    }
+    var fastRT = this.jSPlugin.JS_Fast(0);
+    if (isPromise(fastRT)) {
+      this.speed = speed;
+      return fastRT;
+    }
+    return new Promise(function (resolve) {
+      this.speed = speed;
+      resolve(fastRT);
+    });
+  }
+  slow() {
+    var speed = this.speed;
+    if (speed === 4) {
+      speed = 2;
+    } else if (speed === 2) {
+      speed = 1;
+    } else {
+      if (typeof this.params.handleError === 'function') {
+        this.params.handleError({
+          msg: "播放速度最小为1倍速度",
+          retcode: 1003,
+          id: this.id,
+          type: "handleError"
+        });
+      }
+    }
+    var slowRT = this.jSPlugin.JS_Slow(0);
+    console.log("slowRT", slowRT);
+    if (isPromise(slowRT)) {
+      this.speed = speed;
+      return slowRT;
+    }
+    return new Promise(function (resolve) {
+      this.speed = speed;
+      resolve(slowRT);
+    });
+  }
+  seek(startTime, endTime) {
+    var seekRT = this.jSPlugin.JS_Seek(0, startTime, endTime);
+    console.log("seekRT", seekRT);
+    if (isPromise(seekRT)) {
+      return seekRT;
+    }
+    return new Promise(function (resolve) {
+      resolve(seekRT);
+    });
   }
   fullScreen() {
     var promise = requestFullScreenPromise(document.getElementById(`${this.id}`));
     promise.then((data) => {
       console.log("全屏promise", window.screen.availWidth);
       this.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight);
+      // 兼容旧版本callback
+      if (typeof this.params.fullScreenCallBack === 'function') {
+        this.params.fullScreenCallBack({ id: this.id, type: 'fullScreen', code: 0 });
+      }
     });
     //  监听全屏事件触发
     const fullscreenchange = () => {
       let isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
       if (!isFullScreen) {
         this.jSPlugin.JS_Resize(this.width, this.height);
+      }
+      // 兼容旧版本callback
+      if (typeof this.params.fullScreenChangeCallBack === 'function') {
+        this.params.fullScreenChangeCallBack({ id: this.id, type: 'fullScreen', code: isFullScreen });
       }
     };
     ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange'].forEach((item) => {
