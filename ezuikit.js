@@ -29164,9 +29164,9 @@ class EZUIKitPlayer {
       if(typeof options.accessToken === 'string') {
         this.accessToken =  options.accessToken;
       }
-    }
-    if(this.Theme && (typeof options.url === 'string' || typeof options.accessToken === 'string')) {
-      this.Theme.getDeviceInfo();
+      if(this.Theme && (typeof options.url === 'string' || typeof options.accessToken === 'string')) {
+        this.Theme.getDeviceInfo();
+      }
     }
     const promise = new Promise((resolve, reject) => {
       this._getRealUrlPromise(this.accessToken, this.url)
