@@ -29157,11 +29157,13 @@ class EZUIKitPlayer {
     });
   }
   play(options) {
-    if(typeof options.url === 'string') {
-      this.url = options.url;
-    }
-    if(typeof options.accessToken === 'string') {
-      this.accessToken =  options.accessToken;
+    if(options) {
+      if(typeof options.url === 'string') {
+        this.url = options.url;
+      }
+      if(typeof options.accessToken === 'string') {
+        this.accessToken =  options.accessToken;
+      }
     }
     if(this.Theme && (typeof options.url === 'string' || typeof options.accessToken === 'string')) {
       this.Theme.getDeviceInfo();
