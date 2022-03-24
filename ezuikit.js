@@ -201,7 +201,7 @@ const request = (url, method, params, header, success, error) => {
 
 class HLS {
   constructor(videoId, url) {
-    addJs("https://cdn.jsdelivr.net/npm/hls.js@latest", () => {
+    addJs("https://open.ys7.com/sdk/js/2.0/js/hls.min.js", () => {
       console.log("加载hls.min.js成功", window.Hls);
       console.log("isSupportHls", window.Hls.isSupported());
       if (window.Hls.isSupported()) {
@@ -24067,7 +24067,8 @@ C11.4,16.3,11,16.6,10.6,16.6z" />
     }
     this.timer = setInterval(() => {
       var getOSDTimePromise = this.jSPlugin.getOSDTime();
-      getOSDTimePromise.then((v) => {
+      getOSDTimePromise.then((data) => {
+        var v = data.data;
         if (v === -1) {
           console.log("获取播放时间错误");
         } else {
@@ -26106,12 +26107,19 @@ class Theme {
         this.initThemeData();
         this.renderThemeData();
         break;
+      case 'themeData':
+        this.themeData = this.jSPlugin.params.themeData;
+        this.initThemeData();
+        this.renderThemeData();
       default:
         this.fetchThemeData(this.jSPlugin.themeId);
         break;
       }
     }
-    if ((this.decoderState.state.cloudRec) || (this.decoderState.state.rec)) {
+    var isNeedRenderTimeLine = lodash.findIndex(this.themeData.header.btnList, (v)=>{
+      return (v.iconId === 'cloudRec' && v.isrender === 1) ||  (v.iconId === 'rec' && v.isrender === 1) ;
+    }) >= 0;
+    if (isNeedRenderTimeLine) {
       if (this.isMobile) {
         this.Rec = new MobileRec(jSPlugin);
       } else {
@@ -26121,7 +26129,7 @@ class Theme {
     if (!this.jSPlugin.Talk) {
       this.jSPlugin.Talk = new Talk(this.jSPlugin);
     }
-    if (this.decoderState.state.type === 'live') {
+    if (matchEzopenUrl(jSPlugin.url).type === 'live') {
       if (this.isMobile) {
         this.MobilePtz = new MobilePtz(jSPlugin);
         this.Ptz = new Ptz(jSPlugin);
@@ -26212,7 +26220,7 @@ class Theme {
         }
         break;
       case 'sound':
-        if (`${this.jSPlugin.id}-sound`) {
+        if (document.getElementById(`${this.jSPlugin.id}-sound`)) {
           if (options[item]) {
             document.getElementById(`${this.jSPlugin.id}-sound-content`).children[0].children[1].style = "display:inline-block";
             document.getElementById(`${this.jSPlugin.id}-sound-content`).children[0].children[0].style = "display:none";
@@ -26999,6 +27007,43 @@ class Theme {
         accessToken: this.jSPlugin.accessToken,
         deviceSerial: matchEzopenUrl(this.jSPlugin.url).deviceSerial
       }, '', deviceAPISuccess);
+  }
+}
+
+class Monitor {
+  constructor(params) {
+    this.params = params;
+    this.state = {
+    };
+  }
+  dclog(dclogObj) {
+    const { params } = this;
+    var url = "https://log.ys7.com/statistics.do?";
+    if(params.env) {
+      switch(params.env){
+        case 'test12':
+          url = "https://test12dclog.ys7.com/statistics.do?";
+          break;
+        case 'online':
+          break;
+        default:
+          url = params.env;
+          break;
+      }
+    }
+    var obj = Object.assign({}, { systemName: "open_website_monitor" }, { bn: "ezuikit-js" }, dclogObj, {un:dclogObj.url}, { st: new Date().getTime(), h: window.location.pathname }); // usr_name 更改为un，兼容旧
+    Object.keys(obj).forEach(function(item, index){
+      var value = obj[item];
+      if (typeof (obj[item]) === 'string') {
+        value = obj[item].replace('%', '%25'); // decodeURIComponent 无法解析%
+      }
+      if (typeof (obj[item]) === 'undefined') {
+        return;
+      }
+      url += "".concat(index === 0 ? '' : '&').concat(item, "=").concat(encodeURIComponent(value));
+    });
+    var img = new Image();
+    img.src = url;
   }
 }
 
@@ -28602,8 +28647,14 @@ var EZUIKitV3$1 = EZUIKitV3;
 // iframe模板 - 兼容旧版本
 const matchTemplate = (templateName, params) => {
   const IFRAMETEMPLATE = ['simple', 'standard', 'security', 'vioce', 'theme'];
-  const LOCALTEMPLATE = ['pcLive', 'pcRec', 'mobileLive', 'mobileRec', 'noData'];
+  const LOCALTEMPLATE = ['pcLive', 'pcRec', 'mobileLive', 'mobileRec', 'noData', ''];
   if (typeof templateName === 'undefined') {
+    if(params.themeData) {
+      return {
+        templateType: 'themeData',
+        templateId: 'themeData'
+      }
+    }
     return {
       templateType: 'local',
       templateId: ''
@@ -28650,6 +28701,9 @@ class EZUIKitPlayer {
       }
     };
     if (matchTemplate(this.params.template, params).templateType !== 'iframe') {
+      this.Monitor = new Monitor({
+        env: !(typeof params.disableMonitor !== 'undefined' && params.disableMonitor) ? 'online' : 'test12',
+      });
       this.id = params.id;
       this.width = params.width;
       this.height = params.height;
@@ -28657,25 +28711,50 @@ class EZUIKitPlayer {
       this.accessToken = params.accessToken;
       this.themeId = matchTemplate(params.template, params).templateId;
       this.id = params.id;
-      this.audio = params.audio;
+      this.audio = true;
       this.poster = params.poster;
       this.speed = 1;
       this.staticPath = "https://open.ys7.com/assets/ezuikit_v4.0";
       if (typeof params.staticPath === 'string') {
         this.staticPath = params.staticPath;
       }
+      if(typeof params.audio !== 'undefined') {
+        this.audio = params.audio;
+      }
       addJs(`${this.staticPath}/js/AudioRenderer.js`, () => {
         addJs(`${this.staticPath}/js/SuperRender_10.js`, () => {
           addJs(`${this.staticPath}/js/jsPlugin-4.0.2.min.js`, () => {
             if (autoplay) {
+              this.initTime = new Date().getTime();
+              this.Monitor.dclog({
+                url: this.url,
+                action: 0,
+                text: 'startInit',
+              });
               var initEZUIKitPlayerPromise = this.initEZUIKitPlayer(params);
               var getRealUrlPromise = this._getRealUrlPromise(params.accessToken, params.url);
               Promise.all([initEZUIKitPlayerPromise, getRealUrlPromise]).then(values => {
                 console.log("values", values);
                 if (values[1]) {
                   this._pluginPlay(values[1],
-                    () => { console.log("自动播放成功"); },
-                    () => { console.log("自动播放失败"); },
+                    () => {
+                      console.log("自动播放成功");
+                      this.Monitor.dclog({
+                        url: this.url,
+                        action: 202,
+                        d: new Date().getTime() - this.initTime,
+                        text: 'autoPlaySuccess'
+                      });
+                    },
+                    () => {
+                      console.log("自动播放失败");
+                      this.Monitor.dclog({
+                        url: this.url,
+                        action: 402,
+                        d: new Date().getTime() - this.initTime,
+                        text: 'autoPlayError'
+                      });
+                    },
                   );
                 }
                 window.EZUIKit[params.id].state.EZUIKitPlayer.init = true;
@@ -28684,6 +28763,12 @@ class EZUIKitPlayer {
                 }
               });
             } else {
+              this.initTime = new Date().getTime();
+              this.Monitor.dclog({
+                url: this.url,
+                action: 0,
+                text: 'startInit',
+              });
               var initEZUIKitPlayerPromise = this.initEZUIKitPlayer(params);
               initEZUIKitPlayerPromise.then((data) => {
                 console.log("初始化成功", data);
@@ -28691,6 +28776,12 @@ class EZUIKitPlayer {
                 if (document.getElementById(`${params.id}canvas_draw0`)) {
                   document.getElementById(`${params.id}canvas_draw0`).style.border = "none";
                 }
+                this.Monitor.dclog({
+                  url: this.url,
+                  action: 201,
+                  d: new Date().getTime() - this.initTime,
+                  text: 'initSuccess',
+                });
               });
             }
           });
@@ -28763,8 +28854,10 @@ class EZUIKitPlayer {
         },
         windowFullCcreenChange: function (bFull) {
         },
-        firstFrameDisplay: function (iWndIndex, iWidth, iHeight) {
+        firstFrameDisplay: (iWndIndex, iWidth, iHeight) => {
+          console.log(iWidth, iHeight);
           jSPlugin.JS_SetCanFullScreen(false);
+          this.pluginStatus.loadingClear();
         },
         performanceLack: function () {
         },
@@ -29121,7 +29214,6 @@ class EZUIKitPlayer {
 
     this.jSPlugin.JS_Play(wsUrl, wsParams, 0).then(() => {
       console.log("播放成功");
-      this.pluginStatus.loadingClear();
       if (this.Theme) {
         this.Theme.setDecoderState({ play: true });
       }
@@ -29138,6 +29230,12 @@ class EZUIKitPlayer {
         });
       }
       successCallback();
+      this.Monitor.dclog({
+        url: this.url,
+        action: 211,
+        d: new Date().getTime() - this.playStartTime,
+        text: 'startPlaySuccess'
+      });
     }, (err) => {
       var errorInfo = this.errorHander.matchErrorInfo(err.oError.errorCode);
       var msg = errorInfo ? errorInfo.description : '播放失败，请检查设备及客户端网络';
@@ -29153,10 +29251,23 @@ class EZUIKitPlayer {
           type: "handleError"
         });
       }
-      successCallback(errorCallback);
+      errorCallback();
+      this.Monitor.dclog({
+        url: this.url,
+        action: 411,
+        d: new Date().getTime() - this.playStartTime,
+        text: 'startPlayError'
+      });
     });
   }
   play(options) {
+    this.playStartTime = new Date().getTime();
+    this.Monitor.dclog({
+      url: this.url,
+      action: 1,
+      d: new Date().getTime() - this.initTime,
+      text: 'startPlay'
+    });
     if(options) {
       if(typeof options.url === 'string') {
         this.url = options.url;
@@ -29172,63 +29283,6 @@ class EZUIKitPlayer {
       this._getRealUrlPromise(this.accessToken, this.url)
         .then((data) => {
           this._pluginPlay(data, () => resolve(true), () => reject(false));
-          // console.log("get real url result ===", data);
-          // function getPlayParams(url) {
-          //   var websocketConnectUrl = url.split('?')[0].replace('/live', '').replace('/playback', '');
-          //   var websocketStreamingParam = (url.indexOf('/live') === -1 ? (url.indexOf('cloudplayback') !== -1 ? '/cloudplayback?' : '/playback?') : '/live?') + url.split('?')[1];
-          //   if (websocketStreamingParam.indexOf('/playback') !== -1) {
-          //     websocketStreamingParam = websocketStreamingParam.replace("stream=2", 'stream=1');
-          //   }
-          //   // 本地回放仅支持主码流
-          //   return {
-          //     websocketConnectUrl: websocketConnectUrl,
-          //     websocketStreamingParam: websocketStreamingParam
-          //   };
-          // }
-          // var wsUrl = getPlayParams(data).websocketConnectUrl;
-          // if(this.env && this.env.wsUrl) {
-          //   wsUrl = this.env.wsUrl;
-          // }
-          // var wsParams = {
-          //   playURL: getPlayParams(data).websocketStreamingParam
-          // };
-
-          // this.jSPlugin.JS_Play(wsUrl, wsParams, 0).then(() => {
-          //   console.log("播放成功");
-          //   this.pluginStatus.loadingClear();
-          //   if (this.Theme) {
-          //     this.Theme.setDecoderState({ play: true });
-          //   }
-          //   if (this.audio) {
-          //     setTimeout(() => {
-          //       this.openSound();
-          //     }, 500);
-          //   }
-          //   if (typeof this.params.handleSuccess === 'function') {
-          //     this.params.handleSuccess({
-          //       retcode: 0,
-          //       id: this.params.id,
-          //       type: "handleSuccess"
-          //     });
-          //   }
-          //   resolve(true);
-          // }, (err) => {
-          //   var errorInfo = this.errorHander.matchErrorInfo(err.oError.errorCode);
-          //   var msg = errorInfo ? errorInfo.description : '播放失败，请检查设备及客户端网络';
-          //   this.pluginStatus.loadingSetText({
-          //     text: msg,
-          //     color: 'red'
-          //   });
-          //   if (typeof this.params.handleError === 'function') {
-          //     this.params.handleError({
-          //       retcode: err.oError.errorCode,
-          //       msg: msg,
-          //       id: this.params.id,
-          //       type: "handleError"
-          //     });
-          //   }
-          //   reject(false);
-          // });
         })
         .catch((err) => {
           var msg = err.msg ? err.msg : '播放失败，请检查设备及客户端网络';
@@ -29545,6 +29599,53 @@ class EZUIKitPlayer {
     });
   }
   seek(startTime, endTime) {
+    var url = this.url;
+    var currentDay = (getQueryString(url, 'begin') || new Date().Format('yyyyMMdd')).substr(0,8);
+    endTime = formatRecTime(currentDay,'235959');
+    if(startTime.length === 6) {
+      startTime = formatRecTime(currentDay,startTime);
+    } else if (startTime.length === 16) {
+      if(startTime.substr(0,8) !== currentDay) {
+        this.params.handleError({
+          msg: "seek时间不能跨日期",
+          retcode: -1,
+          id: this.id,
+          type: "handleError"
+        });
+        return false;
+      }
+    } else {
+      this.params.handleError({
+        msg: "seek时间格式错误",
+        retcode: -1,
+        id: this.id,
+        type: "handleError"
+      });
+      return false;
+    }
+    // 格式化回放时间
+    function formatRecTime(time, defaultTime) {
+      // 用户格式 无需更改 => 20182626T000000Z
+      // return time
+      // 用户格式需要更改
+      //用户时间长度为 14 20181226000000  =》 20181226000000
+      // 用户长度为12     201812260000    =》 201812260000 + defaultTime后面2位
+      // 用户长度为10     2018122600      =》 201812260000 + defaultTime后面4位
+      // 用户长度为8     20181226         =》 201812260000 + defaultTime后面6位
+      // 结果 20181226000000 14位
+      // 插入 TZ
+      var reg = /^[0-9]{8}T[0-9]{6}Z$/;
+      if (reg.test(time)) { // 用户格式 无需更改 => 20182626T000000Z
+        return time;
+      } else if (/[0-9]{8,14}/.test(time)) {
+        var start = 6 - (14 - time.length);
+        var end = defaultTime.length;
+        var standardTime = time + defaultTime.substring(start, end);
+        return standardTime.slice(0, 8) + 'T' + standardTime.slice(8) + 'Z';
+      } else {
+        throw new Error('回放时间格式有误，请确认');
+      }
+    }
     var seekRT = this.jSPlugin.JS_Seek(0, startTime, endTime);
     console.log("seekRT", seekRT);
     if (isPromise(seekRT)) {
@@ -29591,6 +29692,19 @@ class EZUIKitPlayer {
   }
   stopTalk() {
     this.Talk.startTalk();
+  }
+  destroy() {
+    var destroyRT = this.jSPlugin.JS_DestroyWorker(0);
+    if (this.Theme) {
+      this.Theme = null;
+      window.EZUIKit[this.params.id].state.EZUIKitPlayer.themeInit = false;
+    }
+    if (isPromise(destroyRT)) {
+      return destroyRT;
+    }
+    return new Promise(function (resolve) {
+      resolve(destroyRT);
+    });
   }
 }
 
