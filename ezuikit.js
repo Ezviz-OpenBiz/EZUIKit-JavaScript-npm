@@ -28646,7 +28646,7 @@ var EZUIKitV3$1 = EZUIKitV3;
 
 // iframe模板 - 兼容旧版本
 const matchTemplate = (templateName, params) => {
-  const IFRAMETEMPLATE = ['simple', 'standard', 'security', 'vioce', 'theme'];
+  const IFRAMETEMPLATE = ['simple', 'standard', 'security', 'voice', 'theme'];
   const LOCALTEMPLATE = ['pcLive', 'pcRec', 'mobileLive', 'mobileRec', 'noData', ''];
   if (typeof templateName === 'undefined') {
     if(params.themeData) {
