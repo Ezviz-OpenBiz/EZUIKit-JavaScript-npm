@@ -55,7 +55,7 @@ import  EZUIKit from 'ezuikit-js';
 ```
 #### 附录： 初始化参数说明
 
-<table style="width:100%!important">
+<table>
 <tr><th>参数名</th><th>类型</th><th>描述</th><th>是否必选</th></tr>
 <tr><td>id</td><td>String</td><td>播放器容器DOM的id</td><td>Y</td></tr>
 <tr><td>accessToken</td><td>String</td><td>授权过程获取的access_token</td><td>Y</td></tr>
@@ -66,7 +66,7 @@ import  EZUIKit from 'ezuikit-js';
 <tr><td>templete</td><td>String</td><td>  
 
 
-<table style="width:100%!important">
+<table style="display:inline-block;width:700px">
 <tr><th>模板值</th><th>描述</th></tr>
 
 <tr><td>simple</td><td>极简版 *固定模板 仅包含视频播放窗口，创建实例后通过方法集控制视频播</br>放相关功能</td></tr>
