@@ -63,25 +63,33 @@ import  EZUIKit from 'ezuikit-js';
 <tr><td>audio</td><td>int</td><td>是否默认开启声音 1：打开（默认） 0：关闭	</td><td>N</td></tr>
 <tr><td>width</td><td>int</td><td>视频宽度，默认值为容器容器DOM宽度	</td><td>Y</td></tr>
 <tr><td>height</td><td>int</td><td>视频高度，默认值为容器容器DOM高度</td><td>Y</td></tr>
-<tr><td>templete</td><td>String</td><td>
+<tr><td>templete</td><td>String</td><td>  
 
-<table>
+
+<table style="width:100%">
 <tr><th>模板值</th><th>描述</th></tr>
+
 <tr><td>simple</td><td>极简版 *固定模板 仅包含视频播放窗口，创建实例后通过方法集控制视频播放相关功能</td></tr>
+
 <tr><td>standard</td><td>标准版;   *固定模板 包含视频窗口，叠加了停止，录制，全屏控件（通过控件快捷调用方法集合控制视频播放相关功能，但你仍然可以通过方法集直接控制视频播放相关功能。下同）</td></tr>
-<tr>security<td></td><td>安防版(预览回放);  *固定模板 包含视频窗口，叠加了录制，全屏控件，标清/高清切换，预览录制切换控件*</td></tr>
-<tr>voice<td></td><td>语音版;  *固定模板 包含视频窗口，叠加了录制，全屏控件，语音播报，语音对讲控件*|</td></tr>
-<tr>pcLive<td></td><td>	*固定模板 按钮列表，颜色，底部头部背景色固定，可用于pc端预览，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData本地配置*</td></tr>
-<tr>pcRec<td></td><td>	*固定模板 按钮列表，颜色，底部头部背景色固定， 可用于pc端回放，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData本地配置*</td></tr>
-<tr>mobileLive<td></td><td>	*固定模板  按钮列表，颜色，底部头部背景色固定，可用于移动端预览，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData本地配置*</td></tr>
-<tr>mobileRec<td></td><td>*固定模板 按钮列表，颜色，底部头部背景色固定， 可用于移动端回放，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData本地配置*</td></tr>
-<tr>{{自定义themeId}}<td></td><td>（建议使用）开放平台提供了查询账号下主题列表，增加主题，修改主题，删除主题接口。你可以通过调用开放平台提供的接口自定义创建多个主题，根据主题Id动态渲染头部，底部样式，按钮隐藏显示，排布及按钮样式[接口示例（请导入postman查看示例）](https://resource.eziot.com/group2/M00/00/79/CtwQFmI8d_mAC8-eAAA1PBGvsds71.json)</td></tr>
-<tr>theme<td></td><td>自定义主题，（[开放平台控制台配置](https://open.ys7.com/console/ezopenIframe.html)）（v0.3.0版本及以上支持，建议使用 自定义themeId，或者使用themeData本地配置）;</td></tr>
+
+<tr><td>security</td><td>安防版(预览回放);  *固定模板 包含视频窗口，叠加了录制，全屏控件，标清/高清切换，预览录制切换控件*</td></tr>
+<tr><td>voice</td><td>语音版;  *固定模板 包含视频窗口，叠加了录制，全屏控件，语音播报，语音对讲控件*|</td></tr>
+<tr><td>pcLive</td><td>	*固定模板 按钮列表，颜色，底部头部背景色固定，可用于pc端预览，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData本地配置*</td></tr>
+<tr><td>pcRec</td><td>	*固定模板 按钮列表，颜色，底部头部背景色固定， 可用于pc端回放，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData本地配置*</td></tr>
+<tr><td>mobileLive</td><td>	*固定模板  按钮列表，颜色，底部头部背景色固定，可用于移动端预览，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData本地配置*</td></tr>
+<tr><td>mobileRec</td><td>*固定模板 按钮列表，颜色，底部头部背景色固定， 可用于移动端回放，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData本地配置*</td></tr>
+<tr><td>{{自定义themeId}}</td><td>（建议使用）开放平台提供了查询账号下主题列表，增加主题，修改主题，删除主题接口。你可以通过调用开放平台提供的接口自定义创建多个主题，根据主题Id动态渲染头部，底部样式，按钮隐藏显示，排布及按钮样式[接口示例（请导入postman查看示例）](https://resource.eziot.com/group2/M00/00/79/CtwQFmI8d_mAC8-eAAA1PBGvsds71.json)</td></tr>
+<tr><td>theme</td><td>自定义主题，（[开放平台控制台配置](https://open.ys7.com/console/ezopenIframe.html)）（v0.3.0版本及以上支持，建议使用 自定义themeId，或者使用themeData本地配置）;</td></tr>
 </table>
+
+</td></tr>
 <tr><td>themeData</td><td>Object</td><td>
 themeData将主题数据本地化，设置本地数据，需要删除template参数  
-你可以通过themeData修改按钮位置，颜色，头部底部颜色等配置。
-配置示例：
+你可以通过themeData修改按钮位置，颜色，头部底部颜色等配置。  
+
+配置示例：  
+
 <pre><code>
 
 {
