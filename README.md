@@ -288,9 +288,10 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhm
   // 方式1 - 下载到本地
   player.capturePicture("文件名");
   // 方式2 - 返回base64格式
-  player.capturePicture("文件名","base64",(base64File)=>{
-    return base64File; // 返回base64文件
-  })
+  const capCallback = (data) => {
+    console.log("data",data)
+  }
+  EZOPENDemo.capturePicture('default',capCallback)
 ```
 #### 开始对讲
 
