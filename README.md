@@ -18,7 +18,7 @@ $ npm install ezuikit-js
 import  EZUIKit from 'ezuikit-js';
 ```
 
->##### 如果你使用原生方法,可以通过标签引用
+#### 如果你使用原生方法,可以通过标签引用
 ```
   <script src="./ezuikit.js"></script>
 ```
@@ -32,62 +32,297 @@ import  EZUIKit from 'ezuikit-js';
   <div id="video-container"></div>
 ```
 
-播放器初始化
-
+## 播放器初始化
+### 直播
 ```
     var player = new EZUIKit.EZUIKitPlayer({
       id: 'video-container', // 视频容器ID
       accessToken: 'at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz',
       url: 'ezopen://open.ys7.com/203751922/1.live',
+      width: 600,
+      height: 400,
     })
 ```
+### 回放
+```
+    var player = new EZUIKit.EZUIKitPlayer({
+      id: 'video-container', // 视频容器ID
+      width: 600,
+      height: 400,
+      accessToken: 'at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz',
+      url: 'ezopen://open.ys7.com/203751922/1.rec'
+    })
+```
+#### 附录： 初始化参数说明
+
+<table>
+<tr><th>参数名</th><th>类型</th><th>描述</th><th>是否必选</th></tr>
+<tr><td>id</td><td>String</td><td>播放器容器DOM的id</td><td>Y</td></tr>
+<tr><td>accessToken</td><td>String</td><td>授权过程获取的access_token</td><td>Y</td></tr>
+<tr><td>url</td><td>String</td><td>视频ezopen协议播放地址 详见：[ezopen协议](http://open.ys7.com/doc/zh/readme/ezopen.html)	</td><td>Y</td></tr>
+<tr><td>audio</td><td>int</td><td>是否默认开启声音 1：打开（默认） 0：关闭	</td><td>N</td></tr>
+<tr><td>width</td><td>int</td><td>视频宽度，默认值为容器容器DOM宽度	</td><td>Y</td></tr>
+<tr><td>height</td><td>int</td><td>视频高度，默认值为容器容器DOM高度</td><td>Y</td></tr>
+<tr><td>templete</td><td>String</td><td>
+
+<table>
+</table>
+
+|模板值|描述|
+|:--|:--|
+|simple|	极简版 *固定模板 仅包含视频播放窗口，创建实例后通过方法集控制视频播放相关功能|
+|standard| 标准版;   *固定模板 包含视频窗口，叠加了停止，录制，全屏控件（通过控件快捷调用方法集合控制视频播放相关功能，但你仍然可以通过方法集直接控制视频播放相关功能。下同）|
+|security| 安防版(预览回放);  *固定模板 包含视频窗口，叠加了录制，全屏控件，标清/高清切换，预览录制切换控件*|
+|voice|	语音版;  *固定模板 包含视频窗口，叠加了录制，全屏控件，语音播报，语音对讲控件*|
+|pcLive|	*固定模板 按钮列表，颜色，底部头部背景色固定，可用于pc端预览，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData本地配置*|
+|pcRec|	*固定模板 按钮列表，颜色，底部头部背景色固定， 可用于pc端回放，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData本地配置*|
+|mobileLive|	*固定模板  按钮列表，颜色，底部头部背景色固定，可用于移动端预览，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData本地配置*|
+|mobileRec|	*固定模板 按钮列表，颜色，底部头部背景色固定， 可用于移动端回放，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData本地配置*|
+|{{自定义themeId}}|（建议使用）开放平台提供了查询账号下主题列表，增加主题，修改主题，删除主题接口。你可以通过调用开放平台提供的接口自定义创建多个主题，根据主题Id动态渲染头部，底部样式，按钮隐藏显示，排布及按钮样式[接口示例（请导入postman查看示例）](https://resource.eziot.com/group2/M00/00/79/CtwQFmI8d_mAC8-eAAA1PBGvsds71.json)|
+|theme|	自定义主题，（[开放平台控制台配置](https://open.ys7.com/console/ezopenIframe.html)）（v0.3.0版本及以上支持，建议使用 自定义themeId，或者使用themeData本地配置）;|
+</td><td>N</td></tr>
+<tr><td>themeData</td><td>Object</td><td>
+themeData将主题数据本地化，设置本地数据，需要删除template参数  
+你可以通过themeData修改按钮位置，颜色，头部底部颜色等配置。
+配置示例：
+```
+{
+    "header": {
+        "color": "#1890ff",
+        "activeColor": "#FFFFFF",
+        "backgroundColor": "#000000",
+        "btnList": [
+            {
+                "iconId": "deviceID",
+                "part": "left",
+                "defaultActive": 0,
+                "memo": "顶部设备名称",
+                "isrender": 1
+            },
+            {
+                "iconId": "deviceName",
+                "part": "left",
+                "defaultActive": 0,
+                "memo": "顶部设备ID",
+                "isrender": 1
+            },
+            {
+                "iconId": "cloudRec",
+                "part": "right",
+                "defaultActive": 0,
+                "memo": "顶部设备ID",
+                "isrender": 0
+            },
+            {
+                "iconId": "rec",
+                "part": "right",
+                "defaultActive": 0,
+                "memo": "顶部设备ID",
+                "isrender": 0
+            }
+        ]
+    },
+    "footer": {
+        "color": "#FFFFFF",
+        "activeColor": "#1890FF",
+        "backgroundColor": "#00000021",
+        "btnList": [
+            {
+                "iconId": "play",
+                "part": "left",
+                "defaultActive": 1,
+                "memo": "播放",
+                "isrender": 1
+            },
+            {
+                "iconId": "capturePicture",
+                "part": "left",
+                "defaultActive": 0,
+                "memo": "截屏按钮",
+                "isrender": 1
+            },
+            {
+                "iconId": "sound",
+                "part": "left",
+                "defaultActive": 0,
+                "memo": "声音按钮",
+                "isrender": 1
+            },
+            {
+                "iconId": "pantile",
+                "part": "left",
+                "defaultActive": 0,
+                "memo": "云台控制按钮",
+                "isrender": 1
+            },
+            {
+                "iconId": "recordvideo",
+                "part": "left",
+                "defaultActive": 0,
+                "memo": "录制按钮",
+                "isrender": 1
+            },
+            {
+                "iconId": "talk",
+                "part": "left",
+                "defaultActive": 0,
+                "memo": "对讲按钮",
+                "isrender": 1
+            },
+            {
+                "iconId": "hd",
+                "part": "right",
+                "defaultActive": 0,
+                "memo": "清晰度切换按钮",
+                "isrender": 1
+            },
+            {
+                "iconId": "webExpend",
+                "part": "right",
+                "defaultActive": 0,
+                "memo": "网页全屏按钮",
+                "isrender": 1
+            },
+            {
+                "iconId": "expend",
+                "part": "right",
+                "defaultActive": 0,
+                "memo": "全局全屏按钮",
+                "isrender": 1
+            }
+        ]
+    }
+}
+```
+</td><td>N</td></tr>
+<tr><td>plugin</td><td>String</td><td>按需加载插件，可选值： talk：对讲，示例：plugin:["talk"] </td><td>N</td></tr>
+<tr><td>handleSuccess</td><td>function</td><td>自动播放成功回调</td><td>N</td></tr>
+<tr><td>poster</td><td>String</td><td>视频默认封面 版本号> v0.4.6 </td><td>N</td></tr>
+</table>
+
+
+#### 直播
+##### 标清
+ezopen://open.ys7.com/${设备序列号}/{通道号}.live<br/>
+##### 高清
+ezopen://open.ys7.com/${设备序列号}/{通道号}.hd.live<br/>
+
+#### 回放
+##### sd卡回放
+初始化参数 url值为：<br/>
+ezopen://open.ys7.com/${设备序列号}/{通道号}.rec?begin=yyyyMMddhhmmss
+##### 云存储回放
+初始化参数 url值为：<br/>
+ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhmmss
 
 ### 方法调用
-> 示例： 停止播放
+> 同步方法（方式1）
+> 方法支持通过promise回调，可通过回调方式执行下一步动作（方式2）。
 
+#### 开始播放
 ```
-  1. player.stop();
-
-  2. player.stop()
+  // 方式1
+  player.play();
+  // 方式2
+  player.play()
   .then(()=>{
     console.log("执行播放成功后其他动作");
   });
+```
+#### 停止播放
 
 ```
-> 示例： 执行播放（自动播放为false,自定义触发播放/切换播放地址）
-
-```
-  player.play();
-  // 切换播放地址场景（注意先执行stop方法停止上次取流）
-  player.play({
-   url: 'ezopen://open.ys7.com/203751922/1.rec?begin=202001000000&end=202001235959'
-  });
-```
-
-切换地址播放（注意需要先执行stop方法停止上次取流）
-
-```
+  // 方式1
+  player.stop();
+  // 方式2
   player.stop()
   .then(()=>{
-    player.play('ezopen://open.ys7.com/{其他设备}/{其他通道}.live');
+    console.log("执行停止成功后其他动作");
   });
+```
+#### 开启声音
 
-  // 其他账号下设备
-  
-  player.stop()
+```
+  // 方式1
+  player.openSound();
+  // 方式2
+  player.openSound()
   .then(()=>{
-    player.play({url:'ezopen://open.ys7.com/{其他设备}/{其他通道}.live',accessToken: 'xxxx'});
+    console.log("执行开启声音成功后其他动作");
   });
-  
 ```
-
-##### 自定义主题切换播放地址
-##### 当template值为“theme”时，自定义主题地址切换需要同步主题中的按钮，回放控件等。
-##### 如果需要同步主题控件，需要调用以下方法切换播放地址
+#### 开始录制
 
 ```
-player.changePlayUrl(options)
-  
+  // 方式1
+  player.startSave("唯一文件名");
+  // 方式2
+  player.startSave("唯一文件名")
+  .then(()=>{
+    console.log("执行开始录制成功后其他动作");
+  });
+```
+#### 停止录制并下载文件
+
+```
+  // 方式1
+  player.stopSave();
+  // 方式2
+  player.stopSave()
+  .then(()=>{
+    console.log("执行停止录制成功后其他动作");
+  });
+```
+#### 抓图
+
+```
+  // 方式1 - 下载到本地
+  player.capturePicture("文件名");
+  // 方式2 - 返回base64格式
+  player.capturePicture("文件名","base64",(base64File)=>{
+    return base64File; // 返回base64文件
+  })
+```
+#### 开始对讲
+
+```
+  player.startTalk();
+```
+
+#### 结束对讲
+
+```
+  player.stopTalk();
+```
+
+#### 全屏
+
+```
+  player.fullScreen();
+```
+#### 取消全屏
+
+```
+  player.cancelFullScreen();
+```
+#### 获取OSD时间
+
+```
+   player.getOSDTime()
+  .then((time)=>{
+    console.log("获取到的当前播放时间", time);
+  });
+```
+
+#### 切换地址播放
+
+> 可用于在播放中切换设备，切换播放参数，以及直播切换回放等
+
+```
+  player.changePlayUrl(options)
+  .then(()=>{
+    console.log("切换成功")
+  });
 ```
 options参数说明
 
@@ -102,49 +337,40 @@ options参数说明
 |begin|	String	| type类型为回放有效，开始时间 格式为“YYYYMMDDHHmmss”	|N|
 |end|	String	| type类型为回放有效，结束时间 格式为 “YYYYMMDDHHmmss”	|N|
 
-### 使用说明
-#### 初始化
+#### 设置封面
 
-|参数名|类型|描述|是否必选|
-|:--|:--|:--|:--|
-|id|	String| 播放器容器DOM的id|	Y|
-|accessToken|	String|	授权过程获取的access_token|	Y|
-|url	|String|	视频ezopen协议播放地址	|Y|
-|audio|	int	| 是否默认开启声音 1：打开（默认） 0：关闭	|N|
-|autoplay|	int	| 是否自动播放 1：开启 0：关闭	|N|
-|width |int	| 视频宽度，默认值为容器容器DOM宽度	|N|
-|height |int	| 视频高度，默认值为容器容器DOM高度	|N|
-|template |string	| 播放器模板，可以通过选定模板，使用内置的播放器样式，组件 simple：极简版;standard：标准版;security：安防版(预览回放);vioce：语音版;theme：自定义主题（v0.3.0版本及以上支持）
-|header |Array	|  simple：极简版 视频头部可选UI组件，可选值：capturePicture：截图,save：录像保存,zoom：电子放大 |N|
-|footer |Array	|  simple：极简版 视频底部部可选UI组件，可选值：talk：对讲,broadcast：语音播报,hd：高清标清切换,fullScreen：全屏 |N|
-|plugin |Array	| 按需加载插件，可选值： talk：对讲 |N|
-|handleSuccess |function	| 播放成功回调 |N|
-|handleError |function	| 播放错误回调 |N|
-|openSoundCallBack |function	| 开启声音回调 |N|
-|closeSoundCallBack |function	| 关闭回调 |N|
-|startSaveCallBack |function	| 开始录像回调 |N|
-|stopSaveCallBack |function	| 结束录像回调 |N|
-|capturePictureCallBack |function	| 截图回调 |N|
-|fullScreenCallBack |function	| 全屏回调 |N|
-|fullScreenChangeCallBack |function	| 全屏变化回调-全局（含ESC退出全屏等） |N|
-|getOSDTimeCallBack |function	| 获取OSD时间回调 |N|
+>你可以在初始化时，通过参数poster设置默认封面
+>实例初始化后可以调用设置封面方法再次更改封面
 
+```
+  player.setPoster(pictureUrl)
+  .then(()=>{
+    console.log("更改封面成功");
+  });
+```
 
-#### 方法集合
+#### 开启电子放大
 
-|方法名|类型|描述|使用示例|
-|:--|:--|:--|:--|
-|stop|	function| 结束播放|	`player.stop()`|
-|openSound|	String|	开启声音|`player.openSound()`|
-|closeSound	|String|关闭声音	|`player.closeSound()`|
-|startSave|	int	|开始录像|`player.startSave()`|
-|stopSave|int	|结束录像|`player.stopSave()`|
-|capturePicture|	function| 视频截图|	`player.capturePicture()`|
-|fullScreen|	function| 全屏（自动适配移动端pc端全屏）|	`player.fullScreen()`|
-|cancelFullScreen|	function| 取消全屏|	`player.cancelFullScreen()`|
-|getOSDTime|	function| 获取播放时间回调|	`player.getOSDTime()`|
-|startTalk|	function| 开始对讲|	`player.startTalk()`|
-|stopTalk|	function| 结束对讲|	`player.stopTalk()`|
+```
+  // 方式1
+  player.enableZoom();
+  // 方式2
+  player.enableZoom()
+  .then(()=>{
+    console.log("开启电子放大成功");
+  });
+```
+#### 关闭电子放大
+
+```
+  // 方式1
+  player.closeZoom();
+  // 方式2
+  player.closeZoom()
+  .then(()=>{
+    console.log("关闭电子放大成功");
+  });
+```
 
 ### 使用示例
 
