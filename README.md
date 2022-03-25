@@ -55,7 +55,7 @@ import  EZUIKit from 'ezuikit-js';
 ```
 #### 附录： 初始化参数说明
 
-<table>
+<table style="width:100%">
 <tr><th>参数名</th><th>类型</th><th>描述</th><th>是否必选</th></tr>
 <tr><td>id</td><td>String</td><td>播放器容器DOM的id</td><td>Y</td></tr>
 <tr><td>accessToken</td><td>String</td><td>授权过程获取的access_token</td><td>Y</td></tr>
