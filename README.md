@@ -85,7 +85,8 @@ import  EZUIKit from 'ezuikit-js';
 themeData将主题数据本地化，设置本地数据，需要删除template参数  
 你可以通过themeData修改按钮位置，颜色，头部底部颜色等配置。
 配置示例：
-```
+<pre><code>
+
 {
     "header": {
         "color": "#1890ff",
@@ -193,7 +194,8 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
         ]
     }
 }
-```
+</code></pre>
+
 </td><td>N</td></tr>
 <tr><td>plugin</td><td>String</td><td>按需加载插件，可选值： talk：对讲，示例：plugin:["talk"] </td><td>N</td></tr>
 <tr><td>handleSuccess</td><td>function</td><td>自动播放成功回调</td><td>N</td></tr>
