@@ -59,7 +59,7 @@ import  EZUIKit from 'ezuikit-js';
 <tr><th>参数名</th><th>类型</th><th>描述</th><th>是否必选</th></tr>
 <tr><td>id</td><td>String</td><td>播放器容器DOM的id</td><td>Y</td></tr>
 <tr><td>accessToken</td><td>String</td><td>授权过程获取的access_token</td><td>Y</td></tr>
-<tr><td>url</td><td>String</td><td>视频ezopen协议播放地址 详见：[ezopen协议](http://open.ys7.com/doc/zh/readme/ezopen.html)	</td><td>Y</td></tr>
+<tr><td>url</td><td>String</td><td>视频ezopen协议播放地址 详见：<a href="http://open.ys7.com/doc/zh/readme/ezopen.html" target="_blank">ezopen协议</a>	</td><td>Y</td></tr>
 <tr><td>audio</td><td>int</td><td>是否默认开启声音 1：打开（默认） 0：关闭	</td><td>N</td></tr>
 <tr><td>width</td><td>int</td><td>视频宽度，默认值为容器容器DOM宽度	</td><td>Y</td></tr>
 <tr><td>height</td><td>int</td><td>视频高度，默认值为容器容器DOM高度</td><td>Y</td></tr>
@@ -79,8 +79,10 @@ import  EZUIKit from 'ezuikit-js';
 <tr><td>pcRec</td><td>	*固定模板 按钮列表，颜色，底部头部背景色固定， 可用于pc端回放，如需<br />修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData<br />本地配置*</td></tr>
 <tr><td>mobileLive</td><td>	*固定模板  按钮列表，颜色，底部头部背景色固定，可用于移动端预<br />览，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData<br />本地配置*</td></tr>
 <tr><td>mobileRec</td><td>*固定模板 按钮列表，颜色，底部头部背景色固定， 可用于移动端回放，<br />如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData<br />本地配置*</td></tr>
-<tr><td>{{自定义themeId}}</td><td>（建议使用）开放平台提供了查询账号下主题列表，增加主题<br />，修改主题，删除主题接口。<br />你可以通过调用开放平台提供的接口自定义创建多个主题，根据主题Id动<br />态渲染头部，底部样式，按钮隐藏显示，排布及按钮样式<br />[接口示例（请导入postman查看示例）](https://resource.eziot.com/group2/M00/00/79/CtwQFmI8d_mAC8-eAAA1PBGvsds71.json)</td></tr>
-<tr><td>theme</td><td>自定义主题，（[开放平台控制台配置](https://open.ys7.com/console/ezopenIframe.html)）<br />（v0.3.0版本及以上支持，建议使用 自定义themeId，或者使用themeData本地<br />配置）;</td></tr>
+<tr><td>{{自定义themeId}}</td><td>（建议使用）开放平台提供了查询账号下主题列表，增加主题<br />，修改主题，删除主题接口。<br />你可以通过调用开放平台提供的接口自定义创建多个主题，根据主题Id动<br />态渲染头部，底部样式，按钮隐藏显示，排布及按钮样式<br />
+<a href="https://resource.eziot.com/group2/M00/00/79/CtwQFmI8d_mAC8-eAAA1PBGvsds71.json" target="_blank">接口示例下载（请导入postman查看示例）</a>
+</td></tr>
+<tr><td>theme</td><td>自定义主题，<a href="https://open.ys7.com/console/ezopenIframe.html" target="_blank">开放平台控制台配置</a><br />（v0.3.0版本及以上支持，建议使用 自定义themeId，或者使用themeData本地<br />配置）;</td></tr>
 </table>
 
 </td></tr>
