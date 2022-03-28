@@ -90,7 +90,22 @@ import  EZUIKit from 'ezuikit-js';
 <tr><th>参数名</th><th>类型</th><th>描述</th><th>是否必选</th></tr>
 <tr><td>id</td><td>String</td><td>播放器容器DOM的id</td><td>Y</td></tr>
 <tr><td>accessToken</td><td>String</td><td>授权过程获取的access_token</td><td>Y</td></tr>
-<tr><td>url</td><td>String</td><td>视频ezopen协议播放地址 详见：<a href="http://open.ys7.com/doc/zh/readme/ezopen.html" target="_blank">ezopen协议</a>	</td><td>Y</td></tr>
+<tr><td>url</td><td>String</td><td>
+
+#### 直播
+##### 标清
+ezopen://open.ys7.com/${设备序列号}/{通道号}.live<br/>
+##### 高清
+ezopen://open.ys7.com/${设备序列号}/{通道号}.hd.live<br/>
+
+#### 回放
+##### sd卡回放
+初始化参数 url值为：<br/>
+ezopen://open.ys7.com/${设备序列号}/{通道号}.rec?begin=yyyyMMddhhmmss
+##### 云存储回放
+初始化参数 url值为：<br/>
+ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhmmss
+视频ezopen协议播放地址 详见：<a href="http://open.ys7.com/doc/zh/readme/ezopen.html" target="_blank">ezopen协议</a>	</td><td>Y</td></tr>
 <tr><td>audio</td><td>int</td><td>是否默认开启声音 1：打开（默认） 0：关闭	</td><td>N</td></tr>
 <tr><td>width</td><td>int</td><td>视频宽度，默认值为容器容器DOM宽度	</td><td>Y</td></tr>
 <tr><td>height</td><td>int</td><td>视频高度，默认值为容器容器DOM高度</td><td>Y</td></tr>
@@ -240,20 +255,6 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 <tr><td>poster</td><td>String</td><td>视频默认封面 版本号> v0.4.6 </td><td>N</td></tr>
 </table>
 
-
-#### 直播
-##### 标清
-ezopen://open.ys7.com/${设备序列号}/{通道号}.live<br/>
-##### 高清
-ezopen://open.ys7.com/${设备序列号}/{通道号}.hd.live<br/>
-
-#### 回放
-##### sd卡回放
-初始化参数 url值为：<br/>
-ezopen://open.ys7.com/${设备序列号}/{通道号}.rec?begin=yyyyMMddhhmmss
-##### 云存储回放
-初始化参数 url值为：<br/>
-ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhmmss
 
 ### 方法调用
 > 同步方法（方式1）
