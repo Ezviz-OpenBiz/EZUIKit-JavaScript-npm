@@ -26115,19 +26115,10 @@ class Theme {
         this.themeData = this.jSPlugin.params.themeData;
         this.initThemeData();
         this.renderThemeData();
+        break;
       default:
         this.fetchThemeData(this.jSPlugin.themeId);
         break;
-      }
-    }
-    var isNeedRenderTimeLine = lodash.findIndex(this.themeData.header.btnList, (v)=>{
-      return (v.iconId === 'cloudRec' && v.isrender === 1) ||  (v.iconId === 'rec' && v.isrender === 1) ;
-    }) >= 0 || (this.isMobile &&matchEzopenUrl(jSPlugin.url).type.indexOf('rec') !== -1);
-    if (isNeedRenderTimeLine) {
-      if (this.isMobile) {
-        this.Rec = new MobileRec(jSPlugin);
-      } else {
-        this.Rec = new Rec(jSPlugin);
       }
     }
     if (!this.jSPlugin.Talk) {
@@ -26970,6 +26961,16 @@ class Theme {
           this.renderFooter(item.iconId, item.part);
         }
       });
+    }
+    var isNeedRenderTimeLine = lodash.findIndex(this.themeData.header.btnList, (v)=>{
+      return (v.iconId === 'cloudRec' && v.isrender === 1) ||  (v.iconId === 'rec' && v.isrender === 1) ;
+    }) >= 0 || (this.isMobile &&matchEzopenUrl(jSPlugin.url).type.indexOf('rec') !== -1);
+    if (isNeedRenderTimeLine) {
+      if (this.isMobile) {
+        this.Rec = new MobileRec(this.jSPlugin);
+      } else {
+        this.Rec = new Rec(this.jSPlugin);
+      }
     }
     //  监听全屏事件触发
     const fullscreenchange = () => {
