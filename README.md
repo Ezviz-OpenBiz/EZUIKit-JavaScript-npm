@@ -56,23 +56,18 @@ import  EZUIKit from 'ezuikit-js';
 #### tips
 为方便开发者快速接入  
 
-我们提供了测试accessToken,测试播放地址，以及提供了几种常用场景使用示例。  
+我们提供了测试accessToken,测试播放地址，并提供了几种常用场景使用示例。你可以通过使用示例，使用测试播放地址，测试accessToken，在你的应用快速接入。  
 
 <b>测试播放地址：</b> ezopen://open.ys7.com/G39444019/1.live  
 
-你可以通过以下地址获取到测试accessToken <a href="https://open.ys7.com/jssdk/ezopen/demo/token" target="_blank">获取测试accessToken</a>  
+你可以通过以下地址获取到测试accessToken <a href="https://open.ys7.com/jssdk/ezopen/demo/token" target="_blank">获取测试accessToken</a> 用来播放上述测试播放地址。 
 
 ##### 使用示例
-<b>基本使用：</b>  
-<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/base.html" target="_blank">基本使用示例</a>  
+<b>基本使用：</b>  <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/base.html" target="_blank">基本使用示例</a>  
 
-<b>自定义主题：</b>
-  
-<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/template.html" target="_blank">自定义主题示例</a>  
+<b>自定义主题：</b>  <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/template.html" target="_blank">自定义主题示例</a>  
 
-<b>本地主题配置：</b>
-  
-<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/themeData.html" target="_blank">本地主题配置示例</a>  
+<b>本地主题配置：</b>  <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/themeData.html" target="_blank">本地主题配置示例</a>  
 
 <b>PC端预览-固定主题：</b>
 <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/pcLive.html" target="_blank">PC端预览-固定主题示例</a>  
