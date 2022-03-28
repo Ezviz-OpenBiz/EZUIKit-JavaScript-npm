@@ -31,19 +31,26 @@
   </div>
   <script>
     var playr;
+    // 获取测试token
     fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
       .then(response => response.json())
       .then(res => {
         var accessToken = res.data.accessToken;
-        playr = new EZUIKit.EZUIKitPlayer({
-          id: 'video-container', // 视频容器ID
-          accessToken: accessToken,
-          url: 'ezopen://open.ys7.com/G39444019/1.live',
-          template: 'simple', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版; theme-可配置主题；
-          plugin: ['talk'],                       // 加载插件，talk-对讲
-          width: 600,
-          height: 400,
-        });
+        // 获取主题
+        fetch(`https://open.ys7.com/jssdk/ezopen/template/get?pageStart=1&pageSize=10&accessToken=${accessToken}`)
+          .then(response => response.json())
+          .then(res => {
+            var template = res.data.result[0].themeId;
+            playr = new EZUIKit.EZUIKitPlayer({
+              id: 'video-container', // 视频容器ID
+              accessToken: accessToken,
+              url: 'ezopen://open.ys7.com/G39444019/1.live',
+              template: template, // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版; theme-可配置主题；
+              plugin: ['talk'],                       // 加载插件，talk-对讲
+              width: 600,
+              height: 400,
+            });
+          })
       });
     function fullScreen() {
       var playPromise = playr.fullScreen();

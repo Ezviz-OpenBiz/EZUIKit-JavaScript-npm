@@ -13,6 +13,8 @@
     <h2>视频模式使用示例：</h2>
     <div id="video-container" style="width:600px;">
     </div>
+    <div id="video-container2" style="width:600px;">
+    </div>
     <div>
       <button onClick="play()">play</button>
       <button onClick="stop()">stop</button>
@@ -31,6 +33,7 @@
   </div>
   <script>
     var playr;
+    var playr2;
     fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
       .then(response => response.json())
       .then(res => {
@@ -39,7 +42,16 @@
           id: 'video-container', // 视频容器ID
           accessToken: accessToken,
           url: 'ezopen://open.ys7.com/G39444019/1.live',
-          template: 'simple', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版; theme-可配置主题；
+          template: 'pcLive', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版; theme-可配置主题；
+          plugin: ['talk'],                       // 加载插件，talk-对讲
+          width: 600,
+          height: 400,
+        });
+        playr2 = new EZUIKit.EZUIKitPlayer({
+          id: 'video-container2', // 视频容器ID
+          accessToken: "at.e0mnhu50d7bwohb40358mchq13aobjm2-6m2v78jd7m-1g22scv-lcn0rdqm1",
+          url: 'ezopen://open.ys7.com/G39444019/1.live',
+          template: 'pcLive', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版; theme-可配置主题；
           plugin: ['talk'],                       // 加载插件，talk-对讲
           width: 600,
           height: 400,

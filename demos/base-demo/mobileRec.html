@@ -11,7 +11,7 @@
 <body>
   <div className="demo">
     <h2>视频模式使用示例：</h2>
-    <div id="video-container" style="width:600px;">
+    <div id="video-container">
     </div>
     <div>
       <button onClick="play()">play</button>
@@ -38,11 +38,10 @@
         playr = new EZUIKit.EZUIKitPlayer({
           id: 'video-container', // 视频容器ID
           accessToken: accessToken,
-          url: 'ezopen://open.ys7.com/G39444019/1.live',
-          template: 'simple', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版; theme-可配置主题；
-          plugin: ['talk'],                       // 加载插件，talk-对讲
-          width: 600,
-          height: 400,
+          url: 'ezopen://open.ys7.com/G39444019/1.rec',
+          template: 'mobileRec', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版; theme-可配置主题；
+          width: 375,
+          height: 210,
         });
       });
     function fullScreen() {
