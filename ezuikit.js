@@ -27600,6 +27600,8 @@ class Monitor {
                           _this.opt.isReliesReady = true;
                         });
                       });
+                    },()=>{
+                      return !!window.adapter;
                     });
                   } // 创建DOM
 
