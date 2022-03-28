@@ -38,7 +38,7 @@ import  EZUIKit from 'ezuikit-js';
     var player = new EZUIKit.EZUIKitPlayer({
       id: 'video-container', // 视频容器ID
       accessToken: 'at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz',
-      url: 'ezopen://open.ys7.com/203751922/1.live',
+      url: 'ezopen://open.ys7.com/G39444019/1.live',
       width: 600,
       height: 400,
     })
@@ -50,9 +50,45 @@ import  EZUIKit from 'ezuikit-js';
       width: 600,
       height: 400,
       accessToken: 'at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz',
-      url: 'ezopen://open.ys7.com/203751922/1.rec'
+      url: 'ezopen://open.ys7.com/G39444019/1.rec'
     })
 ```
+#### tips
+为方便开发者快速接入  
+
+我们提供了测试accessToken,测试播放地址，以及提供了几种常用场景使用示例。  
+
+<b>测试播放地址：</b> ezopen://open.ys7.com/G39444019/1.live  
+
+你可以通过以下地址获取到测试accessToken <a href="https://open.ys7.com/jssdk/ezopen/demo/token" target="_blank">获取测试accessToken</a>  
+
+##### 使用示例
+<b>基本使用：</b>  
+<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/base.html" target="_blank">基本使用示例</a>  
+
+<b>自定义主题：</b>
+  
+<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/template.html" target="_blank">自定义主题示例</a>  
+
+<b>本地主题配置：</b>
+  
+<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/themeData.html" target="_blank">本地主题配置示例</a>  
+
+<b>PC端预览-固定主题：</b>
+<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/pcLive.html" target="_blank">PC端预览-固定主题示例</a>  
+
+<b>PC端回放-固定主题：</b>
+<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/pcRec.html" target="_blank">PC端回放-固定主题示例</a>  
+
+<b>移动端预览-固定主题：</b>
+<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/mobileLive.html" target="_blank">移动端预览-固定主题示例</a>  
+
+<b>移动端回放-固定主题：</b>
+<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/mobileRec.html" target="_blank">移动端回放-固定主题示例</a>  
+
+<b>单页面多实例(视频多窗口)：</b>
+<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/multi.html" target="_blank">单页面多实例(视频多窗口)示例</a>  
+
 #### 附录： 初始化参数说明
 
 <table>
