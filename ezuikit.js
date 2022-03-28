@@ -324,9 +324,16 @@ class Status {
   constructor(jSPlugin,id) {
     this.id = id;
     this.jSPlugin = jSPlugin;
+    this.state = {
+      play: false,
+      loading: false,
+    };
   }
   toString() {
     return `${this.coreX}-${this.coreY}`;
+  }
+  setPlayStatus(options) {
+    this.state = Object.assign(this.state, options);
   }
   loadingStart(id) {
     var oS = document.createElement('style');
@@ -24832,10 +24839,15 @@ class MobileRec {
       this.jSPlugin.changePlayUrl({
         begin: date,
         type: this.type
+      }).then(()=> {
+        setTimeout(()=>{
+          this.syncTimeLine();
+        }, 4000);
       });
     };
     const ontouchstart = () => {
       this.operating = true;
+      this.unSyncTimeLine();
       // if (currentTimer) {
       //   clearInterval(currentTimer)
       // }
@@ -24886,32 +24898,7 @@ class MobileRec {
       // $("#cloudType").attr("checked", recType == '2');
       // $("#cloudType .device svg").attr("checked", recType == '2');
     });
-    var dateFormat = function (now) {
-      var time = new Date(now);
-      var h = time.getHours();     //返回日期中的小时数（0到23）
-      var m = time.getMinutes(); //返回日期中的分钟数（0到59）
-      var s = time.getSeconds(); //返回日期中的秒数（0到59）
-      return (h > 9 ? h : '0' + h) + ':' + (m > 9 ? m : '0' + m) + ':' + (s > 9 ? s : '0' + s);
-    };
-    this.timer = setInterval(() => {
-      // 定时器
-      console.log("定时器", this.jSPlugin.getOSDTime());
-      if (this.operating) {
-        console.log("操作中");
-        return false;
-      }
-      this.jSPlugin.getOSDTime()
-        .then((data)=>{
-          if (data.data > 0) {
-            this.TimeLineOBJ.stepScrollTimeLine(dateFormat(data.data * 1000));
-          } else {
-            console.log("未找到当前获取播放时间，等待中...");
-          }
-        })
-        .catch((err)=>{
-          console.log("未找到当前获取播放时间，等待中...");
-        });
-    }, 1000);
+    this.syncTimeLine();
   }
   fetchDeviceRec() {
     const doRender = (result) => {
@@ -24957,23 +24944,32 @@ class MobileRec {
   }
 
   syncTimeLine() {
+    var dateFormat = function (now) {
+      var time = new Date(now);
+      var h = time.getHours();     //返回日期中的小时数（0到23）
+      var m = time.getMinutes(); //返回日期中的分钟数（0到59）
+      var s = time.getSeconds(); //返回日期中的秒数（0到59）
+      return (h > 9 ? h : '0' + h) + ':' + (m > 9 ? m : '0' + m) + ':' + (s > 9 ? s : '0' + s);
+    };
     if (this.timer) {
       clearInterval(this.timer);
     }
     this.timer = setInterval(() => {
-      var getOSDTimePromise = this.jSPlugin.getOSDTime();
-      getOSDTimePromise.then((v) => {
-        if (v == -1) {
-          console.log("获取播放时间错误");
-        } else {
-          if (v > 0) {
-            //console.log("获取播放时间", v, this.timeLine.run);
-            this.timeLine.run({ time: new Date(v > 1000000000000 ? v : v * 1000) });
-            //$(".current-time").text(new Date(new Date(v > 1000000000000 ? v : v * 1000)).Format('yyyy-MM-dd hh:mm:ss'))
+      // 定时器
+      if (this.operating) {
+        console.log("操作中");
+        return false;
+      }
+      this.jSPlugin.getOSDTime()
+        .then((res)=>{
+          if (res.data > 0) {
+            this.TimeLineOBJ.stepScrollTimeLine(dateFormat(res.data * 1000));
+          } else {
+            console.log("未找到当前获取播放时间，等待中...");
           }
-        }
-      })
-        .catch((err) => {
+        })
+        .catch((err)=>{
+          console.log("未找到当前获取播放时间，等待中...");
         });
     }, 1000);
   }
@@ -26964,7 +26960,7 @@ class Theme {
     }
     var isNeedRenderTimeLine = lodash.findIndex(this.themeData.header.btnList, (v)=>{
       return (v.iconId === 'cloudRec' && v.isrender === 1) ||  (v.iconId === 'rec' && v.isrender === 1) ;
-    }) >= 0 || (this.isMobile &&matchEzopenUrl(jSPlugin.url).type.indexOf('rec') !== -1);
+    }) >= 0 || (this.isMobile &&matchEzopenUrl(this.jSPlugin.url).type.indexOf('rec') !== -1);
     if (isNeedRenderTimeLine) {
       if (this.isMobile) {
         this.Rec = new MobileRec(this.jSPlugin);
@@ -29841,6 +29837,7 @@ class EZUIKitPlayer {
     this.jSPlugin.JS_Play(wsUrl, wsParams, 0).then(() => {
       console.log("播放成功");
       this.pluginStatus.loadingClear();
+      this.pluginStatus.setPlayStatus({play: true, loading: false});
       if (this.Theme) {
         this.Theme.setDecoderState({ play: true });
       }
@@ -29888,6 +29885,7 @@ class EZUIKitPlayer {
     });
   }
   play(options) {
+    this.pluginStatus.setPlayStatus({play: false, loading: true});
     this.playStartTime = new Date().getTime();
     this.Monitor.dclog({
       url: this.url,
@@ -29931,8 +29929,10 @@ class EZUIKitPlayer {
     return promise;
   }
   stop() {
+    this.pluginStatus.setPlayStatus({loading: true});
     return this.jSPlugin.JS_Stop(0).then(() => {
       console.log("停止成功");
+      this.pluginStatus.setPlayStatus({play: false,loading: false});
       if (this.Theme) {
         this.Theme.setDecoderState({ play: false });
       }
