@@ -397,6 +397,7 @@ class Status {
     loadingContainerDOM.appendChild(loadingItemContainer);
   }
   loadingSetText(opt) {
+    this.loadingClear();
     if (document.getElementById(`${this.id}-loading-item-0`)) {
       var textElement = document.getElementById(`${this.id}-loading-item-0`).childNodes[1];
       if(!textElement) {
@@ -24249,7 +24250,7 @@ TimeLine.prototype.setDateLine = function (news, defaultIndex) {
 
     this.primaryOffsetH();
     // 将当前播放时间片段传给父组件
-    this.getPalyParam({ current: news[defaultIndex].st });
+    //this.getPalyParam({ current: news[defaultIndex].st });
   } else {
     this.setState({
       availTimeLine: []
@@ -24840,9 +24841,7 @@ class MobileRec {
         begin: date,
         type: this.type
       }).then(()=> {
-        setTimeout(()=>{
-          this.syncTimeLine();
-        }, 4000);
+        this.syncTimeLine();
       });
     };
     const ontouchstart = () => {
@@ -24892,7 +24891,16 @@ class MobileRec {
       this.fetchDeviceRec();
       this.jSPlugin.changePlayUrl({
         type: this.type,
-        begin: `${new Date(this.date).Format('yyyMMdd000000')}`
+        begin: `${new Date(this.date).Format('yyyyMMdd')}000000`
+      })
+      .then(()=>{
+        console.log("切换类型成功");
+        this.syncTimeLine();
+      },(err)=>{
+        console.log("err",err);
+      })
+      .catch(err=>{
+        console.log(err);
       });
       // document.getElementById("cloudType").setAttribute("checked", true);
       // $("#cloudType").attr("checked", recType == '2');
@@ -27619,6 +27627,9 @@ class Monitor {
                 }
               }
               EZUIKit.opt = _this.opt;
+              if(window.EZUIKit) {
+                window.EZUIKit.opt = this.opt;
+              }
             }
             request(_this.opt.apiDomain, 'POST', {
               accessToken: _this.opt.accessToken,
@@ -28577,6 +28588,9 @@ class Monitor {
     console.log(this.opt);
     var _this = this;
     EZUIKit.opt = this.opt;
+    if(window.EZUIKit) {
+      window.EZUIKit.opt = this.opt;
+    }
     var apiSuccess = function(data) {
       if (data.code == 200) {
         var apiResult = data.data;
@@ -29951,11 +29965,18 @@ class EZUIKitPlayer {
             return this.play({
               accessToken: options.accessToken,
               url: url
+            }).then(() => {
+              resolve(url);
+            }).catch((err) => {
+              reject(url);
             });
           }
           this.play(url)
             .then(() => {
               resolve(url);
+            })
+            .catch((err) => {
+              reject(url);
             });
         })
         .catch((err) => {
@@ -29965,11 +29986,17 @@ class EZUIKitPlayer {
             return this.play({
               accessToken: options.accessToken,
               url: url
+            }).then(() => {
+              resolve(url);
+            }).catch((err) => {
+              reject(url);
             });
           }
           this.play(url)
             .then(() => {
               resolve(url);
+            }).catch((err) => {
+              reject(url);
             });
         });
     });
