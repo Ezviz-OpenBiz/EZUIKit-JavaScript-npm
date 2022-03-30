@@ -32,6 +32,8 @@ const addJs = (filepath, callback, isReadyFun) => {
     oJs.setAttribute("src", filepath);
     oJs.onload = callback;
     document.getElementsByTagName("head")[0].appendChild(oJs);
+  } else {
+    callback();
   }
 };
 const addCss = (filepath, callback) => {
@@ -397,7 +399,7 @@ class Status {
     loadingContainerDOM.appendChild(loadingItemContainer);
   }
   loadingSetText(opt) {
-    this.loadingClear();
+    this.loadingClearText();
     if (document.getElementById(`${this.id}-loading-item-0`)) {
       var textElement = document.getElementById(`${this.id}-loading-item-0`).childNodes[1];
       if(!textElement) {
@@ -407,9 +409,13 @@ class Status {
         loadingItemContainer.appendChild(textElement);
       }
       textElement.innerHTML = opt.text;
-      if (opt.color) {
-        textElement.style.color = opt.color;
-      }
+      textElement.style.color = opt.color || "#FFFFFF";
+    }
+  }
+  loadingClearText() {
+    var elements = document.getElementById(`${this.id}-loading-item-0`).childNodes;
+    if(elements.length > 1) {
+      elements[1].parentNode.removeChild(elements[1]);
     }
   }
   loadingClear() {
