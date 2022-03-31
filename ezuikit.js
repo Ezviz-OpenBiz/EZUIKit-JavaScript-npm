@@ -28249,6 +28249,7 @@ class Monitor {
               break;
               case 'stopTalk':
                 // window.stopTalk()
+				_this.stopTalk();
                 // params.stopTalk();
                 _this.openSound();
                 break;
@@ -30351,7 +30352,7 @@ class EZUIKitPlayer {
     this.Talk.startTalk();
   }
   stopTalk() {
-    this.Talk.startTalk();
+    this.Talk.stopTalk();
   }
   destroy() {
     var destroyRT = this.jSPlugin.JS_DestroyWorker(0);
