@@ -323,7 +323,7 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
   const capCallback = (data) => {
     console.log("data",data)
   }
-  EZOPENDemo.capturePicture('default',capCallback)
+  player.capturePicture('default',capCallback)
 ```
 #### 开始对讲
 
@@ -412,6 +412,12 @@ options参数说明
   .then(()=>{
     console.log("关闭电子放大成功");
   });
+```
+
+#### 重置画面宽高
+
+```
+  player.reSize(width, height);
 ```
 
 ### 使用示例
