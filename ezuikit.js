@@ -27634,7 +27634,7 @@ class Monitor {
               }
               EZUIKit.opt = _this.opt;
               if(window.EZUIKit) {
-                window.EZUIKit.opt = this.opt;
+                window.EZUIKit.opt = _this.opt;
               }
             }
             request(_this.opt.apiDomain, 'POST', {
@@ -28249,8 +28249,7 @@ class Monitor {
               break;
               case 'stopTalk':
                 // window.stopTalk()
-				_this.stopTalk();
-                // params.stopTalk();
+                _this.stopTalk();
                 _this.openSound();
                 break;
               case 'clickEventHandle':

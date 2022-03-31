@@ -10,26 +10,20 @@ class App extends React.Component{
     this.playr = null; //定义播放器
   }
   componentDidMount(){
-    this.playr = new EZUIKit.EZUIKitPlayer({
-      id: 'video-container', // 视频容器ID
-      accessToken: 'at.9ymd5rys4lk1zv6o2rtr51a624s9gl56-5fitodjuss-0tkvm8j-hras1ewfu',
-      url: 'ezopen://open.ys7.com/203751922/1.live',
-      template: 'security', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版；  
-      // 视频上方头部控件
-      // header: ['capturePicture','save','zoom'],            // 如果templete参数不为simple,该字段将被覆盖
-      // // 视频下方底部控件
-      // footer: ['talk','broadcast','hd','fullScreen'],      // 如果template参数不为simple,该字段将被覆盖
-      audio: 1, // 是否默认开启声音 0 - 关闭 1 - 开启
-      openSoundCallBack: (data) => console.log("开启声音回调",data),
-      closeSoundCallBack: (data) => console.log("关闭声音回调",data),
-      startSaveCallBack: (data) => console.log("开始录像回调",data),
-      stopSaveCallBack: (data) => console.log("录像回调",data),
-      capturePictureCallBack: (data) => console.log("截图成功回调",data),
-      fullScreenCallBack: (data) => console.log("全屏回调",data),
-      getOSDTimeCallBack: (data) => console.log("获取OSDTime回调",data),
-      width:600,
-      height:400,
-    })
+    fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
+    .then(response => response.json())
+    .then(res => {
+      var accessToken = res.data.accessToken;
+      this.player = new EZUIKit.EZUIKitPlayer({
+        id: 'video-container', // 视频容器ID
+        accessToken: accessToken,
+        url: 'ezopen://open.ys7.com/G39444019/1.live',
+        template: 'simple', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版; theme-可配置主题；
+        plugin: ['talk'],                       // 加载插件，talk-对讲
+        width: 600,
+        height: 400,
+      });
+    });
   }
   render(){
     return(
