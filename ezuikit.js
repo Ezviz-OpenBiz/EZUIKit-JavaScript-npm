@@ -26170,6 +26170,44 @@ class Theme {
         this.renderThemeData();
       });
   }
+  changeTheme(options) {
+    if(typeof options === 'string') {
+      switch (this.jSPlugin.themeId) {
+        case 'pcLive':
+          this.themeData = pcLiveData.data;
+          this.initThemeData();
+          this.renderThemeData();
+          break;
+        case 'pcRec':
+          this.themeData = pcRecData.data;
+          this.initThemeData();
+          this.renderThemeData();
+          break;
+        case 'mobileLive':
+          this.themeData = mobileLiveData.data;
+          this.initThemeData();
+          this.renderThemeData();
+          break;
+        case 'mobileRec':
+          this.themeData = mobileRecData.data;
+          this.initThemeData();
+          this.renderThemeData();
+          break;
+        case 'themeData':
+          this.themeData = this.jSPlugin.params.themeData;
+          this.initThemeData();
+          this.renderThemeData();
+          break;
+        default:
+          this.fetchThemeData(options);
+          break;
+        }
+    } else if (typeof options === 'object') {
+      this.themeData = options;
+      this.initThemeData();
+      this.renderThemeData();
+    }
+  }
   renderThemeData() {
     const { header, footer } = this.themeData;
     if (this.isNeedRenderHeader && header) {
@@ -26890,10 +26928,10 @@ class Theme {
     this.header = defaultTheme.header;
     this.footer = defaultTheme.footer;
     this.isNeedRenderHeader = lodash.findIndex(header.btnList, (v)=>{
-      return v.isrender === 1;
+      return v.isrender > 0;
     }) >= 0;
     this.isNeedRenderFooter = lodash.findIndex(footer.btnList, (v)=>{
-      return v.isrender === 1;
+      return v.isrender > 0;
     }) >= 0;
     if (this.isNeedRenderHeader) {
       if (!document.getElementById(`${this.jSPlugin.id}-headControl`)) {
@@ -26972,9 +27010,9 @@ class Theme {
         }
       });
     }
-    var isNeedRenderTimeLine = lodash.findIndex(this.themeData.header.btnList, (v)=>{
+    var isNeedRenderTimeLine = (lodash.findIndex(this.themeData.header.btnList, (v)=>{
       return (v.iconId === 'cloudRec' && v.isrender === 1) ||  (v.iconId === 'rec' && v.isrender === 1) ;
-    }) >= 0 || (this.isMobile &&matchEzopenUrl(this.jSPlugin.url).type.indexOf('rec') !== -1);
+    }) >= 0 || (this.isMobile && matchEzopenUrl(this.jSPlugin.url).type.indexOf('rec') !== -1)) && !this.jSPlugin.disabledTimeLine;
     if (isNeedRenderTimeLine) {
       if (this.isMobile) {
         this.Rec = new MobileRec(this.jSPlugin);
@@ -29356,6 +29394,7 @@ class EZUIKitPlayer {
       this.audio = true;
       this.poster = params.poster;
       this.speed = 1;
+      this.disabledTimeLine = false;
       this.env = {
         domain: "https://open.ys7.com"
       };
@@ -29365,6 +29404,9 @@ class EZUIKitPlayer {
       }
       if (typeof params.audio !== 'undefined') {
         this.audio = params.audio;
+      }
+      if (typeof params.disabledTimeLine !== 'undefined') {
+        this.disabledTimeLine = params.disabledTimeLine;
       }
       addJs(`${this.staticPath}/js/jsPlugin-4.0.2.min.js`, () => {
         if (autoplay) {
