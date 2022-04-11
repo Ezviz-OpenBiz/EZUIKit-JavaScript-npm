@@ -25448,6 +25448,7 @@ class MobilePtz {
     mobileContainer.style = `display:inline-block;width: ${this.jSPlugin.width}px;text-align:center;`;
     var mobileContainerTitle = document.createElement('div');
     mobileContainerTitle.className = "live-ptz-title";
+    mobileContainerTitle.id = "live-ptz-title";
     mobileContainerTitle.innerHTML = "云台控制";
     const ptzWrap = document.createElement('div');
     ptzWrap.id = "mobile-ez-ptz-item";
@@ -26134,14 +26135,6 @@ class Theme {
     if (!this.jSPlugin.Talk) {
       this.jSPlugin.Talk = new Talk(this.jSPlugin);
     }
-    if (matchEzopenUrl(jSPlugin.url).type === 'live') {
-      if (this.isMobile) {
-        this.MobilePtz = new MobilePtz(jSPlugin);
-        this.Ptz = new Ptz(jSPlugin);
-      } else {
-        this.Ptz = new Ptz(jSPlugin);
-      }
-    }
   }
   fetchThemeData(themeId) {
     const url = `${this.jSPlugin.env.domain}/jssdk/ezopen/template/getDetail?accessToken=${this.jSPlugin.accessToken}&id=${themeId}`;
@@ -26172,6 +26165,7 @@ class Theme {
   }
   changeTheme(options) {
     if(typeof options === 'string') {
+      this.jSPlugin.themeId = options;
       switch (this.jSPlugin.themeId) {
         case 'pcLive':
           this.themeData = pcLiveData.data;
@@ -26933,6 +26927,11 @@ class Theme {
     this.isNeedRenderFooter = lodash.findIndex(footer.btnList, (v)=>{
       return v.isrender > 0;
     }) >= 0;
+    ["date-switch-container-wrap","rec-type-container-wrap","mobile-rec-wrap","mobile-ez-ptz-container"].forEach((item,index)=> {
+      if(document.getElementById(item)) {
+        document.getElementById(item).parentElement.removeChild(document.getElementById(item));
+      }
+    });
     if (this.isNeedRenderHeader) {
       if (!document.getElementById(`${this.jSPlugin.id}-headControl`)) {
         const headerContainer = document.createElement('div');
@@ -27019,6 +27018,15 @@ class Theme {
       } else {
         this.Rec = new Rec(this.jSPlugin);
       }
+    }
+    var isNeedRenderPTZ = (lodash.findIndex(this.themeData.header.btnList, (v)=>{
+      return (v.iconId === 'pantile' && v.isrender === 1);
+    }) >= 0 || (this.isMobile && matchEzopenUrl(this.jSPlugin.url).type.indexOf('live') !== -1)) && !this.jSPlugin.disabledPTZ;
+    if (isNeedRenderPTZ) {
+      this.MobilePtz = new MobilePtz(this.jSPlugin);
+      this.Ptz = new Ptz(this.jSPlugin);
+    } else {
+      this.Ptz = new Ptz(this.jSPlugin);
     }
     //  监听全屏事件触发
     const fullscreenchange = () => {

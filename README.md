@@ -109,7 +109,7 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhm
 <tr><td>audio</td><td>int</td><td>是否默认开启声音 1：打开（默认） 0：关闭	</td><td>N</td></tr>
 <tr><td>width</td><td>int</td><td>视频宽度，默认值为容器容器DOM宽度	</td><td>Y</td></tr>
 <tr><td>height</td><td>int</td><td>视频高度，默认值为容器容器DOM高度</td><td>Y</td></tr>
-<tr><td>templete</td><td>String</td><td>  
+<tr><td>template</td><td>String</td><td>  
 
 
 <table style="display:inline-block;width:700px">
