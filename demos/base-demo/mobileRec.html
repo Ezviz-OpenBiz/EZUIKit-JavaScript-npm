@@ -23,8 +23,8 @@
       <button onClick="closeSound()">closeSound</button>
       <button onClick="startSave()">startSave</button>
       <button onClick="stopSave()">stopSave</button>
-      <button onClick="startTalk()">开始对讲</button>
-      <button onClick="stopTalk()">结束对讲</button>
+      <button onClick="ezopenStartTalk()">开始对讲</button>
+      <button onClick="ezopenStopTalk()">结束对讲</button>
       <button onClick="fullScreen()">全屏</button>
     </div>
     <p style="font-style: italic;">播放多个视频，可初始化多个实例，参考：/demos/base-demo/multi-demo</p>
@@ -103,6 +103,12 @@
       stopSavePromise.then((data) => {
         console.log("promise 获取 数据", data)
       })
+    }
+    function ezopenStartTalk() {
+      playr.startTalk();
+    }
+    function ezopenStopTalk() {
+      playr.stopTalk();
     }
   </script>
 </body>
