@@ -25310,6 +25310,9 @@ class Talk {
   }
   stopTalk() {
     window.stopTalk();
+    if(document.getElementById("myaudio") && document.getElementById("myaudio").srcObject) {
+      document.getElementById("myaudio").srcObject.getTracks()[0].stop();
+    }
   }
 }
 
@@ -29476,7 +29479,7 @@ class EZUIKitPlayer {
             });
           });
         }
-      },()=>{
+      }, () => {
         return !!window.JSPlugin;
       });
       if ((params.plugin && params.plugin.indexOf("talk") !== -1)) {
@@ -29594,9 +29597,9 @@ class EZUIKitPlayer {
       var apiUrl = apiDomain + "/api/lapp/live/url/ezopen";
       var data = new FormData();
       data.append("ezopen", url);
-      data.append("isFlv", false);
+      data.append("isFlv", "false");
       data.append("userAgent", window.navigator.userAgent);
-      data.append("isHttp", false);
+      data.append("isHttp", "false");
       data.append("accessToken", accessToken);
       fetch(apiUrl, {
         method: "POST",
@@ -29907,7 +29910,7 @@ class EZUIKitPlayer {
     this.jSPlugin.JS_Play(wsUrl, wsParams, 0).then(() => {
       console.log("播放成功");
       this.pluginStatus.loadingClear();
-      this.pluginStatus.setPlayStatus({play: true, loading: false});
+      this.pluginStatus.setPlayStatus({ play: true, loading: false });
       if (this.Theme) {
         this.Theme.setDecoderState({ play: true });
       }
@@ -29955,7 +29958,7 @@ class EZUIKitPlayer {
     });
   }
   play(options) {
-    this.pluginStatus.setPlayStatus({play: false, loading: true});
+    this.pluginStatus.setPlayStatus({ play: false, loading: true });
     this.playStartTime = new Date().getTime();
     this.Monitor.dclog({
       url: this.url,
@@ -29999,10 +30002,10 @@ class EZUIKitPlayer {
     return promise;
   }
   stop() {
-    this.pluginStatus.setPlayStatus({loading: true});
+    this.pluginStatus.setPlayStatus({ loading: true });
     return this.jSPlugin.JS_Stop(0).then(() => {
       console.log("停止成功");
-      this.pluginStatus.setPlayStatus({play: false,loading: false});
+      this.pluginStatus.setPlayStatus({ play: false, loading: false });
       if (this.Theme) {
         this.Theme.setDecoderState({ play: false });
       }
@@ -30270,15 +30273,15 @@ class EZUIKitPlayer {
           type: "handleError"
         });
       }
+      return new Promise((resolve, reject) => {
+        this.speed = speed;
+        reject({ code: -1, data: { speed: speed, result: "播放速度最大为4倍速度" } });
+      });
     }
     var fastRT = this.jSPlugin.JS_Fast(0);
-    if (isPromise(fastRT)) {
+    return new Promise((resolve) => {
       this.speed = speed;
-      return fastRT;
-    }
-    return new Promise(function (resolve) {
-      this.speed = speed;
-      resolve(fastRT);
+      resolve({ code: 0, data: { speed: speed, result: fastRT } });
     });
   }
   slow() {
@@ -30296,16 +30299,15 @@ class EZUIKitPlayer {
           type: "handleError"
         });
       }
+      return new Promise((resolve, reject) => {
+        this.speed = speed;
+        reject({ code: -1, data: { speed: speed, result: "播放速度最小为1倍速度" } });
+      });
     }
     var slowRT = this.jSPlugin.JS_Slow(0);
-    console.log("slowRT", slowRT);
-    if (isPromise(slowRT)) {
+    return new Promise((resolve) => {
       this.speed = speed;
-      return slowRT;
-    }
-    return new Promise(function (resolve) {
-      this.speed = speed;
-      resolve(slowRT);
+      resolve({ code: 0, data: { speed: speed, result: slowRT } });
     });
   }
   seek(startTime, endTime) {

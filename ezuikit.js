@@ -25310,6 +25310,9 @@ class Talk {
   }
   stopTalk() {
     window.stopTalk();
+    if(document.getElementById("myaudio") && document.getElementById("myaudio").srcObject) {
+      document.getElementById("myaudio").srcObject.getTracks()[0].stop();
+    }
   }
 }
 
@@ -29594,9 +29597,9 @@ class EZUIKitPlayer {
       var apiUrl = apiDomain + "/api/lapp/live/url/ezopen";
       var data = new FormData();
       data.append("ezopen", url);
-      data.append("isFlv", false);
+      data.append("isFlv", "false");
       data.append("userAgent", window.navigator.userAgent);
-      data.append("isHttp", false);
+      data.append("isHttp", "false");
       data.append("accessToken", accessToken);
       fetch(apiUrl, {
         method: "POST",

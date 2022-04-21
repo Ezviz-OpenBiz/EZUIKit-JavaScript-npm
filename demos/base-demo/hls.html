@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>Document</title>
+  <script src="./ezuikit.js"></script>
+</head>
+
+<body>
+  <div className="demo">
+    <h2>视频模式使用示例：</h2>
+    <video id="hlsId" autoplay controls src="https://open.ys7.com/v3/openlive/C78957921_1_2.m3u8?expire=1680953107&id=434433876120637440&t=007a292c63640f6de88c92e43b5d72233f6b1ed5d69560122ba2ac294d01237e&ev=100"></video>
+    <p style="font-style: italic;">播放多个视频，可初始化多个实例，参考：/demos/base-demo/multi-demo</p>
+  </div>
+  <script>
+    var hlsDemo = new EZUIKit.HLS("hlsId","https://hls01open.ys7.com/openlive/6e0b2be040a943489ef0b9bb344b96b8.m3u8");
+  </script>
+</body>
+
+</html>
