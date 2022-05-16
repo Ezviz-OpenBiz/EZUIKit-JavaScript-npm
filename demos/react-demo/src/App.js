@@ -14,7 +14,7 @@ class App extends React.Component{
     .then(response => response.json())
     .then(res => {
       var accessToken = res.data.accessToken;
-      this.player = new EZUIKit.EZUIKitPlayer({
+      this.playr = new EZUIKit.EZUIKitPlayer({
         id: 'video-container', // 视频容器ID
         accessToken: accessToken,
         url: 'ezopen://open.ys7.com/G39444019/1.live',
