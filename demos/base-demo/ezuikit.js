@@ -27754,7 +27754,7 @@ var Talk = /*#__PURE__*/function () {
 
             if (urlList.length === 2) {
               // 国标设备
-              var talk = "talk://" + window.EZUIKit.opt.deviceSerial + ":0:" + window.EZUIKit.opt.channelNo + ":cas.ys7.com:6500";
+              var talk = "talk?dev=" + window.EZUIKit.opt.deviceSerial + "&chann=" + window.EZUIKit.opt.channelNo + "&encodetype=2";
               window.EZUIKit.opt.talkLink = window.EZUIKit.opt.ttsUrl.split("?")[0] + "/" + talk;
               window.EZUIKit.opt.talkType = "gb28181";
             } else {
