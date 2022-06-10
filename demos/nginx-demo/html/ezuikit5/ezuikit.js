@@ -31878,12 +31878,6 @@ var matchTemplate = function matchTemplate(templateName, params) {
   }
 };
 
-var isVersion2Available = function isVersion2Available() {
-  var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  var isSharedArrayBuffer = window.SharedArrayBuffer;
-  return isSharedArrayBuffer && !isMobile;
-};
-
 var EZUIKitPlayer = /*#__PURE__*/function () {
   function EZUIKitPlayer(params) {
     var _this = this;
@@ -31918,13 +31912,11 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       this.poster = params.poster;
       this.speed = 1;
       this.disabledTimeLine = false;
-      this.disabledPTZ = false;
-      this.enableSharedArrayBufferGuide = false;
       this.capacity = {};
       this.env = {
         domain: "https://open.ys7.com"
       };
-      this.staticPath = isVersion2Available() ? "https://open.ys7.com/assets/ezuikit_v5.0" : "https://open.ys7.com/assets/ezuikit_v4.0";
+      this.staticPath = !!window.SharedArrayBuffer ? "https://open.ys7.com/assets/ezuikit_v5.0" : "https://open.ys7.com/assets/ezuikit_v4.0";
 
       if (typeof params.staticPath === 'string') {
         this.staticPath = params.staticPath;
@@ -31938,63 +31930,11 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         this.disabledTimeLine = params.disabledTimeLine;
       }
 
-      if (typeof params.disabledPTZ !== 'undefined') {
-        this.disabledPTZ = params.disabledPTZ;
-      }
-
-      if (typeof params.enableSharedArrayBufferGuide !== 'undefined') {
-        this.enableSharedArrayBufferGuide = params.enableSharedArrayBufferGuide;
-      }
-
       var pluginUrl = "".concat(this.staticPath, "/js/jsPlugin-4.0.2.min.js");
 
-      if (isVersion2Available()) {
+      if (!!window.SharedArrayBuffer) {
         console.log("启用多线程解析视频");
         pluginUrl = "".concat(this.staticPath, "/jsPlugin-2.0.0.min.js");
-      } else {
-        // 是否引导用户开启谷歌实验室 Google Labs 特性
-        //enableSharedArrayBufferGuide
-        var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-        var getChromeVersion = function getChromeVersion() {
-          var arr = navigator.userAgent.split(' ');
-          var chromeVersion = '';
-
-          for (var i = 0; i < arr.length; i++) {
-            if (/chrome/i.test(arr[i])) {
-              chromeVersion = arr[i];
-            }
-          }
-
-          if (chromeVersion) {
-            return Number(chromeVersion.split('/')[1].split('.')[0]);
-          }
-
-          return false;
-        }; // pc端 谷歌浏览器 版本92 ~ 105
-
-
-        if (!isMobile && 91 < getChromeVersion < 106 && this.enableSharedArrayBufferGuide) {
-          console.log("提示用户开启谷歌实验室特性");
-          var wapDomId = "".concat(this.id, "-wrap");
-          var guideDom = document.createElement("div");
-          var guideSpan = document.createElement("span");
-          guideSpan.innerHTML = "您当前浏览器可以开启谷歌实验室多线程特性，获取更好播放体验，避免浏览器卡顿及崩溃,详见";
-          guideDom.appendChild(guideSpan);
-          var guideLink = document.createElement("a");
-          guideLink.href = "https://open.ys7.com/help/384";
-          guideLink.setAttribute("target", "_blank");
-          guideDom.appendChild(guideLink);
-          guideLink.innerHTML = "开启说明"; //guideDom.innerHTML = "您的浏览器当前使用单进程播放视频，可能因内存占用过高导致浏览器卡顿,您可参考·谷歌浏览器开启多线程（链接）·开启谷歌实验室多线程特性，获取更好播放体验";
-
-          guideDom.id = "".concat(this.id, "-guide");
-          guideDom.style = "font-size:12px;color:red;";
-          setTimeout(function () {
-            if (document.getElementById(wapDomId)) {
-              document.getElementById(wapDomId).insertBefore(guideDom, document.getElementById(_this.id));
-            }
-          }, 5000);
-        }
       }
 
       addJs(pluginUrl, function () {
@@ -33232,9 +33172,9 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           var end = defaultTime.length;
           var standardTime = time + defaultTime.substring(start, end);
           return standardTime.slice(0, 8) + 'T' + standardTime.slice(8) + 'Z';
+        } else {
+          throw new Error('回放时间格式有误，请确认');
         }
-
-        throw new Error('回放时间格式有误，请确认');
       }
 
       var seekRT = this.jSPlugin.JS_Seek(0, startTime, endTime);

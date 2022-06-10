@@ -1,0 +1,15 @@
+2020/04/01 17:01:54 [error] 9760#9608: *2 CreateFile() "D:\tools\nginx-1.14.2/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/"
+2020/04/01 17:02:50 [notice] 14288#1292: signal process started
+2022/05/31 11:17:25 [error] 12952#13252: *1 CreateFile() "D:\work\jssdk\jssdk-svn\ezuikit\dist\nginx-1.14.2/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/"
+2022/05/31 11:18:31 [notice] 5964#16508: signal process started
+2022/05/31 11:27:09 [notice] 3476#1132: signal process started
+2022/05/31 11:27:09 [error] 3476#1132: CreateFile() "D:\work\jssdk\jssdk-svn\ezuikit\dist\nginx-1.14.2/logs/nginx.pid" failed (2: The system cannot find the file specified)
+2022/05/31 11:27:26 [notice] 17920#17924: signal process started
+2022/05/31 11:27:26 [error] 17920#17924: CreateFile() "D:\work\jssdk\jssdk-svn\ezuikit\dist\nginx-1.14.2/logs/nginx.pid" failed (2: The system cannot find the file specified)
+2022/05/31 11:27:47 [notice] 18408#18412: signal process started
+2022/05/31 12:25:37 [notice] 16256#7740: signal process started
+2022/05/31 12:28:03 [notice] 6492#13188: signal process started
+2022/05/31 14:24:13 [notice] 1284#11668: signal process started
+2022/06/01 21:17:25 [error] 3132#16392: *1 CreateFile() "D:\work\jssdk\jssdk-svn\ezuikit-jsv5\demos\nginx-demo/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/ezuikit5/"
+2022/06/01 22:32:05 [error] 3132#16392: *22 CreateFile() "D:\work\jssdk\jssdk-svn\ezuikit-jsv5\demos\nginx-demo/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/ezuikit5/"
+2022/06/01 22:32:06 [error] 3132#16392: *22 CreateFile() "D:\work\jssdk\jssdk-svn\ezuikit-jsv5\demos\nginx-demo/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/ezuikit5/"
