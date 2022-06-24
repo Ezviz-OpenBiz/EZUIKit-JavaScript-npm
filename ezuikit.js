@@ -23755,7 +23755,7 @@ Janus$1.init = function (options) {
     } else if (Janus$1.webRTCAdapter.browserDetails.browser === 'chrome' && Janus$1.webRTCAdapter.browserDetails.version < 72) {
       // Chrome does, but it's only usable from version 72 on
       Janus$1.unifiedPlan = false;
-    } else if (!('currentDirection' in RTCRtpTransceiver.prototype)) {
+    } else if (typeof RTCRtpTransceiver !== 'undefined' && !('currentDirection' in RTCRtpTransceiver.prototype)) {
       // Safari supports addTransceiver() but not Unified Plan when
       // currentDirection is not defined (see codepen above)
       Janus$1.unifiedPlan = false;
@@ -30796,6 +30796,27 @@ var Monitor = /*#__PURE__*/function () {
             }
 
             break;
+
+          case 'iframeFullScreen':
+            if (id == event.data.id) {
+              var requestFullScreen = function requestFullScreen(element) {
+                var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+
+                if (requestMethod) {
+                  requestMethod.call(element);
+                } else if (typeof window.ActiveXObject !== "undefined") {
+                  var wscript = new ActiveXObject("WScript.Shell");
+
+                  if (wscript !== null) {
+                    wscript.SendKeys("{F11}");
+                  }
+                }
+              };
+
+              requestFullScreen(document.getElementById("EZUIKitPlayer-" + event.data.id));
+            }
+
+            break;
         }
       }
     }); // 全屏变化回调
@@ -31223,6 +31244,18 @@ var Monitor = /*#__PURE__*/function () {
   };
 
   EZUIKitPlayer.prototype.changePlayUrl = function (data) {
+    if (data.deviceSerial) {
+      this.opt.deviceSerial = data.deviceSerial;
+    }
+
+    if (data.channelNo) {
+      this.opt.channelNo = data.channelNo;
+    }
+
+    if (data.accessToken) {
+      this.opt.accessToken = data.accessToken;
+    }
+
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage({
@@ -32106,20 +32139,40 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       }
 
       var initDecoder = function initDecoder(resolve, reject) {
-        var jSPlugin = new window.JSPlugin({
-          szId: id,
-          iType: 2,
-          iWidth: width,
-          iHeight: height,
-          iMaxSplit: 1,
-          iCurrentSplit: 1,
-          szBasePath: "",
-          staticPath: params.staticPath,
-          oStyle: {
-            border: "none",
-            background: "#000000"
-          }
-        });
+        var jSPlugin;
+
+        if (isVersion2Available()) {
+          jSPlugin = new window.JSPlugin({
+            szId: id,
+            iType: 2,
+            iWidth: width,
+            iHeight: height,
+            iMaxSplit: 1,
+            iCurrentSplit: 1,
+            szBasePath: "",
+            staticPath: params.staticPath,
+            oStyle: {
+              border: "none",
+              background: "#000000"
+            }
+          });
+        } else {
+          jSPlugin = new window.JSPlugin({
+            szId: id,
+            iType: 2,
+            iWidth: width,
+            iHeight: height,
+            iMaxSplit: 1,
+            iCurrentSplit: 1,
+            szBasePath: "",
+            staticPath: params.staticPath,
+            oStyle: {
+              border: "none",
+              background: "#000000"
+            }
+          });
+        }
+
         jSPlugin.EventCallback = {
           loadEventHandler: function loadEventHandler() {},
           zoomEventResponse: function
