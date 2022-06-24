@@ -106,7 +106,7 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.rec?begin=yyyyMMddhhmmss
 初始化参数 url值为：<br/>
 ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhmmss
 视频ezopen协议播放地址 详见：<a href="http://open.ys7.com/doc/zh/readme/ezopen.html" target="_blank">ezopen协议</a>	</td><td>Y</td></tr>
-<tr><td>audio</td><td>int</td><td>是否默认开启声音 1：打开（默认） 0：关闭	</td><td>N</td></tr>
+<tr><td>audio</td><td>boolean</td><td>是否默认开启声音 true：打开（默认） false：关闭	</td><td>N</td></tr>
 <tr><td>width</td><td>int</td><td>视频宽度，默认值为容器容器DOM宽度	</td><td>Y</td></tr>
 <tr><td>height</td><td>int</td><td>视频高度，默认值为容器容器DOM高度</td><td>Y</td></tr>
 <tr><td>template</td><td>String</td><td>  
