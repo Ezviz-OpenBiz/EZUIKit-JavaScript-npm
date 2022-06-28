@@ -11,11 +11,13 @@
 <body>
   <div className="demo">
     <h2>视频模式使用示例：</h2>
-    <video id="hlsId" autoplay controls src="https://open.ys7.com/v3/openlive/C78957921_1_2.m3u8?expire=1680953107&id=434433876120637440&t=007a292c63640f6de88c92e43b5d72233f6b1ed5d69560122ba2ac294d01237e&ev=100"></video>
-    <p style="font-style: italic;">播放多个视频，可初始化多个实例，参考：/demos/base-demo/multi-demo</p>
+    <video id="hlsId" autoplay controls style="width: 600px;height:400px"></video>
+    <video id="hlsId2" autoplay controls style="width: 600px;height:400px"></video>
   </div>
   <script>
-    var hlsDemo = new EZUIKit.HLS("hlsId","https://hls01open.ys7.com/openlive/6e0b2be040a943489ef0b9bb344b96b8.m3u8");
+    var hlsDemo = new EZUIKit.HLS("hlsId","https://open.ys7.com/v3/openlive/C78957921_1_2.m3u8?expire=1687488306&id=461844489422516224&t=96ea4ce49d2ea4f2f65d045edbe8fa1a51ef9fac6f38e150052bc64a91c27db7&ev=100");
+
+    var hlsDemo2 = new EZUIKit.HLS("hlsId2","https://open.ys7.com/v3/openlive/G39444019_1_2.m3u8?expire=1687487466&id=461840962679742464&t=c076d5a5ad56090e919a6a2500b96169c20a77874cce866a87a7d65e493e6f2f&ev=100");
   </script>
 </body>
 

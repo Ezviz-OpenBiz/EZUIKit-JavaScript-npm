@@ -319,13 +319,15 @@ var HLS = /*#__PURE__*/function () {
 
     _classCallCheck$1(this, HLS);
 
-    addJs("https://open.ys7.com/sdk/js/2.0/js/hls.min.js", function () {
+    addJs("https://open.ys7.com/assets/ezuikit_v3.4/js/hls.js", function () {
       console.log("加载hls.min.js成功", window.Hls);
       console.log("isSupportHls", window.Hls.isSupported());
 
       if (window.Hls.isSupported()) {
         _this.initHLS(videoId, url);
       }
+    }, function () {
+      return !!window.Hls;
     });
   }
 
@@ -31912,9 +31914,40 @@ var matchTemplate = function matchTemplate(templateName, params) {
 };
 
 var isVersion2Available = function isVersion2Available() {
+  var ua = window.navigator.userAgent.toLowerCase(); //获取用户端信息
+
+  var info = {
+    sa: /version.*safari/.test(ua),
+    //匹配Safari浏览器
+    ch: /chrome/.test(ua),
+    //匹配Chrome浏览器
+    ff: /gecko/.test(ua) && !/webkit/.test(ua) //匹配Firefox浏览器
+
+  };
   var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  var isSharedArrayBuffer = window.SharedArrayBuffer;
-  return isSharedArrayBuffer && !isMobile;
+
+  if (isMobile) {
+    return false;
+  } else if (info.ch) {
+    var getChromeVersion = function getChromeVersion() {
+      var arr = window.navigator.userAgent.split(' ');
+      var chromeVersion = '';
+
+      for (var i = 0; i < arr.length; i++) {
+        if (/chrome/i.test(arr[i])) chromeVersion = arr[i];
+      }
+
+      if (chromeVersion) {
+        return Number(chromeVersion.split('/')[1].split('.')[0]);
+      } else {
+        return false;
+      }
+    };
+
+    return getChromeVersion() > 91 && !!window.SharedArrayBuffer;
+  }
+
+  return false;
 };
 
 var EZUIKitPlayer = /*#__PURE__*/function () {
