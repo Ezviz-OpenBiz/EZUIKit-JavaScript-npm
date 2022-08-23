@@ -17,6 +17,7 @@
       <button onClick="play()">play</button>
       <button onClick="stop()">stop</button>
       <button onClick="getOSDTime()">getOSDTime</button>
+      <button onClick="getOSDTime2()">getOSDTime2</button>
       <button onClick="capturePicture()">capturePicture</button>
       <button onClick="openSound()">openSound</button>
       <button onClick="closeSound()">closeSound</button>
@@ -68,6 +69,12 @@
         console.log("promise 获取 数据", data)
       })
     }
+    function getOSDTime2() {
+      var getOSDTimePromise = playr2.getOSDTime();
+      getOSDTimePromise.then((data) => {
+        console.log("promise 获取 数据", data)
+      })
+    }
     function capturePicture() {
       var capturePicturePromise = playr.capturePicture();
       capturePicturePromise.then((data) => {
@@ -87,7 +94,7 @@
       })
     }
     function startSave() {
-      var startSavePromise = playr.startSave();
+      var startSavePromise = playr.startSave(`${new Date().getTime()}`);
       startSavePromise.then((data) => {
         console.log("promise 获取 数据", data)
       })
@@ -99,10 +106,10 @@
       })
     }
     function ezopenStartTalk() {
-      var stopSavePromise = playr.startTalk();
+      playr.startTalk();
     }
     function ezopenStopTalk() {
-      var stopSavePromise = playr.stopTalk();
+      playr.stopTalk();
     }
   </script>
 </body>

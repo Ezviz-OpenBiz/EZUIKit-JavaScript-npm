@@ -62,6 +62,18 @@ import  EZUIKit from 'ezuikit-js';
 
 你可以通过以下地址获取到测试accessToken <a href="https://open.ys7.com/jssdk/ezopen/demo/token" target="_blank">获取测试accessToken</a> 用来播放上述测试播放地址。 
 
+#### 最佳实践tips
+
+1. 我们在v0.6.2及以上版本持用户通过开启谷歌实验室特性启动多线程解码，多线程模式将大大提升解码效率，降低解码内存消耗。  
+
+>>[开启多线程方式1](https://open.ys7.com/help/384)  (https://open.ys7.com/help/384)
+
+>>[开启多线程方式2](https://open.ys7.com/help/385)(https://open.ys7.com/help/385)  
+
+2. 视频解码库默认从开放平台远程拉取，你可以将解码库放到本地或者你的服务内，可以提升加载解码库速度。 
+
+ >> <b>使用本地解码库提升加载速度</b>  <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/localDecoder.html" target="_blank">本地解码库示例</a> 
+
 ### 使用示例
 <b>基本使用：</b>  <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/base.html" target="_blank">基本使用示例</a>  
 
@@ -125,7 +137,7 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhm
 <tr><td>pcRec</td><td>	*固定模板 按钮列表，颜色，底部头部背景色固定， 可用于pc端回放，如需<br />修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData<br />本地配置*</td></tr>
 <tr><td>mobileLive</td><td>	*固定模板  按钮列表，颜色，底部头部背景色固定，可用于移动端预<br />览，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData<br />本地配置*</td></tr>
 <tr><td>mobileRec</td><td>*固定模板 按钮列表，颜色，底部头部背景色固定， 可用于移动端回放，<br />如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData<br />本地配置*</td></tr>
-<tr><td>theme</td><td>自定义主题，<a href="https://open.ys7.com/console/ezopenIframe.html" target="_blank">开放平台控制台配置</a><br />（v0.3.0版本及以上支持，建议使用 自定义themeId，或者使用themeData本地<br />配置）;</td></tr>
+<tr><td>自定义themeId</td><td>自定义主题，<a href="https://open.ys7.com/console/ezuikit/template.html" target="_blank">开放平台控制台配置</a><br />（v0.6.2版本及以上支持，建议使用 自定义themeId，或者使用themeData本地<br />配置）;</td></tr>
 </table>
 
 </td></tr>
@@ -218,6 +230,13 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
                 "part": "left",
                 "defaultActive": 0,
                 "memo": "对讲按钮",
+                "isrender": 1
+            },
+            {
+                "iconId": "zoom",
+                "part": "left",
+                "defaultActive": 0,
+                "memo": "电子放大",
                 "isrender": 1
             },
             {
@@ -376,6 +395,29 @@ options参数说明
 |begin|	String	| type类型为回放有效，开始时间 格式为“YYYYMMDDHHmmss”	|N|
 |end|	String	| type类型为回放有效，结束时间 格式为 “YYYYMMDDHHmmss”	|N|
 
+
+  
+
+#### 切换模板主题  
+> 可用于在播放中切换模板主题，同切换播放地址一起调用
+
+```
+  player.Theme.changeTheme(template)
+  .then(()=>{
+    console.log("切换成功")
+  });
+
+  // 预览切回放场景示例
+  player.changePlayUrl({type:"rec"});
+  player.Theme.changeTheme("pcRec");
+
+```
+template参数说明
+
+|参数名|类型|描述|是否必选|
+|:--|:--|:--|:--|
+|type|	String| 模板名称，详见初始化参数template|	Y|
+
 #### 设置封面
 
 >你可以在初始化时，通过参数poster设置默认封面
@@ -389,6 +431,7 @@ options参数说明
 ```
 
 #### 开启电子放大
+>建议使用模板，模板中的电子放大功能更全
 
 ```
   // 方式1

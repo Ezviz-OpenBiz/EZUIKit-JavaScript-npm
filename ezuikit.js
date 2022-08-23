@@ -209,7 +209,7 @@ var cancelMobileFullScreen = function cancelMobileFullScreen(element, width, hei
   var style = "";
   style += "width:" + width + "px;";
   style += "height:" + height + "px;";
-  style += "-webkit-transform: rotate(0); transform: rotate(0);";
+  style += "-webkit-transform: none; transform: none;";
   style += "-webkit-transform-origin: 0 0;";
   style += "transform-origin: 0 0;";
   element.style.cssText = style;
@@ -463,5499 +463,6 @@ var FLV = /*#__PURE__*/function () {
   }]);
 
   return FLV;
-}();
-
-/* eslint-disable valid-jsdoc */
-
-/** insertAfter */
-function insertAfter(newElement, targetElement) {
-  var parent = targetElement.parentNode;
-
-  if (parent.lastChild == targetElement) {
-    parent.appendChild(newElement);
-  } else {
-    parent.insertBefore(newElement, targetElement.nextSibling);
-  }
-}
-
-var Status = /*#__PURE__*/function () {
-  function Status(jSPlugin, id) {
-    _classCallCheck$1(this, Status);
-
-    this.id = id;
-    this.jSPlugin = jSPlugin;
-    this.state = {
-      play: false,
-      loading: false
-    };
-  }
-
-  _createClass$1(Status, [{
-    key: "toString",
-    value: function toString() {
-      return "".concat(this.coreX, "-").concat(this.coreY);
-    }
-  }, {
-    key: "setPlayStatus",
-    value: function setPlayStatus(options) {
-      this.state = Object.assign(this.state, options);
-    }
-  }, {
-    key: "loadingStart",
-    value: function loadingStart(id) {
-      var oS = document.createElement('style');
-      document.getElementsByTagName("head")[0].appendChild(oS);
-      oS.innerHTML = '@keyframes antRotate {to {transform: rotate(400deg);transform-origin:50% 50%;}} .loading {display: inline-block;z-index: 1000;-webkit-animation: antRotate 1s infinite linear;animation: antRotate 1s infinite linear;}';
-      var domId = id;
-      var domElement = document.getElementById(domId);
-      var windowWidth = domElement.offsetWidth;
-      var windowHeight = domElement.offsetHeight;
-      var offsetTop = 0; //`calc(50% - ${(domElement.offsetTop / 2)}px)`;//domElement.offsetTop; // `calc(50% - ${domElement.offsetTop / 2}px)`
-
-      var offsetLeft = domElement.offsetLeft; // 先执行清空loading
-
-      if (document.getElementById("".concat(id, "-loading-id-0"))) {
-        document.getElementById("".concat(id, "-loading-id-0")).parentNode.removeChild(document.getElementById("".concat(id, "-loading-id-0")));
-      }
-
-      var loadingContainerDOM = document.createElement('div');
-      loadingContainerDOM.setAttribute('id', "".concat(id, "-loading-id-0"));
-      var style = 'position:absolute;outline:none;pointer-events:none;';
-      console.log("this.jSPlugin", this.jSPlugin);
-
-      if (typeof this.jSPlugin.poster === 'string') {
-        style += "background: url(".concat(this.jSPlugin.poster, ") no-repeat;background-size: cover;");
-      }
-
-      style += 'width: 100%;';
-      style += 'height: 100%;';
-      style += 'top:' + offsetTop + ';';
-      style += 'left:' + offsetLeft + 'px;';
-      loadingContainerDOM.setAttribute('style', style);
-      loadingContainerDOM.style.height = windowHeight;
-      loadingContainerDOM.setAttribute('class', 'loading-container'); // loadingContainerDOM.innerHTML= loading;
-
-      insertAfter(loadingContainerDOM, domElement);
-      var splitBasis = 1;
-      var loadingItemContainer = document.createElement('div');
-      var loadingStatusDOM = document.createElement('div');
-      loadingItemContainer.setAttribute('class', 'loading-item');
-      loadingItemContainer.setAttribute('id', "".concat(id, "-loading-item-0")); //loadingContainer.setAttribute('style','display:inline-flex;flex-direction:column;justify-content:center;align-items: center;width:'+(windowWidth / splitBasis)+'px;height:'+(windowHeight /splitBasis )+'px;outline:none;vertical-align: top;position:absolute');
-
-      var style = 'display:inline-flex;pointer-events:none;flex-direction:column;justify-content:center;align-items: center;width:100%;height:' + windowHeight + 'px;outline:none;vertical-align: top;position:absolute;';
-      style += 'left:' + calLoadingPostion(windowHeight, windowWidth, splitBasis, 0).left + 'px;';
-      style += 'top:' + calLoadingPostion(windowHeight, windowWidth, splitBasis, 0).top + 'px;';
-      loadingItemContainer.setAttribute('style', style);
-
-      function calLoadingPostion(windowHeight, windowWidth, splitBasis, i) {
-        var top = parseInt(i / splitBasis, 10) * (windowHeight / splitBasis);
-        var left = i % splitBasis * (windowWidth / splitBasis);
-        return {
-          top: top,
-          left: left
-        };
-      }
-
-      var loadingDOM = document.createElement('div');
-      loadingStatusDOM.innerHTML = "";
-      loadingStatusDOM.style.color = "#fff";
-      loadingDOM.setAttribute('class', 'loading');
-      var loading = '<svg t="1567069979438" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2399" width="32" height="32"><path d="M538.5344 266.4448a133.12 133.12 0 1 1 133.12-133.12 133.4272 133.4272 0 0 1-133.12 133.12zM255.0144 372.1984a121.6768 121.6768 0 1 1 121.6768-121.6768 121.856 121.856 0 0 1-121.6768 121.6768zM134.72 647.424a107.3664 107.3664 0 1 1 107.3664-107.264A107.52 107.52 0 0 1 134.72 647.424z m120.32 272.4608a90.9824 90.9824 0 1 1 90.9824-90.9824A91.1616 91.1616 0 0 1 255.04 919.8848zM538.5344 1024a79.36 79.36 0 1 1 79.36-79.36 79.36 79.36 0 0 1-79.36 79.36z m287.6928-134.144a64.1792 64.1792 0 1 1 64.1792-64.1792 64.3584 64.3584 0 0 1-64.1792 64.1792z m117.76-296.704a52.6336 52.6336 0 1 1 52.6592-52.6336 52.608 52.608 0 0 1-52.6336 52.6336z m-158.72-338.7136a40.96 40.96 0 1 1 12.0064 28.8512 40.5248 40.5248 0 0 1-12.0064-28.8512z" fill="#ffffff" p-id="2400"></path></svg>';
-      loadingDOM.innerHTML = loading;
-      loadingItemContainer.appendChild(loadingDOM); // loadingContainer.appendChild(loading);
-
-      loadingItemContainer.appendChild(loadingStatusDOM);
-      loadingContainerDOM.appendChild(loadingItemContainer);
-    }
-  }, {
-    key: "loadingSetText",
-    value: function loadingSetText(opt) {
-      this.loadingClearText();
-
-      if (document.getElementById("".concat(this.id, "-loading-item-0"))) {
-        var textElement = document.getElementById("".concat(this.id, "-loading-item-0")).childNodes[1];
-
-        if (!textElement) {
-          var loadingItemContainer = document.getElementById("".concat(this.id, "-loading-item-0"));
-          textElement = document.createElement('div');
-          textElement.innerHTML = opt.text;
-          loadingItemContainer.appendChild(textElement);
-        }
-
-        textElement.innerHTML = opt.text;
-        textElement.style.fontSize = "14px";
-        textElement.style.color = opt.color || "#FFFFFF";
-      }
-    }
-  }, {
-    key: "loadingClearText",
-    value: function loadingClearText() {
-      var elements = document.getElementById("".concat(this.id, "-loading-item-0")).childNodes;
-
-      if (elements.length > 1) {
-        elements[1].parentNode.removeChild(elements[1]);
-      }
-    }
-  }, {
-    key: "loadingClear",
-    value: function loadingClear() {
-      var elements = document.getElementById("".concat(this.id, "-loading-item-0")).childNodes;
-
-      for (var i = elements.length - 1; i >= 0; i--) {
-        elements[i].parentNode.removeChild(elements[i]);
-      }
-
-      if (document.getElementById("".concat(this.id, "-loading-id-0"))) {
-        document.getElementById("".concat(this.id, "-loading-id-0")).style.background = 'none';
-      }
-    }
-  }, {
-    key: "setPoster",
-    value: function setPoster(pic) {
-      if (document.getElementById("".concat(this.id, "-loading-id-0"))) {
-        document.getElementById("".concat(this.id, "-loading-id-0")).style.backgroundImage = "url(".concat(pic, ")");
-      }
-    }
-  }, {
-    key: "loadingEnd",
-    value: function loadingEnd() {
-      var loadingItemContainerDOM = document.getElementById("".concat(this.id, "-loading-item-0"));
-
-      if (loadingItemContainerDOM) {
-        loadingItemContainerDOM.parentNode.removeChild(loadingItemContainerDOM);
-        var loadingContainerDOM = document.getElementById("".concat(this.id, "-loading-id-0"));
-
-        if (loadingContainerDOM && loadingContainerDOM.children.length === 0) {
-          loadingContainerDOM.parentNode.removeChild(loadingContainerDOM);
-        }
-      }
-
-      document.getElementById("".concat(this.id, "-loading-item-0")).style.background = 'none';
-    }
-  }]);
-
-  return Status;
-}();
-
-var data$5 = [
-	{
-		moduleCode: "",
-		detailCode: "405984",
-		description: "",
-		solution: "",
-		updateTime: 1559564188000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10035",
-		description: "获取子账户AccessToken异常,子账户不存在或子账户不属于该开发者",
-		solution: "",
-		updateTime: 1559551958000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1052674",
-		description: "获取本地录像失败",
-		solution: "",
-		updateTime: 1558579653000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395547",
-		description: "",
-		solution: "",
-		updateTime: 1557367296000
-	},
-	{
-		moduleCode: "",
-		detailCode: "12",
-		description: "",
-		solution: "",
-		updateTime: 1557229476000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10052",
-		description: "余额不足",
-		solution: "",
-		updateTime: 1557121463000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20108",
-		description: "当前用户和所添加用户不是好友关系",
-		solution: "",
-		updateTime: 1556541725000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10009",
-		description: "",
-		solution: "",
-		updateTime: 1556422452000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320001",
-		description: "通道不存在",
-		solution: "请检查录像机的关联状态是否正常，没有摄像头的通道无法播放",
-		updateTime: 1556419044000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120001",
-		description: "通道不存在",
-		solution: "请检查录像机的关联状态是否正常，没有摄像头的通道无法播放",
-		updateTime: 1556419030000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320049",
-		description: "",
-		solution: "",
-		updateTime: 1556272984000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380227",
-		description: "",
-		solution: "",
-		updateTime: 1556264379000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10033",
-		description: "policy参数信息异常",
-		solution: "",
-		updateTime: 1555922124000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10065",
-		description: "weakAppKey 不属于accessToken对应的用户",
-		solution: "",
-		updateTime: 1555497522000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395416",
-		description: "设备达到最大连接数，无法建立连接",
-		solution: "请升级设备固件版本",
-		updateTime: 1555394722000
-	},
-	{
-		moduleCode: "",
-		detailCode: "100001",
-		description: "",
-		solution: "",
-		updateTime: 1555141776000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395558",
-		description: "",
-		solution: "",
-		updateTime: 1554987121000
-	},
-	{
-		moduleCode: "",
-		detailCode: "70001",
-		description: "智能家居买断用户设备受到限制,建议合理选择pagestart和pageSize",
-		solution: "",
-		updateTime: 1554691023000
-	},
-	{
-		moduleCode: "",
-		detailCode: "170001",
-		description: "",
-		solution: "",
-		updateTime: 1554691023000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1012",
-		description: "重置失败",
-		solution: "",
-		updateTime: 1554645841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1043",
-		description: "重置失败",
-		solution: "",
-		updateTime: 1554645834000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60060",
-		description: "直播功能未开通",
-		solution: "通道未开通直播功能，请先开通直播",
-		updateTime: 1554346018000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380203",
-		description: "",
-		solution: "",
-		updateTime: 1554093666000
-	},
-	{
-		moduleCode: "",
-		detailCode: "399048",
-		description: "免费版并发数达到上限，请升级企业版使用多并发能力",
-		solution: "升级成为企业版套餐即可取消并发数限制",
-		updateTime: 1553839878000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60007",
-		description: "预置点个数超过最大值",
-		solution: "",
-		updateTime: 1553671316000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1005",
-		description: "",
-		solution: "",
-		updateTime: 1553513701000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20605",
-		description: "其他用户正在认证中",
-		solution: "",
-		updateTime: 1552976317000
-	},
-	{
-		moduleCode: "",
-		detailCode: "90004",
-		description: "当前型号设备暂时不支持AI任务：CS-C3W-3B1WFR-YGL",
-		solution: "",
-		updateTime: 1552898525000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60046",
-		description: "添加的设备的IP和本设备的IP冲突",
-		solution: "",
-		updateTime: 1552872372000
-	},
-	{
-		moduleCode: "",
-		detailCode: "3",
-		description: "修改视频清晰度失败!",
-		solution: "",
-		updateTime: 1552440229000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1013",
-		description: "",
-		solution: "",
-		updateTime: 1552035069000
-	},
-	{
-		moduleCode: "",
-		detailCode: "370007",
-		description: "",
-		solution: "",
-		updateTime: 1551852327000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1",
-		description: "",
-		solution: "",
-		updateTime: 1551752889000
-	},
-	{
-		moduleCode: "",
-		detailCode: "30005",
-		description: "弱账户不存在",
-		solution: "",
-		updateTime: 1551422358000
-	},
-	{
-		moduleCode: "",
-		detailCode: "90006",
-		description: "用户操作AI任务受限",
-		solution: "",
-		updateTime: 1551073320000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60203",
-		description: "未开通相关服务",
-		solution: "",
-		updateTime: 1550623070000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10002",
-		description: "accessToken过期或异常",
-		solution: "",
-		updateTime: 1550300346000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380339",
-		description: "",
-		solution: "",
-		updateTime: 1549889458000
-	},
-	{
-		moduleCode: "",
-		detailCode: "90002",
-		description: "AI任务设备配置数达到上限：3",
-		solution: "",
-		updateTime: 1549071664000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380008",
-		description: "",
-		solution: "",
-		updateTime: 1549005979000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320227",
-		description: "",
-		solution: "",
-		updateTime: 1548739731000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60059",
-		description: "ezopen地址均不可用",
-		solution: "",
-		updateTime: 1548395350000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10005",
-		description: "appKey异常",
-		solution: "",
-		updateTime: 1548317858000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60045",
-		description: "添加的设备的IP和其他通道的IP冲突",
-		solution: "",
-		updateTime: 1548155085000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60047",
-		description: "码流类型不支持",
-		solution: "",
-		updateTime: 1547962108000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60041",
-		description: "添加的设备被其他设备关联或响应超时",
-		solution: "",
-		updateTime: 1547960980000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110029",
-		description: "个人用户接口调用频率超限",
-		solution: "请升级企业版：https://open.ys7.com/price.html",
-		updateTime: 1547606859000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380355",
-		description: "设备直连推流异常结束",
-		solution: "",
-		updateTime: 1547106294000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320081",
-		description: "",
-		solution: "",
-		updateTime: 1547106279000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60035",
-		description: "购买云存储服务失败",
-		solution: "",
-		updateTime: 1547026959000
-	},
-	{
-		moduleCode: "",
-		detailCode: "90005",
-		description: "设备已存在：C75714141",
-		solution: "",
-		updateTime: 1546940622000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1053445",
-		description: "该时间段没有录像片段",
-		solution: "",
-		updateTime: 1546935727000
-	},
-	{
-		moduleCode: "",
-		detailCode: "90007",
-		description: "设备未加入到AI任务",
-		solution: "",
-		updateTime: 1546932948000
-	},
-	{
-		moduleCode: "",
-		detailCode: "326000",
-		description: "",
-		solution: "",
-		updateTime: 1546823143000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1021",
-		description: "重置失败",
-		solution: "",
-		updateTime: 1546781152000
-	},
-	{
-		moduleCode: "",
-		detailCode: "2001",
-		description: "删除设备失败!",
-		solution: "",
-		updateTime: 1546422886000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380425",
-		description: "",
-		solution: "",
-		updateTime: 1546407694000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120097",
-		description: "",
-		solution: "",
-		updateTime: 1546085995000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10059",
-		description: "requestId已存在",
-		solution: "",
-		updateTime: 1545824509000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1154723",
-		description: "",
-		solution: "",
-		updateTime: 1545795209000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60043",
-		description: "添加的设备超出最大数量",
-		solution: "",
-		updateTime: 1545493607000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1152677",
-		description: "",
-		solution: "",
-		updateTime: 1545313404000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20097",
-		description: "设备添加异常,设备验证码为ABCDEF或设备被N1，R1关联",
-		solution: "",
-		updateTime: 1545310795000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10060",
-		description: "设备不支持该云存储类型",
-		solution: "",
-		updateTime: 1545309064000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20102",
-		description: "无相应邀请信息，无法接受邀请",
-		solution: "",
-		updateTime: 1545204966000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10053",
-		description: "云存储开通中",
-		solution: "",
-		updateTime: 1545100293000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20401",
-		description: "用户云空间信息不存在",
-		solution: "",
-		updateTime: 1545017880000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20600",
-		description: "临时密码数已达上限",
-		solution: "",
-		updateTime: 1544873457000
-	},
-	{
-		moduleCode: "",
-		detailCode: "901",
-		description: "",
-		solution: "",
-		updateTime: 1544693519000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60210",
-		description: "图片数据错误",
-		solution: "",
-		updateTime: 1544604457000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10013",
-		description: "您的应用没有权限调用",
-		solution: "",
-		updateTime: 1544416237000
-	},
-	{
-		moduleCode: "",
-		detailCode: "70007",
-		description: "授权码不存在",
-		solution: "",
-		updateTime: 1544179533000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10015",
-		description: "授权地址不存在",
-		solution: "",
-		updateTime: 1544163240000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320423",
-		description: "",
-		solution: "",
-		updateTime: 1544100685000
-	},
-	{
-		moduleCode: "",
-		detailCode: "370009",
-		description: "",
-		solution: "",
-		updateTime: 1544077151000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10031",
-		description: "子账户或萤石用户没有权限",
-		solution: "",
-		updateTime: 1543990462000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10055",
-		description: "设备不支持试用云存储服务",
-		solution: "",
-		updateTime: 1543986292000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60042",
-		description: "添加的设备密码错误",
-		solution: "",
-		updateTime: 1543710913000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60082",
-		description: "设备正在响应本次声源定位",
-		solution: "",
-		updateTime: 1543647426000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10056",
-		description: "设备不支持云存储服务转出",
-		solution: "",
-		updateTime: 1543558342000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20104",
-		description: "好友不存在",
-		solution: "",
-		updateTime: 1543492403000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20111",
-		description: "好友不是等待验证状态，无法接受邀请",
-		solution: "",
-		updateTime: 1543492365000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20107",
-		description: "不能添加自己为好友",
-		solution: "",
-		updateTime: 1543480986000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1",
-		description: "设备返回其他错误",
-		solution: "",
-		updateTime: 1543459921000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60084",
-		description: "当前正在关闭隐私遮蔽",
-		solution: "",
-		updateTime: 1543456515000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380255",
-		description: "",
-		solution: "",
-		updateTime: 1543411652000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20015",
-		description: "设备不支持",
-		solution: "",
-		updateTime: 1543390936000
-	},
-	{
-		moduleCode: "",
-		detailCode: "30003",
-		description: "手机验证码错误",
-		solution: "",
-		updateTime: 1543389137000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20615",
-		description: "锁用户已存在",
-		solution: "",
-		updateTime: 1543388325000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60061",
-		description: "账户流量已超出或未购买，限制开通",
-		solution: "",
-		updateTime: 1543372581000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60020",
-		description: "设备不支持该信令",
-		solution: "",
-		updateTime: 1543321636000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320146",
-		description: "",
-		solution: "",
-		updateTime: 1543318472000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60018",
-		description: "设备升级失败",
-		solution: "",
-		updateTime: 1543304928000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60044",
-		description: "添加的设备网络不可达超时",
-		solution: "",
-		updateTime: 1543304102000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20619",
-		description: "主用户无法删除",
-		solution: "",
-		updateTime: 1543290219000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20608",
-		description: "锁用户不存在",
-		solution: "",
-		updateTime: 1543281950000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20609",
-		description: "设备响应超时,门锁通信故障或者电量不足,请重试.",
-		solution: "",
-		updateTime: 1543281601000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1049954",
-		description: "升级设备失败",
-		solution: "",
-		updateTime: 1543279264000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60009",
-		description: "正在调用预置点",
-		solution: "",
-		updateTime: 1543238114000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1052677",
-		description: "获取本地录像失败",
-		solution: "",
-		updateTime: 1543207604000
-	},
-	{
-		moduleCode: "",
-		detailCode: "327000",
-		description: "",
-		solution: "",
-		updateTime: 1543196609000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20021",
-		description: "设备在线，未被用户添加",
-		solution: "",
-		updateTime: 1543193436000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20202",
-		description: "操作留言信息失败",
-		solution: "",
-		updateTime: 1543191562000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1052678",
-		description: "获取本地录像失败",
-		solution: "",
-		updateTime: 1543132218000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1054723",
-		description: "格式化设备失败",
-		solution: "",
-		updateTime: 1543129833000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20109",
-		description: "对应分享不存在",
-		solution: "",
-		updateTime: 1543129111000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60026",
-		description: "设备处于隐私遮蔽状态",
-		solution: "",
-		updateTime: 1543110403000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60083",
-		description: "当前正在开启隐私遮蔽",
-		solution: "",
-		updateTime: 1543071148000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60001",
-		description: "用户无云台控制权限",
-		solution: "",
-		updateTime: 1543059167000
-	},
-	{
-		moduleCode: "",
-		detailCode: "2003",
-		description: "设备不在线",
-		solution: "",
-		updateTime: 1543051046000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-24",
-		description: "设置设备enable错误",
-		solution: "",
-		updateTime: 1543042701000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10018",
-		description: "",
-		solution: "",
-		updateTime: 1543041564000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20103",
-		description: "好友已存在",
-		solution: "",
-		updateTime: 1543038430000
-	},
-	{
-		moduleCode: "",
-		detailCode: "70010",
-		description: "授权异常请重试",
-		solution: "",
-		updateTime: 1543035590000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60056",
-		description: "删除设备失败",
-		solution: "",
-		updateTime: 1543031275000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60040",
-		description: "添加的设备不在同一局域网",
-		solution: "",
-		updateTime: 1543031210000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60019",
-		description: "加密已开启",
-		solution: "",
-		updateTime: 1543029931000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1054722",
-		description: "格式化设备失败",
-		solution: "",
-		updateTime: 1543028537000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20016",
-		description: "当前设备正在格式化",
-		solution: "",
-		updateTime: 1543028537000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10024",
-		description: "透明通道权限校验不通过",
-		solution: "",
-		updateTime: 1543025540000
-	},
-	{
-		moduleCode: "",
-		detailCode: "6002",
-		description: "删除设备失败!",
-		solution: "",
-		updateTime: 1543025026000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1011",
-		description: "验证码错误！",
-		solution: "",
-		updateTime: 1543016865000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60032",
-		description: "卡密已使用",
-		solution: "",
-		updateTime: 1543006668000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10034",
-		description: "子账号已存在",
-		solution: "",
-		updateTime: 1542989194000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20301",
-		description: "根据uuid查询联动信息不存在",
-		solution: "",
-		updateTime: 1542988651000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1041",
-		description: "获取验证码过于频繁",
-		solution: "",
-		updateTime: 1542980953000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10012",
-		description: "该appkey下已绑定重复的phone！",
-		solution: "",
-		updateTime: 1542980800000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1008",
-		description: "phone不合法！",
-		solution: "",
-		updateTime: 1542979812000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60023",
-		description: "订阅操作失败",
-		solution: "",
-		updateTime: 1542979006000
-	},
-	{
-		moduleCode: "",
-		detailCode: "5",
-		description: "设备返回其他错误",
-		solution: "",
-		updateTime: 1542977828000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60006",
-		description: "云台当前操作失败",
-		solution: "",
-		updateTime: 1542977598000
-	},
-	{
-		moduleCode: "",
-		detailCode: "131",
-		description: "修改视频清晰度失败!",
-		solution: "",
-		updateTime: 1542977246000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10019",
-		description: "密码错误",
-		solution: "",
-		updateTime: 1542976628000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10004",
-		description: "用户不存在",
-		solution: "",
-		updateTime: 1542976268000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20201",
-		description: "操作报警信息失败",
-		solution: "",
-		updateTime: 1542975906000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20024",
-		description: "设备不在线，已经被别的用户添加",
-		solution: "",
-		updateTime: 1542975858000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60004",
-		description: "设备云台旋转达到左限位",
-		solution: "",
-		updateTime: 1542975207000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1052679",
-		description: "修改视频清晰度失败!",
-		solution: "",
-		updateTime: 1542974886000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20031",
-		description: "请在萤石客户端关闭终端绑定",
-		solution: "",
-		updateTime: 1542974756000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1053825",
-		description: "获取本地录像失败",
-		solution: "",
-		updateTime: 1542974692000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60011",
-		description: "预置点不存在",
-		solution: "",
-		updateTime: 1542974414000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1052936",
-		description: "修改视频清晰度失败!",
-		solution: "",
-		updateTime: 1542974390000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1016",
-		description: "",
-		solution: "",
-		updateTime: 1542974273000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10032",
-		description: "子账号不存在",
-		solution: "",
-		updateTime: 1542973906000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20013",
-		description: "设备已被别人添加",
-		solution: "",
-		updateTime: 1542973817000
-	},
-	{
-		moduleCode: "",
-		detailCode: "50000",
-		description: "服务器错误!",
-		solution: "",
-		updateTime: 1542973801000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60010",
-		description: "该预置点已经是当前位置",
-		solution: "",
-		updateTime: 1542973800000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60003",
-		description: "设备云台旋转达到下限位",
-		solution: "",
-		updateTime: 1542973770000
-	},
-	{
-		moduleCode: "",
-		detailCode: "4",
-		description: "设备返回其他错误",
-		solution: "",
-		updateTime: 1542973755000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60016",
-		description: "加密未开启，无需关闭",
-		solution: "",
-		updateTime: 1542973753000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60002",
-		description: "设备云台旋转达到上限位",
-		solution: "",
-		updateTime: 1542973742000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20023",
-		description: "设备不在线，未被用户添加",
-		solution: "",
-		updateTime: 1542973685000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10008",
-		description: "",
-		solution: "",
-		updateTime: 1542973676000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20010",
-		description: "设备验证码错误",
-		solution: "",
-		updateTime: 1542973658000
-	},
-	{
-		moduleCode: "",
-		detailCode: "60005",
-		description: "设备云台旋转达到右限位",
-		solution: "",
-		updateTime: 1542973657000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20017",
-		description: "设备已经被自己添加",
-		solution: "",
-		updateTime: 1542973648000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20020",
-		description: "设备在线，已经被自己添加",
-		solution: "",
-		updateTime: 1542973533000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20029",
-		description: "设备不在线，已经被自己添加",
-		solution: "",
-		updateTime: 1542973530000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10014",
-		description: "APPKEY下对应的第三方userId和phone未绑定！",
-		solution: "",
-		updateTime: 1542973499000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20002",
-		description: "设备不存在",
-		solution: "",
-		updateTime: 1542973499000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10030",
-		description: "appkey和appsecret不匹配",
-		solution: "",
-		updateTime: 1542973490000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20022",
-		description: "设备在线，已经被别的用户添加",
-		solution: "",
-		updateTime: 1542973486000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20008",
-		description: "设备响应超时",
-		solution: "",
-		updateTime: 1542973484000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20032",
-		description: "该用户下通道不存在",
-		solution: "",
-		updateTime: 1542973481000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20006",
-		description: "网络异常",
-		solution: "",
-		updateTime: 1542973475000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20014",
-		description: "deviceSerial不合法!",
-		solution: "",
-		updateTime: 1542973454000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20007",
-		description: "设备不在线",
-		solution: "",
-		updateTime: 1542973454000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20018",
-		description: "该用户不拥有该设备",
-		solution: "",
-		updateTime: 1542973453000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10010",
-		description: "",
-		solution: "",
-		updateTime: 1542973453000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10011",
-		description: "未绑定！",
-		solution: "",
-		updateTime: 1542973453000
-	},
-	{
-		moduleCode: "",
-		detailCode: "20001",
-		description: "通道不存在!",
-		solution: "",
-		updateTime: 1542973452000
-	},
-	{
-		moduleCode: "",
-		detailCode: "10017",
-		description: "appKey不存在",
-		solution: "",
-		updateTime: 1542973451000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400259",
-		description: "",
-		solution: "",
-		updateTime: 1542875643000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400004",
-		description: "",
-		solution: "",
-		updateTime: 1542873364000
-	},
-	{
-		moduleCode: "",
-		detailCode: "3840",
-		description: "",
-		solution: "",
-		updateTime: 1541860000000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1017",
-		description: "",
-		solution: "",
-		updateTime: 1541733663000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320025",
-		description: "",
-		solution: "",
-		updateTime: 1541078281000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320024",
-		description: "",
-		solution: "",
-		updateTime: 1540801374000
-	},
-	{
-		moduleCode: "",
-		detailCode: "321002",
-		description: "",
-		solution: "",
-		updateTime: 1540631734000
-	},
-	{
-		moduleCode: "",
-		detailCode: "321000",
-		description: "",
-		solution: "",
-		updateTime: 1540609178000
-	},
-	{
-		moduleCode: "",
-		detailCode: "321022",
-		description: "",
-		solution: "",
-		updateTime: 1540548345000
-	},
-	{
-		moduleCode: "",
-		detailCode: "321016",
-		description: "",
-		solution: "",
-		updateTime: 1540287187000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320023",
-		description: "",
-		solution: "",
-		updateTime: 1539825993000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1016",
-		description: "",
-		solution: "",
-		updateTime: 1539584931000
-	},
-	{
-		moduleCode: "",
-		detailCode: "8",
-		description: "",
-		solution: "",
-		updateTime: 1539391812000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1075127593",
-		description: "",
-		solution: "",
-		updateTime: 1538959251000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380421",
-		description: "",
-		solution: "",
-		updateTime: 1537288465000
-	},
-	{
-		moduleCode: "",
-		detailCode: "322000",
-		description: "麦克风权限未开启",
-		solution: "",
-		updateTime: 1536820136000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1152678",
-		description: "",
-		solution: "",
-		updateTime: 1536738348000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320047",
-		description: "",
-		solution: "",
-		updateTime: 1536664472000
-	},
-	{
-		moduleCode: "",
-		detailCode: "327006",
-		description: "",
-		solution: "",
-		updateTime: 1536136120000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1074807593",
-		description: "",
-		solution: "",
-		updateTime: 1536135035000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320291",
-		description: "",
-		solution: "",
-		updateTime: 1536110836000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320045",
-		description: "",
-		solution: "",
-		updateTime: 1535963775000
-	},
-	{
-		moduleCode: "",
-		detailCode: "370004",
-		description: "",
-		solution: "",
-		updateTime: 1535883699000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1149954",
-		description: "",
-		solution: "",
-		updateTime: 1535700674000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320053",
-		description: "",
-		solution: "",
-		updateTime: 1535681079000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400000",
-		description: "",
-		solution: "",
-		updateTime: 1535532332000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110028",
-		description: "个人版抓图接口日调用次数超出限制",
-		solution: "请升级企业版：https://open.ys7.com/price.html",
-		updateTime: 1535348756000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110027",
-		description: "个人版帐号数量超出安全限制，无法调用",
-		solution: "请升级企业版：https://open.ys7.com/price.html",
-		updateTime: 1535348734000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110026",
-		description: "设备数量超出个人版限制，当前设备无法操作",
-		solution: "请升级企业版：https://open.ys7.com/price.html",
-		updateTime: 1535348588000
-	},
-	{
-		moduleCode: "",
-		detailCode: "100000",
-		description: "",
-		solution: "",
-		updateTime: 1534980008000
-	},
-	{
-		moduleCode: "",
-		detailCode: "324004",
-		description: "",
-		solution: "",
-		updateTime: 1534927762000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360104",
-		description: "",
-		solution: "",
-		updateTime: 1534761006000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320204",
-		description: "",
-		solution: "",
-		updateTime: 1534584221000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380001",
-		description: "",
-		solution: "",
-		updateTime: 1534404715000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380204",
-		description: "",
-		solution: "",
-		updateTime: 1534401682000
-	},
-	{
-		moduleCode: "",
-		detailCode: "328006",
-		description: "",
-		solution: "",
-		updateTime: 1534144407000
-	},
-	{
-		moduleCode: "",
-		detailCode: "321703",
-		description: "",
-		solution: "",
-		updateTime: 1534127274000
-	},
-	{
-		moduleCode: "",
-		detailCode: "321510",
-		description: "",
-		solution: "",
-		updateTime: 1533428892000
-	},
-	{
-		moduleCode: "",
-		detailCode: "321006",
-		description: "",
-		solution: "",
-		updateTime: 1533036916000
-	},
-	{
-		moduleCode: "",
-		detailCode: "50009",
-		description: "",
-		solution: "",
-		updateTime: 1532078548000
-	},
-	{
-		moduleCode: "",
-		detailCode: "50007",
-		description: "",
-		solution: "",
-		updateTime: 1531991720000
-	},
-	{
-		moduleCode: "",
-		detailCode: "50018",
-		description: "",
-		solution: "",
-		updateTime: 1531912829000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380451",
-		description: "",
-		solution: "",
-		updateTime: 1531615700000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380336",
-		description: "",
-		solution: "",
-		updateTime: 1531231721000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360020",
-		description: "",
-		solution: "",
-		updateTime: 1531117554000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380418",
-		description: "",
-		solution: "",
-		updateTime: 1531107070000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1153445",
-		description: "设备在该时间段内没有录像",
-		solution: "",
-		updateTime: 1530944007000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110007",
-		description: "调用接口总次数达到上限",
-		solution: "请升级企业版，获取更高能力",
-		updateTime: 1530935584000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360019",
-		description: "",
-		solution: "",
-		updateTime: 1530869771000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360100",
-		description: "",
-		solution: "",
-		updateTime: 1530786188000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380042",
-		description: "",
-		solution: "",
-		updateTime: 1530775199000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320355",
-		description: "",
-		solution: "",
-		updateTime: 1530716074000
-	},
-	{
-		moduleCode: "",
-		detailCode: "100003",
-		description: "",
-		solution: "",
-		updateTime: 1530232541000
-	},
-	{
-		moduleCode: "",
-		detailCode: "371026",
-		description: "",
-		solution: "",
-		updateTime: 1530192600000
-	},
-	{
-		moduleCode: "",
-		detailCode: "102",
-		description: "",
-		solution: "",
-		updateTime: 1529895641000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380201",
-		description: "",
-		solution: "",
-		updateTime: 1529740929000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320054",
-		description: "",
-		solution: "",
-		updateTime: 1529544875000
-	},
-	{
-		moduleCode: "",
-		detailCode: "500101",
-		description: "",
-		solution: "",
-		updateTime: 1529485953000
-	},
-	{
-		moduleCode: "",
-		detailCode: "321001",
-		description: "",
-		solution: "",
-		updateTime: 1529411048000
-	},
-	{
-		moduleCode: "",
-		detailCode: "321508",
-		description: "",
-		solution: "",
-		updateTime: 1529393279000
-	},
-	{
-		moduleCode: "",
-		detailCode: "405991",
-		description: "",
-		solution: "",
-		updateTime: 1529380238000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380461",
-		description: "",
-		solution: "",
-		updateTime: 1529130941000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1019",
-		description: "",
-		solution: "",
-		updateTime: 1529057245000
-	},
-	{
-		moduleCode: "",
-		detailCode: "322009",
-		description: "",
-		solution: "",
-		updateTime: 1528965717000
-	},
-	{
-		moduleCode: "",
-		detailCode: "324005",
-		description: "",
-		solution: "",
-		updateTime: 1528950153000
-	},
-	{
-		moduleCode: "",
-		detailCode: "325000",
-		description: "",
-		solution: "",
-		updateTime: 1528947143000
-	},
-	{
-		moduleCode: "",
-		detailCode: "326032",
-		description: "",
-		solution: "",
-		updateTime: 1528872971000
-	},
-	{
-		moduleCode: "",
-		detailCode: "325032",
-		description: "",
-		solution: "",
-		updateTime: 1528863189000
-	},
-	{
-		moduleCode: "",
-		detailCode: "328000",
-		description: "",
-		solution: "",
-		updateTime: 1528794505000
-	},
-	{
-		moduleCode: "",
-		detailCode: "53",
-		description: "",
-		solution: "",
-		updateTime: 1528693249000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1020",
-		description: "",
-		solution: "",
-		updateTime: 1528499440000
-	},
-	{
-		moduleCode: "",
-		detailCode: "329032",
-		description: "",
-		solution: "",
-		updateTime: 1528446301000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1202",
-		description: "",
-		solution: "",
-		updateTime: 1528439820000
-	},
-	{
-		moduleCode: "",
-		detailCode: "2",
-		description: "",
-		solution: "",
-		updateTime: 1528434175000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1152936",
-		description: "",
-		solution: "",
-		updateTime: 1528345986000
-	},
-	{
-		moduleCode: "",
-		detailCode: "328011",
-		description: "",
-		solution: "",
-		updateTime: 1528338600000
-	},
-	{
-		moduleCode: "",
-		detailCode: "28",
-		description: "",
-		solution: "",
-		updateTime: 1528337530000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320356",
-		description: "",
-		solution: "",
-		updateTime: 1528188693000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320357",
-		description: "",
-		solution: "",
-		updateTime: 1528188517000
-	},
-	{
-		moduleCode: "",
-		detailCode: "405800",
-		description: "",
-		solution: "",
-		updateTime: 1528168732000
-	},
-	{
-		moduleCode: "",
-		detailCode: "405996",
-		description: "",
-		solution: "",
-		updateTime: 1528168686000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380357",
-		description: "",
-		solution: "",
-		updateTime: 1528011565000
-	},
-	{
-		moduleCode: "",
-		detailCode: "328022",
-		description: "",
-		solution: "",
-		updateTime: 1527929065000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380003",
-		description: "",
-		solution: "",
-		updateTime: 1527927819000
-	},
-	{
-		moduleCode: "",
-		detailCode: "50004",
-		description: "",
-		solution: "",
-		updateTime: 1527770643000
-	},
-	{
-		moduleCode: "",
-		detailCode: "50011",
-		description: "",
-		solution: "",
-		updateTime: 1527770635000
-	},
-	{
-		moduleCode: "",
-		detailCode: "370017",
-		description: "",
-		solution: "",
-		updateTime: 1527739514000
-	},
-	{
-		moduleCode: "",
-		detailCode: "327032",
-		description: "",
-		solution: "",
-		updateTime: 1527726704000
-	},
-	{
-		moduleCode: "",
-		detailCode: "324001",
-		description: "",
-		solution: "",
-		updateTime: 1527681892000
-	},
-	{
-		moduleCode: "",
-		detailCode: "405997",
-		description: "",
-		solution: "",
-		updateTime: 1527653408000
-	},
-	{
-		moduleCode: "",
-		detailCode: "405995",
-		description: "",
-		solution: "",
-		updateTime: 1527647283000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1153825",
-		description: "",
-		solution: "",
-		updateTime: 1527601747000
-	},
-	{
-		moduleCode: "",
-		detailCode: "328002",
-		description: "",
-		solution: "",
-		updateTime: 1527495292000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1152679",
-		description: "",
-		solution: "",
-		updateTime: 1527486665000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380356",
-		description: "",
-		solution: "",
-		updateTime: 1527125669000
-	},
-	{
-		moduleCode: "",
-		detailCode: "328032",
-		description: "",
-		solution: "",
-		updateTime: 1527069382000
-	},
-	{
-		moduleCode: "",
-		detailCode: "22",
-		description: "",
-		solution: "",
-		updateTime: 1527049826000
-	},
-	{
-		moduleCode: "",
-		detailCode: "9",
-		description: "",
-		solution: "",
-		updateTime: 1527006778000
-	},
-	{
-		moduleCode: "",
-		detailCode: "89",
-		description: "",
-		solution: "",
-		updateTime: 1526622784000
-	},
-	{
-		moduleCode: "",
-		detailCode: "328016",
-		description: "",
-		solution: "",
-		updateTime: 1526452365000
-	},
-	{
-		moduleCode: "",
-		detailCode: "368005",
-		description: "",
-		solution: "",
-		updateTime: 1525921264000
-	},
-	{
-		moduleCode: "",
-		detailCode: "0",
-		description: "",
-		solution: "",
-		updateTime: 1525920242000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380006",
-		description: "",
-		solution: "",
-		updateTime: 1525918868000
-	},
-	{
-		moduleCode: "",
-		detailCode: "310",
-		description: "",
-		solution: "",
-		updateTime: 1525834436000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360011",
-		description: "",
-		solution: "",
-		updateTime: 1525681552000
-	},
-	{
-		moduleCode: "",
-		detailCode: "170005",
-		description: "",
-		solution: "",
-		updateTime: 1525433900000
-	},
-	{
-		moduleCode: "",
-		detailCode: "50023",
-		description: "",
-		solution: "",
-		updateTime: 1525403338000
-	},
-	{
-		moduleCode: "",
-		detailCode: "100131",
-		description: "",
-		solution: "",
-		updateTime: 1525229691000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1018",
-		description: "",
-		solution: "",
-		updateTime: 1525142341000
-	},
-	{
-		moduleCode: "",
-		detailCode: "362026",
-		description: "",
-		solution: "",
-		updateTime: 1524882677000
-	},
-	{
-		moduleCode: "",
-		detailCode: "368007",
-		description: "",
-		solution: "",
-		updateTime: 1524832269000
-	},
-	{
-		moduleCode: "",
-		detailCode: "54",
-		description: "",
-		solution: "",
-		updateTime: 1524793646000
-	},
-	{
-		moduleCode: "",
-		detailCode: "1154722",
-		description: "",
-		solution: "",
-		updateTime: 1524620807000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320229",
-		description: "",
-		solution: "",
-		updateTime: 1524551682000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360012",
-		description: "",
-		solution: "",
-		updateTime: 1524472094000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380229",
-		description: "",
-		solution: "",
-		updateTime: 1524110755000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360016",
-		description: "",
-		solution: "",
-		updateTime: 1523933518000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1003",
-		description: "",
-		solution: "",
-		updateTime: 1523584804000
-	},
-	{
-		moduleCode: "",
-		detailCode: "410026",
-		description: "",
-		solution: "",
-		updateTime: 1523517430000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360102",
-		description: "TTS初始化失败",
-		solution: "",
-		updateTime: 1523503528000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360013",
-		description: "设备开启了隐私保护",
-		solution: "",
-		updateTime: 1523503507000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360010",
-		description: "设备正在对讲中",
-		solution: "",
-		updateTime: 1523503491000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360007",
-		description: "TTS关闭了与客户端的连接",
-		solution: "",
-		updateTime: 1523503475000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360006",
-		description: "客户端接收发生错误",
-		solution: "",
-		updateTime: 1523503457000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360005",
-		description: "客户端发送的消息错误",
-		solution: "",
-		updateTime: 1523503437000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360004",
-		description: "TTS内部发生错误",
-		solution: "",
-		updateTime: 1523503421000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360003",
-		description: "TTS的设备端发生错误",
-		solution: "",
-		updateTime: 1523503397000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360002",
-		description: "对讲发起超时",
-		solution: "",
-		updateTime: 1523503376000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360001",
-		description: "客户端请求超时",
-		solution: "",
-		updateTime: 1523503357000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320077",
-		description: "",
-		solution: "",
-		updateTime: 1523444274000
-	},
-	{
-		moduleCode: "",
-		detailCode: "370047",
-		description: "",
-		solution: "",
-		updateTime: 1523440480000
-	},
-	{
-		moduleCode: "",
-		detailCode: "100002",
-		description: "",
-		solution: "",
-		updateTime: 1523413964000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1004",
-		description: "",
-		solution: "",
-		updateTime: 1523336653000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380000",
-		description: "",
-		solution: "",
-		updateTime: 1523180856000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380213",
-		description: "",
-		solution: "",
-		updateTime: 1523180623000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380101",
-		description: "",
-		solution: "",
-		updateTime: 1522834231000
-	},
-	{
-		moduleCode: "",
-		detailCode: "50047",
-		description: "",
-		solution: "",
-		updateTime: 1522833243000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-999",
-		description: "",
-		solution: "",
-		updateTime: 1522831034000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320418",
-		description: "",
-		solution: "",
-		updateTime: 1522829072000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1009",
-		description: "",
-		solution: "",
-		updateTime: 1522746247000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320209",
-		description: "",
-		solution: "",
-		updateTime: 1522744395000
-	},
-	{
-		moduleCode: "",
-		detailCode: "368006",
-		description: "",
-		solution: "",
-		updateTime: 1522744300000
-	},
-	{
-		moduleCode: "",
-		detailCode: "369003",
-		description: "",
-		solution: "",
-		updateTime: 1522736355000
-	},
-	{
-		moduleCode: "",
-		detailCode: "405989",
-		description: "",
-		solution: "",
-		updateTime: 1522726571000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1012",
-		description: "",
-		solution: "",
-		updateTime: 1522726203000
-	},
-	{
-		moduleCode: "",
-		detailCode: "322016",
-		description: "",
-		solution: "",
-		updateTime: 1522722918000
-	},
-	{
-		moduleCode: "",
-		detailCode: "500103",
-		description: "",
-		solution: "",
-		updateTime: 1522655556000
-	},
-	{
-		moduleCode: "",
-		detailCode: "405999",
-		description: "",
-		solution: "",
-		updateTime: 1522654716000
-	},
-	{
-		moduleCode: "",
-		detailCode: "321032",
-		description: "",
-		solution: "",
-		updateTime: 1522647732000
-	},
-	{
-		moduleCode: "",
-		detailCode: "381101",
-		description: "",
-		solution: "",
-		updateTime: 1522392414000
-	},
-	{
-		moduleCode: "",
-		detailCode: "399999",
-		description: "",
-		solution: "",
-		updateTime: 1522379834000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380103",
-		description: "",
-		solution: "",
-		updateTime: 1522312724000
-	},
-	{
-		moduleCode: "",
-		detailCode: "360014",
-		description: "",
-		solution: "",
-		updateTime: 1522304341000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1005",
-		description: "",
-		solution: "",
-		updateTime: 1522288195000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395454",
-		description: "",
-		solution: "",
-		updateTime: 1522220180000
-	},
-	{
-		moduleCode: "",
-		detailCode: "100005",
-		description: "",
-		solution: "",
-		updateTime: 1522218849000
-	},
-	{
-		moduleCode: "",
-		detailCode: "100004",
-		description: "",
-		solution: "",
-		updateTime: 1522209053000
-	},
-	{
-		moduleCode: "",
-		detailCode: "106002",
-		description: "",
-		solution: "",
-		updateTime: 1522206200000
-	},
-	{
-		moduleCode: "",
-		detailCode: "410030",
-		description: "",
-		solution: "",
-		updateTime: 1522162252000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1002",
-		description: "",
-		solution: "",
-		updateTime: 1522150690000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1200",
-		description: "",
-		solution: "",
-		updateTime: 1522139025000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1001",
-		description: "",
-		solution: "",
-		updateTime: 1522046436000
-	},
-	{
-		moduleCode: "",
-		detailCode: "-1011",
-		description: "",
-		solution: "",
-		updateTime: 1522045931000
-	},
-	{
-		moduleCode: "",
-		detailCode: "381102",
-		description: "",
-		solution: "",
-		updateTime: 1522044953000
-	},
-	{
-		moduleCode: "",
-		detailCode: "381103",
-		description: "",
-		solution: "",
-		updateTime: 1522044953000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391205",
-		description: "vtdu解析服务器ip失败",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391206",
-		description: "vtdu描述符select失败",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391207",
-		description: "vtdu文件描述符不在可读中",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391208",
-		description: "vtdu网络发生错误getsockopt",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391209",
-		description: "vtdu描述符select超时",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395000",
-		description: "cas回复信令，发现内存已经释放（和设备之间异常断开）",
-		solution: "检查设备网络；刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395400",
-		description: "私有化协议vtm检测私有化协议中码流类型小于0或者设备序列号为空等非法参数场景返回(app不重试取流)",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395402",
-		description: "回放找不到录像文件",
-		solution: "检查是否有存储卡并且接触良好",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395403",
-		description: "操作码或信令密钥与设备不匹配",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395404",
-		description: "设备不在线",
-		solution: "检查设备网络；重启设备接入萤石云",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395405",
-		description: "流媒体向设备发送或接受信令超时/cas响应超时",
-		solution: "检查设备网络；重启设备",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395406",
-		description: "token失效",
-		solution: "刷新重试或者重启设备",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395407",
-		description: "客户端的URL格式错误",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395409",
-		description: "预览开启隐私保护",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395410",
-		description: "设备达到最大连接数",
-		solution: "请升级设备固件版本",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395411",
-		description: "token无权限",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395412",
-		description: "session不存在 ",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395413",
-		description: "验证token的他异常（不具体） ",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395415",
-		description: "设备通道错",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395451",
-		description: "设备不支持的码流类型",
-		solution: "刷新重试或者切换到高清模式",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395452",
-		description: "设备链接流媒体服务器失败 ",
-		solution: "检查设备网络，重启设备，刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395500",
-		description: "服务器处理失败 ",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395501",
-		description: "流媒体vtdu达到最大负载，请扩容",
-		solution: "服务器负载达到上限，请稍后重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395503",
-		description: "vtm返回分配vtdu失败",
-		solution: "服务器负载达到上限，请稍后重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395544",
-		description: "设备返回无视频源 ",
-		solution: "设备是否接触良好；",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395545",
-		description: "视频分享时间已经结束",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395546",
-		description: "vtdu返回达到取流并发路数限制",
-		solution: "请升级为企业版，放开并发限制",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395560",
-		description: "蚁兵代理不支持的用户取流类型，会重定向到vtdu取流",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395557",
-		description: "回放服务器等待流头超时",
-		solution: "刷新重试，检测设备网络，重启设备",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395600",
-		description: "分享设备不在分享时间内",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395601",
-		description: "群组分享用户没权限",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395602",
-		description: "群组分享权限变更",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395556",
-		description: "ticket取流验证失败",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395530",
-		description: "机房故障不可用",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "395701",
-		description: "cas信令返回格式错误",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396001",
-		description: "客户端参数出错",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396099",
-		description: "客户端默认错误",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396101",
-		description: "不支持的命令",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396102",
-		description: "设备流头发送失败",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396103",
-		description: "cas/设备返回错误1",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396104",
-		description: "cas/设备返回错误-1",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396105",
-		description: "设备返回错误码3",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396106",
-		description: "设备返回错误码4",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396107",
-		description: "设备返回错误码5",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396108",
-		description: "cas信令回应重复",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396109",
-		description: "视频广场取消分享",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396110",
-		description: "设备信令默认错误",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396501",
-		description: "设备数据链路和实际链路不匹配",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396502",
-		description: "设备数据链路重复建立连接",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396503",
-		description: "设备数据链路端口不匹配",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396504",
-		description: "缓存设备数据链路失败(内存块不足)",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396505",
-		description: "设备发送确认头消息重复",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396506",
-		description: "设备数据先于确定头部到达",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396508",
-		description: "设备数据头部长度非法",
-		solution: "刷新重试，或者重启设备",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396509",
-		description: "索引找不到设备数据管理块",
-		solution: "刷新重试",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396510",
-		description: "设备数据链路vtdu内存块协议状态不匹配",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396511",
-		description: "设备数据头部没有streamkey错误",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396512",
-		description: "设备数据头部非法(较笼统)",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396513",
-		description: "设备数据长度过小",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396514",
-		description: "设备老协议推流头部没有streamkey错误",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396515",
-		description: "设备老协议推流数据非法",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396516",
-		description: "设备老协议索引找不到内存管理块",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396517",
-		description: "设备老协议推流数据非法",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396518",
-		description: "设备数据包过大",
-		solution: "刷新重试，或者重启设备",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396519",
-		description: "设备推流链路网络不稳定",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "396520",
-		description: "设备推流链路网络不稳定(默认)",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "170003",
-		description: "refreshToken不存在",
-		solution: "建议用户重新调用logout接口，然后调用openLoginPage接口重新启动登录页面登录",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "170004",
-		description: "refreshToken已过期",
-		solution: "建议用户重新调用logout接口，然后调用openLoginPage接口重新启动登录页面登录",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380011",
-		description: "设备隐私保护中",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380045",
-		description: "设备直连取流连接数量过大",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380047",
-		description: "设备不支持该命令",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380077",
-		description: "设备正在对讲中",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380102",
-		description: "数据接收异常",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380205",
-		description: "设备检测入参异常",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380209",
-		description: "网络连接超时",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380212",
-		description: "设备端网络连接超时",
-		solution: "",
-		updateTime: 1522034841000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101007",
-		description: "手机号未注册",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120503",
-		description: "正在响铃",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390016",
-		description: "vtdu成功响应未携带流头",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101008",
-		description: "手机号码不合法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120504",
-		description: "室内机正在通话",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390017",
-		description: "无数据流，尚未使用",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101009",
-		description: "用户名与手机不匹配",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120505",
-		description: "设备操作失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390018",
-		description: "信令消息体PB解析失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101010",
-		description: "获取验证码失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120506",
-		description: "非法命令",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390019",
-		description: "信令消息体PB封装失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101011",
-		description: "验证码错误",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120507",
-		description: "智能锁密码错误",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390020",
-		description: "申请系统内存资源失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101012",
-		description: "验证码失效",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120508",
-		description: "开关锁失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390021",
-		description: "vtdu地址尚未获取到",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101013",
-		description: "用户不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120509",
-		description: "开关锁超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390022",
-		description: "客户端尚未支持",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101014",
-		description: "密码不正确或者appKey不正确",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120510",
-		description: "智能锁设备繁忙",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390023",
-		description: "获取系统socket资源失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101015",
-		description: "用户被锁住",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120511",
-		description: "远程开锁功能未打开",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390024",
-		description: "上层填充的StreamSsnId不匹配",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101021",
-		description: "验证参数异常",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120600",
-		description: "临时密码数已达上限",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390025",
-		description: "链接服务器失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101026",
-		description: "邮箱已经被注册",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120601",
-		description: "添加临时密码失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390026",
-		description: "客户端请求未收到服务端应答",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101031",
-		description: "邮箱未注册",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120602",
-		description: "删除临时密码失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390027",
-		description: "链路断开",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101032",
-		description: "邮箱不合法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120603",
-		description: "该临时密码不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390028",
-		description: "没有取流链接",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101041",
-		description: "获取验证码过于频繁",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120604",
-		description: "指纹锁射频通信失败,请稍后再试",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390029",
-		description: "流成功停止",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101043",
-		description: "手机验证码输入错误超过规定次数",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120605",
-		description: "其他用户正在认证中",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390030",
-		description: "客户端防串流校验失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "102000",
-		description: "设备不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120606",
-		description: "验证已启动,请在120s内进行本地验证和调用添加设备接口",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390031",
-		description: "应用层tcp粘包处理缓冲区满",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "102001",
-		description: "摄像机不存在",
-		solution: "摄像机未注册到萤石云平台，请仔细检查摄像机的网络配置，确保连接到网络",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120607",
-		description: "删除用户失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390032",
-		description: "无效状态迁移",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "102003",
-		description: "设备不在线",
-		solution: "参考服务中心排查方法",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120608",
-		description: "用户不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390033",
-		description: "无效客户端状态",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "102004",
-		description: "设备异常",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120609",
-		description: "设备响应超时,门锁通信故障或者电量不足,请重试.",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390034",
-		description: "向vtm取流流媒体信息请求超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "102007",
-		description: "设备序列号不正确",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120610",
-		description: "获取临时密码列表失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390035",
-		description: "向代理取流请求超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "102009",
-		description: "设备请求响应超时异常",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "130001",
-		description: "用户不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390036",
-		description: "向代理保活取流请求超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "105000",
-		description: "设备已被自己添加",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "130002",
-		description: "手机号码已经注册",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390037",
-		description: "向vtdu取流请求超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "105001",
-		description: "设备已被别人添加",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "130003",
-		description: "手机验证码错误",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390038",
-		description: "向vtdu保活取流请求超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "105002",
-		description: "设备验证码错误",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "130004",
-		description: "终端绑定操作失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391001",
-		description: "vtm地址或端口非法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "107001",
-		description: "邀请不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "149999",
-		description: "数据异常",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391002",
-		description: "vtm生成文件描述符失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "107002",
-		description: "邀请验证失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "150000",
-		description: "服务器异常",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391003",
-		description: "vtm设置文件描述符非阻塞失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "107003",
-		description: "邀请用户不匹配",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160000",
-		description: "设备不支持云台控制",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391004",
-		description: "vtm设置文件描述符阻塞失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "107004",
-		description: "云存储连接失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160001",
-		description: "用户无云台控制权限",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391005",
-		description: "vtm解析服务器ip失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "7005",
-		description: "VTDU主动断开连接",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "107005",
-		description: "VTDU主动断开连接",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160002",
-		description: "设备云台旋转达到上限位",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391006",
-		description: "vtm描述符select失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "107006",
-		description: "不能邀请自己",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160003",
-		description: "设备云台旋转达到下限位",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391007",
-		description: "vtm文件描述符不在可读中",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "107007",
-		description: "重复邀请",
-		solution: "分享和删除分享必须全部由接口形式操作，如果与萤石客户端混用会造成这个问题，解决办法：在萤石客户端清空所有相关分享数据并重新添加设备，再通过接口操作即可",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160004",
-		description: "设备云台旋转达到左限位",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391008",
-		description: "vtm网络发生错误getsockopt",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110001",
-		description: "参数错误",
-		solution: "参数为空或者格式不对",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160005",
-		description: "设备云台旋转达到右限位",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391009",
-		description: "vtm描述符select超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110002",
-		description: "accessToken异常或过期",
-		solution: "accessToken有效期为七天，建议在accessToken即将过期或者出现10002错误码的时候重新获取accessToken",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160006",
-		description: "云台当前操作失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391101",
-		description: "proxy地址或端口非法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110004",
-		description: "用户不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160007",
-		description: "预置点个数超过最大值",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391102",
-		description: "proxy生成文件描述符失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110005",
-		description: "appKey异常",
-		solution: "确认appKey状态，不通过或者冻结状态会返回该错误码",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160009",
-		description: "正在调用预置点",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391103",
-		description: "proxy设置文件描述符非阻塞失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110006",
-		description: "ip受限",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160010",
-		description: "该预置点已经是当前位置",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391104",
-		description: "proxy设置文件描述符阻塞失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160011",
-		description: "预置点不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391105",
-		description: "proxy解析服务器ip失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110008",
-		description: "签名错误",
-		solution: "①获取签名方式详见apidemo及[旧]API文档 ②注意编码格式为UTF-8",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160013",
-		description: "设备版本已是最新",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391106",
-		description: "proxy描述符select失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110009",
-		description: "签名参数错误",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160014",
-		description: "设备正在升级",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391107",
-		description: "proxy文件描述符不在可读中",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110010",
-		description: "签名超时",
-		solution: "请调用同步服务器时间接口进行校时",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160015",
-		description: "设备正在重启",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391108",
-		description: "proxy网络发生错误getsockopt",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110011",
-		description: "未开通萤石云服务",
-		solution: "参照绑定流程",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160016",
-		description: "加密未开启，无须关闭",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391109",
-		description: "proxy描述符select超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110012",
-		description: "第三方账户与萤石账号已经绑定",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160017",
-		description: "设备抓图失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391201",
-		description: "vtdu地址或端口非法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110013",
-		description: "应用没有权限调用此接口",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160018",
-		description: "设备升级失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391202",
-		description: "vtdu生成文件描述符失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110014",
-		description: "APPKEY下对应的第三方userId和phone未绑定",
-		solution: "获取AccessToken时所用appKey与SDK所用appKey不一致",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160019",
-		description: "加密已开启",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391203",
-		description: "vtdu设置文件描述符非阻塞失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110017",
-		description: "appKey不存在",
-		solution: "请填写在官网申请的应用秘钥",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160020",
-		description: "不支持该命令",
-		solution: "请确认设备是否支持该命令",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "391204",
-		description: "vtdu设置文件描述符阻塞失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110018",
-		description: "AccessToken与Appkey不匹配",
-		solution: "请检查获取accessToken对应的appKey和SDK中设置的appKey是否一致",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160023",
-		description: "订阅操作失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110019",
-		description: "密码错误",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160024",
-		description: "取消订阅操作失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110020",
-		description: "请求方法为空",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160025",
-		description: "客流统计配置失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110021",
-		description: "ticket校验失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160026",
-		description: "设备处于隐私遮蔽状态",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110022",
-		description: "透传目的地非法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160027",
-		description: "设备正在镜像操作",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110024",
-		description: "无透传权限",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160028",
-		description: "设备正在键控动作",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110025",
-		description: "appKey被禁止使用通明通道",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160029",
-		description: "设备处于语音对讲状态",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160030",
-		description: "卡密输入错误次数过多，24小时后再输入",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160031",
-		description: "卡密信息不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160032",
-		description: "卡密状态不对或已过期",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160033",
-		description: "卡密非卖品，只能开通对应的绑定设备",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110030",
-		description: "appKey和appSecret不匹配",
-		solution: "请检查appKey和appSecret是否对应",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160035",
-		description: "购买云存储服务失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110031",
-		description: "子账户或萤石用户没有权限",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160040",
-		description: "添加的设备不在同一局域网",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110032",
-		description: "子账户不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160041",
-		description: "添加的设备被其他设备关联或响应超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110033",
-		description: "子账户未设置授权策略",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160042",
-		description: "添加的设备密码错误",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110034",
-		description: "子账户已存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160043",
-		description: "添加的设备超出最大数量",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110035",
-		description: "获取子账户AccessToken异常",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160044",
-		description: "添加的设备网络不可达超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110036",
-		description: "子账户被禁用",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160045",
-		description: "添加的设备的IP和其他通道的IP冲突",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "110051",
-		description: "无权限进行抓图",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160046",
-		description: "添加的设备的IP和本设备的IP冲突",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160047",
-		description: "码流类型不支持",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120002",
-		description: "设备不存在",
-		solution: "①设备没有注册到萤石云平台，请检查下设备网络参数，确保能正常连接网络②设备序列号不存在",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160048",
-		description: "带宽超出系统接入带宽",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120003",
-		description: "参数异常，SDK版本过低",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160049",
-		description: "IP或者端口不合法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120004",
-		description: "参数异常，SDK版本过低",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160050",
-		description: "添加的设备版本不支持需要升级才能接入",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120005",
-		description: "安全认证失败，需进行SDK安全认证",
-		solution: "已去掉安全验证",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160051",
-		description: "添加的设备不支持接入",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120006",
-		description: "网络异常",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160052",
-		description: "添加的设备通道号出错",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120007",
-		description: "设备不在线",
-		solution: "参考服务中心排查方法",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160053",
-		description: "添加的设备分辨率不支持",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120008",
-		description: "设备响应超时",
-		solution: "设备响应超时，请检测设备网络或重试",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160054",
-		description: "添加的设备账号被锁定",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120009",
-		description: "子账号不能添加设备",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160055",
-		description: "添加的设备取码流出错",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120010",
-		description: "设备验证码错误",
-		solution: "验证码在设备标签上，六位大写字母，注意大小写",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160056",
-		description: "删除设备失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120012",
-		description: "设备添加失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160057",
-		description: "删除的设备未关联",
-		solution: "检查IPC与NVR是否有关联关系",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120013",
-		description: "设备已被别人添加",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160060",
-		description: "地址未绑定",
-		solution: "请前往官网设置直播",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120014",
-		description: "设备序列号不正确",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160061",
-		description: "账户流量已超出或未购买，限制开通",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120015",
-		description: "设备不支持该功能",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160062",
-		description: "该通道直播已开通",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120016",
-		description: "当前设备正在格式化",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160063",
-		description: "直播未使用或直播已关闭",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120017",
-		description: "设备已被自己添加",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160070",
-		description: "设备不能转移给自己",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120018",
-		description: "该用户不拥有该设备",
-		solution: "确认设备是否属于用户",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160071",
-		description: "设备不能转移，设备与其他设备存在关联关系",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400001",
-		description: "参数为空",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120019",
-		description: "设备不支持云存储服务",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160072",
-		description: "设备不能转移，通道被分享给其他用户或者分享到视频广场",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400002",
-		description: "参数错误",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120020",
-		description: "设备在线，被自己添加",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160073",
-		description: "云存储转移失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400025",
-		description: "设备不支持对讲",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120021",
-		description: "设备在线，但是未被用户添加",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160080",
-		description: "当前正在声源定位",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400029",
-		description: "没有初始化或资源被释放",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120022",
-		description: "设备在线，但是已经被别的用户添加",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160081",
-		description: "当前正在轨迹巡航",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400030",
-		description: "json解析异常",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120023",
-		description: "设备不在线，未被用户添加",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160082",
-		description: "设备正在响应本次声源定位",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400031",
-		description: "网络异常",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120024",
-		description: "设备不在线，但是已经被别的用户添加",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160083",
-		description: "当前正在开启隐私遮蔽",
-		solution: "设备正在操作隐私遮蔽，无法进行当前操作",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400032",
-		description: "设备信息异常为空",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120025",
-		description: "重复申请分享",
-		solution: "确认设备是否由添加过该设备且申请过分享的账户下是否还存在分享记录",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "160084",
-		description: "当前正在关闭隐私遮蔽",
-		solution: "设备正在操作隐私遮蔽，无法进行当前操作",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400034",
-		description: "取流超时",
-		solution: "一般是由于网络状况不好导致，可以尝试下让用户重新播放",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120026",
-		description: "视频广场不存在该视频",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "380290",
-		description: "　连接CAS服务器失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400035",
-		description: "设备已加密，需要输入验证码",
-		solution: "收到此错误码，需要让用户输入验证码后，调用EZPlayer.setPlayKey传入验证码，并重新调用播放函数",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120027",
-		description: "视频转码失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361001",
-		description: "对讲服务端排队超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400036",
-		description: "播放验证码错误",
-		solution: "收到此错误码，需要让用户输入验证码后，调用EZPlayer.setPlayKey传入验证码，并重新调用播放函数",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120028",
-		description: "设备固件升级包不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361002",
-		description: "对讲服务端处理超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400037",
-		description: "surfacehold错误",
-		solution: "请检查是否是播放之前销毁了surface，收到此错误也可以重新建立surface后播放",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120029",
-		description: "设备不在线，但是已经被自己添加",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361003",
-		description: "设备链接对讲服务器超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400100",
-		description: "未知错误",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120030",
-		description: "该用户不拥有该视频广场视频",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361004",
-		description: "服务器内部错误",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400200",
-		description: "player sdk出错，这种错误一般开发者也是无法解决，不具体分类传出，传一个统一的inner错误码出去",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120031",
-		description: "开启终端绑定，硬件特征码验证失败",
-		solution: "请在萤石客户端关闭终端绑定，参考此步骤",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361005",
-		description: "解析消息失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400300",
-		description: "内存溢出",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120032",
-		description: "该用户下通道不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361006",
-		description: "请求重定向--需要向其他服务申请对讲",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400901",
-		description: "设备不在线，可以提示用户",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120033",
-		description: "无法收藏自己分享的视频",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361007",
-		description: "请求url非法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400902",
-		description: "accesstoken异常或失效，需要重新获取accesstoken，并传入到sdk",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120034",
-		description: "该用户下无设备",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361008",
-		description: "token失效",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400903",
-		description: "当前账号开启了终端绑定，只允许指定设备登录操作，提示用户登录i.ys7.com解除终端绑定",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120090",
-		description: "用户反馈失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361009",
-		description: "设备验证码或者通信秘钥不匹配",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400904",
-		description: "设备正在对讲中",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120095",
-		description: "APP包下载失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361010",
-		description: "设备已经在对讲",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "400905",
-		description: "设备开启了隐私保护，不允许预览、对讲等",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120096",
-		description: "APP包信息删除失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361011",
-		description: "设备10s响应超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120101",
-		description: "视频不支持分享给本人",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361012",
-		description: "设备不在线",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320002",
-		description: "参数无效",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120102",
-		description: "无相应邀请信息",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361013",
-		description: "设备开启隐私保护拒绝对讲",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320003",
-		description: "暂不支持此操作",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120103",
-		description: "好友已存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361014",
-		description: "token无权限",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320004",
-		description: "内存溢出",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120104",
-		description: "好友不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361015",
-		description: "设备返回session不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320005",
-		description: "创建CAS session失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120105",
-		description: "好友状态错误",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361016",
-		description: "验证token其他异常错误",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320006",
-		description: "创建cloud session失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120106",
-		description: "对应群组不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361017",
-		description: "服务端监听设备建立端口超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320007",
-		description: "token失效",
-		solution: "重新设置token后再重试",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120107",
-		description: "不能添加自己为好友",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361018",
-		description: "设备链路异常",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320008",
-		description: "token池里面没有token,请传入token",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120108",
-		description: "当前用户和所添加用户不是好友关系",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361019",
-		description: "对讲服务端不支持的信令消息",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320009",
-		description: "传入新的INIT_PARAM并reset(保留，目前未用)",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120109",
-		description: "对应分享不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361020",
-		description: "对讲服务端解析对讲请求未携带会话描述能力集",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320010",
-		description: "请重试",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120110",
-		description: "好友群组不属于当前用户",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361021",
-		description: "对讲服务端优先能力集结果为空",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320011",
-		description: "500毫秒后请重试",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120111",
-		description: "好友不是等待验证状态",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361022",
-		description: "cas链路异常",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320012",
-		description: "token池已满",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120112",
-		description: "添加应用下的用户为好友失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361023",
-		description: "对讲服务端分配对讲会话资源失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320013",
-		description: "P2P client超过限制",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120201",
-		description: "操作报警信息失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "361024",
-		description: "对讲服务端解析信令消息失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320014",
-		description: "sdk未初始化",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120202",
-		description: "操作留言信息失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390001",
-		description: "通用错误返回",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320015",
-		description: "超时",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120301",
-		description: "根据UUID查询报警消息不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390002",
-		description: "入参为空指针",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320016",
-		description: "正在打洞中",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120302",
-		description: "根据UUID查询图片不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390003",
-		description: "入参值无效",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320017",
-		description: "没有视频文件头(播放器层面产生和处理此错误)",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120303",
-		description: "根据FID查询图片不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390004",
-		description: "信令消息解析非法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320018",
-		description: "解码错误/超时(播放器层面产生和处理此错误)",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120305",
-		description: "设备ip解析错误",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390005",
-		description: "内存资源不足",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320019",
-		description: "取消(保留，用户不用处理)",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120401",
-		description: "用户云空间信息不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390006",
-		description: "协议格式不对或者消息体长度超过STREAM_MAX_MSGBODY_LEN",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320020",
-		description: "播放过程中预连接被用户清除预操作信息",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120402",
-		description: "云空间操作失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390007",
-		description: "设备序列号长度不合法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320021",
-		description: "流加密码不对",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120403",
-		description: "用户目录不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390008",
-		description: "取流url长度不合法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "320022",
-		description: "未传入播放窗口",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120404",
-		description: "要操作的目标目录不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390009",
-		description: "解析vtm返回vtdu地址不合法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "100200",
-		description: "操作成功",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120405",
-		description: "要删除的文件信息不存在",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390010",
-		description: "解析vtm返回级联vtdu地址不合法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101001",
-		description: "用户名不合法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120406",
-		description: "已开通云存储",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390011",
-		description: "解析vtm返回会话标识长度不合法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101002",
-		description: "用户名已被占用",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120407",
-		description: "开通记录失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390012",
-		description: "vtdu返回流头长度不合法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101003",
-		description: "密码不合法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120500",
-		description: "获取数据错误",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390013",
-		description: "vtdu会话长度非法",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101004",
-		description: "密码为同一字符",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120501",
-		description: "开锁失败",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390014",
-		description: "回调函数未注册",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "101006",
-		description: "手机号码已经被注册",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "120502",
-		description: "室内机未收到呼叫",
-		solution: "",
-		updateTime: 1522034840000
-	},
-	{
-		moduleCode: "",
-		detailCode: "390015",
-		description: "vtdu成功响应未携带会话标识",
-		solution: "",
-		updateTime: 1522034840000
-	}
-];
-var code = "200";
-var msg$5 = "操作成功!";
-var errorCode = {
-	data: data$5,
-	code: code,
-	msg: msg$5
-};
-
-var Code = /*#__PURE__*/function () {
-  function Code(x, y) {
-    _classCallCheck$1(this, Code);
-
-    this.coreX = x;
-    this.coreY = y;
-    console.log("ErrorCode", errorCode);
-  }
-
-  _createClass$1(Code, [{
-    key: "toString",
-    value: function toString() {
-      return "".concat(this.coreX, "-").concat(this.coreY);
-    }
-  }, {
-    key: "matchErrorInfo",
-    value: function matchErrorInfo(code) {
-      return errorCode.data.find(function (item) {
-        return item.detailCode.substr(-4) == code;
-      });
-    }
-  }]);
-
-  return Code;
 }();
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -15430,6 +9937,5536 @@ freeExports._=_;}else {// Export to the global object.
 root._=_;}}).call(commonjsGlobal);
 });
 
+/* eslint-disable valid-jsdoc */
+
+/** insertAfter */
+function insertAfter(newElement, targetElement) {
+  var parent = targetElement.parentNode;
+
+  if (parent.lastChild == targetElement) {
+    parent.appendChild(newElement);
+  } else {
+    parent.insertBefore(newElement, targetElement.nextSibling);
+  }
+}
+
+var Status = /*#__PURE__*/function () {
+  function Status(jSPlugin, id) {
+    _classCallCheck$1(this, Status);
+
+    this.id = id;
+    this.jSPlugin = jSPlugin;
+    this.state = {
+      play: false,
+      loading: false
+    };
+  }
+
+  _createClass$1(Status, [{
+    key: "toString",
+    value: function toString() {
+      return "".concat(this.coreX, "-").concat(this.coreY);
+    }
+  }, {
+    key: "setPlayStatus",
+    value: function setPlayStatus(options) {
+      this.state = Object.assign(this.state, options);
+    }
+  }, {
+    key: "loadingStart",
+    value: function loadingStart(id) {
+      var oS = document.createElement('style');
+      document.getElementsByTagName("head")[0].appendChild(oS);
+      oS.innerHTML = '@keyframes antRotate {to {transform: rotate(400deg);transform-origin:50% 50%;}} .loading {display: inline-block;z-index: 1000;-webkit-animation: antRotate 1s infinite linear;animation: antRotate 1s infinite linear;}';
+      var domId = id;
+      var domElement = document.getElementById(domId);
+      var windowWidth = domElement.offsetWidth;
+      var windowHeight = domElement.offsetHeight;
+      var offsetTop = 0; //`calc(50% - ${(domElement.offsetTop / 2)}px)`;//domElement.offsetTop; // `calc(50% - ${domElement.offsetTop / 2}px)`
+
+      var offsetLeft = domElement.offsetLeft; // 先执行清空loading
+
+      if (document.getElementById("".concat(id, "-loading-id-0"))) {
+        document.getElementById("".concat(id, "-loading-id-0")).parentNode.removeChild(document.getElementById("".concat(id, "-loading-id-0")));
+      }
+
+      var loadingContainerDOM = document.createElement('div');
+      loadingContainerDOM.setAttribute('id', "".concat(id, "-loading-id-0"));
+      var style = 'position:absolute;outline:none;pointer-events:none;';
+      console.log("this.jSPlugin", this.jSPlugin);
+      style += 'width: 100%;background-size: cover; background-repeat:no-repeat;';
+      style += 'height: 100%;';
+      style += 'top:' + offsetTop + ';';
+      style += 'left:' + offsetLeft + 'px;';
+      loadingContainerDOM.setAttribute('style', style);
+      loadingContainerDOM.style.height = windowHeight;
+      loadingContainerDOM.setAttribute('class', 'loading-container'); // loadingContainerDOM.innerHTML= loading;
+
+      insertAfter(loadingContainerDOM, domElement);
+      var splitBasis = 1;
+      var loadingItemContainer = document.createElement('div');
+      var loadingStatusDOM = document.createElement('div');
+      loadingItemContainer.setAttribute('class', 'loading-item');
+      loadingItemContainer.setAttribute('id', "".concat(id, "-loading-item-0")); //loadingContainer.setAttribute('style','display:inline-flex;flex-direction:column;justify-content:center;align-items: center;width:'+(windowWidth / splitBasis)+'px;height:'+(windowHeight /splitBasis )+'px;outline:none;vertical-align: top;position:absolute');
+
+      var style = 'display:inline-flex;pointer-events:none;flex-direction:column;justify-content:center;align-items: center;width:100%;height:' + windowHeight + 'px;outline:none;vertical-align: top;position:absolute;';
+      style += 'left:' + calLoadingPostion(windowHeight, windowWidth, splitBasis, 0).left + 'px;';
+      style += 'top:' + calLoadingPostion(windowHeight, windowWidth, splitBasis, 0).top + 'px;';
+      loadingItemContainer.setAttribute('style', style);
+
+      function calLoadingPostion(windowHeight, windowWidth, splitBasis, i) {
+        var top = parseInt(i / splitBasis, 10) * (windowHeight / splitBasis);
+        var left = i % splitBasis * (windowWidth / splitBasis);
+        return {
+          top: top,
+          left: left
+        };
+      }
+
+      var loadingDOM = document.createElement('div');
+      loadingStatusDOM.innerHTML = "";
+      loadingStatusDOM.style.color = "#fff";
+      loadingDOM.setAttribute('class', 'loading');
+      var loading = '<svg t="1567069979438" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2399" width="32" height="32"><path d="M538.5344 266.4448a133.12 133.12 0 1 1 133.12-133.12 133.4272 133.4272 0 0 1-133.12 133.12zM255.0144 372.1984a121.6768 121.6768 0 1 1 121.6768-121.6768 121.856 121.856 0 0 1-121.6768 121.6768zM134.72 647.424a107.3664 107.3664 0 1 1 107.3664-107.264A107.52 107.52 0 0 1 134.72 647.424z m120.32 272.4608a90.9824 90.9824 0 1 1 90.9824-90.9824A91.1616 91.1616 0 0 1 255.04 919.8848zM538.5344 1024a79.36 79.36 0 1 1 79.36-79.36 79.36 79.36 0 0 1-79.36 79.36z m287.6928-134.144a64.1792 64.1792 0 1 1 64.1792-64.1792 64.3584 64.3584 0 0 1-64.1792 64.1792z m117.76-296.704a52.6336 52.6336 0 1 1 52.6592-52.6336 52.608 52.608 0 0 1-52.6336 52.6336z m-158.72-338.7136a40.96 40.96 0 1 1 12.0064 28.8512 40.5248 40.5248 0 0 1-12.0064-28.8512z" fill="#ffffff" p-id="2400"></path></svg>';
+      loadingDOM.innerHTML = loading;
+      loadingItemContainer.appendChild(loadingDOM); // loadingContainer.appendChild(loading);
+
+      loadingItemContainer.appendChild(loadingStatusDOM);
+      loadingContainerDOM.appendChild(loadingItemContainer);
+    }
+  }, {
+    key: "loadingSetText",
+    value: function loadingSetText(opt) {
+      this.loadingClearText();
+
+      if (document.getElementById("".concat(this.id, "-loading-item-0"))) {
+        var textElement = document.getElementById("".concat(this.id, "-loading-item-0")).childNodes[1];
+
+        if (!textElement) {
+          var loadingItemContainer = document.getElementById("".concat(this.id, "-loading-item-0"));
+          textElement = document.createElement('div');
+          textElement.innerHTML = opt.text;
+          loadingItemContainer.appendChild(textElement);
+        }
+
+        textElement.innerHTML = opt.text;
+        textElement.style.fontSize = "14px";
+        textElement.style.color = opt.color || "#FFFFFF";
+      }
+    }
+  }, {
+    key: "loadingClearText",
+    value: function loadingClearText() {
+      if (document.getElementById("".concat(this.id, "-loading-item-0"))) {
+        var elements = document.getElementById("".concat(this.id, "-loading-item-0")).childNodes;
+
+        if (elements.length > 1) {
+          elements[1].parentNode.removeChild(elements[1]);
+        } else {
+          elements[0] && elements[0].parentNode.removeChild(elements[0]);
+        }
+      }
+    }
+  }, {
+    key: "loadingClear",
+    value: function loadingClear() {
+      if (document.getElementById("".concat(this.id, "-loading-item-0"))) {
+        var elements = document.getElementById("".concat(this.id, "-loading-item-0")).childNodes;
+
+        for (var i = elements.length - 1; i >= 0; i--) {
+          elements[i].parentNode.removeChild(elements[i]);
+        }
+
+        if (document.getElementById("".concat(this.id, "-loading-id-0"))) {
+          document.getElementById("".concat(this.id, "-loading-id-0")).style.background = 'none';
+        }
+      }
+    }
+  }, {
+    key: "loadingEnd",
+    value: function loadingEnd() {
+      var loadingItemContainerDOM = document.getElementById("".concat(this.id, "-loading-item-0"));
+
+      if (loadingItemContainerDOM) {
+        loadingItemContainerDOM.parentNode.removeChild(loadingItemContainerDOM);
+        var loadingContainerDOM = document.getElementById("".concat(this.id, "-loading-id-0"));
+
+        if (loadingContainerDOM && loadingContainerDOM.children.length === 0) {
+          loadingContainerDOM.parentNode.removeChild(loadingContainerDOM);
+        }
+      }
+
+      document.getElementById("".concat(this.id, "-loading-item-0")).style.background = 'none';
+    }
+  }]);
+
+  return Status;
+}();
+
+var Message = /*#__PURE__*/function () {
+  function Message(jSPlugin, id) {
+    _classCallCheck$1(this, Message);
+
+    this.id = id;
+    this.jSPlugin = jSPlugin;
+    this.timer = null;
+    this.state = {
+      play: false,
+      loading: false
+    };
+  }
+
+  _createClass$1(Message, [{
+    key: "default",
+    value: function _default(msg) {
+      var _this = this;
+
+      var msgId = "msgId";
+
+      if (document.getElementById("".concat(this.id, "-").concat(msgId))) {
+        document.getElementById("".concat(this.id, "-wrap")).removeChild(document.getElementById("".concat(this.id, "-").concat(msgId)));
+      }
+
+      var messageDOM = document.createElement('div');
+      messageDOM.id = "".concat(this.id, "-").concat(msgId);
+      messageDOM.style = "position: absolute;top: 50%;left:calc(50% - ".concat(msg.length * 14 / 2, "px);padding: 4px 16px;background: #00000080;color: #FFFFFF;font-size: 14px");
+      messageDOM.innerHTML = msg;
+      document.getElementById("".concat(this.id, "-wrap")).appendChild(messageDOM);
+
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
+
+      this.timer = setTimeout(function () {
+        document.getElementById("".concat(_this.id, "-wrap")).removeChild(document.getElementById("".concat(_this.id, "-").concat(msgId)));
+      }, 2000);
+    }
+  }]);
+
+  return Message;
+}();
+
+var data$8 = [
+	{
+		moduleCode: "",
+		detailCode: "405984",
+		description: "",
+		solution: "",
+		updateTime: 1559564188000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10035",
+		description: "获取子账户AccessToken异常,子账户不存在或子账户不属于该开发者",
+		solution: "",
+		updateTime: 1559551958000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1052674",
+		description: "获取本地录像失败",
+		solution: "",
+		updateTime: 1558579653000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395547",
+		description: "",
+		solution: "",
+		updateTime: 1557367296000
+	},
+	{
+		moduleCode: "",
+		detailCode: "12",
+		description: "",
+		solution: "",
+		updateTime: 1557229476000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10052",
+		description: "余额不足",
+		solution: "",
+		updateTime: 1557121463000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20108",
+		description: "当前用户和所添加用户不是好友关系",
+		solution: "",
+		updateTime: 1556541725000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10009",
+		description: "",
+		solution: "",
+		updateTime: 1556422452000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320001",
+		description: "通道不存在",
+		solution: "请检查录像机的关联状态是否正常，没有摄像头的通道无法播放",
+		updateTime: 1556419044000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120001",
+		description: "通道不存在",
+		solution: "请检查录像机的关联状态是否正常，没有摄像头的通道无法播放",
+		updateTime: 1556419030000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320049",
+		description: "",
+		solution: "",
+		updateTime: 1556272984000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380227",
+		description: "",
+		solution: "",
+		updateTime: 1556264379000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10033",
+		description: "policy参数信息异常",
+		solution: "",
+		updateTime: 1555922124000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10065",
+		description: "weakAppKey 不属于accessToken对应的用户",
+		solution: "",
+		updateTime: 1555497522000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395416",
+		description: "设备达到最大连接数，无法建立连接",
+		solution: "请升级设备固件版本",
+		updateTime: 1555394722000
+	},
+	{
+		moduleCode: "",
+		detailCode: "100001",
+		description: "",
+		solution: "",
+		updateTime: 1555141776000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395558",
+		description: "",
+		solution: "",
+		updateTime: 1554987121000
+	},
+	{
+		moduleCode: "",
+		detailCode: "70001",
+		description: "智能家居买断用户设备受到限制,建议合理选择pagestart和pageSize",
+		solution: "",
+		updateTime: 1554691023000
+	},
+	{
+		moduleCode: "",
+		detailCode: "170001",
+		description: "",
+		solution: "",
+		updateTime: 1554691023000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1012",
+		description: "重置失败",
+		solution: "",
+		updateTime: 1554645841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1043",
+		description: "重置失败",
+		solution: "",
+		updateTime: 1554645834000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60060",
+		description: "直播功能未开通",
+		solution: "通道未开通直播功能，请先开通直播",
+		updateTime: 1554346018000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380203",
+		description: "",
+		solution: "",
+		updateTime: 1554093666000
+	},
+	{
+		moduleCode: "",
+		detailCode: "399048",
+		description: "免费版并发数达到上限，请升级企业版使用多并发能力",
+		solution: "升级成为企业版套餐即可取消并发数限制",
+		updateTime: 1553839878000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60007",
+		description: "预置点个数超过最大值",
+		solution: "",
+		updateTime: 1553671316000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1005",
+		description: "",
+		solution: "",
+		updateTime: 1553513701000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20605",
+		description: "其他用户正在认证中",
+		solution: "",
+		updateTime: 1552976317000
+	},
+	{
+		moduleCode: "",
+		detailCode: "90004",
+		description: "当前型号设备暂时不支持AI任务：CS-C3W-3B1WFR-YGL",
+		solution: "",
+		updateTime: 1552898525000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60046",
+		description: "添加的设备的IP和本设备的IP冲突",
+		solution: "",
+		updateTime: 1552872372000
+	},
+	{
+		moduleCode: "",
+		detailCode: "3",
+		description: "修改视频清晰度失败!",
+		solution: "",
+		updateTime: 1552440229000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1013",
+		description: "",
+		solution: "",
+		updateTime: 1552035069000
+	},
+	{
+		moduleCode: "",
+		detailCode: "370007",
+		description: "",
+		solution: "",
+		updateTime: 1551852327000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1",
+		description: "",
+		solution: "",
+		updateTime: 1551752889000
+	},
+	{
+		moduleCode: "",
+		detailCode: "30005",
+		description: "弱账户不存在",
+		solution: "",
+		updateTime: 1551422358000
+	},
+	{
+		moduleCode: "",
+		detailCode: "90006",
+		description: "用户操作AI任务受限",
+		solution: "",
+		updateTime: 1551073320000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60203",
+		description: "未开通相关服务",
+		solution: "",
+		updateTime: 1550623070000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10002",
+		description: "accessToken过期或异常",
+		solution: "",
+		updateTime: 1550300346000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380339",
+		description: "",
+		solution: "",
+		updateTime: 1549889458000
+	},
+	{
+		moduleCode: "",
+		detailCode: "90002",
+		description: "AI任务设备配置数达到上限：3",
+		solution: "",
+		updateTime: 1549071664000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380008",
+		description: "",
+		solution: "",
+		updateTime: 1549005979000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320227",
+		description: "",
+		solution: "",
+		updateTime: 1548739731000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60059",
+		description: "ezopen地址均不可用",
+		solution: "",
+		updateTime: 1548395350000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10005",
+		description: "appKey异常",
+		solution: "",
+		updateTime: 1548317858000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60045",
+		description: "添加的设备的IP和其他通道的IP冲突",
+		solution: "",
+		updateTime: 1548155085000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60047",
+		description: "码流类型不支持",
+		solution: "",
+		updateTime: 1547962108000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60041",
+		description: "添加的设备被其他设备关联或响应超时",
+		solution: "",
+		updateTime: 1547960980000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110029",
+		description: "个人用户接口调用频率超限",
+		solution: "请升级企业版：https://open.ys7.com/price.html",
+		updateTime: 1547606859000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380355",
+		description: "设备直连推流异常结束",
+		solution: "",
+		updateTime: 1547106294000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320081",
+		description: "",
+		solution: "",
+		updateTime: 1547106279000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60035",
+		description: "购买云存储服务失败",
+		solution: "",
+		updateTime: 1547026959000
+	},
+	{
+		moduleCode: "",
+		detailCode: "90005",
+		description: "设备已存在：C75714141",
+		solution: "",
+		updateTime: 1546940622000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1053445",
+		description: "该时间段没有录像片段",
+		solution: "",
+		updateTime: 1546935727000
+	},
+	{
+		moduleCode: "",
+		detailCode: "90007",
+		description: "设备未加入到AI任务",
+		solution: "",
+		updateTime: 1546932948000
+	},
+	{
+		moduleCode: "",
+		detailCode: "326000",
+		description: "",
+		solution: "",
+		updateTime: 1546823143000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1021",
+		description: "重置失败",
+		solution: "",
+		updateTime: 1546781152000
+	},
+	{
+		moduleCode: "",
+		detailCode: "2001",
+		description: "删除设备失败!",
+		solution: "",
+		updateTime: 1546422886000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380425",
+		description: "",
+		solution: "",
+		updateTime: 1546407694000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120097",
+		description: "",
+		solution: "",
+		updateTime: 1546085995000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10059",
+		description: "requestId已存在",
+		solution: "",
+		updateTime: 1545824509000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1154723",
+		description: "",
+		solution: "",
+		updateTime: 1545795209000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60043",
+		description: "添加的设备超出最大数量",
+		solution: "",
+		updateTime: 1545493607000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1152677",
+		description: "",
+		solution: "",
+		updateTime: 1545313404000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20097",
+		description: "设备添加异常,设备验证码为ABCDEF或设备被N1，R1关联",
+		solution: "",
+		updateTime: 1545310795000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10060",
+		description: "设备不支持该云存储类型",
+		solution: "",
+		updateTime: 1545309064000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20102",
+		description: "无相应邀请信息，无法接受邀请",
+		solution: "",
+		updateTime: 1545204966000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10053",
+		description: "云存储开通中",
+		solution: "",
+		updateTime: 1545100293000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20401",
+		description: "用户云空间信息不存在",
+		solution: "",
+		updateTime: 1545017880000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20600",
+		description: "临时密码数已达上限",
+		solution: "",
+		updateTime: 1544873457000
+	},
+	{
+		moduleCode: "",
+		detailCode: "901",
+		description: "",
+		solution: "",
+		updateTime: 1544693519000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60210",
+		description: "图片数据错误",
+		solution: "",
+		updateTime: 1544604457000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10013",
+		description: "您的应用没有权限调用",
+		solution: "",
+		updateTime: 1544416237000
+	},
+	{
+		moduleCode: "",
+		detailCode: "70007",
+		description: "授权码不存在",
+		solution: "",
+		updateTime: 1544179533000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10015",
+		description: "授权地址不存在",
+		solution: "",
+		updateTime: 1544163240000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320423",
+		description: "",
+		solution: "",
+		updateTime: 1544100685000
+	},
+	{
+		moduleCode: "",
+		detailCode: "370009",
+		description: "",
+		solution: "",
+		updateTime: 1544077151000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10031",
+		description: "子账户或萤石用户没有权限",
+		solution: "",
+		updateTime: 1543990462000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10055",
+		description: "设备不支持试用云存储服务",
+		solution: "",
+		updateTime: 1543986292000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60042",
+		description: "添加的设备密码错误",
+		solution: "",
+		updateTime: 1543710913000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60082",
+		description: "设备正在响应本次声源定位",
+		solution: "",
+		updateTime: 1543647426000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10056",
+		description: "设备不支持云存储服务转出",
+		solution: "",
+		updateTime: 1543558342000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20104",
+		description: "好友不存在",
+		solution: "",
+		updateTime: 1543492403000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20111",
+		description: "好友不是等待验证状态，无法接受邀请",
+		solution: "",
+		updateTime: 1543492365000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20107",
+		description: "不能添加自己为好友",
+		solution: "",
+		updateTime: 1543480986000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1",
+		description: "设备返回其他错误",
+		solution: "",
+		updateTime: 1543459921000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60084",
+		description: "当前正在关闭隐私遮蔽",
+		solution: "",
+		updateTime: 1543456515000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380255",
+		description: "",
+		solution: "",
+		updateTime: 1543411652000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20015",
+		description: "设备不支持",
+		solution: "",
+		updateTime: 1543390936000
+	},
+	{
+		moduleCode: "",
+		detailCode: "30003",
+		description: "手机验证码错误",
+		solution: "",
+		updateTime: 1543389137000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20615",
+		description: "锁用户已存在",
+		solution: "",
+		updateTime: 1543388325000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60061",
+		description: "账户流量已超出或未购买，限制开通",
+		solution: "",
+		updateTime: 1543372581000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60020",
+		description: "设备不支持该信令",
+		solution: "",
+		updateTime: 1543321636000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320146",
+		description: "",
+		solution: "",
+		updateTime: 1543318472000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60018",
+		description: "设备升级失败",
+		solution: "",
+		updateTime: 1543304928000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60044",
+		description: "添加的设备网络不可达超时",
+		solution: "",
+		updateTime: 1543304102000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20619",
+		description: "主用户无法删除",
+		solution: "",
+		updateTime: 1543290219000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20608",
+		description: "锁用户不存在",
+		solution: "",
+		updateTime: 1543281950000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20609",
+		description: "设备响应超时,门锁通信故障或者电量不足,请重试.",
+		solution: "",
+		updateTime: 1543281601000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1049954",
+		description: "升级设备失败",
+		solution: "",
+		updateTime: 1543279264000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60009",
+		description: "正在调用预置点",
+		solution: "",
+		updateTime: 1543238114000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1052677",
+		description: "获取本地录像失败",
+		solution: "",
+		updateTime: 1543207604000
+	},
+	{
+		moduleCode: "",
+		detailCode: "327000",
+		description: "",
+		solution: "",
+		updateTime: 1543196609000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20021",
+		description: "设备在线，未被用户添加",
+		solution: "",
+		updateTime: 1543193436000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20202",
+		description: "操作留言信息失败",
+		solution: "",
+		updateTime: 1543191562000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1052678",
+		description: "获取本地录像失败",
+		solution: "",
+		updateTime: 1543132218000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1054723",
+		description: "格式化设备失败",
+		solution: "",
+		updateTime: 1543129833000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20109",
+		description: "对应分享不存在",
+		solution: "",
+		updateTime: 1543129111000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60026",
+		description: "设备处于隐私遮蔽状态",
+		solution: "",
+		updateTime: 1543110403000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60083",
+		description: "当前正在开启隐私遮蔽",
+		solution: "",
+		updateTime: 1543071148000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60001",
+		description: "用户无云台控制权限",
+		solution: "",
+		updateTime: 1543059167000
+	},
+	{
+		moduleCode: "",
+		detailCode: "2003",
+		description: "设备不在线",
+		solution: "",
+		updateTime: 1543051046000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-24",
+		description: "设置设备enable错误",
+		solution: "",
+		updateTime: 1543042701000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10018",
+		description: "",
+		solution: "",
+		updateTime: 1543041564000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20103",
+		description: "好友已存在",
+		solution: "",
+		updateTime: 1543038430000
+	},
+	{
+		moduleCode: "",
+		detailCode: "70010",
+		description: "授权异常请重试",
+		solution: "",
+		updateTime: 1543035590000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60056",
+		description: "删除设备失败",
+		solution: "",
+		updateTime: 1543031275000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60040",
+		description: "添加的设备不在同一局域网",
+		solution: "",
+		updateTime: 1543031210000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60019",
+		description: "加密已开启",
+		solution: "",
+		updateTime: 1543029931000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1054722",
+		description: "格式化设备失败",
+		solution: "",
+		updateTime: 1543028537000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20016",
+		description: "当前设备正在格式化",
+		solution: "",
+		updateTime: 1543028537000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10024",
+		description: "透明通道权限校验不通过",
+		solution: "",
+		updateTime: 1543025540000
+	},
+	{
+		moduleCode: "",
+		detailCode: "6002",
+		description: "删除设备失败!",
+		solution: "",
+		updateTime: 1543025026000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1011",
+		description: "验证码错误！",
+		solution: "",
+		updateTime: 1543016865000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60032",
+		description: "卡密已使用",
+		solution: "",
+		updateTime: 1543006668000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10034",
+		description: "子账号已存在",
+		solution: "",
+		updateTime: 1542989194000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20301",
+		description: "根据uuid查询联动信息不存在",
+		solution: "",
+		updateTime: 1542988651000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1041",
+		description: "获取验证码过于频繁",
+		solution: "",
+		updateTime: 1542980953000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10012",
+		description: "该appkey下已绑定重复的phone！",
+		solution: "",
+		updateTime: 1542980800000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1008",
+		description: "phone不合法！",
+		solution: "",
+		updateTime: 1542979812000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60023",
+		description: "订阅操作失败",
+		solution: "",
+		updateTime: 1542979006000
+	},
+	{
+		moduleCode: "",
+		detailCode: "5",
+		description: "设备返回其他错误",
+		solution: "",
+		updateTime: 1542977828000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60006",
+		description: "云台当前操作失败",
+		solution: "",
+		updateTime: 1542977598000
+	},
+	{
+		moduleCode: "",
+		detailCode: "131",
+		description: "修改视频清晰度失败!",
+		solution: "",
+		updateTime: 1542977246000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10019",
+		description: "密码错误",
+		solution: "",
+		updateTime: 1542976628000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10004",
+		description: "用户不存在",
+		solution: "",
+		updateTime: 1542976268000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20201",
+		description: "操作报警信息失败",
+		solution: "",
+		updateTime: 1542975906000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20024",
+		description: "设备不在线，已经被别的用户添加",
+		solution: "",
+		updateTime: 1542975858000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60004",
+		description: "设备云台旋转达到左限位",
+		solution: "",
+		updateTime: 1542975207000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1052679",
+		description: "修改视频清晰度失败!",
+		solution: "",
+		updateTime: 1542974886000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20031",
+		description: "请在萤石客户端关闭终端绑定",
+		solution: "",
+		updateTime: 1542974756000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1053825",
+		description: "获取本地录像失败",
+		solution: "",
+		updateTime: 1542974692000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60011",
+		description: "预置点不存在",
+		solution: "",
+		updateTime: 1542974414000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1052936",
+		description: "修改视频清晰度失败!",
+		solution: "",
+		updateTime: 1542974390000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1016",
+		description: "",
+		solution: "",
+		updateTime: 1542974273000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10032",
+		description: "子账号不存在",
+		solution: "",
+		updateTime: 1542973906000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20013",
+		description: "设备已被别人添加",
+		solution: "",
+		updateTime: 1542973817000
+	},
+	{
+		moduleCode: "",
+		detailCode: "50000",
+		description: "服务器错误!",
+		solution: "",
+		updateTime: 1542973801000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60010",
+		description: "该预置点已经是当前位置",
+		solution: "",
+		updateTime: 1542973800000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60003",
+		description: "设备云台旋转达到下限位",
+		solution: "",
+		updateTime: 1542973770000
+	},
+	{
+		moduleCode: "",
+		detailCode: "4",
+		description: "设备返回其他错误",
+		solution: "",
+		updateTime: 1542973755000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60016",
+		description: "加密未开启，无需关闭",
+		solution: "",
+		updateTime: 1542973753000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60002",
+		description: "设备云台旋转达到上限位",
+		solution: "",
+		updateTime: 1542973742000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20023",
+		description: "设备不在线，未被用户添加",
+		solution: "",
+		updateTime: 1542973685000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10008",
+		description: "",
+		solution: "",
+		updateTime: 1542973676000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20010",
+		description: "设备验证码错误",
+		solution: "",
+		updateTime: 1542973658000
+	},
+	{
+		moduleCode: "",
+		detailCode: "60005",
+		description: "设备云台旋转达到右限位",
+		solution: "",
+		updateTime: 1542973657000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20017",
+		description: "设备已经被自己添加",
+		solution: "",
+		updateTime: 1542973648000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20020",
+		description: "设备在线，已经被自己添加",
+		solution: "",
+		updateTime: 1542973533000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20029",
+		description: "设备不在线，已经被自己添加",
+		solution: "",
+		updateTime: 1542973530000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10014",
+		description: "APPKEY下对应的第三方userId和phone未绑定！",
+		solution: "",
+		updateTime: 1542973499000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20002",
+		description: "设备不存在",
+		solution: "",
+		updateTime: 1542973499000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10030",
+		description: "appkey和appsecret不匹配",
+		solution: "",
+		updateTime: 1542973490000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20022",
+		description: "设备在线，已经被别的用户添加",
+		solution: "",
+		updateTime: 1542973486000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20008",
+		description: "设备响应超时",
+		solution: "",
+		updateTime: 1542973484000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20032",
+		description: "该用户下通道不存在",
+		solution: "",
+		updateTime: 1542973481000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20006",
+		description: "网络异常",
+		solution: "",
+		updateTime: 1542973475000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20014",
+		description: "deviceSerial不合法!",
+		solution: "",
+		updateTime: 1542973454000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20007",
+		description: "设备不在线",
+		solution: "",
+		updateTime: 1542973454000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20018",
+		description: "该用户不拥有该设备",
+		solution: "",
+		updateTime: 1542973453000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10010",
+		description: "",
+		solution: "",
+		updateTime: 1542973453000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10011",
+		description: "未绑定！",
+		solution: "",
+		updateTime: 1542973453000
+	},
+	{
+		moduleCode: "",
+		detailCode: "20001",
+		description: "通道不存在!",
+		solution: "",
+		updateTime: 1542973452000
+	},
+	{
+		moduleCode: "",
+		detailCode: "10017",
+		description: "appKey不存在",
+		solution: "",
+		updateTime: 1542973451000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400259",
+		description: "",
+		solution: "",
+		updateTime: 1542875643000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400004",
+		description: "",
+		solution: "",
+		updateTime: 1542873364000
+	},
+	{
+		moduleCode: "",
+		detailCode: "3840",
+		description: "",
+		solution: "",
+		updateTime: 1541860000000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1017",
+		description: "",
+		solution: "",
+		updateTime: 1541733663000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320025",
+		description: "",
+		solution: "",
+		updateTime: 1541078281000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320024",
+		description: "",
+		solution: "",
+		updateTime: 1540801374000
+	},
+	{
+		moduleCode: "",
+		detailCode: "321002",
+		description: "",
+		solution: "",
+		updateTime: 1540631734000
+	},
+	{
+		moduleCode: "",
+		detailCode: "321000",
+		description: "",
+		solution: "",
+		updateTime: 1540609178000
+	},
+	{
+		moduleCode: "",
+		detailCode: "321022",
+		description: "",
+		solution: "",
+		updateTime: 1540548345000
+	},
+	{
+		moduleCode: "",
+		detailCode: "321016",
+		description: "",
+		solution: "",
+		updateTime: 1540287187000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320023",
+		description: "",
+		solution: "",
+		updateTime: 1539825993000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1016",
+		description: "",
+		solution: "",
+		updateTime: 1539584931000
+	},
+	{
+		moduleCode: "",
+		detailCode: "8",
+		description: "",
+		solution: "",
+		updateTime: 1539391812000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1075127593",
+		description: "",
+		solution: "",
+		updateTime: 1538959251000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380421",
+		description: "",
+		solution: "",
+		updateTime: 1537288465000
+	},
+	{
+		moduleCode: "",
+		detailCode: "322000",
+		description: "麦克风权限未开启",
+		solution: "",
+		updateTime: 1536820136000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1152678",
+		description: "",
+		solution: "",
+		updateTime: 1536738348000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320047",
+		description: "",
+		solution: "",
+		updateTime: 1536664472000
+	},
+	{
+		moduleCode: "",
+		detailCode: "327006",
+		description: "",
+		solution: "",
+		updateTime: 1536136120000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1074807593",
+		description: "",
+		solution: "",
+		updateTime: 1536135035000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320291",
+		description: "",
+		solution: "",
+		updateTime: 1536110836000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320045",
+		description: "",
+		solution: "",
+		updateTime: 1535963775000
+	},
+	{
+		moduleCode: "",
+		detailCode: "370004",
+		description: "",
+		solution: "",
+		updateTime: 1535883699000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1149954",
+		description: "",
+		solution: "",
+		updateTime: 1535700674000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320053",
+		description: "",
+		solution: "",
+		updateTime: 1535681079000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400000",
+		description: "",
+		solution: "",
+		updateTime: 1535532332000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110028",
+		description: "个人版抓图接口日调用次数超出限制",
+		solution: "请升级企业版：https://open.ys7.com/price.html",
+		updateTime: 1535348756000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110027",
+		description: "个人版帐号数量超出安全限制，无法调用",
+		solution: "请升级企业版：https://open.ys7.com/price.html",
+		updateTime: 1535348734000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110026",
+		description: "设备数量超出个人版限制，当前设备无法操作",
+		solution: "请升级企业版：https://open.ys7.com/price.html",
+		updateTime: 1535348588000
+	},
+	{
+		moduleCode: "",
+		detailCode: "100000",
+		description: "",
+		solution: "",
+		updateTime: 1534980008000
+	},
+	{
+		moduleCode: "",
+		detailCode: "324004",
+		description: "",
+		solution: "",
+		updateTime: 1534927762000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360104",
+		description: "",
+		solution: "",
+		updateTime: 1534761006000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320204",
+		description: "",
+		solution: "",
+		updateTime: 1534584221000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380001",
+		description: "",
+		solution: "",
+		updateTime: 1534404715000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380204",
+		description: "",
+		solution: "",
+		updateTime: 1534401682000
+	},
+	{
+		moduleCode: "",
+		detailCode: "328006",
+		description: "",
+		solution: "",
+		updateTime: 1534144407000
+	},
+	{
+		moduleCode: "",
+		detailCode: "321703",
+		description: "",
+		solution: "",
+		updateTime: 1534127274000
+	},
+	{
+		moduleCode: "",
+		detailCode: "321510",
+		description: "",
+		solution: "",
+		updateTime: 1533428892000
+	},
+	{
+		moduleCode: "",
+		detailCode: "321006",
+		description: "",
+		solution: "",
+		updateTime: 1533036916000
+	},
+	{
+		moduleCode: "",
+		detailCode: "50009",
+		description: "",
+		solution: "",
+		updateTime: 1532078548000
+	},
+	{
+		moduleCode: "",
+		detailCode: "50007",
+		description: "",
+		solution: "",
+		updateTime: 1531991720000
+	},
+	{
+		moduleCode: "",
+		detailCode: "50018",
+		description: "",
+		solution: "",
+		updateTime: 1531912829000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380451",
+		description: "",
+		solution: "",
+		updateTime: 1531615700000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380336",
+		description: "",
+		solution: "",
+		updateTime: 1531231721000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360020",
+		description: "",
+		solution: "",
+		updateTime: 1531117554000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380418",
+		description: "",
+		solution: "",
+		updateTime: 1531107070000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1153445",
+		description: "设备在该时间段内没有录像",
+		solution: "",
+		updateTime: 1530944007000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110007",
+		description: "调用接口总次数达到上限",
+		solution: "请升级企业版，获取更高能力",
+		updateTime: 1530935584000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360019",
+		description: "",
+		solution: "",
+		updateTime: 1530869771000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360100",
+		description: "",
+		solution: "",
+		updateTime: 1530786188000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380042",
+		description: "",
+		solution: "",
+		updateTime: 1530775199000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320355",
+		description: "",
+		solution: "",
+		updateTime: 1530716074000
+	},
+	{
+		moduleCode: "",
+		detailCode: "100003",
+		description: "",
+		solution: "",
+		updateTime: 1530232541000
+	},
+	{
+		moduleCode: "",
+		detailCode: "371026",
+		description: "",
+		solution: "",
+		updateTime: 1530192600000
+	},
+	{
+		moduleCode: "",
+		detailCode: "102",
+		description: "",
+		solution: "",
+		updateTime: 1529895641000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380201",
+		description: "",
+		solution: "",
+		updateTime: 1529740929000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320054",
+		description: "",
+		solution: "",
+		updateTime: 1529544875000
+	},
+	{
+		moduleCode: "",
+		detailCode: "500101",
+		description: "",
+		solution: "",
+		updateTime: 1529485953000
+	},
+	{
+		moduleCode: "",
+		detailCode: "321001",
+		description: "",
+		solution: "",
+		updateTime: 1529411048000
+	},
+	{
+		moduleCode: "",
+		detailCode: "321508",
+		description: "",
+		solution: "",
+		updateTime: 1529393279000
+	},
+	{
+		moduleCode: "",
+		detailCode: "405991",
+		description: "",
+		solution: "",
+		updateTime: 1529380238000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380461",
+		description: "",
+		solution: "",
+		updateTime: 1529130941000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1019",
+		description: "",
+		solution: "",
+		updateTime: 1529057245000
+	},
+	{
+		moduleCode: "",
+		detailCode: "322009",
+		description: "",
+		solution: "",
+		updateTime: 1528965717000
+	},
+	{
+		moduleCode: "",
+		detailCode: "324005",
+		description: "",
+		solution: "",
+		updateTime: 1528950153000
+	},
+	{
+		moduleCode: "",
+		detailCode: "325000",
+		description: "",
+		solution: "",
+		updateTime: 1528947143000
+	},
+	{
+		moduleCode: "",
+		detailCode: "326032",
+		description: "",
+		solution: "",
+		updateTime: 1528872971000
+	},
+	{
+		moduleCode: "",
+		detailCode: "325032",
+		description: "",
+		solution: "",
+		updateTime: 1528863189000
+	},
+	{
+		moduleCode: "",
+		detailCode: "328000",
+		description: "",
+		solution: "",
+		updateTime: 1528794505000
+	},
+	{
+		moduleCode: "",
+		detailCode: "53",
+		description: "",
+		solution: "",
+		updateTime: 1528693249000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1020",
+		description: "",
+		solution: "",
+		updateTime: 1528499440000
+	},
+	{
+		moduleCode: "",
+		detailCode: "329032",
+		description: "",
+		solution: "",
+		updateTime: 1528446301000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1202",
+		description: "",
+		solution: "",
+		updateTime: 1528439820000
+	},
+	{
+		moduleCode: "",
+		detailCode: "2",
+		description: "",
+		solution: "",
+		updateTime: 1528434175000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1152936",
+		description: "",
+		solution: "",
+		updateTime: 1528345986000
+	},
+	{
+		moduleCode: "",
+		detailCode: "328011",
+		description: "",
+		solution: "",
+		updateTime: 1528338600000
+	},
+	{
+		moduleCode: "",
+		detailCode: "28",
+		description: "",
+		solution: "",
+		updateTime: 1528337530000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320356",
+		description: "",
+		solution: "",
+		updateTime: 1528188693000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320357",
+		description: "",
+		solution: "",
+		updateTime: 1528188517000
+	},
+	{
+		moduleCode: "",
+		detailCode: "405800",
+		description: "",
+		solution: "",
+		updateTime: 1528168732000
+	},
+	{
+		moduleCode: "",
+		detailCode: "405996",
+		description: "",
+		solution: "",
+		updateTime: 1528168686000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380357",
+		description: "",
+		solution: "",
+		updateTime: 1528011565000
+	},
+	{
+		moduleCode: "",
+		detailCode: "328022",
+		description: "",
+		solution: "",
+		updateTime: 1527929065000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380003",
+		description: "",
+		solution: "",
+		updateTime: 1527927819000
+	},
+	{
+		moduleCode: "",
+		detailCode: "50004",
+		description: "",
+		solution: "",
+		updateTime: 1527770643000
+	},
+	{
+		moduleCode: "",
+		detailCode: "50011",
+		description: "",
+		solution: "",
+		updateTime: 1527770635000
+	},
+	{
+		moduleCode: "",
+		detailCode: "370017",
+		description: "",
+		solution: "",
+		updateTime: 1527739514000
+	},
+	{
+		moduleCode: "",
+		detailCode: "327032",
+		description: "",
+		solution: "",
+		updateTime: 1527726704000
+	},
+	{
+		moduleCode: "",
+		detailCode: "324001",
+		description: "",
+		solution: "",
+		updateTime: 1527681892000
+	},
+	{
+		moduleCode: "",
+		detailCode: "405997",
+		description: "",
+		solution: "",
+		updateTime: 1527653408000
+	},
+	{
+		moduleCode: "",
+		detailCode: "405995",
+		description: "",
+		solution: "",
+		updateTime: 1527647283000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1153825",
+		description: "",
+		solution: "",
+		updateTime: 1527601747000
+	},
+	{
+		moduleCode: "",
+		detailCode: "328002",
+		description: "",
+		solution: "",
+		updateTime: 1527495292000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1152679",
+		description: "",
+		solution: "",
+		updateTime: 1527486665000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380356",
+		description: "",
+		solution: "",
+		updateTime: 1527125669000
+	},
+	{
+		moduleCode: "",
+		detailCode: "328032",
+		description: "",
+		solution: "",
+		updateTime: 1527069382000
+	},
+	{
+		moduleCode: "",
+		detailCode: "22",
+		description: "",
+		solution: "",
+		updateTime: 1527049826000
+	},
+	{
+		moduleCode: "",
+		detailCode: "9",
+		description: "",
+		solution: "",
+		updateTime: 1527006778000
+	},
+	{
+		moduleCode: "",
+		detailCode: "89",
+		description: "",
+		solution: "",
+		updateTime: 1526622784000
+	},
+	{
+		moduleCode: "",
+		detailCode: "328016",
+		description: "",
+		solution: "",
+		updateTime: 1526452365000
+	},
+	{
+		moduleCode: "",
+		detailCode: "368005",
+		description: "",
+		solution: "",
+		updateTime: 1525921264000
+	},
+	{
+		moduleCode: "",
+		detailCode: "0",
+		description: "",
+		solution: "",
+		updateTime: 1525920242000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380006",
+		description: "",
+		solution: "",
+		updateTime: 1525918868000
+	},
+	{
+		moduleCode: "",
+		detailCode: "310",
+		description: "",
+		solution: "",
+		updateTime: 1525834436000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360011",
+		description: "",
+		solution: "",
+		updateTime: 1525681552000
+	},
+	{
+		moduleCode: "",
+		detailCode: "170005",
+		description: "",
+		solution: "",
+		updateTime: 1525433900000
+	},
+	{
+		moduleCode: "",
+		detailCode: "50023",
+		description: "",
+		solution: "",
+		updateTime: 1525403338000
+	},
+	{
+		moduleCode: "",
+		detailCode: "100131",
+		description: "",
+		solution: "",
+		updateTime: 1525229691000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1018",
+		description: "",
+		solution: "",
+		updateTime: 1525142341000
+	},
+	{
+		moduleCode: "",
+		detailCode: "362026",
+		description: "",
+		solution: "",
+		updateTime: 1524882677000
+	},
+	{
+		moduleCode: "",
+		detailCode: "368007",
+		description: "",
+		solution: "",
+		updateTime: 1524832269000
+	},
+	{
+		moduleCode: "",
+		detailCode: "54",
+		description: "",
+		solution: "",
+		updateTime: 1524793646000
+	},
+	{
+		moduleCode: "",
+		detailCode: "1154722",
+		description: "",
+		solution: "",
+		updateTime: 1524620807000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320229",
+		description: "",
+		solution: "",
+		updateTime: 1524551682000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360012",
+		description: "",
+		solution: "",
+		updateTime: 1524472094000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380229",
+		description: "",
+		solution: "",
+		updateTime: 1524110755000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360016",
+		description: "",
+		solution: "",
+		updateTime: 1523933518000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1003",
+		description: "",
+		solution: "",
+		updateTime: 1523584804000
+	},
+	{
+		moduleCode: "",
+		detailCode: "410026",
+		description: "",
+		solution: "",
+		updateTime: 1523517430000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360102",
+		description: "TTS初始化失败",
+		solution: "",
+		updateTime: 1523503528000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360013",
+		description: "设备开启了隐私保护",
+		solution: "",
+		updateTime: 1523503507000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360010",
+		description: "设备正在对讲中",
+		solution: "",
+		updateTime: 1523503491000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360007",
+		description: "TTS关闭了与客户端的连接",
+		solution: "",
+		updateTime: 1523503475000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360006",
+		description: "客户端接收发生错误",
+		solution: "",
+		updateTime: 1523503457000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360005",
+		description: "客户端发送的消息错误",
+		solution: "",
+		updateTime: 1523503437000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360004",
+		description: "TTS内部发生错误",
+		solution: "",
+		updateTime: 1523503421000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360003",
+		description: "TTS的设备端发生错误",
+		solution: "",
+		updateTime: 1523503397000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360002",
+		description: "对讲发起超时",
+		solution: "",
+		updateTime: 1523503376000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360001",
+		description: "客户端请求超时",
+		solution: "",
+		updateTime: 1523503357000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320077",
+		description: "",
+		solution: "",
+		updateTime: 1523444274000
+	},
+	{
+		moduleCode: "",
+		detailCode: "370047",
+		description: "",
+		solution: "",
+		updateTime: 1523440480000
+	},
+	{
+		moduleCode: "",
+		detailCode: "100002",
+		description: "",
+		solution: "",
+		updateTime: 1523413964000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1004",
+		description: "",
+		solution: "",
+		updateTime: 1523336653000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380000",
+		description: "",
+		solution: "",
+		updateTime: 1523180856000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380213",
+		description: "",
+		solution: "",
+		updateTime: 1523180623000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380101",
+		description: "",
+		solution: "",
+		updateTime: 1522834231000
+	},
+	{
+		moduleCode: "",
+		detailCode: "50047",
+		description: "",
+		solution: "",
+		updateTime: 1522833243000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-999",
+		description: "",
+		solution: "",
+		updateTime: 1522831034000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320418",
+		description: "",
+		solution: "",
+		updateTime: 1522829072000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1009",
+		description: "",
+		solution: "",
+		updateTime: 1522746247000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320209",
+		description: "",
+		solution: "",
+		updateTime: 1522744395000
+	},
+	{
+		moduleCode: "",
+		detailCode: "368006",
+		description: "",
+		solution: "",
+		updateTime: 1522744300000
+	},
+	{
+		moduleCode: "",
+		detailCode: "369003",
+		description: "",
+		solution: "",
+		updateTime: 1522736355000
+	},
+	{
+		moduleCode: "",
+		detailCode: "405989",
+		description: "",
+		solution: "",
+		updateTime: 1522726571000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1012",
+		description: "",
+		solution: "",
+		updateTime: 1522726203000
+	},
+	{
+		moduleCode: "",
+		detailCode: "322016",
+		description: "",
+		solution: "",
+		updateTime: 1522722918000
+	},
+	{
+		moduleCode: "",
+		detailCode: "500103",
+		description: "",
+		solution: "",
+		updateTime: 1522655556000
+	},
+	{
+		moduleCode: "",
+		detailCode: "405999",
+		description: "",
+		solution: "",
+		updateTime: 1522654716000
+	},
+	{
+		moduleCode: "",
+		detailCode: "321032",
+		description: "",
+		solution: "",
+		updateTime: 1522647732000
+	},
+	{
+		moduleCode: "",
+		detailCode: "381101",
+		description: "",
+		solution: "",
+		updateTime: 1522392414000
+	},
+	{
+		moduleCode: "",
+		detailCode: "399999",
+		description: "",
+		solution: "",
+		updateTime: 1522379834000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380103",
+		description: "",
+		solution: "",
+		updateTime: 1522312724000
+	},
+	{
+		moduleCode: "",
+		detailCode: "360014",
+		description: "",
+		solution: "",
+		updateTime: 1522304341000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1005",
+		description: "",
+		solution: "",
+		updateTime: 1522288195000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395454",
+		description: "",
+		solution: "",
+		updateTime: 1522220180000
+	},
+	{
+		moduleCode: "",
+		detailCode: "100005",
+		description: "",
+		solution: "",
+		updateTime: 1522218849000
+	},
+	{
+		moduleCode: "",
+		detailCode: "100004",
+		description: "",
+		solution: "",
+		updateTime: 1522209053000
+	},
+	{
+		moduleCode: "",
+		detailCode: "106002",
+		description: "",
+		solution: "",
+		updateTime: 1522206200000
+	},
+	{
+		moduleCode: "",
+		detailCode: "410030",
+		description: "",
+		solution: "",
+		updateTime: 1522162252000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1002",
+		description: "",
+		solution: "",
+		updateTime: 1522150690000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1200",
+		description: "",
+		solution: "",
+		updateTime: 1522139025000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1001",
+		description: "",
+		solution: "",
+		updateTime: 1522046436000
+	},
+	{
+		moduleCode: "",
+		detailCode: "-1011",
+		description: "",
+		solution: "",
+		updateTime: 1522045931000
+	},
+	{
+		moduleCode: "",
+		detailCode: "381102",
+		description: "",
+		solution: "",
+		updateTime: 1522044953000
+	},
+	{
+		moduleCode: "",
+		detailCode: "381103",
+		description: "",
+		solution: "",
+		updateTime: 1522044953000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391205",
+		description: "vtdu解析服务器ip失败",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391206",
+		description: "vtdu描述符select失败",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391207",
+		description: "vtdu文件描述符不在可读中",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391208",
+		description: "vtdu网络发生错误getsockopt",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391209",
+		description: "vtdu描述符select超时",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395000",
+		description: "cas回复信令，发现内存已经释放（和设备之间异常断开）",
+		solution: "检查设备网络；刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395400",
+		description: "私有化协议vtm检测私有化协议中码流类型小于0或者设备序列号为空等非法参数场景返回(app不重试取流)",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395402",
+		description: "回放找不到录像文件",
+		solution: "检查是否有存储卡并且接触良好",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395403",
+		description: "操作码或信令密钥与设备不匹配",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395404",
+		description: "设备不在线",
+		solution: "检查设备网络；重启设备接入萤石云",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395405",
+		description: "流媒体向设备发送或接受信令超时/cas响应超时",
+		solution: "检查设备网络；重启设备",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395406",
+		description: "token失效",
+		solution: "刷新重试或者重启设备",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395407",
+		description: "客户端的URL格式错误",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395409",
+		description: "预览开启隐私保护",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395410",
+		description: "设备达到最大连接数",
+		solution: "请升级设备固件版本",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395411",
+		description: "token无权限",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395412",
+		description: "session不存在 ",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395413",
+		description: "验证token的他异常（不具体） ",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395415",
+		description: "设备通道错",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395451",
+		description: "设备不支持的码流类型",
+		solution: "刷新重试或者切换到高清模式",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395452",
+		description: "设备链接流媒体服务器失败 ",
+		solution: "检查设备网络，重启设备，刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395500",
+		description: "服务器处理失败 ",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395501",
+		description: "流媒体vtdu达到最大负载，请扩容",
+		solution: "服务器负载达到上限，请稍后重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395503",
+		description: "vtm返回分配vtdu失败",
+		solution: "服务器负载达到上限，请稍后重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395544",
+		description: "设备返回无视频源 ",
+		solution: "设备是否接触良好；",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395545",
+		description: "视频分享时间已经结束",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395546",
+		description: "vtdu返回达到取流并发路数限制",
+		solution: "请升级为企业版，放开并发限制",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395560",
+		description: "蚁兵代理不支持的用户取流类型，会重定向到vtdu取流",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395557",
+		description: "回放服务器等待流头超时",
+		solution: "刷新重试，检测设备网络，重启设备",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395600",
+		description: "分享设备不在分享时间内",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395601",
+		description: "群组分享用户没权限",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395602",
+		description: "群组分享权限变更",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395556",
+		description: "ticket取流验证失败",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395530",
+		description: "机房故障不可用",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "395701",
+		description: "cas信令返回格式错误",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396001",
+		description: "客户端参数出错",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396099",
+		description: "客户端默认错误",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396101",
+		description: "不支持的命令",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396102",
+		description: "设备流头发送失败",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396103",
+		description: "cas/设备返回错误1",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396104",
+		description: "cas/设备返回错误-1",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396105",
+		description: "设备返回错误码3",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396106",
+		description: "设备返回错误码4",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396107",
+		description: "设备返回错误码5",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396108",
+		description: "cas信令回应重复",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396109",
+		description: "视频广场取消分享",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396110",
+		description: "设备信令默认错误",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396501",
+		description: "设备数据链路和实际链路不匹配",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396502",
+		description: "设备数据链路重复建立连接",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396503",
+		description: "设备数据链路端口不匹配",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396504",
+		description: "缓存设备数据链路失败(内存块不足)",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396505",
+		description: "设备发送确认头消息重复",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396506",
+		description: "设备数据先于确定头部到达",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396508",
+		description: "设备数据头部长度非法",
+		solution: "刷新重试，或者重启设备",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396509",
+		description: "索引找不到设备数据管理块",
+		solution: "刷新重试",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396510",
+		description: "设备数据链路vtdu内存块协议状态不匹配",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396511",
+		description: "设备数据头部没有streamkey错误",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396512",
+		description: "设备数据头部非法(较笼统)",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396513",
+		description: "设备数据长度过小",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396514",
+		description: "设备老协议推流头部没有streamkey错误",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396515",
+		description: "设备老协议推流数据非法",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396516",
+		description: "设备老协议索引找不到内存管理块",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396517",
+		description: "设备老协议推流数据非法",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396518",
+		description: "设备数据包过大",
+		solution: "刷新重试，或者重启设备",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396519",
+		description: "设备推流链路网络不稳定",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "396520",
+		description: "设备推流链路网络不稳定(默认)",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "170003",
+		description: "refreshToken不存在",
+		solution: "建议用户重新调用logout接口，然后调用openLoginPage接口重新启动登录页面登录",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "170004",
+		description: "refreshToken已过期",
+		solution: "建议用户重新调用logout接口，然后调用openLoginPage接口重新启动登录页面登录",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380011",
+		description: "设备隐私保护中",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380045",
+		description: "设备直连取流连接数量过大",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380047",
+		description: "设备不支持该命令",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380077",
+		description: "设备正在对讲中",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380102",
+		description: "数据接收异常",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380205",
+		description: "设备检测入参异常",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380209",
+		description: "网络连接超时",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380212",
+		description: "设备端网络连接超时",
+		solution: "",
+		updateTime: 1522034841000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101007",
+		description: "手机号未注册",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120503",
+		description: "正在响铃",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390016",
+		description: "vtdu成功响应未携带流头",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101008",
+		description: "手机号码不合法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120504",
+		description: "室内机正在通话",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390017",
+		description: "无数据流，尚未使用",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101009",
+		description: "用户名与手机不匹配",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120505",
+		description: "设备操作失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390018",
+		description: "信令消息体PB解析失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101010",
+		description: "获取验证码失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120506",
+		description: "非法命令",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390019",
+		description: "信令消息体PB封装失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101011",
+		description: "验证码错误",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120507",
+		description: "智能锁密码错误",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390020",
+		description: "申请系统内存资源失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101012",
+		description: "验证码失效",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120508",
+		description: "开关锁失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390021",
+		description: "vtdu地址尚未获取到",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101013",
+		description: "用户不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120509",
+		description: "开关锁超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390022",
+		description: "客户端尚未支持",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101014",
+		description: "密码不正确或者appKey不正确",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120510",
+		description: "智能锁设备繁忙",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390023",
+		description: "获取系统socket资源失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101015",
+		description: "用户被锁住",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120511",
+		description: "远程开锁功能未打开",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390024",
+		description: "上层填充的StreamSsnId不匹配",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101021",
+		description: "验证参数异常",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120600",
+		description: "临时密码数已达上限",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390025",
+		description: "链接服务器失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101026",
+		description: "邮箱已经被注册",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120601",
+		description: "添加临时密码失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390026",
+		description: "客户端请求未收到服务端应答",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101031",
+		description: "邮箱未注册",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120602",
+		description: "删除临时密码失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390027",
+		description: "链路断开",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101032",
+		description: "邮箱不合法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120603",
+		description: "该临时密码不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390028",
+		description: "没有取流链接",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101041",
+		description: "获取验证码过于频繁",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120604",
+		description: "指纹锁射频通信失败,请稍后再试",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390029",
+		description: "流成功停止",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101043",
+		description: "手机验证码输入错误超过规定次数",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120605",
+		description: "其他用户正在认证中",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390030",
+		description: "客户端防串流校验失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "102000",
+		description: "设备不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120606",
+		description: "验证已启动,请在120s内进行本地验证和调用添加设备接口",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390031",
+		description: "应用层tcp粘包处理缓冲区满",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "102001",
+		description: "摄像机不存在",
+		solution: "摄像机未注册到萤石云平台，请仔细检查摄像机的网络配置，确保连接到网络",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120607",
+		description: "删除用户失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390032",
+		description: "无效状态迁移",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "102003",
+		description: "设备不在线",
+		solution: "参考服务中心排查方法",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120608",
+		description: "用户不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390033",
+		description: "无效客户端状态",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "102004",
+		description: "设备异常",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120609",
+		description: "设备响应超时,门锁通信故障或者电量不足,请重试.",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390034",
+		description: "向vtm取流流媒体信息请求超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "102007",
+		description: "设备序列号不正确",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120610",
+		description: "获取临时密码列表失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390035",
+		description: "向代理取流请求超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "102009",
+		description: "设备请求响应超时异常",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "130001",
+		description: "用户不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390036",
+		description: "向代理保活取流请求超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "105000",
+		description: "设备已被自己添加",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "130002",
+		description: "手机号码已经注册",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390037",
+		description: "向vtdu取流请求超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "105001",
+		description: "设备已被别人添加",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "130003",
+		description: "手机验证码错误",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390038",
+		description: "向vtdu保活取流请求超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "105002",
+		description: "设备验证码错误",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "130004",
+		description: "终端绑定操作失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391001",
+		description: "vtm地址或端口非法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "107001",
+		description: "邀请不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "149999",
+		description: "数据异常",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391002",
+		description: "vtm生成文件描述符失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "107002",
+		description: "邀请验证失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "150000",
+		description: "服务器异常",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391003",
+		description: "vtm设置文件描述符非阻塞失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "107003",
+		description: "邀请用户不匹配",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160000",
+		description: "设备不支持云台控制",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391004",
+		description: "vtm设置文件描述符阻塞失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "107004",
+		description: "云存储连接失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160001",
+		description: "用户无云台控制权限",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391005",
+		description: "vtm解析服务器ip失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "7005",
+		description: "VTDU主动断开连接",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "107005",
+		description: "VTDU主动断开连接",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160002",
+		description: "设备云台旋转达到上限位",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391006",
+		description: "vtm描述符select失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "107006",
+		description: "不能邀请自己",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160003",
+		description: "设备云台旋转达到下限位",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391007",
+		description: "vtm文件描述符不在可读中",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "107007",
+		description: "重复邀请",
+		solution: "分享和删除分享必须全部由接口形式操作，如果与萤石客户端混用会造成这个问题，解决办法：在萤石客户端清空所有相关分享数据并重新添加设备，再通过接口操作即可",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160004",
+		description: "设备云台旋转达到左限位",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391008",
+		description: "vtm网络发生错误getsockopt",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110001",
+		description: "参数错误",
+		solution: "参数为空或者格式不对",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160005",
+		description: "设备云台旋转达到右限位",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391009",
+		description: "vtm描述符select超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110002",
+		description: "accessToken异常或过期",
+		solution: "accessToken有效期为七天，建议在accessToken即将过期或者出现10002错误码的时候重新获取accessToken",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160006",
+		description: "云台当前操作失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391101",
+		description: "proxy地址或端口非法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110004",
+		description: "用户不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160007",
+		description: "预置点个数超过最大值",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391102",
+		description: "proxy生成文件描述符失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110005",
+		description: "appKey异常",
+		solution: "确认appKey状态，不通过或者冻结状态会返回该错误码",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160009",
+		description: "正在调用预置点",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391103",
+		description: "proxy设置文件描述符非阻塞失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110006",
+		description: "ip受限",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160010",
+		description: "该预置点已经是当前位置",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391104",
+		description: "proxy设置文件描述符阻塞失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160011",
+		description: "预置点不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391105",
+		description: "proxy解析服务器ip失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110008",
+		description: "签名错误",
+		solution: "①获取签名方式详见apidemo及[旧]API文档 ②注意编码格式为UTF-8",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160013",
+		description: "设备版本已是最新",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391106",
+		description: "proxy描述符select失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110009",
+		description: "签名参数错误",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160014",
+		description: "设备正在升级",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391107",
+		description: "proxy文件描述符不在可读中",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110010",
+		description: "签名超时",
+		solution: "请调用同步服务器时间接口进行校时",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160015",
+		description: "设备正在重启",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391108",
+		description: "proxy网络发生错误getsockopt",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110011",
+		description: "未开通萤石云服务",
+		solution: "参照绑定流程",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160016",
+		description: "加密未开启，无须关闭",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391109",
+		description: "proxy描述符select超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110012",
+		description: "第三方账户与萤石账号已经绑定",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160017",
+		description: "设备抓图失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391201",
+		description: "vtdu地址或端口非法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110013",
+		description: "应用没有权限调用此接口",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160018",
+		description: "设备升级失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391202",
+		description: "vtdu生成文件描述符失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110014",
+		description: "APPKEY下对应的第三方userId和phone未绑定",
+		solution: "获取AccessToken时所用appKey与SDK所用appKey不一致",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160019",
+		description: "加密已开启",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391203",
+		description: "vtdu设置文件描述符非阻塞失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110017",
+		description: "appKey不存在",
+		solution: "请填写在官网申请的应用秘钥",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160020",
+		description: "不支持该命令",
+		solution: "请确认设备是否支持该命令",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "391204",
+		description: "vtdu设置文件描述符阻塞失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110018",
+		description: "AccessToken与Appkey不匹配",
+		solution: "请检查获取accessToken对应的appKey和SDK中设置的appKey是否一致",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160023",
+		description: "订阅操作失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110019",
+		description: "密码错误",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160024",
+		description: "取消订阅操作失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110020",
+		description: "请求方法为空",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160025",
+		description: "客流统计配置失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110021",
+		description: "ticket校验失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160026",
+		description: "设备处于隐私遮蔽状态",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110022",
+		description: "透传目的地非法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160027",
+		description: "设备正在镜像操作",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110024",
+		description: "无透传权限",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160028",
+		description: "设备正在键控动作",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110025",
+		description: "appKey被禁止使用通明通道",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160029",
+		description: "设备处于语音对讲状态",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160030",
+		description: "卡密输入错误次数过多，24小时后再输入",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160031",
+		description: "卡密信息不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160032",
+		description: "卡密状态不对或已过期",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160033",
+		description: "卡密非卖品，只能开通对应的绑定设备",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110030",
+		description: "appKey和appSecret不匹配",
+		solution: "请检查appKey和appSecret是否对应",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160035",
+		description: "购买云存储服务失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110031",
+		description: "子账户或萤石用户没有权限",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160040",
+		description: "添加的设备不在同一局域网",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110032",
+		description: "子账户不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160041",
+		description: "添加的设备被其他设备关联或响应超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110033",
+		description: "子账户未设置授权策略",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160042",
+		description: "添加的设备密码错误",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110034",
+		description: "子账户已存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160043",
+		description: "添加的设备超出最大数量",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110035",
+		description: "获取子账户AccessToken异常",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160044",
+		description: "添加的设备网络不可达超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110036",
+		description: "子账户被禁用",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160045",
+		description: "添加的设备的IP和其他通道的IP冲突",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "110051",
+		description: "无权限进行抓图",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160046",
+		description: "添加的设备的IP和本设备的IP冲突",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160047",
+		description: "码流类型不支持",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120002",
+		description: "设备不存在",
+		solution: "①设备没有注册到萤石云平台，请检查下设备网络参数，确保能正常连接网络②设备序列号不存在",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160048",
+		description: "带宽超出系统接入带宽",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120003",
+		description: "参数异常，SDK版本过低",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160049",
+		description: "IP或者端口不合法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120004",
+		description: "参数异常，SDK版本过低",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160050",
+		description: "添加的设备版本不支持需要升级才能接入",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120005",
+		description: "安全认证失败，需进行SDK安全认证",
+		solution: "已去掉安全验证",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160051",
+		description: "添加的设备不支持接入",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120006",
+		description: "网络异常",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160052",
+		description: "添加的设备通道号出错",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120007",
+		description: "设备不在线",
+		solution: "参考服务中心排查方法",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160053",
+		description: "添加的设备分辨率不支持",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120008",
+		description: "设备响应超时",
+		solution: "设备响应超时，请检测设备网络或重试",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160054",
+		description: "添加的设备账号被锁定",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120009",
+		description: "子账号不能添加设备",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160055",
+		description: "添加的设备取码流出错",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120010",
+		description: "设备验证码错误",
+		solution: "验证码在设备标签上，六位大写字母，注意大小写",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160056",
+		description: "删除设备失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120012",
+		description: "设备添加失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160057",
+		description: "删除的设备未关联",
+		solution: "检查IPC与NVR是否有关联关系",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120013",
+		description: "设备已被别人添加",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160060",
+		description: "地址未绑定",
+		solution: "请前往官网设置直播",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120014",
+		description: "设备序列号不正确",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160061",
+		description: "账户流量已超出或未购买，限制开通",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120015",
+		description: "设备不支持该功能",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160062",
+		description: "该通道直播已开通",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120016",
+		description: "当前设备正在格式化",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160063",
+		description: "直播未使用或直播已关闭",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120017",
+		description: "设备已被自己添加",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160070",
+		description: "设备不能转移给自己",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120018",
+		description: "该用户不拥有该设备",
+		solution: "确认设备是否属于用户",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160071",
+		description: "设备不能转移，设备与其他设备存在关联关系",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400001",
+		description: "参数为空",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120019",
+		description: "设备不支持云存储服务",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160072",
+		description: "设备不能转移，通道被分享给其他用户或者分享到视频广场",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400002",
+		description: "参数错误",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120020",
+		description: "设备在线，被自己添加",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160073",
+		description: "云存储转移失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400025",
+		description: "设备不支持对讲",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120021",
+		description: "设备在线，但是未被用户添加",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160080",
+		description: "当前正在声源定位",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400029",
+		description: "没有初始化或资源被释放",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120022",
+		description: "设备在线，但是已经被别的用户添加",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160081",
+		description: "当前正在轨迹巡航",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400030",
+		description: "json解析异常",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120023",
+		description: "设备不在线，未被用户添加",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160082",
+		description: "设备正在响应本次声源定位",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400031",
+		description: "网络异常",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120024",
+		description: "设备不在线，但是已经被别的用户添加",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160083",
+		description: "当前正在开启隐私遮蔽",
+		solution: "设备正在操作隐私遮蔽，无法进行当前操作",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400032",
+		description: "设备信息异常为空",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120025",
+		description: "重复申请分享",
+		solution: "确认设备是否由添加过该设备且申请过分享的账户下是否还存在分享记录",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "160084",
+		description: "当前正在关闭隐私遮蔽",
+		solution: "设备正在操作隐私遮蔽，无法进行当前操作",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400034",
+		description: "取流超时",
+		solution: "一般是由于网络状况不好导致，可以尝试下让用户重新播放",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120026",
+		description: "视频广场不存在该视频",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "380290",
+		description: "　连接CAS服务器失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400035",
+		description: "设备已加密，需要输入验证码",
+		solution: "收到此错误码，需要让用户输入验证码后，调用EZPlayer.setPlayKey传入验证码，并重新调用播放函数",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120027",
+		description: "视频转码失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361001",
+		description: "对讲服务端排队超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400036",
+		description: "播放验证码错误",
+		solution: "收到此错误码，需要让用户输入验证码后，调用EZPlayer.setPlayKey传入验证码，并重新调用播放函数",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120028",
+		description: "设备固件升级包不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361002",
+		description: "对讲服务端处理超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400037",
+		description: "surfacehold错误",
+		solution: "请检查是否是播放之前销毁了surface，收到此错误也可以重新建立surface后播放",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120029",
+		description: "设备不在线，但是已经被自己添加",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361003",
+		description: "设备链接对讲服务器超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400100",
+		description: "未知错误",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120030",
+		description: "该用户不拥有该视频广场视频",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361004",
+		description: "服务器内部错误",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400200",
+		description: "player sdk出错，这种错误一般开发者也是无法解决，不具体分类传出，传一个统一的inner错误码出去",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120031",
+		description: "开启终端绑定，硬件特征码验证失败",
+		solution: "请在萤石客户端关闭终端绑定，参考此步骤",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361005",
+		description: "解析消息失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400300",
+		description: "内存溢出",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120032",
+		description: "该用户下通道不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361006",
+		description: "请求重定向--需要向其他服务申请对讲",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400901",
+		description: "设备不在线，可以提示用户",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120033",
+		description: "无法收藏自己分享的视频",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361007",
+		description: "请求url非法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400902",
+		description: "accesstoken异常或失效，需要重新获取accesstoken，并传入到sdk",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120034",
+		description: "该用户下无设备",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361008",
+		description: "token失效",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400903",
+		description: "当前账号开启了终端绑定，只允许指定设备登录操作，提示用户登录i.ys7.com解除终端绑定",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120090",
+		description: "用户反馈失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361009",
+		description: "设备验证码或者通信秘钥不匹配",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400904",
+		description: "设备正在对讲中",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120095",
+		description: "APP包下载失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361010",
+		description: "设备已经在对讲",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "400905",
+		description: "设备开启了隐私保护，不允许预览、对讲等",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120096",
+		description: "APP包信息删除失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361011",
+		description: "设备10s响应超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120101",
+		description: "视频不支持分享给本人",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361012",
+		description: "设备不在线",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320002",
+		description: "参数无效",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120102",
+		description: "无相应邀请信息",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361013",
+		description: "设备开启隐私保护拒绝对讲",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320003",
+		description: "暂不支持此操作",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120103",
+		description: "好友已存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361014",
+		description: "token无权限",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320004",
+		description: "内存溢出",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120104",
+		description: "好友不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361015",
+		description: "设备返回session不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320005",
+		description: "创建CAS session失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120105",
+		description: "好友状态错误",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361016",
+		description: "验证token其他异常错误",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320006",
+		description: "创建cloud session失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120106",
+		description: "对应群组不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361017",
+		description: "服务端监听设备建立端口超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320007",
+		description: "token失效",
+		solution: "重新设置token后再重试",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120107",
+		description: "不能添加自己为好友",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361018",
+		description: "设备链路异常",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320008",
+		description: "token池里面没有token,请传入token",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120108",
+		description: "当前用户和所添加用户不是好友关系",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361019",
+		description: "对讲服务端不支持的信令消息",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320009",
+		description: "传入新的INIT_PARAM并reset(保留，目前未用)",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120109",
+		description: "对应分享不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361020",
+		description: "对讲服务端解析对讲请求未携带会话描述能力集",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320010",
+		description: "请重试",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120110",
+		description: "好友群组不属于当前用户",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361021",
+		description: "对讲服务端优先能力集结果为空",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320011",
+		description: "500毫秒后请重试",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120111",
+		description: "好友不是等待验证状态",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361022",
+		description: "cas链路异常",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320012",
+		description: "token池已满",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120112",
+		description: "添加应用下的用户为好友失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361023",
+		description: "对讲服务端分配对讲会话资源失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320013",
+		description: "P2P client超过限制",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120201",
+		description: "操作报警信息失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "361024",
+		description: "对讲服务端解析信令消息失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320014",
+		description: "sdk未初始化",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120202",
+		description: "操作留言信息失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390001",
+		description: "通用错误返回",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320015",
+		description: "超时",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120301",
+		description: "根据UUID查询报警消息不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390002",
+		description: "入参为空指针",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320016",
+		description: "正在打洞中",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120302",
+		description: "根据UUID查询图片不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390003",
+		description: "入参值无效",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320017",
+		description: "没有视频文件头(播放器层面产生和处理此错误)",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120303",
+		description: "根据FID查询图片不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390004",
+		description: "信令消息解析非法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320018",
+		description: "解码错误/超时(播放器层面产生和处理此错误)",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120305",
+		description: "设备ip解析错误",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390005",
+		description: "内存资源不足",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320019",
+		description: "取消(保留，用户不用处理)",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120401",
+		description: "用户云空间信息不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390006",
+		description: "协议格式不对或者消息体长度超过STREAM_MAX_MSGBODY_LEN",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320020",
+		description: "播放过程中预连接被用户清除预操作信息",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120402",
+		description: "云空间操作失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390007",
+		description: "设备序列号长度不合法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320021",
+		description: "流加密码不对",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120403",
+		description: "用户目录不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390008",
+		description: "取流url长度不合法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "320022",
+		description: "未传入播放窗口",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120404",
+		description: "要操作的目标目录不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390009",
+		description: "解析vtm返回vtdu地址不合法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "100200",
+		description: "操作成功",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120405",
+		description: "要删除的文件信息不存在",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390010",
+		description: "解析vtm返回级联vtdu地址不合法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101001",
+		description: "用户名不合法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120406",
+		description: "已开通云存储",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390011",
+		description: "解析vtm返回会话标识长度不合法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101002",
+		description: "用户名已被占用",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120407",
+		description: "开通记录失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390012",
+		description: "vtdu返回流头长度不合法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101003",
+		description: "密码不合法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120500",
+		description: "获取数据错误",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390013",
+		description: "vtdu会话长度非法",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101004",
+		description: "密码为同一字符",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120501",
+		description: "开锁失败",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390014",
+		description: "回调函数未注册",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "101006",
+		description: "手机号码已经被注册",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "120502",
+		description: "室内机未收到呼叫",
+		solution: "",
+		updateTime: 1522034840000
+	},
+	{
+		moduleCode: "",
+		detailCode: "390015",
+		description: "vtdu成功响应未携带会话标识",
+		solution: "",
+		updateTime: 1522034840000
+	}
+];
+var code = "200";
+var msg$1 = "操作成功!";
+var errorCode = {
+	data: data$8,
+	code: code,
+	msg: msg$1
+};
+
+var Code = /*#__PURE__*/function () {
+  function Code(x, y) {
+    _classCallCheck$1(this, Code);
+
+    this.coreX = x;
+    this.coreY = y;
+    console.log("ErrorCode", errorCode);
+  }
+
+  _createClass$1(Code, [{
+    key: "toString",
+    value: function toString() {
+      return "".concat(this.coreX, "-").concat(this.coreY);
+    }
+  }, {
+    key: "matchErrorInfo",
+    value: function matchErrorInfo(code) {
+      return errorCode.data.find(function (item) {
+        return item.detailCode.substr(-4) == code;
+      });
+    }
+  }]);
+
+  return Code;
+}();
+
 var header = {
 	color: "red",
 	backgroundColor: "red",
@@ -15490,7 +15527,7 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
     hoverLeft: 0,
     timeTipShow: false,
     randomNum: 123,
-    timeWidthTbls: [60, 1800, 3600, 86400, 259200],
+    timeWidthTbls: [60, 1800, 3600, 86400],
     // 时间宽度单位（秒）
     timeUnits: ['范围: 1分钟; 单位: 秒', '范围: 30分钟; 单位: 分钟', '范围: 1小时; 单位: 分钟', '范围: 1天; 单位: 小时', '范围: 3天; 单位: 小时'],
     // 时间单位
@@ -15693,16 +15730,30 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
       this.isMouseDown = false;
 
       if (this.moved) {
-        this.moved = false; //12 -10
-        // this.$emit('change', [
-        //     parseInt(this.nowTime),
-        //     parseInt(this.oldTime)
-        // ]);
+        this.moved = false; // 限制拖动只更改时分秒
 
+        var newStringTime = // new Date(this.nowTime).getFullYear() +
+        // '/' +
+        // ( new Date(this.nowTime).getMonth() + 1) +
+        // '/' +
+        // new Date(this.nowTime).getDate() +
+        // ' ' +
+        this.subTime(new Date(this.nowTime).getHours()) + ':' + this.subTime(new Date(this.nowTime).getMinutes()) + ':' + this.subTime(new Date(this.nowTime).getSeconds());
+        var oldStringTime = new Date(this.oldTime).getFullYear() + '/' + (new Date(this.oldTime).getMonth() + 1) + '/' + new Date(this.oldTime).getDate(); // ' ' +
+        // this.subTime(new Date(this.oldTime).getHours()) +
+        // ':' +
+        // this.subTime( new Date(this.oldTime).getMinutes()) +
+        // ':' +
+        // this.subTime( new Date(this.oldTime).getSeconds());
+        // this.nowTime = new Date(`${oldStringTime.substring(0,11) + newStringTime.substring(11,19)}`).getTime();
+
+        this.nowTime = new Date("".concat(oldStringTime, " ").concat(newStringTime));
         this.updata({
           time: this.nowTime
         });
         this.oldTime = this.nowTime;
+        console.log("nowTime", new Date(this.nowTime), "".concat(oldStringTime, " ").concat(newStringTime)); // 限制只能拖动当天;
+
         callback(this.nowTime);
       }
     }
@@ -15796,9 +15847,6 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
     var startHours = startDate.getHours(); // 起始的小时
 
     var startDay = startDate.getDate(); // 起始的日期
-    //console.log("startDay",startDay)
-
-    var OffsetLeft = starMin * 60 + starSecond; // 偏移量
     // debugger;
 
     var curScale = 0; // 计算时间点
@@ -15818,9 +15866,6 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
           // console.log("starSecond",starSecond)
 
           for (var i = 0; i < dotNum; i++) {
-            // debugger;
-            // debugger;
-            // console.log("starSecond",starSecond,curScale)
             curScale = starSecond + i;
             startDate.setSeconds(curScale); // debugger;
             //debugger;
@@ -15844,48 +15889,7 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
             startDate.setDate(startDay);
             startDate.setHours(startHours);
             startDate.setMinutes(starMin);
-          } // for (var i = 0; i < 60; i++) {
-          //     curScale = starSecond + i;
-          //     if (curScale > 60) {
-          //         curScale = curScale - 60;
-          //     }
-          //     startDate.setSeconds(curScale);
-          //     // 每一个整10秒画一次线和文字
-          //     if (curScale % 10 === 0) {
-          //         that.drawSolidLine(
-          //             (i * that.canvasWidth) / 60,
-          //             0,
-          //             (i * that.canvasWidth) / 60,
-          //             (that.canvasHeight / 5) * 1.5,
-          //             1,
-          //             lineColor
-          //         );
-          //         var timeString =
-          //             this.subTime(startDate.getHours()) +
-          //             ':' +
-          //             this.subTime(startDate.getMinutes()) +
-          //             ':' +
-          //             this.subTime(startDate.getSeconds());
-          //         that.drawString(
-          //             timeString,
-          //             (i * that.canvasWidth) / 60,
-          //             (that.canvasHeight / 5) * 2.5,
-          //             'center',
-          //             'rgba(255,255,255,0.3)'
-          //         );
-          //     } else {
-          //         // 只画一次线
-          //         that.drawSolidLine(
-          //             (i * that.canvasWidth) / 60,
-          //             0,
-          //             (i * that.canvasWidth) / 60,
-          //             (that.canvasHeight / 5) * 0.5,
-          //             1,
-          //             lineColor
-          //         );
-          //     }
-          // }
-
+          }
 
           break;
         }
@@ -15901,11 +15905,7 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
           starMin = startDate.getMinutes(); //console.log("dotNum",dotNum,starMin)
 
           for (var i = 0; i <= dotNum; i++) {
-            curScale = starMin + i; //console.log("curScale",curScale)
-            // if (curScale > 60) {
-            //     curScale = curScale - 60;
-            // }
-
+            curScale = starMin + i;
             startDate.setMinutes(curScale);
 
             if (curScale % 5 === 0) {
@@ -15917,45 +15917,8 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
               that.drawSolidLine(i * that.canvasWidth / dotNum, 8, i * that.canvasWidth / dotNum, that.canvasHeight / 5 * 0.5 + 8, 1, lineColor);
             }
 
-            startDate.setHours(startHours); // startDate.setMinutes(starMin);
-          } // for (var i = 0; i <= 30; i++) {
-          //     curScale = starMin + i;
-          //     if (curScale > 60) {
-          //         curScale = curScale - 60;
-          //     }
-          //     startDate.setMinutes(curScale);
-          //     if (curScale % 5 === 0) {
-          //         that.drawSolidLine(
-          //             ((i * 60 - starSecond) * that.canvasWidth) / 1800,
-          //             0,
-          //             ((i * 60 - starSecond) * that.canvasWidth) / 1800,
-          //             (that.canvasHeight / 5) * 1.5,
-          //             1,
-          //             lineColor
-          //         );
-          //         var timeString =
-          //             this.subTime(startDate.getHours()) +
-          //             ':' +
-          //             this.subTime(startDate.getMinutes());
-          //         that.drawString(
-          //             timeString,
-          //             ((i * 60 - starSecond) * that.canvasWidth) / 1800,
-          //             (that.canvasHeight / 5) * 2.5,
-          //             'center',
-          //             'rgba(255,255,255,0.3)'
-          //         );
-          //     } else {
-          //         that.drawSolidLine(
-          //             ((i * 60 - starSecond) * that.canvasWidth) / 1800,
-          //             0,
-          //             ((i * 60 - starSecond) * that.canvasWidth) / 1800,
-          //             (that.canvasHeight / 5) * 0.5,
-          //             1,
-          //             lineColor
-          //         );
-          //     }
-          // }
-
+            startDate.setHours(startHours);
+          }
 
           break;
         }
@@ -16014,75 +15977,39 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
             startDate.setHours(curScale);
             var timeString; // 不等于24的时候，画短线
             //console.log("curScale",curScale)
+            //if (curScale % 24 !=0) {
+            //  console.log("curScale",curScale)
 
-            if (curScale % 24 != 0) {
-              //  console.log("curScale",curScale)
-              timeString = this.subTime(startDate.getHours()) + ":00"; // timeString = startDate.toLocaleDateString();
-              // debugger
+            timeString = this.subTime(startDate.getHours()) + ":00"; // timeString = startDate.toLocaleDateString();
+            // debugger
 
-              that.drawSolidLine(i * that.canvasWidth / dotNum, 8, i * that.canvasWidth / dotNum, that.canvasHeight / 5 * 0.5 + 8, 1, lineColor);
-            } else {
-              // debugger;
-              // console.log("画图")
-              // 不等于24的时候，画长线
-              timeString = startDate.toLocaleDateString(); // console.log("startDatestartDate",startDate,i)
-              // debugger;
-
-              that.drawSolidLine(i * that.canvasWidth / dotNum, 8, i * that.canvasWidth / dotNum, that.canvasHeight / 5 * 1 + 8, 1, lineColor);
-            } // 每2个小时一个时间文字
-
+            that.drawSolidLine(i * that.canvasWidth / dotNum, 8, i * that.canvasWidth / dotNum, that.canvasHeight / 5 * 0.5 + 8, 1, lineColor); // } else {
+            //     // debugger;
+            //     // console.log("画图")
+            //     // 不等于24的时候，画长线
+            //     timeString = startDate.toLocaleDateString();
+            //     // console.log("startDatestartDate",startDate,i)
+            //     // debugger;
+            //     that.drawSolidLine(
+            //         ((i ) * that.canvasWidth) /
+            //         dotNum,
+            //         8,
+            //         ((i) * that.canvasWidth) /
+            //         dotNum,
+            //         (that.canvasHeight / 5) * 1 + 8,
+            //         1,
+            //         lineColor
+            //     );
+            // }
+            // 每2个小时一个时间文字
 
             if (curScale % 2 === 0) {
               that.drawString(timeString, i * that.canvasWidth / dotNum, that.canvasHeight / 5 * 2, 'center', 'rgba(255,255,255,0.3)');
-            } // console.log("startDay",startDay)
-            //    startDate.setDate(startDay);
-
+            }
 
             startDate.setFullYear(startYears);
             startDate.setDate(startDay);
-            startDate.setHours(startHours); //   startDate.setTime(that.nowTime);
-            //   console.log("haha21",startDay,that.nowTime)
-            //   console.log("haha",startDate)
-          }
-
-          break;
-        }
-
-      case 259200:
-        {
-          // 3天
-          startDate.setHours(startDate.getHours() - 36);
-          starSecond = startDate.getSeconds();
-          starMin = startDate.getMinutes();
-          startHours = startDate.getHours();
-          OffsetLeft = starMin * 60 + starSecond;
-
-          for (var i = 0; i <= 72; i++) {
-            curScale = startHours + i;
-
-            if (curScale >= 24) {
-              curScale = curScale % 24;
-            }
-
-            if (curScale === 0) {
-              startDate.setHours(24);
-            } else {
-              startDate.setHours(curScale);
-            }
-
-            var timeString = this.subTime(startDate.getHours());
-
-            if (curScale % 3 === 0) {
-              // 每3天一个时间文字和刻度
-              if (!curScale) {
-                timeString = startDate.toLocaleDateString();
-              }
-
-              that.drawString(timeString, (i * 3600 - OffsetLeft) * that.canvasWidth / 259200, that.canvasHeight / 5 * 2.5, 'center', 'rgba(255,255,255,0.3)');
-              that.drawSolidLine((i * 3600 - OffsetLeft) * that.canvasWidth / 259200, 0, (i * 3600 - OffsetLeft) * that.canvasWidth / 259200, that.canvasHeight / 5 * 1, 1, lineColor);
-            } else {
-              that.drawSolidLine((i * 3600 - OffsetLeft) * that.canvasWidth / 259200, 0, (i * 3600 - OffsetLeft) * that.canvasWidth / 259200, that.canvasHeight / 5 * 0.5, 1, lineColor);
-            }
+            startDate.setHours(startHours);
           }
 
           break;
@@ -16091,17 +16018,6 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
   };
 
   TimeLine.prototype.getRecord = function (timeArr, startTime, endTime) {
-    console.log("timeArr,startTime,endTime", timeArr, startTime, endTime); // if(timeArr.length > 0 && startTime) {
-    //     if(timeArr[0].startTime < startTime) {
-    //         timeArr[0].startTime = startTime;
-    //     }
-    // }
-    // if(timeArr.length > 0 && endTime) {
-    //     if(timeArr[timeArr.length-1].endTime > endTime) {
-    //         timeArr[timeArr.length-1].endTime = endTime;
-    //     }
-    // }
-
     this.timeSection = timeArr;
     this.drawRecord();
   };
@@ -16155,65 +16071,10 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
       }
 
       return position;
-    } // switch (that.timeWidth) {
-    //     case 60: {
-    //         startDate.setSeconds(startDate.getSeconds() - 30);
-    //         break;
-    //     }
-    //     case 1800: {
-    //         startDate.setMinutes(startDate.getMinutes() - 15);
-    //         break;
-    //     }
-    //     case 3600: {
-    //         startDate.setMinutes(startDate.getMinutes() - 30);
-    //         break;
-    //     }
-    //     case 86400: {
-    //         startDate.setHours(startDate.getHours() - 12);
-    //         break;
-    //     }
-    //     case 259200: {
-    //         startDate.setHours(startDate.getHours() - 36);
-    //         break;
-    //     }
-    // }
-    // that.timeSection.forEach(function (item, i) {
-    //     // 蓝色片段条
-    //     drawPen.fillStyle = '#4E6FAE';
-    //     var x = ((item.time[0] - startDate.getTime()) * timeScale) / 1000;
-    //     var w = ((item.time[1] - item.time[0]) * timeScale) / 1000;
-    //     drawPen.fillRect(
-    //         x,
-    //         (that.canvasHeight / 5) * 3,
-    //         w,
-    //         (that.canvasHeight / 5) * 1.5
-    //     );
-    // });
-
+    }
   };
 
   TimeLine.prototype.drawOtherMsg = function () {
-    // 画中心线阴影
-    // this.drawPen.shadowColor = '#1890FF';
-    // this.drawPen.shadowOffsetX = 0;
-    // this.drawPen.shadowOffsetY = 0;
-    // this.drawPen.shadowBlur = 10;
-    // // 绘制中心线上方的三角形
-    // this.drawPen.beginPath();
-    // this.drawPen.moveTo(this.canvasWidth / 2 - 4.5, 0);
-    // this.drawPen.lineTo(this.canvasWidth / 2 + 4.5, 0);
-    // this.drawPen.lineTo(this.canvasWidth / 2, 4.5);
-    // this.drawPen.fillStyle = '#fff';
-    // this.drawPen.closePath();
-    // this.drawPen.fill();
-    // // 绘制中心线下方的三角形
-    // this.drawPen.beginPath();
-    // this.drawPen.moveTo(this.canvasWidth / 2 - 4.5, this.canvasHeight);
-    // this.drawPen.lineTo(this.canvasWidth / 2 + 4.5, this.canvasHeight);
-    // this.drawPen.lineTo(this.canvasWidth / 2, this.canvasHeight - 4.5);
-    // this.drawPen.fillStyle = '#fff';
-    // this.drawPen.closePath();
-    // this.drawPen.fill();
     // 画中心线
     this.drawSolidLine(this.canvasWidth / 2, 0, this.canvasWidth / 2, this.canvasHeight, 2, '#1890FF');
     this.drawPen.shadowBlur = 0;
@@ -16249,9 +16110,11 @@ var Rec = /*#__PURE__*/function () {
     this.timer = null;
     this.date = new Date();
     this.datepickerVisible = false;
+    this.seekTimer = null;
+    this.disabled = false;
     var canvasItemWidth = parseInt(getComputedStyle(document.getElementById(jSPlugin.id)).width, 10) - 100;
     var canvasContainer = document.createElement('div');
-    canvasContainer.style = "display:inline-block;width:".concat(canvasItemWidth, "px;height:48px;");
+    canvasContainer.style = "display:inline-block;height:48px;";
     canvasContainer.id = this.jSPlugin.id + "-canvas-container";
     var canvasItem = document.createElement('canvas');
     canvasItem.id = this.jSPlugin.id + "-canvas";
@@ -16265,7 +16128,7 @@ var Rec = /*#__PURE__*/function () {
     var timeLineControlsContainer = document.createElement('div');
     timeLineControlsContainer.className = "timeline-controls";
     timeLineControlsContainer.style = "display:flex;width:100px;height:48px;text-align:center;line-height: 48px;vertical-align: top;background: #000000;";
-    var timeLineControls = "\n<div class=\"timeline-controls-scale\" style=\"display: inline-flex;flex-direction: column;justify-content: center;vertical-align: top;padding: 0 20px;\">\n  <span style=\"vertical-Align: middle;line-height: 14px;height: 18px; width: 18px;\" id=\"".concat(this.jSPlugin.id, "-timeline-scale-add\">\n    <svg fill=\"#2C2C2C\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"\n      viewBox=\"0 0 20 20\">\n      <title>add</title>\n      <g>\n        <polygon points=\"0.1,0.5 15,0.5 15,15.4 0.1,15.4 \t\" />\n      </g>\n      <g>\n        <path\n          fill=\"#FFFFFF\";\n          d=\"M7.6,12.4c-0.3,0-0.5-0.2-0.5-0.5v-8c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v8C8.1,12.2,7.9,12.4,7.6,12.4z\" />\n      </g>\n      <g>\n        <path\n          fill=\"#FFFFFF\";\n          d=\"M11.6,8.4h-8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h8c0.3,0,0.5,0.2,0.5,0.5S11.8,8.4,11.6,8.4z\" />\n      </g>\n    </svg>\n  </span>\n  <span style=\"vertical-Align: middle;line-height: 14px;height: 18px; width: 18px;\" id=\"").concat(this.jSPlugin.id, "-timeline-scale-sub\">\n    <svg fill=\"#2C2C2C\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"\n      viewBox=\"0 0 20 20\">\n      <title>reduce</title>\n      <g>\n        <polygon class=\"st0\" points=\"1,0.8 15.2,0.8 15.2,15 1,15 \t\" />\n      </g>\n      <g>\n        <path class=\"st1\"\n          fill=\"#FFFFFF\";\n          d=\"M12.1,8.4h-8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h8c0.3,0,0.5,0.2,0.5,0.5S12.4,8.4,12.1,8.4z\" />\n      </g>\n    </svg>\n  </span>\n</div>\n<label for=\"").concat(this.jSPlugin.id, "-datepicker\">\n  <div class=\"timeline-controls-date\">\n    <span>\n      <svg fill=\"#2C2C2C\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"\n        viewBox=\"0 0 20 20\">\n        <title>ifttt</title>\n        <g id=\"Rectangle\">\n          <rect x=\"0.6\" y=\"0.9\" class=\"st0\" width=\"20\" height=\"20\" />\n        </g>\n        <g id=\"Stroke-1\">\n          <path fill=\"#FFFFFF\"; class=\"st1\"\n            d=\"M14,7.2c-0.3,0-0.5-0.2-0.5-0.5V3.4c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v3.3C14.5,7,14.2,7.2,14,7.2z\" />\n        </g>\n        <g id=\"Stroke-3\">\n          <path fill=\"#FFFFFF\"; class=\"st1\"\n            d=\"M7.3,7.2C7,7.2,6.8,7,6.8,6.7V3.4c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v3.3C7.8,7,7.6,7.2,7.3,7.2z\" />\n        </g>\n        <g id=\"Stroke-5\">\n          <path fill=\"#FFFFFF\"; class=\"st1\"\n            d=\"M18.1,9.7h-15c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h15c0.3,0,0.5,0.2,0.5,0.5S18.4,9.7,18.1,9.7z\" />\n        </g>\n        <g id=\"Stroke-7\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M16.5,19.7H4.8c-1.2,0-2.2-1-2.2-2.2V6.7c0-1.2,1-2.2,2.2-2.2h11.7c1.2,0,2.2,1,2.2,2.2v10.8\nC18.6,18.8,17.7,19.7,16.5,19.7z M4.8,5.6c-0.6,0-1.2,0.5-1.2,1.2v10.8c0,0.6,0.5,1.2,1.2,1.2h11.7c0.6,0,1.2-0.5,1.2-1.2V6.7\nc0-0.6-0.5-1.2-1.2-1.2H4.8z\" />\n        </g>\n        <g id=\"Stroke-9\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M10.6,13.3c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5s0.3-0.2,0.5-0.2h0h0c0.4,0,0.7,0.3,0.7,0.7\nS11,13.3,10.6,13.3z\" />\n        </g>\n        <g id=\"Stroke-11\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M14.8,13.3c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2c0.4,0,0.7,0.3,0.7,0.7\nS15.2,13.3,14.8,13.3z M14.8,12.3c-0.2,0-0.3,0.1-0.3,0.3c0,0.2,0.3,0.4,0.5,0.2c0.1-0.1,0.1-0.1,0.1-0.2\nC15.1,12.4,15,12.3,14.8,12.3z\" />\n        </g>\n        <g id=\"Stroke-13\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M6.5,16.6c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2h0h0c0.4,0,0.7,0.3,0.7,0.7\nC7.2,16.3,6.9,16.6,6.5,16.6z\" />\n        </g>\n        <g id=\"Stroke-15\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M10.6,16.6c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2h0h0c0.4,0,0.7,0.3,0.7,0.7\nC11.4,16.3,11,16.6,10.6,16.6z\" />\n        </g>\n      </svg>\n    </span>\n  </div>\n</label>\n<input data-toggle=\"").concat(this.jSPlugin.id, "-datepicker\" id=\"").concat(this.jSPlugin.id, "-datepicker\" name=\"").concat(this.jSPlugin.id, "-datepicker\" style=\"opacity:0;width:0;margin-left:-4\" />\n");
+    var timeLineControls = "\n<div class=\"timeline-controls-scale\" style=\"display: inline-flex;flex-direction: column;justify-content: center;vertical-align: top;padding: 0 20px;\">\n  <span style=\"vertical-Align: middle;line-height: 14px;height: 18px; width: 18px;cursor:pointer;\" id=\"".concat(this.jSPlugin.id, "-timeline-scale-add\">\n    <svg fill=\"#2C2C2C\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"\n      viewBox=\"0 0 20 20\">\n      <title>add</title>\n      <g>\n        <polygon points=\"0.1,0.5 15,0.5 15,15.4 0.1,15.4 \t\" />\n      </g>\n      <g>\n        <path\n          fill=\"#FFFFFF\";\n          d=\"M7.6,12.4c-0.3,0-0.5-0.2-0.5-0.5v-8c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v8C8.1,12.2,7.9,12.4,7.6,12.4z\" />\n      </g>\n      <g>\n        <path\n          fill=\"#FFFFFF\";\n          d=\"M11.6,8.4h-8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h8c0.3,0,0.5,0.2,0.5,0.5S11.8,8.4,11.6,8.4z\" />\n      </g>\n    </svg>\n  </span>\n  <span style=\"vertical-Align: middle;line-height: 14px;height: 18px; width: 18px;cursor:pointer;\" id=\"").concat(this.jSPlugin.id, "-timeline-scale-sub\">\n    <svg fill=\"#2C2C2C\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"\n      viewBox=\"0 0 20 20\">\n      <title>reduce</title>\n      <g>\n        <polygon class=\"st0\" points=\"1,0.8 15.2,0.8 15.2,15 1,15 \t\" />\n      </g>\n      <g>\n        <path class=\"st1\"\n          fill=\"#FFFFFF\";\n          d=\"M12.1,8.4h-8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h8c0.3,0,0.5,0.2,0.5,0.5S12.4,8.4,12.1,8.4z\" />\n      </g>\n    </svg>\n  </span>\n</div>\n<label for=\"").concat(this.jSPlugin.id, "-datepicker\">\n  <div class=\"timeline-controls-date\">\n    <span>\n      <svg fill=\"#2C2C2C\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"\n        viewBox=\"0 0 20 20\">\n        <title>ifttt</title>\n        <g id=\"Rectangle\">\n          <rect x=\"0.6\" y=\"0.9\" class=\"st0\" width=\"20\" height=\"20\" />\n        </g>\n        <g id=\"Stroke-1\">\n          <path fill=\"#FFFFFF\"; class=\"st1\"\n            d=\"M14,7.2c-0.3,0-0.5-0.2-0.5-0.5V3.4c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v3.3C14.5,7,14.2,7.2,14,7.2z\" />\n        </g>\n        <g id=\"Stroke-3\">\n          <path fill=\"#FFFFFF\"; class=\"st1\"\n            d=\"M7.3,7.2C7,7.2,6.8,7,6.8,6.7V3.4c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v3.3C7.8,7,7.6,7.2,7.3,7.2z\" />\n        </g>\n        <g id=\"Stroke-5\">\n          <path fill=\"#FFFFFF\"; class=\"st1\"\n            d=\"M18.1,9.7h-15c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h15c0.3,0,0.5,0.2,0.5,0.5S18.4,9.7,18.1,9.7z\" />\n        </g>\n        <g id=\"Stroke-7\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M16.5,19.7H4.8c-1.2,0-2.2-1-2.2-2.2V6.7c0-1.2,1-2.2,2.2-2.2h11.7c1.2,0,2.2,1,2.2,2.2v10.8\nC18.6,18.8,17.7,19.7,16.5,19.7z M4.8,5.6c-0.6,0-1.2,0.5-1.2,1.2v10.8c0,0.6,0.5,1.2,1.2,1.2h11.7c0.6,0,1.2-0.5,1.2-1.2V6.7\nc0-0.6-0.5-1.2-1.2-1.2H4.8z\" />\n        </g>\n        <g id=\"Stroke-9\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M10.6,13.3c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5s0.3-0.2,0.5-0.2h0h0c0.4,0,0.7,0.3,0.7,0.7\nS11,13.3,10.6,13.3z\" />\n        </g>\n        <g id=\"Stroke-11\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M14.8,13.3c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2c0.4,0,0.7,0.3,0.7,0.7\nS15.2,13.3,14.8,13.3z M14.8,12.3c-0.2,0-0.3,0.1-0.3,0.3c0,0.2,0.3,0.4,0.5,0.2c0.1-0.1,0.1-0.1,0.1-0.2\nC15.1,12.4,15,12.3,14.8,12.3z\" />\n        </g>\n        <g id=\"Stroke-13\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M6.5,16.6c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2h0h0c0.4,0,0.7,0.3,0.7,0.7\nC7.2,16.3,6.9,16.6,6.5,16.6z\" />\n        </g>\n        <g id=\"Stroke-15\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M10.6,16.6c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2h0h0c0.4,0,0.7,0.3,0.7,0.7\nC11.4,16.3,11,16.6,10.6,16.6z\" />\n        </g>\n      </svg>\n    </span>\n  </div>\n</label>\n<input data-toggle=\"").concat(this.jSPlugin.id, "-datepicker\" id=\"").concat(this.jSPlugin.id, "-datepicker\" name=\"").concat(this.jSPlugin.id, "-datepicker\" style=\"opacity:0;width:24px;margin-left:-24px;cursor:pointer;\" />\n");
     timeLineControlsContainer.innerHTML = timeLineControls;
     insertAfter$1(timeLineControlsContainer, canvasContainer);
     this.timeLine = new TimeLine$1(this.jSPlugin);
@@ -16274,12 +16137,94 @@ var Rec = /*#__PURE__*/function () {
       width: canvasItemWidth,
       onChange: function onChange(time) {
         console.log("time", time, new Date(time).Format('yyyyMMddhhmmss'));
-        console.log("jSPlugin", _this.jSPlugin);
         var newBegin = new Date(time).Format('yyyyMMddhhmmss');
 
-        _this.jSPlugin.changePlayUrl({
-          begin: newBegin
-        });
+        if (matchEzopenUrl(_this.jSPlugin.url).type === 'cloud.rec') {
+          var cloudSeek = function cloudSeek() {
+            _this.jSPlugin.seek(newBegin.substr(8, 6), "235959");
+
+            _this.unSyncTimeLine();
+
+            setTimeout(function () {
+              _this.syncTimeLine();
+            }, 6000);
+          };
+
+          if (_this.seekTimer) {
+            clearTimeout(_this.seekTimer);
+          } else {
+            cloudSeek();
+          } // 限制每2秒只触发一次拖动
+
+
+          _this.seekTimer = setTimeout(function () {
+            cloudSeek();
+            clearTimeout(_this.seekTimer);
+            _this.seekTimer = null;
+          }, 2000);
+        } else {
+          var callback = function callback() {
+            setTimeout(function () {
+              _this.disabled = false;
+            }, 2000);
+          };
+
+          var localRecSeek = function localRecSeek(callback) {
+            _this.disabled = true;
+
+            _this.jSPlugin.pause().then(function () {
+              console.log("暂停成功");
+
+              _this.jSPlugin.resume(newBegin).then(function (data) {
+                console.log("恢复成功");
+
+                if (_this.jSPlugin.Theme) {
+                  _this.jSPlugin.Theme.setDecoderState({
+                    play: true
+                  });
+                }
+
+                if (callback) {
+                  callback();
+                }
+              })["catch"](function (err) {
+                console.log("恢复失败", err);
+              });
+            })["catch"](function () {
+              console.log("暂停失败");
+
+              _this.jSPlugin.resume(newBegin).then(function (data) {
+                console.log("恢复成功");
+
+                if (_this.jSPlugin.Theme) {
+                  _this.jSPlugin.Theme.setDecoderState({
+                    play: true
+                  });
+                }
+
+                if (callback) {
+                  callback();
+                }
+              })["catch"](function (err) {
+                console.log("恢复失败", err);
+              });
+            });
+          };
+
+          if (_this.disabled) {
+            console.log("操作频繁，等待2秒后执行"); // 限制每2秒只触发一次拖动
+
+            if (_this.seekTimer) {
+              clearTimeout(_this.seekTimer);
+            }
+
+            _this.seekTimer = setTimeout(function () {
+              localRecSeek(callback);
+            }, 2000);
+          } else {
+            localRecSeek(callback);
+          }
+        }
       }
     });
     this.syncTimeLine(); // 加载日期选择器
@@ -16313,16 +16258,14 @@ var Rec = /*#__PURE__*/function () {
 
             $('#datepicker').datepicker('hide');
             _this.datepickerVisible = false;
-          });
-          $("#".concat(_this.jSPlugin.id, "-datepicker")).bind("click", function (e) {
-            if (_this.datepickerVisible) {
-              $("#".concat(_this.jSPlugin.id, "-datepicker")).datepicker('hide');
-            } else {
-              $("#".concat(_this.jSPlugin.id, "-datepicker")).datepicker('show');
-            }
-
-            _this.datepickerVisible = !_this.datepickerVisible;
-          });
+          }); // $(`#${this.jSPlugin.id}-datepicker`).click((e) => {
+          //   if (this.datepickerVisible) {
+          //     $(`#${this.jSPlugin.id}-datepicker`).datepicker('hide');
+          //   } else {
+          //     $(`#${this.jSPlugin.id}-datepicker`).datepicker('show');
+          //   }
+          //   this.datepickerVisible = !this.datepickerVisible;
+          // });
         });
       });
     }); // 尺度变化监听
@@ -16346,20 +16289,16 @@ var Rec = /*#__PURE__*/function () {
 
     var initDate = getQueryString("begin", this.jSPlugin.url) || new Date().Format('yyyyMMdd');
     this.renderRec("".concat(initDate.slice(0, 4), "-").concat(initDate.slice(4, 6), "-").concat(initDate.slice(6, 8)));
-    var observer = new MutationObserver(function (mutations, observer) {
-      mutations.forEach(function (mutation) {
-        console.log(mutation);
-
-        _this.recAutoSize();
-      });
+    this.observer = new MutationObserver(function (mutations, observer) {
+      _this.recAutoSize();
     });
     var config = {
       attributes: true,
       attributeOldValue: true,
       attributeFilter: ['style']
     };
-    var el = document.getElementById(this.jSPlugin.id);
-    observer.observe(el, config);
+    var el = document.getElementById("".concat(this.jSPlugin.id));
+    this.observer.observe(el, config);
   }
 
   _createClass$1(Rec, [{
@@ -16367,22 +16306,27 @@ var Rec = /*#__PURE__*/function () {
     value: function recAutoSize() {
       var _this2 = this;
 
-      var canvasItemWidth = parseInt(getComputedStyle(document.getElementById(this.jSPlugin.id)).width, 10) - 100;
-      document.getElementById("".concat(this.jSPlugin.id, "-canvas")).width = canvasItemWidth;
-      this.timeLine.init({
-        id: "".concat(this.jSPlugin.id, "-canvas"),
-        width: canvasItemWidth,
-        onChange: function onChange(time) {
-          console.log("time", time, new Date(time).Format('yyyyMMddhhmmss'));
-          console.log("jSPlugin", _this2.jSPlugin);
-          var newBegin = new Date(time).Format('yyyyMMddhhmmss');
+      if (document.getElementById("".concat(this.jSPlugin.id, "-canvas"))) {
+        var canvasItemWidth = parseInt(getComputedStyle(document.getElementById(this.jSPlugin.id)).width, 10) - 100;
 
-          _this2.jSPlugin.changePlayUrl({
-            begin: newBegin
+        if (canvasItemWidth !== parseInt(document.getElementById("".concat(this.jSPlugin.id, "-canvas")).width)) {
+          document.getElementById("".concat(this.jSPlugin.id, "-canvas")).width = canvasItemWidth;
+          this.timeLine.init({
+            id: "".concat(this.jSPlugin.id, "-canvas"),
+            width: canvasItemWidth,
+            onChange: function onChange(time) {
+              console.log("time", time, new Date(time).Format('yyyyMMddhhmmss'));
+              console.log("jSPlugin", _this2.jSPlugin);
+              var newBegin = new Date(time).Format('yyyyMMddhhmmss');
+
+              _this2.jSPlugin.changePlayUrl({
+                begin: newBegin
+              });
+            }
           });
+          this.renderRec(this.date);
         }
-      });
-      this.renderRec(this.date);
+      }
     }
   }, {
     key: "renderRec",
@@ -16390,8 +16334,9 @@ var Rec = /*#__PURE__*/function () {
       var _this3 = this;
 
       this.date = date;
-      var dateStart = new Date(new Date(date).Format('yyyy-MM-dd 00:00:00')).getTime();
-      var dateEnd = new Date(new Date(date).Format('yyyy-MM-dd 23:59:59')).getTime();
+      var dateStart = new Date(new Date(date).Format('yyyy-MM-dd 00:00:00').replace(/-/g, "/")).getTime();
+      var dateEnd = new Date(new Date(date).Format('yyyy-MM-dd 23:59:59').replace(/-/g, "/")).getTime();
+      this.timeLine.getRecord([], dateStart, dateEnd);
       var recSliceParams = {
         accessToken: this.jSPlugin.accessToken,
         recType: matchEzopenUrl(this.jSPlugin.url).type === 'cloud.rec' ? 1 : 2,
@@ -16437,10 +16382,18 @@ var Rec = /*#__PURE__*/function () {
 
             recTransaction();
           }
+
+          _this3.timeLine.run({
+            time: new Date(dateStart)
+          });
         } else if (data.data && data.data.length > 0) {
           console.log("获取本地录像片段成功", data);
 
           _this3.timeLine.getRecord(data.data, dateStart, dateEnd);
+
+          _this3.timeLine.run({
+            time: new Date(dateStart)
+          });
         } else ;
       };
 
@@ -17028,19 +16981,30 @@ var MobileRec = /*#__PURE__*/function () {
     this.jSPlugin = jSPlugin;
     this.timer = null;
     this.date = new Date().Format('yyyy-MM-dd');
-    this.begin = new Date().Format('yyyy-MM-dd') + ' 00:00:00';
-    this.end = new Date().Format('yyyy-MM-dd') + ' 23:59:59';
+    this.begin = (new Date().Format('yyyy-MM-dd') + ' 00:00:00').replace(/-/g, "/");
+    this.end = (new Date().Format('yyyy-MM-dd') + ' 23:59:59').replace(/-/g, "/");
+    this.initBegin = null;
+    this.initEnd = null;
     this.type = matchEzopenUrl(this.jSPlugin.url).type;
     this.operating = false;
+    this.seekTimer = null;
+    this.disabled = false;
     var oS = document.createElement('style');
-    oS.innerHTML = "\n    body{\n      padding: 0;\n      margin: 0;\n    }\n    .time-line-container {\n      height: 300px;\n      /* outline: 1px solid red; */\n      /* background: gray; */\n      position: relative;\n      /* padding-top: 60px; */\n      margin-top: 20px;\n    }\n\n    .time-line-container .time-line-item-container {\n      display: inline-block;\n      /* height: 400px; */\n      width: 30%;\n      /* background: indianred; */\n      overflow-y: scroll;\n      overflow-x: hidden;\n      /* padding-top: 60px; */\n      height: 300px;\n      box-sizing: border-box;\n      white-space: nowrap;\n      position: relative;\n    }\n\n    .time-line-container .time-line-item-container::-webkit-scrollbar {\n      width: 0px;\n      /*\u6EDA\u52A8\u6761\u5BBD\u5EA6*/\n      height: 0px;\n      /*\u6EDA\u52A8\u6761\u9AD8\u5EA6*/\n    }\n\n    .time-line-item .time-item {\n      position: relative;\n      box-sizing: border-box;\n      height: 60px;\n      font-size: 12px;\n      color: rgb(150, 150, 150);\n      border-right: 6px solid;\n      border-right-color: #ddd;\n    }\n\n    .time-line-item .time-item .scale {\n      width: 6px;\n      height: 9px;\n      border-bottom: 1px solid #ccc;\n      float: right;\n      clear: both;\n    }\n\n    .time-line-item .time-item .item-unavail {\n      width: 6px;\n      position: absolute;\n      left: 100%;\n      background-color: #ddd;\n    }\n\n    .time-line-container .current-time {\n      position: absolute;\n      left: 0;\n      top: 40px;\n      height: 29px;\n      /* line-height: 58px; */\n      border-bottom: 1px solid #648FFC;\n      width: 60%;\n      margin-left: 26%;\n    }\n\n    .time-line-container .current-time .current-time-bg {\n      position: relative;\n      top: 15px;\n      width: 100px;\n      height: 29px;\n      line-height: 29px;\n      left: -70px;\n      font-size: 12px;\n      color: #2C2C2C;\n    }\n\n    .time-line-container .current-time .current-time-bg::before {\n      content: '';\n      display: inline-block;\n      width: 6px;\n      height: 6px;\n      border-radius: 100%;\n      background: #648FFC;\n      top: 11px;\n      position: absolute;\n      right: 30px;\n    }\n\n    .date-switch-container {\n      height: 40px;\n      position: relative;\n      text-align: center;\n      margin: 20px 10px;\n    }\n\n    .date-switch-container .current-date {\n      line-height: 40px;\n      height: 22px;\n      font-size: 16px;\n      color: #2C2C2C;\n      text-align: center;\n      font-weight: bold;\n    }\n\n    .date-container {\n      width: 40px;\n      height: 40px;\n      position: absolute;\n      right: 0;\n      top: 0;\n    }\n\n    .rec-type-container {\n      display: flex;\n      justify-content: space-between;\n    }\n\n    .rec-type-container .rec-type-text {\n      padding: 0 15px;\n      font-size: 12px;\n      color: #2C2C2C;\n    }\n\n    .rec-type-container .rec-type-switch {\n      padding: 0 15px;\n    }\n\n    .date-container input {\n      position: absolute;\n      opacity: 0;\n      display: inline-block;\n      width: 40px;\n      height: 40px;\n      z-index: 10;\n      left: 0;\n    }\n\n    .date-container label {\n      position: absolute;\n      left: 0;\n      top: 0;\n      /* display: none; */\n      z-index: 0;\n    }\n\n    .date-icon {\n      display: inline-block;\n      width: 40px;\n      height: 40px;\n      background: url('https://resource.eziot.com/group2/M00/00/6A/CtwQF2F6VieAQrU9AAABP-_Nsqo949.png') no-repeat 100% 100%;\n    }\n    .select-container {\n      padding: 10px;\n      display: flex;\n      justify-content: space-between;\n    }\n\n    .advice {\n      height: 24px;\n      width: 82px;\n      display: flex;\n      justify-content: space-between;\n      line-height: 24px;\n    }\n\n    .advice span {\n      width: 40px;\n      display: inline-block;\n    }\n\n    input[type=\"checkbox\"]:not(:checked)+.advice span:first-child {\n      box-shadow: 0px 2px 5px 0px rgb(23 45 101 / 20%);\n      border-radius: 8px;\n      text-align: center;\n\n    }\n\n    input[type=\"checkbox\"]:checked+.advice span:last-child {\n      box-shadow: 0px 2px 5px 0px rgb(23 45 101 / 20%);\n      border-radius: 8px;\n      text-align: center;\n    }\n\n    input[type=\"checkbox\"]:not(:checked)+.advice span:first-child svg {\n      fill: #648FFC !important;\n    }\n\n    input[type=\"checkbox\"]:checked+.advice span:last-child svg {\n      fill: #648FFC !important;\n    }";
+    oS.innerHTML = "\n    body{\n      padding: 0;\n      margin: 0;\n    }\n    .time-line-container {\n      text-align: left;\n      height: 300px;\n      /* outline: 1px solid red; */\n      /* background: gray; */\n      position: relative;\n      /* padding-top: 60px; */\n      margin-top: 20px;\n    }\n\n    .time-line-container .time-line-item-container {\n      display: inline-block;\n      /* height: 400px; */\n      width: 30%;\n      /* background: indianred; */\n      overflow-y: scroll;\n      overflow-x: hidden;\n      /* padding-top: 60px; */\n      height: 300px;\n      box-sizing: border-box;\n      white-space: nowrap;\n      position: relative;\n    }\n\n    .time-line-container .time-line-item-container::-webkit-scrollbar {\n      width: 0px;\n      /*\u6EDA\u52A8\u6761\u5BBD\u5EA6*/\n      height: 0px;\n      /*\u6EDA\u52A8\u6761\u9AD8\u5EA6*/\n    }\n\n    .time-line-item .time-item {\n      position: relative;\n      box-sizing: border-box;\n      height: 60px;\n      font-size: 12px;\n      color: rgb(150, 150, 150);\n      border-right: 6px solid;\n      border-right-color: #ddd;\n    }\n\n    .time-line-item .time-item .scale {\n      width: 6px;\n      height: 9px;\n      border-bottom: 1px solid #ccc;\n      float: right;\n      clear: both;\n    }\n\n    .time-line-item .time-item .item-unavail {\n      width: 6px;\n      position: absolute;\n      left: 100%;\n      background-color: #ddd;\n    }\n\n    .time-line-container .current-time {\n      position: absolute;\n      left: 0;\n      top: 40px;\n      height: 29px;\n      /* line-height: 58px; */\n      border-bottom: 1px solid #648FFC;\n      width: 60%;\n      margin-left: 26%;\n    }\n\n    .time-line-container .current-time .current-time-bg {\n      position: relative;\n      top: 15px;\n      width: 100px;\n      height: 29px;\n      line-height: 29px;\n      left: -70px;\n      font-size: 12px;\n      color: #2C2C2C;\n    }\n\n    .time-line-container .current-time .current-time-bg::before {\n      content: '';\n      display: inline-block;\n      width: 6px;\n      height: 6px;\n      border-radius: 100%;\n      background: #648FFC;\n      top: 11px;\n      position: absolute;\n      right: 30px;\n    }\n\n    .date-switch-container {\n      height: 40px;\n      position: relative;\n      text-align: center;\n      margin: 20px 10px;\n    }\n\n    .date-switch-container .current-date {\n      line-height: 40px;\n      height: 22px;\n      font-size: 16px;\n      color: #2C2C2C;\n      text-align: center;\n      font-weight: bold;\n    }\n\n    .date-container {\n      width: 40px;\n      height: 40px;\n      position: absolute;\n      right: 0;\n      top: 0;\n    }\n\n    .rec-type-container {\n      display: flex;\n      justify-content: space-between;\n    }\n\n    .rec-type-container .rec-type-text {\n      padding: 0 15px;\n      font-size: 12px;\n      color: #2C2C2C;\n    }\n\n    .rec-type-container .rec-type-switch {\n      padding: 0 20px;\n    }\n\n    .date-container input {\n      position: absolute;\n      opacity: 0;\n      display: inline-block;\n      width: 40px;\n      height: 40px;\n      z-index: 10;\n      left: 0;\n    }\n\n    .date-container label {\n      position: absolute;\n      left: 0;\n      top: 0;\n      /* display: none; */\n      z-index: 0;\n    }\n\n    .date-icon {\n      display: inline-block;\n      width: 40px;\n      height: 40px;\n      background: url('https://resource.eziot.com/group2/M00/00/6A/CtwQF2F6VieAQrU9AAABP-_Nsqo949.png') no-repeat 100% 100%;\n    }\n    .select-container {\n      padding: 10px;\n      display: flex;\n      justify-content: space-between;\n    }\n\n    .advice {\n      height: 24px;\n      width: 70px;\n      display: flex;\n      justify-content: space-between;\n      line-height: 24px;\n      background: #F8F8F8;\n      border-radius: 8px;\n    }\n\n    .advice span {\n      width: 40px;\n      display: inline-block;\n    }\n\n    input[type=\"checkbox\"]:not(:checked)+.advice span:first-child {\n      box-shadow: 0px 2px 5px 0px rgb(23 45 101 / 20%);\n      border-radius: 8px;\n      text-align: center;\n\n    }\n\n    input[type=\"checkbox\"]:checked+.advice span:last-child {\n      box-shadow: 0px 2px 5px 0px rgb(23 45 101 / 20%);\n      border-radius: 8px;\n      text-align: center;\n    }\n\n    input[type=\"checkbox\"]:not(:checked)+.advice span:first-child svg {\n      fill: #648FFC !important;\n    }\n\n    input[type=\"checkbox\"]:checked+.advice span:last-child svg {\n      fill: #648FFC !important;\n    }";
     document.getElementsByTagName("head")[0].appendChild(oS);
 
     if (getQueryString("begin", this.jSPlugin.url)) {
       var begin = getQueryString("begin", this.jSPlugin.url);
-      this.date = begin.slice(0, 4) + '-' + begin.slice(4, 6) + '-' + begin.slice(6, 8);
-      this.begin = this.date + ' 00:00:00';
+      this.date = begin.slice(0, 4) + '/' + begin.slice(4, 6) + '/' + begin.slice(6, 8);
+      this.begin = this.date + " ".concat(begin.slice(8, 10) || "00", ":").concat(begin.slice(10, 12) || "00", ":").concat(begin.slice(12, 14) || "00");
       this.end = this.date + ' 23:59:59';
+      this.initBegin = this.begin;
+    }
+
+    if (getQueryString("end", this.jSPlugin.url)) {
+      var end = getQueryString("end", this.jSPlugin.url);
+      this.end = this.date + " ".concat(end.slice(8, 10) || "23", ":").concat(end.slice(10, 12) || "59", ":").concat(end.slice(12, 14) || "59");
+      this.initEnd = this.end;
     } // 回放时间标题
 
 
@@ -17070,12 +17034,101 @@ var MobileRec = /*#__PURE__*/function () {
       var st = data.current;
       var date = new Date(_this.date).Format('yyyyMMdd').substr(0, 8) + (data.current ? st.replace(/:/g, "") : data.current.replace(/:/g, ""));
 
-      _this.jSPlugin.changePlayUrl({
-        begin: date,
-        type: _this.type
-      }).then(function () {
-        _this.syncTimeLine();
-      });
+      if (_this.initBegin && new Date("".concat(_this.date, " ").concat(data.current)).getTime() < new Date(_this.initBegin).getTime()) {
+        console.log("超过限制最低值");
+        date = new Date(_this.initBegin).Format("yyyyMMddhhmmss");
+      }
+
+      if (_this.initEnd && new Date("".concat(_this.date, " ").concat(data.current)).getTime() > new Date(_this.initEnd).getTime()) {
+        console.log("超过限制最高值");
+        date = new Date(_this.initBegin).Format("yyyyMMddhhmmss");
+      }
+
+      if (_this.type === 'cloud.rec') {
+        var cloudSeek = function cloudSeek() {
+          _this.jSPlugin.seek(date.substr(8, 6), "235959");
+
+          setTimeout(function () {
+            _this.syncTimeLine();
+          }, 6000);
+        };
+
+        if (_this.seekTimer) {
+          clearTimeout(_this.seekTimer);
+        } else {
+          cloudSeek();
+        } // 限制每2秒只触发一次拖动
+
+
+        _this.seekTimer = setTimeout(function () {
+          cloudSeek();
+          clearTimeout(_this.seekTimer);
+          _this.seekTimer = null;
+        }, 2000);
+      } else {
+        var callback = function callback() {
+          setTimeout(function () {
+            _this.disabled = false;
+          }, 2000);
+        };
+
+        var localRecSeek = function localRecSeek(callback) {
+          _this.disabled = true;
+
+          _this.jSPlugin.pause().then(function () {
+            console.log("暂停成功");
+
+            _this.jSPlugin.resume(date).then(function (data) {
+              console.log("恢复成功");
+
+              if (_this.jSPlugin.Theme) {
+                _this.jSPlugin.Theme.setDecoderState({
+                  play: true
+                });
+              }
+
+              _this.syncTimeLine();
+
+              if (callback) {
+                callback();
+              }
+            });
+          })["catch"](function () {
+            console.log("暂停失败");
+
+            _this.jSPlugin.resume(date).then(function (data) {
+              console.log("恢复成功");
+
+              if (_this.jSPlugin.Theme) {
+                _this.jSPlugin.Theme.setDecoderState({
+                  play: true
+                });
+              }
+
+              _this.syncTimeLine();
+
+              if (callback) {
+                callback();
+              }
+            });
+          });
+        };
+
+        if (_this.disabled) {
+          console.log("操作频繁，等待2秒后执行");
+
+          if (_this.seekTimer) {
+            clearTimeout(_this.seekTimer);
+          }
+
+          _this.seekTimer = setTimeout(function () {
+            localRecSeek(callback);
+          }, 2000);
+        } else {
+          // 限制每2秒只触发一次拖动
+          localRecSeek(callback);
+        }
+      }
     };
 
     var ontouchstart = function ontouchstart() {
@@ -17115,10 +17168,30 @@ var MobileRec = /*#__PURE__*/function () {
     this.fetchDeviceRec(); // 监听日期变化
 
     document.getElementById("date").addEventListener('change', function (e) {
-      console.log("日期变化", e.target.value);
-      _this.date = new Date(e.target.value).Format("yyyy-MM-dd");
+      console.log("日期变化", e.target.value); // if(this.initBegin && new Date(`${e.target.value}`.replace(/-/g, "/")).getTime() < new Date(this.initBegin.slice(0, 10)).getTime()) {
+      //   console.log("超过限制最低值")
+      //   return false;
+      // }
+      // if(this.initEnd && new Date(`${e.target.value}`.replace(/-/g, "/")).getTime() > new Date(this.initEnd.slice(0, 10)).getTime()) {
+      //   console.log("超过限制最高值")
+      //   return false;
+      // }
+
+      if (_this.initBegin || _this.initEnd) {
+        console.log("您开启了时间限制，无法切换日期");
+        return false;
+      }
+
+      _this.date = new Date(e.target.value).Format("yyyy/MM/dd");
+      _this.begin = _this.date + ' 00:00:00';
+      _this.end = _this.date + ' 23:59:59';
 
       _this.fetchDeviceRec();
+
+      _this.jSPlugin.changePlayUrl({
+        type: _this.type,
+        begin: "".concat(new Date(_this.date).Format('yyyyMMdd'), "000000")
+      });
     });
     document.getElementById("cloudType").checked = this.type === 'rec';
     document.getElementById("cloudType").addEventListener('change', function (e) {
@@ -17179,8 +17252,8 @@ var MobileRec = /*#__PURE__*/function () {
       data.append("channelNo", matchEzopenUrl(this.jSPlugin.url).channelNo);
       data.append("accessToken", this.jSPlugin.accessToken);
       data.append("recType", this.type === 'cloud.rec' ? 1 : 2);
-      data.append("startTime", new Date(this.date + ' 00:00:00').getTime());
-      data.append("endTime", new Date(this.date + ' 23:59:59').getTime());
+      data.append("startTime", new Date(this.begin).getTime());
+      data.append("endTime", new Date(this.end).getTime());
       fetch(this.jSPlugin.env.domain + '/api/lapp/video/by/time', {
         method: "POST",
         body: data
@@ -17254,6 +17327,12 @@ var Ptz = /*#__PURE__*/function () {
     _classCallCheck$1(this, Ptz);
 
     this.jSPlugin = jSPlugin;
+    console.log("云台初始化");
+
+    if (document.getElementById(this.jSPlugin.id + "-ez-ptz-item")) {
+      return false;
+    }
+
     var ptzWrap = document.createElement('div');
     ptzWrap.id = this.jSPlugin.id + "-ez-ptz-item";
     ptzWrap.className = "ez-ptz-wrap";
@@ -17262,7 +17341,7 @@ var Ptz = /*#__PURE__*/function () {
     oS.innerHTML = "\n    .ez-ptz-container {\n      position: relative;\n      width: 80px;\n      height: 80px;\n      background: rgba(255, 255, 255, 0.80);\n      box-shadow: 0px 0px 33px 4px rgb(0 0 0 / 15%);\n      border: 1px solid rgba(255, 255, 255, 0.80);\n      border-radius: 100%;\n      cursor: pointer;\n      overflow: hidden;\n      user-select: none;\n    }\n    .ez-ptz-container .ez-ptz-icon.top {\n      width: 0;\n      height: 0;\n      border-left: 3px solid transparent;\n      border-right: 3px solid transparent;\n      border-bottom: 6px solid #333333;\n      position: absolute;\n      display: inline-block;\n      left: calc(50% - 3px);\n      top: 2px;\n    }\n\n    .ez-ptz-container .ez-ptz-icon.top.active {\n      border-bottom-color: #1890FF;\n    }\n\n    .ez-ptz-container .ez-ptz-icon.bottom {\n      width: 0;\n      height: 0;\n      border-left: 3px solid transparent;\n      border-right: 3px solid transparent;\n      border-top: 6px solid #333333;\n      position: absolute;\n      display: inline-block;\n      left: calc(50% - 3px);\n      bottom: 2px;\n    }\n\n    .ez-ptz-container .ez-ptz-icon.bottom.active {\n      border-top-color: #1890FF;\n    }\n\n    .ez-ptz-container .ez-ptz-icon.right {\n      width: 0;\n      height: 0;\n      border-top: 3px solid transparent;\n      border-bottom: 3px solid transparent;\n      border-left: 6px solid #333333;\n      position: absolute;\n      display: inline-block;\n      top: calc(50% - 3px);\n      right: 2px;\n    }\n\n    .ez-ptz-container .ez-ptz-icon.right.active {\n      border-left-color: #1890FF;\n    }\n\n    .ez-ptz-container .ez-ptz-icon.left {\n      width: 0;\n      height: 0;\n      border-top: 3px solid transparent;\n      border-bottom: 3px solid transparent;\n      border-right: 6px solid #333333;\n      position: absolute;\n      display: inline-block;\n      top: calc(50% - 3px);\n      left: 2px;\n    }\n\n    .ez-ptz-container .ez-ptz-icon.left.active {\n      border-right-color: #1890FF;\n    }\n\n    .ez-ptz-container .ez-ptz-main.center {\n      width: 23px;\n      height: 23px;\n      background: #1890FF;\n      border-radius: 100%;\n      top: calc(50% - 12.3px);\n      left: calc(50% - 12.3px);\n      position: absolute;\n    }\n\n    .ez-ptz-wrap {\n      position: absolute;\n      right: 20px;\n      top: calc(50% - 50px);\n      width: 100px;\n      height: 100px;\n      z-index: 999;\n    }\n\n    .ez-ptz-close {\n      position: absolute;\n      color: #FFFFFF;\n      top: 0;\n      right: 0px;\n    }";
     document.getElementsByTagName("head")[0].appendChild(oS);
     ptzWrap.innerHTML = "\n      <div class=\"ez-ptz-container\" id=\"".concat(this.jSPlugin.id, "-ez-ptz-container\" style=\"position: relative;width: 80px;height: 80px;background: rgba(255, 255, 255, 0.80);box-shadow: 0px 0px 33px 4px rgba(0, 0, 0, 0.15);border: 1px solid rgba(255, 255, 255, 0.80);border-radius: 100%;cursor: pointer;overflow: hidden;user-select: none;\">\n        <div class=\"ez-ptz-main center\"></div>\n        <div class=\"ez-ptz-icon top active\"></div>\n        <div class=\"ez-ptz-icon left active\"></div>\n        <div class=\"ez-ptz-icon bottom active\"></div>\n        <div class=\"ez-ptz-icon right active\"></div>\n      ");
-    document.getElementById(jSPlugin.id).appendChild(ptzWrap); // 云台控制事件绑定
+    document.getElementById("".concat(jSPlugin.id, "-wrap")).appendChild(ptzWrap); // 云台控制事件绑定
     // 云台控制
 
     document.getElementById("".concat(this.jSPlugin.id, "-ez-ptz-container")).onmousedown = function (e) {
@@ -17391,6 +17470,8 @@ var Ptz = /*#__PURE__*/function () {
             document.getElementById("".concat(_this2.jSPlugin.id, "-ez-ptz-container")).style = "background-image:linear-gradient(".concat(direction === 0 ? 180 : direction === 1 ? 0 : direction === 2 ? 90 : 270, "deg, #f45656 0%, rgba(100,143,252,0.00) 30%)");
           }
         }
+      })["catch"](function (err) {
+        console.log("云台调用异常", err);
       });
     }
   }]);
@@ -27753,6 +27834,8 @@ var Talk = /*#__PURE__*/function () {
 
             window.EZUIKit.opt.rtcUrl = rtcTrunk;
             window.EZUIKit.opt.ttsUrl = "tts://" + apiResult.ttsUrl;
+            window.EZUIKit.opt.deviceSerial = matchEzopenUrl(_this2.jSPlugin.url).deviceSerial;
+            window.EZUIKit.opt.channelNo = matchEzopenUrl(_this2.jSPlugin.url).channelNo;
             var urlList = window.EZUIKit.opt.ttsUrl.split("?");
 
             if (urlList.length === 2) {
@@ -27805,7 +27888,7 @@ var MobilePtz = /*#__PURE__*/function () {
 
     this.jSPlugin = jSPlugin;
     var oS = document.createElement('style');
-    oS.innerHTML = "\n    body{\n      padding: 0;\n      margin: 0;\n    }\n    #mobile-ez-ptz-container {\n      display: inline-block;\n      width: 375px;\n      text-align: center;\n    }\n    .live-ptz-title{\n      height: 25px;\n      font-size: 18px;\n      color: #2c2c2c;\n      text-align: center;\n      font-weight: 700;\n      margin: 24px 0;\n    }\n    #mobile-ez-ptz-container .mobile-ez-ptz-container {\n      position: relative;\n      width: 260px;\n      height: 260px;\n      background: rgba(255, 255, 255, 0.80);\n      box-shadow: 0px 0px 33px 4px rgba(0, 0, 0, 0.15);\n      border: 1px solid rgba(255, 255, 255, 0.80);\n      border-radius: 100%;\n      cursor: pointer;\n      overflow: hidden;\n      margin: auto;\n      /* background-image:linear-gradient(180deg, #d5e7f3 0%, rgba(100,143,252,0.00) 54%); */\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.top {\n      width: 0;\n      height: 0;\n      border-left: 6px solid transparent;\n      border-right: 6px solid transparent;\n      border-bottom: 6px solid #333333;\n      position: absolute;\n      display: inline-block;\n      left: calc(50% - 6px);\n      top: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.top.active {\n      border-bottom-color: #1890FF;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.bottom {\n      width: 0;\n      height: 0;\n      border-left: 6px solid transparent;\n      border-right: 6px solid transparent;\n      border-top: 6px solid #333333;\n      position: absolute;\n      display: inline-block;\n      left: calc(50% - 6px);\n      bottom: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.bottom.active {\n      border-top-color: #1890FF;\n\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.right {\n      width: 0;\n      height: 0;\n      border-top: 6px solid transparent;\n      border-bottom: 6px solid transparent;\n      border-left: 6px solid #333333;\n      position: absolute;\n      display: inline-block;\n      top: calc(50% - 6px);\n      right: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.right.active {\n      border-left-color: #1890FF;\n\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.left {\n      width: 0;\n      height: 0;\n      border-top: 6px solid transparent;\n      border-bottom: 6px solid transparent;\n      border-right: 6px solid #333333;\n      position: absolute;\n      display: inline-block;\n      top: calc(50% - 6px);\n      left: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.left.active {\n      border-right-color: #1890FF;\n\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .ez-ptz-main.center {\n      width: 52px;\n      height: 52px;\n      background: #FFFFFF;\n      border: 2px solid #eee;\n      border-radius: 100%;\n      top: calc(50% - 26px);\n      left: calc(50% - 26px);\n      position: absolute;\n      /* box-shadow: 0px -39px 40px 6px #1890ff; */\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-wrap {\n      display: inline-block;\n      padding: 12px 24px;\n      border-radius: 100%;\n      overflow: hidden;\n    }\n\n    #mobile-ez-ptz-container .ez-ptz-close {\n      position: absolute;\n      color: #FFFFFF;\n      top: 0;\n      right: 0px;\n    }";
+    oS.innerHTML = "\n    body{\n      padding: 0;\n      margin: 0;\n    }\n    #mobile-ez-ptz-container {\n      display: inline-block;\n      width: 375px;\n      text-align: center;\n    }\n    .live-ptz-title{\n      height: 25px;\n      font-size: 18px;\n      color: #2c2c2c;\n      text-align: center;\n      font-weight: 700;\n      margin: 24px 0 12px;\n    }\n    .live-ptz-intro {\n      margin-bottom: 24px;\n      color: #aaaaaa;\n    }\n    .mobile-ez-ptz-wrap {\n      background-image: linear-gradient(180deg, #f6f8ff 0%, #ededed6b 50%)\n    }\n    #mobile-ez-ptz-container .mobile-ez-ptz-container {\n      position: relative;\n      width: 260px;\n      height: 260px;\n      background: rgba(255, 255, 255, 0.80);\n      border: 1px solid rgba(255, 255, 255, 0.80);\n      border-radius: 100%;\n      cursor: pointer;\n      overflow: hidden;\n      margin: auto;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.top {\n      width: 0;\n      height: 0;\n      border-left: 6px solid transparent;\n      border-right: 6px solid transparent;\n      border-bottom: 6px solid #aaaaaa;\n      position: absolute;\n      display: inline-block;\n      left: calc(50% - 6px);\n      top: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.top.active {\n      border-bottom-color: #1890FF;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.bottom {\n      width: 0;\n      height: 0;\n      border-left: 6px solid transparent;\n      border-right: 6px solid transparent;\n      border-top: 6px solid #aaaaaa;\n      position: absolute;\n      display: inline-block;\n      left: calc(50% - 6px);\n      bottom: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.bottom.active {\n      border-top-color: #1890FF;\n\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.right {\n      width: 0;\n      height: 0;\n      border-top: 6px solid transparent;\n      border-bottom: 6px solid transparent;\n      border-left: 6px solid #aaaaaa;\n      position: absolute;\n      display: inline-block;\n      top: calc(50% - 6px);\n      right: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.right.active {\n      border-left-color: #1890FF;\n\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.left {\n      width: 0;\n      height: 0;\n      border-top: 6px solid transparent;\n      border-bottom: 6px solid transparent;\n      border-right: 6px solid #aaaaaa;\n      position: absolute;\n      display: inline-block;\n      top: calc(50% - 6px);\n      left: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.left.active {\n      border-right-color: #1890FF;\n\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .ez-ptz-main.center {\n      width: 52px;\n      height: 52px;\n      background: #FFFFFF;\n      border: 2px solid #eee;\n      border-radius: 100%;\n      top: calc(50% - 26px);\n      left: calc(50% - 26px);\n      position: absolute;\n      /* box-shadow: 0px -39px 40px 6px #1890ff; */\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-wrap {\n      display: inline-block;\n      padding: 24px 24px;\n      border-radius: 100%;\n      overflow: hidden;\n    }\n\n    #mobile-ez-ptz-container .ez-ptz-close {\n      position: absolute;\n      color: #FFFFFF;\n      top: 0;\n      right: 0px;\n    }";
     document.getElementsByTagName("head")[0].appendChild(oS);
     var mobileContainer = document.createElement('div');
     mobileContainer.className = "mobile-ez-ptz-container";
@@ -27815,14 +27898,31 @@ var MobilePtz = /*#__PURE__*/function () {
     mobileContainerTitle.className = "live-ptz-title";
     mobileContainerTitle.id = "live-ptz-title";
     mobileContainerTitle.innerHTML = "云台控制";
+
+    if (!document.getElementById("live-ptz-title")) {
+      mobileContainer.appendChild(mobileContainerTitle);
+    }
+
+    var mobileContainerIntro = document.createElement('div');
+    mobileContainerIntro.className = "live-ptz-intro";
+    mobileContainerIntro.id = "live-ptz-intro";
+    mobileContainerIntro.innerHTML = "请通过操控云台来调整摄像机视角";
+
+    if (!document.getElementById("live-ptz-intro")) {
+      mobileContainer.appendChild(mobileContainerIntro);
+    }
+
     var ptzWrap = document.createElement('div');
     ptzWrap.id = "mobile-ez-ptz-item";
     ptzWrap.className = "mobile-ez-ptz-wrap";
-    ptzWrap.innerHTML = "\n    <div class=\"mobile-ez-ptz-container\" id=\"mobile-ez-ptz-container\">\n      <div class=\"ez-ptz-main center\"></div>\n      <div class=\"mobile-ez-ptz-icon top active\"></div>\n      <div class=\"mobile-ez-ptz-icon left active\"></div>\n      <div class=\"mobile-ez-ptz-icon bottom active\"></div>\n      <div class=\"mobile-ez-ptz-icon right active\"></div>\n    </div>\n      ";
-    mobileContainer.appendChild(ptzWrap); //document.getElementById(jSPlugin.id).appendChild(mobileContainer);
+    ptzWrap.innerHTML = "\n    <div class=\"mobile-ez-ptz-container\" id=\"mobile-ez-ptz-container\">\n      <div class=\"ez-ptz-main center\"></div>\n      <div class=\"mobile-ez-ptz-icon top default\"></div>\n      <div class=\"mobile-ez-ptz-icon left default\"></div>\n      <div class=\"mobile-ez-ptz-icon bottom default\"></div>\n      <div class=\"mobile-ez-ptz-icon right default\"></div>\n    </div>\n      ";
 
-    insertAfter$1(mobileContainer, document.getElementById("".concat(this.jSPlugin.id, "-wrap")));
-    mobileContainer.parentElement.insertBefore(mobileContainerTitle, mobileContainer); // 云台控制事件绑定
+    if (!document.getElementById("mobile-ez-ptz-item")) {
+      mobileContainer.appendChild(ptzWrap);
+    } //document.getElementById(jSPlugin.id).appendChild(mobileContainer);
+
+
+    insertAfter$1(mobileContainer, document.getElementById("".concat(this.jSPlugin.id, "-wrap"))); // 云台控制事件绑定
     // 云台控制
 
     document.getElementById("mobile-ez-ptz-item").ontouchstart = function (e) {
@@ -27883,28 +27983,31 @@ var MobilePtz = /*#__PURE__*/function () {
 
       if (Math.abs(left) > Math.abs(top)) {
         if (left > 0) {
-          direction = 3; // nextPtzImg = ptzRightImgSuccess;
-          // nextPtzImgFailed = ptzRightImgFailed;
+          direction = 3;
+          document.getElementsByClassName("mobile-ez-ptz-icon")[3].className = document.getElementsByClassName("mobile-ez-ptz-icon")[3].className.replace("default", "active");
         } else {
-          direction = 2; // nextPtzImg = ptzLeftImgSuccess;
-          // nextPtzImgFailed = ptzLeftImgFailed;
+          direction = 2;
+          document.getElementsByClassName("mobile-ez-ptz-icon")[1].className = document.getElementsByClassName("mobile-ez-ptz-icon")[1].className.replace("default", "active");
         }
       } else {
         if (top > 0) {
-          direction = 1; // nextPtzImg = ptzDownImgSuccess;
-          // nextPtzImgFailed = ptzDownImgFailed;
+          direction = 1;
+          document.getElementsByClassName("mobile-ez-ptz-icon")[2].className = document.getElementsByClassName("mobile-ez-ptz-icon")[2].className.replace("default", "active");
         } else {
-          direction = 0; // nextPtzImg = ptzTopImgSuccess;
-          // nextPtzImgFailed = ptzTopImgFailed;
+          direction = 0;
+          document.getElementsByClassName("mobile-ez-ptz-icon")[0].className = document.getElementsByClassName("mobile-ez-ptz-icon")[0].className.replace("default", "active");
         }
       }
 
-      console.log("direction", direction);
-      document.getElementById("mobile-ez-ptz-item").style = "background-image:linear-gradient(".concat(direction === 0 ? 180 : direction === 1 ? 0 : direction === 2 ? 90 : 270, "deg, #1d8dd8 0%, rgba(100,143,252,0.00) 30%)");
+      document.getElementById("mobile-ez-ptz-item").style = "background-image:linear-gradient(".concat(direction === 0 ? 180 : direction === 1 ? 0 : direction === 2 ? 90 : 270, "deg, #c0ddf1 0%, rgba(100,143,252,0.00) 50%)");
 
       if (type === 'stop') {
         url = this.jSPlugin.env.domain + '/api/lapp/device/ptz/stop';
         document.getElementById("mobile-ez-ptz-item").style = "";
+        document.getElementsByClassName("mobile-ez-ptz-icon")[3].className = document.getElementsByClassName("mobile-ez-ptz-icon")[3].className.replace("active", "default");
+        document.getElementsByClassName("mobile-ez-ptz-icon")[1].className = document.getElementsByClassName("mobile-ez-ptz-icon")[1].className.replace("active", "default");
+        document.getElementsByClassName("mobile-ez-ptz-icon")[2].className = document.getElementsByClassName("mobile-ez-ptz-icon")[2].className.replace("active", "default");
+        document.getElementsByClassName("mobile-ez-ptz-icon")[0].className = document.getElementsByClassName("mobile-ez-ptz-icon")[0].className.replace("active", "default");
       }
 
       var data = new FormData();
@@ -27923,9 +28026,11 @@ var MobilePtz = /*#__PURE__*/function () {
           //document.getElementById('ptz-img-container').childNodes[0].src = nextPtzImgFailed;
           // layer.msg(data.msg);
           if (rt.code == 60005 || rt.code == 60002 || rt.code == 60003 || rt.code == 60004) {
-            document.getElementById("mobile-ez-ptz-item").style = "background-image:linear-gradient(".concat(direction === 0 ? 180 : direction === 1 ? 0 : direction === 2 ? 90 : 270, "deg, #f45656 0%, rgba(100,143,252,0.00) 30%)");
+            document.getElementById("mobile-ez-ptz-item").style = "background-image:linear-gradient(".concat(direction === 0 ? 180 : direction === 1 ? 0 : direction === 2 ? 90 : 270, "deg, #f45656 0%, rgba(100,143,252,0.00) 50%)");
           }
         }
+      })["catch"](function (err) {
+        console.log("云台调用异常", err);
       });
     }
   }]);
@@ -27933,13 +28038,13 @@ var MobilePtz = /*#__PURE__*/function () {
   return MobilePtz;
 }();
 
-var retcode$4 = 0;
-var msg$4 = "成功";
-var data$4 = {
+var retcode = 0;
+var msg = "成功";
+var data$7 = {
 	header: {
 		color: "#FFFFFF",
 		backgroundColor: "#000000",
-		activeColor: "#FFFFFF",
+		activeColor: "#1890FF",
 		btnList: [
 			{
 				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-header-0",
@@ -27978,7 +28083,7 @@ var data$4 = {
 	footer: {
 		color: "#FFFFFF",
 		backgroundColor: "rgb(0 0 0 / 0%)",
-		activeColor: "#FFFFFF",
+		activeColor: "#1890FF",
 		btnList: [
 			{
 				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-footer-0",
@@ -28056,378 +28161,1370 @@ var data$4 = {
 	}
 };
 var emptyData = {
-	retcode: retcode$4,
-	msg: msg$4,
-	data: data$4
+	retcode: retcode,
+	msg: msg,
+	data: data$7
 };
 
-var retcode$3 = 0;
-var msg$3 = "成功";
-var data$3 = {
+var data$6 = {
 	header: {
 		color: "#FFFFFF",
 		backgroundColor: "#000000",
-		activeColor: "#FFFFFF",
+		activeColor: "#1890FF",
 		btnList: [
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-header-0",
 				iconId: "deviceID",
 				part: "left",
-				defaultActive: 1,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				defaultActive: 0,
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-header-1",
 				iconId: "deviceName",
 				part: "left",
-				defaultActive: 1,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "cloudRec",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "rec",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
 			}
 		]
 	},
 	footer: {
 		color: "#FFFFFF",
-		backgroundColor: "rgb(0 0 0 / 0%)",
-		activeColor: "#FFFFFF",
+		backgroundColor: "#00000080",
+		activeColor: "#1890FF",
 		btnList: [
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-0",
 				iconId: "play",
 				part: "left",
 				defaultActive: 1,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-1",
 				iconId: "capturePicture",
 				part: "left",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 0
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-2",
 				iconId: "sound",
 				part: "left",
-				defaultActive: 0,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				defaultActive: 1,
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-3",
 				iconId: "pantile",
 				part: "left",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-4",
 				iconId: "recordvideo",
 				part: "left",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 0
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-5",
 				iconId: "talk",
 				part: "left",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-6",
+				iconId: "zoom",
+				part: "left",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
 				iconId: "hd",
 				part: "right",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-7",
 				iconId: "webExpend",
 				part: "right",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 0
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-8",
 				iconId: "expend",
 				part: "right",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 1
 			}
 		]
 	}
 };
-var pcLiveData = {
-	retcode: retcode$3,
-	msg: msg$3,
-	data: data$3
+var mobileLiveFullData = {
+	data: data$6
 };
 
-var retcode$2 = 0;
-var msg$2 = "成功";
-var data$2 = {
+var data$5 = {
 	header: {
 		color: "#FFFFFF",
 		backgroundColor: "#000000",
-		activeColor: "#FFFFFF",
+		activeColor: "#1890FF",
+		btnList: [
+			{
+				iconId: "deviceID",
+				part: "left",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "deviceName",
+				part: "left",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "cloudRec",
+				part: "right",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "rec",
+				part: "right",
+				defaultActive: 0,
+				isrender: 1
+			}
+		]
+	},
+	footer: {
+		color: "#FFFFFF",
+		backgroundColor: "#00000080",
+		activeColor: "#1890FF",
+		btnList: [
+			{
+				iconId: "play",
+				part: "left",
+				defaultActive: 1,
+				isrender: 1
+			},
+			{
+				iconId: "capturePicture",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "sound",
+				part: "left",
+				defaultActive: 1,
+				isrender: 1
+			},
+			{
+				iconId: "pantile",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "recordvideo",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "talk",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "zoom",
+				part: "left",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "speed",
+				part: "right",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "hd",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "webExpend",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "expend",
+				part: "right",
+				defaultActive: 0,
+				isrender: 1
+			}
+		]
+	}
+};
+var mobileRecFullData = {
+	data: data$5
+};
+
+var data$4 = {
+	header: {
+		color: "#FFFFFF",
+		backgroundColor: "#000000",
+		activeColor: "#1890FF",
 		btnList: [
 			{
 				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-header-0",
 				iconId: "deviceID",
 				part: "left",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f7896c8942c9476fb439370dd974f1c0"
+				isrender: 1
 			},
 			{
 				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-header-1",
 				iconId: "deviceName",
 				part: "left",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f7896c8942c9476fb439370dd974f1c0"
+				isrender: 1
 			},
 			{
 				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-header-2",
 				iconId: "cloudRec",
 				part: "right",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f7896c8942c9476fb439370dd974f1c0"
+				isrender: 0
 			},
 			{
 				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-header-3",
 				iconId: "rec",
 				part: "right",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f7896c8942c9476fb439370dd974f1c0"
+				isrender: 0
 			}
 		]
 	},
 	footer: {
 		color: "#FFFFFF",
-		backgroundColor: "rgba(0 0 0 / 0%)",
-		activeColor: "#FFFFFF",
+		backgroundColor: "#00000080",
+		activeColor: "#1890FF",
 		btnList: [
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-footer-0",
 				iconId: "play",
 				part: "left",
 				defaultActive: 1,
-				isrender: 1,
-				themeId: "f7896c8942c9476fb439370dd974f1c0"
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-footer-1",
 				iconId: "capturePicture",
 				part: "left",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f7896c8942c9476fb439370dd974f1c0"
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-footer-2",
 				iconId: "sound",
 				part: "left",
-				defaultActive: 0,
-				isrender: 1,
-				themeId: "f7896c8942c9476fb439370dd974f1c0"
+				defaultActive: 1,
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-footer-4",
+				iconId: "pantile",
+				part: "left",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
 				iconId: "recordvideo",
 				part: "left",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f7896c8942c9476fb439370dd974f1c0"
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-footer-7",
+				iconId: "talk",
+				part: "left",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "zoom",
+				part: "left",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "speed",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "hd",
+				part: "right",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
 				iconId: "webExpend",
 				part: "right",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f7896c8942c9476fb439370dd974f1c0"
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-footer-8",
 				iconId: "expend",
 				part: "right",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f7896c8942c9476fb439370dd974f1c0"
+				isrender: 1
 			}
 		]
 	}
 };
-var pcRecData = {
-	retcode: retcode$2,
-	msg: msg$2,
+var pcLiveFullData = {
+	data: data$4
+};
+
+var data$3 = {
+	header: {
+		color: "#FFFFFF",
+		backgroundColor: "#000000",
+		activeColor: "#1890FF",
+		btnList: [
+			{
+				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-header-0",
+				iconId: "deviceID",
+				part: "left",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-header-1",
+				iconId: "deviceName",
+				part: "left",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-header-2",
+				iconId: "cloudRec",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f7896c8942c9476fb439370dd974f1c0-header-3",
+				iconId: "rec",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
+			}
+		]
+	},
+	footer: {
+		color: "#FFFFFF",
+		backgroundColor: "#00000080",
+		activeColor: "#1890FF",
+		btnList: [
+			{
+				iconId: "play",
+				part: "left",
+				defaultActive: 1,
+				isrender: 1
+			},
+			{
+				iconId: "talk",
+				part: "left",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "sound",
+				part: "left",
+				defaultActive: 1,
+				isrender: 1
+			},
+			{
+				iconId: "capturePicture",
+				part: "left",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "recordvideo",
+				part: "left",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "pantile",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "zoom",
+				part: "left",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "hd",
+				part: "right",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "webExpend",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "expend",
+				part: "right",
+				defaultActive: 0,
+				isrender: 1
+			}
+		]
+	}
+};
+var pcLiveSecurityData = {
+	data: data$3
+};
+
+var data$2 = {
+	header: {
+		color: "#FFFFFF",
+		backgroundColor: "#000000",
+		activeColor: "#1890FF",
+		btnList: [
+			{
+				iconId: "deviceID",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "deviceName",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "cloudRec",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "rec",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
+			}
+		]
+	},
+	footer: {
+		color: "#FFFFFF",
+		backgroundColor: "#000000",
+		activeColor: "#1890FF",
+		btnList: [
+			{
+				iconId: "play",
+				part: "left",
+				defaultActive: 1,
+				isrender: 0
+			},
+			{
+				iconId: "capturePicture",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "sound",
+				part: "left",
+				defaultActive: 1,
+				isrender: 0
+			},
+			{
+				iconId: "pantile",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "recordvideo",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "talk",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "zoom",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "hd",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "webExpend",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "expend",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
+			}
+		]
+	}
+};
+var pcLiveSimpleData = {
 	data: data$2
 };
 
-var retcode$1 = 0;
-var msg$1 = "成功";
 var data$1 = {
 	header: {
 		color: "#FFFFFF",
 		backgroundColor: "#000000",
-		activeColor: "#FFFFFF",
+		activeColor: "#1890FF",
 		btnList: [
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-header-0",
 				iconId: "deviceID",
 				part: "left",
-				defaultActive: 1,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				defaultActive: 0,
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-header-1",
 				iconId: "deviceName",
 				part: "left",
-				defaultActive: 1,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "cloudRec",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "rec",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
 			}
 		]
 	},
 	footer: {
 		color: "#FFFFFF",
-		backgroundColor: "rgb(0 0 0 / 0%)",
-		activeColor: "#FFFFFF",
+		backgroundColor: "#00000080",
+		activeColor: "#1890FF",
 		btnList: [
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-0",
 				iconId: "play",
 				part: "left",
 				defaultActive: 1,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-2",
-				iconId: "sound",
+				iconId: "capturePicture",
 				part: "left",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 0
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-3",
-				iconId: "pantile",
-				part: "left",
-				defaultActive: 0,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
-			},
-			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-5",
 				iconId: "talk",
 				part: "left",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-6",
+				iconId: "sound",
+				part: "left",
+				defaultActive: 1,
+				isrender: 1
+			},
+			{
+				iconId: "pantile",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "recordvideo",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
 				iconId: "hd",
 				part: "right",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 0
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-7",
+				iconId: "zoom",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "webExpend",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
 				iconId: "expend",
 				part: "right",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 1
 			}
 		]
 	}
 };
-var mobileLiveData = {
-	retcode: retcode$1,
-	msg: msg$1,
+var pcLiveVoiceData = {
 	data: data$1
 };
 
-var retcode = 0;
-var msg = "成功";
 var data = {
 	header: {
 		color: "#FFFFFF",
 		backgroundColor: "#000000",
-		activeColor: "#FFFFFF",
+		activeColor: "#1890FF",
 		btnList: [
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-header-0",
 				iconId: "deviceID",
 				part: "left",
-				defaultActive: 1,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				defaultActive: 0,
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-header-1",
 				iconId: "deviceName",
 				part: "left",
-				defaultActive: 1,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "cloudRec",
+				part: "right",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "rec",
+				part: "right",
+				defaultActive: 0,
+				isrender: 1
 			}
 		]
 	},
 	footer: {
 		color: "#FFFFFF",
-		backgroundColor: "rgb(0 0 0 / 0%)",
-		activeColor: "#FFFFFF",
+		backgroundColor: "#00000080",
+		activeColor: "#1890FF",
 		btnList: [
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-0",
 				iconId: "play",
 				part: "left",
 				defaultActive: 1,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-2",
-				iconId: "sound",
+				iconId: "capturePicture",
 				part: "left",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 1
 			},
 			{
-				btnKey: "c1cbc1d4e86d49a0981f54beea95280a-f9a70c9a4fde425c9c7ec7815b9fec4b-footer-7",
+				iconId: "sound",
+				part: "left",
+				defaultActive: 1,
+				isrender: 1
+			},
+			{
+				iconId: "pantile",
+				part: "left",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "recordvideo",
+				part: "left",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "zoom",
+				part: "left",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "speed",
+				part: "right",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
+				iconId: "hd",
+				part: "right",
+				defaultActive: 0,
+				isrender: 0
+			},
+			{
+				iconId: "webExpend",
+				part: "right",
+				defaultActive: 0,
+				isrender: 1
+			},
+			{
 				iconId: "expend",
 				part: "right",
 				defaultActive: 0,
-				isrender: 1,
-				themeId: "f9a70c9a4fde425c9c7ec7815b9fec4b"
+				isrender: 1
 			}
 		]
 	}
 };
-var mobileRecData = {
-	retcode: retcode,
-	msg: msg,
+var pcRecFullDataData = {
 	data: data
 };
+
+var officeTemplateList = [{
+  autoFocus: 5,
+  createTime: '2021-06-14T08:04:37.000Z',
+  themeId: 'pcLive',
+  themeIntro: 'PC直播全量版',
+  themeName: 'PC直播全量版',
+  themeType: 'webLive',
+  updateTime: '2021-06-14T08:04:37.000Z',
+  label: '官方',
+  labelPic: "https://resource.eziot.com/group1/M00/00/8A/CtwQEmLr_DmANlElAAA-xyivSaw030.png",
+  poster: "https://resource.eziot.com/group1/M00/00/89/CtwQEmLl8r-AZU7wAAETKlvgerU237.png",
+  header: pcLiveFullData.data.header,
+  footer: pcLiveFullData.data.footer
+}, {
+  autoFocus: 5,
+  createTime: '2021-06-14T08:04:37.000Z',
+  themeId: 'security',
+  themeIntro: 'PC直播安防版',
+  themeName: 'PC直播安防版',
+  themeType: 'webLive',
+  updateTime: '2021-06-14T08:04:37.000Z',
+  label: '官方',
+  labelPic: "https://resource.eziot.com/group1/M00/00/8A/CtwQEmLr_DmANlElAAA-xyivSaw030.png",
+  poster: "https://resource.eziot.com/group1/M00/00/89/CtwQEmLl8r-AZU7wAAETKlvgerU237.png",
+  header: pcLiveSecurityData.data.header,
+  footer: pcLiveSecurityData.data.footer
+}, {
+  autoFocus: 5,
+  createTime: '2021-06-14T08:04:37.000Z',
+  themeId: 'voice',
+  themeIntro: 'PC直播语音版',
+  themeName: 'PC直播语音版',
+  themeType: 'webLive',
+  updateTime: '2021-06-14T08:04:37.000Z',
+  label: '官方',
+  labelPic: "https://resource.eziot.com/group1/M00/00/8A/CtwQEmLr_DmANlElAAA-xyivSaw030.png",
+  poster: "https://resource.eziot.com/group1/M00/00/89/CtwQEmLl8r-AZU7wAAETKlvgerU237.png",
+  header: pcLiveVoiceData.data.header,
+  footer: pcLiveVoiceData.data.footer
+}, {
+  autoFocus: 5,
+  createTime: '2021-06-14T08:04:37.000Z',
+  themeId: 'simple',
+  themeIntro: 'PC直播极简版',
+  themeName: 'PC直播极简版',
+  themeType: 'webLive',
+  updateTime: '2021-06-14T08:04:37.000Z',
+  label: '官方',
+  labelPic: "https://resource.eziot.com/group1/M00/00/8A/CtwQEmLr_DmANlElAAA-xyivSaw030.png",
+  poster: "",
+  header: pcLiveSimpleData.data.header,
+  footer: pcLiveSimpleData.data.footer
+}, {
+  autoFocus: 5,
+  createTime: '2021-06-14T08:04:37.000Z',
+  themeId: 'pcRec',
+  themeIntro: 'PC回放全量版',
+  themeName: 'PC回放全量版',
+  themeType: 'webRec',
+  updateTime: '2021-06-14T08:04:37.000Z',
+  label: '官方',
+  labelPic: "https://resource.eziot.com/group1/M00/00/8A/CtwQEmLr_DmANlElAAA-xyivSaw030.png",
+  poster: "https://resource.eziot.com/group1/M00/00/89/CtwQEmLl8r-AZU7wAAETKlvgerU237.png",
+  header: pcRecFullDataData.data.header,
+  footer: pcRecFullDataData.data.footer
+}, {
+  autoFocus: 5,
+  createTime: '2021-06-14T08:04:37.000Z',
+  themeId: 'mobileLive',
+  themeIntro: 'Mobile直播全量版',
+  themeName: 'Mobile直播全量版',
+  themeType: 'mobileLive',
+  updateTime: '2021-06-14T08:04:37.000Z',
+  label: '官方',
+  labelPic: "https://resource.eziot.com/group1/M00/00/8A/CtwQEmLr_GmAL5IhAABZs1vUK0s564.png",
+  poster: "https://resource.eziot.com/group1/M00/00/89/CtwQEmLl8r-AZU7wAAETKlvgerU237.png",
+  header: mobileLiveFullData.data.header,
+  footer: mobileLiveFullData.data.footer
+}, {
+  autoFocus: 5,
+  createTime: '2021-06-14T08:04:37.000Z',
+  themeId: 'mobileRec',
+  themeIntro: 'Mobile回放全量版',
+  themeName: 'Mobile回放全量版',
+  themeType: 'mobileRec',
+  updateTime: '2021-06-14T08:04:37.000Z',
+  label: '官方',
+  labelPic: "https://resource.eziot.com/group1/M00/00/8A/CtwQEmLr_GmAL5IhAABZs1vUK0s564.png",
+  poster: "https://resource.eziot.com/group1/M00/00/89/CtwQEmLl8r-AZU7wAAETKlvgerU237.png",
+  header: mobileRecFullData.data.header,
+  footer: mobileRecFullData.data.footer
+}];
+
+var Zoom = /*#__PURE__*/function () {
+  function Zoom(jSPlugin) {
+    var _this = this;
+
+    _classCallCheck$1(this, Zoom);
+
+    this.jSPlugin = jSPlugin;
+    this.enableZoom = false;
+    this.isMouseDown = false, this.videoWidth = 1920;
+    this.videoHeight = 1080;
+    this.currentScale = 1;
+    this.currentPosition = {
+      x: 0,
+      //操作点 -x
+      y: 0,
+      //
+      xPercent: 0.10,
+      // 百分比 -x
+      yPercent: 0.10,
+      // 百分比
+      xCurrentVideo: 0,
+      // 当前放大后可视视频左上角起点
+      yCurrentVideo: 0,
+      left: 0,
+      top: 0,
+      right: 1920,
+      bottom: 1080
+    };
+    this.DOM = document.getElementById(jSPlugin.id);
+    this.clientRect = document.getElementById(jSPlugin.id).getBoundingClientRect(); //audioControls-left
+
+    var scaleDOMContainer = document.createElement('div');
+    scaleDOMContainer.id = "".concat(jSPlugin.id, "-zoom-container");
+    scaleDOMContainer.style = "position: absolute;\n    display:none;\n    left: 12px;\n    bottom: 80px;";
+    var scaleDOMHTML = "\n    <div\n    style=\"display: inline-flex;flex-direction: column;width: 38px;height: 160px;background:rgba(0,0,0,0.60);border-radius: 8px;align-items: center;\">\n    <div id=\"".concat(this.jSPlugin.id, "-scale-value\" style=\"font-size: 12px;color:#FFFFFF;margin-top:10px;margin-bottom:4px;\">2.0X</div>\n    <div style=\"width: 24px;\" id=\"").concat(this.jSPlugin.id, "-addScale\">\n      <?xml version=\"1.0\" encoding=\"utf-8\"?>\n      <svg version=\"1.1\" fill=\"#FFFFFF\" id=\"\u56FE\u5C42_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n         viewBox=\"0 0 20 20\" style=\"enable-background:new 0 0 20 20;\" xml:space=\"preserve\">\n      <title>\u653E\u5927</title>\n      <g id=\"\u77E9\u5F62\">\n        <rect class=\"st0\" width=\"20\" height=\"20\" fill=\"none\"/>\n      </g>\n      <g id=\"\u5F62\u72B6\u7ED3\u5408\">\n        <path class=\"st1\" d=\"M10,3.8c3.5,0,6.2,2.8,6.2,6.2s-2.8,6.2-6.2,6.2S3.8,13.5,3.8,10S6.5,3.8,10,3.8z M10,5c-2.8,0-5,2.2-5,5\n          s2.2,5,5,5s5-2.2,5-5S12.8,5,10,5z\"/>\n      </g>\n      <g id=\"\u8DEF\u5F84-4\">\n        <path class=\"st2\" d=\"M12.5,10.7h-5c-0.3,0-0.6-0.3-0.6-0.6s0.3-0.6,0.6-0.6h5c0.3,0,0.6,0.3,0.6,0.6S12.8,10.7,12.5,10.7z\"/>\n      </g>\n      <g id=\"\u8DEF\u5F84-4\u5907\u4EFD\">\n        <path class=\"st2\" d=\"M10,13.2c-0.3,0-0.6-0.3-0.6-0.6v-5c0-0.3,0.3-0.6,0.6-0.6s0.6,0.3,0.6,0.6v5C10.6,12.9,10.3,13.2,10,13.2z\"/>\n      </g>\n      </svg>\n    </div>\n    <div style=\"\n    position: relative;\n    width: 1px;\n    height: 64px;\n    border: 1px solid rgba(255,255,255,0.75);\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: flex-end;\">\n    <div class=\"scale-body-line-dot\" id=\"").concat(this.jSPlugin.id, "-scale-body-line-dot\" style=\"width: 8px;\n      height: 8px;\n      background: #FFFFFF;\n      border-radius: 100%;\n      position: absolute;\n      border: 1.5px solid rgba(64,122,255,1);\"></div>\n      <div id=\"").concat(this.jSPlugin.id, "-line-dot\" style=\"width: 1px;\n      height: 0%;\n      background: #1890FF;\n      bottom: 0;\"></div>\n    </div>\n    <div style=\"width: 24px;margin-top: 6px;\" id=\"").concat(this.jSPlugin.id, "-subScale\">\n      <?xml version=\"1.0\" encoding=\"utf-8\"?>\n      <svg fill=\"#FFFFFF\" version=\"1.1\" id=\"\u56FE\u5C42_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n        viewBox=\"0 0 20 20\" style=\"enable-background:new 0 0 20 20;\" xml:space=\"preserve\">\n        <title>\u7F29\u5C0F</title>\n        <g id=\"\u77E9\u5F62\">\n          <rect class=\"st0\" width=\"20\" height=\"20\" fill=\"none\"/>\n        </g>\n        <g id=\"\u5F62\u72B6\u7ED3\u5408\">\n          <path class=\"st1\" d=\"M10,3.8c3.5,0,6.2,2.8,6.2,6.2s-2.8,6.2-6.2,6.2S3.8,13.5,3.8,10S6.5,3.8,10,3.8z M10,5c-2.8,0-5,2.2-5,5\n            s2.2,5,5,5s5-2.2,5-5S12.8,5,10,5z\"/>\n        </g>\n        <g id=\"\u8DEF\u5F84-4\">\n          <path class=\"st2\" d=\"M12.5,10.7h-5c-0.3,0-0.6-0.3-0.6-0.6s0.3-0.6,0.6-0.6h5c0.3,0,0.6,0.3,0.6,0.6S12.8,10.7,12.5,10.7z\"/>\n        </g>\n      </svg>\n    </div>\n  </div>\n    ");
+    scaleDOMContainer.innerHTML = scaleDOMHTML;
+    document.getElementById("".concat(jSPlugin.id, "-audioControls-left")).parentNode.appendChild(scaleDOMContainer);
+
+    document.getElementById("".concat(jSPlugin.id, "-addScale")).onclick = function () {
+      _this.addScale();
+    };
+
+    document.getElementById("".concat(jSPlugin.id, "-subScale")).onclick = function () {
+      _this.subScale();
+    }; // document.getElementById("video-container").addEventListener("mouseenter",(event)=> {
+    //   console.log("鼠标进入", event);
+    // });
+
+  }
+
+  _createClass$1(Zoom, [{
+    key: "onMouseDown",
+    value: function onMouseDown(event) {
+      this.currentPosition;
+          this.currentScale;
+      this.moveX = event.clientX;
+      this.moveY = event.clientY;
+      this.isMouseDown = true;
+    }
+  }, {
+    key: "onMouseUp",
+    value: function onMouseUp(event) {
+      var currentPosition = this.currentPosition;
+          this.enableZoom;
+      this.isMouseDown = false;
+      currentPosition.left = currentPosition.left - (event.clientX - this.moveX);
+      currentPosition.top = currentPosition.top - (event.clientY - this.moveY);
+      this.doScale();
+    }
+  }, {
+    key: "onMouseOut",
+    value: function onMouseOut(event) {
+      if (this.isMouseDown) {
+        console.log("鼠标按上", event);
+        this.isMouseDown = false;
+      }
+
+      this.isMouseDown = false;
+    }
+  }, {
+    key: "renderDot",
+    value: function renderDot() {
+      var currentScale = this.currentScale;
+      document.getElementById("".concat(this.jSPlugin.id, "-scale-value")).innerHTML = "".concat(currentScale, ".0X");
+      document.getElementById("".concat(this.jSPlugin.id, "-line-dot")).style.height = "".concat((currentScale - 1) / 7 * 100, "%");
+      document.getElementById("".concat(this.jSPlugin.id, "-scale-body-line-dot")).style.bottom = "calc(".concat((currentScale - 1) / 7 * 100, "% - 6px)");
+    }
+  }, {
+    key: "startZoom",
+    value: function startZoom() {
+      var _this2 = this;
+
+      var info = this.jSPlugin.jSPlugin._JSPlayM4_GetFrameInfo(0);
+
+      this.videoWidth = info.width;
+      this.videoHeight = info.height;
+      this.currentPosition.right = info.width;
+      this.currentPosition.bottom = info.height;
+      this.currentScale = 1;
+      document.getElementById("".concat(this.jSPlugin.id, "-zoom-container")).style.display = "block";
+
+      this.jSPlugin.jSPlugin._JSPlayM4_SetDisplayRegion(0, this.videoWidth, 0, this.videoHeight);
+
+      this.renderDot();
+      this.enableZoom = true;
+
+      if (document.getElementById("".concat(this.jSPlugin.id, "canvas_draw0"))) {
+        document.getElementById("".concat(this.jSPlugin.id, "canvas_draw0")).addEventListener("mousedown", function (event) {
+          return _this2.onMouseDown(event);
+        });
+        document.getElementById("".concat(this.jSPlugin.id, "canvas_draw0")).addEventListener("mouseup", function (event) {
+          return _this2.onMouseUp(event);
+        });
+        document.getElementById("".concat(this.jSPlugin.id, "canvas_draw0")).addEventListener("mouseout", function (event) {
+          return _this2.onMouseOut(event);
+        });
+      } else if (document.getElementById("".concat(this.jSPlugin.id, "-player"))) {
+        document.getElementById("".concat(this.jSPlugin.id, "-player")).addEventListener("mousedown", function (event) {
+          return _this2.onMouseDown(event);
+        });
+        document.getElementById("".concat(this.jSPlugin.id, "-player")).addEventListener("mouseup", function (event) {
+          return _this2.onMouseUp(event);
+        });
+        document.getElementById("".concat(this.jSPlugin.id, "-player")).addEventListener("mouseout", function (event) {
+          return _this2.onMouseOut(event);
+        });
+      }
+    }
+  }, {
+    key: "stopZoom",
+    value: function stopZoom() {
+      var _this3 = this;
+
+      this.currentScale = 1;
+
+      this.jSPlugin.jSPlugin._JSPlayM4_SetDisplayRegion(0, this.videoWidth, 0, this.videoHeight);
+
+      document.getElementById("".concat(this.jSPlugin.id, "-zoom-container")).style.display = "none";
+      this.renderDot();
+      this.enableZoom = false;
+      document.getElementById(this.jSPlugin.id).removeEventListener("mousedown", function (event) {
+        return _this3.onMouseDown(event);
+      });
+      document.getElementById(this.jSPlugin.id).removeEventListener("mouseup", function (event) {
+        return _this3.onMouseUp(event);
+      });
+      document.getElementById(this.jSPlugin.id).removeEventListener("mouseout", function (event) {
+        return _this3.onMouseOut(event);
+      });
+    } // scrollFunc(e) {
+    //   e = e || window.event;
+    //   if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件               
+    //     if (e.wheelDelta > 0) { //当滑轮向上滚动时  
+    //       this.isScrollOverVideo(e, 'up');
+    //     }
+    //     if (e.wheelDelta < 0) { //当滑轮向下滚动时  
+    //       this.isScrollOverVideo(e, 'down');
+    //     }
+    //   } else if (e.detail) {  //Firefox滑轮事件  
+    //     if (e.detail > 0) { //当滑轮向下滚动时  
+    //       this.isScrollOverVideo(e, 'down');
+    //     }
+    //     if (e.detail < 0) { //当滑轮向上滚动时  
+    //       this.isScrollOverVideo(e, 'up');
+    //     }
+    //   }
+    // }
+    // isScrollOverVideo(e, type) {
+    //   const { clientRect } = this;
+    //   if (e.clientX > clientRect.x && e.clientX < (clientRect.x + clientRect.width)) {
+    //     if (e.clientY > clientRect.y && e.clientY < (clientRect.y + clientRect.height)) {
+    //       if (type == 'up' && currentScale < 8) {
+    //         this.currentScale++;
+    //         console.log("当前放大尺度", currentScale)
+    //         this.calCurrentPosition(e);
+    //       }
+    //       if (type == 'down' && currentScale > 1) {
+    //         this.currentScale--;
+    //         console.log("当前放大尺度", currentScale)
+    //         this.calCurrentPosition(e);
+    //       }
+    //       return;
+    //     }
+    //   }
+    //   return false
+    // }
+
+  }, {
+    key: "doScale",
+    value: function doScale() {
+      console.log("执行放大");
+      var currentPosition = this.currentPosition,
+          currentScale = this.currentScale;
+      currentPosition.left = currentPosition.left + currentPosition.xPercent * (currentPosition.right - currentPosition.left) - 1 / 2 * (this.videoWidth / currentScale);
+
+      if (currentPosition.left < 0) {
+        currentPosition.left = 0;
+      } else if (currentPosition.left > this.videoWidth - this.videoWidth / currentScale) {
+        currentPosition.left = this.videoWidth - this.videoWidth / currentScale;
+      }
+
+      currentPosition.right = currentPosition.left + this.videoWidth / currentScale;
+      currentPosition.top = currentPosition.top + currentPosition.yPercent * (currentPosition.bottom - currentPosition.top) - 1 / 2 * (this.videoHeight / currentScale);
+
+      if (currentPosition.top < 0) {
+        currentPosition.top = 0;
+      } else if (currentPosition.top > this.videoHeight - this.videoHeight / currentScale) {
+        currentPosition.top = this.videoHeight - this.videoHeight / currentScale;
+      }
+
+      currentPosition.bottom = currentPosition.top + this.videoHeight / currentScale; //整数化
+
+      currentPosition.left = parseInt(currentPosition.left, 10);
+      currentPosition.right = parseInt(currentPosition.right, 10);
+      currentPosition.top = parseInt(currentPosition.top, 10);
+      currentPosition.bottom = parseInt(currentPosition.bottom, 10);
+      console.log("计算后，", this.jSPlugin.jSPlugin, currentPosition.left, currentPosition.right, currentPosition.top, currentPosition.bottom, currentPosition.xPercent, currentPosition.yPercent);
+
+      this.jSPlugin.jSPlugin._JSPlayM4_SetDisplayRegion(currentPosition.left, currentPosition.right, currentPosition.top, currentPosition.bottom);
+
+      this.renderDot();
+    }
+  }, {
+    key: "calCurrentPosition",
+    value: function calCurrentPosition(e) {
+      var currentPosition = this.currentPosition,
+          clientRect = this.clientRect;
+      currentPosition.x = e.clientX;
+      currentPosition.y = e.clientY;
+      currentPosition.xPercent = (e.clientX - clientRect.x) / clientRect.width;
+      currentPosition.yPercent = (e.clientY - clientRect.y) / clientRect.height;
+      this.doScale();
+      return;
+    }
+  }, {
+    key: "addScale",
+    value: function addScale() {
+      var currentScale = this.currentScale,
+          currentPosition = this.currentPosition;
+
+      if (currentScale >= 8) {
+        console.log("达到最大倍率了");
+
+        if (this.jSPlugin.Message) {
+          this.jSPlugin.Message["default"]("已经放大到最大倍数8.0X");
+        }
+
+        return false;
+      }
+
+      this.currentScale++;
+      currentPosition.xPercent = 0.5;
+      currentPosition.yPercent = 0.5;
+      this.doScale();
+    }
+  }, {
+    key: "subScale",
+    value: function subScale() {
+      var currentScale = this.currentScale,
+          currentPosition = this.currentPosition;
+
+      if (currentScale <= 1) {
+        console.log("达到最小倍率了");
+        return false;
+      }
+
+      this.currentScale--;
+      currentPosition.xPercent = 0.5;
+      currentPosition.yPercent = 0.5;
+      this.doScale();
+    }
+  }]);
+
+  return Zoom;
+}();
+
+function lineLength(point1, point2) {
+  return Math.abs(point2.clientX - point1.clientX) * Math.abs(point2.clientX - point1.clientX) + Math.abs(point2.clientY - point1.clientY) * Math.abs(point2.clientY - point1.clientY);
+}
+
+var MobileZoom = /*#__PURE__*/function () {
+  function MobileZoom(jSPlugin) {
+    var _this = this;
+
+    _classCallCheck$1(this, MobileZoom);
+
+    this.jSPlugin = jSPlugin;
+    this.enableZoom = false;
+    this.isDubboTouch = false, this.videoWidth = 0;
+    this.videoHeight = 0;
+    this.currentScale = 1;
+    this.currentPosition = {
+      x: 0,
+      //操作点 -x
+      y: 0,
+      //
+      xPercent: 0.10,
+      // 百分比 -x
+      yPercent: 0.10,
+      // 百分比
+      xCurrentVideo: 0,
+      // 当前放大后可视视频左上角起点
+      yCurrentVideo: 0,
+      left: 0,
+      top: 0,
+      right: 1920,
+      bottom: 1080
+    };
+    this.DOM = document.getElementById(jSPlugin.id);
+    this.clientRect = document.getElementById(jSPlugin.id).getBoundingClientRect();
+    this.point1 = {
+      clientX: 0,
+      clientY: 0
+    };
+    this.point2 = {
+      clientX: 0,
+      clientY: 0
+    };
+    this.touchLineLength = 0;
+    this.inited = false;
+    var scaleDOMContainer = document.createElement('div');
+    scaleDOMContainer.id = "".concat(jSPlugin.id, "-zoom-container");
+    scaleDOMContainer.style = "display:none;\n    position: absolute;\n    left: 10px;\n    top: -30px;\n    border: 1px solid rgba(0,0,0,0.6);\n    color: #FFFFFF;\n    background: rgba(0,0,0,0.6);\n    border-radius: 10px;\n    width: 36px;\n    font-size: 12px;\n    text-align: center;\n    height: 22px;\n    line-height: 22px;";
+    var scaleDOMHTML = "1X";
+    scaleDOMContainer.innerHTML = scaleDOMHTML;
+    document.getElementById("".concat(jSPlugin.id, "-audioControls-left")).parentNode.appendChild(scaleDOMContainer); // document.getElementById(this.jSPlugin.id).addEventListener("mousedown",(event)=>this.onMouseDown(event));
+    // document.getElementById(this.jSPlugin.id).addEventListener("mouseup",(event)=>this.onMouseUp(event));
+    // document.getElementById(this.jSPlugin.id).addEventListener("mouseout",(event)=>this.onMouseOut(event));
+
+    document.getElementById(this.jSPlugin.id).addEventListener("touchstart", function (event) {
+      return _this.onTouchstart(event);
+    });
+    document.getElementById(this.jSPlugin.id).addEventListener("touchmove", function (event) {
+      return _this.onTouchmove(event);
+    }); // var info = jSPlugin.jSPlugin._JSPlayM4_GetFrameInfo(0);
+    // this.videoWidth = info.width;
+    // this.videoHeight = info.height;
+    // this.currentPosition.right = info.width;
+    // this.currentPosition.bottom = info.height;
+  }
+
+  _createClass$1(MobileZoom, [{
+    key: "onTouchstart",
+    value: function onTouchstart(event) {
+      if (!this.inited) {
+        var info = this.jSPlugin.jSPlugin._JSPlayM4_GetFrameInfo(0);
+
+        this.videoWidth = info.width;
+        this.videoHeight = info.height;
+        this.currentPosition.right = info.width;
+        this.currentPosition.bottom = info.height;
+        this.inited = true;
+      }
+
+      var currentPosition = this.currentPosition;
+          this.currentScale;
+      console.log("双指按下", currentPosition);
+      var touches = event.touches;
+      var events = touches[0];
+      var events2 = touches[1];
+
+      if (events) {
+        this.point1.clientX = events.clientX;
+        this.point1.clientY = events.clientY;
+      }
+
+      if (events2) {
+        this.point2.clientX = events2.clientX;
+        this.point2.clientY = events2.clientY;
+        this.touchLineLength = lineLength(this.point1, this.point2);
+        this.isDubboTouch = true;
+        this.moveX = events.clientX;
+        this.moveY = events.clientY;
+      }
+
+      console.log("双指按下2", currentPosition);
+    }
+  }, {
+    key: "onTouchmove",
+    value: function onTouchmove(event) {
+      var isDubboTouch = this.isDubboTouch,
+          currentPosition = this.currentPosition,
+          clientRect = this.clientRect; // console.log("event.touches.lenght",event.touches.length);
+
+      if (event.touches.length === 1) {
+        var events = event.touches[0]; //console.log("currentPosition.xPercent",event.touches)
+
+        currentPosition.xPercent = currentPosition.xPercent + (this.point1.clientX - events.clientX) / clientRect.width / this.currentScale;
+        currentPosition.yPercent = currentPosition.yPercent + (this.point1.clientY - events.clientY) / clientRect.height / this.currentScale;
+        this.doScale();
+        this.point1.clientX = events.clientX;
+        this.point1.clientY = events.clientY;
+        return false;
+      }
+
+      if (!isDubboTouch) {
+        return false;
+      }
+
+      var touches = event.touches;
+      var events = touches[0];
+      var events2 = touches[1];
+
+      if (events) {
+        this.point1.clientX = events.clientX;
+        this.point1.clientY = events.clientY;
+      }
+
+      if (events2) {
+        this.point2.clientX = events2.clientX;
+        this.point2.clientY = events2.clientY;
+        var newtTouchLineLength = lineLength(this.point1, this.point2);
+
+        if (newtTouchLineLength !== this.touchLineLength) {
+          if (newtTouchLineLength > this.touchLineLength) {
+            if (this.currentScale < 8) {
+              ++this.currentScale;
+              currentPosition.xPercent = (this.point1.clientX + this.point2.clientX) / 2 / clientRect.width;
+              currentPosition.yPercent = (this.point1.clientY + this.point2.clientY) / 2 / clientRect.height;
+              this.doScale();
+            } else {
+              console.log("已经是最大8倍率了");
+            }
+          } else {
+            if (this.currentScale > 1) {
+              --this.currentScale;
+              currentPosition.xPercent = (this.point1.clientX + this.point2.clientX) / 2 / clientRect.width;
+              currentPosition.yPercent = (this.point1.clientY + this.point2.clientY) / 2 / clientRect.height;
+              this.doScale();
+            } else {
+              console.log("已经是最小1倍率了");
+            }
+          }
+
+          this.isDubboTouch = false;
+        }
+      }
+    }
+  }, {
+    key: "startZoom",
+    value: function startZoom() {
+      var info = this.jSPlugin.jSPlugin._JSPlayM4_GetFrameInfo(0);
+
+      this.videoWidth = info.width;
+      this.videoHeight = info.height;
+      this.currentPosition.right = info.width;
+      this.currentPosition.bottom = info.height;
+      this.currentScale = 1;
+      document.getElementById("".concat(this.jSPlugin.id, "-zoom-container")).style.display = "block";
+
+      this.jSPlugin.jSPlugin._JSPlayM4_SetDisplayRegion(0, this.videoWidth, 0, this.videoHeight);
+
+      this.renderDot();
+    }
+  }, {
+    key: "stopZoom",
+    value: function stopZoom() {
+      this.currentScale = 1;
+
+      this.jSPlugin.jSPlugin._JSPlayM4_SetDisplayRegion(0, this.videoWidth, 0, this.videoHeight);
+
+      document.getElementById("".concat(this.jSPlugin.id, "-zoom-container")).style.display = "none";
+      this.renderDot();
+    }
+  }, {
+    key: "doScale",
+    value: function doScale() {
+      var currentPosition = this.currentPosition,
+          currentScale = this.currentScale;
+      currentPosition.left = currentPosition.left + currentPosition.xPercent * (currentPosition.right - currentPosition.left) - 1 / 2 * (this.videoWidth / currentScale);
+
+      if (currentPosition.left < 0) {
+        currentPosition.left = 0;
+      } else if (currentPosition.left > this.videoWidth - this.videoWidth / currentScale) {
+        currentPosition.left = this.videoWidth - this.videoWidth / currentScale;
+      }
+
+      currentPosition.right = currentPosition.left + this.videoWidth / currentScale;
+      currentPosition.top = currentPosition.top + currentPosition.yPercent * (currentPosition.bottom - currentPosition.top) - 1 / 2 * (this.videoHeight / currentScale);
+
+      if (currentPosition.top < 0) {
+        currentPosition.top = 0;
+      } else if (currentPosition.top > this.videoHeight - this.videoHeight / currentScale) {
+        currentPosition.top = this.videoHeight - this.videoHeight / currentScale;
+      }
+
+      currentPosition.bottom = currentPosition.top + this.videoHeight / currentScale; //整数化
+
+      currentPosition.left = parseInt(currentPosition.left, 10);
+      currentPosition.right = parseInt(currentPosition.right, 10);
+      currentPosition.top = parseInt(currentPosition.top, 10);
+      currentPosition.bottom = parseInt(currentPosition.bottom, 10);
+      console.log("视频宽高", this.videoWidth, this.videoHeight);
+      console.log("计算后，", currentPosition.left, currentPosition.right, currentPosition.top, currentPosition.bottom, currentPosition.xPercent, currentPosition.yPercent); // 注意，和PC
+
+      if (currentPosition.left < currentPosition.right && currentPosition.top < currentPosition.bottom && currentPosition.bottom <= this.videoHeight && currentPosition.right <= this.videoWidth) {
+        this.jSPlugin.jSPlugin._JSPlayM4_SetDisplayRegion(currentPosition.left, currentPosition.right, currentPosition.top, currentPosition.bottom);
+      }
+
+      document.getElementById("".concat(this.jSPlugin.id, "-zoom-container")).innerHTML = "".concat(currentScale, ".0X");
+      document.getElementById("".concat(this.jSPlugin.id, "-zoom-container")).style.display = currentScale === 1 ? "none" : "inline-block";
+    }
+  }, {
+    key: "calCurrentPosition",
+    value: function calCurrentPosition(e) {
+      var currentPosition = this.currentPosition,
+          clientRect = this.clientRect;
+      currentPosition.x = e.clientX;
+      currentPosition.y = e.clientY;
+      currentPosition.xPercent = (e.clientX - clientRect.x) / clientRect.width;
+      currentPosition.yPercent = (e.clientY - clientRect.y) / clientRect.height;
+      this.doScale();
+      return;
+    }
+  }]);
+
+  return MobileZoom;
+}();
 
 var styleToString = function styleToString(obj) {
   var styleString = "";
@@ -28440,22 +29537,28 @@ var styleToString = function styleToString(obj) {
 var MEDIAWIDTH = 500;
 var Theme = /*#__PURE__*/function () {
   function Theme(jSPlugin) {
+    var _this = this;
+
     _classCallCheck$1(this, Theme);
 
     this.jSPlugin = jSPlugin;
     this.isNeedRenderHeader = false;
     this.isNeedRenderFooter = false;
+    this.autoFocus = 0, this.autoFocusTimer = null, this.recordTimer = null;
+    this.nextRate = 1;
+    this.showHD = false;
     this.decoderState = {
       state: {
         isEditing: false,
-        play: true,
-        sound: true,
+        play: false,
+        sound: false,
         recordvideo: false,
-        recordTimer: null,
         recordCount: "00:00",
         talk: false,
+        zoom: false,
         pantile: false,
         hd: false,
+        speed: false,
         expend: false,
         webExpend: false,
         cloudRec: matchEzopenUrl(jSPlugin.url).type === 'cloud.rec',
@@ -28463,8 +29566,14 @@ var Theme = /*#__PURE__*/function () {
         type: matchEzopenUrl(jSPlugin.url).type
       }
     };
+    console.log(" matchEzopenUrl(jSPlugin.url)", matchEzopenUrl(jSPlugin.url), this.decoderState.state);
     this.inited = false;
-    this.isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i); // 默认主题 - 按钮全部展示
+    this.isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+
+    if (typeof jSPlugin.isMobile !== 'undefined') {
+      this.isMobile = jSPlugin.isMobile;
+    } // 默认主题 - 按钮全部展示
+
 
     this.themeData = emptyData.data; // 自适应主题数据
 
@@ -28478,25 +29587,20 @@ var Theme = /*#__PURE__*/function () {
     if (this.jSPlugin.themeId) {
       switch (this.jSPlugin.themeId) {
         case 'pcLive':
-          this.themeData = pcLiveData.data;
-          this.initThemeData();
-          this.renderThemeData();
-          break;
-
         case 'pcRec':
-          this.themeData = pcRecData.data;
-          this.initThemeData();
-          this.renderThemeData();
-          break;
-
         case 'mobileLive':
-          this.themeData = mobileLiveData.data;
-          this.initThemeData();
-          this.renderThemeData();
-          break;
-
         case 'mobileRec':
-          this.themeData = mobileRecData.data;
+        case 'security':
+        case 'voice':
+        case 'simple':
+          var ezuikitTemplateDetail = lodash.find(officeTemplateList, function (item) {
+            return item.themeId === _this.jSPlugin.themeId;
+          });
+
+          if (ezuikitTemplateDetail) {
+            this.themeData = ezuikitTemplateDetail;
+          }
+
           this.initThemeData();
           this.renderThemeData();
           break;
@@ -28516,14 +29620,22 @@ var Theme = /*#__PURE__*/function () {
     if (!this.jSPlugin.Talk) {
       this.jSPlugin.Talk = new Talk(this.jSPlugin);
     }
+
+    addCss("".concat(this.jSPlugin.staticPath, "/speed/speed.css"));
+    addCss("".concat(this.jSPlugin.staticPath, "/css/theme.css"));
   }
 
   _createClass$1(Theme, [{
     key: "fetchThemeData",
     value: function fetchThemeData(themeId) {
-      var _this = this;
+      var _this2 = this;
 
-      var url = "".concat(this.jSPlugin.env.domain, "/jssdk/ezopen/template/getDetail?accessToken=").concat(this.jSPlugin.accessToken, "&id=").concat(themeId);
+      var url = "".concat(this.jSPlugin.env.domain, "/console/jssdk/ezopen/template/getDetail?accessToken=").concat(this.jSPlugin.accessToken, "&id=").concat(themeId);
+
+      if (window.location.hostname === "test11open.ys7.com" || window.location.hostname === "127.0.0.1" || window.location.hostname === "jianboyu.top") {
+        url = url.replace("test12open.ys7.com/console/jssdk", "test11open.ys7.com/console/jssdk");
+      }
+
       fetch(url, {
         method: 'GET'
       }).then(function (response) {
@@ -28532,59 +29644,54 @@ var Theme = /*#__PURE__*/function () {
         console.log("get theme data", data);
 
         if (data.meta.code === 0 && data.data) {
+          _this2.themeData = data.data;
+
           if (data.data.header) {
-            _this.themeData.header = data.data.header;
+            _this2.themeData.header = data.data.header;
+            _this2.themeData.header.btnList = _this2.themeData.header.btnList.sort(function (a, b) {
+              return a.btnKey.split("-")[3] - b.btnKey.split("-")[3];
+            });
           }
 
           if (data.data.footer) {
-            _this.themeData.footer = data.data.footer;
-          } // // 判断是否自动隐藏控件
-          // if (themeData[0].autoFocus > 0) {
-          //   autoFocus = parseInt(themeData[0].autoFocus);
-          // }
+            _this2.themeData.footer = data.data.footer;
+            _this2.themeData.footer.btnList = _this2.themeData.footer.btnList.sort(function (a, b) {
+              return a.btnKey.split("-")[3] - b.btnKey.split("-")[3];
+            });
+          }
 
+          _this2.initThemeData();
 
-          _this.initThemeData();
-
-          _this.renderThemeData();
+          _this2.renderThemeData();
         }
       })["catch"](function (error) {
-        _this.renderThemeData();
+        _this2.renderThemeData();
       });
     }
   }, {
     key: "changeTheme",
     value: function changeTheme(options) {
+      var _this3 = this;
+
       if (typeof options === 'string') {
         this.jSPlugin.themeId = options;
 
         switch (this.jSPlugin.themeId) {
           case 'pcLive':
-            this.themeData = pcLiveData.data;
-            this.initThemeData();
-            this.renderThemeData();
-            break;
-
           case 'pcRec':
-            this.themeData = pcRecData.data;
-            this.initThemeData();
-            this.renderThemeData();
-            break;
-
           case 'mobileLive':
-            this.themeData = mobileLiveData.data;
-            this.initThemeData();
-            this.renderThemeData();
-            break;
-
           case 'mobileRec':
-            this.themeData = mobileRecData.data;
-            this.initThemeData();
-            this.renderThemeData();
-            break;
+          case 'security':
+          case 'voice':
+          case 'simple':
+            var ezuikitTemplateDetail = lodash.find(officeTemplateList, function (item) {
+              return item.themeId === _this3.jSPlugin.themeId;
+            });
 
-          case 'themeData':
-            this.themeData = this.jSPlugin.params.themeData;
+            if (ezuikitTemplateDetail) {
+              this.themeData = ezuikitTemplateDetail;
+            }
+
             this.initThemeData();
             this.renderThemeData();
             break;
@@ -28597,12 +29704,20 @@ var Theme = /*#__PURE__*/function () {
         this.themeData = options;
         this.initThemeData();
         this.renderThemeData();
+
+        if (this.decoderState.state.isEditing) {
+          this.editStart();
+        }
+      }
+
+      if (this.jSPlugin && this.jSPlugin.handleThemeChange) {
+        this.jSPlugin.handleThemeChange(options);
       }
     }
   }, {
     key: "renderThemeData",
     value: function renderThemeData() {
-      var _this2 = this;
+      var _this4 = this;
 
       var _this$themeData = this.themeData,
           header = _this$themeData.header,
@@ -28613,7 +29728,7 @@ var Theme = /*#__PURE__*/function () {
         document.getElementById("".concat(this.jSPlugin.id, "-headControl")).style.color = header.color.replace("-diy", "");
         header.btnList.map(function (item, index) {
           if (item.isrender) {
-            _this2.setDecoderState(_defineProperty({}, item.iconId, _this2.decoderState[item.iconId]));
+            _this4.setDecoderState(_defineProperty({}, item.iconId, _this4.decoderState.state[item.iconId]));
           }
         });
       }
@@ -28623,15 +29738,63 @@ var Theme = /*#__PURE__*/function () {
         document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).style.color = footer.color.replace("-diy", "");
         footer.btnList.map(function (item, index) {
           if (item.isrender) {
-            _this2.setDecoderState(_defineProperty({}, item.iconId, _this2.decoderState[item.iconId]));
+            _this4.setDecoderState(_defineProperty({}, item.iconId, _this4.decoderState.state[item.iconId]));
           }
-        });
+
+          if (item.iconId === "play" && item.defaultActive) {
+            var checkTimer = setInterval(function () {
+              if (window.EZUIKit[_this4.jSPlugin.id].state.EZUIKitPlayer.init) {
+                clearInterval(checkTimer);
+
+                _this4.jSPlugin.play();
+              }
+            }, 50);
+          }
+        }); // 判断标清高清
+
+        if (this.jSPlugin.url.indexOf("hd.live") !== -1) {
+          this.setDecoderState({
+            hd: true
+          });
+        } // 判断是否自动隐藏控件
+
+
+        if (this.themeData.autoFocus > 0) {
+          this.autoFocus = parseInt(this.themeData.autoFocus);
+          this.startAutoFocus();
+          document.getElementById("".concat(this.jSPlugin.id, "-wrap")).addEventListener("click", function () {
+            _this4.stopAutoFocus();
+          }); // document.getElementById(`${this.jSPlugin.id}-wrap`).addEventListener("mouseout", ()=>{
+          //   console.log("开启自动隐藏")
+          //   this.startAutoFocus();
+          // })
+        }
       }
+
+      var isNeedRoom = lodash.findIndex(this.themeData.footer.btnList, function (v) {
+        return v.iconId === 'zoom' && v.isrender > 0;
+      }) >= 0;
+
+      if (isNeedRoom) {
+        if (this.isMobile) {
+          this.jSPlugin.Zoom = new MobileZoom(this.jSPlugin);
+        } else {
+          this.jSPlugin.Zoom = new Zoom(this.jSPlugin);
+        }
+      }
+
+      var checkTimer = setInterval(function () {
+        if (window.EZUIKit[_this4.jSPlugin.id].state.EZUIKitPlayer.init) {
+          clearInterval(checkTimer); // 执行一次reSize
+
+          _this4.jSPlugin.reSize(_this4.jSPlugin.params.width, _this4.jSPlugin.params.height);
+        }
+      }, 50);
     }
   }, {
     key: "setDecoderState",
     value: function setDecoderState(options) {
-      var _this3 = this;
+      var _this5 = this;
 
       var _this$themeData2 = this.themeData,
           header = _this$themeData2.header,
@@ -28648,185 +29811,251 @@ var Theme = /*#__PURE__*/function () {
           color = footer.color.replace("-diy", "");
           activeColor = footer.activeColor.replace("-diy", "");
         } else {
-          color = header.color.replace("-diy", "");
-          activeColor = header.activeColor.replace("-diy", "");
+          color = header.color.replace("-diy", ""); // 按钮相关的激活颜色统一使用底部的
+
+          activeColor = footer.activeColor.replace("-diy", "");
         }
 
         switch (item) {
           case 'play':
             if (options[item]) {
-              if (document.getElementById("".concat(_this3.jSPlugin.id, "-play"))) {
-                document.getElementById("".concat(_this3.jSPlugin.id, "-play-content")).children[0].children[0].style = "display:inline-block";
-                document.getElementById("".concat(_this3.jSPlugin.id, "-play-content")).children[0].children[1].style = "display:none";
-                document.getElementById("".concat(_this3.jSPlugin.id, "-play")).className = options[item] ? 'active' : '';
-                document.getElementById("".concat(_this3.jSPlugin.id, "-play-content")).childNodes[0].children[0].style.fill = options[item] ? activeColor : color;
+              if (document.getElementById("".concat(_this5.jSPlugin.id, "-play"))) {
+                document.getElementById("".concat(_this5.jSPlugin.id, "-play-content")).children[0].children[0].style = "display:inline-block";
+                document.getElementById("".concat(_this5.jSPlugin.id, "-play-content")).children[0].children[1].style = "display:none";
+                document.getElementById("".concat(_this5.jSPlugin.id, "-play")).className = options[item] ? 'active' : '';
+                document.getElementById("".concat(_this5.jSPlugin.id, "-play-content")).childNodes[0].children[0].style.fill = options[item] ? activeColor : color;
               }
             } else {
-              if (document.getElementById("".concat(_this3.jSPlugin.id, "-play"))) {
-                document.getElementById("".concat(_this3.jSPlugin.id, "-play-content")).children[0].children[1].style = "display:inline-block";
-                document.getElementById("".concat(_this3.jSPlugin.id, "-play-content")).children[0].children[0].style = "display:none";
-                document.getElementById("".concat(_this3.jSPlugin.id, "-play")).className = options[item] ? 'active' : '';
-                document.getElementById("".concat(_this3.jSPlugin.id, "-play-content")).childNodes[0].children[1].style.fill = options[item] ? activeColor : color;
+              if (document.getElementById("".concat(_this5.jSPlugin.id, "-play"))) {
+                document.getElementById("".concat(_this5.jSPlugin.id, "-play-content")).children[0].children[1].style = "display:inline-block";
+                document.getElementById("".concat(_this5.jSPlugin.id, "-play-content")).children[0].children[0].style = "display:none";
+                document.getElementById("".concat(_this5.jSPlugin.id, "-play")).className = options[item] ? 'active' : '';
+                document.getElementById("".concat(_this5.jSPlugin.id, "-play-content")).childNodes[0].children[1].style.fill = options[item] ? activeColor : color;
               }
             }
 
             break;
 
           case 'sound':
-            if (document.getElementById("".concat(_this3.jSPlugin.id, "-sound"))) {
+            if (document.getElementById("".concat(_this5.jSPlugin.id, "-sound"))) {
               if (options[item]) {
-                document.getElementById("".concat(_this3.jSPlugin.id, "-sound-content")).children[0].children[1].style = "display:inline-block";
-                document.getElementById("".concat(_this3.jSPlugin.id, "-sound-content")).children[0].children[0].style = "display:none";
-                document.getElementById("".concat(_this3.jSPlugin.id, "-sound")).className = options[item] ? 'active' : '';
-                document.getElementById("".concat(_this3.jSPlugin.id, "-sound-content")).childNodes[0].children[1].style.fill = options[item] ? activeColor : color;
+                document.getElementById("".concat(_this5.jSPlugin.id, "-sound-content")).children[0].children[1].style = "display:inline-block";
+                document.getElementById("".concat(_this5.jSPlugin.id, "-sound-content")).children[0].children[0].style = "display:none";
+                document.getElementById("".concat(_this5.jSPlugin.id, "-sound")).className = options[item] ? 'active' : '';
+                document.getElementById("".concat(_this5.jSPlugin.id, "-sound-content")).childNodes[0].children[1].style.fill = options[item] ? activeColor : color;
               } else {
-                document.getElementById("".concat(_this3.jSPlugin.id, "-sound-content")).children[0].children[0].style = "display:inline-block";
-                document.getElementById("".concat(_this3.jSPlugin.id, "-sound-content")).children[0].children[1].style = "display:none";
-                document.getElementById("".concat(_this3.jSPlugin.id, "-sound")).className = options[item] ? 'active' : '';
-                document.getElementById("".concat(_this3.jSPlugin.id, "-sound-content")).childNodes[0].children[0].style.fill = options[item] ? activeColor : color;
+                document.getElementById("".concat(_this5.jSPlugin.id, "-sound-content")).children[0].children[0].style = "display:inline-block";
+                document.getElementById("".concat(_this5.jSPlugin.id, "-sound-content")).children[0].children[1].style = "display:none";
+                document.getElementById("".concat(_this5.jSPlugin.id, "-sound")).className = options[item] ? 'active' : '';
+                document.getElementById("".concat(_this5.jSPlugin.id, "-sound-content")).childNodes[0].children[0].style.fill = options[item] ? activeColor : color;
               }
             }
 
             break;
 
           case 'recordvideo':
-            if (document.getElementById("".concat(_this3.jSPlugin.id, "-recordvideo"))) {
-              document.getElementById("".concat(_this3.jSPlugin.id, "-recordvideo")).className = options[item] ? 'active' : '';
-              document.getElementById("".concat(_this3.jSPlugin.id, "-recordvideo-content")).childNodes[0].style.fill = options[item] ? activeColor : color;
+            if (document.getElementById("".concat(_this5.jSPlugin.id, "-recordvideo"))) {
+              document.getElementById("".concat(_this5.jSPlugin.id, "-recordvideo")).className = options[item] ? 'active' : '';
+              document.getElementById("".concat(_this5.jSPlugin.id, "-recordvideo-content")).childNodes[0].style.fill = options[item] ? activeColor : color; // 定时器处理
+
+              if (options[item]) {
+                _this5.countTime('add', 0); // this.recordTimer = setInterval(() => {
+                // }, 1000);
+
+              } else {
+                _this5.countTime('destroy', 0); // clearInterval(this.recordTimer);
+
+              }
             }
 
             break;
 
           case 'talk':
-            if (document.getElementById("".concat(_this3.jSPlugin.id, "-talk"))) {
-              document.getElementById("".concat(_this3.jSPlugin.id, "-talk")).className = options[item] ? 'active' : '';
-              document.getElementById("".concat(_this3.jSPlugin.id, "-talk-content")).childNodes[1].style.fill = options[item] ? activeColor : color;
+            if (document.getElementById("".concat(_this5.jSPlugin.id, "-talk"))) {
+              document.getElementById("".concat(_this5.jSPlugin.id, "-talk")).className = options[item] ? 'active' : '';
+              document.getElementById("".concat(_this5.jSPlugin.id, "-talk-content")).childNodes[1].style.fill = options[item] ? activeColor : color;
+            }
+
+            break;
+
+          case 'zoom':
+            if (document.getElementById("".concat(_this5.jSPlugin.id, "-zoom"))) {
+              document.getElementById("".concat(_this5.jSPlugin.id, "-zoom")).className = options[item] ? 'active' : '';
+              document.getElementById("".concat(_this5.jSPlugin.id, "-zoom-content")).childNodes[1].style.fill = options[item] ? activeColor : color;
             }
 
             break;
 
           case 'pantile':
-            if (document.getElementById("".concat(_this3.jSPlugin.id, "-pantile"))) {
-              document.getElementById("".concat(_this3.jSPlugin.id, "-pantile")).className = options[item] ? 'active' : '';
-              document.getElementById("".concat(_this3.jSPlugin.id, "-pantile-content")).childNodes[0].style.fill = options[item] ? activeColor : color;
+            if (document.getElementById("".concat(_this5.jSPlugin.id, "-pantile"))) {
+              document.getElementById("".concat(_this5.jSPlugin.id, "-pantile")).className = options[item] ? 'active' : '';
+              document.getElementById("".concat(_this5.jSPlugin.id, "-pantile-content")).childNodes[0].style.fill = options[item] ? activeColor : color;
             }
 
             break;
 
           case 'webExpend':
             if (options[item]) {
-              if (document.getElementById("".concat(_this3.jSPlugin.id, "-webExpend"))) {
-                document.getElementById("".concat(_this3.jSPlugin.id, "-webExpend-content")).children[0].children[1].style = "display:inline-block";
-                document.getElementById("".concat(_this3.jSPlugin.id, "-webExpend-content")).children[0].children[0].style = "display:none";
+              if (document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend"))) {
+                document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend-content")).children[0].children[1].style = "display:inline-block";
+                document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend-content")).children[0].children[0].style = "display:none";
               } // 全屏置灰
 
 
-              if (document.getElementById("".concat(_this3.jSPlugin.id, "-expend"))) {
-                document.getElementById("".concat(_this3.jSPlugin.id, "-expend")).className = "disabled";
+              if (document.getElementById("".concat(_this5.jSPlugin.id, "-expend"))) {
+                document.getElementById("".concat(_this5.jSPlugin.id, "-expend")).className = "disabled";
               }
             } else {
-              if (document.getElementById("".concat(_this3.jSPlugin.id, "-webExpend"))) {
-                document.getElementById("".concat(_this3.jSPlugin.id, "-webExpend-content")).children[0].children[0].style = "display:inline-block";
-                document.getElementById("".concat(_this3.jSPlugin.id, "-webExpend-content")).children[0].children[1].style = "display:none";
+              if (document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend"))) {
+                document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend-content")).children[0].children[0].style = "display:inline-block";
+                document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend-content")).children[0].children[1].style = "display:none";
               } // 全屏置灰
 
 
-              if (document.getElementById("".concat(_this3.jSPlugin.id, "-expend"))) {
-                document.getElementById("".concat(_this3.jSPlugin.id, "-expend")).className = "";
+              if (document.getElementById("".concat(_this5.jSPlugin.id, "-expend"))) {
+                document.getElementById("".concat(_this5.jSPlugin.id, "-expend")).className = "";
               }
             }
 
-            if (document.getElementById("".concat(_this3.jSPlugin.id, "-webExpend"))) {
-              document.getElementById("".concat(_this3.jSPlugin.id, "-webExpend")).className = options[item] ? 'active' : '';
-              document.getElementById("".concat(_this3.jSPlugin.id, "-webExpend-content")).childNodes[0].childNodes[0].style.fill = options[item] ? activeColor : color;
-              document.getElementById("".concat(_this3.jSPlugin.id, "-webExpend-content")).childNodes[0].childNodes[1].style.fill = options[item] ? activeColor : color;
+            if (document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend"))) {
+              document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend")).className = options[item] ? 'active' : '';
+              document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend-content")).childNodes[0].childNodes[0].style.fill = options[item] ? activeColor : color;
+              document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend-content")).childNodes[0].childNodes[1].style.fill = options[item] ? activeColor : color;
             }
 
             break;
 
           case 'capturePicture':
-            if (document.getElementById("".concat(_this3.jSPlugin.id, "-capturePicture"))) {
-              document.getElementById("".concat(_this3.jSPlugin.id, "-capturePicture")).className = options[item] ? 'active' : '';
-              document.getElementById("".concat(_this3.jSPlugin.id, "-capturePicture-content")).childNodes[0].style.fill = options[item] ? activeColor : color;
+            if (document.getElementById("".concat(_this5.jSPlugin.id, "-capturePicture"))) {
+              document.getElementById("".concat(_this5.jSPlugin.id, "-capturePicture")).className = options[item] ? 'active' : '';
+              document.getElementById("".concat(_this5.jSPlugin.id, "-capturePicture-content")).childNodes[0].style.fill = options[item] ? activeColor : color;
             }
 
             break;
 
           case 'expend':
             if (options[item]) {
-              if (document.getElementById("".concat(_this3.jSPlugin.id, "-expend"))) {
-                document.getElementById("".concat(_this3.jSPlugin.id, "-expend-content")).children[0].children[1].style = "display:inline-block";
-                document.getElementById("".concat(_this3.jSPlugin.id, "-expend-content")).children[0].children[0].style = "display:none";
+              if (document.getElementById("".concat(_this5.jSPlugin.id, "-expend"))) {
+                document.getElementById("".concat(_this5.jSPlugin.id, "-expend-content")).children[0].children[1].style = "display:inline-block";
+                document.getElementById("".concat(_this5.jSPlugin.id, "-expend-content")).children[0].children[0].style = "display:none";
               } // 网站全屏置灰
 
 
-              if (document.getElementById("".concat(_this3.jSPlugin.id, "-webExpend"))) {
-                document.getElementById("".concat(_this3.jSPlugin.id, "-webExpend")).className = "disabled";
+              if (document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend"))) {
+                document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend")).className = "disabled";
               }
             } else {
-              if (document.getElementById("".concat(_this3.jSPlugin.id, "-expend"))) {
-                document.getElementById("".concat(_this3.jSPlugin.id, "-expend-content")).children[0].children[0].style = "display:inline-block";
-                document.getElementById("".concat(_this3.jSPlugin.id, "-expend-content")).children[0].children[1].style = "display:none";
+              if (document.getElementById("".concat(_this5.jSPlugin.id, "-expend"))) {
+                document.getElementById("".concat(_this5.jSPlugin.id, "-expend-content")).children[0].children[0].style = "display:inline-block";
+                document.getElementById("".concat(_this5.jSPlugin.id, "-expend-content")).children[0].children[1].style = "display:none";
               } // 网站全屏置灰
 
 
-              if (document.getElementById("".concat(_this3.jSPlugin.id, "-webExpend"))) {
-                document.getElementById("".concat(_this3.jSPlugin.id, "-webExpend")).className = "";
+              if (document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend"))) {
+                document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend")).className = "";
               }
             }
 
-            if (document.getElementById("".concat(_this3.jSPlugin.id, "-expend"))) {
-              document.getElementById("".concat(_this3.jSPlugin.id, "-expend")).className = options[item] ? 'active' : '';
-              document.getElementById("".concat(_this3.jSPlugin.id, "-expend-content")).childNodes[0].childNodes[0].style.fill = options[item] ? activeColor : color;
-              document.getElementById("".concat(_this3.jSPlugin.id, "-expend-content")).childNodes[0].childNodes[1].style.fill = options[item] ? activeColor : color;
+            if (document.getElementById("".concat(_this5.jSPlugin.id, "-expend"))) {
+              document.getElementById("".concat(_this5.jSPlugin.id, "-expend")).className = options[item] ? 'active' : '';
+              document.getElementById("".concat(_this5.jSPlugin.id, "-expend-content")).childNodes[0].childNodes[0].style.fill = options[item] ? activeColor : color;
+              document.getElementById("".concat(_this5.jSPlugin.id, "-expend-content")).childNodes[0].childNodes[1].style.fill = options[item] ? activeColor : color;
             }
 
             break;
 
           case 'hd':
             if (options[item]) {
-              if (document.getElementById("".concat(_this3.jSPlugin.id, "-hd"))) {
-                document.getElementById("".concat(_this3.jSPlugin.id, "-hd-content")).children[1].children[0].style = "display:block";
-                document.getElementById("".concat(_this3.jSPlugin.id, "-hd-content")).children[1].children[1].style = "display:none";
+              if (document.getElementById("".concat(_this5.jSPlugin.id, "-hd"))) {
+                document.getElementById("".concat(_this5.jSPlugin.id, "-hd-content")).children[1].children[0].style = "display:block";
+                document.getElementById("".concat(_this5.jSPlugin.id, "-hd-content")).children[1].children[1].style = "display:none";
               }
             } else {
-              if (document.getElementById("".concat(_this3.jSPlugin.id, "-hd"))) {
-                document.getElementById("".concat(_this3.jSPlugin.id, "-hd-content")).children[1].children[1].style = "display:block";
-                document.getElementById("".concat(_this3.jSPlugin.id, "-hd-content")).children[1].children[0].style = "display:none";
+              if (document.getElementById("".concat(_this5.jSPlugin.id, "-hd"))) {
+                document.getElementById("".concat(_this5.jSPlugin.id, "-hd-content")).children[1].children[1].style = "display:block";
+                document.getElementById("".concat(_this5.jSPlugin.id, "-hd-content")).children[1].children[0].style = "display:none";
               }
+            }
+
+            break;
+
+          case 'speed':
+            if (document.getElementById("".concat(_this5.jSPlugin.id, "-speed"))) {
+              document.getElementById("".concat(_this5.jSPlugin.id, "-speed-content")).children[1].children[0].style.color = options[item] ? activeColor : color;
+              document.getElementById("".concat(_this5.jSPlugin.id, "-speed-content")).children[1].children[0].style.borderColor = options[item] ? activeColor : color;
+            }
+
+            if (_this5.isMobile && options[item]) {
+              document.getElementById("".concat(_this5.jSPlugin.id, "-select-mask")).style.display = "block";
+            } else {
+              document.getElementById("".concat(_this5.jSPlugin.id, "-select-mask")).style.display = "none";
             }
 
             break;
 
           case 'cloudRec':
-            if (document.getElementById("".concat(_this3.jSPlugin.id, "-cloudRec"))) {
-              document.getElementById("".concat(_this3.jSPlugin.id, "-cloudRec")).className = options[item] ? 'active' : '';
-              document.getElementById("".concat(_this3.jSPlugin.id, "-cloudRec-content")).children[0].children[0].style.fill = options[item] ? activeColor : color;
+            if (document.getElementById("".concat(_this5.jSPlugin.id, "-cloudRec"))) {
+              console.log("document.getElementById(`${this.jSPlugin.id}-cloudRec-content`)", document.getElementById("".concat(_this5.jSPlugin.id, "-cloudRec")));
+              document.getElementById("".concat(_this5.jSPlugin.id, "-cloudRec")).className = options[item] ? 'active' : '';
+              document.getElementById("".concat(_this5.jSPlugin.id, "-cloudRec-content")).children[0].children[0].style.fill = options[item] ? activeColor : color;
             }
 
-            if (document.getElementById("".concat(_this3.jSPlugin.id, "-rec"))) {
-              document.getElementById("".concat(_this3.jSPlugin.id, "-rec")).className = options[item] ? 'active' : '';
-              document.getElementById("".concat(_this3.jSPlugin.id, "-rec-content")).children[0].children[0].style.fill = options[item] ? color : activeColor;
+            if (document.getElementById("".concat(_this5.jSPlugin.id, "-rec"))) {
+              document.getElementById("".concat(_this5.jSPlugin.id, "-rec")).className = options[item] ? 'active' : '';
+              document.getElementById("".concat(_this5.jSPlugin.id, "-rec-content")).children[0].children[0].style.fill = options[item] ? color : activeColor;
             }
 
             break;
 
           case 'rec':
-            if (document.getElementById("".concat(_this3.jSPlugin.id, "-cloudRec"))) {
-              document.getElementById("".concat(_this3.jSPlugin.id, "-cloudRec")).className = options[item] ? 'active' : '';
-              document.getElementById("".concat(_this3.jSPlugin.id, "-cloudRec-content")).children[0].children[0].style.fill = options[item] ? color : activeColor;
+            if (document.getElementById("".concat(_this5.jSPlugin.id, "-cloudRec"))) {
+              document.getElementById("".concat(_this5.jSPlugin.id, "-cloudRec")).className = options[item] ? 'active' : '';
+              document.getElementById("".concat(_this5.jSPlugin.id, "-cloudRec-content")).children[0].children[0].style.fill = options[item] ? color : activeColor;
             }
 
-            if (document.getElementById("".concat(_this3.jSPlugin.id, "-rec"))) {
-              document.getElementById("".concat(_this3.jSPlugin.id, "-rec")).className = options[item] ? 'active' : '';
-              document.getElementById("".concat(_this3.jSPlugin.id, "-rec-content")).children[0].children[0].style.fill = options[item] ? activeColor : color;
+            if (document.getElementById("".concat(_this5.jSPlugin.id, "-rec"))) {
+              document.getElementById("".concat(_this5.jSPlugin.id, "-rec")).className = options[item] ? 'active' : '';
+              document.getElementById("".concat(_this5.jSPlugin.id, "-rec-content")).children[0].children[0].style.fill = options[item] ? activeColor : color;
             }
 
             break;
         }
 
-        _this3.decoderState.state = Object.assign(_this3.decoderState.state, options);
+        _this5.decoderState.state = Object.assign(_this5.decoderState.state, options);
       });
+    }
+  }, {
+    key: "startAutoFocus",
+    value: function startAutoFocus() {
+      var _this6 = this;
+
+      console.log("开始自动隐藏", this.autoFocus);
+      var autoFocus = this.autoFocus; // if(document.getElementById(`${this.jSPlugin.id}-audioControls`)) {
+
+      if (this.autoFocusTimer) {
+        clearTimeout(this.autoFocusTimer);
+      }
+
+      this.autoFocusTimer = setTimeout(function () {
+        if (document.getElementById("".concat(_this6.jSPlugin.id, "-audioControls"))) {
+          document.getElementById("".concat(_this6.jSPlugin.id, "-audioControls")).style.opacity = 0;
+        }
+      }, autoFocus * 1000);
+    }
+  }, {
+    key: "stopAutoFocus",
+    value: function stopAutoFocus() {
+      console.log("结束自动隐藏");
+
+      if (document.getElementById("".concat(this.jSPlugin.id, "-audioControls"))) {
+        document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).style.opacity = 1;
+      }
+
+      if (this.autoFocusTimer) {
+        clearTimeout(this.autoFocusTimer);
+      }
+
+      this.startAutoFocus();
     }
   }, {
     key: "toString",
@@ -28836,11 +30065,76 @@ var Theme = /*#__PURE__*/function () {
   }, {
     key: "renderFooter",
     value: function renderFooter(id, part) {
+      var _this7 = this;
+
       // 播放停止
-      var objItem = this.matchBtn(id);
+      var objItem = this.matchBtn(id); // 移动端不展示电子放大
+
+      if (this.isMobile && objItem.id === "zoom") {
+        return false;
+      }
+
       var objDOM = document.createElement('div');
-      objDOM.innerHTML = "".concat("<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "\" style=\"position:relative;").concat(objItem.part === 'left' ? 'margin-right: 12px;' : 'margin-left: 12px;', "\">") + "<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-content\" title=\"").concat(objItem.title, "\" style=\"display:inline-block;\">")).concat(objItem.domString, "</span>") + "<span id=\"".concat(objItem.id, "-remove\" title=\"\u79FB\u9664\" style=\"position: absolute;top: -10px;left: 38px;display: none;\">") + '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 15 15">' + '<circle style="fill-rule:evenodd;clip-rule:evenodd;fill-opacity:0.8011;" cx="7.5" cy="7.6" r="7" />' + '<rect x="3.9" y="3.5" class="st1" style="fill:none;" width="8.1" height="8.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="5" x2="10" y2="10.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="10.1" x2="10" y2="5" />' + '</svg>' + '</span>' + '</span>';
-      objDOM.onclick = objItem.onclick;
+      objDOM.className = "theme-icon-item";
+      objDOM.innerHTML = "".concat("<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "\" style=\"position:relative;\">") // +`<span id="${this.jSPlugin.id}-${objItem.id}-left" class="ezuikit-theme-icon" title="左移" style="position: absolute;top: calc(50% - 26px);left: -6px;display: none;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080;"><path d="M7.4,10V5.3c0-0.3-0.3-0.6-0.6-0.6c-0.1,0-0.3,0.1-0.4,0.2L3.7,7.4c-0.2,0.2-0.3,0.6,0,0.8 c0,0,0,0,0.1,0.1l2.7,2.2c0.2,0.2,0.6,0.2,0.8-0.1C7.3,10.3,7.4,10.2,7.4,10z"></path></svg></span>`  
+      + "<div id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-content\" title=\"").concat(objItem.title, "\" style=\"height:").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px;display: flex;align-items: center;position:relative;\">")).concat(objItem.domString, "</div>") // +`<span id="${this.jSPlugin.id}-${objItem.id}-right" class="ezuikit-theme-icon" title="右移" style="position: absolute;top: calc(50% - 26px);left: calc(100% - 0px);display: none;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080"><path d="M3.4,5.2v4.7c0,0.3,0.3,0.6,0.6,0.6c0.1,0,0.3-0.1,0.4-0.2l2.7-2.5c0.2-0.2,0.3-0.6,0-0.8 c0,0,0,0-0.1-0.1L4.4,4.8C4.1,4.6,3.8,4.6,3.6,4.9C3.5,5,3.4,5.1,3.4,5.2z"></path></svg></span>`
+      + '</span>';
+
+      objDOM.onclick = function (e) {
+        if (_this7.decoderState.state.isEditing) {
+          return false;
+        }
+
+        objItem.onclick(e);
+      };
+
+      if (objItem.onmouseenter) {
+        objDOM.onmouseenter = function (e) {
+          if (_this7.decoderState.state.isEditing) {
+            return false;
+          }
+
+          objItem.onmouseenter(e);
+        };
+      }
+
+      if (objItem.onmouseleave) {
+        objDOM.onmouseleave = function (e) {
+          if (_this7.decoderState.state.isEditing) {
+            return false;
+          }
+
+          objItem.onmouseleave(e);
+        };
+      }
+
+      var toLeft = document.createElement('span');
+      toLeft.className = "icon-move left";
+      toLeft.innerHTML = "<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-left\" title=\"\u5DE6\u79FB\" style=\"position: absolute;top: calc(50% - 10px);left: -4px;\"><svg fill=\"#ffffff\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"24\" viewBox=\"0 0 10 15\" style=\"background:#00000080;\"><path d=\"M7.4,10V5.3c0-0.3-0.3-0.6-0.6-0.6c-0.1,0-0.3,0.1-0.4,0.2L3.7,7.4c-0.2,0.2-0.3,0.6,0,0.8 c0,0,0,0,0.1,0.1l2.7,2.2c0.2,0.2,0.6,0.2,0.8-0.1C7.3,10.3,7.4,10.2,7.4,10z\"></path></svg></span>");
+
+      toLeft.onclick = function () {
+        _this7.editIcon(objItem.id, 'left', 'footer');
+      };
+
+      objDOM.appendChild(toLeft);
+      var toRight = document.createElement('span');
+      toRight.className = "icon-move right";
+      toRight.innerHTML = "<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-right\" class=\"ezuikit-theme-icon\" title=\"\u53F3\u79FB\" style=\"position: absolute;top: calc(50% - 10px);left: calc(100% - 8px);\"><svg fill=\"#ffffff\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"24\" viewBox=\"0 0 10 15\" style=\"background:#00000080\"><path d=\"M3.4,5.2v4.7c0,0.3,0.3,0.6,0.6,0.6c0.1,0,0.3-0.1,0.4-0.2l2.7-2.5c0.2-0.2,0.3-0.6,0-0.8 c0,0,0,0-0.1-0.1L4.4,4.8C4.1,4.6,3.8,4.6,3.6,4.9C3.5,5,3.4,5.1,3.4,5.2z\"></path></svg></span>");
+
+      toRight.onclick = function () {
+        _this7.editIcon(objItem.id, 'right', 'footer');
+      };
+
+      objDOM.appendChild(toRight);
+      var toClose = document.createElement('span');
+      toClose.className = "icon-move close";
+      toClose.innerHTML = "<span id=\"".concat(objItem.id, "-remove\" class=\"ezuikit-theme-icon\" title=\"\u79FB\u9664\" style=\"position: absolute;top: -10px;right: -10px;\">") + '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 15 15">' + '<circle style="fill-rule:evenodd;clip-rule:evenodd;fill-opacity:0.8011;" cx="7.5" cy="7.6" r="7" />' + '<rect x="3.9" y="3.5" class="st1" style="fill:none;" width="8.1" height="8.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="5" x2="10" y2="10.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="10.1" x2="10" y2="5" />' + '</svg>' + '</span>';
+
+      toClose.onclick = function () {
+        _this7.editIcon(objItem.id, 'delete', 'footer');
+      };
+
+      objDOM.appendChild(toClose);
 
       if (part === 'left') {
         document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).childNodes[0].appendChild(objDOM);
@@ -28850,13 +30144,130 @@ var Theme = /*#__PURE__*/function () {
 
     }
   }, {
+    key: "editIcon",
+    value: function editIcon(id, type, area) {
+      console.log("编辑组件", id, type, area);
+      var newThemeData = this.themeData;
+      console.log("themeData", this.themeData);
+      var btnList = this.themeData[area].btnList;
+
+      var _index = lodash.findIndex(btnList, function (item) {
+        return item.iconId === id;
+      });
+
+      var tmp = btnList[_index];
+
+      switch (type) {
+        case 'delete':
+          // btnList.splice(_index, 1);
+          // 限制回放必须选中一种介质
+          if (id === "rec") {
+            if (lodash.findIndex(btnList, function (item) {
+              return item.iconId === "cloudRec" && item.isrender == 1;
+            }) === -1) {
+              if (this.jSPlugin.Message) {
+                this.jSPlugin.Message["default"]("必须选中一种存储介质");
+              }
+
+              return false;
+            }
+          } else if (id === "cloudRec") {
+            if (lodash.findIndex(btnList, function (item) {
+              return item.iconId === "rec" && item.isrender == 1;
+            }) === -1) {
+              if (this.jSPlugin.Message) {
+                this.jSPlugin.Message["default"]("必须选中一种存储介质");
+              }
+
+              return false;
+            }
+          }
+
+          btnList[_index].isrender = 0;
+          break;
+
+        case 'right':
+          var nextRightBtnIndex = -1;
+
+          for (var i = _index + 1; i < btnList.length; i++) {
+            if (btnList[i].part === btnList[_index].part && btnList[i].isrender == 1) {
+              nextRightBtnIndex = i;
+              break;
+            }
+          }
+
+          if (nextRightBtnIndex !== -1) {
+            btnList[_index] = btnList[nextRightBtnIndex];
+            btnList[nextRightBtnIndex] = tmp;
+          }
+
+          break;
+
+        case 'left':
+          var nextLeftBtnIndex = -1;
+
+          for (var _i = _index - 1; _i >= 0; _i--) {
+            if (btnList[_i].part === btnList[_index].part && btnList[_i].isrender == 1) {
+              nextLeftBtnIndex = _i;
+              break;
+            }
+          }
+
+          if (nextLeftBtnIndex !== -1) {
+            btnList[_index] = btnList[nextLeftBtnIndex];
+            btnList[nextLeftBtnIndex] = tmp;
+          }
+
+          break;
+      }
+
+      console.log("new btnList", btnList);
+      newThemeData[area].btnList = btnList; //this.renderThemeData();
+
+      this.changeTheme(newThemeData);
+    }
+  }, {
     key: "renderHeader",
     value: function renderHeader(id, part) {
+      var _this8 = this;
+
       // 播放停止
       var objItem = this.matchBtn(id);
       var objDOM = document.createElement('div');
-      objDOM.innerHTML = "".concat("<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "\" style=\"position:relative;").concat(objItem.part === 'left' ? 'margin-right: 12px;' : 'margin-left: 12px;', "\">") + "<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-content\" title=\"").concat(objItem.title, "\" style=\"display:inline-block;height:").concat(this.width > MEDIAWIDTH ? 48 : 32, "px;\">")).concat(objItem.domString, "</span>") + "<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-remove\" title=\"\u79FB\u9664\" style=\"position: absolute;top: -10px;left: 38px;display: none;\">") + '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 15 15">' + '<circle style="fill-rule:evenodd;clip-rule:evenodd;fill-opacity:0.8011;" cx="7.5" cy="7.6" r="7" />' + '<rect x="3.9" y="3.5" class="st1" style="fill:none;" width="8.1" height="8.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="5" x2="10" y2="10.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="10.1" x2="10" y2="5" />' + '</svg>' + '</span>' + '</span>';
-      objDOM.onclick = objItem.onclick;
+      objDOM.className = "theme-icon-item";
+      objDOM.innerHTML = "".concat("<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "\" style=\"position:relative\";>") // +`<span id="${this.jSPlugin.id}-${objItem.id}-left" title="左移" style="position: absolute;top: calc(50% - 10px);left: -6px;display: none;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080;"><path d="M7.4,10V5.3c0-0.3-0.3-0.6-0.6-0.6c-0.1,0-0.3,0.1-0.4,0.2L3.7,7.4c-0.2,0.2-0.3,0.6,0,0.8 c0,0,0,0,0.1,0.1l2.7,2.2c0.2,0.2,0.6,0.2,0.8-0.1C7.3,10.3,7.4,10.2,7.4,10z"></path></svg></span>`  
+      + "<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-content\" title=\"").concat(objItem.title, "\" style=\"display:inline-block;height:").concat(this.width > MEDIAWIDTH ? 48 : 32, "px;\">")).concat(objItem.domString, "</span>") //+`<span id="${this.jSPlugin.id}-${objItem.id}-right" title="右移" style="position: absolute;top: calc(50% - 10px);left: calc(100% - 6px);display: none;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080"><path d="M3.4,5.2v4.7c0,0.3,0.3,0.6,0.6,0.6c0.1,0,0.3-0.1,0.4-0.2l2.7-2.5c0.2-0.2,0.3-0.6,0-0.8 c0,0,0,0-0.1-0.1L4.4,4.8C4.1,4.6,3.8,4.6,3.6,4.9C3.5,5,3.4,5.1,3.4,5.2z"></path></svg></span>`
+      + "<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-remove\" title=\"\u79FB\u9664\" style=\"position: absolute;top: -6px;left: 38px;display: none;\">") + '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 15 15">' + '<circle style="fill-rule:evenodd;clip-rule:evenodd;fill-opacity:0.8011;" cx="7.5" cy="7.6" r="7" />' + '<rect x="3.9" y="3.5" class="st1" style="fill:none;" width="8.1" height="8.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="5" x2="10" y2="10.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="10.1" x2="10" y2="5" />' + '</svg>' + '</span>' + '</span>'; // var toLeft = document.createElement('span');
+      // toLeft.innerHTML =  +`<span id="${this.jSPlugin.id}-${objItem.id}-left" title="左移" style="position: absolute;top: calc(50% - 10px);left: -6px;display: none;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080;"><path d="M7.4,10V5.3c0-0.3-0.3-0.6-0.6-0.6c-0.1,0-0.3,0.1-0.4,0.2L3.7,7.4c-0.2,0.2-0.3,0.6,0,0.8 c0,0,0,0,0.1,0.1l2.7,2.2c0.2,0.2,0.6,0.2,0.8-0.1C7.3,10.3,7.4,10.2,7.4,10z"></path></svg></span>`;
+      // toLeft.onclick = () => {console.log("左移动")};
+
+      objDOM.onclick = function (e) {
+        if (_this8.decoderState.state.isEditing) {
+          return false;
+        }
+
+        objItem.onclick(e);
+      }; // var toLeft = document.createElement('span');
+      // toLeft.className = "icon-move left";
+      // toLeft.innerHTML =  `<span id="${this.jSPlugin.id}-${objItem.id}-left" title="左移" style="position: absolute;top: calc(50% - 10px);left: -4px;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080;"><path d="M7.4,10V5.3c0-0.3-0.3-0.6-0.6-0.6c-0.1,0-0.3,0.1-0.4,0.2L3.7,7.4c-0.2,0.2-0.3,0.6,0,0.8 c0,0,0,0,0.1,0.1l2.7,2.2c0.2,0.2,0.6,0.2,0.8-0.1C7.3,10.3,7.4,10.2,7.4,10z"></path></svg></span>`;
+      // toLeft.onclick = () => {this.editIcon(objItem.id,'left','header')};
+      // objDOM.appendChild(toLeft);
+      // var toRight = document.createElement('span');
+      // toRight.className = "icon-move right";
+      // toRight.innerHTML = `<span id="${this.jSPlugin.id}-${objItem.id}-right" class="ezuikit-theme-icon" title="右移" style="position: absolute;top: calc(50% - 10px);left: calc(100% - 8px);"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080"><path d="M3.4,5.2v4.7c0,0.3,0.3,0.6,0.6,0.6c0.1,0,0.3-0.1,0.4-0.2l2.7-2.5c0.2-0.2,0.3-0.6,0-0.8 c0,0,0,0-0.1-0.1L4.4,4.8C4.1,4.6,3.8,4.6,3.6,4.9C3.5,5,3.4,5.1,3.4,5.2z"></path></svg></span>`;
+      // toRight.onclick = () => {this.editIcon(objItem.id,'right','header')};
+      // objDOM.appendChild(toRight);
+
+
+      var toClose = document.createElement('span');
+      toClose.className = "icon-move close";
+      toClose.innerHTML = "<span id=\"".concat(objItem.id, "-remove\" class=\"ezuikit-theme-icon\" title=\"\u79FB\u9664\" style=\"position: absolute;top: -6px;right: -6px;\">") + '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 15 15">' + '<circle style="fill-rule:evenodd;clip-rule:evenodd;fill-opacity:0.8011;" cx="7.5" cy="7.6" r="7" />' + '<rect x="3.9" y="3.5" class="st1" style="fill:none;" width="8.1" height="8.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="5" x2="10" y2="10.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="10.1" x2="10" y2="5" />' + '</svg>' + '</span>';
+
+      toClose.onclick = function () {
+        _this8.editIcon(objItem.id, 'delete', 'header');
+      };
+
+      objDOM.appendChild(toClose); // objDOM.appendChild(toLeft);
 
       if (part === 'left') {
         document.getElementById("".concat(this.jSPlugin.id, "-headControl")).childNodes[0].appendChild(objDOM);
@@ -28865,9 +30276,84 @@ var Theme = /*#__PURE__*/function () {
       }
     }
   }, {
+    key: "countTime",
+    value: function countTime(type) {
+      var start = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      var that = this;
+
+      if (!document.getElementById(this.jSPlugin.id + "time-area")) {
+        var recordDOM = document.createElement("div");
+        recordDOM.id = this.jSPlugin.id + "time-area";
+        recordDOM.className = "time-area";
+        recordDOM.innerHTML = "<span class=\"dot\"></span><span class=\"value\">00:00</span>";
+
+        if (document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container"))) {
+          document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")).appendChild(recordDOM);
+        }
+      }
+
+      if (this.countTimer) {
+        clearInterval(this.countTimer);
+      }
+
+      if (type === 'add') {
+        var i = start;
+        document.getElementById(that.jSPlugin.id + "time-area").style.display = 'flex';
+        this.countTimer = setInterval(function () {
+          ++i;
+          document.getElementById(that.jSPlugin.id + "time-area").children[1].innerHTML = formatSeconds(i);
+        }, 1000);
+      } else if (type === 'destroy') {
+        if (this.countTimer) {
+          clearInterval(this.countTimer);
+        }
+        this.countTimer = undefined;
+
+        if (document.getElementById(that.jSPlugin.id + "time-area")) {
+          document.getElementById(that.jSPlugin.id + "time-area").children[1].innerHTML = '00:00';
+          document.getElementById(that.jSPlugin.id + "time-area").style.display = 'none';
+        }
+      } //将秒数转换为时分秒格式
+
+
+      function formatSeconds(value) {
+        var theTime = parseInt(value); // 秒
+
+        var middle = 0; // 分
+
+        var hour = 0; // 小时
+
+        var secondV = '00';
+        var minV = '00';
+        var hourV = '00';
+
+        if (theTime > 59) {
+          middle = parseInt(theTime / 60);
+          theTime = parseInt(theTime % 60);
+
+          if (middle > 59) {
+            hour = parseInt(middle / 60);
+            middle = parseInt(middle % 60);
+          }
+        }
+
+        secondV = parseInt(theTime) > 9 ? parseInt(theTime) : '0' + parseInt(theTime);
+        minV = parseInt(middle) > 9 ? parseInt(middle) : '0' + parseInt(middle);
+        hourV = parseInt(hour) > 9 ? parseInt(hour) : '0' + parseInt(hour);
+
+        if (hour > 0) {
+          return hourV + ':' + minV + ':' + secondV;
+        } else if (middle > 0) {
+          return minV + ':' + secondV;
+        } else {
+          return '00:' + secondV;
+        }
+      }
+    }
+  }, {
     key: "matchBtn",
     value: function matchBtn(btnId) {
-      var _this4 = this;
+      var _this9 = this;
 
       var _this$themeData3 = this.themeData,
           header = _this$themeData3.header,
@@ -28902,18 +30388,24 @@ var Theme = /*#__PURE__*/function () {
         case 'play':
           btnItem.title = "播放/结束播放";
           btnItem.id = btnId;
-          btnItem.domString = '<span>' + "<svg style=\"display:none\" width=\"".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\"  fill=\"").concat(btnItem.color, "\" viewBox=\"-6 -6 32 32\">\n            <path id=\"Stroke-1\" class=\"st1\" d=\"M10.5,1.7c-4.9,0-8.8,4-8.8,8.8s4,8.8,8.8,8.8s8.8-4,8.8-8.8S15.4,1.7,10.5,1.7z M10.5,2.7\n              c4.3,0,7.8,3.5,7.8,7.8s-3.5,7.8-7.8,7.8s-7.8-3.5-7.8-7.8S6.2,2.7,10.5,2.7z\"/>\n            <path class=\"st2\" d=\"M8.7,8C9,8,9.3,8.3,9.3,8.6v3.8C9.3,12.7,9,13,8.7,13C8.3,13,8,12.7,8,12.4V8.6C8,8.3,8.3,8,8.7,8z\"/>\n            <path id=\"Rectangle-Copy-10\" class=\"st2\" d=\"M12.8,8c0.3,0,0.6,0.3,0.6,0.6v3.8c0,0.3-0.3,0.6-0.6,0.6c-0.3,0-0.6-0.3-0.6-0.6V8.6\n              C12.2,8.3,12.5,8,12.8,8z\"/>\n          </svg>") + "<svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M13,9.8L10.1,8C9.9,7.9,9.7,7.9,9.5,7.9c-0.6,0-1,0.4-1,1v3.7c0,0.2,0.1,0.4,0.2,0.5c0.3,0.5,0.9,0.6,1.4,0.3 l2.9-1.8c0.1-0.1,0.2-0.2,0.3-0.3C13.6,10.7,13.4,10.1,13,9.8z" />' + '<path d="M10.5,1.9c-4.9,0-8.8,4-8.8,8.8c0,4.9,4,8.8,8.8,8.8s8.8-4,8.8-8.8C19.4,5.8,15.4,1.9,10.5,1.9z M10.5,18.5 c-4.3,0-7.8-3.5-7.8-7.8s3.5-7.8,7.8-7.8c4.3,0,7.8,3.5,7.8,7.8S14.9,18.5,10.5,18.5z" />' + '</svg>' + '</span>';
+          btnItem.domString = '<div style="height: 100%">' + "<svg style=\"display:none\" width=\"".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\"  fill=\"").concat(btnItem.color, "\" viewBox=\"-6 -6 32 32\">\n            <path id=\"Stroke-1\" class=\"st1\" d=\"M10.5,1.7c-4.9,0-8.8,4-8.8,8.8s4,8.8,8.8,8.8s8.8-4,8.8-8.8S15.4,1.7,10.5,1.7z M10.5,2.7\n              c4.3,0,7.8,3.5,7.8,7.8s-3.5,7.8-7.8,7.8s-7.8-3.5-7.8-7.8S6.2,2.7,10.5,2.7z\"/>\n            <path class=\"st2\" d=\"M8.7,8C9,8,9.3,8.3,9.3,8.6v3.8C9.3,12.7,9,13,8.7,13C8.3,13,8,12.7,8,12.4V8.6C8,8.3,8.3,8,8.7,8z\"/>\n            <path id=\"Rectangle-Copy-10\" class=\"st2\" d=\"M12.8,8c0.3,0,0.6,0.3,0.6,0.6v3.8c0,0.3-0.3,0.6-0.6,0.6c-0.3,0-0.6-0.3-0.6-0.6V8.6\n              C12.2,8.3,12.5,8,12.8,8z\"/>\n          </svg>") + "<svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M13,9.8L10.1,8C9.9,7.9,9.7,7.9,9.5,7.9c-0.6,0-1,0.4-1,1v3.7c0,0.2,0.1,0.4,0.2,0.5c0.3,0.5,0.9,0.6,1.4,0.3 l2.9-1.8c0.1-0.1,0.2-0.2,0.3-0.3C13.6,10.7,13.4,10.1,13,9.8z" />' + '<path d="M10.5,1.9c-4.9,0-8.8,4-8.8,8.8c0,4.9,4,8.8,8.8,8.8s8.8-4,8.8-8.8C19.4,5.8,15.4,1.9,10.5,1.9z M10.5,18.5 c-4.3,0-7.8-3.5-7.8-7.8s3.5-7.8,7.8-7.8c4.3,0,7.8,3.5,7.8,7.8S14.9,18.5,10.5,18.5z" />' + '</svg>' + '</div>';
 
           btnItem.onclick = function () {
-            var play = _this4.decoderState.state.play;
+            var _this9$decoderState$s = _this9.decoderState.state,
+                play = _this9$decoderState$s.play,
+                isEditing = _this9$decoderState$s.isEditing;
 
-            if (play) {
-              _this4.jSPlugin.stop();
-            } else {
-              _this4.jSPlugin.play();
+            if (isEditing) {
+              return false;
             }
 
-            _this4.setDecoderState({
+            if (play) {
+              _this9.jSPlugin.stop();
+            } else {
+              _this9.jSPlugin.play();
+            }
+
+            _this9.setDecoderState({
               play: !play
             });
           };
@@ -28923,24 +30415,24 @@ var Theme = /*#__PURE__*/function () {
         case 'sound':
           btnItem.title = "声音";
           btnItem.id = btnId;
-          btnItem.domString = '<span>' + "<svg style=\"display:none\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">\n            <path d=\"M8.5,4.2c0.8-0.7,2.1-0.2,2.2,0.9l0,0.1v10c0,1.1-1.2,1.7-2.1,1.1l-0.1-0.1l-3.3-2.8C5,13.2,5,12.9,5.1,12.7 c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.3,2.8c0.2,0.2,0.5,0.1,0.5-0.2l0-0.1v-10c0-0.3-0.3-0.4-0.5-0.3L9.2,5L5.9,7.8 C5.6,7.9,5.3,7.9,5.1,7.7C5,7.5,5,7.3,5.1,7.1L5.2,7L8.5,4.2z\"/>\n            <path d=\"M5.5,6.9C5.8,6.9,6,7.1,6,7.4c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2C3.4,7.9,3.3,8,3.2,8.2l0,0.1v4 c0,0.2,0.1,0.3,0.3,0.3l0.1,0h2C5.8,12.5,6,12.7,6,13c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2c-0.7,0-1.3-0.5-1.3-1.2l0-0.1v-4 c0-0.7,0.5-1.3,1.2-1.3l0.1,0H5.5z\"/>\n            <path d=\"M17.4,7.9c0.2-0.2,0.5-0.2,0.7,0c0.2,0.2,0.2,0.4,0.1,0.6l-0.1,0.1l-3.8,3.8c-0.2,0.2-0.5,0.2-0.7,0 c-0.2-0.2-0.2-0.4-0.1-0.6l0.1-0.1L17.4,7.9z\"/>\n            <path d=\"M13.7,7.9c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.8,3.8c0.2,0.2,0.2,0.5,0,0.7c-0.2,0.2-0.4,0.2-0.6,0.1l-0.1-0.1 l-3.7-3.8C13.5,8.4,13.5,8.1,13.7,7.9z\"/>\n            </svg>") + "<svg style=\"display:inline-block\" width=\"".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" fill=\"").concat(btnItem.color, "\" viewBox=\"-6 -6 32 32\">\n              <path d=\"M13.2,7.1c0.1-0.2,0.5-0.3,0.7-0.2c1.1,0.7,1.9,2.2,1.9,3.7c0,1.6-0.7,3-1.9,3.7\n                c-0.2,0.1-0.5,0.1-0.7-0.2c-0.1-0.2-0.1-0.5,0.2-0.7c0.8-0.5,1.4-1.6,1.4-2.9c0-1.3-0.6-2.4-1.4-2.9C13.1,7.6,13,7.3,13.2,7.1z\"/>\n              <path d=\"M15.7,4.5c0.2-0.2,0.5-0.2,0.7-0.1C18,5.8,19,8.2,19,10.7c0,2.5-1,4.8-2.7,6.3\n                c-0.2,0.2-0.5,0.2-0.7-0.1c-0.2-0.2-0.2-0.5,0.1-0.7c1.4-1.2,2.3-3.3,2.3-5.5c0-2.2-0.9-4.3-2.3-5.5C15.5,5,15.5,4.7,15.7,4.5z\"/>\n              <path id=\"Stroke-5\" class=\"st1\" d=\"M8.5,4.7c0.8-0.7,2.1-0.2,2.2,0.9l0,0.1v10c0,1.1-1.2,1.7-2.1,1.1l-0.1-0.1l-3.3-2.8\n                C5,13.7,5,13.4,5.1,13.2c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.3,2.8c0.2,0.2,0.5,0.1,0.5-0.2l0-0.1v-10c0-0.3-0.3-0.4-0.5-0.3l-0.1,0\n                L5.9,8.3C5.6,8.4,5.3,8.4,5.1,8.2C5,8,5,7.7,5.1,7.6l0.1-0.1L8.5,4.7z\"/>\n              <path  d=\"M5.5,7.4C5.8,7.4,6,7.6,6,7.9c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2c-0.2,0-0.3,0.1-0.3,0.3l0,0.1v4\n                c0,0.2,0.1,0.3,0.3,0.3l0.1,0h2C5.8,13,6,13.2,6,13.5c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2c-0.7,0-1.3-0.5-1.3-1.2l0-0.1v-4\n                c0-0.7,0.5-1.3,1.2-1.3l0.1,0H5.5z\"/>\n            </svg>") + '</span>';
+          btnItem.domString = '<span style="height: 100%">' + "<svg style=\"display:none\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">\n            <path d=\"M8.5,4.2c0.8-0.7,2.1-0.2,2.2,0.9l0,0.1v10c0,1.1-1.2,1.7-2.1,1.1l-0.1-0.1l-3.3-2.8C5,13.2,5,12.9,5.1,12.7 c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.3,2.8c0.2,0.2,0.5,0.1,0.5-0.2l0-0.1v-10c0-0.3-0.3-0.4-0.5-0.3L9.2,5L5.9,7.8 C5.6,7.9,5.3,7.9,5.1,7.7C5,7.5,5,7.3,5.1,7.1L5.2,7L8.5,4.2z\"/>\n            <path d=\"M5.5,6.9C5.8,6.9,6,7.1,6,7.4c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2C3.4,7.9,3.3,8,3.2,8.2l0,0.1v4 c0,0.2,0.1,0.3,0.3,0.3l0.1,0h2C5.8,12.5,6,12.7,6,13c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2c-0.7,0-1.3-0.5-1.3-1.2l0-0.1v-4 c0-0.7,0.5-1.3,1.2-1.3l0.1,0H5.5z\"/>\n            <path d=\"M17.4,7.9c0.2-0.2,0.5-0.2,0.7,0c0.2,0.2,0.2,0.4,0.1,0.6l-0.1,0.1l-3.8,3.8c-0.2,0.2-0.5,0.2-0.7,0 c-0.2-0.2-0.2-0.4-0.1-0.6l0.1-0.1L17.4,7.9z\"/>\n            <path d=\"M13.7,7.9c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.8,3.8c0.2,0.2,0.2,0.5,0,0.7c-0.2,0.2-0.4,0.2-0.6,0.1l-0.1-0.1 l-3.7-3.8C13.5,8.4,13.5,8.1,13.7,7.9z\"/>\n            </svg>") + "<svg style=\"display:inline-block\" width=\"".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" fill=\"").concat(btnItem.color, "\" viewBox=\"-6 -6 32 32\">\n              <path d=\"M13.2,7.1c0.1-0.2,0.5-0.3,0.7-0.2c1.1,0.7,1.9,2.2,1.9,3.7c0,1.6-0.7,3-1.9,3.7\n                c-0.2,0.1-0.5,0.1-0.7-0.2c-0.1-0.2-0.1-0.5,0.2-0.7c0.8-0.5,1.4-1.6,1.4-2.9c0-1.3-0.6-2.4-1.4-2.9C13.1,7.6,13,7.3,13.2,7.1z\"/>\n              <path d=\"M15.7,4.5c0.2-0.2,0.5-0.2,0.7-0.1C18,5.8,19,8.2,19,10.7c0,2.5-1,4.8-2.7,6.3\n                c-0.2,0.2-0.5,0.2-0.7-0.1c-0.2-0.2-0.2-0.5,0.1-0.7c1.4-1.2,2.3-3.3,2.3-5.5c0-2.2-0.9-4.3-2.3-5.5C15.5,5,15.5,4.7,15.7,4.5z\"/>\n              <path id=\"Stroke-5\" class=\"st1\" d=\"M8.5,4.7c0.8-0.7,2.1-0.2,2.2,0.9l0,0.1v10c0,1.1-1.2,1.7-2.1,1.1l-0.1-0.1l-3.3-2.8\n                C5,13.7,5,13.4,5.1,13.2c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.3,2.8c0.2,0.2,0.5,0.1,0.5-0.2l0-0.1v-10c0-0.3-0.3-0.4-0.5-0.3l-0.1,0\n                L5.9,8.3C5.6,8.4,5.3,8.4,5.1,8.2C5,8,5,7.7,5.1,7.6l0.1-0.1L8.5,4.7z\"/>\n              <path  d=\"M5.5,7.4C5.8,7.4,6,7.6,6,7.9c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2c-0.2,0-0.3,0.1-0.3,0.3l0,0.1v4\n                c0,0.2,0.1,0.3,0.3,0.3l0.1,0h2C5.8,13,6,13.2,6,13.5c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2c-0.7,0-1.3-0.5-1.3-1.2l0-0.1v-4\n                c0-0.7,0.5-1.3,1.2-1.3l0.1,0H5.5z\"/>\n            </svg>") + '</span>';
 
           btnItem.onclick = function () {
-            var _this4$decoderState$s = _this4.decoderState.state,
-                play = _this4$decoderState$s.play,
-                sound = _this4$decoderState$s.sound;
+            var _this9$decoderState$s2 = _this9.decoderState.state,
+                play = _this9$decoderState$s2.play,
+                sound = _this9$decoderState$s2.sound;
 
             if (play) {
               if (sound) {
-                _this4.jSPlugin.closeSound();
+                _this9.jSPlugin.closeSound();
 
-                _this4.setDecoderState({
+                _this9.setDecoderState({
                   sound: false
                 });
               } else {
-                _this4.jSPlugin.openSound();
+                _this9.jSPlugin.openSound();
 
-                _this4.setDecoderState({
+                _this9.setDecoderState({
                   sound: true
                 });
               }
@@ -28955,21 +30447,21 @@ var Theme = /*#__PURE__*/function () {
           btnItem.domString = "<svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M11.6,5.3H4.7c-1.4,0-2.5,1.1-2.5,2.5v5.9c0,1.4,1.1,2.5,2.5,2.5h6.9c1.4,0,2.5-1.1,2.5-2.5V7.7 C14.1,6.4,13,5.3,11.6,5.3z M4.7,6.3h6.9c0.8,0,1.5,0.7,1.5,1.5v5.9c0,0.8-0.7,1.5-1.5,1.5H4.7c-0.8,0-1.5-0.7-1.5-1.5V7.7 C3.3,6.9,3.9,6.3,4.7,6.3z" />' + '<path d="M16.6,6.7c0.9-0.8,2.3-0.1,2.4,1l0,0.1v5.7c0,1.2-1.3,1.9-2.3,1.2l-0.1-0.1L13.3,12 c-0.2-0.2-0.2-0.5-0.1-0.7c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.3,2.7c0.3,0.2,0.7,0.1,0.8-0.3l0-0.1V7.8c0-0.4-0.4-0.6-0.7-0.4 l-0.1,0l-3.3,2.7c-0.2,0.2-0.5,0.1-0.7-0.1c-0.2-0.2-0.1-0.5,0-0.6l0.1-0.1L16.6,6.7z" />' + '</svg>';
 
           btnItem.onclick = function () {
-            var _this4$decoderState$s2 = _this4.decoderState.state,
-                play = _this4$decoderState$s2.play,
-                recordvideo = _this4$decoderState$s2.recordvideo;
+            var _this9$decoderState$s3 = _this9.decoderState.state,
+                play = _this9$decoderState$s3.play,
+                recordvideo = _this9$decoderState$s3.recordvideo;
 
             if (play) {
               if (recordvideo) {
-                _this4.jSPlugin.stopSave();
+                _this9.jSPlugin.stopSave();
 
-                _this4.setDecoderState({
+                _this9.setDecoderState({
                   recordvideo: false
                 });
               } else {
-                _this4.jSPlugin.startSave("".concat(new Date().getTime()));
+                _this9.jSPlugin.startSave("".concat(new Date().getTime()));
 
-                _this4.setDecoderState({
+                _this9.setDecoderState({
                   recordvideo: true
                 });
               }
@@ -28984,10 +30476,10 @@ var Theme = /*#__PURE__*/function () {
           btnItem.domString = "<svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M10.8,7.7c-2,0-3.7,1.6-3.7,3.7S8.7,15,10.8,15c2,0,3.7-1.6,3.7-3.7S12.8,7.7,10.8,7.7z M10.8,8.7c1.5,0,2.7,1.2,2.7,2.7S12.2,14,10.8,14c-1.5,0-2.7-1.2-2.7-2.7S9.3,8.7,10.8,8.7z" />' + '<path d="M8.6,3.7l-0.1,0C8,3.7,7.7,4,7.5,4.3l-1,1.7l-1.3,0C4,6.1,3.1,7,3.1,8.2v7.1 c0,1.2,0.9,2.1,2.1,2.1h11.1c1.2,0,2.1-0.9,2.1-2.1V8.2l0-0.1c-0.1-1.1-1-1.9-2.1-1.9l-1.3,0l-1.1-1.8c-0.2-0.4-0.7-0.6-1.1-0.6H8.6 z M8.6,4.7h4.2c0.1,0,0.2,0.1,0.3,0.1l1.2,2c0.1,0.2,0.3,0.2,0.4,0.2h1.6c0.6,0,1.1,0.5,1.1,1.1v7.1c0,0.6-0.5,1.1-1.1,1.1H5.1 c-0.6,0-1.1-0.5-1.1-1.1V8.2c0-0.6,0.5-1.1,1.1-1.1h1.6c0.2,0,0.3-0.1,0.4-0.2l1.2-2C8.4,4.7,8.5,4.7,8.6,4.7z" />' + '</svg>';
 
           btnItem.onclick = function () {
-            var play = _this4.decoderState.state.play;
+            var play = _this9.decoderState.state.play;
 
             if (play) {
-              _this4.jSPlugin.capturePicture("".concat(new Date().getTime()));
+              _this9.jSPlugin.capturePicture("".concat(new Date().getTime()));
             } else {
               console.log("视频未播放，无法截图");
             }
@@ -29001,34 +30493,75 @@ var Theme = /*#__PURE__*/function () {
           btnItem.domString = '<div></div>' + "<svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M10.1,2.7C8.5,2.7,7.2,4,7.2,5.6v5.2c0,1.6,1.3,2.9,2.9,2.9l0.2,0c1.5-0.1,2.7-1.4,2.7-2.9V5.6	C13,4,11.7,2.7,10.1,2.7z M10.1,3.7c1.1,0,1.9,0.9,1.9,1.9v5.2c0,1-0.8,1.8-1.8,1.9l-0.1,0c-1,0-1.9-0.9-1.9-1.9V5.6 C8.2,4.5,9,3.7,10.1,3.7z" />' + '<path d="M15.1,8.5c0.2,0,0.4,0.2,0.5,0.4l0,0.1v1.7c0,3-2.5,5.5-5.5,5.5c-3,0-5.4-2.3-5.5-5.3l0-0.2V9 c0-0.3,0.2-0.5,0.5-0.5c0.2,0,0.4,0.2,0.5,0.4l0,0.1v1.7c0,2.5,2,4.5,4.5,4.5c2.4,0,4.4-1.9,4.5-4.3l0-0.2V9 C14.6,8.7,14.8,8.5,15.1,8.5z" />' + '<path d="M13.5,17.7c0.3,0,0.5,0.2,0.5,0.5c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-7c-0.3,0-0.5-0.2-0.5-0.5 c0-0.2,0.2-0.4,0.4-0.5l0.1,0H13.5z" />' + '<path d="M10.1,15.2c0.2,0,0.4,0.2,0.5,0.4l0,0.1v2.5c0,0.3-0.2,0.5-0.5,0.5c-0.2,0-0.4-0.2-0.5-0.4l0-0.1 v-2.5C9.6,15.4,9.8,15.2,10.1,15.2z" />' + '</svg>';
 
           btnItem.onclick = function () {
-            var _this4$decoderState$s3 = _this4.decoderState.state,
-                talk = _this4$decoderState$s3.talk,
-                sound = _this4$decoderState$s3.sound;
+            var _this9$decoderState$s4 = _this9.decoderState.state,
+                talk = _this9$decoderState$s4.talk,
+                sound = _this9$decoderState$s4.sound;
 
             if (talk) {
               console.log('结束对讲');
 
-              _this4.setDecoderState({
+              _this9.setDecoderState({
                 talk: false
               });
 
-              _this4.jSPlugin.Talk.stopTalk();
+              _this9.jSPlugin.Talk.stopTalk();
+
+              var isReOpenSound = lodash.findIndex(_this9.themeData.footer.btnList, function (v) {
+                return v.iconId === 'sound' && v.isrender === 1 && v.defaultActive === 1;
+              }) > -1;
+
+              if (_this9.themeData && isReOpenSound) {
+                _this9.jSPlugin.openSound();
+
+                _this9.setDecoderState({
+                  sound: true
+                });
+              }
             } else {
               console.log('开始对讲');
 
-              _this4.setDecoderState({
+              _this9.setDecoderState({
                 talk: true
               });
 
               if (sound) {
-                _this4.jSPlugin.closeSound();
+                _this9.jSPlugin.closeSound();
 
-                _this4.setDecoderState({
+                _this9.setDecoderState({
                   sound: false
                 });
               }
 
-              _this4.jSPlugin.Talk.startTalk();
+              _this9.jSPlugin.Talk.startTalk();
+            }
+          };
+
+          return btnItem;
+
+        case 'zoom':
+          btnItem.title = "电子放大";
+          btnItem.id = btnId;
+          btnItem.domString = '<div></div>' + "<svg  fill=\"".concat(btnItem.color, "\" version=\"1.1\" id=\"\u56FE\u5C42_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n          width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"5 -6 5 32\" style=\"enable-background:new 0 0 20 20.1;\" xml:space=\"preserve\">\n              <path class=\"st1\" d=\"M8.8,2.6c3.5,0,6.2,2.8,6.2,6.2s-2.8,6.2-6.2,6.2s-6.2-2.8-6.2-6.2S5.3,2.6,8.8,2.6z M8.8,3.9\n                c-2.8,0-5,2.2-5,5s2.2,5,5,5s5-2.2,5-5S11.5,3.9,8.8,3.9z M12.7,12.7l3.9,3.9\"/>\n              <path class=\"st2\" d=\"M11.2,9.5h-5c-0.3,0-0.6-0.3-0.6-0.6s0.3-0.6,0.6-0.6h5c0.3,0,0.6,0.3,0.6,0.6S11.6,9.5,11.2,9.5z\"/>\n              <path class=\"st2\" d=\"M8.7,12c-0.3,0-0.6-0.3-0.6-0.6v-5c0-0.3,0.3-0.6,0.6-0.6s0.6,0.3,0.6,0.6v5C9.3,11.8,9.1,12,8.7,12z\"/>\n              <path class=\"st2\" d=\"M16.9,17.6c-0.1,0-0.3-0.1-0.4-0.2l-3.9-3.9c-0.2-0.2-0.2-0.6,0-0.8s0.6-0.2,0.8,0l3.9,3.9\n                c0.2,0.2,0.2,0.6,0,0.8C17.2,17.5,17,17.6,16.9,17.6z\"/>\n          </svg>");
+
+          btnItem.onclick = function () {
+            var zoom = _this9.decoderState.state.zoom;
+
+            if (zoom) {
+              console.log('结束电子放大');
+
+              _this9.setDecoderState({
+                zoom: false
+              });
+
+              _this9.jSPlugin.Zoom.stopZoom();
+            } else {
+              console.log('开始电子放大');
+
+              _this9.jSPlugin.Zoom.startZoom();
+
+              _this9.setDecoderState({
+                zoom: true
+              });
             }
           };
 
@@ -29040,22 +30573,30 @@ var Theme = /*#__PURE__*/function () {
           btnItem.domString = "<svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M10.2,7.8c1.6,0,2.9,1.3,2.9,2.9s-1.3,2.9-2.9,2.9s-2.9-1.3-2.9-2.9S8.5,7.8,10.2,7.8z M10.2,8.8c-1.1,0-1.9,0.9-1.9,1.9s0.9,1.9,1.9,1.9s1.9-0.9,1.9-1.9S11.2,8.8,10.2,8.8z" />' + '<path d="M8.8,3.5c0.7-0.6,1.8-0.6,2.5-0.1l0.1,0.1l1.4,1.1c0.2,0.2,0.3,0.5,0.1,0.7 c-0.2,0.2-0.4,0.2-0.6,0.1l-0.1,0l-1.4-1.1C10.5,3.9,10,3.9,9.6,4.2L9.4,4.3L8,5.4C7.8,5.5,7.5,5.5,7.3,5.3c-0.2-0.2-0.1-0.5,0-0.6 l0.1-0.1L8.8,3.5z" />' + '<path d="M2.5,12.3c-0.6-0.7-0.6-1.8-0.1-2.5l0.1-0.1l1.1-1.4c0.2-0.2,0.5-0.3,0.7-0.1 c0.2,0.2,0.2,0.4,0.1,0.6l0,0.1l-1.1,1.4C3,10.6,3,11.1,3.2,11.5l0.1,0.1L4.4,13c0.2,0.2,0.1,0.5-0.1,0.7c-0.2,0.2-0.5,0.1-0.6,0 l-0.1-0.1L2.5,12.3z" />' + '<path d="M17.7,12.3c0.6-0.7,0.6-1.8,0.1-2.5l-0.1-0.1l-1.1-1.4c-0.2-0.2-0.5-0.3-0.7-0.1 c-0.2,0.2-0.2,0.4-0.1,0.6l0,0.1l1.1,1.4c0.3,0.4,0.3,0.9,0.1,1.3l-0.1,0.1L15.8,13c-0.2,0.2-0.1,0.5,0.1,0.7c0.2,0.2,0.5,0.1,0.6,0 l0.1-0.1L17.7,12.3z" />' + '<path d="M8.8,18.2c0.7,0.6,1.8,0.6,2.5,0.1l0.1-0.1l1.4-1.1c0.2-0.2,0.3-0.5,0.1-0.7 c-0.2-0.2-0.4-0.2-0.6-0.1l-0.1,0l-1.4,1.1c-0.4,0.3-0.9,0.3-1.3,0.1l-0.1-0.1L8,16.3c-0.2-0.2-0.5-0.1-0.7,0.1 c-0.2,0.2-0.1,0.5,0,0.6l0.1,0.1L8.8,18.2z" />' + '</svg>';
 
           btnItem.onclick = function () {
-            var pantile = _this4.decoderState.state.pantile;
+            var _this9$decoderState$s5 = _this9.decoderState.state,
+                pantile = _this9$decoderState$s5.pantile,
+                expend = _this9$decoderState$s5.expend;
 
             if (!pantile) {
               console.log('显示云台');
 
-              _this4.Ptz.show();
+              if (_this9.isMobile && !expend) {
+                console.log("移动端，非全屏状态不展示云台"); // 移动端，非全屏状态不展示云台
 
-              _this4.setDecoderState({
+                return false;
+              }
+
+              _this9.Ptz.show();
+
+              _this9.setDecoderState({
                 pantile: true
               });
             } else {
               console.log('隐藏云台');
 
-              _this4.Ptz.hide();
+              _this9.Ptz.hide();
 
-              _this4.setDecoderState({
+              _this9.setDecoderState({
                 pantile: false
               });
             }
@@ -29069,10 +30610,11 @@ var Theme = /*#__PURE__*/function () {
           btnItem.domString = "<span><svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M3.4,7.6c-0.3,0-0.5-0.2-0.5-0.5V5.3c0-1.2,1-2.3,2.2-2.3h1.8c0.3,0,0.5,0.2,0.5,0.5S7.2,4.1,6.9,4.1H5.2 c-0.7,0-1.2,0.6-1.2,1.3v1.8C3.9,7.4,3.7,7.6,3.4,7.6z" />' + '<path d="M6.9,18.1H5.2c-1.2,0-2.2-1-2.2-2.2v-1.8c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v1.8c0,0.7,0.6,1.2,1.2,1.2 h1.8c0.3,0,0.5,0.2,0.5,0.5S7.2,18.1,6.9,18.1z" />' + '<path d="M15.7,18.1h-1.8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h1.8c0.7,0,1.2-0.6,1.2-1.2v-1.8 c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v1.8C17.9,17.1,16.9,18.1,15.7,18.1z" />' + '<path d="M17.4,7.6c-0.3,0-0.5-0.2-0.5-0.5V5.3c0-0.7-0.6-1.3-1.2-1.3h-1.8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h1.8 c1.2,0,2.2,1,2.2,2.3v1.8C17.9,7.4,17.7,7.6,17.4,7.6z" />' + '</svg>' + "<svg style=\"display:none\" width=\"".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" fill=\"").concat(btnItem.color, "\" viewBox=\"-6 -6 32 32\">\n            <path class=\"st1\" d=\"M5.7,8.1H3.9c-0.3,0-0.6-0.2-0.6-0.6S3.6,7,3.9,7h1.9c0.7,0,1.3-0.6,1.3-1.3V3.8c0-0.3,0.2-0.6,0.6-0.6\n              s0.6,0.2,0.6,0.6v1.9C8.2,7,7.1,8.1,5.7,8.1z\"/>\n            <path class=\"st1\" d=\"M7.6,17.7c-0.3,0-0.6-0.2-0.6-0.6v-1.9c0-0.7-0.6-1.3-1.3-1.3H3.9c-0.3,0-0.6-0.2-0.6-0.6s0.2-0.6,0.6-0.6h1.9\n              c1.3,0,2.4,1.1,2.4,2.4v1.9C8.2,17.5,7.9,17.7,7.6,17.7z\"/>\n            <path class=\"st1\" d=\"M13.4,17.7c-0.3,0-0.6-0.2-0.6-0.6v-1.9c0-1.3,1.1-2.4,2.4-2.4h1.9c0.3,0,0.6,0.2,0.6,0.6S17.5,14,17.2,14\n              h-1.9c-0.7,0-1.3,0.6-1.3,1.3v1.9C14,17.5,13.8,17.7,13.4,17.7z\"/>\n            <path class=\"st1\" d=\"M17.2,8.1h-1.9c-1.3,0-2.4-1.1-2.4-2.4V3.8c0-0.3,0.2-0.6,0.6-0.6S14,3.5,14,3.8v1.9C14,6.4,14.6,7,15.3,7h1.9\n              c0.3,0,0.6,0.2,0.6,0.6S17.5,8.1,17.2,8.1z\"/>\n          </svg>\n          </span>");
 
           btnItem.onclick = function () {
-            var _this4$decoderState$s4 = _this4.decoderState.state,
-                webExpend = _this4$decoderState$s4.webExpend,
-                expend = _this4$decoderState$s4.expend,
-                play = _this4$decoderState$s4.play;
+            var _this9$decoderState$s6 = _this9.decoderState.state,
+                webExpend = _this9$decoderState$s6.webExpend,
+                expend = _this9$decoderState$s6.expend,
+                play = _this9$decoderState$s6.play,
+                pantile = _this9$decoderState$s6.pantile;
 
             if (!play) {
               return false;
@@ -29086,43 +30628,63 @@ var Theme = /*#__PURE__*/function () {
             if (!expend) {
               console.log("执行全局全屏");
 
-              if (_this4.isMobile) {
-                var heightIntercept = parseInt(getComputedStyle(document.getElementById("".concat(_this4.jSPlugin.id, "-wrap"))).height, 10) - parseInt(getComputedStyle(document.getElementById(_this4.jSPlugin.id)).height, 10);
-                requestMobileFullScreen(document.getElementById("".concat(_this4.jSPlugin.id, "-wrap")));
+              if (_this9.isMobile) {
+                var heightIntercept = parseInt(getComputedStyle(document.getElementById("".concat(_this9.jSPlugin.id, "-wrap"))).height, 10) - parseInt(getComputedStyle(document.getElementById(_this9.jSPlugin.id)).height, 10);
+                requestMobileFullScreen(document.getElementById("".concat(_this9.jSPlugin.id, "-wrap")));
                 setTimeout(function () {
                   var width = document.documentElement.clientWidth;
-                  var height = document.documentElement.clientHeight;
+                  var height = document.documentElement.clientHeight; // 兼容微信浏览器footer被隐藏
+                  // document.getElementById(`${this.jSPlugin.id}-ez-iframe-footer-container`).style.marginTop = "0px";
+                  // document.getElementById(`${this.jSPlugin.id}-headControl`).style.position = "absolute";
 
-                  _this4.jSPlugin.jSPlugin.JS_Resize(height, width - heightIntercept);
+                  document.getElementById("".concat(_this9.jSPlugin.id)).style["backface-visibility"] = "hidden";
+
+                  _this9.jSPlugin.jSPlugin.JS_Resize(height, width - heightIntercept);
                 }, 100);
               } else {
-                var promise = requestFullScreenPromise(document.getElementById("".concat(_this4.jSPlugin.id)));
+                var promise = requestFullScreenPromise(document.getElementById("".concat(_this9.jSPlugin.id)));
                 promise.then(function (data) {
-                  console.log("全屏promise", window.screen.availWidth);
-
-                  _this4.jSPlugin.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight);
+                  _this9.jSPlugin.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight);
                 })["catch"](function (err) {
                   console.log(err);
                 });
               }
             } else {
-              if (_this4.isMobile) {
-                var heightIntercept = parseInt(getComputedStyle(document.getElementById("".concat(_this4.jSPlugin.id, "-wrap"))).height, 10) - parseInt(getComputedStyle(document.getElementById(_this4.jSPlugin.id)).height, 10);
-                cancelMobileFullScreen(document.getElementById("".concat(_this4.jSPlugin.id, "-wrap")), _this4.jSPlugin.width, _this4.jSPlugin.height + heightIntercept);
+              if (_this9.isMobile) {
+                var heightIntercept = parseInt(getComputedStyle(document.getElementById("".concat(_this9.jSPlugin.id, "-wrap"))).height, 10) - parseInt(getComputedStyle(document.getElementById(_this9.jSPlugin.id)).height, 10);
 
-                _this4.jSPlugin.jSPlugin.JS_Resize(_this4.jSPlugin.width, _this4.jSPlugin.height);
+                if (document.getElementById("".concat(_this9.jSPlugin.id, "-ez-iframe-footer-container"))) {
+                  document.getElementById("".concat(_this9.jSPlugin.id, "-ez-iframe-footer-container")).style.marginTop = "-32px";
+                }
+
+                if (document.getElementById("".concat(_this9.jSPlugin.id, "-headControl"))) {
+                  document.getElementById("".concat(_this9.jSPlugin.id, "-headControl")).style.position = "relative";
+                }
+
+                cancelMobileFullScreen(document.getElementById("".concat(_this9.jSPlugin.id, "-wrap")), _this9.jSPlugin.width, _this9.jSPlugin.height + heightIntercept);
+
+                _this9.jSPlugin.jSPlugin.JS_Resize(_this9.jSPlugin.width, _this9.jSPlugin.height); // 移动端取消全屏，如果开启了云台，取消云台
+
+
+                if (pantile) {
+                  _this9.Ptz.hide();
+
+                  _this9.setDecoderState({
+                    pantile: false
+                  });
+                }
               } else {
                 console.log("取消全局全屏");
                 var cancelPromise = cancelFullScreenPromise();
                 cancelPromise.then(function (data) {
-                  console.log("取消全屏", data, _this4.jSPlugin);
+                  console.log("取消全屏", data, _this9.jSPlugin);
 
-                  _this4.jSPlugin.jSPlugin.JS_Resize(_this4.jSPlugin.width, _this4.jSPlugin.height);
+                  _this9.jSPlugin.jSPlugin.JS_Resize(_this9.jSPlugin.width, _this9.jSPlugin.height);
                 });
               }
             }
 
-            _this4.setDecoderState({
+            _this9.setDecoderState({
               expend: !expend
             });
           };
@@ -29135,10 +30697,10 @@ var Theme = /*#__PURE__*/function () {
           btnItem.domString = "<span><svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M3.1,7.6c-0.3,0-0.5-0.2-0.5-0.5V5.3c0-1.2,1-2.3,2.2-2.3h1.8c0.3,0,0.5,0.2,0.5,0.5S6.8,4.1,6.6,4.1H4.8 c-0.7,0-1.2,0.6-1.2,1.3v1.8C3.6,7.4,3.3,7.6,3.1,7.6z" />' + '<path d="M15.3,18.1h-1.8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h1.8c0.7,0,1.2-0.6,1.2-1.2v-1.8 c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v1.8C17.6,17.1,16.6,18.1,15.3,18.1z" />' + '<circle class="st2" cx="10.2" cy="10.4" r="1.1"/>' + '</svg>' + "<svg fill=\"".concat(btnItem.color, "\" style=\"display:none;\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">\n          <path class=\"st1\" d=\"M5.4,8.1H3.5C3.2,8.1,3,7.9,3,7.6s0.2-0.5,0.5-0.5h1.9c0.8,0,1.4-0.6,1.4-1.4V3.8c0-0.3,0.2-0.5,0.5-0.5\n            s0.5,0.2,0.5,0.5v1.9C7.7,7,6.7,8.1,5.4,8.1z\"/>\n          <path class=\"st1\" d=\"M13.1,17.7c-0.3,0-0.5-0.2-0.5-0.5v-1.9c0-1.3,1.1-2.4,2.4-2.4h1.9c0.3,0,0.5,0.2,0.5,0.5s-0.2,0.5-0.5,0.5H15\n            c-0.8,0-1.4,0.6-1.4,1.4v1.9C13.6,17.4,13.4,17.7,13.1,17.7z\"/>\n            <circle class=\"st2\" cx=\"10.2\" cy=\"10.4\" r=\"1.1\"/>\n          ") + '</svg></span>';
 
           btnItem.onclick = function () {
-            var _this4$decoderState$s5 = _this4.decoderState.state,
-                webExpend = _this4$decoderState$s5.webExpend,
-                expend = _this4$decoderState$s5.expend,
-                play = _this4$decoderState$s5.play;
+            var _this9$decoderState$s7 = _this9.decoderState.state,
+                webExpend = _this9$decoderState$s7.webExpend,
+                expend = _this9$decoderState$s7.expend,
+                play = _this9$decoderState$s7.play;
 
             if (!play) {
               return false;
@@ -29161,21 +30723,21 @@ var Theme = /*#__PURE__*/function () {
               //   return isFullScreen;
               // }
 
-              var promise = requestFullScreenPromise(document.getElementById("".concat(_this4.jSPlugin.id, "-wrap")));
+              var promise = requestFullScreenPromise(document.getElementById("".concat(_this9.jSPlugin.id, "-wrap")));
               promise.then(function (data) {
                 console.log("全屏promise", window.screen.availWidth);
 
-                if (document.getElementById("".concat(_this4.jSPlugin.id, "-ez-iframe-footer-container"))) {
-                  footerDOMHeight = parseInt(window.getComputedStyle(document.getElementById("".concat(_this4.jSPlugin.id, "-ez-iframe-footer-container"))).height, 10);
+                if (document.getElementById("".concat(_this9.jSPlugin.id, "-canvas-container"))) {
+                  footerDOMHeight = parseInt(window.getComputedStyle(document.getElementById("".concat(_this9.jSPlugin.id, "-canvas-container"))).height, 10);
                 }
 
-                if (document.getElementById("".concat(_this4.jSPlugin.id, "-headControl"))) {
-                  headerDOMHeight = parseInt(window.getComputedStyle(document.getElementById("".concat(_this4.jSPlugin.id, "-headControl"))).height, 10);
+                if (document.getElementById("".concat(_this9.jSPlugin.id, "-headControl"))) {
+                  headerDOMHeight = parseInt(window.getComputedStyle(document.getElementById("".concat(_this9.jSPlugin.id, "-headControl"))).height, 10);
                 }
 
                 console.log("this.jSPlugin.JS_Resiz", footerDOMHeight, headerDOMHeight, document.body.clientWidth);
 
-                _this4.jSPlugin.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight - footerDOMHeight - headerDOMHeight);
+                _this9.jSPlugin.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight - footerDOMHeight - headerDOMHeight);
               })["catch"](function (err) {
                 console.log(err);
               });
@@ -29183,11 +30745,11 @@ var Theme = /*#__PURE__*/function () {
               console.log("取消网页全屏");
               var cancelPromise = cancelFullScreenPromise();
               cancelPromise.then(function (data) {
-                _this4.jSPlugin.jSPlugin.JS_Resize(_this4.jSPlugin.width, _this4.jSPlugin.height);
+                _this9.jSPlugin.jSPlugin.JS_Resize(_this9.jSPlugin.width, _this9.jSPlugin.height);
               });
             }
 
-            _this4.setDecoderState({
+            _this9.setDecoderState({
               webExpend: !webExpend
             });
           };
@@ -29197,34 +30759,204 @@ var Theme = /*#__PURE__*/function () {
         case 'hd':
           btnItem.title = "画面清晰度";
           btnItem.id = btnId;
-          btnItem.domString = "<ul id=\"".concat(this.jSPlugin.id, "-hdSelect\" class=\"select\" style=\"display:none;width: 60px;background: #fff;box-shadow: 0 3px 20px 0 rgb(0 0 0 / 10%);border-radius: 2px;padding: 6px 0;position: absolute;top: -120px;\">") + "<li class=\"selectOption\" style=\"width: 60px;height: 32px;text-align: center;line-height: 32px;list-style: none;cursor: pointer;font-size: 13px;color: rgba(0, 0, 0, .85);\" name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-hd\">\u9AD8\u6E05</li>") + "<li class=\"selectOption\" style=\"width: 60px;height: 32px;text-align: center;line-height: 32px;list-style: none;cursor: pointer;font-size: 13px;color: rgba(0, 0, 0, .85);\" name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-sd\">\u6807\u6E05</li>") + '</ul>' + "<span><svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M17.4,16.5H3.1c-0.8,0-1.4-0.6-1.4-1.4V5.4c0-0.9,0.7-1.6,1.6-1.6h14.1c0.8,0,1.4,0.6,1.4,1.4v9.8 C18.8,15.9,18.2,16.5,17.4,16.5z M3.3,5C3.1,5,2.9,5.2,2.9,5.4v9.7c0,0.2,0.1,0.3,0.3,0.3h14.3c0.2,0,0.3-0.1,0.3-0.3V5.3 c0-0.2-0.1-0.3-0.3-0.3H3.3z" />' + '<path d="M13.3,13.6h-1.6c-0.4,0-0.7-0.3-0.7-0.7V7.4c0-0.4,0.3-0.7,0.7-0.7h1.6c1.2,0,2.2,1,2.2,2.2v2.4 C15.6,12.6,14.6,13.6,13.3,13.6z M12.2,12.5h1.1c0.6,0,1.1-0.5,1.1-1.1V9c0-0.6-0.5-1.1-1.1-1.1h-1.1V12.5z" />' + '<path d="M5.5,13.6c-0.3,0-0.6-0.2-0.6-0.6V7.3C5,7,5.2,6.8,5.5,6.8S6.1,7,6.1,7.3v5.7C6.1,13.4,5.8,13.6,5.5,13.6z" />' + '<path d="M9.2,13.6c-0.3,0-0.6-0.2-0.6-0.6V7.3c0-0.3,0.2-0.6,0.6-0.6S9.8,7,9.8,7.3v5.7C9.8,13.4,9.5,13.6,9.2,13.6z" />' + '<rect x="5.6" y="9.6" width="3.6" height="1.1" />' + '</svg>' + "<svg style=\"display:none\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -8 40 44\">\n                <path d=\"M24.1,23.8h-20c-1.1,0-1.9-0.9-1.9-1.9V8.4c0-1.2,1-2.2,2.1-2.2h19.7c1.1,0,1.9,0.9,1.9,1.9v13.8\n                    C26,23,25.1,23.8,24.1,23.8z M4.3,7.7C4,7.7,3.7,8,3.7,8.4v13.5c0,0.2,0.2,0.4,0.4,0.4h20c0.2,0,0.4-0.2,0.4-0.4V8.2\n                    c0-0.2-0.2-0.4-0.4-0.4H4.3z\"/>\n                <path d=\"M18.4,19.8h-2.2c-0.5,0-0.9-0.4-0.9-0.9v-7.8c0-0.5,0.4-0.9,0.9-0.9h2.2c1.7,0,3.1,1.4,3.1,3.1v3.3\n                C21.5,18.4,20.1,19.8,18.4,19.8z M16.7,18.3h1.6c0.9,0,1.6-0.7,1.6-1.6v-3.3c0-0.9-0.7-1.6-1.6-1.6h-1.6V18.3z\"/>\n                <path d=\"M10.5,19.8c1.2,0,2.1-0.3,2.7-0.9c0.6-0.6,0.9-1.3,0.9-2.1c0-0.8-0.3-1.4-0.9-1.8c-0.4-0.2-1.1-0.5-2.2-0.8\n                    l0,0l-1-0.2c-0.4-0.1-0.8-0.2-1-0.4c-0.4-0.2-0.6-0.5-0.6-0.9c0-0.4,0.1-0.6,0.4-0.9s0.7-0.3,1.3-0.3c0.8,0,1.4,0.2,1.8,0.6\n                    c0.2,0.3,0.3,0.6,0.4,0.9l0,0h1.4c0-0.6-0.2-1.1-0.5-1.6c-0.6-0.8-1.6-1.2-2.9-1.2c-1,0-1.8,0.3-2.4,0.8c-0.6,0.5-0.9,1.2-0.9,2\n                    c0,0.7,0.3,1.3,1,1.7c0.4,0.2,0.9,0.4,1.7,0.6l0,0l1.2,0.3c0.6,0.2,1.1,0.3,1.3,0.4c0.3,0.2,0.5,0.5,0.5,0.9c0,0.5-0.2,0.9-0.6,1.1\n                    s-0.9,0.4-1.5,0.4c-0.9,0-1.6-0.2-2-0.7c-0.2-0.3-0.3-0.6-0.4-1.1l0,0H6.8c0,0.9,0.3,1.6,0.9,2.2C8.2,19.5,9.2,19.8,10.5,19.8z\"/>\n                <defs>\n                  <filter id=\"Adobe_OpacityMaskFilter\" filterUnits=\"userSpaceOnUse\" x=\"15.2\" y=\"10.3\" width=\"6.2\" height=\"9.5\">\n                    <feColorMatrix  type=\"matrix\" values=\"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0\"/>\n                  </filter>\n                </defs>\n                <mask maskUnits=\"userSpaceOnUse\" x=\"15.2\" y=\"10.3\" width=\"6.2\" height=\"9.5\" id=\"mask-2_2_\">\n                  <g class=\"st2\">\n                    <path id=\"path-1_2_\" class=\"st3\" d=\"M24.1,23.1h-20c-0.6,0-1.2-0.5-1.2-1.2V8.2C2.9,7.5,3.5,7,4.1,7h19.7c0.8,0,1.4,0.6,1.4,1.4\n                      v13.5C25.2,22.6,24.7,23.1,24.1,23.1z\"/>\n                  </g>\n                </mask>\n                <defs>\n                  <filter id=\"Adobe_OpacityMaskFilter_1_\" filterUnits=\"userSpaceOnUse\" x=\"6.8\" y=\"10.3\" width=\"7.3\" height=\"9.5\">\n                    <feColorMatrix  type=\"matrix\" values=\"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0\"/>\n                  </filter>\n                </defs>\n                <mask maskUnits=\"userSpaceOnUse\" x=\"6.8\" y=\"10.3\" width=\"7.3\" height=\"9.5\" id=\"mask-2_3_\">\n                  <g class=\"st5\">\n                    <path id=\"path-1_3_\" class=\"st3\" d=\"M24.1,23.1h-20c-0.6,0-1.2-0.5-1.2-1.2V8.2C2.9,7.5,3.5,7,4.1,7h19.7c0.8,0,1.4,0.6,1.4,1.4\n                      v13.5C25.2,22.6,24.7,23.1,24.1,23.1z\"/>\n                  </g>\n                </mask>\n                </svg>\n                ") + '</span>';
+          btnItem.domString = "<ul id=\"".concat(this.jSPlugin.id, "-hdSelect\" class=\"hd speed-select ").concat(this.isMobile ? "mobile" : "", "\" style=\"display:none;\">") // + `<li class="selectOption" style="width: 60px;height: 32px;text-align: center;line-height: 32px;list-style: none;cursor: pointer;font-size: 13px;color: rgba(0, 0, 0, .85);" name="option" id="${this.jSPlugin.id}-select-hd">高清</li>`
+          // + `<li class="selectOption" style="width: 60px;height: 32px;text-align: center;line-height: 32px;list-style: none;cursor: pointer;font-size: 13px;color: rgba(0, 0, 0, .85);" name="option" id="${this.jSPlugin.id}-select-sd">标清</li>`
+          + "<li class=\"selectOption default\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;\" name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-hd\">\u9AD8\u6E05</li>") + "<li class=\"selectOption default\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;\"  name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-sd\">\u6807\u6E05</li>") + "<li class=\"selectOption cancel\" style=\"".concat(this.isMobile ? "" : "display:none;", "\" name=\"option\" id=\"").concat(this.jSPlugin.id, "-select-speed\">\u53D6\u6D88</li>") + '</ul>' + "<span><svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M17.4,16.5H3.1c-0.8,0-1.4-0.6-1.4-1.4V5.4c0-0.9,0.7-1.6,1.6-1.6h14.1c0.8,0,1.4,0.6,1.4,1.4v9.8 C18.8,15.9,18.2,16.5,17.4,16.5z M3.3,5C3.1,5,2.9,5.2,2.9,5.4v9.7c0,0.2,0.1,0.3,0.3,0.3h14.3c0.2,0,0.3-0.1,0.3-0.3V5.3 c0-0.2-0.1-0.3-0.3-0.3H3.3z" />' + '<path d="M13.3,13.6h-1.6c-0.4,0-0.7-0.3-0.7-0.7V7.4c0-0.4,0.3-0.7,0.7-0.7h1.6c1.2,0,2.2,1,2.2,2.2v2.4 C15.6,12.6,14.6,13.6,13.3,13.6z M12.2,12.5h1.1c0.6,0,1.1-0.5,1.1-1.1V9c0-0.6-0.5-1.1-1.1-1.1h-1.1V12.5z" />' + '<path d="M5.5,13.6c-0.3,0-0.6-0.2-0.6-0.6V7.3C5,7,5.2,6.8,5.5,6.8S6.1,7,6.1,7.3v5.7C6.1,13.4,5.8,13.6,5.5,13.6z" />' + '<path d="M9.2,13.6c-0.3,0-0.6-0.2-0.6-0.6V7.3c0-0.3,0.2-0.6,0.6-0.6S9.8,7,9.8,7.3v5.7C9.8,13.4,9.5,13.6,9.2,13.6z" />' + '<rect x="5.6" y="9.6" width="3.6" height="1.1" />' + '</svg>' + "<svg style=\"display:none\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -8 40 44\">\n                <path d=\"M24.1,23.8h-20c-1.1,0-1.9-0.9-1.9-1.9V8.4c0-1.2,1-2.2,2.1-2.2h19.7c1.1,0,1.9,0.9,1.9,1.9v13.8\n                    C26,23,25.1,23.8,24.1,23.8z M4.3,7.7C4,7.7,3.7,8,3.7,8.4v13.5c0,0.2,0.2,0.4,0.4,0.4h20c0.2,0,0.4-0.2,0.4-0.4V8.2\n                    c0-0.2-0.2-0.4-0.4-0.4H4.3z\"/>\n                <path d=\"M18.4,19.8h-2.2c-0.5,0-0.9-0.4-0.9-0.9v-7.8c0-0.5,0.4-0.9,0.9-0.9h2.2c1.7,0,3.1,1.4,3.1,3.1v3.3\n                C21.5,18.4,20.1,19.8,18.4,19.8z M16.7,18.3h1.6c0.9,0,1.6-0.7,1.6-1.6v-3.3c0-0.9-0.7-1.6-1.6-1.6h-1.6V18.3z\"/>\n                <path d=\"M10.5,19.8c1.2,0,2.1-0.3,2.7-0.9c0.6-0.6,0.9-1.3,0.9-2.1c0-0.8-0.3-1.4-0.9-1.8c-0.4-0.2-1.1-0.5-2.2-0.8\n                    l0,0l-1-0.2c-0.4-0.1-0.8-0.2-1-0.4c-0.4-0.2-0.6-0.5-0.6-0.9c0-0.4,0.1-0.6,0.4-0.9s0.7-0.3,1.3-0.3c0.8,0,1.4,0.2,1.8,0.6\n                    c0.2,0.3,0.3,0.6,0.4,0.9l0,0h1.4c0-0.6-0.2-1.1-0.5-1.6c-0.6-0.8-1.6-1.2-2.9-1.2c-1,0-1.8,0.3-2.4,0.8c-0.6,0.5-0.9,1.2-0.9,2\n                    c0,0.7,0.3,1.3,1,1.7c0.4,0.2,0.9,0.4,1.7,0.6l0,0l1.2,0.3c0.6,0.2,1.1,0.3,1.3,0.4c0.3,0.2,0.5,0.5,0.5,0.9c0,0.5-0.2,0.9-0.6,1.1\n                    s-0.9,0.4-1.5,0.4c-0.9,0-1.6-0.2-2-0.7c-0.2-0.3-0.3-0.6-0.4-1.1l0,0H6.8c0,0.9,0.3,1.6,0.9,2.2C8.2,19.5,9.2,19.8,10.5,19.8z\"/>\n                <defs>\n                  <filter id=\"Adobe_OpacityMaskFilter\" filterUnits=\"userSpaceOnUse\" x=\"15.2\" y=\"10.3\" width=\"6.2\" height=\"9.5\">\n                    <feColorMatrix  type=\"matrix\" values=\"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0\"/>\n                  </filter>\n                </defs>\n                <mask maskUnits=\"userSpaceOnUse\" x=\"15.2\" y=\"10.3\" width=\"6.2\" height=\"9.5\" id=\"mask-2_2_\">\n                  <g class=\"st2\">\n                    <path id=\"path-1_2_\" class=\"st3\" d=\"M24.1,23.1h-20c-0.6,0-1.2-0.5-1.2-1.2V8.2C2.9,7.5,3.5,7,4.1,7h19.7c0.8,0,1.4,0.6,1.4,1.4\n                      v13.5C25.2,22.6,24.7,23.1,24.1,23.1z\"/>\n                  </g>\n                </mask>\n                <defs>\n                  <filter id=\"Adobe_OpacityMaskFilter_1_\" filterUnits=\"userSpaceOnUse\" x=\"6.8\" y=\"10.3\" width=\"7.3\" height=\"9.5\">\n                    <feColorMatrix  type=\"matrix\" values=\"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0\"/>\n                  </filter>\n                </defs>\n                <mask maskUnits=\"userSpaceOnUse\" x=\"6.8\" y=\"10.3\" width=\"7.3\" height=\"9.5\" id=\"mask-2_3_\">\n                  <g class=\"st5\">\n                    <path id=\"path-1_3_\" class=\"st3\" d=\"M24.1,23.1h-20c-0.6,0-1.2-0.5-1.2-1.2V8.2C2.9,7.5,3.5,7,4.1,7h19.7c0.8,0,1.4,0.6,1.4,1.4\n                      v13.5C25.2,22.6,24.7,23.1,24.1,23.1z\"/>\n                  </g>\n                </mask>\n                </svg>\n                ") + "<span class='speed-select-mask' style=\"display:none\" id=\"".concat(this.jSPlugin.id, "-select-hd-mask\"></span>") + '</span>';
 
           btnItem.onclick = function (e) {
-            var hd = _this4.decoderState.state.hd; // 选择清晰度选项时才触发事件
+            var _this9$decoderState$s8 = _this9.decoderState.state,
+                hd = _this9$decoderState$s8.hd,
+                expend = _this9$decoderState$s8.expend; // 选择清晰度选项时才触发事件
 
-            if (hd && e.target.id === "".concat(_this4.jSPlugin.id, "-select-sd")) {
+            if (hd && e.target.id === "".concat(_this9.jSPlugin.id, "-select-sd")) {
               //decoder.changePlayUrl({ hd: false });
               console.log("切换到标清");
 
-              _this4.jSPlugin.changePlayUrl({
+              _this9.jSPlugin.changeVideoLevel(0);
+
+              _this9.setDecoderState({
                 hd: false
               });
+            } else if (!hd && e.target.id === "".concat(_this9.jSPlugin.id, "-select-hd")) {
+              _this9.jSPlugin.changeVideoLevel(1);
 
-              _this4.setDecoderState({
-                hd: false
-              });
-            } else if (!hd && e.target.id === "".concat(_this4.jSPlugin.id, "-select-hd")) {
-              _this4.jSPlugin.changePlayUrl({
-                hd: true
-              });
-
-              _this4.setDecoderState({
+              _this9.setDecoderState({
                 hd: true
               });
             }
 
-            if (document.getElementById("".concat(_this4.jSPlugin.id, "-hdSelect"))) {
-              document.getElementById("".concat(_this4.jSPlugin.id, "-hdSelect")).style.display = document.getElementById("".concat(_this4.jSPlugin.id, "-hdSelect")).style.display === 'none' ? 'block' : 'none';
+            _this9.showHD = !_this9.showHD;
+
+            if (document.getElementById("".concat(_this9.jSPlugin.id, "-hdSelect"))) {
+              document.getElementById("".concat(_this9.jSPlugin.id, "-hdSelect")).style.display = document.getElementById("".concat(_this9.jSPlugin.id, "-hdSelect")).style.display === 'none' ? 'block' : 'none';
+
+              if (_this9.isMobile) {
+                document.getElementById("".concat(_this9.jSPlugin.id, "-select-hd-mask")).style.display = document.getElementById("".concat(_this9.jSPlugin.id, "-select-hd-mask")).style.display === 'none' ? 'block' : 'none';
+              }
+            }
+
+            if (_this9.isMobile && expend && _this9.showHD) {
+              document.getElementById("".concat(_this9.jSPlugin.id, "-hdSelect")).className = "hd speed-select mobile expend";
+            } else {
+              document.getElementById("".concat(_this9.jSPlugin.id, "-hdSelect")).className = _this9.isMobile ? "hd speed-select mobile" : "speed-select";
+            }
+          };
+
+          return btnItem;
+
+        case 'speed':
+          btnItem.title = "回放倍速";
+          btnItem.id = btnId;
+          btnItem.domString = "<ul id=\"".concat(this.jSPlugin.id, "-speedSelect\" class=\"speed speed-select ").concat(this.isMobile ? "mobile" : "", "\" style=\"display:none;\">") + "<li class=\"selectOption default\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;font-size: 13px;\" name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-speed4\">4\u500D</li>") + "<li class=\"selectOption default\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;font-size: 13px;\" name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-speed2\">2\u500D</li>") + "<li class=\"selectOption active\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;font-size: 13px;\" name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-speed1\">1\u500D\uFF08\u6B63\u5E38\u64AD\u653E\uFF09</li>") + "<li class=\"selectOption default\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;font-size: 13px;\" name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-speed05\">0.5\u500D</li>") + "<li class=\"selectOption cancel\" style=\"".concat(this.isMobile ? "" : "display:none;", "\" name=\"option\" id=\"").concat(this.jSPlugin.id, "-select-speed\">\u53D6\u6D88</li>") + '</ul>' + "<span>\n          <div style=\"font-size: 12px;\n          vertical-align: bottom;\n          display: inline-flex;\n          padding: 0px 7px;\n          width: 48px;\n          line-height: 24px;\n          justify-content: center;\n          border: 1px solid ".concat(btnItem.color, ";\n          text-align: center;border-radius: 12.5px;\"\n          id=\"").concat(this.jSPlugin.id, "-speed-text\"\n          >").concat(this.nextRate === 1 ? "倍速" : "".concat(this.nextRate, "\u500D").replace("3", "0.5"), "</div>\n                ") + "<span class='speed-select-mask' style=\"display:none\" id=\"".concat(this.jSPlugin.id, "-select-mask\"></span>") + '</span>';
+
+          var setLiActive = function setLiActive(index) {
+            console.log("setLiActive", index);
+            document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[0].className = document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[0].className.replace("active", "default");
+            document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[1].className = document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[1].className.replace("active", "default");
+            document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[2].className = document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[2].className.replace("active", "default");
+            document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[3].className = document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[3].className.replace("active", "default");
+            document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[index].className = document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[index].className.replace("default", "active");
+          };
+
+          if (!this.isMobile) {
+            btnItem.onmouseenter = function (e) {
+              console.log("鼠标移入", e);
+
+              _this9.setDecoderState({
+                speed: true
+              });
+
+              if (document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect"))) {
+                document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).style.display = 'block';
+              }
+            };
+
+            btnItem.onmouseleave = function (e) {
+              console.log("鼠标移出", e);
+
+              _this9.setDecoderState({
+                speed: false
+              });
+
+              if (document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect"))) {
+                document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).style.display = 'none';
+              }
+            };
+          }
+
+          btnItem.onclick = function (e) {
+            var _this9$decoderState$s9 = _this9.decoderState.state,
+                speed = _this9$decoderState$s9.speed,
+                expend = _this9$decoderState$s9.expend;
+
+            if (!speed && _this9.isMobile) {
+              document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).className = expend ? "speed speed-select mobile expend" : "speed speed-select mobile";
+            }
+
+            _this9.nextRate = 1; // 选择清晰度选项时才触发事件
+            // if(this.isMobile) {
+            //   console.log("请执行移动端倍速");
+            //   return false;
+            // }
+
+            if (e.target.id) {
+              switch (e.target.id) {
+                case "".concat(_this9.jSPlugin.id, "-select-speed1"):
+                  // case `${this.jSPlugin.id}-select-speed`:
+                  console.log("倍速1");
+                  _this9.nextRate = 1;
+
+                  _this9.jSPlugin.jSPlugin.JS_Speed(_this9.nextRate);
+
+                  if (document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text"))) {
+                    document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text")).innerHTML = "倍速";
+                    setLiActive(2);
+                  }
+
+                  _this9.setDecoderState({
+                    speed: !speed
+                  });
+
+                  break;
+
+                case "".concat(_this9.jSPlugin.id, "-select-speed2"):
+                  console.log("倍速2");
+                  _this9.nextRate = 2;
+
+                  _this9.jSPlugin.jSPlugin.JS_Speed(_this9.nextRate);
+
+                  if (document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text"))) {
+                    document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text")).innerHTML = "2倍"; // 设置2倍速选中效果
+
+                    setLiActive(1);
+                  }
+
+                  _this9.setDecoderState({
+                    speed: !speed
+                  });
+
+                  break;
+
+                case "".concat(_this9.jSPlugin.id, "-select-speed4"):
+                  console.log("倍速4");
+                  _this9.nextRate = 4;
+
+                  _this9.jSPlugin.jSPlugin.JS_Speed(_this9.nextRate);
+
+                  if (document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text"))) {
+                    document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text")).innerHTML = "4倍";
+                    setLiActive(0);
+                  }
+
+                  _this9.setDecoderState({
+                    speed: !speed
+                  });
+
+                  break;
+
+                case "".concat(_this9.jSPlugin.id, "-select-speed05"):
+                  console.log("倍速05");
+                  _this9.nextRate = 3;
+
+                  _this9.jSPlugin.jSPlugin.JS_Speed(_this9.nextRate);
+
+                  if (document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text"))) {
+                    document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text")).innerHTML = "0.5倍";
+                    setLiActive(3);
+                  }
+
+                  _this9.setDecoderState({
+                    speed: !speed
+                  });
+
+                  break;
+
+                default:
+                  // if(document.getElementById(`${this.jSPlugin.id}-speed-text`)){
+                  //   document.getElementById(`${this.jSPlugin.id}-speed-text`).innerHTML = this.nextRate +"倍";
+                  // }
+                  // pc 端点击不再隐藏，只通过移出隐藏
+                  if (!_this9.isMobile) {
+                    _this9.setDecoderState({
+                      speed: true
+                    });
+                  } else {
+                    _this9.setDecoderState({
+                      speed: !speed
+                    });
+                  }
+
+                  break;
+              }
+            } // pc 端点击不再隐藏，只通过移出隐藏
+
+
+            if (!_this9.isMobile && e.target.id === "".concat(_this9.jSPlugin.id, "-speed-text")) {
+              document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).style.display = 'block';
+            } else {
+              if (document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect"))) {
+                document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).style.display = document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).style.display === 'none' ? 'block' : 'none';
+              }
             }
           };
 
@@ -29256,20 +30988,20 @@ var Theme = /*#__PURE__*/function () {
           btnItem.onclick = function () {
             console.log("点击云回放");
 
-            _this4.setDecoderState({
+            _this9.setDecoderState({
               type: 'cloud.rec',
               cloudRec: true,
               rec: false
             });
 
-            _this4.jSPlugin.changePlayUrl({
+            _this9.jSPlugin.changePlayUrl({
               type: 'cloud.rec'
             });
 
-            console.log(_this4.jSPlugin);
-            var initDate = getQueryString("begin", _this4.jSPlugin.url) || new Date().Format('yyyyMMdd');
+            console.log(_this9.jSPlugin);
+            var initDate = getQueryString("begin", _this9.jSPlugin.url) || new Date().Format('yyyyMMdd');
 
-            _this4.Rec.renderRec("".concat(initDate.slice(0, 4), "-").concat(initDate.slice(4, 6), "-").concat(initDate.slice(6, 8)));
+            _this9.Rec.renderRec("".concat(initDate.slice(0, 4), "-").concat(initDate.slice(4, 6), "-").concat(initDate.slice(6, 8)));
           };
 
           return btnItem;
@@ -29282,20 +31014,20 @@ var Theme = /*#__PURE__*/function () {
           btnItem.onclick = function () {
             console.log("点击本地回放");
 
-            _this4.setDecoderState({
+            _this9.setDecoderState({
               type: 'rec',
               cloudRec: false,
               rec: true
             });
 
-            _this4.jSPlugin.changePlayUrl({
+            _this9.jSPlugin.changePlayUrl({
               type: 'rec'
             });
 
-            console.log(_this4.jSPlugin);
-            var initDate = getQueryString("begin", _this4.jSPlugin.url) || new Date().Format('yyyyMMdd');
+            console.log(_this9.jSPlugin);
+            var initDate = getQueryString("begin", _this9.jSPlugin.url) || new Date().Format('yyyyMMdd');
 
-            _this4.Rec.renderRec("".concat(initDate.slice(0, 4), "-").concat(initDate.slice(4, 6), "-").concat(initDate.slice(6, 8)));
+            _this9.Rec.renderRec("".concat(initDate.slice(0, 4), "-").concat(initDate.slice(4, 6), "-").concat(initDate.slice(6, 8)));
           };
 
           return btnItem;
@@ -29307,7 +31039,7 @@ var Theme = /*#__PURE__*/function () {
   }, {
     key: "initThemeData",
     value: function initThemeData() {
-      var _this5 = this;
+      var _this10 = this;
 
       var _this$themeData4 = this.themeData,
           header = _this$themeData4.header,
@@ -29318,9 +31050,20 @@ var Theme = /*#__PURE__*/function () {
       this.isNeedRenderHeader = lodash.findIndex(header.btnList, function (v) {
         return v.isrender > 0;
       }) >= 0;
+
+      if (this.isMobile) {
+        // 移动端回放，需要判断设备序列号，设备名称
+        this.isNeedRenderHeader = lodash.findIndex(header.btnList, function (v) {
+          return v.isrender > 0 && v.iconId === "deviceID" || v.isrender > 0 && v.iconId === "deviceName";
+        }) >= 0;
+      }
+
       this.isNeedRenderFooter = lodash.findIndex(footer.btnList, function (v) {
         return v.isrender > 0;
       }) >= 0;
+      this.isNeedRenderTimeLine = lodash.findIndex(header.btnList, function (v) {
+        return v.iconId === 'cloudRec' && v.isrender === 1 || v.iconId === 'rec' && v.isrender === 1;
+      }) >= 0 && !this.jSPlugin.disabledTimeLine;
       ["date-switch-container-wrap", "rec-type-container-wrap", "mobile-rec-wrap", "mobile-ez-ptz-container"].forEach(function (item, index) {
         if (document.getElementById(item)) {
           document.getElementById(item).parentElement.removeChild(document.getElementById(item));
@@ -29331,8 +31074,8 @@ var Theme = /*#__PURE__*/function () {
         if (!document.getElementById("".concat(this.jSPlugin.id, "-headControl"))) {
           var headerContainer = document.createElement('div');
           headerContainer.setAttribute('id', "".concat(this.jSPlugin.id, "-headControl"));
-          headerContainer.setAttribute('class', 'head-message');
-          headerContainer.innerHTML = "<div id='".concat(this.jSPlugin.id, "-headControl-left' style='display:flex'></div><div id='").concat(this.jSPlugin.id, "}-headControl-right' style='display:flex'></div>");
+          headerContainer.setAttribute('class', 'header-controls');
+          headerContainer.innerHTML = "<div id='".concat(this.jSPlugin.id, "-headControl-left' class=\"header-controls-left\" style='display:flex'></div><div id='").concat(this.jSPlugin.id, "-headControl-right' class=\"header-controls-right\" style='display:flex'></div>");
           var headerStyle = {
             height: this.jSPlugin.width > MEDIAWIDTH ? "48px" : "32px",
             "line-height": this.jSPlugin.width > MEDIAWIDTH ? "48px" : "32px",
@@ -29345,14 +31088,22 @@ var Theme = /*#__PURE__*/function () {
             width: "100%"
           };
           headerContainer.style = styleToString(headerStyle);
-          document.getElementById("".concat(videoId, "-wrap")).insertBefore(headerContainer, document.getElementById(videoId));
+          document.getElementById("".concat(videoId, "-wrap")).insertBefore(headerContainer, document.getElementById(videoId)); // 头部预留x像素空间
+
+          var _checkTimer = setInterval(function () {
+            if (window.EZUIKit[_this10.jSPlugin.id].state.EZUIKitPlayer.init) {
+              clearInterval(_checkTimer); // 检测到渲染头部，执行一次reSize
+              // this.jSPlugin.reSize(this.jSPlugin.params.width,this.jSPlugin.params.height);
+            }
+          }, 50);
         } else {
-          document.getElementById("".concat(this.jSPlugin.id, "-headControl")).innerHTML = "<div id='".concat(this.jSPlugin.id, "}-headControl-left' style='display:flex'></div><div id='").concat(this.jSPlugin.id, "}-headControl-right' style='display:flex'></div>");
+          document.getElementById("".concat(this.jSPlugin.id, "-headControl")).innerHTML = "<div id='".concat(this.jSPlugin.id, "-headControl-left' style='display:flex'></div><div id='").concat(this.jSPlugin.id, "-headControl-right' style='display:flex'></div>");
         }
       } else {
         if (document.getElementById("".concat(this.jSPlugin.id, "-headControl"))) {
           document.getElementById("".concat(this.jSPlugin.id, "-headControl")).parentElement.removeChild(document.getElementById("".concat(this.jSPlugin.id, "-headControl")));
-        }
+        } // this.jSPlugin.reSize(this.jSPlugin.params.width,this.jSPlugin.params.height);
+
       }
 
       if (this.isNeedRenderFooter) {
@@ -29368,17 +31119,17 @@ var Theme = /*#__PURE__*/function () {
             display: "flex",
             "flex-wrap": "wrap",
             "justify-content": "space-between",
+            "z-index": 999,
             top: 0,
-            "z-index": 1,
             color: "#FFFFFF",
             width: "100%"
           };
           footerContainer.style = styleToString(footerStyle);
-          footerContainer.innerHTML = "<div id=\"".concat(this.jSPlugin.id, "-audioControls\" style='display:flex;height:").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px;justify-content: space-between;width:100%;'><div id='").concat(this.jSPlugin.id, "-audioControls-left' style='display:flex'></div><div id='").concat(this.jSPlugin.id, "-audioControls-right' style='display:flex'></div></div>");
+          footerContainer.innerHTML = "<div id=\"".concat(this.jSPlugin.id, "-audioControls\" class=\"footer-controls\" style='display:flex;height:").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px;justify-content: space-between;width:100%;z-index:999;position: relative;'><div id='").concat(this.jSPlugin.id, "-audioControls-left' class=\"footer-controls-left\" style='display:flex;margin-lefacti'></div><div id='").concat(this.jSPlugin.id, "-audioControls-right' class=\"footer-controls-right\" style='display:flex'></div></div>");
           insertAfter$1(footerContainer, document.getElementById(videoId));
         } else {
           if (document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container"))) {
-            document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")).innerHTML = "<div id=\"".concat(this.jSPlugin.id, "-audioControls\" style='display:flex;justify-content: space-between;height: ").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px;width:100%;'><div id='").concat(this.jSPlugin.id, "-audioControls-left' style='display:flex'></div><div id='").concat(this.jSPlugin.id, "-audioControls-right' style='display:flex'></div></div>");
+            document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")).innerHTML = "<div id=\"".concat(this.jSPlugin.id, "-audioControls\"  class=\"footer-controls\" style='display:flex;justify-content: space-between;height: ").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px;width:100%;'><div id='").concat(this.jSPlugin.id, "-audioControls-left' class=\"footer-controls-left\" style='display:flex'></div><div id='").concat(this.jSPlugin.id, "-audioControls-right' class=\"footer-controls-right\" style='display:flex'></div></div>");
           }
         }
       } else {
@@ -29392,7 +31143,7 @@ var Theme = /*#__PURE__*/function () {
         document.getElementById("".concat(this.jSPlugin.id, "-headControl")).style.color = header.color;
         header.btnList.map(function (item, index) {
           if (item.isrender) {
-            _this5.renderHeader(item.iconId, item.part);
+            _this10.renderHeader(item.iconId, item.part);
           }
         });
       }
@@ -29402,52 +31153,60 @@ var Theme = /*#__PURE__*/function () {
         document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).style.color = footer.color;
         footer.btnList.map(function (item, index) {
           if (item.isrender) {
-            _this5.renderFooter(item.iconId, item.part);
+            _this10.renderFooter(item.iconId, item.part);
           }
         });
       }
 
-      var isNeedRenderTimeLine = (lodash.findIndex(this.themeData.header.btnList, function (v) {
-        return v.iconId === 'cloudRec' && v.isrender === 1 || v.iconId === 'rec' && v.isrender === 1;
-      }) >= 0 || this.isMobile && matchEzopenUrl(this.jSPlugin.url).type.indexOf('rec') !== -1) && !this.jSPlugin.disabledTimeLine;
-
-      if (isNeedRenderTimeLine) {
+      if (this.isNeedRenderTimeLine) {
         if (this.isMobile) {
+          if (document.getElementById("".concat(this.jSPlugin.id, "-headControl-right"))) {
+            document.getElementById("".concat(this.jSPlugin.id, "-headControl-right")).style.display = "none";
+          }
+
           this.Rec = new MobileRec(this.jSPlugin);
         } else {
-          this.Rec = new Rec(this.jSPlugin);
+          this.Rec = new Rec(this.jSPlugin); // 回放时间轴预留48像素空间
+
+          var _checkTimer2 = setInterval(function () {
+            if (window.EZUIKit[_this10.jSPlugin.id].state.EZUIKitPlayer.init) {
+              clearInterval(_checkTimer2); // 检测到渲染回放时间轴，执行一次reSize
+              // this.jSPlugin.reSize(this.jSPlugin.params.width, this.jSPlugin.params.height);
+            }
+          }, 50);
         }
       }
 
-      var isNeedRenderPTZ = (lodash.findIndex(this.themeData.header.btnList, function (v) {
+      var isNeedRenderPTZ = lodash.findIndex(this.themeData.footer.btnList, function (v) {
         return v.iconId === 'pantile' && v.isrender === 1;
-      }) >= 0 || this.isMobile && matchEzopenUrl(this.jSPlugin.url).type.indexOf('live') !== -1) && !this.jSPlugin.disabledPTZ;
+      }) >= 0 && !this.jSPlugin.disabledPTZ;
 
       if (isNeedRenderPTZ) {
-        this.MobilePtz = new MobilePtz(this.jSPlugin);
-        this.Ptz = new Ptz(this.jSPlugin);
-      } else {
+        if (this.isMobile) {
+          this.MobilePtz = new MobilePtz(this.jSPlugin);
+        }
+
         this.Ptz = new Ptz(this.jSPlugin);
       } //  监听全屏事件触发
 
 
       var fullscreenchange = function fullscreenchange() {
-        var _this5$decoderState$s = _this5.decoderState.state,
-            expend = _this5$decoderState$s.expend,
-            webExpend = _this5$decoderState$s.webExpend;
+        var _this10$decoderState$ = _this10.decoderState.state,
+            expend = _this10$decoderState$.expend,
+            webExpend = _this10$decoderState$.webExpend;
         var isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
 
         if (!isFullScreen) {
-          _this5.jSPlugin.jSPlugin.JS_Resize(_this5.jSPlugin.width, _this5.jSPlugin.height);
+          _this10.jSPlugin.reSize(_this10.jSPlugin.params.width, _this10.jSPlugin.params.height);
 
           if (expend) {
-            _this5.setDecoderState({
+            _this10.setDecoderState({
               expend: false
             });
           }
 
           if (webExpend) {
-            _this5.setDecoderState({
+            _this10.setDecoderState({
               webExpend: false
             });
           }
@@ -29458,7 +31217,19 @@ var Theme = /*#__PURE__*/function () {
         window.addEventListener(item, function (data) {
           return fullscreenchange();
         });
-      });
+      }); // // 判断是否配置封面
+
+      if (this.themeData.poster) {
+        this.jSPlugin.poster = this.themeData.poster;
+        var checkTimer = setInterval(function () {
+          if (window.EZUIKit[_this10.jSPlugin.id].state.EZUIKitPlayer.init) {
+            clearInterval(checkTimer);
+
+            _this10.jSPlugin.setPoster(_this10.themeData.poster);
+          }
+        }, 50);
+      }
+
       this.inited = true; //设备信息
 
       this.getDeviceInfo();
@@ -29466,24 +31237,24 @@ var Theme = /*#__PURE__*/function () {
   }, {
     key: "getDeviceInfo",
     value: function getDeviceInfo() {
-      var _this6 = this;
+      var _this11 = this;
 
       var deviceAPISuccess = function deviceAPISuccess(data) {
         if (data.code == 200 && data.data) {
           // 设备序列号
-          if (document.getElementById("".concat(_this6.jSPlugin.id, "-deviceName-content"))) {
-            document.getElementById("".concat(_this6.jSPlugin.id, "-deviceName-content")).style.maxWidth = "160px";
-            document.getElementById("".concat(_this6.jSPlugin.id, "-deviceName-content")).style.overflow = "hidden";
-            document.getElementById("".concat(_this6.jSPlugin.id, "-deviceName-content")).style.textOverflow = "ellipsis";
-            document.getElementById("".concat(_this6.jSPlugin.id, "-deviceName-content")).innerHTML = data.data.deviceName;
+          if (document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content"))) {
+            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content")).style.maxWidth = "160px";
+            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content")).style.overflow = "hidden";
+            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content")).style.textOverflow = "ellipsis";
+            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content")).innerHTML = data.data.deviceName;
           } // 设备序列号
 
 
-          if (document.getElementById("".concat(_this6.jSPlugin.id, "-deviceID-content"))) {
-            document.getElementById("".concat(_this6.jSPlugin.id, "-deviceID-content")).style.maxWidth = "160px";
-            document.getElementById("".concat(_this6.jSPlugin.id, "-deviceID-content")).style.overflow = "hidden";
-            document.getElementById("".concat(_this6.jSPlugin.id, "-deviceID-content")).style.textOverflow = "ellipsis";
-            document.getElementById("".concat(_this6.jSPlugin.id, "-deviceID-content")).innerHTML = matchEzopenUrl(_this6.jSPlugin.url).deviceSerial;
+          if (document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content"))) {
+            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content")).style.maxWidth = "160px";
+            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content")).style.overflow = "hidden";
+            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content")).style.textOverflow = "ellipsis";
+            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content")).innerHTML = matchEzopenUrl(_this11.jSPlugin.url).deviceSerial;
           }
         }
       };
@@ -29493,40 +31264,120 @@ var Theme = /*#__PURE__*/function () {
         deviceSerial: matchEzopenUrl(this.jSPlugin.url).deviceSerial
       }, '', deviceAPISuccess);
     }
+  }, {
+    key: "editStart",
+    value: function editStart(callback) {
+      var audioControlsDOM = document.getElementById("".concat(this.jSPlugin.id, "-audioControls"));
+      var headerMessageDOM = document.getElementById("".concat(this.jSPlugin.id, "-headControl"));
+
+      if (headerMessageDOM) {
+        headerMessageDOM.setAttribute('class', 'header-controls themeEditing');
+      }
+
+      if (audioControlsDOM) {
+        audioControlsDOM.setAttribute('class', 'footer-controls themeEditing');
+      }
+
+      this.setDecoderState({
+        isEditing: true
+      });
+    }
+  }, {
+    key: "editEnd",
+    value: function editEnd(callback) {
+      var audioControlsDOM = document.getElementById("".concat(this.jSPlugin.id, "-audioControls"));
+      var headerMessageDOM = document.getElementById("".concat(this.jSPlugin.id, "-headControl"));
+
+      if (headerMessageDOM) {
+        headerMessageDOM.setAttribute('class', 'header-controls');
+      }
+
+      if (audioControlsDOM) {
+        audioControlsDOM.setAttribute('class', 'footer-controls');
+      }
+
+      this.setDecoderState({
+        isEditing: false
+      });
+    }
   }]);
 
   return Theme;
 }();
 
+Date.prototype.Format = function (fmt) {
+  //author: meizz
+  var o = {
+    "M+": this.getMonth() + 1,
+    //月份
+    "d+": this.getDate(),
+    //日
+    "h+": this.getHours(),
+    //小时
+    "m+": this.getMinutes(),
+    //分
+    "s+": this.getSeconds(),
+    //秒
+    "q+": Math.floor((this.getMonth() + 3) / 3),
+    //季度
+    "S": this.getMilliseconds() //毫秒
+
+  };
+  if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+
+  for (var k in o) {
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+  }
+
+  return fmt;
+};
+
 var Monitor = /*#__PURE__*/function () {
-  function Monitor(params) {
+  function Monitor(params, jsPlugin) {
     _classCallCheck$1(this, Monitor);
 
     this.params = params;
     this.state = {};
+    this.jsPlugin = jsPlugin;
+    this.url = "https://log.ys7.com/statistics.do?";
+
+    if (params.env) {
+      switch (params.env) {
+        case 'test12':
+          this.url = "https://test12dclog.ys7.com/statistics.do?";
+          break;
+
+        case 'online':
+          break;
+
+        default:
+          this.url = params.env;
+          break;
+      }
+    }
   }
+  /** 生成uuid */
+
 
   _createClass$1(Monitor, [{
+    key: "uuid",
+    value: function uuid() {
+      var s = [];
+      var hexDigits = "0123456789abcdef";
+
+      for (var i = 0; i < 36; i++) {
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+      }
+      s[14] = "4";
+      s[19] = hexDigits.substr(s[19] & 0x3 | 0x8, 1);
+      s[8] = s[13] = s[18] = s[23] = "-";
+      var uuid = s.join("");
+      return uuid;
+    }
+  }, {
     key: "dclog",
     value: function dclog(dclogObj) {
-      var params = this.params;
-      var url = "https://log.ys7.com/statistics.do?";
-
-      if (params.env) {
-        switch (params.env) {
-          case 'test12':
-            url = "https://test12dclog.ys7.com/statistics.do?";
-            break;
-
-          case 'online':
-            break;
-
-          default:
-            url = params.env;
-            break;
-        }
-      }
-
+      var imgUrl = this.url;
       var obj = Object.assign({}, {
         systemName: "open_website_monitor"
       }, {
@@ -29549,10 +31400,82 @@ var Monitor = /*#__PURE__*/function () {
           return;
         }
 
-        url += "".concat(index === 0 ? '' : '&').concat(item, "=").concat(encodeURIComponent(value));
+        imgUrl += "".concat(index === 0 ? '' : '&').concat(item, "=").concat(encodeURIComponent(value));
       });
       var img = new Image();
-      img.src = url;
+      img.src = imgUrl;
+    }
+  }, {
+    key: "localInfoLog",
+    value: function localInfoLog(dclogObj) {
+      var imgUrl = this.url; // var obj = Object.assign({}, { systemName: "open_netstream_localinfo" }, dclogObj, {un:dclogObj.url}, { st: new Date().getTime(), h: window.location.pathname }); // usr_name 更改为un，兼容旧
+
+      var domain = window.location.protocol + '//' + window.location.host;
+      var obj = {
+        systemName: "open_netstream_localinfo",
+        Ver: 'v6.0.0',
+        PlatAddr: domain,
+        ExterVer: 'v6.0.0',
+        OpId: this.uuid(),
+        CltType: 102,
+        AppId: "",
+        playurl: encodeURIComponent(this.jsPlugin.url),
+        StartTime: new Date().Format('yyyy-MM-dd hh:mm:ss.S'),
+        // 每个日志包含当前的时间
+        OS: navigator.platform
+      };
+      obj = Object.assign(obj, dclogObj);
+      Object.keys(obj).forEach(function (item, index) {
+        var value = obj[item];
+
+        if (typeof obj[item] === 'string') {
+          value = obj[item].replace('%', '%25'); // decodeURIComponent 无法解析%
+        }
+
+        if (typeof obj[item] === 'undefined') {
+          return;
+        }
+
+        imgUrl += "".concat(index === 0 ? '' : '&').concat(item, "=").concat(encodeURIComponent(value));
+      });
+      var img = new Image();
+      img.src = imgUrl;
+    }
+  }, {
+    key: "playLog",
+    value: function playLog(dclogObj) {
+      var url = this.url;
+      var imgUrl = url;
+      var obj = {
+        systemName: "open_netstream_play_main",
+        playurl: encodeURIComponent(this.jsPlugin.url),
+        Time: new Date().Format('yyyy-MM-dd hh:mm:ss.S'),
+        //Enc: 0,  // 0 不加密 1 加密
+        //PlTp: PlTp,  // 1 直播 2 回放
+        Via: 2,
+        // 2 服务端取流
+        //ErrCd: 0,
+        OpId: this.uuid() //Cost: (new Date()).getTime() - _this.initTime,  // 毫秒数
+        //Serial: getQueryString('dev', item),
+        //Channel: getQueryString('chn', item),
+
+      };
+      obj = Object.assign(obj, dclogObj);
+      Object.keys(obj).forEach(function (item, index) {
+        var value = obj[item];
+
+        if (typeof obj[item] === 'string') {
+          value = obj[item].replace('%', '%25'); // decodeURIComponent 无法解析%
+        }
+
+        if (typeof obj[item] === 'undefined') {
+          return;
+        }
+
+        imgUrl += "".concat(index === 0 ? '' : '&').concat(item, "=").concat(encodeURIComponent(value));
+      });
+      var img = new Image();
+      img.src = imgUrl;
     }
   }]);
 
@@ -31074,7 +32997,7 @@ var Monitor = /*#__PURE__*/function () {
       var style = "";
       style += "width:" + width + "px;";
       style += "height:" + height + "px;";
-      style += "-webkit-transform: rotate(0); transform: rotate(0);";
+      style += "-webkit-transform: none; transform: none;";
       style += "-webkit-transform-origin: 0 0;";
       style += "transform-origin: 0 0;";
       wrapper.style.cssText = style;
@@ -31347,7 +33270,7 @@ var __instance = function () {
 
     AudioRenderer.unique = this;
     this.oAudioContext = null;
-    this.currentVolume = 0.8; // 初始音量
+    this.currentVolume = 80; // 初始音量
 
     this.bSetVolume = false;
     this.gainNode = null;
@@ -31452,7 +33375,7 @@ var __instance = function () {
           self.bSetVolume = false;
         }
 
-        self.gainNode.gain.value = self.currentVolume; // self.currentVolume = self.gainNode.gain.value;
+        self.gainNode.gain.value = self.currentVolume / 100; // self.currentVolume = self.gainNode.gain.value;
 
         self.gainNode.connect(self.oAudioContext.destination);
         bufferSource.connect(self.gainNode);
@@ -31495,7 +33418,7 @@ var __instance = function () {
       this.bSetVolume = true;
       this.currentVolume = iVolume; // 储存当前窗口设置音量值
 
-      this.mVolumes.set(this.iWndNum, iVolume);
+      this.mVolumes.set(this.iWndNum, this.currentVolume);
       return true;
     }
     /**
@@ -31514,7 +33437,7 @@ var __instance = function () {
       var iVolume = this.mVolumes.get(iWndNum);
 
       if (iVolume == undefined) {
-        iVolume = 0.8; // 默认音量
+        iVolume = 80; // 默认音量
       }
 
       this.currentVolume = iVolume;
@@ -31533,7 +33456,7 @@ var __instance = function () {
       var iVolume = this.mVolumes.get(this.iWndNum);
 
       if (iVolume == undefined) {
-        iVolume = 0.8; // 默认音量
+        iVolume = 80; // 默认音量
       }
 
       return iVolume;
@@ -31755,13 +33678,13 @@ var fragmentYUVShader = ['precision highp float;', 'varying highp vec2 textureCo
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, width, height, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, yData);
       var cbDataLength = width / 2 * height / 2;
       var cbData = i420Data.subarray(width * height, width * height + cbDataLength);
-      gl.activeTexture(gl.TEXTURE1);
-      gl.bindTexture(gl.TEXTURE_2D, uTextureRef);
+      gl.activeTexture(gl.TEXTURE2);
+      gl.bindTexture(gl.TEXTURE_2D, vTextureRef);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, width / 2, height / 2, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, cbData);
       var crDataLength = cbDataLength;
       var crData = i420Data.subarray(width * height + width * height / 4, width * height + width * height / 4 + crDataLength);
-      gl.activeTexture(gl.TEXTURE2);
-      gl.bindTexture(gl.TEXTURE_2D, vTextureRef);
+      gl.activeTexture(gl.TEXTURE1);
+      gl.bindTexture(gl.TEXTURE_2D, uTextureRef);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, width / 2, height / 2, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, crData);
     } else {
       // //裁剪宽
@@ -31793,8 +33716,8 @@ var fragmentYUVShader = ['precision highp float;', 'varying highp vec2 textureCo
         }
       }
 
-      gl.activeTexture(gl.TEXTURE1);
-      gl.bindTexture(gl.TEXTURE_2D, uTextureRef);
+      gl.activeTexture(gl.TEXTURE2);
+      gl.bindTexture(gl.TEXTURE_2D, vTextureRef);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, dWidth / 2, dHeight / 2, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, cbData);
       cbData = null;
       cbSonData = null;
@@ -31809,8 +33732,8 @@ var fragmentYUVShader = ['precision highp float;', 'varying highp vec2 textureCo
         }
       }
 
-      gl.activeTexture(gl.TEXTURE2);
-      gl.bindTexture(gl.TEXTURE_2D, vTextureRef);
+      gl.activeTexture(gl.TEXTURE1);
+      gl.bindTexture(gl.TEXTURE_2D, uTextureRef);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, dWidth / 2, dHeight / 2, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, crData);
       crData = null;
       crSonData = null;
@@ -31861,15 +33784,15 @@ var fragmentYUVShader = ['precision highp float;', 'varying highp vec2 textureCo
     var vTextureRef = this.vTextureRef;
     gl.deleteTexture(yTextureRef);
     gl.deleteTexture(uTextureRef);
-    gl.deleteTexture(vTextureRef);
+    gl.deleteTexture(vTextureRef); //gl.getExtension('WEBGL_lose_context').loseContext();
   };
 
   return RenderManager;
 });
 
 var matchTemplate = function matchTemplate(templateName, params) {
-  var IFRAMETEMPLATE = ['simple', 'standard', 'security', 'voice', 'theme'];
-  var LOCALTEMPLATE = ['pcLive', 'pcRec', 'mobileLive', 'mobileRec', 'noData', ''];
+  var IFRAMETEMPLATE = ['theme', 'standard'];
+  var LOCALTEMPLATE = ['pcLive', 'pcRec', 'mobileLive', 'mobileRec', 'noData', 'security', 'voice', 'simple'];
 
   if (typeof templateName === 'undefined') {
     if (params.themeData) {
@@ -31957,8 +33880,14 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     _classCallCheck$1(this, EZUIKitPlayer);
 
     var _params$autoplay = params.autoplay,
-        autoplay = _params$autoplay === void 0 ? true : _params$autoplay;
+        autoplay = _params$autoplay === void 0 ? true : _params$autoplay; // 如果设置了模板（除精简版），此处不自动播放，根据模板判断是否执行自动播放:
+
+    if (params.template && params.template !== "simple" || params.themeData) {
+      autoplay = false;
+    }
+
     this.params = params;
+    this.autoplay = autoplay;
     window.EZUIKit[params.id] = {
       state: {
         EZUIKitPlayer: {
@@ -31972,7 +33901,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     if (matchTemplate(this.params.template, params).templateType !== 'iframe') {
       this.Monitor = new Monitor({
         env: !(typeof params.disableMonitor !== 'undefined' && params.disableMonitor) ? 'online' : 'test12'
-      });
+      }, this);
       this.id = params.id;
       this.width = params.width;
       this.height = params.height;
@@ -31990,14 +33919,40 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       this.env = {
         domain: "https://open.ys7.com"
       };
-      this.staticPath = isVersion2Available() ? "https://open.ys7.com/assets/ezuikit_v5.0" : "https://open.ys7.com/assets/ezuikit_v4.0";
+      var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      this.isMobile = isMobile; // 兼容多次初始化
+
+      if (document.getElementById("".concat(this.id, "-wrap"))) {
+        document.getElementById("".concat(this.id, "-wrap")).innerHTML = "";
+        document.getElementById("".concat(this.id, "-wrap")).id = this.id;
+      }
+
+      this.staticPath = isVersion2Available() ? "https://open.ys7.com/console/ezuikit_static/v6/v2" : "https://open.ys7.com/console/ezuikit_static/v6/v1";
 
       if (typeof params.staticPath === 'string') {
-        this.staticPath = params.staticPath;
+        if (params.staticPath.startsWith("http")) {
+          this.staticPath = params.staticPath;
+        } else {
+          this.staticPath = window.location.protocol + '//' + window.location.host + params.staticPath;
+        }
+
+        if (isVersion2Available()) {
+          this.staticPath += '/v2';
+        } else {
+          this.staticPath += '/v1';
+        }
       }
 
       if (typeof params.audio !== 'undefined') {
         this.audio = params.audio;
+      }
+
+      if (typeof params.env !== 'undefined') {
+        this.env = Object.assign(this.env, params.env);
+      }
+
+      if (typeof params.isMobile !== 'undefined') {
+        this.isMobile = params.isMobile;
       }
 
       if (typeof params.disabledTimeLine !== 'undefined') {
@@ -32012,16 +33967,14 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         this.enableSharedArrayBufferGuide = params.enableSharedArrayBufferGuide;
       }
 
-      var pluginUrl = "".concat(this.staticPath, "/js/jsPlugin-4.0.2.min.js");
+      var pluginUrl = "".concat(this.staticPath, "/js/jsPluginV1-1.0.0.min.js");
 
       if (isVersion2Available()) {
         console.log("启用多线程解析视频");
-        pluginUrl = "".concat(this.staticPath, "/jsPlugin-2.0.0.min.js");
+        pluginUrl = "".concat(this.staticPath, "/js/jsPluginV2-2.0.1.min.js");
       } else {
         // 是否引导用户开启谷歌实验室 Google Labs 特性
         //enableSharedArrayBufferGuide
-        var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
         var getChromeVersion = function getChromeVersion() {
           var arr = navigator.userAgent.split(' ');
           var chromeVersion = '';
@@ -32063,8 +34016,9 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         }
       }
 
+      this.pluginStatus = new Status(this, this.id);
       addJs(pluginUrl, function () {
-        if (autoplay) {
+        if (_this.autoplay) {
           _this.initTime = new Date().getTime();
 
           _this.Monitor.dclog({
@@ -32073,12 +34027,21 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             text: 'startInit'
           });
 
+          _this.Monitor.localInfoLog({
+            Serial: matchEzopenUrl(_this.url).deviceSerial,
+            Channel: matchEzopenUrl(_this.url).channelNo,
+            Ver: isVersion2Available() ? "v7.0.0" : "v6.0.0",
+            ExterVer: isVersion2Available() ? "v7.0.0" : "v6.0.0"
+          });
+
           var initEZUIKitPlayerPromise = _this.initEZUIKitPlayer(params);
 
           var getRealUrlPromise = _this._getRealUrlPromise(params.accessToken, params.url);
 
           Promise.all([initEZUIKitPlayerPromise, getRealUrlPromise]).then(function (values) {
             if (values[1]) {
+              _this.playStartTime = new Date().getTime();
+
               _this._pluginPlay(values[1], function () {
                 console.log("自动播放成功");
 
@@ -32098,6 +34061,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                   text: 'autoPlayError'
                 });
               });
+            } else {
+              console.log("promise of one", values);
             }
 
             window.EZUIKit[params.id].state.EZUIKitPlayer.init = true;
@@ -32105,6 +34070,13 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             if (document.getElementById("".concat(params.id, "canvas_draw0"))) {
               document.getElementById("".concat(params.id, "canvas_draw0")).style.border = "none";
             }
+          })["catch"](function (err) {
+            console.log("err", err);
+
+            _this.pluginStatus.loadingSetText({
+              text: err && err.msg || "获取播放地址失败",
+              color: 'red'
+            });
           });
         } else {
           _this.initTime = new Date().getTime();
@@ -32113,6 +34085,12 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             url: _this.url,
             action: 0,
             text: 'startInit'
+          });
+
+          _this.Monitor.localInfoLog({
+            Serial: matchEzopenUrl(_this.url).deviceSerial,
+            Channel: matchEzopenUrl(_this.url).channelNo,
+            Ver: isVersion2Available() ? "v7.0.0" : "v6.0.0"
           });
 
           var initEZUIKitPlayerPromise = _this.initEZUIKitPlayer(params);
@@ -32134,7 +34112,11 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           });
         }
       }, function () {
-        return !!window.JSPlugin;
+        if (isVersion2Available()) {
+          return !!window.JSPluginV2;
+        }
+
+        return !!window.JSPluginV1;
       });
 
       if (params.plugin && params.plugin.indexOf("talk") !== -1) {
@@ -32159,10 +34141,22 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           _params$height = params.height,
           height = _params$height === void 0 ? 400 : _params$height;
 
+      if (!params.width || !params.height) {
+        var videoDOMBounding = document.getElementById(id).getBoundingClientRect();
+
+        if (!params.width && videoDOMBounding.width > 0) {
+          width = videoDOMBounding.width;
+        }
+
+        if (!params.height && videoDOMBounding.height > 0) {
+          height = videoDOMBounding.height;
+        }
+      }
+
       if (!document.getElementById("".concat(id, "-wrap"))) {
         var wapDom = document.createElement("div");
         wapDom.id = "".concat(id, "-wrap");
-        wapDom.style = "display:inline-block;width:".concat(width, "px;position:relative;");
+        wapDom.style = "display:inline-block;width:".concat(width, "px;position:relative;vertical-align: bottom;");
         document.getElementById(id).parentNode.insertBefore(wapDom, document.getElementById(id));
         document.getElementById(id).parentNode.removeChild(document.getElementById(id)); // wapDom.appendChild(document.getElementById(id));
 
@@ -32171,11 +34165,24 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         document.getElementById(id).style.verticalAlign = "top";
       }
 
+      if (this.themeId) {
+        this.Theme = new Theme(this, params.id);
+        window.EZUIKit[params.id].state.EZUIKitPlayer.themeInit = true;
+
+        if (typeof this.params.handleThemeChange === 'function') {
+          this.handleThemeChange = this.params.handleThemeChange;
+        }
+      } // 初始化Message模块
+
+
+      var pluginMessage = new Message(this, id);
+      this.Message = pluginMessage;
+
       var initDecoder = function initDecoder(resolve, reject) {
         var jSPlugin;
 
         if (isVersion2Available()) {
-          jSPlugin = new window.JSPlugin({
+          jSPlugin = new window.JSPluginV2({
             szId: id,
             iType: 2,
             iWidth: width,
@@ -32183,110 +34190,166 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             iMaxSplit: 1,
             iCurrentSplit: 1,
             szBasePath: "",
-            staticPath: params.staticPath,
+            staticPath: _this2.staticPath,
             oStyle: {
               border: "none",
               background: "#000000"
             }
+          }); // 增加视频容器
+          //var pluginStatus = new Status(this, id);
+
+          _this2.pluginStatus.loadingStart(id);
+
+          _this2.pluginStatus.loadingSetText({
+            text: '初始化播放器完成'
           });
-        } else {
-          jSPlugin = new window.JSPlugin({
-            szId: id,
-            iType: 2,
-            iWidth: width,
-            iHeight: height,
-            iMaxSplit: 1,
-            iCurrentSplit: 1,
-            szBasePath: "",
-            staticPath: params.staticPath,
-            oStyle: {
-              border: "none",
-              background: "#000000"
-            }
-          });
-        }
 
-        jSPlugin.EventCallback = {
-          loadEventHandler: function loadEventHandler() {},
-          zoomEventResponse: function
-            /*iMode, aPoint*/
-          zoomEventResponse() {//电子放大回调
-          },
-          windowEventSelect: function windowEventSelect(iWndIndex) {//插件选中窗口回调
-          },
-          pluginErrorHandler: function pluginErrorHandler(iWndIndex, iErrorCode, oError) {
-            //插件错误回调
-            console.log(iWndIndex, iErrorCode, oError);
+          _this2.env = {
+            domain: "https://open.ys7.com"
+          };
 
-            if (iErrorCode === 1003) {
-              console.log("断流");
+          if (typeof params.env !== 'undefined') {
+            _this2.env = Object.assign(_this2.env, params.env);
+          }
 
-              _this2.pluginStatus.loadingSetText({
-                text: "连接断开，请重试",
-                color: 'red'
-              });
+          if (typeof params.handleTalkSuccess !== 'undefined') {
+            _this2.handleTalkSuccess = params.handleTalkSuccess;
+          }
 
-              if (typeof _this2.params.handleError === 'function') {
-                _this2.params.handleError({
-                  msg: "连接断开，请重试",
-                  retcode: 1003,
+          if (typeof params.handleTalkError !== 'undefined') {
+            _this2.handleTalkError = params.handleTalkError;
+          }
+
+          _this2.errorHander = new Code();
+          _this2.jSPlugin = jSPlugin; // if (this.themeId) {
+          //   this.Theme = new Theme(this, id);
+          //   window.EZUIKit[params.id].state.EZUIKitPlayer.themeInit = true;
+          // }
+
+          var checkTimer = setInterval(function () {
+            if (_this2.jSPlugin.Module && _this2.jSPlugin.Module._JSPlayM4_GetSDKVersion && _this2.jSPlugin.Module._JSPlayM4_GetSDKVersion()) {
+              clearInterval(checkTimer);
+
+              if (typeof _this2.params.handleInitSuccess === 'function') {
+                _this2.params.handleInitSuccess({
+                  retcode: 0,
                   id: _this2.params.id,
-                  type: "handleError"
+                  type: "handleInitSuccess"
                 });
               }
+
+              resolve({
+                meta: {
+                  retcode: 200,
+                  msg: "初始化成功"
+                }
+              });
             }
-          },
-          windowEventOver: function windowEventOver(iWndIndex) {},
-          windowEventOut: function windowEventOut(iWndIndex) {},
-          windowEventUp: function windowEventUp(iWndIndex) {},
-          windowFullCcreenChange: function windowFullCcreenChange(bFull) {},
-          firstFrameDisplay: function firstFrameDisplay(iWndIndex, iWidth, iHeight) {
-            console.log(iWidth, iHeight);
-            jSPlugin.JS_SetCanFullScreen(false);
+          }, 50);
+        } else {
+          jSPlugin = new window.JSPluginV1({
+            szId: id,
+            iType: 2,
+            iWidth: width,
+            iHeight: height,
+            iMaxSplit: 1,
+            iCurrentSplit: 1,
+            szBasePath: "",
+            staticPath: _this2.staticPath,
+            oStyle: {
+              border: "none",
+              background: "#000000"
+            }
+          }); // 增加视频容器
+          //var pluginStatus = new Status(this, id);
 
-            _this2.pluginStatus.loadingClear();
-          },
-          performanceLack: function performanceLack() {},
-          mouseEvent: function mouseEvent(iMouseEventType, iMouseX, iMouseY) {}
-        }; // 增加视频容器
+          _this2.pluginStatus.loadingStart(id);
 
-        var pluginStatus = new Status(_this2, id);
-        pluginStatus.loadingStart(id);
-        pluginStatus.loadingSetText({
-          text: '初始化播放器完成'
-        });
-        _this2.env = {
-          domain: "https://open.ys7.com"
-        };
+          _this2.pluginStatus.loadingSetText({
+            text: '初始化播放器完成'
+          });
 
-        if (typeof params.env !== 'undefined') {
-          _this2.env = Object.assign(_this2.env, params.env);
-        }
+          jSPlugin.EventCallback = {
+            loadEventHandler: function loadEventHandler() {},
+            zoomEventResponse: function
+              /*iMode, aPoint*/
+            zoomEventResponse() {//电子放大回调
+            },
+            windowEventSelect: function windowEventSelect(iWndIndex) {//插件选中窗口回调
+            },
+            pluginErrorHandler: function pluginErrorHandler(iWndIndex, iErrorCode, oError) {
+              //插件错误回调
+              console.log(iWndIndex, iErrorCode, oError);
 
-        if (typeof params.handleTalkSuccess !== 'undefined') {
-          _this2.handleTalkSuccess = params.handleTalkSuccess;
-        }
+              if (iErrorCode === 1003) {
+                console.log("断流");
 
-        if (typeof params.handleTalkError !== 'undefined') {
-          _this2.handleTalkError = params.handleTalkError;
-        }
+                _this2.pluginStatus.loadingSetText({
+                  text: "连接断开，请重试",
+                  color: 'red'
+                });
 
-        _this2.errorHander = new Code();
-        _this2.jSPlugin = jSPlugin;
+                if (typeof _this2.params.handleError === 'function') {
+                  _this2.params.handleError({
+                    msg: "连接断开，请重试",
+                    retcode: 1003,
+                    id: _this2.params.id,
+                    type: "handleError"
+                  });
+                }
+              }
+            },
+            windowEventOver: function windowEventOver(iWndIndex) {},
+            windowEventOut: function windowEventOut(iWndIndex) {},
+            windowEventUp: function windowEventUp(iWndIndex) {},
+            windowFullCcreenChange: function windowFullCcreenChange(bFull) {},
+            firstFrameDisplay: function firstFrameDisplay(iWndIndex, iWidth, iHeight) {
+              console.log(iWidth, iHeight);
+              jSPlugin.JS_SetCanFullScreen(false);
 
-        if (_this2.themeId && !window.EZUIKit[params.id].state.EZUIKitPlayer.themeInit) {
-          _this2.Theme = new Theme(_this2, id);
-          window.EZUIKit[params.id].state.EZUIKitPlayer.themeInit = true;
-        }
+              _this2.pluginStatus.loadingClear();
+            },
+            performanceLack: function performanceLack() {},
+            mouseEvent: function mouseEvent(iMouseEventType, iMouseX, iMouseY) {}
+          };
+          _this2.env = {
+            domain: "https://open.ys7.com"
+          };
 
-        _this2.pluginStatus = pluginStatus; // 待需要改造plugin，异步判断；
-
-        resolve({
-          meta: {
-            retcode: 200,
-            msg: "初始化成功"
+          if (typeof params.env !== 'undefined') {
+            _this2.env = Object.assign(_this2.env, params.env);
           }
-        });
+
+          if (typeof params.handleTalkSuccess !== 'undefined') {
+            _this2.handleTalkSuccess = params.handleTalkSuccess;
+          }
+
+          if (typeof params.handleTalkError !== 'undefined') {
+            _this2.handleTalkError = params.handleTalkError;
+          }
+
+          _this2.errorHander = new Code();
+          _this2.jSPlugin = jSPlugin; // if (this.themeId) {
+          //   this.Theme = new Theme(this, id);
+          //   window.EZUIKit[params.id].state.EZUIKitPlayer.themeInit = true;
+          // }
+          // 待需要改造plugin，异步判断；
+
+          if (typeof _this2.params.handleInitSuccess === 'function') {
+            _this2.params.handleInitSuccess({
+              retcode: 0,
+              id: _this2.params.id,
+              type: "handleInitSuccess"
+            });
+          }
+
+          resolve({
+            meta: {
+              retcode: 200,
+              msg: "初始化成功"
+            }
+          });
+        }
       };
 
       var initDecoderPromise = new Promise(initDecoder);
@@ -32351,6 +34414,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               if (typeof _this3.jSPlugin.decoderVersion !== 'undefined' && _this3.jSPlugin.decoderVersion === '2.0') {
                 _this3.validateCode = validateCode;
               } else {
+                console.log("设置密钥", validateCode);
+
                 _this3.jSPlugin.JS_SetSecretKey(0, validateCode);
               }
             } // 回放处理
@@ -32578,7 +34643,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               });
             }
 
-            resolve(realUrl);
+            reject(data);
           } // fetch real url end
 
         });
@@ -32634,6 +34699,10 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
 
       console.log("get real url result ===", data);
 
+      if (!data) {
+        return false;
+      }
+
       function getPlayParams(url) {
         var websocketConnectUrl = url.split('?')[0].replace('/live', '').replace('/playback', '');
         var websocketStreamingParam = (url.indexOf('/live') === -1 ? url.indexOf('cloudplayback') !== -1 ? '/cloudplayback?' : '/playback?' : '/live?') + url.split('?')[1];
@@ -32676,6 +34745,11 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           _this4.Theme.setDecoderState({
             play: true
           });
+
+          var isOpenSound = lodash.findIndex(_this4.Theme.themeData.footer.btnList, function (v) {
+            return v.iconId === 'sound' && v.isrender === 1 && v.defaultActive === 1;
+          }) > -1;
+          _this4.audio = isOpenSound;
         }
 
         if (_this4.audio) {
@@ -32700,10 +34774,32 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           d: new Date().getTime() - _this4.playStartTime,
           text: 'startPlaySuccess'
         });
-      }, function (err) {
-        var errorInfo = _this4.errorHander.matchErrorInfo(err.oError.errorCode);
 
-        var msg = errorInfo ? errorInfo.description : '播放失败，请检查设备及客户端网络';
+        _this4.Monitor.playLog({
+          Enc: _this4.url.indexOf("@") === -1 ? 0 : 1,
+          // 0 不加密 1 加密
+          PlTp: _this4.url.indexOf("back") === -1 ? 1 : 2,
+          // 1 直播 2 回放
+          Via: 2,
+          // 2 服务端取流
+          ErrCd: 0,
+          Cost: new Date().getTime() - _this4.playStartTime,
+          // 毫秒数
+          Serial: matchEzopenUrl(_this4.url).deviceSerial,
+          Channel: matchEzopenUrl(_this4.url).channelNo,
+          Ver: isVersion2Available() ? "v7.0.0" : "v6.0.0"
+        });
+      }, function (err) {
+        console.log("err", err);
+        var msg = '播放失败，请检查设备及客户端网络';
+        var retcode = -1;
+
+        if (err && err.oError && err.oError.errorCode) {
+          var errorInfo = _this4.errorHander.matchErrorInfo(err.oError.errorCode);
+
+          msg = errorInfo && errorInfo.description ? errorInfo.description : '播放失败，请检查设备及客户端网络';
+          retcode = err.oError.errorCode;
+        }
 
         _this4.pluginStatus.loadingSetText({
           text: msg,
@@ -32712,7 +34808,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
 
         if (typeof _this4.params.handleError === 'function') {
           _this4.params.handleError({
-            retcode: err.oError.errorCode,
+            retcode: retcode,
             msg: msg,
             id: _this4.params.id,
             type: "handleError"
@@ -32727,12 +34823,31 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           d: new Date().getTime() - _this4.playStartTime,
           text: 'startPlayError'
         });
+
+        _this4.Monitor.playLog({
+          Enc: _this4.url.indexOf("@") === -1 ? 0 : 1,
+          // 0 不加密 1 加密
+          PlTp: _this4.url.indexOf("back") === -1 ? 1 : 2,
+          // 1 直播 2 回放
+          Via: 2,
+          // 2 服务端取流
+          ErrCd: retcode,
+          Cost: -1,
+          // 毫秒数
+          Serial: matchEzopenUrl(_this4.url).deviceSerial,
+          Channel: matchEzopenUrl(_this4.url).channelNo,
+          Ver: isVersion2Available() ? "v7.0.0" : "v6.0.0"
+        });
       });
     }
   }, {
     key: "play",
     value: function play(options) {
       var _this5 = this;
+
+      if (this.jSPlugin.bPlay) {
+        return false;
+      }
 
       this.pluginStatus.setPlayStatus({
         play: false,
@@ -32777,7 +34892,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
 
           if (typeof _this5.params.handleError === 'function') {
             _this5.params.handleError({
-              retcode: err.oError.errorCode,
+              retcode: err.oError ? err.oError.errorCode : -1,
               msg: msg,
               id: _this5.params.id,
               type: "handleError"
@@ -32793,6 +34908,17 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "stop",
     value: function stop() {
       var _this6 = this;
+
+      if (!this.jSPlugin.bPlay) {
+        console.log("当前非播放状态");
+        var promise = new Promise(function (resolve, reject) {
+          reject({
+            retcode: -1,
+            msg: "当前非播放状态"
+          });
+        });
+        return promise;
+      }
 
       this.pluginStatus.setPlayStatus({
         loading: true
@@ -32813,21 +34939,78 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       });
     }
   }, {
+    key: "changeVideoLevel",
+    value: function changeVideoLevel(level) {
+      var _this7 = this;
+      var initUrl = this.url;
+      var url = level ? initUrl.replace(".live", ".hd.live") : initUrl.replace(".hd.live", ".live");
+      this.jSPlugin.playURL = level ? this.jSPlugin.playURL.replace("stream=2", "stream=1") : this.jSPlugin.playURL.replace("stream=1", "stream=2");
+      console.log("changeVideoLevel", url, this.jSPlugin.playURL);
+      this.url = url;
+      var promise = new Promise(function (resolve, reject) {
+        _this7.pause().then(function () {
+          console.log("暂停成功");
+
+          _this7.resume().then(function (data) {
+            console.log("恢复成功");
+          });
+        })["catch"](function () {
+          console.log("暂停失败");
+
+          _this7.resume().then(function (data) {
+            console.log("恢复成功");
+          });
+        });
+      });
+      return promise;
+    }
+  }, {
     key: "changePlayUrl",
     value: function changePlayUrl(options) {
-      var _this7 = this;
+      var _this8 = this;
 
       var initUrl = this.url;
       var url = matchUrl(initUrl, options);
       console.log("changePlayUrl", url);
       this.url = url;
       var promise = new Promise(function (resolve, reject) {
-        _this7.stop().then(function () {
-          console.log("changePlayUrl stop success");
+        _this8.stop().then(function () {
+          console.log("changePlayUrl stop success"); // 云台初始化
+
+          if (_this8.Theme && _this8.Theme.Ptz) {
+            _this8.Theme.setDecoderState({
+              pantile: false
+            });
+
+            _this8.Theme.Ptz.hide();
+          } // 录制初始化
+
+
+          if (_this8.Theme) {
+            _this8.Theme.setDecoderState({
+              recordvideo: false
+            });
+          } // 电子放大初始化
+
+
+          if (_this8.Theme) {
+            _this8.Theme.setDecoderState({
+              zoom: false
+            });
+          } // 对讲初始化
+
+
+          if (_this8.Theme && _this8.Theme.decoderState.state.talk) {
+            _this8.stopTalk();
+
+            _this8.Theme.setDecoderState({
+              talk: false
+            });
+          }
 
           if (options.accessToken) {
-            _this7.accessToken = options.accessToken;
-            return _this7.play({
+            _this8.accessToken = options.accessToken;
+            return _this8.play({
               accessToken: options.accessToken,
               url: url
             }).then(function () {
@@ -32838,7 +35021,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             });
           }
 
-          _this7.play(url).then(function () {
+          _this8.play(url).then(function () {
             console.log("changePlayUrl replay success");
             resolve(url);
           })["catch"](function (err) {
@@ -32848,8 +35031,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           console.log("切换过程停止失败", err);
 
           if (options.accessToken) {
-            _this7.accessToken = options.accessToken;
-            return _this7.play({
+            _this8.accessToken = options.accessToken;
+            return _this8.play({
               accessToken: options.accessToken,
               url: url
             }).then(function () {
@@ -32859,7 +35042,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             });
           }
 
-          _this7.play(url).then(function () {
+          _this8.play(url).then(function () {
             resolve(url);
           })["catch"](function (err) {
             reject(url);
@@ -32936,19 +35119,19 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "getOSDTime",
     value: function getOSDTime() {
-      var _this8 = this;
+      var _this9 = this;
 
       var promise = new Promise(function (resolve, reject) {
-        _this8.jSPlugin.JS_GetOSDTime(0).then(function (data) {
+        _this9.jSPlugin.JS_GetOSDTime(0).then(function (data) {
           resolve({
             code: 0,
             retcode: 0,
             data: data
           }); // 兼容旧版本callback
 
-          if (typeof _this8.params.getOSDTimeCallBack === 'function') {
-            _this8.params.getOSDTimeCallBack({
-              id: _this8.id,
+          if (typeof _this9.params.getOSDTimeCallBack === 'function') {
+            _this9.params.getOSDTimeCallBack({
+              id: _this9.id,
               type: 'getOSDTime',
               code: 0,
               data: data
@@ -32961,9 +35144,9 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             data: err
           }); // 兼容旧版本callback
 
-          if (typeof _this8.params.getOSDTimeCallBack === 'function') {
-            _this8.params.getOSDTimeCallBack({
-              id: _this8.id,
+          if (typeof _this9.params.getOSDTimeCallBack === 'function') {
+            _this9.params.getOSDTimeCallBack({
+              id: _this9.id,
               type: 'getOSDTime',
               code: -1,
               data: -1
@@ -32976,7 +35159,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "capturePicture",
     value: function capturePicture(name) {
-      var _this9 = this;
+      var _this10 = this;
 
       var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var capturePictureRT = this.jSPlugin.JS_CapturePicture(0, name, "JPEG", callback, !!callback);
@@ -32985,14 +35168,14 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         // 兼容旧版本callback
         if (typeof this.params.capturePictureCallBack === 'function') {
           capturePictureRT.then(function () {
-            _this9.params.capturePictureCallBack({
-              id: _this9.id,
+            _this10.params.capturePictureCallBack({
+              id: _this10.id,
               type: 'capturePicture',
               code: 0
             });
           })["catch"](function () {
-            _this9.params.capturePictureCallBack({
-              id: _this9.id,
+            _this10.params.capturePictureCallBack({
+              id: _this10.id,
               type: 'capturePicture',
               code: -1
             });
@@ -33009,7 +35192,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "startSave",
     value: function startSave(name) {
-      var _this10 = this;
+      var _this11 = this;
 
       var startSaveRT = this.jSPlugin.JS_StartSave(0, name);
 
@@ -33017,14 +35200,14 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         // 兼容旧版本callback
         if (typeof this.params.startSaveCallBack === 'function') {
           startSaveRT.then(function () {
-            _this10.params.startSaveCallBack({
-              id: _this10.id,
+            _this11.params.startSaveCallBack({
+              id: _this11.id,
               type: 'startSave',
               code: 0
             });
           })["catch"](function () {
-            _this10.params.startSaveCallBack({
-              id: _this10.id,
+            _this11.params.startSaveCallBack({
+              id: _this11.id,
               type: 'startSave',
               code: -1
             });
@@ -33047,7 +35230,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "stopSave",
     value: function stopSave() {
-      var _this11 = this;
+      var _this12 = this;
 
       var stopSaveRT = this.jSPlugin.JS_StopSave(0);
 
@@ -33055,14 +35238,14 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         // 兼容旧版本callback
         if (typeof this.params.startSaveCallBack === 'function') {
           stopSaveRT.then(function () {
-            _this11.params.stopSaveCallBack({
-              id: _this11.id,
+            _this12.params.stopSaveCallBack({
+              id: _this12.id,
               type: 'stopSave',
               code: 0
             });
           })["catch"](function () {
-            _this11.params.stopSaveCallBack({
-              id: _this11.id,
+            _this12.params.stopSaveCallBack({
+              id: _this12.id,
               type: 'stopSave',
               code: -1
             });
@@ -33168,52 +35351,120 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "setPoster",
     value: function setPoster(url) {
-      this.pluginStatus.setPoster(url);
+      // this.pluginStatus.setPoster(url);
+      if (isVersion2Available()) {
+        if (document.getElementById("".concat(this.id))) {
+          document.getElementById("".concat(this.id)).style.backgroundImage = "url(".concat(url, ")");
+          document.getElementById("".concat(this.id)).style.backgroundSize = "cover";
+        }
+      } else {
+        if (document.getElementById("".concat(this.id, "canvas0"))) {
+          document.getElementById("".concat(this.id, "canvas0")).style.backgroundImage = "url(".concat(url, ")");
+          document.getElementById("".concat(this.id, "canvas0")).style.backgroundSize = "cover";
+        }
+      }
     }
   }, {
     key: "reSize",
     value: function reSize(width, height) {
+      var headerHeight = 0;
+      var timeLineHeight = 0;
+      this.params.height = height;
+      this.params.width = width; //总体高度包含模板
+
+      if (this.Theme && this.Theme.isNeedRenderHeader && document.getElementById("".concat(this.id, "-headControl"))) {
+        headerHeight = parseInt(document.getElementById("".concat(this.id, "-headControl")).style.height, 10);
+      }
+
+      if (this.Theme && this.Theme.isNeedRenderTimeLine && !this.isMobile) {
+        timeLineHeight = 48;
+      }
+
+      height = height - headerHeight - timeLineHeight;
       this.width = width;
       this.height = height;
-      document.getElementById("".concat(this.id, "-wrap")).style = "width:".concat(width, "px;position:relative;");
-      this.jSPlugin.JS_Resize(width, height);
+      document.getElementById("".concat(this.id, "-wrap")).style = "width:".concat(width, "px;position:relative;display:inline-block;vertical-align: bottom;");
+      document.getElementById("".concat(this.id)).style.width = width + 'px';
+      document.getElementById("".concat(this.id)).style.height = height + 'px';
+
+      if (this.jSPlugin && this.jSPlugin.bPlay) {
+        if (this.jSPlugin) {
+          this.jSPlugin.iHeight = height;
+          this.jSPlugin.iWidth = width;
+        }
+
+        this.jSPlugin.JS_Resize(width, height);
+      } else {
+        if (document.getElementById("".concat(this.id, "-player"))) {
+          document.getElementById("".concat(this.id, "-player")).style.width = width;
+          document.getElementById("".concat(this.id, "-player")).style.height = height;
+        }
+
+        var scale = 1;
+
+        if (document.getElementById("".concat(this.id, "canvas0"))) {
+          var isNeedScale = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+
+          if (isNeedScale) {
+            scale = 2;
+          }
+
+          document.getElementById("".concat(this.id, "canvas0")).style.width = width * scale;
+          document.getElementById("".concat(this.id, "canvas0")).style.height = height * scale;
+          document.getElementById("".concat(this.id, "canvas0")).width = width * scale;
+          document.getElementById("".concat(this.id, "canvas0")).height = height * scale;
+          document.getElementById("".concat(this.id, "canvas0")).parentNode.style.width = width * scale;
+          document.getElementById("".concat(this.id, "canvas0")).parentNode.style.height = height * scale;
+          document.getElementById("".concat(this.id, "canvas_draw0")).height = height * scale;
+        }
+
+        if (this.jSPlugin) {
+          this.jSPlugin.iHeight = height * scale;
+          this.jSPlugin.iWidth = width * scale;
+        }
+      }
     }
   }, {
     key: "fast",
-    value: function fast() {
-      var _this12 = this;
+    value: function fast(next) {
+      var _this13 = this;
 
       var speed = this.speed;
 
-      if (speed === 1) {
-        speed = 2;
-      } else if (speed === 2) {
-        speed = 4;
+      if (next) {
+        var fastRT = this.jSPlugin.JS_Fast(0, next);
       } else {
-        if (typeof this.params.handleError === 'function') {
-          this.params.handleError({
-            msg: "播放速度最大为4倍速度",
-            retcode: 1003,
-            id: this.id,
-            type: "handleError"
+        if (speed === 1) {
+          speed = 2;
+        } else if (speed === 2) {
+          speed = 4;
+        } else {
+          if (typeof this.params.handleError === 'function') {
+            this.params.handleError({
+              msg: "播放速度最大为4倍速度",
+              retcode: 1003,
+              id: this.id,
+              type: "handleError"
+            });
+          }
+
+          return new Promise(function (resolve, reject) {
+            _this13.speed = speed;
+            reject({
+              code: -1,
+              data: {
+                speed: speed,
+                result: "播放速度最大为4倍速度"
+              }
+            });
           });
         }
 
-        return new Promise(function (resolve, reject) {
-          _this12.speed = speed;
-          reject({
-            code: -1,
-            data: {
-              speed: speed,
-              result: "播放速度最大为4倍速度"
-            }
-          });
-        });
+        var fastRT = this.jSPlugin.JS_Fast(0);
       }
 
-      var fastRT = this.jSPlugin.JS_Fast(0);
       return new Promise(function (resolve) {
-        _this12.speed = speed;
+        _this13.speed = speed;
         resolve({
           code: 0,
           data: {
@@ -33226,7 +35477,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "slow",
     value: function slow() {
-      var _this13 = this;
+      var _this14 = this;
 
       var speed = this.speed;
 
@@ -33245,7 +35496,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         }
 
         return new Promise(function (resolve, reject) {
-          _this13.speed = speed;
+          _this14.speed = speed;
           reject({
             code: -1,
             data: {
@@ -33258,7 +35509,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
 
       var slowRT = this.jSPlugin.JS_Slow(0);
       return new Promise(function (resolve) {
-        _this13.speed = speed;
+        _this14.speed = speed;
         resolve({
           code: 0,
           data: {
@@ -33272,28 +35523,34 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "seek",
     value: function seek(startTime, endTime) {
       var url = this.url;
-      var currentDay = (getQueryString(url, 'begin') || new Date().Format('yyyyMMdd')).substr(0, 8);
+      var currentDay = (getQueryString('begin', url) || new Date().Format('yyyyMMdd')).substr(0, 8);
       endTime = formatRecTime(currentDay, '235959');
 
       if (startTime.length === 6) {
         startTime = formatRecTime(currentDay, startTime);
       } else if (startTime.length === 16) {
         if (startTime.substr(0, 8) !== currentDay) {
+          if (typeof this.params.handleError === 'function') {
+            this.params.handleError({
+              msg: "seek时间不能跨日期",
+              retcode: -1,
+              id: this.id,
+              type: "handleError"
+            });
+          }
+
+          return false;
+        }
+      } else {
+        if (typeof this.params.handleError === 'function') {
           this.params.handleError({
-            msg: "seek时间不能跨日期",
+            msg: "seek时间格式错误",
             retcode: -1,
             id: this.id,
             type: "handleError"
           });
-          return false;
         }
-      } else {
-        this.params.handleError({
-          msg: "seek时间格式错误",
-          retcode: -1,
-          id: this.id,
-          type: "handleError"
-        });
+
         return false;
       } // 格式化回放时间
 
@@ -33337,18 +35594,18 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "fullScreen",
     value: function fullScreen() {
-      var _this14 = this;
+      var _this15 = this;
 
       var promise = requestFullScreenPromise(document.getElementById("".concat(this.id)));
       promise.then(function (data) {
         console.log("全屏promise", window.screen.availWidth);
 
-        _this14.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight); // 兼容旧版本callback
+        _this15.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight); // 兼容旧版本callback
 
 
-        if (typeof _this14.params.fullScreenCallBack === 'function') {
-          _this14.params.fullScreenCallBack({
-            id: _this14.id,
+        if (typeof _this15.params.fullScreenCallBack === 'function') {
+          _this15.params.fullScreenCallBack({
+            id: _this15.id,
             type: 'fullScreen',
             code: 0
           });
@@ -33359,13 +35616,13 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         var isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
 
         if (!isFullScreen) {
-          _this14.jSPlugin.JS_Resize(_this14.width, _this14.height);
+          _this15.jSPlugin.JS_Resize(_this15.width, _this15.height);
         } // 兼容旧版本callback
 
 
-        if (typeof _this14.params.fullScreenChangeCallBack === 'function') {
-          _this14.params.fullScreenChangeCallBack({
-            id: _this14.id,
+        if (typeof _this15.params.fullScreenChangeCallBack === 'function') {
+          _this15.params.fullScreenChangeCallBack({
+            id: _this15.id,
             type: 'fullScreen',
             code: isFullScreen
           });
@@ -33381,13 +35638,13 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "cancelFullScreen",
     value: function cancelFullScreen() {
-      var _this15 = this;
+      var _this16 = this;
 
       var cancelPromise = cancelFullScreenPromise();
       cancelPromise.then(function (data) {
-        console.log("取消全屏", data, _this15.jSPlugin);
+        console.log("取消全屏", data, _this16.jSPlugin);
 
-        _this15.jSPlugin.JS_Resize(_this15.width, _this15.height);
+        _this16.jSPlugin.JS_Resize(_this16.width, _this16.height);
       });
     }
   }, {
@@ -33421,7 +35678,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "getDeviceCapacity",
     value: function getDeviceCapacity() {
-      var _this16 = this;
+      var _this17 = this;
 
       var apiDomain = this.env.domain;
 
@@ -33433,7 +35690,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
 
       var capacitySuccess = function capacitySuccess(data) {
         if (data.code == 200 && data.data) {
-          _this16.capacity = data.data;
+          _this17.capacity = data.data;
         }
       };
 
@@ -33442,6 +35699,16 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         deviceSerial: matchEzopenUrl(this.url).deviceSerial
       };
       request(capacityUrl, 'POST', capacityParams, '', capacitySuccess);
+    }
+  }, {
+    key: "pause",
+    value: function pause() {
+      return this.jSPlugin.JS_Pause(0);
+    }
+  }, {
+    key: "resume",
+    value: function resume(time) {
+      return this.jSPlugin.JS_Resume(time);
     }
   }]);
 
