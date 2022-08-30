@@ -16112,6 +16112,12 @@ var Rec = /*#__PURE__*/function () {
     this.datepickerVisible = false;
     this.seekTimer = null;
     this.disabled = false;
+    this.seekFrequency = 2000;
+
+    if (this.jSPlugin.params && this.jSPlugin.params.seekFrequency) {
+      this.seekFrequency = this.jSPlugin.params.seekFrequency;
+    }
+
     var canvasItemWidth = parseInt(getComputedStyle(document.getElementById(jSPlugin.id)).width, 10) - 100;
     var canvasContainer = document.createElement('div');
     canvasContainer.style = "display:inline-block;height:48px;";
@@ -16161,12 +16167,12 @@ var Rec = /*#__PURE__*/function () {
             cloudSeek();
             clearTimeout(_this.seekTimer);
             _this.seekTimer = null;
-          }, 2000);
+          }, _this.seekFrequency);
         } else {
           var callback = function callback() {
             setTimeout(function () {
               _this.disabled = false;
-            }, 2000);
+            }, _this.seekFrequency);
           };
 
           var localRecSeek = function localRecSeek(callback) {
@@ -16220,7 +16226,7 @@ var Rec = /*#__PURE__*/function () {
 
             _this.seekTimer = setTimeout(function () {
               localRecSeek(callback);
-            }, 2000);
+            }, _this.seekFrequency);
           } else {
             localRecSeek(callback);
           }
@@ -16234,15 +16240,25 @@ var Rec = /*#__PURE__*/function () {
       addJs("".concat(_this.jSPlugin.staticPath, "/rec/datepicker.js"), function () {
         addJs("".concat(_this.jSPlugin.staticPath, "/rec/datepicker.zh-CN.js"), function () {
           // 日期选择：
-          $("#".concat(_this.jSPlugin.id, "-datepicker")).datepicker({
-            autoShow: false,
-            autoHide: true,
-            autoPick: true,
-            language: 'zh-CN',
-            defaultDate: new Date(),
-            format: 'yyyy-mm-dd',
-            endDate: new Date()
-          });
+          if (!document.getElementsByClassName("datepicker-container")[0]) {
+            $("#".concat(_this.jSPlugin.id, "-datepicker")).datepicker({
+              autoShow: false,
+              autoHide: true,
+              autoPick: true,
+              language: 'zh-CN',
+              defaultDate: new Date(),
+              format: 'yyyy-mm-dd',
+              endDate: new Date(),
+              inline: true,
+              container: document.getElementById("".concat(_this.jSPlugin.id, "-wrap"))
+            });
+          }
+
+          if (document.getElementsByClassName("datepicker-container")[0]) {
+            document.getElementsByClassName("datepicker-container")[0].style.display = "none";
+          }
+
+          _this.datepickerVisible = false;
           $("#".concat(_this.jSPlugin.id, "-datepicker")).on('pick.datepicker', function (e) {
             console.log("重新选择日期", e.date, new Date(e.date).Format('yyyyMMdd'), new Date(document.getElementById("".concat(_this.jSPlugin.id, "-datepicker")).value).Format('yyyyMMdd'));
 
@@ -16256,16 +16272,27 @@ var Rec = /*#__PURE__*/function () {
               });
             }
 
-            $('#datepicker').datepicker('hide');
+            if (document.getElementsByClassName("datepicker-container")[0]) {
+              document.getElementsByClassName("datepicker-container")[0].style.display = "none";
+            }
+
             _this.datepickerVisible = false;
-          }); // $(`#${this.jSPlugin.id}-datepicker`).click((e) => {
-          //   if (this.datepickerVisible) {
-          //     $(`#${this.jSPlugin.id}-datepicker`).datepicker('hide');
-          //   } else {
-          //     $(`#${this.jSPlugin.id}-datepicker`).datepicker('show');
-          //   }
-          //   this.datepickerVisible = !this.datepickerVisible;
-          // });
+          });
+          $("#".concat(_this.jSPlugin.id, "-datepicker")).off('click').on("click", function (e) {
+            console.log("点击日期");
+
+            if (!_this.datepickerVisible) {
+              if (document.getElementsByClassName("datepicker-container")[0]) {
+                document.getElementsByClassName("datepicker-container")[0].style.display = "inline";
+              }
+            } else {
+              if (document.getElementsByClassName("datepicker-container")[0]) {
+                document.getElementsByClassName("datepicker-container")[0].style.display = "none";
+              }
+            }
+
+            _this.datepickerVisible = !_this.datepickerVisible;
+          });
         });
       });
     }); // 尺度变化监听
@@ -16989,6 +17016,12 @@ var MobileRec = /*#__PURE__*/function () {
     this.operating = false;
     this.seekTimer = null;
     this.disabled = false;
+    this.seekFrequency = 2000;
+
+    if (this.jSPlugin.params && this.jSPlugin.params.seekFrequency) {
+      this.seekFrequency = this.jSPlugin.params.seekFrequency;
+    }
+
     var oS = document.createElement('style');
     oS.innerHTML = "\n    body{\n      padding: 0;\n      margin: 0;\n    }\n    .time-line-container {\n      text-align: left;\n      height: 300px;\n      /* outline: 1px solid red; */\n      /* background: gray; */\n      position: relative;\n      /* padding-top: 60px; */\n      margin-top: 20px;\n    }\n\n    .time-line-container .time-line-item-container {\n      display: inline-block;\n      /* height: 400px; */\n      width: 30%;\n      /* background: indianred; */\n      overflow-y: scroll;\n      overflow-x: hidden;\n      /* padding-top: 60px; */\n      height: 300px;\n      box-sizing: border-box;\n      white-space: nowrap;\n      position: relative;\n    }\n\n    .time-line-container .time-line-item-container::-webkit-scrollbar {\n      width: 0px;\n      /*\u6EDA\u52A8\u6761\u5BBD\u5EA6*/\n      height: 0px;\n      /*\u6EDA\u52A8\u6761\u9AD8\u5EA6*/\n    }\n\n    .time-line-item .time-item {\n      position: relative;\n      box-sizing: border-box;\n      height: 60px;\n      font-size: 12px;\n      color: rgb(150, 150, 150);\n      border-right: 6px solid;\n      border-right-color: #ddd;\n    }\n\n    .time-line-item .time-item .scale {\n      width: 6px;\n      height: 9px;\n      border-bottom: 1px solid #ccc;\n      float: right;\n      clear: both;\n    }\n\n    .time-line-item .time-item .item-unavail {\n      width: 6px;\n      position: absolute;\n      left: 100%;\n      background-color: #ddd;\n    }\n\n    .time-line-container .current-time {\n      position: absolute;\n      left: 0;\n      top: 40px;\n      height: 29px;\n      /* line-height: 58px; */\n      border-bottom: 1px solid #648FFC;\n      width: 60%;\n      margin-left: 26%;\n    }\n\n    .time-line-container .current-time .current-time-bg {\n      position: relative;\n      top: 15px;\n      width: 100px;\n      height: 29px;\n      line-height: 29px;\n      left: -70px;\n      font-size: 12px;\n      color: #2C2C2C;\n    }\n\n    .time-line-container .current-time .current-time-bg::before {\n      content: '';\n      display: inline-block;\n      width: 6px;\n      height: 6px;\n      border-radius: 100%;\n      background: #648FFC;\n      top: 11px;\n      position: absolute;\n      right: 30px;\n    }\n\n    .date-switch-container {\n      height: 40px;\n      position: relative;\n      text-align: center;\n      margin: 20px 10px;\n    }\n\n    .date-switch-container .current-date {\n      line-height: 40px;\n      height: 22px;\n      font-size: 16px;\n      color: #2C2C2C;\n      text-align: center;\n      font-weight: bold;\n    }\n\n    .date-container {\n      width: 40px;\n      height: 40px;\n      position: absolute;\n      right: 0;\n      top: 0;\n    }\n\n    .rec-type-container {\n      display: flex;\n      justify-content: space-between;\n    }\n\n    .rec-type-container .rec-type-text {\n      padding: 0 15px;\n      font-size: 12px;\n      color: #2C2C2C;\n    }\n\n    .rec-type-container .rec-type-switch {\n      padding: 0 20px;\n    }\n\n    .date-container input {\n      position: absolute;\n      opacity: 0;\n      display: inline-block;\n      width: 40px;\n      height: 40px;\n      z-index: 10;\n      left: 0;\n    }\n\n    .date-container label {\n      position: absolute;\n      left: 0;\n      top: 0;\n      /* display: none; */\n      z-index: 0;\n    }\n\n    .date-icon {\n      display: inline-block;\n      width: 40px;\n      height: 40px;\n      background: url('https://resource.eziot.com/group2/M00/00/6A/CtwQF2F6VieAQrU9AAABP-_Nsqo949.png') no-repeat 100% 100%;\n    }\n    .select-container {\n      padding: 10px;\n      display: flex;\n      justify-content: space-between;\n    }\n\n    .advice {\n      height: 24px;\n      width: 70px;\n      display: flex;\n      justify-content: space-between;\n      line-height: 24px;\n      background: #F8F8F8;\n      border-radius: 8px;\n    }\n\n    .advice span {\n      width: 40px;\n      display: inline-block;\n    }\n\n    input[type=\"checkbox\"]:not(:checked)+.advice span:first-child {\n      box-shadow: 0px 2px 5px 0px rgb(23 45 101 / 20%);\n      border-radius: 8px;\n      text-align: center;\n\n    }\n\n    input[type=\"checkbox\"]:checked+.advice span:last-child {\n      box-shadow: 0px 2px 5px 0px rgb(23 45 101 / 20%);\n      border-radius: 8px;\n      text-align: center;\n    }\n\n    input[type=\"checkbox\"]:not(:checked)+.advice span:first-child svg {\n      fill: #648FFC !important;\n    }\n\n    input[type=\"checkbox\"]:checked+.advice span:last-child svg {\n      fill: #648FFC !important;\n    }";
     document.getElementsByTagName("head")[0].appendChild(oS);
@@ -17057,19 +17090,20 @@ var MobileRec = /*#__PURE__*/function () {
           clearTimeout(_this.seekTimer);
         } else {
           cloudSeek();
-        } // 限制每2秒只触发一次拖动
+        }
 
+        console.log("this.jsPlug", _this.jSPlugin.params); // 限制每2秒只触发一次拖动
 
         _this.seekTimer = setTimeout(function () {
           cloudSeek();
           clearTimeout(_this.seekTimer);
           _this.seekTimer = null;
-        }, 2000);
+        }, _this.seekFrequency);
       } else {
         var callback = function callback() {
           setTimeout(function () {
             _this.disabled = false;
-          }, 2000);
+          }, _this.seekFrequency);
         };
 
         var localRecSeek = function localRecSeek(callback) {
@@ -17123,7 +17157,7 @@ var MobileRec = /*#__PURE__*/function () {
 
           _this.seekTimer = setTimeout(function () {
             localRecSeek(callback);
-          }, 2000);
+          }, _this.seekFrequency);
         } else {
           // 限制每2秒只触发一次拖动
           localRecSeek(callback);
@@ -29769,6 +29803,14 @@ var Theme = /*#__PURE__*/function () {
           //   this.startAutoFocus();
           // })
         }
+      } else {
+        var _checkTimer = setInterval(function () {
+          if (window.EZUIKit[_this4.jSPlugin.id].state.EZUIKitPlayer.init) {
+            clearInterval(_checkTimer);
+
+            _this4.jSPlugin.play();
+          }
+        }, 50);
       }
 
       var isNeedRoom = lodash.findIndex(this.themeData.footer.btnList, function (v) {
@@ -31090,9 +31132,9 @@ var Theme = /*#__PURE__*/function () {
           headerContainer.style = styleToString(headerStyle);
           document.getElementById("".concat(videoId, "-wrap")).insertBefore(headerContainer, document.getElementById(videoId)); // 头部预留x像素空间
 
-          var _checkTimer = setInterval(function () {
+          var _checkTimer2 = setInterval(function () {
             if (window.EZUIKit[_this10.jSPlugin.id].state.EZUIKitPlayer.init) {
-              clearInterval(_checkTimer); // 检测到渲染头部，执行一次reSize
+              clearInterval(_checkTimer2); // 检测到渲染头部，执行一次reSize
               // this.jSPlugin.reSize(this.jSPlugin.params.width,this.jSPlugin.params.height);
             }
           }, 50);
@@ -31168,9 +31210,9 @@ var Theme = /*#__PURE__*/function () {
         } else {
           this.Rec = new Rec(this.jSPlugin); // 回放时间轴预留48像素空间
 
-          var _checkTimer2 = setInterval(function () {
+          var _checkTimer3 = setInterval(function () {
             if (window.EZUIKit[_this10.jSPlugin.id].state.EZUIKitPlayer.init) {
-              clearInterval(_checkTimer2); // 检测到渲染回放时间轴，执行一次reSize
+              clearInterval(_checkTimer3); // 检测到渲染回放时间轴，执行一次reSize
               // this.jSPlugin.reSize(this.jSPlugin.params.width, this.jSPlugin.params.height);
             }
           }, 50);
@@ -31299,6 +31341,99 @@ var Theme = /*#__PURE__*/function () {
       this.setDecoderState({
         isEditing: false
       });
+    }
+  }, {
+    key: "webExpend",
+    value: function webExpend() {
+      var _this12 = this;
+
+      var _this$decoderState$st = this.decoderState.state;
+          _this$decoderState$st.webExpend;
+          var expend = _this$decoderState$st.expend,
+          play = _this$decoderState$st.play;
+
+      if (!play) {
+        return false;
+      }
+
+      if (expend) {
+        console.log("正在全局全屏");
+        return false;
+      }
+
+      console.log("执行网页全屏");
+      var footerDOMHeight = 0;
+      var headerDOMHeight = 0; // ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange'].forEach((item) => {
+      //   window.addEventListener(item, (data) => fullscreenchange("fullscreenchange", data));
+      // });
+      // //  监听全屏事件触发
+      // function fullscreenchange() {
+      //   let isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
+      //   return isFullScreen;
+      // }
+
+      var promise = requestFullScreenPromise(document.getElementById("".concat(this.jSPlugin.id, "-wrap")));
+      promise.then(function (data) {
+        console.log("全屏promise", window.screen.availWidth);
+
+        if (document.getElementById("".concat(_this12.jSPlugin.id, "-canvas-container"))) {
+          footerDOMHeight = parseInt(window.getComputedStyle(document.getElementById("".concat(_this12.jSPlugin.id, "-canvas-container"))).height, 10);
+        }
+
+        if (document.getElementById("".concat(_this12.jSPlugin.id, "-headControl"))) {
+          headerDOMHeight = parseInt(window.getComputedStyle(document.getElementById("".concat(_this12.jSPlugin.id, "-headControl"))).height, 10);
+        }
+
+        console.log("this.jSPlugin.JS_Resiz", footerDOMHeight, headerDOMHeight, document.body.clientWidth);
+
+        _this12.jSPlugin.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight - footerDOMHeight - headerDOMHeight);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
+  }, {
+    key: "expend",
+    value: function expend() {
+      var _this13 = this;
+
+      var _this$decoderState$st2 = this.decoderState.state,
+          webExpend = _this$decoderState$st2.webExpend;
+          _this$decoderState$st2.expend;
+          var play = _this$decoderState$st2.play;
+          _this$decoderState$st2.pantile;
+
+      if (!play) {
+        return false;
+      }
+
+      if (webExpend) {
+        console.log("正在网站全屏");
+        return false;
+      }
+
+      console.log("执行全局全屏");
+
+      if (this.isMobile) {
+        var heightIntercept = parseInt(getComputedStyle(document.getElementById("".concat(this.jSPlugin.id, "-wrap"))).height, 10) - parseInt(getComputedStyle(document.getElementById(this.jSPlugin.id)).height, 10);
+        requestMobileFullScreen(document.getElementById("".concat(this.jSPlugin.id, "-wrap")));
+        setTimeout(function () {
+          var width = document.documentElement.clientWidth;
+          var height = document.documentElement.clientHeight; // 兼容微信浏览器footer被隐藏
+          // document.getElementById(`${this.jSPlugin.id}-ez-iframe-footer-container`).style.marginTop = "0px";
+          // document.getElementById(`${this.jSPlugin.id}-headControl`).style.position = "absolute";
+
+          document.getElementById("".concat(_this13.jSPlugin.id)).style["backface-visibility"] = "hidden";
+
+          _this13.jSPlugin.jSPlugin.JS_Resize(height, width - heightIntercept);
+        }, 100);
+      } else {
+        var promise = requestFullScreenPromise(document.getElementById("".concat(this.jSPlugin.id)));
+        promise.then(function (data) {
+          _this13.jSPlugin.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight);
+        })["catch"](function (err) {
+          console.log(err);
+        });
+      }
     }
   }]);
 
@@ -34168,6 +34303,11 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       if (this.themeId) {
         this.Theme = new Theme(this, params.id);
         window.EZUIKit[params.id].state.EZUIKitPlayer.themeInit = true;
+        this.Monitor.dclog({
+          url: this.url,
+          action: 2,
+          text: this.themeId
+        });
 
         if (typeof this.params.handleThemeChange === 'function') {
           this.handleThemeChange = this.params.handleThemeChange;
@@ -34204,6 +34344,30 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             text: '初始化播放器完成'
           });
 
+          jSPlugin.EventCallback = {
+            pluginErrorHandler: function pluginErrorHandler(iWndIndex, iErrorCode, oError) {
+              //插件错误回调
+              console.log(iWndIndex, iErrorCode, oError);
+
+              if (iErrorCode === 1003) {
+                console.log("断流");
+
+                _this2.pluginStatus.loadingSetText({
+                  text: "连接断开，请重试",
+                  color: 'red'
+                });
+
+                if (typeof _this2.params.handleError === 'function') {
+                  _this2.params.handleError({
+                    msg: "连接断开，请重试",
+                    retcode: 1003,
+                    id: _this2.params.id,
+                    type: "handleError"
+                  });
+                }
+              }
+            }
+          };
           _this2.env = {
             domain: "https://open.ys7.com"
           };
@@ -34997,6 +35161,10 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             _this8.Theme.setDecoderState({
               zoom: false
             });
+
+            if (_this8.Zoom) {
+              _this8.Zoom.stopZoom();
+            }
           } // 对讲初始化
 
 
@@ -35014,7 +35182,17 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               accessToken: options.accessToken,
               url: url
             }).then(function () {
-              console.log("changePlayUrl replay success");
+              console.log("changePlayUrl replay success"); // 当前处于网页全屏状态
+
+              if (_this8.Theme && _this8.Theme.decoderState.state.webExpend) {
+                _this8.Theme.webExpend();
+              } // 当前处于全屏状态
+
+
+              if (_this8.Theme && _this8.Theme.decoderState.state.expend) {
+                _this8.Theme.expend();
+              }
+
               resolve(url);
             })["catch"](function (err) {
               reject(url);
@@ -35022,7 +35200,17 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           }
 
           _this8.play(url).then(function () {
-            console.log("changePlayUrl replay success");
+            console.log("changePlayUrl replay success"); // 当前处于网页全屏状态
+
+            if (_this8.Theme && _this8.Theme.decoderState.state.webExpend) {
+              _this8.Theme.webExpend();
+            } // 当前处于全屏状态
+
+
+            if (_this8.Theme && _this8.Theme.decoderState.state.expend) {
+              _this8.Theme.expend();
+            }
+
             resolve(url);
           })["catch"](function (err) {
             reject(url);

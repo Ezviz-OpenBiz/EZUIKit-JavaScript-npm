@@ -18,6 +18,15 @@
  .datepicker-panel>ul>li.picked, .datepicker-panel>ul>li.picked:hover {
   color: #39f;
 }
+.datepicker-inline {
+  position: absolute;
+  z-index: 999999;
+  bottom: 48px;
+  right: 24px;
+  height: 250px;
+  top: auto;
+  left: auto;
+ }
 .datepicker-panel>ul>li.picked {
   background: #1890ff;
   color: #fff;
