@@ -75,25 +75,36 @@ import  EZUIKit from 'ezuikit-js';
  >> <b>使用本地解码库提升加载速度</b>  <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/localDecoder.html" target="_blank">本地解码库示例</a> 
 
 ### 使用示例
-<b>基本使用：</b>  <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/base.html" target="_blank">基本使用示例</a>  
+> 1. 快速创建视频播放页面  
 
-<b>自定义主题：</b>  <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/template.html" target="_blank">自定义主题示例</a>  
+&emsp;&emsp;&emsp;&emsp;<b>基本使用：</b>  <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/base.html" target="_blank">基本使用示例</a>  
 
-<b>本地主题配置：</b>  <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/themeData.html" target="_blank">本地主题配置示例</a>  
+> 2. 前往[开放平台轻应用模板管理页](https://open.ys7.com/console/ezuikit/template.html)创建一个主题，可以动态配置你的播放主题，控件，示例展示了获取一个主题后使用示例。  
 
-<b>PC端预览-固定主题：</b>
+&emsp;&emsp;&emsp;&emsp;<b>自定义主题：</b>  <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/template.html" target="_blank">自定义主题示例</a>  
+
+> 3. 你可以本地创建一个主题配置，可以本地配置你的播放主题，控件，示例展示了本地配置项使用示例。  
+
+&emsp;&emsp;&emsp;&emsp;<b>本地主题配置：</b>  <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/themeData.html" target="_blank">本地主题配置示例</a>  
+
+> 4. 我们提供了一些通用场景的主题，PC端预览，PC端回放，移动端预览，移动端回放，你也可以直接使用。  
+
+
+&emsp;&emsp;&emsp;&emsp;<b>PC端预览-固定主题：</b>
 <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/pcLive.html" target="_blank">PC端预览-固定主题示例</a>  
 
-<b>PC端回放-固定主题：</b>
+&emsp;&emsp;&emsp;&emsp;<b>PC端回放-固定主题：</b>
 <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/pcRec.html" target="_blank">PC端回放-固定主题示例</a>  
 
-<b>移动端预览-固定主题：</b>
+&emsp;&emsp;&emsp;&emsp;<b>移动端预览-固定主题：</b>
 <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/mobileLive.html" target="_blank">移动端预览-固定主题示例</a>  
 
-<b>移动端回放-固定主题：</b>
+&emsp;&emsp;&emsp;&emsp;<b>移动端回放-固定主题：</b>
 <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/mobileRec.html" target="_blank">移动端回放-固定主题示例</a>  
 
-<b>单页面多实例(视频多窗口)：</b>
+>同一个页面播放多个视频，可以参考：  
+
+&emsp;&emsp;&emsp;&emsp;<b>单页面多实例(视频多窗口)：</b>
 <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/multi.html" target="_blank">单页面多实例(视频多窗口)示例</a>  
 
 #### 附录： 初始化参数说明
@@ -137,7 +148,7 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhm
 <tr><td>pcRec</td><td>	*固定模板 按钮列表，颜色，底部头部背景色固定， 可用于pc端回放，如需<br />修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData<br />本地配置*</td></tr>
 <tr><td>mobileLive</td><td>	*固定模板  按钮列表，颜色，底部头部背景色固定，可用于移动端预<br />览，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData<br />本地配置*</td></tr>
 <tr><td>mobileRec</td><td>*固定模板 按钮列表，颜色，底部头部背景色固定， 可用于移动端回放，<br />如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData<br />本地配置*</td></tr>
-<tr><td>自定义themeId</td><td>自定义主题，<a href="https://open.ys7.com/console/ezuikit/template.html" target="_blank">开放平台控制台配置</a><br />（v0.6.2版本及以上支持，建议使用 自定义themeId，或者使用themeData本地<br />配置）;</td></tr>
+<tr><td>自定义themeId</td><td>自定义主题，<a href="https://open.ys7.com/console/ezuikit/template.html" target="_blank">前往开放平台控制台配置页面获取</a><br />（v0.6.2版本及以上支持，建议使用 自定义themeId，或者使用themeData本地<br />配置）;</td></tr>
 </table>
 
 </td></tr>
@@ -150,6 +161,8 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 <pre><code>
 
 {
+    "autoFocus": 5,
+    "poster":"https://resource.eziot.com/group1/M00/00/89/CtwQEmLl8r-AZU7wAAETKlvgerU237.png",
     "header": {
         "color": "#1890ff",
         "activeColor": "#FFFFFF",
@@ -173,14 +186,14 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
                 "iconId": "cloudRec",
                 "part": "right",
                 "defaultActive": 0,
-                "memo": "顶部设备ID",
+                "memo": "头部云存储回放",
                 "isrender": 0
             },
             {
                 "iconId": "rec",
                 "part": "right",
                 "defaultActive": 0,
-                "memo": "顶部设备ID",
+                "memo": "头部本地回放",
                 "isrender": 0
             }
         ]
@@ -417,17 +430,6 @@ template参数说明
 |:--|:--|:--|:--|
 |type|	String| 模板名称，详见初始化参数template|	Y|
 
-#### 设置封面
-
->你可以在初始化时，通过参数poster设置默认封面
->实例初始化后可以调用设置封面方法再次更改封面
-
-```
-  player.setPoster(pictureUrl)
-  .then(()=>{
-    console.log("更改封面成功");
-  });
-```
 
 #### 开启电子放大
 >建议使用模板，模板中的电子放大功能更全
