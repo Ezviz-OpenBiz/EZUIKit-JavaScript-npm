@@ -268,7 +268,6 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 </td><td>N</td></tr>
 <tr><td>plugin</td><td>String</td><td>按需加载插件，可选值： talk：对讲，示例：plugin:["talk"] </td><td>N</td></tr>
 <tr><td>handleSuccess</td><td>function</td><td>自动播放成功回调</td><td>N</td></tr>
-<tr><td>poster</td><td>String</td><td>视频默认封面 版本号> v0.4.6 </td><td>N</td></tr>
 </table>
 
 
