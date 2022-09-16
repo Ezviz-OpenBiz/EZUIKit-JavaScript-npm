@@ -322,7 +322,8 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
   });
 ```
 #### 开始录制
-
+> 因录制解码库加载限制，录制库加载需要3S秒左右，请保证录制时长需要大于5秒。
+> 录制文件需要使用播放器，播放器下载地址 <a href="https://service.ys7.com/downloadInfoSite/admin">播放器下载</a>
 ```
   // 方式1
   player.startSave("唯一文件名");
