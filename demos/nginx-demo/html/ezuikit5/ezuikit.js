@@ -311,6 +311,61 @@ var request = function request(url, method, params, header, success, error) {
   }
 
   http_request.send(data);
+}; // 增加防抖函数
+
+var debouncePromise = function debouncePromise(fn, delay) {
+  var immdiate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var timer = null;
+  var isInvoke = false;
+  return function _debounce() {
+    var _this = this;
+
+    for (var _len = arguments.length, arg = new Array(_len), _key = 0; _key < _len; _key++) {
+      arg[_key] = arguments[_key];
+    }
+
+    return new Promise(function (resolve, reject) {
+      if (timer) {
+        console.log("防抖, delay 后执行", timer, delay, fn);
+        clearTimeout(timer);
+      } // 双击执行2次
+
+
+      if (immdiate && !isInvoke) {
+        console.log("防抖 第一次执行...", isInvoke, fn);
+        isInvoke = true;
+        fn.apply(_this, arg).then(function () {
+          resolve();
+        })["catch"](function (err) {
+          console.log("防抖,err", err);
+          reject();
+        });
+        setTimeout(function () {
+          isInvoke = false;
+        }, delay);
+      } else {
+        if (isInvoke) {
+          console.log("操作过于频繁，仅支持" + delay + "ms时间内切换一次");
+          reject({
+            code: -1,
+            msg: "操作过于频繁，仅支持" + delay + "ms时间内切换一次"
+          });
+          return false;
+        }
+
+        timer = setTimeout(function () {
+          console.log("防抖 执行...", fn);
+          fn.apply(_this, arg).then(function () {
+            resolve();
+          })["catch"](function (err) {
+            console.log("防抖,err", err);
+            reject();
+          });
+          isInvoke = false;
+        }, delay);
+      }
+    });
+  };
 };
 
 var HLS = /*#__PURE__*/function () {
@@ -16095,8 +16150,6 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
 
 var Rec = /*#__PURE__*/function () {
   function Rec(jSPlugin) {
-    var _this = this;
-
     _classCallCheck$1(this, Rec);
 
     this.jSPlugin = jSPlugin;
@@ -16107,7 +16160,6 @@ var Rec = /*#__PURE__*/function () {
 
     this.currentTimeWidth = 1; //回放时间轴尺度 1~4
 
-    this.timer = null;
     this.date = new Date();
     this.datepickerVisible = false;
     this.seekTimer = null;
@@ -16118,157 +16170,152 @@ var Rec = /*#__PURE__*/function () {
       this.seekFrequency = this.jSPlugin.params.seekFrequency;
     }
 
-    var canvasItemWidth = parseInt(getComputedStyle(document.getElementById(jSPlugin.id)).width, 10) - 100;
-    var canvasContainer = document.createElement('div');
-    canvasContainer.style = "display:inline-block;height:48px;";
-    canvasContainer.id = this.jSPlugin.id + "-canvas-container";
-    var canvasItem = document.createElement('canvas');
-    canvasItem.id = this.jSPlugin.id + "-canvas";
-    canvasItem.className = "time-line-body";
-    canvasItem.height = "48";
-    canvasItem.width = canvasItemWidth;
-    canvasItem.style = "display:inline-block;";
-    canvasItem.innerHTML = "该浏览器不支持canvas";
-    canvasContainer.appendChild(canvasItem);
-    insertAfter$1(canvasContainer, document.getElementById("".concat(this.jSPlugin.id, "-audioControls")));
-    var timeLineControlsContainer = document.createElement('div');
-    timeLineControlsContainer.className = "timeline-controls";
-    timeLineControlsContainer.style = "display:flex;width:100px;height:48px;text-align:center;line-height: 48px;vertical-align: top;background: #000000;";
-    var timeLineControls = "\n<div class=\"timeline-controls-scale\" style=\"display: inline-flex;flex-direction: column;justify-content: center;vertical-align: top;padding: 0 20px;\">\n  <span style=\"vertical-Align: middle;line-height: 14px;height: 18px; width: 18px;cursor:pointer;\" id=\"".concat(this.jSPlugin.id, "-timeline-scale-add\">\n    <svg fill=\"#2C2C2C\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"\n      viewBox=\"0 0 20 20\">\n      <title>add</title>\n      <g>\n        <polygon points=\"0.1,0.5 15,0.5 15,15.4 0.1,15.4 \t\" />\n      </g>\n      <g>\n        <path\n          fill=\"#FFFFFF\";\n          d=\"M7.6,12.4c-0.3,0-0.5-0.2-0.5-0.5v-8c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v8C8.1,12.2,7.9,12.4,7.6,12.4z\" />\n      </g>\n      <g>\n        <path\n          fill=\"#FFFFFF\";\n          d=\"M11.6,8.4h-8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h8c0.3,0,0.5,0.2,0.5,0.5S11.8,8.4,11.6,8.4z\" />\n      </g>\n    </svg>\n  </span>\n  <span style=\"vertical-Align: middle;line-height: 14px;height: 18px; width: 18px;cursor:pointer;\" id=\"").concat(this.jSPlugin.id, "-timeline-scale-sub\">\n    <svg fill=\"#2C2C2C\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"\n      viewBox=\"0 0 20 20\">\n      <title>reduce</title>\n      <g>\n        <polygon class=\"st0\" points=\"1,0.8 15.2,0.8 15.2,15 1,15 \t\" />\n      </g>\n      <g>\n        <path class=\"st1\"\n          fill=\"#FFFFFF\";\n          d=\"M12.1,8.4h-8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h8c0.3,0,0.5,0.2,0.5,0.5S12.4,8.4,12.1,8.4z\" />\n      </g>\n    </svg>\n  </span>\n</div>\n<label for=\"").concat(this.jSPlugin.id, "-datepicker\">\n  <div class=\"timeline-controls-date\">\n    <span>\n      <svg fill=\"#2C2C2C\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"\n        viewBox=\"0 0 20 20\">\n        <title>ifttt</title>\n        <g id=\"Rectangle\">\n          <rect x=\"0.6\" y=\"0.9\" class=\"st0\" width=\"20\" height=\"20\" />\n        </g>\n        <g id=\"Stroke-1\">\n          <path fill=\"#FFFFFF\"; class=\"st1\"\n            d=\"M14,7.2c-0.3,0-0.5-0.2-0.5-0.5V3.4c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v3.3C14.5,7,14.2,7.2,14,7.2z\" />\n        </g>\n        <g id=\"Stroke-3\">\n          <path fill=\"#FFFFFF\"; class=\"st1\"\n            d=\"M7.3,7.2C7,7.2,6.8,7,6.8,6.7V3.4c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v3.3C7.8,7,7.6,7.2,7.3,7.2z\" />\n        </g>\n        <g id=\"Stroke-5\">\n          <path fill=\"#FFFFFF\"; class=\"st1\"\n            d=\"M18.1,9.7h-15c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h15c0.3,0,0.5,0.2,0.5,0.5S18.4,9.7,18.1,9.7z\" />\n        </g>\n        <g id=\"Stroke-7\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M16.5,19.7H4.8c-1.2,0-2.2-1-2.2-2.2V6.7c0-1.2,1-2.2,2.2-2.2h11.7c1.2,0,2.2,1,2.2,2.2v10.8\nC18.6,18.8,17.7,19.7,16.5,19.7z M4.8,5.6c-0.6,0-1.2,0.5-1.2,1.2v10.8c0,0.6,0.5,1.2,1.2,1.2h11.7c0.6,0,1.2-0.5,1.2-1.2V6.7\nc0-0.6-0.5-1.2-1.2-1.2H4.8z\" />\n        </g>\n        <g id=\"Stroke-9\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M10.6,13.3c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5s0.3-0.2,0.5-0.2h0h0c0.4,0,0.7,0.3,0.7,0.7\nS11,13.3,10.6,13.3z\" />\n        </g>\n        <g id=\"Stroke-11\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M14.8,13.3c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2c0.4,0,0.7,0.3,0.7,0.7\nS15.2,13.3,14.8,13.3z M14.8,12.3c-0.2,0-0.3,0.1-0.3,0.3c0,0.2,0.3,0.4,0.5,0.2c0.1-0.1,0.1-0.1,0.1-0.2\nC15.1,12.4,15,12.3,14.8,12.3z\" />\n        </g>\n        <g id=\"Stroke-13\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M6.5,16.6c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2h0h0c0.4,0,0.7,0.3,0.7,0.7\nC7.2,16.3,6.9,16.6,6.5,16.6z\" />\n        </g>\n        <g id=\"Stroke-15\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M10.6,16.6c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2h0h0c0.4,0,0.7,0.3,0.7,0.7\nC11.4,16.3,11,16.6,10.6,16.6z\" />\n        </g>\n      </svg>\n    </span>\n  </div>\n</label>\n<input data-toggle=\"").concat(this.jSPlugin.id, "-datepicker\" id=\"").concat(this.jSPlugin.id, "-datepicker\" name=\"").concat(this.jSPlugin.id, "-datepicker\" style=\"opacity:0;width:24px;margin-left:-24px;cursor:pointer;\" />\n");
-    timeLineControlsContainer.innerHTML = timeLineControls;
-    insertAfter$1(timeLineControlsContainer, canvasContainer);
-    this.timeLine = new TimeLine$1(this.jSPlugin);
-    this.timeLine.init({
-      id: this.jSPlugin.id + '-canvas',
-      width: canvasItemWidth,
-      onChange: function onChange(time) {
-        console.log("time", time, new Date(time).Format('yyyyMMddhhmmss'));
-        var newBegin = new Date(time).Format('yyyyMMddhhmmss');
+    this.recInit();
+  }
 
-        if (matchEzopenUrl(_this.jSPlugin.url).type === 'cloud.rec') {
-          var cloudSeek = function cloudSeek() {
-            _this.jSPlugin.seek(newBegin.substr(8, 6), "235959");
+  _createClass$1(Rec, [{
+    key: "recInit",
+    value: function recInit() {
+      var _this = this;
 
-            _this.unSyncTimeLine();
+      var canvasItemWidth = parseInt(getComputedStyle(document.getElementById(this.jSPlugin.id)).width, 10) - 100;
+      var canvasContainer = document.createElement('div');
+      canvasContainer.style = "display:inline-block;height:48px;";
+      canvasContainer.id = this.jSPlugin.id + "-canvas-container";
+      var canvasItem = document.createElement('canvas');
+      canvasItem.id = this.jSPlugin.id + "-canvas";
+      canvasItem.className = "time-line-body";
+      canvasItem.height = "48";
+      canvasItem.width = canvasItemWidth;
+      canvasItem.style = "display:inline-block;";
+      canvasItem.innerHTML = "该浏览器不支持canvas";
+      canvasContainer.appendChild(canvasItem);
+      insertAfter$1(canvasContainer, document.getElementById("".concat(this.jSPlugin.id, "-audioControls")));
+      var timeLineControlsContainer = document.createElement('div');
+      timeLineControlsContainer.className = "timeline-controls";
+      timeLineControlsContainer.style = "display:flex;width:100px;height:48px;text-align:center;line-height: 48px;vertical-align: top;background: #000000;";
+      var timeLineControls = "\n<div class=\"timeline-controls-scale\" style=\"display: inline-flex;flex-direction: column;justify-content: center;vertical-align: top;padding: 0 20px;\">\n  <span style=\"vertical-Align: middle;line-height: 14px;height: 18px; width: 18px;cursor:pointer;\" id=\"".concat(this.jSPlugin.id, "-timeline-scale-add\">\n    <svg fill=\"#2C2C2C\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"\n      viewBox=\"0 0 20 20\">\n      <title>add</title>\n      <g>\n        <polygon points=\"0.1,0.5 15,0.5 15,15.4 0.1,15.4 \t\" />\n      </g>\n      <g>\n        <path\n          fill=\"#FFFFFF\";\n          d=\"M7.6,12.4c-0.3,0-0.5-0.2-0.5-0.5v-8c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v8C8.1,12.2,7.9,12.4,7.6,12.4z\" />\n      </g>\n      <g>\n        <path\n          fill=\"#FFFFFF\";\n          d=\"M11.6,8.4h-8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h8c0.3,0,0.5,0.2,0.5,0.5S11.8,8.4,11.6,8.4z\" />\n      </g>\n    </svg>\n  </span>\n  <span style=\"vertical-Align: middle;line-height: 14px;height: 18px; width: 18px;cursor:pointer;\" id=\"").concat(this.jSPlugin.id, "-timeline-scale-sub\">\n    <svg fill=\"#2C2C2C\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"\n      viewBox=\"0 0 20 20\">\n      <title>reduce</title>\n      <g>\n        <polygon class=\"st0\" points=\"1,0.8 15.2,0.8 15.2,15 1,15 \t\" />\n      </g>\n      <g>\n        <path class=\"st1\"\n          fill=\"#FFFFFF\";\n          d=\"M12.1,8.4h-8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h8c0.3,0,0.5,0.2,0.5,0.5S12.4,8.4,12.1,8.4z\" />\n      </g>\n    </svg>\n  </span>\n</div>\n<label for=\"").concat(this.jSPlugin.id, "-datepicker\">\n  <div class=\"timeline-controls-date\">\n    <span>\n      <svg fill=\"#2C2C2C\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"\n        viewBox=\"0 0 20 20\">\n        <title>ifttt</title>\n        <g id=\"Rectangle\">\n          <rect x=\"0.6\" y=\"0.9\" class=\"st0\" width=\"20\" height=\"20\" />\n        </g>\n        <g id=\"Stroke-1\">\n          <path fill=\"#FFFFFF\"; class=\"st1\"\n            d=\"M14,7.2c-0.3,0-0.5-0.2-0.5-0.5V3.4c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v3.3C14.5,7,14.2,7.2,14,7.2z\" />\n        </g>\n        <g id=\"Stroke-3\">\n          <path fill=\"#FFFFFF\"; class=\"st1\"\n            d=\"M7.3,7.2C7,7.2,6.8,7,6.8,6.7V3.4c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v3.3C7.8,7,7.6,7.2,7.3,7.2z\" />\n        </g>\n        <g id=\"Stroke-5\">\n          <path fill=\"#FFFFFF\"; class=\"st1\"\n            d=\"M18.1,9.7h-15c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h15c0.3,0,0.5,0.2,0.5,0.5S18.4,9.7,18.1,9.7z\" />\n        </g>\n        <g id=\"Stroke-7\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M16.5,19.7H4.8c-1.2,0-2.2-1-2.2-2.2V6.7c0-1.2,1-2.2,2.2-2.2h11.7c1.2,0,2.2,1,2.2,2.2v10.8\nC18.6,18.8,17.7,19.7,16.5,19.7z M4.8,5.6c-0.6,0-1.2,0.5-1.2,1.2v10.8c0,0.6,0.5,1.2,1.2,1.2h11.7c0.6,0,1.2-0.5,1.2-1.2V6.7\nc0-0.6-0.5-1.2-1.2-1.2H4.8z\" />\n        </g>\n        <g id=\"Stroke-9\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M10.6,13.3c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5s0.3-0.2,0.5-0.2h0h0c0.4,0,0.7,0.3,0.7,0.7\nS11,13.3,10.6,13.3z\" />\n        </g>\n        <g id=\"Stroke-11\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M14.8,13.3c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2c0.4,0,0.7,0.3,0.7,0.7\nS15.2,13.3,14.8,13.3z M14.8,12.3c-0.2,0-0.3,0.1-0.3,0.3c0,0.2,0.3,0.4,0.5,0.2c0.1-0.1,0.1-0.1,0.1-0.2\nC15.1,12.4,15,12.3,14.8,12.3z\" />\n        </g>\n        <g id=\"Stroke-13\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M6.5,16.6c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2h0h0c0.4,0,0.7,0.3,0.7,0.7\nC7.2,16.3,6.9,16.6,6.5,16.6z\" />\n        </g>\n        <g id=\"Stroke-15\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M10.6,16.6c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2h0h0c0.4,0,0.7,0.3,0.7,0.7\nC11.4,16.3,11,16.6,10.6,16.6z\" />\n        </g>\n      </svg>\n    </span>\n  </div>\n</label>\n<input data-toggle=\"").concat(this.jSPlugin.id, "-datepicker\" id=\"").concat(this.jSPlugin.id, "-datepicker\" name=\"").concat(this.jSPlugin.id, "-datepicker\" style=\"opacity:0;width:24px;margin-left:-24px;cursor:pointer;\" />\n");
+      timeLineControlsContainer.innerHTML = timeLineControls;
+      insertAfter$1(timeLineControlsContainer, canvasContainer);
+      this.timeLine = new TimeLine$1(this.jSPlugin);
+      this.timeLine.init({
+        id: this.jSPlugin.id + '-canvas',
+        width: canvasItemWidth,
+        onChange: function onChange(time) {
+          console.log("time", time, new Date(time).Format('yyyyMMddhhmmss'));
+          var newBegin = new Date(time).Format('yyyyMMddhhmmss');
 
-            setTimeout(function () {
-              _this.syncTimeLine();
-            }, 6000);
-          };
+          if (matchEzopenUrl(_this.jSPlugin.url).type === 'cloud.rec') {
+            var cloudSeek = function cloudSeek() {
+              _this.jSPlugin.seek(newBegin.substr(8, 6), "235959");
 
-          if (_this.seekTimer) {
-            clearTimeout(_this.seekTimer);
-          } else {
-            cloudSeek();
-          } // 限制每2秒只触发一次拖动
+              _this.unSyncTimeLine();
 
-
-          _this.seekTimer = setTimeout(function () {
-            cloudSeek();
-            clearTimeout(_this.seekTimer);
-            _this.seekTimer = null;
-          }, _this.seekFrequency);
-        } else {
-          var callback = function callback() {
-            setTimeout(function () {
-              _this.disabled = false;
-            }, _this.seekFrequency);
-          };
-
-          var localRecSeek = function localRecSeek(callback) {
-            _this.disabled = true;
-
-            _this.jSPlugin.pause().then(function () {
-              console.log("暂停成功");
-
-              _this.jSPlugin.resume(newBegin).then(function (data) {
-                console.log("恢复成功");
-
-                if (_this.jSPlugin.Theme) {
-                  _this.jSPlugin.Theme.setDecoderState({
-                    play: true
-                  });
-                }
-
-                if (callback) {
-                  callback();
-                }
-              })["catch"](function (err) {
-                console.log("恢复失败", err);
-              });
-            })["catch"](function () {
-              console.log("暂停失败");
-
-              _this.jSPlugin.resume(newBegin).then(function (data) {
-                console.log("恢复成功");
-
-                if (_this.jSPlugin.Theme) {
-                  _this.jSPlugin.Theme.setDecoderState({
-                    play: true
-                  });
-                }
-
-                if (callback) {
-                  callback();
-                }
-              })["catch"](function (err) {
-                console.log("恢复失败", err);
-              });
-            });
-          };
-
-          if (_this.disabled) {
-            console.log("操作频繁，等待2秒后执行"); // 限制每2秒只触发一次拖动
+              setTimeout(function () {
+                _this.syncTimeLine();
+              }, 6000);
+            };
 
             if (_this.seekTimer) {
               clearTimeout(_this.seekTimer);
-            }
+            } else {
+              cloudSeek();
+            } // 限制每2秒只触发一次拖动
+
 
             _this.seekTimer = setTimeout(function () {
-              localRecSeek(callback);
+              cloudSeek();
+              clearTimeout(_this.seekTimer);
+              _this.seekTimer = null;
             }, _this.seekFrequency);
           } else {
-            localRecSeek(callback);
+            var callback = function callback() {
+              setTimeout(function () {
+                _this.disabled = false;
+              }, _this.seekFrequency);
+            };
+
+            var localRecSeek = function localRecSeek(callback) {
+              _this.disabled = true;
+
+              _this.jSPlugin.pause().then(function () {
+                console.log("暂停成功");
+
+                _this.jSPlugin.resume(newBegin).then(function (data) {
+                  console.log("恢复成功");
+
+                  if (_this.jSPlugin.Theme) {
+                    _this.jSPlugin.Theme.setDecoderState({
+                      play: true
+                    });
+                  } // 打开声音
+
+
+                  if (_this.jSPlugin.Theme && _this.jSPlugin.Theme.decoderState.state.sound) {
+                    _this.jSPlugin.openSound();
+                  }
+
+                  if (callback) {
+                    callback();
+                  }
+                })["catch"](function (err) {
+                  console.log("恢复失败", err);
+                });
+              })["catch"](function () {
+                console.log("暂停失败");
+
+                _this.jSPlugin.resume(newBegin).then(function (data) {
+                  console.log("恢复成功");
+
+                  if (_this.jSPlugin.Theme) {
+                    _this.jSPlugin.Theme.setDecoderState({
+                      play: true
+                    });
+                  }
+
+                  if (callback) {
+                    callback();
+                  }
+                })["catch"](function (err) {
+                  console.log("恢复失败", err);
+                });
+              });
+            };
+
+            if (_this.disabled) {
+              console.log("操作频繁，等待2秒后执行"); // 限制每2秒只触发一次拖动
+
+              if (_this.seekTimer) {
+                clearTimeout(_this.seekTimer);
+              }
+
+              _this.seekTimer = setTimeout(function () {
+                localRecSeek(callback);
+              }, _this.seekFrequency);
+            } else {
+              localRecSeek(callback);
+            }
           }
         }
-      }
-    });
-    this.syncTimeLine(); // 加载日期选择器
+      });
+      this.syncTimeLine(); // 加载日期选择器
 
-    addCss("".concat(this.jSPlugin.staticPath, "/rec/datepicker.min.css"));
-    addJs("".concat(this.jSPlugin.staticPath, "/rec/jquery.min.js"), function () {
-      addJs("".concat(_this.jSPlugin.staticPath, "/rec/datepicker.js"), function () {
-        addJs("".concat(_this.jSPlugin.staticPath, "/rec/datepicker.zh-CN.js"), function () {
-          // 日期选择：
-          if (!document.getElementsByClassName("datepicker-container")[0]) {
-            $("#".concat(_this.jSPlugin.id, "-datepicker")).datepicker({
-              autoShow: false,
-              autoHide: true,
-              autoPick: true,
-              language: 'zh-CN',
-              defaultDate: new Date(),
-              format: 'yyyy-mm-dd',
-              endDate: new Date(),
-              inline: true,
-              container: document.getElementById("".concat(_this.jSPlugin.id, "-wrap"))
-            });
-          }
-
-          if (document.getElementsByClassName("datepicker-container")[0]) {
-            document.getElementsByClassName("datepicker-container")[0].style.display = "none";
-          }
-
-          _this.datepickerVisible = false;
-          $("#".concat(_this.jSPlugin.id, "-datepicker")).on('pick.datepicker', function (e) {
-            console.log("重新选择日期", e.date, new Date(e.date).Format('yyyyMMdd'), new Date(document.getElementById("".concat(_this.jSPlugin.id, "-datepicker")).value).Format('yyyyMMdd'));
-
-            if (e.date > new Date() || new Date(e.date).Format('yyyyMMdd') === new Date(document.getElementById("".concat(_this.jSPlugin.id, "-datepicker")).value).Format('yyyyMMdd')) {
-              e.preventDefault(); // Prevent to pick the date
-            } else {
-              _this.renderRec(e.date);
-
-              _this.jSPlugin.changePlayUrl({
-                begin: new Date(e.date).Format('yyyyMMdd')
+      addCss("".concat(this.jSPlugin.staticPath, "/rec/datepicker.min.css"));
+      addJs("".concat(this.jSPlugin.staticPath, "/rec/jquery.min.js"), function () {
+        addJs("".concat(_this.jSPlugin.staticPath, "/rec/datepicker.js"), function () {
+          addJs("".concat(_this.jSPlugin.staticPath, "/rec/datepicker.zh-CN.js"), function () {
+            // 日期选择：
+            if (!document.getElementsByClassName("datepicker-container")[0]) {
+              $("#".concat(_this.jSPlugin.id, "-datepicker")).datepicker({
+                autoShow: false,
+                autoHide: true,
+                autoPick: true,
+                language: 'zh-CN',
+                defaultDate: new Date(),
+                format: 'yyyy-mm-dd',
+                endDate: new Date(),
+                inline: true,
+                container: document.getElementById("".concat(_this.jSPlugin.id, "-wrap"))
               });
             }
 
@@ -16277,58 +16324,75 @@ var Rec = /*#__PURE__*/function () {
             }
 
             _this.datepickerVisible = false;
-          });
-          $("#".concat(_this.jSPlugin.id, "-datepicker")).off('click').on("click", function (e) {
-            console.log("点击日期");
+            $("#".concat(_this.jSPlugin.id, "-datepicker")).on('pick.datepicker', function (e) {
+              console.log("重新选择日期", e.date, new Date(e.date).Format('yyyyMMdd'), new Date(document.getElementById("".concat(_this.jSPlugin.id, "-datepicker")).value).Format('yyyyMMdd'));
 
-            if (!_this.datepickerVisible) {
-              if (document.getElementsByClassName("datepicker-container")[0]) {
-                document.getElementsByClassName("datepicker-container")[0].style.display = "inline";
+              if (e.date > new Date() || new Date(e.date).Format('yyyyMMdd') === new Date(document.getElementById("".concat(_this.jSPlugin.id, "-datepicker")).value).Format('yyyyMMdd')) {
+                e.preventDefault(); // Prevent to pick the date
+              } else {
+                _this.renderRec(e.date);
+
+                _this.jSPlugin.changePlayUrl({
+                  begin: new Date(e.date).Format('yyyyMMdd')
+                });
               }
-            } else {
+
               if (document.getElementsByClassName("datepicker-container")[0]) {
                 document.getElementsByClassName("datepicker-container")[0].style.display = "none";
               }
-            }
 
-            _this.datepickerVisible = !_this.datepickerVisible;
+              _this.datepickerVisible = false;
+            });
+            $("#".concat(_this.jSPlugin.id, "-datepicker")).off('click').on("click", function (e) {
+              console.log("点击日期");
+
+              if (!_this.datepickerVisible) {
+                if (document.getElementsByClassName("datepicker-container")[0]) {
+                  document.getElementsByClassName("datepicker-container")[0].style.display = "inline";
+                }
+              } else {
+                if (document.getElementsByClassName("datepicker-container")[0]) {
+                  document.getElementsByClassName("datepicker-container")[0].style.display = "none";
+                }
+              }
+
+              _this.datepickerVisible = !_this.datepickerVisible;
+            });
           });
         });
+      }); // 尺度变化监听
+
+      document.getElementById("".concat(this.jSPlugin.id, "-timeline-scale-add")).onclick = function () {
+        var currentTimeWidth = _this.currentTimeWidth;
+
+        if (currentTimeWidth < 3) {
+          _this.timeLine.changeSize(++_this.currentTimeWidth);
+        }
+      };
+
+      document.getElementById("".concat(this.jSPlugin.id, "-timeline-scale-sub")).onclick = function () {
+        var currentTimeWidth = _this.currentTimeWidth;
+
+        if (currentTimeWidth > 0) {
+          _this.timeLine.changeSize(--_this.currentTimeWidth);
+        }
+      }; // 渲染回放
+
+
+      var initDate = getQueryString("begin", this.jSPlugin.url) || new Date().Format('yyyyMMdd');
+      this.renderRec("".concat(initDate.slice(0, 4), "-").concat(initDate.slice(4, 6), "-").concat(initDate.slice(6, 8)));
+      this.observer = new MutationObserver(function (mutations, observer) {
+        _this.recAutoSize();
       });
-    }); // 尺度变化监听
-
-    document.getElementById("".concat(this.jSPlugin.id, "-timeline-scale-add")).onclick = function () {
-      var currentTimeWidth = _this.currentTimeWidth;
-
-      if (currentTimeWidth < 3) {
-        _this.timeLine.changeSize(++_this.currentTimeWidth);
-      }
-    };
-
-    document.getElementById("".concat(this.jSPlugin.id, "-timeline-scale-sub")).onclick = function () {
-      var currentTimeWidth = _this.currentTimeWidth;
-
-      if (currentTimeWidth > 0) {
-        _this.timeLine.changeSize(--_this.currentTimeWidth);
-      }
-    }; // 渲染回放
-
-
-    var initDate = getQueryString("begin", this.jSPlugin.url) || new Date().Format('yyyyMMdd');
-    this.renderRec("".concat(initDate.slice(0, 4), "-").concat(initDate.slice(4, 6), "-").concat(initDate.slice(6, 8)));
-    this.observer = new MutationObserver(function (mutations, observer) {
-      _this.recAutoSize();
-    });
-    var config = {
-      attributes: true,
-      attributeOldValue: true,
-      attributeFilter: ['style']
-    };
-    var el = document.getElementById("".concat(this.jSPlugin.id));
-    this.observer.observe(el, config);
-  }
-
-  _createClass$1(Rec, [{
+      var config = {
+        attributes: true,
+        attributeOldValue: true,
+        attributeFilter: ['style']
+      };
+      var el = document.getElementById("".concat(this.jSPlugin.id));
+      this.observer.observe(el, config);
+    }
+  }, {
     key: "recAutoSize",
     value: function recAutoSize() {
       var _this2 = this;
@@ -16356,11 +16420,48 @@ var Rec = /*#__PURE__*/function () {
       }
     }
   }, {
-    key: "renderRec",
-    value: function renderRec(date) {
+    key: "syncTimeLine",
+    value: function syncTimeLine() {
       var _this3 = this;
 
+      if (this.jSPlugin.recTimer) {
+        clearInterval(this.jSPlugin.recTimer);
+      }
+
+      this.jSPlugin.recTimer = setInterval(function () {
+        var getOSDTimePromise = _this3.jSPlugin.getOSDTime();
+
+        getOSDTimePromise.then(function (data) {
+          var v = data.data;
+
+          if (v === -1) {
+            console.log("获取播放时间错误");
+          } else {
+            if (v > 0) {
+              //console.log("获取播放时间", v, this.timeLine.run);
+              _this3.timeLine.run({
+                time: new Date(v > 1000000000000 ? v : v * 1000)
+              }); //$(".current-time").text(new Date(new Date(v > 1000000000000 ? v : v * 1000)).Format('yyyy-MM-dd hh:mm:ss'))
+
+            }
+          }
+        })["catch"](function (err) {});
+      }, 1000);
+    }
+  }, {
+    key: "unSyncTimeLine",
+    value: function unSyncTimeLine() {
+      if (this.jSPlugin.recTimer) {
+        clearInterval(this.jSPlugin.recTimer);
+      }
+    }
+  }, {
+    key: "renderRec",
+    value: function renderRec(date) {
+      var _this4 = this;
+
       this.date = date;
+      var that = this;
       var dateStart = new Date(new Date(date).Format('yyyy-MM-dd 00:00:00').replace(/-/g, "/")).getTime();
       var dateEnd = new Date(new Date(date).Format('yyyy-MM-dd 23:59:59').replace(/-/g, "/")).getTime();
       this.timeLine.getRecord([], dateStart, dateEnd);
@@ -16381,7 +16482,7 @@ var Rec = /*#__PURE__*/function () {
           var isAll = data.data.isAll;
 
           if (isAll) {
-            _this3.timeLine.getRecord(dataArr, dateStart, dateEnd);
+            _this4.timeLine.getRecord(dataArr, dateStart, dateEnd);
           } else {
             // 云存储回调事务
             var recTransaction = function recTransaction() {
@@ -16396,10 +16497,10 @@ var Rec = /*#__PURE__*/function () {
                     recTransaction();
                   } else {
                     console.log("云存储执行渲染片段");
-                    this.timeLine.getRecord(dataArr, dateStart, dateEnd);
+                    that.timeLine.getRecord(dataArr, dateStart, dateEnd);
                   }
                 } else {
-                  this.timeLine.getRecord(dataArr, dateStart, dateEnd);
+                  that.timeLine.getRecord(dataArr, dateStart, dateEnd);
                 }
               }
 
@@ -16410,15 +16511,13 @@ var Rec = /*#__PURE__*/function () {
             recTransaction();
           }
 
-          _this3.timeLine.run({
+          _this4.timeLine.run({
             time: new Date(dateStart)
           });
         } else if (data.data && data.data.length > 0) {
           console.log("获取本地录像片段成功", data);
-
-          _this3.timeLine.getRecord(data.data, dateStart, dateEnd);
-
-          _this3.timeLine.run({
+          that.timeLine.getRecord(data.data, dateStart, dateEnd);
+          that.timeLine.run({
             time: new Date(dateStart)
           });
         } else ;
@@ -16426,42 +16525,6 @@ var Rec = /*#__PURE__*/function () {
 
       var recAPIUrl = this.jSPlugin.env.domain + "/api/lapp/video/by/time";
       request(recAPIUrl, 'POST', recSliceParams, '', recAPISuccess);
-    }
-  }, {
-    key: "syncTimeLine",
-    value: function syncTimeLine() {
-      var _this4 = this;
-
-      if (this.timer) {
-        clearInterval(this.timer);
-      }
-
-      this.timer = setInterval(function () {
-        var getOSDTimePromise = _this4.jSPlugin.getOSDTime();
-
-        getOSDTimePromise.then(function (data) {
-          var v = data.data;
-
-          if (v === -1) {
-            console.log("获取播放时间错误");
-          } else {
-            if (v > 0) {
-              //console.log("获取播放时间", v, this.timeLine.run);
-              _this4.timeLine.run({
-                time: new Date(v > 1000000000000 ? v : v * 1000)
-              }); //$(".current-time").text(new Date(new Date(v > 1000000000000 ? v : v * 1000)).Format('yyyy-MM-dd hh:mm:ss'))
-
-            }
-          }
-        })["catch"](function (err) {});
-      }, 1000);
-    }
-  }, {
-    key: "unSyncTimeLine",
-    value: function unSyncTimeLine() {
-      if (this.timer) {
-        clearInterval(this.timer);
-      }
     }
   }]);
 
@@ -17119,6 +17182,11 @@ var MobileRec = /*#__PURE__*/function () {
                 _this.jSPlugin.Theme.setDecoderState({
                   play: true
                 });
+              } // 打开声音
+
+
+              if (_this.jSPlugin.Theme && _this.jSPlugin.Theme.decoderState.state.sound) {
+                _this.jSPlugin.openSound();
               }
 
               _this.syncTimeLine();
@@ -29096,6 +29164,12 @@ var Zoom = /*#__PURE__*/function () {
     value: function onMouseDown(event) {
       this.currentPosition;
           this.currentScale;
+          var enableZoom = this.enableZoom;
+
+      if (!enableZoom) {
+        return false;
+      }
+
       this.moveX = event.clientX;
       this.moveY = event.clientY;
       this.isMouseDown = true;
@@ -29103,8 +29177,13 @@ var Zoom = /*#__PURE__*/function () {
   }, {
     key: "onMouseUp",
     value: function onMouseUp(event) {
-      var currentPosition = this.currentPosition;
-          this.enableZoom;
+      var currentPosition = this.currentPosition,
+          enableZoom = this.enableZoom;
+
+      if (!enableZoom) {
+        return false;
+      }
+
       this.isMouseDown = false;
       currentPosition.left = currentPosition.left - (event.clientX - this.moveX);
       currentPosition.top = currentPosition.top - (event.clientY - this.moveY);
@@ -29113,6 +29192,12 @@ var Zoom = /*#__PURE__*/function () {
   }, {
     key: "onMouseOut",
     value: function onMouseOut(event) {
+      var enableZoom = this.enableZoom;
+
+      if (!enableZoom) {
+        return false;
+      }
+
       if (this.isMouseDown) {
         console.log("鼠标按上", event);
         this.isMouseDown = false;
@@ -29581,6 +29666,7 @@ var Theme = /*#__PURE__*/function () {
     this.autoFocus = 0, this.autoFocusTimer = null, this.recordTimer = null;
     this.nextRate = 1;
     this.showHD = false;
+    this.themeInited = false;
     this.decoderState = {
       state: {
         isEditing: false,
@@ -29775,12 +29861,14 @@ var Theme = /*#__PURE__*/function () {
             _this4.setDecoderState(_defineProperty({}, item.iconId, _this4.decoderState.state[item.iconId]));
           }
 
-          if (item.iconId === "play" && item.defaultActive) {
+          if (item.iconId === "play" && item.defaultActive && !_this4.themeInited) {
             var checkTimer = setInterval(function () {
               if (window.EZUIKit[_this4.jSPlugin.id].state.EZUIKitPlayer.init) {
                 clearInterval(checkTimer);
 
                 _this4.jSPlugin.play();
+
+                _this4.themeInited = true;
               }
             }, 50);
           }
@@ -29802,15 +29890,26 @@ var Theme = /*#__PURE__*/function () {
           //   console.log("开启自动隐藏")
           //   this.startAutoFocus();
           // })
-        }
-      } else {
-        var _checkTimer = setInterval(function () {
-          if (window.EZUIKit[_this4.jSPlugin.id].state.EZUIKitPlayer.init) {
-            clearInterval(_checkTimer);
+        } // 设置当前播放类型
 
-            _this4.jSPlugin.play();
-          }
-        }, 50);
+
+        this.setDecoderState({
+          cloudRec: matchEzopenUrl(this.jSPlugin.url).type === 'cloud.rec',
+          rec: matchEzopenUrl(this.jSPlugin.url).type === 'rec',
+          type: matchEzopenUrl(this.jSPlugin.url).type
+        });
+      } else {
+        if (!this.themeInited) {
+          var _checkTimer = setInterval(function () {
+            if (window.EZUIKit[_this4.jSPlugin.id].state.EZUIKitPlayer.init) {
+              clearInterval(_checkTimer);
+
+              _this4.jSPlugin.play();
+
+              _this4.themeInited = true;
+            }
+          }, 50);
+        }
       }
 
       var isNeedRoom = lodash.findIndex(this.themeData.footer.btnList, function (v) {
@@ -30071,7 +30170,7 @@ var Theme = /*#__PURE__*/function () {
     value: function startAutoFocus() {
       var _this6 = this;
 
-      console.log("开始自动隐藏", this.autoFocus);
+      //console.log("开始自动隐藏",this.autoFocus);
       var autoFocus = this.autoFocus; // if(document.getElementById(`${this.jSPlugin.id}-audioControls`)) {
 
       if (this.autoFocusTimer) {
@@ -30087,8 +30186,7 @@ var Theme = /*#__PURE__*/function () {
   }, {
     key: "stopAutoFocus",
     value: function stopAutoFocus() {
-      console.log("结束自动隐藏");
-
+      //console.log("结束自动隐藏")
       if (document.getElementById("".concat(this.jSPlugin.id, "-audioControls"))) {
         document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).style.opacity = 1;
       }
@@ -30277,7 +30375,8 @@ var Theme = /*#__PURE__*/function () {
       var objItem = this.matchBtn(id);
       var objDOM = document.createElement('div');
       objDOM.className = "theme-icon-item";
-      objDOM.innerHTML = "".concat("<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "\" style=\"position:relative\";>") // +`<span id="${this.jSPlugin.id}-${objItem.id}-left" title="左移" style="position: absolute;top: calc(50% - 10px);left: -6px;display: none;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080;"><path d="M7.4,10V5.3c0-0.3-0.3-0.6-0.6-0.6c-0.1,0-0.3,0.1-0.4,0.2L3.7,7.4c-0.2,0.2-0.3,0.6,0,0.8 c0,0,0,0,0.1,0.1l2.7,2.2c0.2,0.2,0.6,0.2,0.8-0.1C7.3,10.3,7.4,10.2,7.4,10z"></path></svg></span>`  
+      objDOM.style = "max-width:50%;";
+      objDOM.innerHTML = "".concat("<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "\" style=\"position:relative;\";>") // +`<span id="${this.jSPlugin.id}-${objItem.id}-left" title="左移" style="position: absolute;top: calc(50% - 10px);left: -6px;display: none;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080;"><path d="M7.4,10V5.3c0-0.3-0.3-0.6-0.6-0.6c-0.1,0-0.3,0.1-0.4,0.2L3.7,7.4c-0.2,0.2-0.3,0.6,0,0.8 c0,0,0,0,0.1,0.1l2.7,2.2c0.2,0.2,0.6,0.2,0.8-0.1C7.3,10.3,7.4,10.2,7.4,10z"></path></svg></span>`  
       + "<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-content\" title=\"").concat(objItem.title, "\" style=\"display:inline-block;height:").concat(this.width > MEDIAWIDTH ? 48 : 32, "px;\">")).concat(objItem.domString, "</span>") //+`<span id="${this.jSPlugin.id}-${objItem.id}-right" title="右移" style="position: absolute;top: calc(50% - 10px);left: calc(100% - 6px);display: none;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080"><path d="M3.4,5.2v4.7c0,0.3,0.3,0.6,0.6,0.6c0.1,0,0.3-0.1,0.4-0.2l2.7-2.5c0.2-0.2,0.3-0.6,0-0.8 c0,0,0,0-0.1-0.1L4.4,4.8C4.1,4.6,3.8,4.6,3.6,4.9C3.5,5,3.4,5.1,3.4,5.2z"></path></svg></span>`
       + "<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-remove\" title=\"\u79FB\u9664\" style=\"position: absolute;top: -6px;left: 38px;display: none;\">") + '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 15 15">' + '<circle style="fill-rule:evenodd;clip-rule:evenodd;fill-opacity:0.8011;" cx="7.5" cy="7.6" r="7" />' + '<rect x="3.9" y="3.5" class="st1" style="fill:none;" width="8.1" height="8.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="5" x2="10" y2="10.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="10.1" x2="10" y2="5" />' + '</svg>' + '</span>' + '</span>'; // var toLeft = document.createElement('span');
       // toLeft.innerHTML =  +`<span id="${this.jSPlugin.id}-${objItem.id}-left" title="左移" style="position: absolute;top: calc(50% - 10px);left: -6px;display: none;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080;"><path d="M7.4,10V5.3c0-0.3-0.3-0.6-0.6-0.6c-0.1,0-0.3,0.1-0.4,0.2L3.7,7.4c-0.2,0.2-0.3,0.6,0,0.8 c0,0,0,0,0.1,0.1l2.7,2.2c0.2,0.2,0.6,0.2,0.8-0.1C7.3,10.3,7.4,10.2,7.4,10z"></path></svg></span>`;
@@ -30430,7 +30529,7 @@ var Theme = /*#__PURE__*/function () {
         case 'play':
           btnItem.title = "播放/结束播放";
           btnItem.id = btnId;
-          btnItem.domString = '<div style="height: 100%">' + "<svg style=\"display:none\" width=\"".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\"  fill=\"").concat(btnItem.color, "\" viewBox=\"-6 -6 32 32\">\n            <path id=\"Stroke-1\" class=\"st1\" d=\"M10.5,1.7c-4.9,0-8.8,4-8.8,8.8s4,8.8,8.8,8.8s8.8-4,8.8-8.8S15.4,1.7,10.5,1.7z M10.5,2.7\n              c4.3,0,7.8,3.5,7.8,7.8s-3.5,7.8-7.8,7.8s-7.8-3.5-7.8-7.8S6.2,2.7,10.5,2.7z\"/>\n            <path class=\"st2\" d=\"M8.7,8C9,8,9.3,8.3,9.3,8.6v3.8C9.3,12.7,9,13,8.7,13C8.3,13,8,12.7,8,12.4V8.6C8,8.3,8.3,8,8.7,8z\"/>\n            <path id=\"Rectangle-Copy-10\" class=\"st2\" d=\"M12.8,8c0.3,0,0.6,0.3,0.6,0.6v3.8c0,0.3-0.3,0.6-0.6,0.6c-0.3,0-0.6-0.3-0.6-0.6V8.6\n              C12.2,8.3,12.5,8,12.8,8z\"/>\n          </svg>") + "<svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M13,9.8L10.1,8C9.9,7.9,9.7,7.9,9.5,7.9c-0.6,0-1,0.4-1,1v3.7c0,0.2,0.1,0.4,0.2,0.5c0.3,0.5,0.9,0.6,1.4,0.3 l2.9-1.8c0.1-0.1,0.2-0.2,0.3-0.3C13.6,10.7,13.4,10.1,13,9.8z" />' + '<path d="M10.5,1.9c-4.9,0-8.8,4-8.8,8.8c0,4.9,4,8.8,8.8,8.8s8.8-4,8.8-8.8C19.4,5.8,15.4,1.9,10.5,1.9z M10.5,18.5 c-4.3,0-7.8-3.5-7.8-7.8s3.5-7.8,7.8-7.8c4.3,0,7.8,3.5,7.8,7.8S14.9,18.5,10.5,18.5z" />' + '</svg>' + '</div>';
+          btnItem.domString = '<div style="height: 100%">' + "<svg class=\"theme-icon-item-icon\" style=\"display:none\" width=\"".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\"  fill=\"").concat(btnItem.color, "\" viewBox=\"-6 -6 32 32\">\n            <path id=\"Stroke-1\" class=\"st1\" d=\"M10.5,1.7c-4.9,0-8.8,4-8.8,8.8s4,8.8,8.8,8.8s8.8-4,8.8-8.8S15.4,1.7,10.5,1.7z M10.5,2.7\n              c4.3,0,7.8,3.5,7.8,7.8s-3.5,7.8-7.8,7.8s-7.8-3.5-7.8-7.8S6.2,2.7,10.5,2.7z\"/>\n            <path class=\"st2\" d=\"M8.7,8C9,8,9.3,8.3,9.3,8.6v3.8C9.3,12.7,9,13,8.7,13C8.3,13,8,12.7,8,12.4V8.6C8,8.3,8.3,8,8.7,8z\"/>\n            <path id=\"Rectangle-Copy-10\" class=\"st2\" d=\"M12.8,8c0.3,0,0.6,0.3,0.6,0.6v3.8c0,0.3-0.3,0.6-0.6,0.6c-0.3,0-0.6-0.3-0.6-0.6V8.6\n              C12.2,8.3,12.5,8,12.8,8z\"/>\n          </svg>") + "<svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M13,9.8L10.1,8C9.9,7.9,9.7,7.9,9.5,7.9c-0.6,0-1,0.4-1,1v3.7c0,0.2,0.1,0.4,0.2,0.5c0.3,0.5,0.9,0.6,1.4,0.3 l2.9-1.8c0.1-0.1,0.2-0.2,0.3-0.3C13.6,10.7,13.4,10.1,13,9.8z" />' + '<path d="M10.5,1.9c-4.9,0-8.8,4-8.8,8.8c0,4.9,4,8.8,8.8,8.8s8.8-4,8.8-8.8C19.4,5.8,15.4,1.9,10.5,1.9z M10.5,18.5 c-4.3,0-7.8-3.5-7.8-7.8s3.5-7.8,7.8-7.8c4.3,0,7.8,3.5,7.8,7.8S14.9,18.5,10.5,18.5z" />' + '</svg>' + '</div>';
 
           btnItem.onclick = function () {
             var _this9$decoderState$s = _this9.decoderState.state,
@@ -30457,7 +30556,7 @@ var Theme = /*#__PURE__*/function () {
         case 'sound':
           btnItem.title = "声音";
           btnItem.id = btnId;
-          btnItem.domString = '<span style="height: 100%">' + "<svg style=\"display:none\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">\n            <path d=\"M8.5,4.2c0.8-0.7,2.1-0.2,2.2,0.9l0,0.1v10c0,1.1-1.2,1.7-2.1,1.1l-0.1-0.1l-3.3-2.8C5,13.2,5,12.9,5.1,12.7 c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.3,2.8c0.2,0.2,0.5,0.1,0.5-0.2l0-0.1v-10c0-0.3-0.3-0.4-0.5-0.3L9.2,5L5.9,7.8 C5.6,7.9,5.3,7.9,5.1,7.7C5,7.5,5,7.3,5.1,7.1L5.2,7L8.5,4.2z\"/>\n            <path d=\"M5.5,6.9C5.8,6.9,6,7.1,6,7.4c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2C3.4,7.9,3.3,8,3.2,8.2l0,0.1v4 c0,0.2,0.1,0.3,0.3,0.3l0.1,0h2C5.8,12.5,6,12.7,6,13c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2c-0.7,0-1.3-0.5-1.3-1.2l0-0.1v-4 c0-0.7,0.5-1.3,1.2-1.3l0.1,0H5.5z\"/>\n            <path d=\"M17.4,7.9c0.2-0.2,0.5-0.2,0.7,0c0.2,0.2,0.2,0.4,0.1,0.6l-0.1,0.1l-3.8,3.8c-0.2,0.2-0.5,0.2-0.7,0 c-0.2-0.2-0.2-0.4-0.1-0.6l0.1-0.1L17.4,7.9z\"/>\n            <path d=\"M13.7,7.9c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.8,3.8c0.2,0.2,0.2,0.5,0,0.7c-0.2,0.2-0.4,0.2-0.6,0.1l-0.1-0.1 l-3.7-3.8C13.5,8.4,13.5,8.1,13.7,7.9z\"/>\n            </svg>") + "<svg style=\"display:inline-block\" width=\"".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" fill=\"").concat(btnItem.color, "\" viewBox=\"-6 -6 32 32\">\n              <path d=\"M13.2,7.1c0.1-0.2,0.5-0.3,0.7-0.2c1.1,0.7,1.9,2.2,1.9,3.7c0,1.6-0.7,3-1.9,3.7\n                c-0.2,0.1-0.5,0.1-0.7-0.2c-0.1-0.2-0.1-0.5,0.2-0.7c0.8-0.5,1.4-1.6,1.4-2.9c0-1.3-0.6-2.4-1.4-2.9C13.1,7.6,13,7.3,13.2,7.1z\"/>\n              <path d=\"M15.7,4.5c0.2-0.2,0.5-0.2,0.7-0.1C18,5.8,19,8.2,19,10.7c0,2.5-1,4.8-2.7,6.3\n                c-0.2,0.2-0.5,0.2-0.7-0.1c-0.2-0.2-0.2-0.5,0.1-0.7c1.4-1.2,2.3-3.3,2.3-5.5c0-2.2-0.9-4.3-2.3-5.5C15.5,5,15.5,4.7,15.7,4.5z\"/>\n              <path id=\"Stroke-5\" class=\"st1\" d=\"M8.5,4.7c0.8-0.7,2.1-0.2,2.2,0.9l0,0.1v10c0,1.1-1.2,1.7-2.1,1.1l-0.1-0.1l-3.3-2.8\n                C5,13.7,5,13.4,5.1,13.2c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.3,2.8c0.2,0.2,0.5,0.1,0.5-0.2l0-0.1v-10c0-0.3-0.3-0.4-0.5-0.3l-0.1,0\n                L5.9,8.3C5.6,8.4,5.3,8.4,5.1,8.2C5,8,5,7.7,5.1,7.6l0.1-0.1L8.5,4.7z\"/>\n              <path  d=\"M5.5,7.4C5.8,7.4,6,7.6,6,7.9c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2c-0.2,0-0.3,0.1-0.3,0.3l0,0.1v4\n                c0,0.2,0.1,0.3,0.3,0.3l0.1,0h2C5.8,13,6,13.2,6,13.5c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2c-0.7,0-1.3-0.5-1.3-1.2l0-0.1v-4\n                c0-0.7,0.5-1.3,1.2-1.3l0.1,0H5.5z\"/>\n            </svg>") + '</span>';
+          btnItem.domString = '<span style="height: 100%">' + "<svg class=\"theme-icon-item-icon\" style=\"display:none\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">\n            <path d=\"M8.5,4.2c0.8-0.7,2.1-0.2,2.2,0.9l0,0.1v10c0,1.1-1.2,1.7-2.1,1.1l-0.1-0.1l-3.3-2.8C5,13.2,5,12.9,5.1,12.7 c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.3,2.8c0.2,0.2,0.5,0.1,0.5-0.2l0-0.1v-10c0-0.3-0.3-0.4-0.5-0.3L9.2,5L5.9,7.8 C5.6,7.9,5.3,7.9,5.1,7.7C5,7.5,5,7.3,5.1,7.1L5.2,7L8.5,4.2z\"/>\n            <path d=\"M5.5,6.9C5.8,6.9,6,7.1,6,7.4c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2C3.4,7.9,3.3,8,3.2,8.2l0,0.1v4 c0,0.2,0.1,0.3,0.3,0.3l0.1,0h2C5.8,12.5,6,12.7,6,13c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2c-0.7,0-1.3-0.5-1.3-1.2l0-0.1v-4 c0-0.7,0.5-1.3,1.2-1.3l0.1,0H5.5z\"/>\n            <path d=\"M17.4,7.9c0.2-0.2,0.5-0.2,0.7,0c0.2,0.2,0.2,0.4,0.1,0.6l-0.1,0.1l-3.8,3.8c-0.2,0.2-0.5,0.2-0.7,0 c-0.2-0.2-0.2-0.4-0.1-0.6l0.1-0.1L17.4,7.9z\"/>\n            <path d=\"M13.7,7.9c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.8,3.8c0.2,0.2,0.2,0.5,0,0.7c-0.2,0.2-0.4,0.2-0.6,0.1l-0.1-0.1 l-3.7-3.8C13.5,8.4,13.5,8.1,13.7,7.9z\"/>\n            </svg>") + "<svg class=\"theme-icon-item-icon\" style=\"display:inline-block\" width=\"".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" fill=\"").concat(btnItem.color, "\" viewBox=\"-6 -6 32 32\">\n              <path d=\"M13.2,7.1c0.1-0.2,0.5-0.3,0.7-0.2c1.1,0.7,1.9,2.2,1.9,3.7c0,1.6-0.7,3-1.9,3.7\n                c-0.2,0.1-0.5,0.1-0.7-0.2c-0.1-0.2-0.1-0.5,0.2-0.7c0.8-0.5,1.4-1.6,1.4-2.9c0-1.3-0.6-2.4-1.4-2.9C13.1,7.6,13,7.3,13.2,7.1z\"/>\n              <path d=\"M15.7,4.5c0.2-0.2,0.5-0.2,0.7-0.1C18,5.8,19,8.2,19,10.7c0,2.5-1,4.8-2.7,6.3\n                c-0.2,0.2-0.5,0.2-0.7-0.1c-0.2-0.2-0.2-0.5,0.1-0.7c1.4-1.2,2.3-3.3,2.3-5.5c0-2.2-0.9-4.3-2.3-5.5C15.5,5,15.5,4.7,15.7,4.5z\"/>\n              <path id=\"Stroke-5\" class=\"st1\" d=\"M8.5,4.7c0.8-0.7,2.1-0.2,2.2,0.9l0,0.1v10c0,1.1-1.2,1.7-2.1,1.1l-0.1-0.1l-3.3-2.8\n                C5,13.7,5,13.4,5.1,13.2c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.3,2.8c0.2,0.2,0.5,0.1,0.5-0.2l0-0.1v-10c0-0.3-0.3-0.4-0.5-0.3l-0.1,0\n                L5.9,8.3C5.6,8.4,5.3,8.4,5.1,8.2C5,8,5,7.7,5.1,7.6l0.1-0.1L8.5,4.7z\"/>\n              <path  d=\"M5.5,7.4C5.8,7.4,6,7.6,6,7.9c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2c-0.2,0-0.3,0.1-0.3,0.3l0,0.1v4\n                c0,0.2,0.1,0.3,0.3,0.3l0.1,0h2C5.8,13,6,13.2,6,13.5c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2c-0.7,0-1.3-0.5-1.3-1.2l0-0.1v-4\n                c0-0.7,0.5-1.3,1.2-1.3l0.1,0H5.5z\"/>\n            </svg>") + '</span>';
 
           btnItem.onclick = function () {
             var _this9$decoderState$s2 = _this9.decoderState.state,
@@ -30486,7 +30585,7 @@ var Theme = /*#__PURE__*/function () {
         case 'recordvideo':
           btnItem.title = "录屏";
           btnItem.id = btnId;
-          btnItem.domString = "<svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M11.6,5.3H4.7c-1.4,0-2.5,1.1-2.5,2.5v5.9c0,1.4,1.1,2.5,2.5,2.5h6.9c1.4,0,2.5-1.1,2.5-2.5V7.7 C14.1,6.4,13,5.3,11.6,5.3z M4.7,6.3h6.9c0.8,0,1.5,0.7,1.5,1.5v5.9c0,0.8-0.7,1.5-1.5,1.5H4.7c-0.8,0-1.5-0.7-1.5-1.5V7.7 C3.3,6.9,3.9,6.3,4.7,6.3z" />' + '<path d="M16.6,6.7c0.9-0.8,2.3-0.1,2.4,1l0,0.1v5.7c0,1.2-1.3,1.9-2.3,1.2l-0.1-0.1L13.3,12 c-0.2-0.2-0.2-0.5-0.1-0.7c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.3,2.7c0.3,0.2,0.7,0.1,0.8-0.3l0-0.1V7.8c0-0.4-0.4-0.6-0.7-0.4 l-0.1,0l-3.3,2.7c-0.2,0.2-0.5,0.1-0.7-0.1c-0.2-0.2-0.1-0.5,0-0.6l0.1-0.1L16.6,6.7z" />' + '</svg>';
+          btnItem.domString = "<svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M11.6,5.3H4.7c-1.4,0-2.5,1.1-2.5,2.5v5.9c0,1.4,1.1,2.5,2.5,2.5h6.9c1.4,0,2.5-1.1,2.5-2.5V7.7 C14.1,6.4,13,5.3,11.6,5.3z M4.7,6.3h6.9c0.8,0,1.5,0.7,1.5,1.5v5.9c0,0.8-0.7,1.5-1.5,1.5H4.7c-0.8,0-1.5-0.7-1.5-1.5V7.7 C3.3,6.9,3.9,6.3,4.7,6.3z" />' + '<path d="M16.6,6.7c0.9-0.8,2.3-0.1,2.4,1l0,0.1v5.7c0,1.2-1.3,1.9-2.3,1.2l-0.1-0.1L13.3,12 c-0.2-0.2-0.2-0.5-0.1-0.7c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.3,2.7c0.3,0.2,0.7,0.1,0.8-0.3l0-0.1V7.8c0-0.4-0.4-0.6-0.7-0.4 l-0.1,0l-3.3,2.7c-0.2,0.2-0.5,0.1-0.7-0.1c-0.2-0.2-0.1-0.5,0-0.6l0.1-0.1L16.6,6.7z" />' + '</svg>';
 
           btnItem.onclick = function () {
             var _this9$decoderState$s3 = _this9.decoderState.state,
@@ -30515,7 +30614,7 @@ var Theme = /*#__PURE__*/function () {
         case 'capturePicture':
           btnItem.title = "截图";
           btnItem.id = btnId;
-          btnItem.domString = "<svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M10.8,7.7c-2,0-3.7,1.6-3.7,3.7S8.7,15,10.8,15c2,0,3.7-1.6,3.7-3.7S12.8,7.7,10.8,7.7z M10.8,8.7c1.5,0,2.7,1.2,2.7,2.7S12.2,14,10.8,14c-1.5,0-2.7-1.2-2.7-2.7S9.3,8.7,10.8,8.7z" />' + '<path d="M8.6,3.7l-0.1,0C8,3.7,7.7,4,7.5,4.3l-1,1.7l-1.3,0C4,6.1,3.1,7,3.1,8.2v7.1 c0,1.2,0.9,2.1,2.1,2.1h11.1c1.2,0,2.1-0.9,2.1-2.1V8.2l0-0.1c-0.1-1.1-1-1.9-2.1-1.9l-1.3,0l-1.1-1.8c-0.2-0.4-0.7-0.6-1.1-0.6H8.6 z M8.6,4.7h4.2c0.1,0,0.2,0.1,0.3,0.1l1.2,2c0.1,0.2,0.3,0.2,0.4,0.2h1.6c0.6,0,1.1,0.5,1.1,1.1v7.1c0,0.6-0.5,1.1-1.1,1.1H5.1 c-0.6,0-1.1-0.5-1.1-1.1V8.2c0-0.6,0.5-1.1,1.1-1.1h1.6c0.2,0,0.3-0.1,0.4-0.2l1.2-2C8.4,4.7,8.5,4.7,8.6,4.7z" />' + '</svg>';
+          btnItem.domString = "<svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M10.8,7.7c-2,0-3.7,1.6-3.7,3.7S8.7,15,10.8,15c2,0,3.7-1.6,3.7-3.7S12.8,7.7,10.8,7.7z M10.8,8.7c1.5,0,2.7,1.2,2.7,2.7S12.2,14,10.8,14c-1.5,0-2.7-1.2-2.7-2.7S9.3,8.7,10.8,8.7z" />' + '<path d="M8.6,3.7l-0.1,0C8,3.7,7.7,4,7.5,4.3l-1,1.7l-1.3,0C4,6.1,3.1,7,3.1,8.2v7.1 c0,1.2,0.9,2.1,2.1,2.1h11.1c1.2,0,2.1-0.9,2.1-2.1V8.2l0-0.1c-0.1-1.1-1-1.9-2.1-1.9l-1.3,0l-1.1-1.8c-0.2-0.4-0.7-0.6-1.1-0.6H8.6 z M8.6,4.7h4.2c0.1,0,0.2,0.1,0.3,0.1l1.2,2c0.1,0.2,0.3,0.2,0.4,0.2h1.6c0.6,0,1.1,0.5,1.1,1.1v7.1c0,0.6-0.5,1.1-1.1,1.1H5.1 c-0.6,0-1.1-0.5-1.1-1.1V8.2c0-0.6,0.5-1.1,1.1-1.1h1.6c0.2,0,0.3-0.1,0.4-0.2l1.2-2C8.4,4.7,8.5,4.7,8.6,4.7z" />' + '</svg>';
 
           btnItem.onclick = function () {
             var play = _this9.decoderState.state.play;
@@ -30532,7 +30631,7 @@ var Theme = /*#__PURE__*/function () {
         case 'talk':
           btnItem.title = "对讲";
           btnItem.id = btnId;
-          btnItem.domString = '<div></div>' + "<svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M10.1,2.7C8.5,2.7,7.2,4,7.2,5.6v5.2c0,1.6,1.3,2.9,2.9,2.9l0.2,0c1.5-0.1,2.7-1.4,2.7-2.9V5.6	C13,4,11.7,2.7,10.1,2.7z M10.1,3.7c1.1,0,1.9,0.9,1.9,1.9v5.2c0,1-0.8,1.8-1.8,1.9l-0.1,0c-1,0-1.9-0.9-1.9-1.9V5.6 C8.2,4.5,9,3.7,10.1,3.7z" />' + '<path d="M15.1,8.5c0.2,0,0.4,0.2,0.5,0.4l0,0.1v1.7c0,3-2.5,5.5-5.5,5.5c-3,0-5.4-2.3-5.5-5.3l0-0.2V9 c0-0.3,0.2-0.5,0.5-0.5c0.2,0,0.4,0.2,0.5,0.4l0,0.1v1.7c0,2.5,2,4.5,4.5,4.5c2.4,0,4.4-1.9,4.5-4.3l0-0.2V9 C14.6,8.7,14.8,8.5,15.1,8.5z" />' + '<path d="M13.5,17.7c0.3,0,0.5,0.2,0.5,0.5c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-7c-0.3,0-0.5-0.2-0.5-0.5 c0-0.2,0.2-0.4,0.4-0.5l0.1,0H13.5z" />' + '<path d="M10.1,15.2c0.2,0,0.4,0.2,0.5,0.4l0,0.1v2.5c0,0.3-0.2,0.5-0.5,0.5c-0.2,0-0.4-0.2-0.5-0.4l0-0.1 v-2.5C9.6,15.4,9.8,15.2,10.1,15.2z" />' + '</svg>';
+          btnItem.domString = '<div></div>' + "<svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M10.1,2.7C8.5,2.7,7.2,4,7.2,5.6v5.2c0,1.6,1.3,2.9,2.9,2.9l0.2,0c1.5-0.1,2.7-1.4,2.7-2.9V5.6	C13,4,11.7,2.7,10.1,2.7z M10.1,3.7c1.1,0,1.9,0.9,1.9,1.9v5.2c0,1-0.8,1.8-1.8,1.9l-0.1,0c-1,0-1.9-0.9-1.9-1.9V5.6 C8.2,4.5,9,3.7,10.1,3.7z" />' + '<path d="M15.1,8.5c0.2,0,0.4,0.2,0.5,0.4l0,0.1v1.7c0,3-2.5,5.5-5.5,5.5c-3,0-5.4-2.3-5.5-5.3l0-0.2V9 c0-0.3,0.2-0.5,0.5-0.5c0.2,0,0.4,0.2,0.5,0.4l0,0.1v1.7c0,2.5,2,4.5,4.5,4.5c2.4,0,4.4-1.9,4.5-4.3l0-0.2V9 C14.6,8.7,14.8,8.5,15.1,8.5z" />' + '<path d="M13.5,17.7c0.3,0,0.5,0.2,0.5,0.5c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-7c-0.3,0-0.5-0.2-0.5-0.5 c0-0.2,0.2-0.4,0.4-0.5l0.1,0H13.5z" />' + '<path d="M10.1,15.2c0.2,0,0.4,0.2,0.5,0.4l0,0.1v2.5c0,0.3-0.2,0.5-0.5,0.5c-0.2,0-0.4-0.2-0.5-0.4l0-0.1 v-2.5C9.6,15.4,9.8,15.2,10.1,15.2z" />' + '</svg>';
 
           btnItem.onclick = function () {
             var _this9$decoderState$s4 = _this9.decoderState.state,
@@ -30583,10 +30682,16 @@ var Theme = /*#__PURE__*/function () {
         case 'zoom':
           btnItem.title = "电子放大";
           btnItem.id = btnId;
-          btnItem.domString = '<div></div>' + "<svg  fill=\"".concat(btnItem.color, "\" version=\"1.1\" id=\"\u56FE\u5C42_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n          width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"5 -6 5 32\" style=\"enable-background:new 0 0 20 20.1;\" xml:space=\"preserve\">\n              <path class=\"st1\" d=\"M8.8,2.6c3.5,0,6.2,2.8,6.2,6.2s-2.8,6.2-6.2,6.2s-6.2-2.8-6.2-6.2S5.3,2.6,8.8,2.6z M8.8,3.9\n                c-2.8,0-5,2.2-5,5s2.2,5,5,5s5-2.2,5-5S11.5,3.9,8.8,3.9z M12.7,12.7l3.9,3.9\"/>\n              <path class=\"st2\" d=\"M11.2,9.5h-5c-0.3,0-0.6-0.3-0.6-0.6s0.3-0.6,0.6-0.6h5c0.3,0,0.6,0.3,0.6,0.6S11.6,9.5,11.2,9.5z\"/>\n              <path class=\"st2\" d=\"M8.7,12c-0.3,0-0.6-0.3-0.6-0.6v-5c0-0.3,0.3-0.6,0.6-0.6s0.6,0.3,0.6,0.6v5C9.3,11.8,9.1,12,8.7,12z\"/>\n              <path class=\"st2\" d=\"M16.9,17.6c-0.1,0-0.3-0.1-0.4-0.2l-3.9-3.9c-0.2-0.2-0.2-0.6,0-0.8s0.6-0.2,0.8,0l3.9,3.9\n                c0.2,0.2,0.2,0.6,0,0.8C17.2,17.5,17,17.6,16.9,17.6z\"/>\n          </svg>");
+          btnItem.domString = '<div></div>' + "<svg class=\"theme-icon-item-icon\"  fill=\"".concat(btnItem.color, "\" version=\"1.1\" id=\"\u56FE\u5C42_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n          width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"5 -6 5 32\" style=\"enable-background:new 0 0 20 20.1;\" xml:space=\"preserve\">\n              <path class=\"st1\" d=\"M8.8,2.6c3.5,0,6.2,2.8,6.2,6.2s-2.8,6.2-6.2,6.2s-6.2-2.8-6.2-6.2S5.3,2.6,8.8,2.6z M8.8,3.9\n                c-2.8,0-5,2.2-5,5s2.2,5,5,5s5-2.2,5-5S11.5,3.9,8.8,3.9z M12.7,12.7l3.9,3.9\"/>\n              <path class=\"st2\" d=\"M11.2,9.5h-5c-0.3,0-0.6-0.3-0.6-0.6s0.3-0.6,0.6-0.6h5c0.3,0,0.6,0.3,0.6,0.6S11.6,9.5,11.2,9.5z\"/>\n              <path class=\"st2\" d=\"M8.7,12c-0.3,0-0.6-0.3-0.6-0.6v-5c0-0.3,0.3-0.6,0.6-0.6s0.6,0.3,0.6,0.6v5C9.3,11.8,9.1,12,8.7,12z\"/>\n              <path class=\"st2\" d=\"M16.9,17.6c-0.1,0-0.3-0.1-0.4-0.2l-3.9-3.9c-0.2-0.2-0.2-0.6,0-0.8s0.6-0.2,0.8,0l3.9,3.9\n                c0.2,0.2,0.2,0.6,0,0.8C17.2,17.5,17,17.6,16.9,17.6z\"/>\n          </svg>");
 
           btnItem.onclick = function () {
-            var zoom = _this9.decoderState.state.zoom;
+            var _this9$decoderState$s5 = _this9.decoderState.state,
+                zoom = _this9$decoderState$s5.zoom,
+                play = _this9$decoderState$s5.play;
+
+            if (!play) {
+              return false;
+            }
 
             if (zoom) {
               console.log('结束电子放大');
@@ -30612,12 +30717,12 @@ var Theme = /*#__PURE__*/function () {
         case 'pantile':
           btnItem.title = "云台控制";
           btnItem.id = btnId;
-          btnItem.domString = "<svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M10.2,7.8c1.6,0,2.9,1.3,2.9,2.9s-1.3,2.9-2.9,2.9s-2.9-1.3-2.9-2.9S8.5,7.8,10.2,7.8z M10.2,8.8c-1.1,0-1.9,0.9-1.9,1.9s0.9,1.9,1.9,1.9s1.9-0.9,1.9-1.9S11.2,8.8,10.2,8.8z" />' + '<path d="M8.8,3.5c0.7-0.6,1.8-0.6,2.5-0.1l0.1,0.1l1.4,1.1c0.2,0.2,0.3,0.5,0.1,0.7 c-0.2,0.2-0.4,0.2-0.6,0.1l-0.1,0l-1.4-1.1C10.5,3.9,10,3.9,9.6,4.2L9.4,4.3L8,5.4C7.8,5.5,7.5,5.5,7.3,5.3c-0.2-0.2-0.1-0.5,0-0.6 l0.1-0.1L8.8,3.5z" />' + '<path d="M2.5,12.3c-0.6-0.7-0.6-1.8-0.1-2.5l0.1-0.1l1.1-1.4c0.2-0.2,0.5-0.3,0.7-0.1 c0.2,0.2,0.2,0.4,0.1,0.6l0,0.1l-1.1,1.4C3,10.6,3,11.1,3.2,11.5l0.1,0.1L4.4,13c0.2,0.2,0.1,0.5-0.1,0.7c-0.2,0.2-0.5,0.1-0.6,0 l-0.1-0.1L2.5,12.3z" />' + '<path d="M17.7,12.3c0.6-0.7,0.6-1.8,0.1-2.5l-0.1-0.1l-1.1-1.4c-0.2-0.2-0.5-0.3-0.7-0.1 c-0.2,0.2-0.2,0.4-0.1,0.6l0,0.1l1.1,1.4c0.3,0.4,0.3,0.9,0.1,1.3l-0.1,0.1L15.8,13c-0.2,0.2-0.1,0.5,0.1,0.7c0.2,0.2,0.5,0.1,0.6,0 l0.1-0.1L17.7,12.3z" />' + '<path d="M8.8,18.2c0.7,0.6,1.8,0.6,2.5,0.1l0.1-0.1l1.4-1.1c0.2-0.2,0.3-0.5,0.1-0.7 c-0.2-0.2-0.4-0.2-0.6-0.1l-0.1,0l-1.4,1.1c-0.4,0.3-0.9,0.3-1.3,0.1l-0.1-0.1L8,16.3c-0.2-0.2-0.5-0.1-0.7,0.1 c-0.2,0.2-0.1,0.5,0,0.6l0.1,0.1L8.8,18.2z" />' + '</svg>';
+          btnItem.domString = "<svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M10.2,7.8c1.6,0,2.9,1.3,2.9,2.9s-1.3,2.9-2.9,2.9s-2.9-1.3-2.9-2.9S8.5,7.8,10.2,7.8z M10.2,8.8c-1.1,0-1.9,0.9-1.9,1.9s0.9,1.9,1.9,1.9s1.9-0.9,1.9-1.9S11.2,8.8,10.2,8.8z" />' + '<path d="M8.8,3.5c0.7-0.6,1.8-0.6,2.5-0.1l0.1,0.1l1.4,1.1c0.2,0.2,0.3,0.5,0.1,0.7 c-0.2,0.2-0.4,0.2-0.6,0.1l-0.1,0l-1.4-1.1C10.5,3.9,10,3.9,9.6,4.2L9.4,4.3L8,5.4C7.8,5.5,7.5,5.5,7.3,5.3c-0.2-0.2-0.1-0.5,0-0.6 l0.1-0.1L8.8,3.5z" />' + '<path d="M2.5,12.3c-0.6-0.7-0.6-1.8-0.1-2.5l0.1-0.1l1.1-1.4c0.2-0.2,0.5-0.3,0.7-0.1 c0.2,0.2,0.2,0.4,0.1,0.6l0,0.1l-1.1,1.4C3,10.6,3,11.1,3.2,11.5l0.1,0.1L4.4,13c0.2,0.2,0.1,0.5-0.1,0.7c-0.2,0.2-0.5,0.1-0.6,0 l-0.1-0.1L2.5,12.3z" />' + '<path d="M17.7,12.3c0.6-0.7,0.6-1.8,0.1-2.5l-0.1-0.1l-1.1-1.4c-0.2-0.2-0.5-0.3-0.7-0.1 c-0.2,0.2-0.2,0.4-0.1,0.6l0,0.1l1.1,1.4c0.3,0.4,0.3,0.9,0.1,1.3l-0.1,0.1L15.8,13c-0.2,0.2-0.1,0.5,0.1,0.7c0.2,0.2,0.5,0.1,0.6,0 l0.1-0.1L17.7,12.3z" />' + '<path d="M8.8,18.2c0.7,0.6,1.8,0.6,2.5,0.1l0.1-0.1l1.4-1.1c0.2-0.2,0.3-0.5,0.1-0.7 c-0.2-0.2-0.4-0.2-0.6-0.1l-0.1,0l-1.4,1.1c-0.4,0.3-0.9,0.3-1.3,0.1l-0.1-0.1L8,16.3c-0.2-0.2-0.5-0.1-0.7,0.1 c-0.2,0.2-0.1,0.5,0,0.6l0.1,0.1L8.8,18.2z" />' + '</svg>';
 
           btnItem.onclick = function () {
-            var _this9$decoderState$s5 = _this9.decoderState.state,
-                pantile = _this9$decoderState$s5.pantile,
-                expend = _this9$decoderState$s5.expend;
+            var _this9$decoderState$s6 = _this9.decoderState.state,
+                pantile = _this9$decoderState$s6.pantile,
+                expend = _this9$decoderState$s6.expend;
 
             if (!pantile) {
               console.log('显示云台');
@@ -30649,14 +30754,14 @@ var Theme = /*#__PURE__*/function () {
         case 'expend':
           btnItem.title = "全局全屏";
           btnItem.id = btnId;
-          btnItem.domString = "<span><svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M3.4,7.6c-0.3,0-0.5-0.2-0.5-0.5V5.3c0-1.2,1-2.3,2.2-2.3h1.8c0.3,0,0.5,0.2,0.5,0.5S7.2,4.1,6.9,4.1H5.2 c-0.7,0-1.2,0.6-1.2,1.3v1.8C3.9,7.4,3.7,7.6,3.4,7.6z" />' + '<path d="M6.9,18.1H5.2c-1.2,0-2.2-1-2.2-2.2v-1.8c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v1.8c0,0.7,0.6,1.2,1.2,1.2 h1.8c0.3,0,0.5,0.2,0.5,0.5S7.2,18.1,6.9,18.1z" />' + '<path d="M15.7,18.1h-1.8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h1.8c0.7,0,1.2-0.6,1.2-1.2v-1.8 c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v1.8C17.9,17.1,16.9,18.1,15.7,18.1z" />' + '<path d="M17.4,7.6c-0.3,0-0.5-0.2-0.5-0.5V5.3c0-0.7-0.6-1.3-1.2-1.3h-1.8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h1.8 c1.2,0,2.2,1,2.2,2.3v1.8C17.9,7.4,17.7,7.6,17.4,7.6z" />' + '</svg>' + "<svg style=\"display:none\" width=\"".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" fill=\"").concat(btnItem.color, "\" viewBox=\"-6 -6 32 32\">\n            <path class=\"st1\" d=\"M5.7,8.1H3.9c-0.3,0-0.6-0.2-0.6-0.6S3.6,7,3.9,7h1.9c0.7,0,1.3-0.6,1.3-1.3V3.8c0-0.3,0.2-0.6,0.6-0.6\n              s0.6,0.2,0.6,0.6v1.9C8.2,7,7.1,8.1,5.7,8.1z\"/>\n            <path class=\"st1\" d=\"M7.6,17.7c-0.3,0-0.6-0.2-0.6-0.6v-1.9c0-0.7-0.6-1.3-1.3-1.3H3.9c-0.3,0-0.6-0.2-0.6-0.6s0.2-0.6,0.6-0.6h1.9\n              c1.3,0,2.4,1.1,2.4,2.4v1.9C8.2,17.5,7.9,17.7,7.6,17.7z\"/>\n            <path class=\"st1\" d=\"M13.4,17.7c-0.3,0-0.6-0.2-0.6-0.6v-1.9c0-1.3,1.1-2.4,2.4-2.4h1.9c0.3,0,0.6,0.2,0.6,0.6S17.5,14,17.2,14\n              h-1.9c-0.7,0-1.3,0.6-1.3,1.3v1.9C14,17.5,13.8,17.7,13.4,17.7z\"/>\n            <path class=\"st1\" d=\"M17.2,8.1h-1.9c-1.3,0-2.4-1.1-2.4-2.4V3.8c0-0.3,0.2-0.6,0.6-0.6S14,3.5,14,3.8v1.9C14,6.4,14.6,7,15.3,7h1.9\n              c0.3,0,0.6,0.2,0.6,0.6S17.5,8.1,17.2,8.1z\"/>\n          </svg>\n          </span>");
+          btnItem.domString = "<span><svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M3.4,7.6c-0.3,0-0.5-0.2-0.5-0.5V5.3c0-1.2,1-2.3,2.2-2.3h1.8c0.3,0,0.5,0.2,0.5,0.5S7.2,4.1,6.9,4.1H5.2 c-0.7,0-1.2,0.6-1.2,1.3v1.8C3.9,7.4,3.7,7.6,3.4,7.6z" />' + '<path d="M6.9,18.1H5.2c-1.2,0-2.2-1-2.2-2.2v-1.8c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v1.8c0,0.7,0.6,1.2,1.2,1.2 h1.8c0.3,0,0.5,0.2,0.5,0.5S7.2,18.1,6.9,18.1z" />' + '<path d="M15.7,18.1h-1.8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h1.8c0.7,0,1.2-0.6,1.2-1.2v-1.8 c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v1.8C17.9,17.1,16.9,18.1,15.7,18.1z" />' + '<path d="M17.4,7.6c-0.3,0-0.5-0.2-0.5-0.5V5.3c0-0.7-0.6-1.3-1.2-1.3h-1.8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h1.8 c1.2,0,2.2,1,2.2,2.3v1.8C17.9,7.4,17.7,7.6,17.4,7.6z" />' + '</svg>' + "<svg class=\"theme-icon-item-icon\" style=\"display:none\" width=\"".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" fill=\"").concat(btnItem.color, "\" viewBox=\"-6 -6 32 32\">\n            <path class=\"st1\" d=\"M5.7,8.1H3.9c-0.3,0-0.6-0.2-0.6-0.6S3.6,7,3.9,7h1.9c0.7,0,1.3-0.6,1.3-1.3V3.8c0-0.3,0.2-0.6,0.6-0.6\n              s0.6,0.2,0.6,0.6v1.9C8.2,7,7.1,8.1,5.7,8.1z\"/>\n            <path class=\"st1\" d=\"M7.6,17.7c-0.3,0-0.6-0.2-0.6-0.6v-1.9c0-0.7-0.6-1.3-1.3-1.3H3.9c-0.3,0-0.6-0.2-0.6-0.6s0.2-0.6,0.6-0.6h1.9\n              c1.3,0,2.4,1.1,2.4,2.4v1.9C8.2,17.5,7.9,17.7,7.6,17.7z\"/>\n            <path class=\"st1\" d=\"M13.4,17.7c-0.3,0-0.6-0.2-0.6-0.6v-1.9c0-1.3,1.1-2.4,2.4-2.4h1.9c0.3,0,0.6,0.2,0.6,0.6S17.5,14,17.2,14\n              h-1.9c-0.7,0-1.3,0.6-1.3,1.3v1.9C14,17.5,13.8,17.7,13.4,17.7z\"/>\n            <path class=\"st1\" d=\"M17.2,8.1h-1.9c-1.3,0-2.4-1.1-2.4-2.4V3.8c0-0.3,0.2-0.6,0.6-0.6S14,3.5,14,3.8v1.9C14,6.4,14.6,7,15.3,7h1.9\n              c0.3,0,0.6,0.2,0.6,0.6S17.5,8.1,17.2,8.1z\"/>\n          </svg>\n          </span>");
 
           btnItem.onclick = function () {
-            var _this9$decoderState$s6 = _this9.decoderState.state,
-                webExpend = _this9$decoderState$s6.webExpend,
-                expend = _this9$decoderState$s6.expend,
-                play = _this9$decoderState$s6.play,
-                pantile = _this9$decoderState$s6.pantile;
+            var _this9$decoderState$s7 = _this9.decoderState.state,
+                webExpend = _this9$decoderState$s7.webExpend,
+                expend = _this9$decoderState$s7.expend,
+                play = _this9$decoderState$s7.play,
+                pantile = _this9$decoderState$s7.pantile;
 
             if (!play) {
               return false;
@@ -30684,9 +30789,11 @@ var Theme = /*#__PURE__*/function () {
                   _this9.jSPlugin.jSPlugin.JS_Resize(height, width - heightIntercept);
                 }, 100);
               } else {
+                var width = window.screen.width;
+                var height = window.screen.height;
                 var promise = requestFullScreenPromise(document.getElementById("".concat(_this9.jSPlugin.id)));
                 promise.then(function (data) {
-                  _this9.jSPlugin.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight);
+                  _this9.jSPlugin.jSPlugin.JS_Resize(width, height);
                 })["catch"](function (err) {
                   console.log(err);
                 });
@@ -30736,13 +30843,13 @@ var Theme = /*#__PURE__*/function () {
         case 'webExpend':
           btnItem.title = "网页全屏";
           btnItem.id = btnId;
-          btnItem.domString = "<span><svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M3.1,7.6c-0.3,0-0.5-0.2-0.5-0.5V5.3c0-1.2,1-2.3,2.2-2.3h1.8c0.3,0,0.5,0.2,0.5,0.5S6.8,4.1,6.6,4.1H4.8 c-0.7,0-1.2,0.6-1.2,1.3v1.8C3.6,7.4,3.3,7.6,3.1,7.6z" />' + '<path d="M15.3,18.1h-1.8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h1.8c0.7,0,1.2-0.6,1.2-1.2v-1.8 c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v1.8C17.6,17.1,16.6,18.1,15.3,18.1z" />' + '<circle class="st2" cx="10.2" cy="10.4" r="1.1"/>' + '</svg>' + "<svg fill=\"".concat(btnItem.color, "\" style=\"display:none;\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">\n          <path class=\"st1\" d=\"M5.4,8.1H3.5C3.2,8.1,3,7.9,3,7.6s0.2-0.5,0.5-0.5h1.9c0.8,0,1.4-0.6,1.4-1.4V3.8c0-0.3,0.2-0.5,0.5-0.5\n            s0.5,0.2,0.5,0.5v1.9C7.7,7,6.7,8.1,5.4,8.1z\"/>\n          <path class=\"st1\" d=\"M13.1,17.7c-0.3,0-0.5-0.2-0.5-0.5v-1.9c0-1.3,1.1-2.4,2.4-2.4h1.9c0.3,0,0.5,0.2,0.5,0.5s-0.2,0.5-0.5,0.5H15\n            c-0.8,0-1.4,0.6-1.4,1.4v1.9C13.6,17.4,13.4,17.7,13.1,17.7z\"/>\n            <circle class=\"st2\" cx=\"10.2\" cy=\"10.4\" r=\"1.1\"/>\n          ") + '</svg></span>';
+          btnItem.domString = "<span><svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M3.1,7.6c-0.3,0-0.5-0.2-0.5-0.5V5.3c0-1.2,1-2.3,2.2-2.3h1.8c0.3,0,0.5,0.2,0.5,0.5S6.8,4.1,6.6,4.1H4.8 c-0.7,0-1.2,0.6-1.2,1.3v1.8C3.6,7.4,3.3,7.6,3.1,7.6z" />' + '<path d="M15.3,18.1h-1.8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h1.8c0.7,0,1.2-0.6,1.2-1.2v-1.8 c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v1.8C17.6,17.1,16.6,18.1,15.3,18.1z" />' + '<circle class="st2" cx="10.2" cy="10.4" r="1.1"/>' + '</svg>' + "<svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" style=\"display:none;\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">\n          <path class=\"st1\" d=\"M5.4,8.1H3.5C3.2,8.1,3,7.9,3,7.6s0.2-0.5,0.5-0.5h1.9c0.8,0,1.4-0.6,1.4-1.4V3.8c0-0.3,0.2-0.5,0.5-0.5\n            s0.5,0.2,0.5,0.5v1.9C7.7,7,6.7,8.1,5.4,8.1z\"/>\n          <path class=\"st1\" d=\"M13.1,17.7c-0.3,0-0.5-0.2-0.5-0.5v-1.9c0-1.3,1.1-2.4,2.4-2.4h1.9c0.3,0,0.5,0.2,0.5,0.5s-0.2,0.5-0.5,0.5H15\n            c-0.8,0-1.4,0.6-1.4,1.4v1.9C13.6,17.4,13.4,17.7,13.1,17.7z\"/>\n            <circle class=\"st2\" cx=\"10.2\" cy=\"10.4\" r=\"1.1\"/>\n          ") + '</svg></span>';
 
           btnItem.onclick = function () {
-            var _this9$decoderState$s7 = _this9.decoderState.state,
-                webExpend = _this9$decoderState$s7.webExpend,
-                expend = _this9$decoderState$s7.expend,
-                play = _this9$decoderState$s7.play;
+            var _this9$decoderState$s8 = _this9.decoderState.state,
+                webExpend = _this9$decoderState$s8.webExpend,
+                expend = _this9$decoderState$s8.expend,
+                play = _this9$decoderState$s8.play;
 
             if (!play) {
               return false;
@@ -30765,10 +30872,10 @@ var Theme = /*#__PURE__*/function () {
               //   return isFullScreen;
               // }
 
+              var width = window.screen.width;
+              var height = window.screen.height;
               var promise = requestFullScreenPromise(document.getElementById("".concat(_this9.jSPlugin.id, "-wrap")));
               promise.then(function (data) {
-                console.log("全屏promise", window.screen.availWidth);
-
                 if (document.getElementById("".concat(_this9.jSPlugin.id, "-canvas-container"))) {
                   footerDOMHeight = parseInt(window.getComputedStyle(document.getElementById("".concat(_this9.jSPlugin.id, "-canvas-container"))).height, 10);
                 }
@@ -30777,9 +30884,11 @@ var Theme = /*#__PURE__*/function () {
                   headerDOMHeight = parseInt(window.getComputedStyle(document.getElementById("".concat(_this9.jSPlugin.id, "-headControl"))).height, 10);
                 }
 
-                console.log("this.jSPlugin.JS_Resiz", footerDOMHeight, headerDOMHeight, document.body.clientWidth);
+                _this9.jSPlugin.jSPlugin.JS_Resize(width, height - footerDOMHeight - headerDOMHeight);
 
-                _this9.jSPlugin.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight - footerDOMHeight - headerDOMHeight);
+                if (_this9.jSPlugin.Theme.Rec) {
+                  _this9.jSPlugin.Theme.Rec.recAutoSize();
+                }
               })["catch"](function (err) {
                 console.log(err);
               });
@@ -30788,6 +30897,10 @@ var Theme = /*#__PURE__*/function () {
               var cancelPromise = cancelFullScreenPromise();
               cancelPromise.then(function (data) {
                 _this9.jSPlugin.jSPlugin.JS_Resize(_this9.jSPlugin.width, _this9.jSPlugin.height);
+
+                if (_this9.jSPlugin.Theme.Rec) {
+                  _this9.jSPlugin.Theme.Rec.recAutoSize();
+                }
               });
             }
 
@@ -30803,12 +30916,12 @@ var Theme = /*#__PURE__*/function () {
           btnItem.id = btnId;
           btnItem.domString = "<ul id=\"".concat(this.jSPlugin.id, "-hdSelect\" class=\"hd speed-select ").concat(this.isMobile ? "mobile" : "", "\" style=\"display:none;\">") // + `<li class="selectOption" style="width: 60px;height: 32px;text-align: center;line-height: 32px;list-style: none;cursor: pointer;font-size: 13px;color: rgba(0, 0, 0, .85);" name="option" id="${this.jSPlugin.id}-select-hd">高清</li>`
           // + `<li class="selectOption" style="width: 60px;height: 32px;text-align: center;line-height: 32px;list-style: none;cursor: pointer;font-size: 13px;color: rgba(0, 0, 0, .85);" name="option" id="${this.jSPlugin.id}-select-sd">标清</li>`
-          + "<li class=\"selectOption default\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;\" name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-hd\">\u9AD8\u6E05</li>") + "<li class=\"selectOption default\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;\"  name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-sd\">\u6807\u6E05</li>") + "<li class=\"selectOption cancel\" style=\"".concat(this.isMobile ? "" : "display:none;", "\" name=\"option\" id=\"").concat(this.jSPlugin.id, "-select-speed\">\u53D6\u6D88</li>") + '</ul>' + "<span><svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M17.4,16.5H3.1c-0.8,0-1.4-0.6-1.4-1.4V5.4c0-0.9,0.7-1.6,1.6-1.6h14.1c0.8,0,1.4,0.6,1.4,1.4v9.8 C18.8,15.9,18.2,16.5,17.4,16.5z M3.3,5C3.1,5,2.9,5.2,2.9,5.4v9.7c0,0.2,0.1,0.3,0.3,0.3h14.3c0.2,0,0.3-0.1,0.3-0.3V5.3 c0-0.2-0.1-0.3-0.3-0.3H3.3z" />' + '<path d="M13.3,13.6h-1.6c-0.4,0-0.7-0.3-0.7-0.7V7.4c0-0.4,0.3-0.7,0.7-0.7h1.6c1.2,0,2.2,1,2.2,2.2v2.4 C15.6,12.6,14.6,13.6,13.3,13.6z M12.2,12.5h1.1c0.6,0,1.1-0.5,1.1-1.1V9c0-0.6-0.5-1.1-1.1-1.1h-1.1V12.5z" />' + '<path d="M5.5,13.6c-0.3,0-0.6-0.2-0.6-0.6V7.3C5,7,5.2,6.8,5.5,6.8S6.1,7,6.1,7.3v5.7C6.1,13.4,5.8,13.6,5.5,13.6z" />' + '<path d="M9.2,13.6c-0.3,0-0.6-0.2-0.6-0.6V7.3c0-0.3,0.2-0.6,0.6-0.6S9.8,7,9.8,7.3v5.7C9.8,13.4,9.5,13.6,9.2,13.6z" />' + '<rect x="5.6" y="9.6" width="3.6" height="1.1" />' + '</svg>' + "<svg style=\"display:none\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -8 40 44\">\n                <path d=\"M24.1,23.8h-20c-1.1,0-1.9-0.9-1.9-1.9V8.4c0-1.2,1-2.2,2.1-2.2h19.7c1.1,0,1.9,0.9,1.9,1.9v13.8\n                    C26,23,25.1,23.8,24.1,23.8z M4.3,7.7C4,7.7,3.7,8,3.7,8.4v13.5c0,0.2,0.2,0.4,0.4,0.4h20c0.2,0,0.4-0.2,0.4-0.4V8.2\n                    c0-0.2-0.2-0.4-0.4-0.4H4.3z\"/>\n                <path d=\"M18.4,19.8h-2.2c-0.5,0-0.9-0.4-0.9-0.9v-7.8c0-0.5,0.4-0.9,0.9-0.9h2.2c1.7,0,3.1,1.4,3.1,3.1v3.3\n                C21.5,18.4,20.1,19.8,18.4,19.8z M16.7,18.3h1.6c0.9,0,1.6-0.7,1.6-1.6v-3.3c0-0.9-0.7-1.6-1.6-1.6h-1.6V18.3z\"/>\n                <path d=\"M10.5,19.8c1.2,0,2.1-0.3,2.7-0.9c0.6-0.6,0.9-1.3,0.9-2.1c0-0.8-0.3-1.4-0.9-1.8c-0.4-0.2-1.1-0.5-2.2-0.8\n                    l0,0l-1-0.2c-0.4-0.1-0.8-0.2-1-0.4c-0.4-0.2-0.6-0.5-0.6-0.9c0-0.4,0.1-0.6,0.4-0.9s0.7-0.3,1.3-0.3c0.8,0,1.4,0.2,1.8,0.6\n                    c0.2,0.3,0.3,0.6,0.4,0.9l0,0h1.4c0-0.6-0.2-1.1-0.5-1.6c-0.6-0.8-1.6-1.2-2.9-1.2c-1,0-1.8,0.3-2.4,0.8c-0.6,0.5-0.9,1.2-0.9,2\n                    c0,0.7,0.3,1.3,1,1.7c0.4,0.2,0.9,0.4,1.7,0.6l0,0l1.2,0.3c0.6,0.2,1.1,0.3,1.3,0.4c0.3,0.2,0.5,0.5,0.5,0.9c0,0.5-0.2,0.9-0.6,1.1\n                    s-0.9,0.4-1.5,0.4c-0.9,0-1.6-0.2-2-0.7c-0.2-0.3-0.3-0.6-0.4-1.1l0,0H6.8c0,0.9,0.3,1.6,0.9,2.2C8.2,19.5,9.2,19.8,10.5,19.8z\"/>\n                <defs>\n                  <filter id=\"Adobe_OpacityMaskFilter\" filterUnits=\"userSpaceOnUse\" x=\"15.2\" y=\"10.3\" width=\"6.2\" height=\"9.5\">\n                    <feColorMatrix  type=\"matrix\" values=\"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0\"/>\n                  </filter>\n                </defs>\n                <mask maskUnits=\"userSpaceOnUse\" x=\"15.2\" y=\"10.3\" width=\"6.2\" height=\"9.5\" id=\"mask-2_2_\">\n                  <g class=\"st2\">\n                    <path id=\"path-1_2_\" class=\"st3\" d=\"M24.1,23.1h-20c-0.6,0-1.2-0.5-1.2-1.2V8.2C2.9,7.5,3.5,7,4.1,7h19.7c0.8,0,1.4,0.6,1.4,1.4\n                      v13.5C25.2,22.6,24.7,23.1,24.1,23.1z\"/>\n                  </g>\n                </mask>\n                <defs>\n                  <filter id=\"Adobe_OpacityMaskFilter_1_\" filterUnits=\"userSpaceOnUse\" x=\"6.8\" y=\"10.3\" width=\"7.3\" height=\"9.5\">\n                    <feColorMatrix  type=\"matrix\" values=\"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0\"/>\n                  </filter>\n                </defs>\n                <mask maskUnits=\"userSpaceOnUse\" x=\"6.8\" y=\"10.3\" width=\"7.3\" height=\"9.5\" id=\"mask-2_3_\">\n                  <g class=\"st5\">\n                    <path id=\"path-1_3_\" class=\"st3\" d=\"M24.1,23.1h-20c-0.6,0-1.2-0.5-1.2-1.2V8.2C2.9,7.5,3.5,7,4.1,7h19.7c0.8,0,1.4,0.6,1.4,1.4\n                      v13.5C25.2,22.6,24.7,23.1,24.1,23.1z\"/>\n                  </g>\n                </mask>\n                </svg>\n                ") + "<span class='speed-select-mask' style=\"display:none\" id=\"".concat(this.jSPlugin.id, "-select-hd-mask\"></span>") + '</span>';
+          + "<li class=\"selectOption default\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;\" name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-hd\">\u9AD8\u6E05</li>") + "<li class=\"selectOption default\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;\"  name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-sd\">\u6807\u6E05</li>") + "<li class=\"selectOption cancel\" style=\"".concat(this.isMobile ? "" : "display:none;", "\" name=\"option\" id=\"").concat(this.jSPlugin.id, "-select-speed\">\u53D6\u6D88</li>") + '</ul>' + "<span><svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M17.4,16.5H3.1c-0.8,0-1.4-0.6-1.4-1.4V5.4c0-0.9,0.7-1.6,1.6-1.6h14.1c0.8,0,1.4,0.6,1.4,1.4v9.8 C18.8,15.9,18.2,16.5,17.4,16.5z M3.3,5C3.1,5,2.9,5.2,2.9,5.4v9.7c0,0.2,0.1,0.3,0.3,0.3h14.3c0.2,0,0.3-0.1,0.3-0.3V5.3 c0-0.2-0.1-0.3-0.3-0.3H3.3z" />' + '<path d="M13.3,13.6h-1.6c-0.4,0-0.7-0.3-0.7-0.7V7.4c0-0.4,0.3-0.7,0.7-0.7h1.6c1.2,0,2.2,1,2.2,2.2v2.4 C15.6,12.6,14.6,13.6,13.3,13.6z M12.2,12.5h1.1c0.6,0,1.1-0.5,1.1-1.1V9c0-0.6-0.5-1.1-1.1-1.1h-1.1V12.5z" />' + '<path d="M5.5,13.6c-0.3,0-0.6-0.2-0.6-0.6V7.3C5,7,5.2,6.8,5.5,6.8S6.1,7,6.1,7.3v5.7C6.1,13.4,5.8,13.6,5.5,13.6z" />' + '<path d="M9.2,13.6c-0.3,0-0.6-0.2-0.6-0.6V7.3c0-0.3,0.2-0.6,0.6-0.6S9.8,7,9.8,7.3v5.7C9.8,13.4,9.5,13.6,9.2,13.6z" />' + '<rect x="5.6" y="9.6" width="3.6" height="1.1" />' + '</svg>' + "<svg class=\"theme-icon-item-icon\" style=\"display:none\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -8 40 44\">\n                <path d=\"M24.1,23.8h-20c-1.1,0-1.9-0.9-1.9-1.9V8.4c0-1.2,1-2.2,2.1-2.2h19.7c1.1,0,1.9,0.9,1.9,1.9v13.8\n                    C26,23,25.1,23.8,24.1,23.8z M4.3,7.7C4,7.7,3.7,8,3.7,8.4v13.5c0,0.2,0.2,0.4,0.4,0.4h20c0.2,0,0.4-0.2,0.4-0.4V8.2\n                    c0-0.2-0.2-0.4-0.4-0.4H4.3z\"/>\n                <path d=\"M18.4,19.8h-2.2c-0.5,0-0.9-0.4-0.9-0.9v-7.8c0-0.5,0.4-0.9,0.9-0.9h2.2c1.7,0,3.1,1.4,3.1,3.1v3.3\n                C21.5,18.4,20.1,19.8,18.4,19.8z M16.7,18.3h1.6c0.9,0,1.6-0.7,1.6-1.6v-3.3c0-0.9-0.7-1.6-1.6-1.6h-1.6V18.3z\"/>\n                <path d=\"M10.5,19.8c1.2,0,2.1-0.3,2.7-0.9c0.6-0.6,0.9-1.3,0.9-2.1c0-0.8-0.3-1.4-0.9-1.8c-0.4-0.2-1.1-0.5-2.2-0.8\n                    l0,0l-1-0.2c-0.4-0.1-0.8-0.2-1-0.4c-0.4-0.2-0.6-0.5-0.6-0.9c0-0.4,0.1-0.6,0.4-0.9s0.7-0.3,1.3-0.3c0.8,0,1.4,0.2,1.8,0.6\n                    c0.2,0.3,0.3,0.6,0.4,0.9l0,0h1.4c0-0.6-0.2-1.1-0.5-1.6c-0.6-0.8-1.6-1.2-2.9-1.2c-1,0-1.8,0.3-2.4,0.8c-0.6,0.5-0.9,1.2-0.9,2\n                    c0,0.7,0.3,1.3,1,1.7c0.4,0.2,0.9,0.4,1.7,0.6l0,0l1.2,0.3c0.6,0.2,1.1,0.3,1.3,0.4c0.3,0.2,0.5,0.5,0.5,0.9c0,0.5-0.2,0.9-0.6,1.1\n                    s-0.9,0.4-1.5,0.4c-0.9,0-1.6-0.2-2-0.7c-0.2-0.3-0.3-0.6-0.4-1.1l0,0H6.8c0,0.9,0.3,1.6,0.9,2.2C8.2,19.5,9.2,19.8,10.5,19.8z\"/>\n                <defs>\n                  <filter id=\"Adobe_OpacityMaskFilter\" filterUnits=\"userSpaceOnUse\" x=\"15.2\" y=\"10.3\" width=\"6.2\" height=\"9.5\">\n                    <feColorMatrix  type=\"matrix\" values=\"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0\"/>\n                  </filter>\n                </defs>\n                <mask maskUnits=\"userSpaceOnUse\" x=\"15.2\" y=\"10.3\" width=\"6.2\" height=\"9.5\" id=\"mask-2_2_\">\n                  <g class=\"st2\">\n                    <path id=\"path-1_2_\" class=\"st3\" d=\"M24.1,23.1h-20c-0.6,0-1.2-0.5-1.2-1.2V8.2C2.9,7.5,3.5,7,4.1,7h19.7c0.8,0,1.4,0.6,1.4,1.4\n                      v13.5C25.2,22.6,24.7,23.1,24.1,23.1z\"/>\n                  </g>\n                </mask>\n                <defs>\n                  <filter id=\"Adobe_OpacityMaskFilter_1_\" filterUnits=\"userSpaceOnUse\" x=\"6.8\" y=\"10.3\" width=\"7.3\" height=\"9.5\">\n                    <feColorMatrix  type=\"matrix\" values=\"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0\"/>\n                  </filter>\n                </defs>\n                <mask maskUnits=\"userSpaceOnUse\" x=\"6.8\" y=\"10.3\" width=\"7.3\" height=\"9.5\" id=\"mask-2_3_\">\n                  <g class=\"st5\">\n                    <path id=\"path-1_3_\" class=\"st3\" d=\"M24.1,23.1h-20c-0.6,0-1.2-0.5-1.2-1.2V8.2C2.9,7.5,3.5,7,4.1,7h19.7c0.8,0,1.4,0.6,1.4,1.4\n                      v13.5C25.2,22.6,24.7,23.1,24.1,23.1z\"/>\n                  </g>\n                </mask>\n                </svg>\n                ") + "<span class='speed-select-mask' style=\"display:none\" id=\"".concat(this.jSPlugin.id, "-select-hd-mask\"></span>") + '</span>';
 
           btnItem.onclick = function (e) {
-            var _this9$decoderState$s8 = _this9.decoderState.state,
-                hd = _this9$decoderState$s8.hd,
-                expend = _this9$decoderState$s8.expend; // 选择清晰度选项时才触发事件
+            var _this9$decoderState$s9 = _this9.decoderState.state,
+                hd = _this9$decoderState$s9.hd,
+                expend = _this9$decoderState$s9.expend; // 选择清晰度选项时才触发事件
 
             if (hd && e.target.id === "".concat(_this9.jSPlugin.id, "-select-sd")) {
               //decoder.changePlayUrl({ hd: false });
@@ -30887,9 +31000,9 @@ var Theme = /*#__PURE__*/function () {
           }
 
           btnItem.onclick = function (e) {
-            var _this9$decoderState$s9 = _this9.decoderState.state,
-                speed = _this9$decoderState$s9.speed,
-                expend = _this9$decoderState$s9.expend;
+            var _this9$decoderState$s10 = _this9.decoderState.state,
+                speed = _this9$decoderState$s10.speed,
+                expend = _this9$decoderState$s10.expend;
 
             if (!speed && _this9.isMobile) {
               document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).className = expend ? "speed speed-select mobile expend" : "speed speed-select mobile";
@@ -31025,7 +31138,7 @@ var Theme = /*#__PURE__*/function () {
         case 'cloudRec':
           btnItem.title = "云存储回放";
           btnItem.id = btnId;
-          btnItem.domString = "\n        <span>\n          <svg fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"  width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-10 0 40 15\">\n\t<path d=\"M9.5,13.1c-0.3,0-0.5-0.2-0.5-0.5V8.8c0-0.3,0.2-0.5,0.5-0.5S10,8.5,10,8.8v3.8C10,12.8,9.8,13.1,9.5,13.1z\"/>\n\t<path d=\"M7.6,10.6c-0.1,0-0.3-0.1-0.4-0.2C7,10.2,7,9.9,7.3,9.7l1.9-1.7c0.2-0.2,0.5-0.2,0.7,0l1.8,1.7\n\t\tc0.2,0.2,0.2,0.5,0,0.7c-0.2,0.2-0.5,0.2-0.7,0L9.5,9.1l-1.6,1.4C7.8,10.6,7.7,10.6,7.6,10.6z\"/>\n\t<path d=\"M13.2,15.7H5.6c-2.1-0.1-3.8-1.8-3.8-3.9c0-1.8,1.3-3.4,3-3.8c0.4-2.2,2.3-3.9,4.6-3.9c2.3,0,4.2,1.7,4.6,3.8\n\t\tc1.8,0.4,3.1,1.9,3.1,3.8C17.1,13.9,15.4,15.7,13.2,15.7z M5.6,14.7h7.6c1.6,0,2.9-1.3,2.9-2.9c0-1.5-1.1-2.7-2.6-2.9l-0.4,0l0-0.4\n\t\tc-0.2-1.9-1.7-3.3-3.6-3.3C7.5,5.1,6,6.6,5.8,8.5l0,0.4l-0.4,0c-1.4,0.2-2.5,1.4-2.5,2.9C2.8,13.3,4.1,14.6,5.6,14.7z\"/>\n          </svg>\n        </span>\n        ");
+          btnItem.domString = "\n        <span>\n          <svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"  width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-10 0 40 15\">\n\t<path d=\"M9.5,13.1c-0.3,0-0.5-0.2-0.5-0.5V8.8c0-0.3,0.2-0.5,0.5-0.5S10,8.5,10,8.8v3.8C10,12.8,9.8,13.1,9.5,13.1z\"/>\n\t<path d=\"M7.6,10.6c-0.1,0-0.3-0.1-0.4-0.2C7,10.2,7,9.9,7.3,9.7l1.9-1.7c0.2-0.2,0.5-0.2,0.7,0l1.8,1.7\n\t\tc0.2,0.2,0.2,0.5,0,0.7c-0.2,0.2-0.5,0.2-0.7,0L9.5,9.1l-1.6,1.4C7.8,10.6,7.7,10.6,7.6,10.6z\"/>\n\t<path d=\"M13.2,15.7H5.6c-2.1-0.1-3.8-1.8-3.8-3.9c0-1.8,1.3-3.4,3-3.8c0.4-2.2,2.3-3.9,4.6-3.9c2.3,0,4.2,1.7,4.6,3.8\n\t\tc1.8,0.4,3.1,1.9,3.1,3.8C17.1,13.9,15.4,15.7,13.2,15.7z M5.6,14.7h7.6c1.6,0,2.9-1.3,2.9-2.9c0-1.5-1.1-2.7-2.6-2.9l-0.4,0l0-0.4\n\t\tc-0.2-1.9-1.7-3.3-3.6-3.3C7.5,5.1,6,6.6,5.8,8.5l0,0.4l-0.4,0c-1.4,0.2-2.5,1.4-2.5,2.9C2.8,13.3,4.1,14.6,5.6,14.7z\"/>\n          </svg>\n        </span>\n        ");
 
           btnItem.onclick = function () {
             console.log("点击云回放");
@@ -31051,7 +31164,7 @@ var Theme = /*#__PURE__*/function () {
         case 'rec':
           btnItem.title = "本地存储";
           btnItem.id = btnId;
-          btnItem.domString = "\n        <span>\n        <svg fill=".concat(btnItem.color, " version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"  width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"0 0 40 15\">\n          <path d=\"M13,16.3H5.5c-1.1,0-2-0.9-2-2V3.8c0-1.1,0.9-2,2-2h5.4c0.5,0,1,0.2,1.4,0.6l2.1,2.1C14.8,4.8,15,5.3,15,5.9\n  v8.4C15,15.4,14.1,16.3,13,16.3z M5.5,2.8c-0.6,0-1,0.4-1,1v10.5c0,0.6,0.4,1,1,1H13c0.6,0,1-0.4,1-1V5.9c0-0.3-0.1-0.5-0.3-0.7\n  L11.6,3c-0.2-0.2-0.4-0.3-0.7-0.3H5.5z\"/>\n<path d=\"M6.3,7.3C6,7.3,5.8,7,5.8,6.8V4.5C5.8,4.2,6,4,6.3,4s0.5,0.2,0.5,0.5v2.2C6.8,7,6.6,7.3,6.3,7.3z\"/>\n<path d=\"M8.5,7.3C8.3,7.3,8,7,8,6.8V4.5C8,4.2,8.3,4,8.5,4S9,4.2,9,4.5v2.2C9,7,8.8,7.3,8.5,7.3z\"/>\n<path d=\"M10.8,7.3c-0.3,0-0.5-0.2-0.5-0.5V4.5c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v2.2C11.3,7,11.1,7.3,10.8,7.3z\"\n  />\n        </svg>\n      </span>\n        ");
+          btnItem.domString = "\n        <span>\n        <svg class=\"theme-icon-item-icon\" fill=".concat(btnItem.color, " version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"  width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"0 0 40 15\">\n          <path d=\"M13,16.3H5.5c-1.1,0-2-0.9-2-2V3.8c0-1.1,0.9-2,2-2h5.4c0.5,0,1,0.2,1.4,0.6l2.1,2.1C14.8,4.8,15,5.3,15,5.9\n  v8.4C15,15.4,14.1,16.3,13,16.3z M5.5,2.8c-0.6,0-1,0.4-1,1v10.5c0,0.6,0.4,1,1,1H13c0.6,0,1-0.4,1-1V5.9c0-0.3-0.1-0.5-0.3-0.7\n  L11.6,3c-0.2-0.2-0.4-0.3-0.7-0.3H5.5z\"/>\n<path d=\"M6.3,7.3C6,7.3,5.8,7,5.8,6.8V4.5C5.8,4.2,6,4,6.3,4s0.5,0.2,0.5,0.5v2.2C6.8,7,6.6,7.3,6.3,7.3z\"/>\n<path d=\"M8.5,7.3C8.3,7.3,8,7,8,6.8V4.5C8,4.2,8.3,4,8.5,4S9,4.2,9,4.5v2.2C9,7,8.8,7.3,8.5,7.3z\"/>\n<path d=\"M10.8,7.3c-0.3,0-0.5-0.2-0.5-0.5V4.5c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v2.2C11.3,7,11.1,7.3,10.8,7.3z\"\n  />\n        </svg>\n      </span>\n        ");
 
           btnItem.onclick = function () {
             console.log("点击本地回放");
@@ -31117,7 +31230,7 @@ var Theme = /*#__PURE__*/function () {
           var headerContainer = document.createElement('div');
           headerContainer.setAttribute('id', "".concat(this.jSPlugin.id, "-headControl"));
           headerContainer.setAttribute('class', 'header-controls');
-          headerContainer.innerHTML = "<div id='".concat(this.jSPlugin.id, "-headControl-left' class=\"header-controls-left\" style='display:flex'></div><div id='").concat(this.jSPlugin.id, "-headControl-right' class=\"header-controls-right\" style='display:flex'></div>");
+          headerContainer.innerHTML = "<div id='".concat(this.jSPlugin.id, "-headControl-left' class=\"header-controls-left\" style='display:flex;width:calc(100% - 100px);overflow:hidden;'></div><div id='").concat(this.jSPlugin.id, "-headControl-right' class=\"header-controls-right\" style='display:flex;'></div>");
           var headerStyle = {
             height: this.jSPlugin.width > MEDIAWIDTH ? "48px" : "32px",
             "line-height": this.jSPlugin.width > MEDIAWIDTH ? "48px" : "32px",
@@ -31139,7 +31252,7 @@ var Theme = /*#__PURE__*/function () {
             }
           }, 50);
         } else {
-          document.getElementById("".concat(this.jSPlugin.id, "-headControl")).innerHTML = "<div id='".concat(this.jSPlugin.id, "-headControl-left' style='display:flex'></div><div id='").concat(this.jSPlugin.id, "-headControl-right' style='display:flex'></div>");
+          document.getElementById("".concat(this.jSPlugin.id, "-headControl")).innerHTML = "<div id='".concat(this.jSPlugin.id, "-headControl-left' style='display:flex;width: calc(100% - 100px);'></div><div id='").concat(this.jSPlugin.id, "-headControl-right' style='display:flex'></div>");
         }
       } else {
         if (document.getElementById("".concat(this.jSPlugin.id, "-headControl"))) {
@@ -31171,6 +31284,7 @@ var Theme = /*#__PURE__*/function () {
           insertAfter$1(footerContainer, document.getElementById(videoId));
         } else {
           if (document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container"))) {
+            document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")).style.marginTop = "-".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px");
             document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")).innerHTML = "<div id=\"".concat(this.jSPlugin.id, "-audioControls\"  class=\"footer-controls\" style='display:flex;justify-content: space-between;height: ").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px;width:100%;'><div id='").concat(this.jSPlugin.id, "-audioControls-left' class=\"footer-controls-left\" style='display:flex'></div><div id='").concat(this.jSPlugin.id, "-audioControls-right' class=\"footer-controls-right\" style='display:flex'></div></div>");
           }
         }
@@ -31208,7 +31322,14 @@ var Theme = /*#__PURE__*/function () {
 
           this.Rec = new MobileRec(this.jSPlugin);
         } else {
-          this.Rec = new Rec(this.jSPlugin); // 回放时间轴预留48像素空间
+          if (this.Rec) {
+            // 如果回放已经定义，只需要初始化渲染
+            this.Rec.unSyncTimeLine();
+            this.Rec.recInit();
+          } else {
+            this.Rec = new Rec(this.jSPlugin);
+          } // 回放时间轴预留48像素空间
+
 
           var _checkTimer3 = setInterval(function () {
             if (window.EZUIKit[_this10.jSPlugin.id].state.EZUIKitPlayer.init) {
@@ -31239,7 +31360,7 @@ var Theme = /*#__PURE__*/function () {
         var isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
 
         if (!isFullScreen) {
-          _this10.jSPlugin.reSize(_this10.jSPlugin.params.width, _this10.jSPlugin.params.height);
+          _this10.jSPlugin.jSPlugin.JS_Resize(_this10.jSPlugin.width, _this10.jSPlugin.height);
 
           if (expend) {
             _this10.setDecoderState({
@@ -31252,6 +31373,10 @@ var Theme = /*#__PURE__*/function () {
               webExpend: false
             });
           }
+        }
+
+        if (_this10.jSPlugin.Theme.Rec) {
+          _this10.jSPlugin.Theme.Rec.recAutoSize();
         }
       };
 
@@ -31285,17 +31410,19 @@ var Theme = /*#__PURE__*/function () {
         if (data.code == 200 && data.data) {
           // 设备序列号
           if (document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content"))) {
-            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content")).style.maxWidth = "160px";
+            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content")).style.maxWidth = "100%";
             document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content")).style.overflow = "hidden";
             document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content")).style.textOverflow = "ellipsis";
+            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content")).style.whiteSpace = "nowrap";
             document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content")).innerHTML = data.data.deviceName;
           } // 设备序列号
 
 
           if (document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content"))) {
-            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content")).style.maxWidth = "160px";
+            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content")).style.maxWidth = "100%";
             document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content")).style.overflow = "hidden";
             document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content")).style.textOverflow = "ellipsis";
+            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content")).style.whiteSpace = "nowrap";
             document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content")).innerHTML = matchEzopenUrl(_this11.jSPlugin.url).deviceSerial;
           }
         }
@@ -31374,7 +31501,7 @@ var Theme = /*#__PURE__*/function () {
 
       var promise = requestFullScreenPromise(document.getElementById("".concat(this.jSPlugin.id, "-wrap")));
       promise.then(function (data) {
-        console.log("全屏promise", window.screen.availWidth);
+        console.log("全屏promise", window.screen.width);
 
         if (document.getElementById("".concat(_this12.jSPlugin.id, "-canvas-container"))) {
           footerDOMHeight = parseInt(window.getComputedStyle(document.getElementById("".concat(_this12.jSPlugin.id, "-canvas-container"))).height, 10);
@@ -31386,7 +31513,7 @@ var Theme = /*#__PURE__*/function () {
 
         console.log("this.jSPlugin.JS_Resiz", footerDOMHeight, headerDOMHeight, document.body.clientWidth);
 
-        _this12.jSPlugin.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight - footerDOMHeight - headerDOMHeight);
+        _this12.jSPlugin.jSPlugin.JS_Resize(window.screen.width, window.screen.height - footerDOMHeight - headerDOMHeight);
       })["catch"](function (err) {
         console.log(err);
       });
@@ -31429,7 +31556,7 @@ var Theme = /*#__PURE__*/function () {
       } else {
         var promise = requestFullScreenPromise(document.getElementById("".concat(this.jSPlugin.id)));
         promise.then(function (data) {
-          _this13.jSPlugin.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight);
+          _this13.jSPlugin.jSPlugin.JS_Resize(window.screen.width, window.screen.height);
         })["catch"](function (err) {
           console.log(err);
         });
@@ -34017,7 +34144,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     var _params$autoplay = params.autoplay,
         autoplay = _params$autoplay === void 0 ? true : _params$autoplay; // 如果设置了模板（除精简版），此处不自动播放，根据模板判断是否执行自动播放:
 
-    if (params.template && params.template !== "simple" || params.themeData) {
+    if (params.template || params.themeData) {
       autoplay = false;
     }
 
@@ -34051,6 +34178,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       this.disabledPTZ = false;
       this.enableSharedArrayBufferGuide = false;
       this.capacity = {};
+      this.playTimer = null; // 播放定时器，限制至少1秒触发播放
+
       this.env = {
         domain: "https://open.ys7.com"
       };
@@ -34062,7 +34191,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         document.getElementById("".concat(this.id, "-wrap")).id = this.id;
       }
 
-      this.staticPath = isVersion2Available() ? "https://open.ys7.com/console/ezuikit_static/v6/v2" : "https://open.ys7.com/console/ezuikit_static/v6/v1";
+      this.staticPath = isVersion2Available() ? "https://open.ys7.com/console/ezuikit_static/v64/v2" : "https://open.ys7.com/console/ezuikit_static/v64/v1";
 
       if (typeof params.staticPath === 'string') {
         if (params.staticPath.startsWith("http")) {
@@ -34102,167 +34231,203 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         this.enableSharedArrayBufferGuide = params.enableSharedArrayBufferGuide;
       }
 
-      var pluginUrl = "".concat(this.staticPath, "/js/jsPluginV1-1.0.0.min.js");
+      var pluginUrl = "".concat(this.staticPath, "/js/jsPluginV1-1.0.0.min.js"); // 执行初始化；
 
-      if (isVersion2Available()) {
-        console.log("启用多线程解析视频");
-        pluginUrl = "".concat(this.staticPath, "/js/jsPluginV2-2.0.1.min.js");
-      } else {
-        // 是否引导用户开启谷歌实验室 Google Labs 特性
-        //enableSharedArrayBufferGuide
-        var getChromeVersion = function getChromeVersion() {
-          var arr = navigator.userAgent.split(' ');
-          var chromeVersion = '';
+      var doInit = function doInit() {
+        window.addPluginUrlIng = true;
 
-          for (var i = 0; i < arr.length; i++) {
-            if (/chrome/i.test(arr[i])) {
-              chromeVersion = arr[i];
-            }
-          }
-
-          if (chromeVersion) {
-            return Number(chromeVersion.split('/')[1].split('.')[0]);
-          }
-
-          return false;
-        }; // pc端 谷歌浏览器 版本92 ~ 105
-
-
-        if (!isMobile && 91 < getChromeVersion < 106 && this.enableSharedArrayBufferGuide) {
-          console.log("提示用户开启谷歌实验室特性");
-          var wapDomId = "".concat(this.id, "-wrap");
-          var guideDom = document.createElement("div");
-          var guideSpan = document.createElement("span");
-          guideSpan.innerHTML = "您当前浏览器可以开启谷歌实验室多线程特性，获取更好播放体验，避免浏览器卡顿及崩溃,详见";
-          guideDom.appendChild(guideSpan);
-          var guideLink = document.createElement("a");
-          guideLink.href = "https://open.ys7.com/help/384";
-          guideLink.setAttribute("target", "_blank");
-          guideDom.appendChild(guideLink);
-          guideLink.innerHTML = "开启说明"; //guideDom.innerHTML = "您的浏览器当前使用单进程播放视频，可能因内存占用过高导致浏览器卡顿,您可参考·谷歌浏览器开启多线程（链接）·开启谷歌实验室多线程特性，获取更好播放体验";
-
-          guideDom.id = "".concat(this.id, "-guide");
-          guideDom.style = "font-size:12px;color:red;";
-          setTimeout(function () {
-            if (document.getElementById(wapDomId)) {
-              document.getElementById(wapDomId).insertBefore(guideDom, document.getElementById(_this.id));
-            }
-          }, 5000);
-        }
-      }
-
-      this.pluginStatus = new Status(this, this.id);
-      addJs(pluginUrl, function () {
-        if (_this.autoplay) {
-          _this.initTime = new Date().getTime();
-
-          _this.Monitor.dclog({
-            url: _this.url,
-            action: 0,
-            text: 'startInit'
-          });
-
-          _this.Monitor.localInfoLog({
-            Serial: matchEzopenUrl(_this.url).deviceSerial,
-            Channel: matchEzopenUrl(_this.url).channelNo,
-            Ver: isVersion2Available() ? "v7.0.0" : "v6.0.0",
-            ExterVer: isVersion2Available() ? "v7.0.0" : "v6.0.0"
-          });
-
-          var initEZUIKitPlayerPromise = _this.initEZUIKitPlayer(params);
-
-          var getRealUrlPromise = _this._getRealUrlPromise(params.accessToken, params.url);
-
-          Promise.all([initEZUIKitPlayerPromise, getRealUrlPromise]).then(function (values) {
-            if (values[1]) {
-              _this.playStartTime = new Date().getTime();
-
-              _this._pluginPlay(values[1], function () {
-                console.log("自动播放成功");
-
-                _this.Monitor.dclog({
-                  url: _this.url,
-                  action: 202,
-                  d: new Date().getTime() - _this.initTime,
-                  text: 'autoPlaySuccess'
-                });
-              }, function () {
-                console.log("自动播放失败");
-
-                _this.Monitor.dclog({
-                  url: _this.url,
-                  action: 402,
-                  d: new Date().getTime() - _this.initTime,
-                  text: 'autoPlayError'
-                });
-              });
-            } else {
-              console.log("promise of one", values);
-            }
-
-            window.EZUIKit[params.id].state.EZUIKitPlayer.init = true;
-
-            if (document.getElementById("".concat(params.id, "canvas_draw0"))) {
-              document.getElementById("".concat(params.id, "canvas_draw0")).style.border = "none";
-            }
-          })["catch"](function (err) {
-            console.log("err", err);
-
-            _this.pluginStatus.loadingSetText({
-              text: err && err.msg || "获取播放地址失败",
-              color: 'red'
-            });
-          });
+        if (isVersion2Available()) {
+          console.log("启用多线程解析视频");
+          pluginUrl = "".concat(_this.staticPath, "/js/jsPluginV2-2.0.1.min.js");
         } else {
-          _this.initTime = new Date().getTime();
+          // 是否引导用户开启谷歌实验室 Google Labs 特性
+          //enableSharedArrayBufferGuide
+          var getChromeVersion = function getChromeVersion() {
+            var arr = navigator.userAgent.split(' ');
+            var chromeVersion = '';
 
-          _this.Monitor.dclog({
-            url: _this.url,
-            action: 0,
-            text: 'startInit'
-          });
-
-          _this.Monitor.localInfoLog({
-            Serial: matchEzopenUrl(_this.url).deviceSerial,
-            Channel: matchEzopenUrl(_this.url).channelNo,
-            Ver: isVersion2Available() ? "v7.0.0" : "v6.0.0"
-          });
-
-          var initEZUIKitPlayerPromise = _this.initEZUIKitPlayer(params);
-
-          initEZUIKitPlayerPromise.then(function (data) {
-            console.log("初始化成功", data);
-            window.EZUIKit[params.id].state.EZUIKitPlayer.init = true;
-
-            if (document.getElementById("".concat(params.id, "canvas_draw0"))) {
-              document.getElementById("".concat(params.id, "canvas_draw0")).style.border = "none";
+            for (var i = 0; i < arr.length; i++) {
+              if (/chrome/i.test(arr[i])) {
+                chromeVersion = arr[i];
+              }
             }
+
+            if (chromeVersion) {
+              return Number(chromeVersion.split('/')[1].split('.')[0]);
+            }
+
+            return false;
+          }; // pc端 谷歌浏览器 版本 > 91
+
+
+          if (!isMobile && 91 < getChromeVersion && _this.enableSharedArrayBufferGuide) {
+            console.log("提示用户开启谷歌实验室特性");
+            var wapDomId = "".concat(_this.id, "-wrap");
+            var guideDom = document.createElement("div");
+            var guideSpan = document.createElement("span");
+            guideSpan.innerHTML = "您当前浏览器可以开启谷歌实验室多线程特性，获取更好播放体验，避免浏览器卡顿及崩溃,详见";
+            guideDom.appendChild(guideSpan);
+            var guideLink = document.createElement("a");
+            guideLink.href = "https://open.ys7.com/help/384";
+            guideLink.setAttribute("target", "_blank");
+            guideDom.appendChild(guideLink);
+            guideLink.innerHTML = "开启说明"; //guideDom.innerHTML = "您的浏览器当前使用单进程播放视频，可能因内存占用过高导致浏览器卡顿,您可参考·谷歌浏览器开启多线程（链接）·开启谷歌实验室多线程特性，获取更好播放体验";
+
+            guideDom.id = "".concat(_this.id, "-guide");
+            guideDom.style = "font-size:12px;color:red;";
+            setTimeout(function () {
+              if (document.getElementById(wapDomId)) {
+                document.getElementById(wapDomId).insertBefore(guideDom, document.getElementById(_this.id));
+              }
+            }, 5000);
+          }
+        }
+
+        _this.pluginStatus = new Status(_this, _this.id);
+        addJs(pluginUrl, function () {
+          if (_this.autoplay) {
+            _this.initTime = new Date().getTime();
 
             _this.Monitor.dclog({
               url: _this.url,
-              action: 201,
-              d: new Date().getTime() - _this.initTime,
-              text: 'initSuccess'
+              action: 0,
+              text: 'startInit'
             });
-          });
-        }
-      }, function () {
-        if (isVersion2Available()) {
-          return !!window.JSPluginV2;
+
+            _this.Monitor.localInfoLog({
+              Serial: matchEzopenUrl(_this.url).deviceSerial,
+              Channel: matchEzopenUrl(_this.url).channelNo,
+              Ver: isVersion2Available() ? "v7.0.0" : "v6.0.0",
+              ExterVer: isVersion2Available() ? "v7.0.0" : "v6.0.0"
+            });
+
+            console.log("初始化-");
+
+            var initEZUIKitPlayerPromise = _this.initEZUIKitPlayer(params);
+
+            var getRealUrlPromise = _this._getRealUrlPromise(params.accessToken, params.url);
+
+            Promise.all([initEZUIKitPlayerPromise, getRealUrlPromise]).then(function (values) {
+              if (values[1]) {
+                _this.playStartTime = new Date().getTime();
+
+                _this._pluginPlay(values[1], function () {
+                  console.log("自动播放成功");
+
+                  _this.Monitor.dclog({
+                    url: _this.url,
+                    action: 202,
+                    d: new Date().getTime() - _this.initTime,
+                    text: 'autoPlaySuccess'
+                  });
+                }, function () {
+                  console.log("自动播放失败");
+
+                  _this.Monitor.dclog({
+                    url: _this.url,
+                    action: 402,
+                    d: new Date().getTime() - _this.initTime,
+                    text: 'autoPlayError'
+                  });
+                });
+              } else {
+                console.log("promise of one", values);
+              }
+
+              window.EZUIKit[params.id].state.EZUIKitPlayer.init = true;
+
+              if (document.getElementById("".concat(params.id, "canvas_draw0"))) {
+                document.getElementById("".concat(params.id, "canvas_draw0")).style.border = "none";
+              }
+            })["catch"](function (err) {
+              console.log("err", err);
+
+              _this.pluginStatus.loadingSetText({
+                text: err && err.msg || "获取播放地址失败",
+                color: 'red'
+              });
+            });
+          } else {
+            _this.initTime = new Date().getTime();
+
+            _this.Monitor.dclog({
+              url: _this.url,
+              action: 0,
+              text: 'startInit'
+            });
+
+            _this.Monitor.localInfoLog({
+              Serial: matchEzopenUrl(_this.url).deviceSerial,
+              Channel: matchEzopenUrl(_this.url).channelNo,
+              Ver: isVersion2Available() ? "v7.0.0" : "v6.0.0"
+            });
+
+            var initEZUIKitPlayerPromise = _this.initEZUIKitPlayer(params);
+
+            initEZUIKitPlayerPromise.then(function (data) {
+              console.log("初始化成功", data);
+              window.EZUIKit[params.id].state.EZUIKitPlayer.init = true;
+
+              if (document.getElementById("".concat(params.id, "canvas_draw0"))) {
+                document.getElementById("".concat(params.id, "canvas_draw0")).style.border = "none";
+              }
+
+              _this.Monitor.dclog({
+                url: _this.url,
+                action: 201,
+                d: new Date().getTime() - _this.initTime,
+                text: 'initSuccess'
+              });
+            });
+          }
+        }, function () {
+          if (isVersion2Available()) {
+            return !!window.JSPluginV2 || !!window.addPluginUrled;
+          }
+
+          return !!window.JSPluginV1 || !!window.addPluginUrled;
+        });
+
+        if (params.plugin && params.plugin.indexOf("talk") !== -1) {
+          _this.Talk = new Talk(_this);
+          window.EZUIKit[params.id].state.EZUIKitPlayer.talkInit = true;
         }
 
-        return !!window.JSPluginV1;
-      });
+        _this.getDeviceCapacity();
+      }; // 如果浏览器正在加载插件
 
-      if (params.plugin && params.plugin.indexOf("talk") !== -1) {
-        this.Talk = new Talk(this);
-        window.EZUIKit[params.id].state.EZUIKitPlayer.talkInit = true;
+
+      if (window.addPluginUrlIng) {
+        var doInitTimer = setInterval(function () {
+          if (window.JSPluginV1 || window.JSPluginV2) {
+            // 判断加载成功
+            clearInterval(doInitTimer);
+            doInit();
+          }
+        }, 50);
+      } else {
+        doInit();
       }
-
-      this.getDeviceCapacity();
     } else {
       return new EZUIKitV3$1.EZUIKitPlayer(params);
-    }
+    } // this.stop = debouncePromise(()=>this._stop(),0,true);
+
+
+    this.play = debouncePromise(function (options) {
+      return _this._play(options);
+    }, 1000, true); // this.pause = debouncePromise(()=>this._pause(),1000,true);
+
+    this.resume = debouncePromise(function (time) {
+      return _this._resume(time);
+    }, 1000, true); //this.changePlayUrl = debouncePromise((time)=>this._changePlayUrl(time),1000,true);
+    // 监听到页面退出
+    // 研究院反馈，播放过程中退出页面需要执行停止视频，否则可能导致浏览器崩溃
+
+    window.addEventListener("beforeunload", function () {
+      console.log("退出页面，停止视频流");
+
+      _this.stop();
+    });
   }
 
   _createClass$1(EZUIKitPlayer, [{
@@ -34352,10 +34517,12 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               if (iErrorCode === 1003) {
                 console.log("断流");
 
-                _this2.pluginStatus.loadingSetText({
-                  text: "连接断开，请重试",
-                  color: 'red'
-                });
+                if (!jSPlugin.bPlay) {
+                  _this2.pluginStatus.loadingSetText({
+                    text: "连接断开，请重试",
+                    color: 'red'
+                  });
+                }
 
                 if (typeof _this2.params.handleError === 'function') {
                   _this2.params.handleError({
@@ -34391,7 +34558,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           // }
 
           var checkTimer = setInterval(function () {
-            if (_this2.jSPlugin.Module && _this2.jSPlugin.Module._JSPlayM4_GetSDKVersion && _this2.jSPlugin.Module._JSPlayM4_GetSDKVersion()) {
+            //轮询是否加载解码库成功
+            if (window.JSPlayerModuleLoaded) {
               clearInterval(checkTimer);
 
               if (typeof _this2.params.handleInitSuccess === 'function') {
@@ -34448,10 +34616,12 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               if (iErrorCode === 1003) {
                 console.log("断流");
 
-                _this2.pluginStatus.loadingSetText({
-                  text: "连接断开，请重试",
-                  color: 'red'
-                });
+                if (!jSPlugin.bPlay) {
+                  _this2.pluginStatus.loadingSetText({
+                    text: "连接断开，请重试",
+                    color: 'red'
+                  });
+                }
 
                 if (typeof _this2.params.handleError === 'function') {
                   _this2.params.handleError({
@@ -34958,6 +35128,10 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         var msg = '播放失败，请检查设备及客户端网络';
         var retcode = -1;
 
+        if (_this4.jSPlugin.bPlay) {
+          return false;
+        }
+
         if (err && err.oError && err.oError.errorCode) {
           var errorInfo = _this4.errorHander.matchErrorInfo(err.oError.errorCode);
 
@@ -35005,13 +35179,9 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "play",
-    value: function play(options) {
+    key: "_play",
+    value: function _play(options) {
       var _this5 = this;
-
-      if (this.jSPlugin.bPlay) {
-        return false;
-      }
 
       this.pluginStatus.setPlayStatus({
         play: false,
@@ -35026,6 +35196,10 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       });
 
       if (options) {
+        if (typeof options === 'string') {
+          this.url = options;
+        }
+
         if (typeof options.url === 'string') {
           this.url = options.url;
         }
@@ -35040,30 +35214,34 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       }
 
       var promise = new Promise(function (resolve, reject) {
-        _this5._getRealUrlPromise(_this5.accessToken, _this5.url).then(function (data) {
-          _this5._pluginPlay(data, function () {
-            return resolve(true);
-          }, function () {
-            return reject(false);
-          });
-        })["catch"](function (err) {
-          var msg = err.msg ? err.msg : '播放失败，请检查设备及客户端网络';
+        _this5.stop().then(function () {
+          console.log("play_stop- success");
 
-          _this5.pluginStatus.loadingSetText({
-            text: msg,
-            color: 'red'
-          });
-
-          if (typeof _this5.params.handleError === 'function') {
-            _this5.params.handleError({
-              retcode: err.oError ? err.oError.errorCode : -1,
-              msg: msg,
-              id: _this5.params.id,
-              type: "handleError"
+          _this5._getRealUrlPromise(_this5.accessToken, _this5.url).then(function (data) {
+            _this5._pluginPlay(data, function () {
+              return resolve(true);
+            }, function () {
+              return reject(false);
             });
-          }
+          })["catch"](function (err) {
+            var msg = err.msg ? err.msg : '播放失败，请检查设备及客户端网络';
 
-          reject(false);
+            _this5.pluginStatus.loadingSetText({
+              text: msg,
+              color: 'red'
+            });
+
+            if (typeof _this5.params.handleError === 'function') {
+              _this5.params.handleError({
+                retcode: err.oError ? err.oError.errorCode : -1,
+                msg: msg,
+                id: _this5.params.id,
+                type: "handleError"
+              });
+            }
+
+            reject(false);
+          });
         });
       });
       return promise;
@@ -35073,20 +35251,10 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     value: function stop() {
       var _this6 = this;
 
-      if (!this.jSPlugin.bPlay) {
-        console.log("当前非播放状态");
-        var promise = new Promise(function (resolve, reject) {
-          reject({
-            retcode: -1,
-            msg: "当前非播放状态"
-          });
-        });
-        return promise;
-      }
-
       this.pluginStatus.setPlayStatus({
         loading: true
       });
+      this.reSetTheme();
       return this.jSPlugin.JS_Stop(0).then(function () {
         console.log("停止成功");
 
@@ -35129,6 +35297,40 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       return promise;
     }
   }, {
+    key: "reSetTheme",
+    value: function reSetTheme() {
+      // 云台初始化
+      if (this.Theme && this.Theme.Ptz) {
+        this.Theme.setDecoderState({
+          pantile: false
+        });
+        this.Theme.Ptz.hide();
+      } // 录制初始化
+
+
+      if (this.Theme) {
+        this.Theme.setDecoderState({
+          recordvideo: false
+        });
+      } // 电子放大初始化
+
+
+      if (this.Theme && this.Theme.decoderState.state.zoom) {
+        this.Zoom.stopZoom();
+        this.Theme.setDecoderState({
+          zoom: false
+        });
+      } // 对讲初始化
+
+
+      if (this.Theme && this.Theme.decoderState.state.talk) {
+        this.stopTalk();
+        this.Theme.setDecoderState({
+          talk: false
+        });
+      }
+    }
+  }, {
     key: "changePlayUrl",
     value: function changePlayUrl(options) {
       var _this8 = this;
@@ -35136,71 +35338,20 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       var initUrl = this.url;
       var url = matchUrl(initUrl, options);
       console.log("changePlayUrl", url);
-      this.url = url;
       var promise = new Promise(function (resolve, reject) {
-        _this8.stop().then(function () {
-          console.log("changePlayUrl stop success"); // 云台初始化
+        // play中已经处理stop;
+        // this.stop()
+        //   .then(() => {
+        console.log("changePlayUrl stop success");
 
-          if (_this8.Theme && _this8.Theme.Ptz) {
-            _this8.Theme.setDecoderState({
-              pantile: false
-            });
-
-            _this8.Theme.Ptz.hide();
-          } // 录制初始化
-
-
-          if (_this8.Theme) {
-            _this8.Theme.setDecoderState({
-              recordvideo: false
-            });
-          } // 电子放大初始化
-
-
-          if (_this8.Theme) {
-            _this8.Theme.setDecoderState({
-              zoom: false
-            });
-
-            if (_this8.Zoom) {
-              _this8.Zoom.stopZoom();
-            }
-          } // 对讲初始化
-
-
-          if (_this8.Theme && _this8.Theme.decoderState.state.talk) {
-            _this8.stopTalk();
-
-            _this8.Theme.setDecoderState({
-              talk: false
-            });
-          }
-
-          if (options.accessToken) {
-            _this8.accessToken = options.accessToken;
-            return _this8.play({
-              accessToken: options.accessToken,
-              url: url
-            }).then(function () {
-              console.log("changePlayUrl replay success"); // 当前处于网页全屏状态
-
-              if (_this8.Theme && _this8.Theme.decoderState.state.webExpend) {
-                _this8.Theme.webExpend();
-              } // 当前处于全屏状态
-
-
-              if (_this8.Theme && _this8.Theme.decoderState.state.expend) {
-                _this8.Theme.expend();
-              }
-
-              resolve(url);
-            })["catch"](function (err) {
-              reject(url);
-            });
-          }
-
-          _this8.play(url).then(function () {
-            console.log("changePlayUrl replay success"); // 当前处于网页全屏状态
+        if (options.accessToken) {
+          _this8.accessToken = options.accessToken;
+          return _this8.play({
+            accessToken: options.accessToken,
+            url: url
+          }).then(function () {
+            console.log("changePlayUrl replay success");
+            _this8.url = url; // 当前处于网页全屏状态
 
             if (_this8.Theme && _this8.Theme.decoderState.state.webExpend) {
               _this8.Theme.webExpend();
@@ -35215,27 +35366,46 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           })["catch"](function (err) {
             reject(url);
           });
-        })["catch"](function (err) {
-          console.log("切换过程停止失败", err);
+        }
 
-          if (options.accessToken) {
-            _this8.accessToken = options.accessToken;
-            return _this8.play({
-              accessToken: options.accessToken,
-              url: url
-            }).then(function () {
-              resolve(url);
-            })["catch"](function (err) {
-              reject(url);
-            });
+        _this8.play(url).then(function () {
+          console.log("changePlayUrl replay success");
+          _this8.url = url; // 当前处于网页全屏状态
+
+          if (_this8.Theme && _this8.Theme.decoderState.state.webExpend) {
+            _this8.Theme.webExpend();
+          } // 当前处于全屏状态
+
+
+          if (_this8.Theme && _this8.Theme.decoderState.state.expend) {
+            _this8.Theme.expend();
           }
 
-          _this8.play(url).then(function () {
-            resolve(url);
-          })["catch"](function (err) {
-            reject(url);
-          });
-        });
+          resolve(url);
+        })["catch"](function (err) {
+          reject(url);
+        }); // })
+        // .catch((err) => {
+        //   console.log("切换过程停止失败", err);
+        //   if (options.accessToken) {
+        //     this.accessToken = options.accessToken;
+        //     return this.play({
+        //       accessToken: options.accessToken,
+        //       url: url
+        //     }).then(() => {
+        //       resolve(url);
+        //     }).catch((err) => {
+        //       reject(url);
+        //     });
+        //   }
+        //   this.play(url)
+        //     .then(() => {
+        //       resolve(url);
+        //     }).catch((err) => {
+        //       reject(url);
+        //     });
+        // });
+
       });
       /**
       * 匹配播放地址 用户播放地址切换
@@ -35543,7 +35713,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       if (isVersion2Available()) {
         if (document.getElementById("".concat(this.id))) {
           document.getElementById("".concat(this.id)).style.backgroundImage = "url(".concat(url, ")");
-          document.getElementById("".concat(this.id)).style.backgroundSize = "cover";
+          document.getElementById("".concat(this.id)).style.backgroundSize = "100% 100%";
         }
       } else {
         if (document.getElementById("".concat(this.id, "canvas0"))) {
@@ -35584,8 +35754,10 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         this.jSPlugin.JS_Resize(width, height);
       } else {
         if (document.getElementById("".concat(this.id, "-player"))) {
-          document.getElementById("".concat(this.id, "-player")).style.width = width;
-          document.getElementById("".concat(this.id, "-player")).style.height = height;
+          document.getElementById("".concat(this.id, "-player")).width = width;
+          document.getElementById("".concat(this.id, "-player")).height = height;
+          document.getElementById("".concat(this.id, "-player")).style.width = width + "px";
+          document.getElementById("".concat(this.id, "-player")).style.height = height + "px";
         }
 
         var scale = 1;
@@ -35597,12 +35769,12 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             scale = 2;
           }
 
-          document.getElementById("".concat(this.id, "canvas0")).style.width = width * scale;
-          document.getElementById("".concat(this.id, "canvas0")).style.height = height * scale;
+          document.getElementById("".concat(this.id, "canvas0")).style.width = width * scale + "px";
+          document.getElementById("".concat(this.id, "canvas0")).style.height = height * scale + "px";
           document.getElementById("".concat(this.id, "canvas0")).width = width * scale;
           document.getElementById("".concat(this.id, "canvas0")).height = height * scale;
-          document.getElementById("".concat(this.id, "canvas0")).parentNode.style.width = width * scale;
-          document.getElementById("".concat(this.id, "canvas0")).parentNode.style.height = height * scale;
+          document.getElementById("".concat(this.id, "canvas0")).parentNode.style.width = width * scale + "px";
+          document.getElementById("".concat(this.id, "canvas0")).parentNode.style.height = height * scale + "px";
           document.getElementById("".concat(this.id, "canvas_draw0")).height = height * scale;
         }
 
@@ -35887,15 +36059,21 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         deviceSerial: matchEzopenUrl(this.url).deviceSerial
       };
       request(capacityUrl, 'POST', capacityParams, '', capacitySuccess);
-    }
+    } // pause() {
+    //   return this.jSPlugin.JS_Pause(0);
+    // }
+    // resume(time) {
+    //   return this.jSPlugin.JS_Resume(time);
+    // }
+
   }, {
     key: "pause",
     value: function pause() {
       return this.jSPlugin.JS_Pause(0);
     }
   }, {
-    key: "resume",
-    value: function resume(time) {
+    key: "_resume",
+    value: function _resume(time) {
       return this.jSPlugin.JS_Resume(time);
     }
   }]);

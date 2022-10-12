@@ -388,7 +388,7 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 
 #### 切换地址播放
 
-> 可用于在播放中切换设备，切换播放参数，以及直播切换回放等
+> 可用于在播放中切换设备，切换播放参数，以及直播切换回放等。请注意，频繁切换可能导致异常，切换间隔至少需要1秒
 
 ```
   player.changePlayUrl(options)
@@ -413,17 +413,18 @@ options参数说明
   
 
 #### 切换模板主题  
-> 可用于在播放中切换模板主题，同切换播放地址一起调用
+> 可用于在播放中切换模板主题，请切换播放地址成功后调用
 
 ```
   player.Theme.changeTheme(template)
-  .then(()=>{
-    console.log("切换成功")
-  });
 
   // 预览切回放场景示例
   player.changePlayUrl({type:"rec"});
-  player.Theme.changeTheme("pcRec");
+  .then(()=>{
+    console.log("地址切换成功，开始切换模板主题");
+    player.Theme.changeTheme("pcRec");
+  });
+  
 
 ```
 template参数说明

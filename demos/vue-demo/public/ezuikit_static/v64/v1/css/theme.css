@@ -1,0 +1,121 @@
+.footer-controls .theme-icon-item {
+  margin: 0 1%;
+}
+.footer-controls.themeEditing .theme-icon-item {
+  position: relative;
+  /* margin: 0 8px; */
+}
+.footer-controls .footer-controls-left{
+  margin-left: 12px;
+}
+.footer-controls.themeEditing .footer-controls-left .theme-icon-item {
+  /* margin-left: 12px; */
+}
+.footer-controls.themeEditing .footer-controls-right .theme-icon-item {
+  /* margin-right: 12px; */
+}
+.footer-controls .theme-icon-item .icon-move {
+  display: none;
+}
+.footer-controls.themeEditing .theme-icon-item:hover .icon-move {
+  display: block;
+}
+.footer-controls.themeEditing .footer-controls-left .theme-icon-item:first-child .icon-move.left{
+  display: none;
+}
+.footer-controls.themeEditing .footer-controls-left .theme-icon-item:nth-last-child(1) .icon-move.right{
+  display: none;
+}
+.footer-controls .footer-controls-right {
+  margin-right: 12px;
+}
+
+.footer-controls.themeEditing .footer-controls-right .theme-icon-item:first-child .icon-move.left{
+  display: none;
+}
+.footer-controls.themeEditing .footer-controls-right .theme-icon-item:nth-last-child(1) .icon-move.right{
+  display: none;
+}
+
+.header-controls .theme-icon-item {
+  margin: 0 1%;
+}
+.header-controls.themeEditing .theme-icon-item {
+  position: relative;
+  /* margin: 0 8px; */
+}
+.header-controls.themeEditing .header-controls-left  {
+  margin-left: 12px;
+}
+.header-controls.themeEditing .header-controls-right {
+  margin-right: 12px;
+}
+.header-controls .theme-icon-item .icon-move {
+  display: none;
+}
+.header-controls.themeEditing .theme-icon-item:hover .icon-move {
+  display: block;
+}
+.header-controls.themeEditing .header-controls-left .theme-icon-item:first-child .icon-move.left{
+  display: none;
+}
+.header-controls.themeEditing .header-controls-left .theme-icon-item:nth-last-child(1) .icon-move.right{
+  display: none;
+}
+
+.header-controls.themeEditing .header-controls-right .theme-icon-item:first-child .icon-move.left{
+  display: none;
+}
+.header-controls.themeEditing .header-controls-right .theme-icon-item:nth-last-child(1) .icon-move.right{
+  display: none;
+}
+
+
+.time-area {
+  position: absolute;
+  color: #FFFFFF;
+  width: 68px;
+  height: 24px;
+  line-height: 24px;
+  background: #00000050;
+  border-radius: 12px;
+  display: none;
+  align-content: center;
+  left: calc(50% - 34px);
+  top: -30px;
+  align-items: center;
+  justify-content: space-around;
+  padding-left: 4px;
+  z-index: 9999999;
+
+}
+.time-area .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: red;
+  border-radius: 100%;
+  margin: 0 4px 1px 4px;
+}
+
+
+/* .footer-controls.themeEditing .theme-icon-item {
+  position: relative;
+  margin: 0 8px;
+}
+.footer-controls.themeEditing .footer-controls-left .theme-icon-item:nth-child(1) .ezuikit-theme-icon >span:first-child{
+  display: none!important;
+}
+.footer-controls.themeEditing .footer-controls-left .theme-icon-item:nth-last-child(2) .ezuikit-theme-icon >span:nth-child(3){
+  display: none!important;
+}
+
+.footer-controls.themeEditing .theme-icon-item:hover .ezuikit-theme-icon {
+  display: block!important;
+}
+.footer-controls.themeEditing .footer-controls-right .theme-icon-item:nth-child(1) .ezuikit-theme-icon >span:first-child{
+  display: none!important;
+}
+.footer-controls.themeEditing .footer-controls-right .theme-icon-item:nth-last-child(1) .ezuikit-theme-icon >span:nth-child(3){
+  display: none!important;
+} */
