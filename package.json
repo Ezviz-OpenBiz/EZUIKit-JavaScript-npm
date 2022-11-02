@@ -1,6 +1,7 @@
 {
   "name": "ezuikit-js",
-  "version": "0.6.4",
+  "maintainers": ["jzy"],
+  "version": "0.6.5",
   "description": "ezuikit javascript for npm",
   "main": "ezuikit.js",
   "scripts": {

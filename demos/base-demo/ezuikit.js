@@ -9,13 +9,11 @@ function _typeof(obj) {
     return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
   }, _typeof(obj);
 }
-
 function _classCallCheck$1(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
   }
 }
-
 function _defineProperties(target, props) {
   for (var i = 0; i < props.length; i++) {
     var descriptor = props[i];
@@ -25,7 +23,6 @@ function _defineProperties(target, props) {
     Object.defineProperty(target, descriptor.key, descriptor);
   }
 }
-
 function _createClass$1(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
@@ -34,7 +31,6 @@ function _createClass$1(Constructor, protoProps, staticProps) {
   });
   return Constructor;
 }
-
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -46,25 +42,21 @@ function _defineProperty(obj, key, value) {
   } else {
     obj[key] = value;
   }
-
   return obj;
 }
 
 var Core = /*#__PURE__*/function () {
   function Core(x, y) {
     _classCallCheck$1(this, Core);
-
     this.coreX = x;
     this.coreY = y;
   }
-
   _createClass$1(Core, [{
     key: "toString",
     value: function toString() {
       return "".concat(this.coreX, "-").concat(this.coreY);
     }
   }]);
-
   return Core;
 }();
 
@@ -79,23 +71,19 @@ Date.prototype.Format = function (fmt) {
     "q+": Math.floor((this.getMonth() + 3) / 3),
     "S": this.getMilliseconds()
   };
-
   if (/(y+)/.test(fmt)) {
     fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
   }
-
   for (var k in o) {
     if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
   }
-
   return fmt;
-}; // 加载js
+};
 
-
+// 加载js
 var addJs = function addJs(filepath, callback, isReadyFun) {
   var headerScript = document.getElementsByTagName('head')[0].getElementsByTagName("script");
   var isReady = false;
-
   if (isReadyFun) {
     isReady = isReadyFun();
   } else {
@@ -106,7 +94,6 @@ var addJs = function addJs(filepath, callback, isReadyFun) {
       }
     }
   }
-
   if (!isReady) {
     var oJs = document.createElement("script");
     oJs.setAttribute("src", filepath);
@@ -120,13 +107,11 @@ var addJs = function addJs(filepath, callback, isReadyFun) {
 var addCss = function addCss(filepath, callback) {
   var headerLink = document.getElementsByTagName('head')[0].getElementsByTagName("link");
   var isReady = false;
-
   for (var i = 0; i < headerLink.length; i++) {
     if (headerLink[i].getAttribute("href") == filepath) {
       isReady = true;
     }
   }
-
   if (!isReady) {
     var oJs = document.createElement('link');
     oJs.rel = 'stylesheet';
@@ -146,7 +131,6 @@ var getQueryString = function getQueryString(name, url) {
 };
 var insertAfter$1 = function insertAfter(newElement, targetElement) {
   var parent = targetElement.parentNode;
-
   if (parent.lastChild == targetElement) {
     parent.appendChild(newElement);
   } else {
@@ -156,12 +140,10 @@ var insertAfter$1 = function insertAfter(newElement, targetElement) {
 var requestFullScreen = function requestFullScreen(element) {
   console.log("requestFullScreen", document.getElementById(element));
   var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
-
   if (requestMethod) {
     requestMethod.call(element);
   } else if (typeof window.ActiveXObject !== "undefined") {
     var wscript = new window.ActiveXObject("WScript.Shell");
-
     if (wscript !== null) {
       wscript.SendKeys("{F11}");
     }
@@ -173,10 +155,9 @@ var requestMobileFullScreen = function requestMobileFullScreen(element) {
   var wrapper = element;
   var style = "";
   style += "width:" + height + "px;"; // 注意旋转后的宽高切换
-
   style += "height:" + width + "px;";
-  style += "-webkit-transform: rotate(90.001deg); transform: rotate(90.001deg);"; // 注意旋转中点的处理
-
+  style += "-webkit-transform: rotate(90.001deg); transform: rotate(90.001deg);";
+  // 注意旋转中点的处理
   style += "-webkit-transform-origin: " + width / 2 + "px " + width / 2 + "px;";
   style += "transform-origin: " + width / 2 + "px " + width / 2 + "px;";
   style += 'position: fixed;top: 0;left: 0;z-index:10';
@@ -187,7 +168,6 @@ var requestFullScreenPromise = function requestFullScreenPromise(element) {
   var promise = new Promise(function (resolve, reject) {
     var timeInterval = setInterval(function () {
       var isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
-
       if (isFullScreen) {
         clearInterval(timeInterval);
         return resolve(true);
@@ -195,11 +175,9 @@ var requestFullScreenPromise = function requestFullScreenPromise(element) {
     }, 100);
     var timeOut = setTimeout(function () {
       var isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
-
       if (!isFullScreen) {
         reject(false);
       }
-
       clearTimeout(timeOut);
     }, 2000);
   });
@@ -228,7 +206,6 @@ var cancelFullScreenPromise = function cancelFullScreenPromise(element) {
   var promise = new Promise(function (resolve, reject) {
     var timeInterval = setInterval(function () {
       var isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
-
       if (!isFullScreen) {
         clearInterval(timeInterval);
         return resolve(true);
@@ -236,11 +213,9 @@ var cancelFullScreenPromise = function cancelFullScreenPromise(element) {
     }, 50);
     var timeOut = setTimeout(function () {
       var isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
-
       if (isFullScreen) {
         reject(false);
       }
-
       clearTimeout(timeOut);
     }, 2000);
   });
@@ -252,11 +227,9 @@ var matchEzopenUrl = function matchEzopenUrl(ezopenUrl) {
   var validCode = ezopenUrl.split("/")[2].split("@").length === 2 ? ezopenUrl.split("/")[2].split("@")[0] : "";
   var hd = ezopenUrl.indexOf('.hd') !== -1;
   var type = ezopenUrl.split("/")[4].split(".")[ezopenUrl.split("/")[4].split(".").length - 1].split("?")[0];
-
   if (type === 'rec' && ezopenUrl.indexOf(".cloud.rec") !== -1) {
     type = 'cloud.rec';
   }
-
   return {
     deviceSerial: deviceSerial,
     channelNo: channelNo,
@@ -265,35 +238,28 @@ var matchEzopenUrl = function matchEzopenUrl(ezopenUrl) {
     type: type
   };
 };
-
 function isJSON(str) {
   if (typeof str === 'string') {
     try {
       var obj = JSON.parse(str);
-
       if (_typeof(obj) === 'object' && obj) {
         return true;
       }
-
       return false;
     } catch (e) {
       return false;
     }
   }
-
   console.log('It is not a string!');
 }
-
 var request = function request(url, method, params, header, success, error) {
   var _url = url;
   var http_request = new XMLHttpRequest();
-
   http_request.onreadystatechange = function () {
     if (http_request.readyState == 4) {
       if (http_request.status == 200) {
         if (isJSON(http_request.responseText)) {
           var _data = JSON.parse(http_request.responseText);
-
           success(_data);
         } else {
           success(http_request.responseText);
@@ -301,36 +267,30 @@ var request = function request(url, method, params, header, success, error) {
       }
     }
   };
-
-  http_request.open(method, _url, true); // http_request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
+  http_request.open(method, _url, true);
+  // http_request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   var data = new FormData();
-
   for (var i in params) {
     data.append(i, params[i]);
   }
-
   http_request.send(data);
-}; // 增加防抖函数
-
+};
+// 增加防抖函数
 var debouncePromise = function debouncePromise(fn, delay) {
   var immdiate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   var timer = null;
   var isInvoke = false;
   return function _debounce() {
     var _this = this;
-
     for (var _len = arguments.length, arg = new Array(_len), _key = 0; _key < _len; _key++) {
       arg[_key] = arguments[_key];
     }
-
     return new Promise(function (resolve, reject) {
       if (timer) {
         console.log("防抖, delay 后执行", timer, delay, fn);
         clearTimeout(timer);
-      } // 双击执行2次
-
-
+      }
+      // 双击执行2次
       if (immdiate && !isInvoke) {
         console.log("防抖 第一次执行...", isInvoke, fn);
         isInvoke = true;
@@ -352,7 +312,6 @@ var debouncePromise = function debouncePromise(fn, delay) {
           });
           return false;
         }
-
         timer = setTimeout(function () {
           console.log("防抖 执行...", fn);
           fn.apply(_this, arg).then(function () {
@@ -371,13 +330,10 @@ var debouncePromise = function debouncePromise(fn, delay) {
 var HLS = /*#__PURE__*/function () {
   function HLS(videoId, url) {
     var _this = this;
-
     _classCallCheck$1(this, HLS);
-
     addJs("https://open.ys7.com/assets/ezuikit_v3.4/js/hls.js", function () {
       console.log("加载hls.min.js成功", window.Hls);
       console.log("isSupportHls", window.Hls.isSupported());
-
       if (window.Hls.isSupported()) {
         _this.initHLS(videoId, url);
       }
@@ -385,7 +341,6 @@ var HLS = /*#__PURE__*/function () {
       return !!window.Hls;
     });
   }
-
   _createClass$1(HLS, [{
     key: "toString",
     value: function toString() {
@@ -398,7 +353,6 @@ var HLS = /*#__PURE__*/function () {
       var hls = new window.Hls({
         defaultAudioCodec: 'mp4a.40.2'
       }); // 萤石设备默认使用 AAC LC 音频编码
-
       hls.loadSource(hlsUrl);
       hls.attachMedia(video);
       hls.on(window.Hls.Events.MANIFEST_PARSED, function () {
@@ -412,12 +366,10 @@ var HLS = /*#__PURE__*/function () {
               console.log("fatal network error encountered, try to recover");
               hls.startLoad();
               break;
-
             case window.Hls.ErrorTypes.MEDIA_ERROR:
               console.log("fatal media error encountered, try to recover");
               hls.recoverMediaError();
               break;
-
             default:
               // cannot recover
               hls.destroy();
@@ -433,8 +385,8 @@ var HLS = /*#__PURE__*/function () {
     key: "play",
     value: function play() {
       console.log("执行hls播放", this.video);
-      this.hls.startLoad(); // this.video.src = this.hlsUrl;
-
+      this.hls.startLoad();
+      // this.video.src = this.hlsUrl;
       this.video.play();
     }
   }, {
@@ -443,31 +395,27 @@ var HLS = /*#__PURE__*/function () {
       // 通过暂停停止播放
       // this.video.pause();
       // this.video.src = "";
-      this.video.pause(); // 停止取流
-
-      this.hls.stopLoad(); // this.hls.destroy();
+      this.video.pause();
+      // 停止取流
+      this.hls.stopLoad();
+      // this.hls.destroy();
     }
   }]);
-
   return HLS;
 }();
 
 var FLV = /*#__PURE__*/function () {
   function FLV(videoId, url) {
     var _this = this;
-
     _classCallCheck$1(this, FLV);
-
-    addJs("https://open.ys7.com/sdk/js/2.0/js/flv.min.js", function () {
+    addJs("https://open.ys7.com/assets/ezuikit_v3.4/js/flv.min.js", function () {
       console.log("加载flv.min.js成功", window.flvjs);
       console.log("isSupportFlv", window.flvjs.isSupported());
-
       if (window.flvjs.isSupported()) {
         _this.initFLV(videoId, url);
       }
     });
   }
-
   _createClass$1(FLV, [{
     key: "toString",
     value: function toString() {
@@ -478,11 +426,9 @@ var FLV = /*#__PURE__*/function () {
     value: function initFLV(videoId, flvUrl) {
       var video = document.getElementById(videoId);
       var hasControls = video.getAttribute('controls');
-
       if (!hasControls) {
         video.setAttribute('controls', true);
       }
-
       var flvPlayer = window.flvjs.createPlayer({
         type: 'flv',
         url: flvUrl,
@@ -511,12 +457,12 @@ var FLV = /*#__PURE__*/function () {
       // 通过暂停停止播放
       // this.video.pause();
       // this.video.src = "";
-      this.video.pause(); // 停止取流
-
-      this.flv.unload(); // this.hls.destroy();
+      this.video.pause();
+      // 停止取流
+      this.flv.unload();
+      // this.hls.destroy();
     }
   }]);
-
   return FLV;
 }();
 
@@ -9993,22 +9939,18 @@ root._=_;}}).call(commonjsGlobal);
 });
 
 /* eslint-disable valid-jsdoc */
-
 /** insertAfter */
 function insertAfter(newElement, targetElement) {
   var parent = targetElement.parentNode;
-
   if (parent.lastChild == targetElement) {
     parent.appendChild(newElement);
   } else {
     parent.insertBefore(newElement, targetElement.nextSibling);
   }
 }
-
 var Status = /*#__PURE__*/function () {
   function Status(jSPlugin, id) {
     _classCallCheck$1(this, Status);
-
     this.id = id;
     this.jSPlugin = jSPlugin;
     this.state = {
@@ -10016,7 +9958,6 @@ var Status = /*#__PURE__*/function () {
       loading: false
     };
   }
-
   _createClass$1(Status, [{
     key: "toString",
     value: function toString() {
@@ -10038,13 +9979,11 @@ var Status = /*#__PURE__*/function () {
       var windowWidth = domElement.offsetWidth;
       var windowHeight = domElement.offsetHeight;
       var offsetTop = 0; //`calc(50% - ${(domElement.offsetTop / 2)}px)`;//domElement.offsetTop; // `calc(50% - ${domElement.offsetTop / 2}px)`
-
-      var offsetLeft = domElement.offsetLeft; // 先执行清空loading
-
+      var offsetLeft = domElement.offsetLeft;
+      // 先执行清空loading
       if (document.getElementById("".concat(id, "-loading-id-0"))) {
         document.getElementById("".concat(id, "-loading-id-0")).parentNode.removeChild(document.getElementById("".concat(id, "-loading-id-0")));
       }
-
       var loadingContainerDOM = document.createElement('div');
       loadingContainerDOM.setAttribute('id', "".concat(id, "-loading-id-0"));
       var style = 'position:absolute;outline:none;pointer-events:none;';
@@ -10055,20 +9994,19 @@ var Status = /*#__PURE__*/function () {
       style += 'left:' + offsetLeft + 'px;';
       loadingContainerDOM.setAttribute('style', style);
       loadingContainerDOM.style.height = windowHeight;
-      loadingContainerDOM.setAttribute('class', 'loading-container'); // loadingContainerDOM.innerHTML= loading;
-
+      loadingContainerDOM.setAttribute('class', 'loading-container');
+      // loadingContainerDOM.innerHTML= loading;
       insertAfter(loadingContainerDOM, domElement);
       var splitBasis = 1;
       var loadingItemContainer = document.createElement('div');
       var loadingStatusDOM = document.createElement('div');
       loadingItemContainer.setAttribute('class', 'loading-item');
-      loadingItemContainer.setAttribute('id', "".concat(id, "-loading-item-0")); //loadingContainer.setAttribute('style','display:inline-flex;flex-direction:column;justify-content:center;align-items: center;width:'+(windowWidth / splitBasis)+'px;height:'+(windowHeight /splitBasis )+'px;outline:none;vertical-align: top;position:absolute');
-
+      loadingItemContainer.setAttribute('id', "".concat(id, "-loading-item-0"));
+      //loadingContainer.setAttribute('style','display:inline-flex;flex-direction:column;justify-content:center;align-items: center;width:'+(windowWidth / splitBasis)+'px;height:'+(windowHeight /splitBasis )+'px;outline:none;vertical-align: top;position:absolute');
       var style = 'display:inline-flex;pointer-events:none;flex-direction:column;justify-content:center;align-items: center;width:100%;height:' + windowHeight + 'px;outline:none;vertical-align: top;position:absolute;';
       style += 'left:' + calLoadingPostion(windowHeight, windowWidth, splitBasis, 0).left + 'px;';
       style += 'top:' + calLoadingPostion(windowHeight, windowWidth, splitBasis, 0).top + 'px;';
       loadingItemContainer.setAttribute('style', style);
-
       function calLoadingPostion(windowHeight, windowWidth, splitBasis, i) {
         var top = parseInt(i / splitBasis, 10) * (windowHeight / splitBasis);
         var left = i % splitBasis * (windowWidth / splitBasis);
@@ -10077,15 +10015,14 @@ var Status = /*#__PURE__*/function () {
           left: left
         };
       }
-
       var loadingDOM = document.createElement('div');
       loadingStatusDOM.innerHTML = "";
       loadingStatusDOM.style.color = "#fff";
       loadingDOM.setAttribute('class', 'loading');
       var loading = '<svg t="1567069979438" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2399" width="32" height="32"><path d="M538.5344 266.4448a133.12 133.12 0 1 1 133.12-133.12 133.4272 133.4272 0 0 1-133.12 133.12zM255.0144 372.1984a121.6768 121.6768 0 1 1 121.6768-121.6768 121.856 121.856 0 0 1-121.6768 121.6768zM134.72 647.424a107.3664 107.3664 0 1 1 107.3664-107.264A107.52 107.52 0 0 1 134.72 647.424z m120.32 272.4608a90.9824 90.9824 0 1 1 90.9824-90.9824A91.1616 91.1616 0 0 1 255.04 919.8848zM538.5344 1024a79.36 79.36 0 1 1 79.36-79.36 79.36 79.36 0 0 1-79.36 79.36z m287.6928-134.144a64.1792 64.1792 0 1 1 64.1792-64.1792 64.3584 64.3584 0 0 1-64.1792 64.1792z m117.76-296.704a52.6336 52.6336 0 1 1 52.6592-52.6336 52.608 52.608 0 0 1-52.6336 52.6336z m-158.72-338.7136a40.96 40.96 0 1 1 12.0064 28.8512 40.5248 40.5248 0 0 1-12.0064-28.8512z" fill="#ffffff" p-id="2400"></path></svg>';
       loadingDOM.innerHTML = loading;
-      loadingItemContainer.appendChild(loadingDOM); // loadingContainer.appendChild(loading);
-
+      loadingItemContainer.appendChild(loadingDOM);
+      // loadingContainer.appendChild(loading);
       loadingItemContainer.appendChild(loadingStatusDOM);
       loadingContainerDOM.appendChild(loadingItemContainer);
     }
@@ -10093,17 +10030,14 @@ var Status = /*#__PURE__*/function () {
     key: "loadingSetText",
     value: function loadingSetText(opt) {
       this.loadingClearText();
-
       if (document.getElementById("".concat(this.id, "-loading-item-0"))) {
         var textElement = document.getElementById("".concat(this.id, "-loading-item-0")).childNodes[1];
-
         if (!textElement) {
           var loadingItemContainer = document.getElementById("".concat(this.id, "-loading-item-0"));
           textElement = document.createElement('div');
           textElement.innerHTML = opt.text;
           loadingItemContainer.appendChild(textElement);
         }
-
         textElement.innerHTML = opt.text;
         textElement.style.fontSize = "14px";
         textElement.style.color = opt.color || "#FFFFFF";
@@ -10114,7 +10048,6 @@ var Status = /*#__PURE__*/function () {
     value: function loadingClearText() {
       if (document.getElementById("".concat(this.id, "-loading-item-0"))) {
         var elements = document.getElementById("".concat(this.id, "-loading-item-0")).childNodes;
-
         if (elements.length > 1) {
           elements[1].parentNode.removeChild(elements[1]);
         } else {
@@ -10127,11 +10060,9 @@ var Status = /*#__PURE__*/function () {
     value: function loadingClear() {
       if (document.getElementById("".concat(this.id, "-loading-item-0"))) {
         var elements = document.getElementById("".concat(this.id, "-loading-item-0")).childNodes;
-
         for (var i = elements.length - 1; i >= 0; i--) {
           elements[i].parentNode.removeChild(elements[i]);
         }
-
         if (document.getElementById("".concat(this.id, "-loading-id-0"))) {
           document.getElementById("".concat(this.id, "-loading-id-0")).style.background = 'none';
         }
@@ -10141,27 +10072,22 @@ var Status = /*#__PURE__*/function () {
     key: "loadingEnd",
     value: function loadingEnd() {
       var loadingItemContainerDOM = document.getElementById("".concat(this.id, "-loading-item-0"));
-
       if (loadingItemContainerDOM) {
         loadingItemContainerDOM.parentNode.removeChild(loadingItemContainerDOM);
         var loadingContainerDOM = document.getElementById("".concat(this.id, "-loading-id-0"));
-
         if (loadingContainerDOM && loadingContainerDOM.children.length === 0) {
           loadingContainerDOM.parentNode.removeChild(loadingContainerDOM);
         }
       }
-
       document.getElementById("".concat(this.id, "-loading-item-0")).style.background = 'none';
     }
   }]);
-
   return Status;
 }();
 
 var Message = /*#__PURE__*/function () {
   function Message(jSPlugin, id) {
     _classCallCheck$1(this, Message);
-
     this.id = id;
     this.jSPlugin = jSPlugin;
     this.timer = null;
@@ -10170,34 +10096,27 @@ var Message = /*#__PURE__*/function () {
       loading: false
     };
   }
-
   _createClass$1(Message, [{
     key: "default",
     value: function _default(msg) {
       var _this = this;
-
       var msgId = "msgId";
-
       if (document.getElementById("".concat(this.id, "-").concat(msgId))) {
         document.getElementById("".concat(this.id, "-wrap")).removeChild(document.getElementById("".concat(this.id, "-").concat(msgId)));
       }
-
       var messageDOM = document.createElement('div');
       messageDOM.id = "".concat(this.id, "-").concat(msgId);
       messageDOM.style = "position: absolute;top: 50%;left:calc(50% - ".concat(msg.length * 14 / 2, "px);padding: 4px 16px;background: #00000080;color: #FFFFFF;font-size: 14px");
       messageDOM.innerHTML = msg;
       document.getElementById("".concat(this.id, "-wrap")).appendChild(messageDOM);
-
       if (this.timer) {
         clearTimeout(this.timer);
       }
-
       this.timer = setTimeout(function () {
         document.getElementById("".concat(_this.id, "-wrap")).removeChild(document.getElementById("".concat(_this.id, "-").concat(msgId)));
       }, 2000);
     }
   }]);
-
   return Message;
 }();
 
@@ -15499,12 +15418,10 @@ var errorCode = {
 var Code = /*#__PURE__*/function () {
   function Code(x, y) {
     _classCallCheck$1(this, Code);
-
     this.coreX = x;
     this.coreY = y;
     console.log("ErrorCode", errorCode);
   }
-
   _createClass$1(Code, [{
     key: "toString",
     value: function toString() {
@@ -15518,7 +15435,6 @@ var Code = /*#__PURE__*/function () {
       });
     }
   }]);
-
   return Code;
 }();
 
@@ -15566,7 +15482,6 @@ var defaultTheme = {
 };
 
 // 通用请求方法
-
 var TimeLine$1 = function TimeLine(jsPlugin) {
   this.jsPlugin = jsPlugin;
   var status = {
@@ -15591,12 +15506,11 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
     canvasWidth: null,
     canvasHeight: null,
     timeTips: null
-  }; // Object.keys(status).forEach(element => {
+  };
+  // Object.keys(status).forEach(element => {
   //     this[element] = status[element];
   // });
-
   var _this = this;
-
   Object.keys(status).forEach(function (element) {
     _this[element] = status[element];
   });
@@ -15607,7 +15521,6 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
     //new Date("2019-10-31 00:00:00"),//
     timeSection: [],
     timeWidth: 0 // 0-3
-
   };
 
   TimeLine.prototype.subTime = function (time) {
@@ -15617,112 +15530,93 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
       return time;
     }
   };
-
   TimeLine.prototype.tranTime = function (time) {
     var stringTime = time;
-
     if (time) {
       var newDate = new Date(time);
       stringTime = newDate.getFullYear() + '/' + (newDate.getMonth() + 1) + '/' + newDate.getDate() + ' ' + this.subTime(newDate.getHours()) + ':' + this.subTime(newDate.getMinutes()) + ':' + this.subTime(newDate.getSeconds());
     }
-
     return stringTime;
   };
-
   TimeLine.prototype.init = function (params) {
     // document.getElementsByTagName("html")[0].addEventListener("mouseup", this.mouseUpFn(e,params.));
     if (params.width) {
       document.getElementById(params.id).setAttribute("width", parseInt(params.width, 10) + 'px');
     }
-
     var that = this;
     var opts = this.options;
     that.randomNum = (Math.random() + '').split('.').join('');
     that.timeWidthTblIndex = opts.timeWidth; // 当前使用时间宽度索引
+
     // 12-10
     //that.drawPanal = this.$refs.drawPanal;
-
     var canvas = document.querySelector("#".concat(this.jsPlugin.id, "-canvas"));
     that.drawPen = canvas.getContext('2d');
     that.nowTime = opts.time || Date.now(); // 当前时间点
-
     that.timeSection = opts.timeSection || []; // 时间段记录区间
-
     that.canvasWidth = canvas.offsetWidth;
     that.canvasHeight = canvas.offsetHeight;
     that.updata(); // 展示进度条
     // 事件监听
-
     document.getElementById("".concat(this.jsPlugin.id, "-canvas")).addEventListener('mousemove', function (e) {
       if (that.options.readOnly) {
         return;
       }
-
       that.mousemove(e);
     });
     document.getElementById("".concat(this.jsPlugin.id, "-canvas")).addEventListener('mouseover', function (e) {
       if (that.options.readOnly) {
         return;
       }
-
       that.mouseover(e);
     });
     document.getElementById("".concat(this.jsPlugin.id, "-canvas")).addEventListener('mouseleave', function (e) {
       if (that.options.readOnly) {
         return;
       }
-
       that.mouseleave(e);
     });
     document.getElementById("".concat(this.jsPlugin.id, "-canvas")).addEventListener('mousedown', function (e) {
       if (that.options.readOnly) {
         return;
       }
-
       that.mousedown(e);
     });
     document.getElementById("".concat(this.jsPlugin.id, "-canvas")).addEventListener('mouseup', function (e) {
       if (that.options.readOnly) {
         return;
-      } //debugger
-
-
+      }
+      //debugger
       var callback = params.onChange;
       that.mouseUpFn(e, callback);
     });
   };
-
   TimeLine.prototype.mousemove = function (e) {
     //  console.log("鼠标移动",e)
     if (this.isMouseDown && this.isOver) {
-      var mouseOffset = this.mousePosition - e.pageX; // fix点击引起mousemove的问题
-
+      var mouseOffset = this.mousePosition - e.pageX;
+      // fix点击引起mousemove的问题
       if (mouseOffset === 0) {
         return;
       }
-
       var timeOffsetUnit = 0;
-
       switch (this.timeWidth) {
         case 60:
           timeOffsetUnit = 1 / 10;
           break;
-
         case 1800:
           timeOffsetUnit = 1 / 20 * 60;
           break;
-
         case 3600:
           timeOffsetUnit = 1 / 20 * 60;
           break;
-
         case 86400:
           //timeOffset = 
           timeOffsetUnit = 1 / 30 * 60 * 60;
           break;
       }
-
-      var currentTime = new Date(this.oldTime).getTime() + mouseOffset * timeOffsetUnit * 1000; //console.log("rurrentTime",this.oldTime,mouseOffset,currentTime,new Date(currentTime))
+      var currentTime = new Date(this.oldTime).getTime() + mouseOffset * timeOffsetUnit * 1000;
+      //console.log("rurrentTime",this.oldTime,mouseOffset,currentTime,new Date(currentTime))
       //console.log("currentTime", new Date(currentTime))
       // var currentTime =
       //     this.oldTime +
@@ -15730,7 +15624,6 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
       //     this.timeWidth *
       //     1000;
       // console.log("currentTime",new Date(this.oldTime), new Date(currentTime))
-
       this.updata({
         time: currentTime
       });
@@ -15738,8 +15631,9 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
     } else {
       // 12-10
       //var { left, top } = this.$utils.getOffset(this.$refs.drawPanal);
-      var left = parseInt(document.getElementById("".concat(this.jsPlugin.id, "-canvas-container")).offsetLeft, 10); //12 -10
 
+      var left = parseInt(document.getElementById("".concat(this.jsPlugin.id, "-canvas-container")).offsetLeft, 10);
+      //12 -10
       this.mousePosition = e.pageX - left;
       this.updata(); // 更新画面
     }
@@ -15748,21 +15642,21 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
   TimeLine.prototype.mousedown = function (e) {
     this.isMouseDown = true;
     this.mousePosition = e.pageX;
-    this.oldTime = this.nowTime; // this.$emit('drag', true);
+    this.oldTime = this.nowTime;
+    // this.$emit('drag', true);
   };
 
   TimeLine.prototype.mouseover = function (e) {
     this.isOver = true;
   };
-
   TimeLine.prototype.mouseleave = function (e) {
     this.isOver = false;
     this.isMouseDown = false;
     this.updata();
   };
-
   TimeLine.prototype.changeSize = function (timeWidth) {
-    console.log("changeSize", timeWidth); // if (w) {
+    console.log("changeSize", timeWidth);
+    // if (w) {
     //     this.options.width = w;
     //     this.canvasWidth = w;
     // }
@@ -15771,11 +15665,11 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
     //     this.canvasHeight = h;
     // }
     // console.log("tehis.optiosn",this.options)
-
     this.options.timeWidth = timeWidth;
     this.updata({
       timeWidth: timeWidth
-    }); // this.$nextTick(() => {
+    });
+    // this.$nextTick(() => {
     //     this.updata();
     // });
   };
@@ -15783,60 +15677,56 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
   TimeLine.prototype.mouseUpFn = function (e, callback) {
     if (this.isMouseDown) {
       this.isMouseDown = false;
-
       if (this.moved) {
-        this.moved = false; // 限制拖动只更改时分秒
-
-        var newStringTime = // new Date(this.nowTime).getFullYear() +
+        this.moved = false;
+        // 限制拖动只更改时分秒
+        var newStringTime =
+        // new Date(this.nowTime).getFullYear() +
         // '/' +
         // ( new Date(this.nowTime).getMonth() + 1) +
         // '/' +
         // new Date(this.nowTime).getDate() +
         // ' ' +
         this.subTime(new Date(this.nowTime).getHours()) + ':' + this.subTime(new Date(this.nowTime).getMinutes()) + ':' + this.subTime(new Date(this.nowTime).getSeconds());
-        var oldStringTime = new Date(this.oldTime).getFullYear() + '/' + (new Date(this.oldTime).getMonth() + 1) + '/' + new Date(this.oldTime).getDate(); // ' ' +
+        var oldStringTime = new Date(this.oldTime).getFullYear() + '/' + (new Date(this.oldTime).getMonth() + 1) + '/' + new Date(this.oldTime).getDate();
+        // ' ' +
         // this.subTime(new Date(this.oldTime).getHours()) +
         // ':' +
         // this.subTime( new Date(this.oldTime).getMinutes()) +
         // ':' +
         // this.subTime( new Date(this.oldTime).getSeconds());
         // this.nowTime = new Date(`${oldStringTime.substring(0,11) + newStringTime.substring(11,19)}`).getTime();
-
         this.nowTime = new Date("".concat(oldStringTime, " ").concat(newStringTime));
         this.updata({
           time: this.nowTime
         });
         this.oldTime = this.nowTime;
-        console.log("nowTime", new Date(this.nowTime), "".concat(oldStringTime, " ").concat(newStringTime)); // 限制只能拖动当天;
+        console.log("nowTime", new Date(this.nowTime), "".concat(oldStringTime, " ").concat(newStringTime));
+        // 限制只能拖动当天;
 
         callback(this.nowTime);
       }
     }
   };
-
   TimeLine.prototype.readOnly = function (data) {
     console.log("更改为只读");
     this.options.readOnly = true;
     document.getElementById("".concat(this.jsPlugin.id, "-canvas")).style.cursor = "not-allowed";
   };
-
   TimeLine.prototype.unReadOnly = function (data) {
     console.log("更改为只读");
     this.options.readOnly = false;
     document.getElementById("".concat(this.jsPlugin.id, "-canvas")).style.cursor = "pointer";
   };
-
   TimeLine.prototype.run = function (data) {
     if (!this.isMouseDown) {
       this.updata(data);
     }
   };
-
   TimeLine.prototype.getTime = function (data) {
     console.log("this", this);
     console.log("当前时间", new Date(this.nowTime));
   };
-
   TimeLine.prototype.updata = function (data) {
     var that = this;
     data = data || {};
@@ -15845,29 +15735,23 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
     that.timeWidthTblIndex = data.timeWidth || that.timeWidthTblIndex;
     that.timeWidth = that.timeWidthTbls[data.timeWidth || that.timeWidthTblIndex];
     that.timeUnit = that.timeUnits[data.timeWidth || that.timeWidthTblIndex];
-
     if (data.timeWidth === 0) {
       that.timeWidthTblIndex = 0;
       that.timeWidth = that.timeWidthTbls[0];
       that.timeUnit = that.timeUnits[0];
     }
-
     that.drawPen.fillStyle = '#000000';
     that.drawPen.fillRect(0, 0, that.canvasWidth, that.canvasHeight);
     that.drawScale(); // 画刻度
-
     that.drawRecord(); // 画录像区间
-
     that.drawOtherMsg(); // 画录像的其他信息
     // 12-10
     //that.$emit('update-time', that.nowTime);
-
     document.getElementById("".concat(this.jsPlugin.id, "-canvas-container")).style.width = this.options.width + 'px';
     document.getElementById("".concat(this.jsPlugin.id, "-canvas")).style.width = this.options.width + 'px';
     document.getElementById("".concat(this.jsPlugin.id, "-canvas-container")).style.height = this.options.height + 'px';
     document.getElementById("".concat(this.jsPlugin.id, "-canvas")).style.height = this.options.height + 'px';
   };
-
   TimeLine.prototype.drawSolidLine = function (startX, startY, endX, endY, lineWidth, color) {
     this.drawPen.save();
     this.drawPen.strokeStyle = color;
@@ -15878,59 +15762,49 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
     this.drawPen.stroke();
     this.drawPen.restore();
   };
-
   TimeLine.prototype.drawString = function (text, x, y, aling, color) {
     this.drawPen.font = '12px serif';
     this.drawPen.fillStyle = '#ffffff';
     this.drawPen.textAlign = aling || 'left';
     this.drawPen.fillText(text, x, y + 10);
   };
-
   TimeLine.prototype.drawScale = function () {
     // console.log("drawScale",new Date(this.nowTime))
     var that = this;
-    var lineColor = 'rgba(255,255,255)'; //that.nowTime = new Date("2019-12-31 01:50:00")
-
+    var lineColor = 'rgba(255,255,255)';
+    //that.nowTime = new Date("2019-12-31 01:50:00")
     var startDate = new Date(that.nowTime); // 开始时间
-
     var startYears = startDate.getFullYear(); // 起始的秒数
-
     var starSecond = startDate.getSeconds(); // 起始的秒数
-
     var starMin = startDate.getMinutes(); // 起始的分钟数
-
     var startHours = startDate.getHours(); // 起始的小时
-
     var startDay = startDate.getDate(); // 起始的日期
     // debugger;
-
     var curScale = 0; // 计算时间点
-
     switch (that.timeWidth) {
       case 60:
         {
           // debugger
           var dotNum = parseInt(that.canvasWidth / 10); // 每10像素一个点
-
           startDate.setSeconds(startDate.getSeconds() - parseInt(dotNum / 2, 10)); // 从现在时间的一半开始画起
-
           startDay = startDate.getDate();
           startHours = startDate.getHours();
           starMin = startDate.getMinutes();
-          starSecond = startDate.getSeconds(); // console.log("domNum",dotNum);
+          starSecond = startDate.getSeconds();
+          // console.log("domNum",dotNum);
           // console.log("starSecond",starSecond)
-
           for (var i = 0; i < dotNum; i++) {
             curScale = starSecond + i;
-            startDate.setSeconds(curScale); // debugger;
+            startDate.setSeconds(curScale);
+            // debugger;
             //debugger;
             // console.log("startDate",startDate,curScale)
             // 每一个整10秒画一次线和文字
-
             if (curScale % 10 === 0) {
               that.drawSolidLine(i * that.canvasWidth / dotNum, 8, i * that.canvasWidth / dotNum, that.canvasHeight / 5 + 8, 1, lineColor);
               var timeString = this.subTime(startDate.getHours()) + ':' + this.subTime(startDate.getMinutes()) + ':' + this.subTime(startDate.getSeconds());
-              that.drawString(timeString, i * that.canvasWidth / dotNum, that.canvasHeight / 5 * 2.5, 'center', 'rgba(255,255,255,0.3)'); // console.log("timeString",timeString)
+              that.drawString(timeString, i * that.canvasWidth / dotNum, that.canvasHeight / 5 * 2.5, 'center', 'rgba(255,255,255,0.3)');
+              // console.log("timeString",timeString)
             } else {
               // console.log("画短线",(i * that.canvasWidth) / 60,0,(i * that.canvasWidth) / 60,(that.canvasHeight / 5) * 0.5,1)
               // 只画一次线
@@ -15939,30 +15813,24 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
             /**
              * 偏移距离超过60，setSeconds会每次累加1到分钟，因此绘图完成后需要复原到当前分钟，再次计算偏移
              */
-
-
             startDate.setDate(startDay);
             startDate.setHours(startHours);
             startDate.setMinutes(starMin);
           }
-
           break;
         }
-
       case 1800:
         {
           // 30分钟
           var dotNum = parseInt(that.canvasWidth / 20); // 每10像素一个点
-
-          startDate.setMinutes(startDate.getMinutes() - parseInt(dotNum / 2, 10)); // starSecond = startDate.getSeconds();
-
+          startDate.setMinutes(startDate.getMinutes() - parseInt(dotNum / 2, 10));
+          // starSecond = startDate.getSeconds();
           startHours = startDate.getHours();
-          starMin = startDate.getMinutes(); //console.log("dotNum",dotNum,starMin)
-
+          starMin = startDate.getMinutes();
+          //console.log("dotNum",dotNum,starMin)
           for (var i = 0; i <= dotNum; i++) {
             curScale = starMin + i;
             startDate.setMinutes(curScale);
-
             if (curScale % 5 === 0) {
               that.drawSolidLine(i * that.canvasWidth / dotNum, 8, i * that.canvasWidth / dotNum, that.canvasHeight / 5 * 1.5 + 8, 1, lineColor);
               var timeString = this.subTime(startDate.getHours()) + ':' + this.subTime(startDate.getMinutes());
@@ -15971,29 +15839,23 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
               // console.log("画短线",((i - starMin) * that.canvasWidth) / dotNum)
               that.drawSolidLine(i * that.canvasWidth / dotNum, 8, i * that.canvasWidth / dotNum, that.canvasHeight / 5 * 0.5 + 8, 1, lineColor);
             }
-
             startDate.setHours(startHours);
           }
-
           break;
         }
-
       case 3600:
         {
           // 60分钟
           var dotNum = parseInt(that.canvasWidth / 20); // 每10像素一个点
-
           startDate.setMinutes(startDate.getMinutes() - parseInt(dotNum / 2, 10));
           startHours = startDate.getHours();
           starMin = startDate.getMinutes();
-
           for (var i = 0; i <= dotNum; i++) {
-            curScale = starMin + i; // if (curScale > 60) {
+            curScale = starMin + i;
+            // if (curScale > 60) {
             //     curScale = curScale - 60;
             // }
-
             startDate.setMinutes(curScale);
-
             if (curScale % 10 === 0) {
               that.drawSolidLine(i * that.canvasWidth / dotNum, 8, i * that.canvasWidth / dotNum, that.canvasHeight / 5 * 1.5 + 8, 1, lineColor);
               var timeString = this.subTime(startDate.getHours()) + ':' + this.subTime(startDate.getMinutes());
@@ -16001,44 +15863,41 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
             } else {
               that.drawSolidLine(i * that.canvasWidth / dotNum, 8, i * that.canvasWidth / dotNum, that.canvasHeight / 5 * 0.5 + 8, 1, lineColor);
             }
-
             startDate.setHours(startHours);
           }
-
           break;
         }
-
       case 86400:
         {
           var dotNum = parseInt(that.canvasWidth / 30); // 每10像素一个点
           // 1天，24小时
           //console.log("dotNum",dotNum);
           //startDate.setDate(startDay  - parseInt(dotNum / 2,10));
+          startDate.setHours(startDate.getHours() - parseInt(dotNum / 2, 10));
+          // console.log("startDat111e",startDate);
 
-          startDate.setHours(startDate.getHours() - parseInt(dotNum / 2, 10)); // console.log("startDat111e",startDate);
           // debugger;
-
           starSecond = startDate.getSeconds();
           starMin = startDate.getMinutes();
           startHours = startDate.getHours();
           startDay = startDate.getDate();
           startYears = startDate.getFullYear();
-
           for (var i = 0; i <= dotNum; i++) {
-            curScale = startHours + i; // if (curScale >= 24) {
+            curScale = startHours + i;
+            // if (curScale >= 24) {
             //     curScale = curScale - 24;
             // }
-
             startDate.setHours(curScale);
-            var timeString; // 不等于24的时候，画短线
+            var timeString;
+            // 不等于24的时候，画短线
             //console.log("curScale",curScale)
             //if (curScale % 24 !=0) {
             //  console.log("curScale",curScale)
-
-            timeString = this.subTime(startDate.getHours()) + ":00"; // timeString = startDate.toLocaleDateString();
+            timeString = this.subTime(startDate.getHours()) + ":00";
+            // timeString = startDate.toLocaleDateString();
             // debugger
-
-            that.drawSolidLine(i * that.canvasWidth / dotNum, 8, i * that.canvasWidth / dotNum, that.canvasHeight / 5 * 0.5 + 8, 1, lineColor); // } else {
+            that.drawSolidLine(i * that.canvasWidth / dotNum, 8, i * that.canvasWidth / dotNum, that.canvasHeight / 5 * 0.5 + 8, 1, lineColor);
+            // } else {
             //     // debugger;
             //     // console.log("画图")
             //     // 不等于24的时候，画长线
@@ -16057,33 +15916,30 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
             //     );
             // }
             // 每2个小时一个时间文字
-
             if (curScale % 2 === 0) {
               that.drawString(timeString, i * that.canvasWidth / dotNum, that.canvasHeight / 5 * 2, 'center', 'rgba(255,255,255,0.3)');
             }
-
             startDate.setFullYear(startYears);
             startDate.setDate(startDay);
             startDate.setHours(startHours);
           }
-
           break;
         }
     }
   };
-
   TimeLine.prototype.getRecord = function (timeArr, startTime, endTime) {
     this.timeSection = timeArr;
     this.drawRecord();
   };
-
   TimeLine.prototype.drawRecord = function () {
     var timeArr = this.timeSection || [];
     var that = this;
-    var drawPen = that.drawPen; // var startDate = new Date(that.nowTime);
-    // var timeScale = that.canvasWidth / that.timeWidth;
-    // 根据时间查找当前位置
+    var drawPen = that.drawPen;
 
+    // var startDate = new Date(that.nowTime);
+    // var timeScale = that.canvasWidth / that.timeWidth;
+
+    // 根据时间查找当前位置
     for (var i = 0; i < timeArr.length; i++) {
       //console.log("timeArr[i]",timeArr[i],findPosition(timeArr[i].startTime),findPosition(timeArr[i].endTime))
       var startPosition = findPosition(timeArr[i].startTime);
@@ -16091,54 +15947,41 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
       drawPen.fillStyle = '#1890ff80';
       drawPen.fillRect(startPosition, 0, endPosition - startPosition, 48);
     }
-
     function findPosition(time) {
       var scale = 10;
-
       switch (that.timeWidth) {
         case 60:
           scale = 10;
           break;
-
         case 1800:
           scale = 20 / 60;
           break;
-
         case 3600:
           scale = 20 / 60;
           break;
-
         case 86400:
           scale = 20 / 60 / 60;
           break;
       }
-
       var nowTimePostion = that.canvasWidth / 2; //总宽度一半
-
       var position = nowTimePostion + (time - that.nowTime) / 1000 * scale;
-
       if (position > that.canvasWidth) {
         position = that.canvasWidth;
       }
-
       if (position <= 0) {
         position = 0;
       }
-
       return position;
     }
   };
-
   TimeLine.prototype.drawOtherMsg = function () {
     // 画中心线
     this.drawSolidLine(this.canvasWidth / 2, 0, this.canvasWidth / 2, this.canvasHeight, 2, '#1890FF');
     this.drawPen.shadowBlur = 0;
-
     if (this.isOver && !this.isMouseDown) {
       this.mouseTime = this.mousePosition / this.canvasWidth * this.timeWidth * 1000 + this.nowTime - this.timeWidth / 2 * 1000; // 鼠标的悬浮点对应的时间
 
       this.mouseString = this.tranTime(this.mouseTime); // 鼠标悬浮点显示的文字
-
       this.hoverTime = this.mouseString;
       this.hoverLeft = this.mousePosition - 60;
       this.timeTipShow = true;
@@ -16151,33 +15994,25 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
 var Rec = /*#__PURE__*/function () {
   function Rec(jSPlugin) {
     _classCallCheck$1(this, Rec);
-
     this.jSPlugin = jSPlugin;
-
     if (!document.getElementById("".concat(this.jSPlugin.id, "-audioControls"))) {
       return false;
     }
-
     this.currentTimeWidth = 1; //回放时间轴尺度 1~4
-
     this.date = new Date();
     this.datepickerVisible = false;
     this.seekTimer = null;
     this.disabled = false;
     this.seekFrequency = 2000;
-
     if (this.jSPlugin.params && this.jSPlugin.params.seekFrequency) {
       this.seekFrequency = this.jSPlugin.params.seekFrequency;
     }
-
     this.recInit();
   }
-
   _createClass$1(Rec, [{
     key: "recInit",
     value: function recInit() {
       var _this = this;
-
       var canvasItemWidth = parseInt(getComputedStyle(document.getElementById(this.jSPlugin.id)).width, 10) - 100;
       var canvasContainer = document.createElement('div');
       canvasContainer.style = "display:inline-block;height:48px;";
@@ -16204,25 +16039,20 @@ var Rec = /*#__PURE__*/function () {
         onChange: function onChange(time) {
           console.log("time", time, new Date(time).Format('yyyyMMddhhmmss'));
           var newBegin = new Date(time).Format('yyyyMMddhhmmss');
-
           if (matchEzopenUrl(_this.jSPlugin.url).type === 'cloud.rec') {
             var cloudSeek = function cloudSeek() {
               _this.jSPlugin.seek(newBegin.substr(8, 6), "235959");
-
               _this.unSyncTimeLine();
-
               setTimeout(function () {
                 _this.syncTimeLine();
               }, 6000);
             };
-
             if (_this.seekTimer) {
               clearTimeout(_this.seekTimer);
             } else {
               cloudSeek();
-            } // 限制每2秒只触发一次拖动
-
-
+            }
+            // 限制每2秒只触发一次拖动
             _this.seekTimer = setTimeout(function () {
               cloudSeek();
               clearTimeout(_this.seekTimer);
@@ -16234,27 +16064,21 @@ var Rec = /*#__PURE__*/function () {
                 _this.disabled = false;
               }, _this.seekFrequency);
             };
-
             var localRecSeek = function localRecSeek(callback) {
               _this.disabled = true;
-
               _this.jSPlugin.pause().then(function () {
                 console.log("暂停成功");
-
                 _this.jSPlugin.resume(newBegin).then(function (data) {
                   console.log("恢复成功");
-
                   if (_this.jSPlugin.Theme) {
                     _this.jSPlugin.Theme.setDecoderState({
                       play: true
                     });
-                  } // 打开声音
-
-
+                  }
+                  // 打开声音
                   if (_this.jSPlugin.Theme && _this.jSPlugin.Theme.decoderState.state.sound) {
                     _this.jSPlugin.openSound();
                   }
-
                   if (callback) {
                     callback();
                   }
@@ -16263,16 +16087,13 @@ var Rec = /*#__PURE__*/function () {
                 });
               })["catch"](function () {
                 console.log("暂停失败");
-
                 _this.jSPlugin.resume(newBegin).then(function (data) {
                   console.log("恢复成功");
-
                   if (_this.jSPlugin.Theme) {
                     _this.jSPlugin.Theme.setDecoderState({
                       play: true
                     });
                   }
-
                   if (callback) {
                     callback();
                   }
@@ -16281,14 +16102,12 @@ var Rec = /*#__PURE__*/function () {
                 });
               });
             };
-
             if (_this.disabled) {
-              console.log("操作频繁，等待2秒后执行"); // 限制每2秒只触发一次拖动
-
+              console.log("操作频繁，等待2秒后执行");
+              // 限制每2秒只触发一次拖动
               if (_this.seekTimer) {
                 clearTimeout(_this.seekTimer);
               }
-
               _this.seekTimer = setTimeout(function () {
                 localRecSeek(callback);
               }, _this.seekFrequency);
@@ -16298,8 +16117,8 @@ var Rec = /*#__PURE__*/function () {
           }
         }
       });
-      this.syncTimeLine(); // 加载日期选择器
-
+      this.syncTimeLine();
+      // 加载日期选择器
       addCss("".concat(this.jSPlugin.staticPath, "/rec/datepicker.min.css"));
       addJs("".concat(this.jSPlugin.staticPath, "/rec/jquery.min.js"), function () {
         addJs("".concat(_this.jSPlugin.staticPath, "/rec/datepicker.js"), function () {
@@ -16318,34 +16137,27 @@ var Rec = /*#__PURE__*/function () {
                 container: document.getElementById("".concat(_this.jSPlugin.id, "-wrap"))
               });
             }
-
             if (document.getElementsByClassName("datepicker-container")[0]) {
               document.getElementsByClassName("datepicker-container")[0].style.display = "none";
             }
-
             _this.datepickerVisible = false;
             $("#".concat(_this.jSPlugin.id, "-datepicker")).on('pick.datepicker', function (e) {
               console.log("重新选择日期", e.date, new Date(e.date).Format('yyyyMMdd'), new Date(document.getElementById("".concat(_this.jSPlugin.id, "-datepicker")).value).Format('yyyyMMdd'));
-
               if (e.date > new Date() || new Date(e.date).Format('yyyyMMdd') === new Date(document.getElementById("".concat(_this.jSPlugin.id, "-datepicker")).value).Format('yyyyMMdd')) {
                 e.preventDefault(); // Prevent to pick the date
               } else {
                 _this.renderRec(e.date);
-
                 _this.jSPlugin.changePlayUrl({
                   begin: new Date(e.date).Format('yyyyMMdd')
                 });
               }
-
               if (document.getElementsByClassName("datepicker-container")[0]) {
                 document.getElementsByClassName("datepicker-container")[0].style.display = "none";
               }
-
               _this.datepickerVisible = false;
             });
             $("#".concat(_this.jSPlugin.id, "-datepicker")).off('click').on("click", function (e) {
               console.log("点击日期");
-
               if (!_this.datepickerVisible) {
                 if (document.getElementsByClassName("datepicker-container")[0]) {
                   document.getElementsByClassName("datepicker-container")[0].style.display = "inline";
@@ -16355,30 +16167,25 @@ var Rec = /*#__PURE__*/function () {
                   document.getElementsByClassName("datepicker-container")[0].style.display = "none";
                 }
               }
-
               _this.datepickerVisible = !_this.datepickerVisible;
             });
           });
         });
-      }); // 尺度变化监听
-
+      });
+      // 尺度变化监听
       document.getElementById("".concat(this.jSPlugin.id, "-timeline-scale-add")).onclick = function () {
         var currentTimeWidth = _this.currentTimeWidth;
-
         if (currentTimeWidth < 3) {
           _this.timeLine.changeSize(++_this.currentTimeWidth);
         }
       };
-
       document.getElementById("".concat(this.jSPlugin.id, "-timeline-scale-sub")).onclick = function () {
         var currentTimeWidth = _this.currentTimeWidth;
-
         if (currentTimeWidth > 0) {
           _this.timeLine.changeSize(--_this.currentTimeWidth);
         }
-      }; // 渲染回放
-
-
+      };
+      // 渲染回放
       var initDate = getQueryString("begin", this.jSPlugin.url) || new Date().Format('yyyyMMdd');
       this.renderRec("".concat(initDate.slice(0, 4), "-").concat(initDate.slice(4, 6), "-").concat(initDate.slice(6, 8)));
       this.observer = new MutationObserver(function (mutations, observer) {
@@ -16393,13 +16200,27 @@ var Rec = /*#__PURE__*/function () {
       this.observer.observe(el, config);
     }
   }, {
+    key: "datepickerHide",
+    value: function datepickerHide() {
+      if (document.getElementsByClassName("datepicker-container")[0]) {
+        document.getElementsByClassName("datepicker-container")[0].style.display = "none";
+      }
+      this.datepickerVisible = false;
+    }
+  }, {
+    key: "datepickerShow",
+    value: function datepickerShow() {
+      if (document.getElementsByClassName("datepicker-container")[0]) {
+        document.getElementsByClassName("datepicker-container")[0].style.display = "inline";
+      }
+      this.datepickerVisible = true;
+    }
+  }, {
     key: "recAutoSize",
     value: function recAutoSize() {
       var _this2 = this;
-
       if (document.getElementById("".concat(this.jSPlugin.id, "-canvas"))) {
         var canvasItemWidth = parseInt(getComputedStyle(document.getElementById(this.jSPlugin.id)).width, 10) - 100;
-
         if (canvasItemWidth !== parseInt(document.getElementById("".concat(this.jSPlugin.id, "-canvas")).width)) {
           document.getElementById("".concat(this.jSPlugin.id, "-canvas")).width = canvasItemWidth;
           this.timeLine.init({
@@ -16409,7 +16230,6 @@ var Rec = /*#__PURE__*/function () {
               console.log("time", time, new Date(time).Format('yyyyMMddhhmmss'));
               console.log("jSPlugin", _this2.jSPlugin);
               var newBegin = new Date(time).Format('yyyyMMddhhmmss');
-
               _this2.jSPlugin.changePlayUrl({
                 begin: newBegin
               });
@@ -16423,17 +16243,13 @@ var Rec = /*#__PURE__*/function () {
     key: "syncTimeLine",
     value: function syncTimeLine() {
       var _this3 = this;
-
       if (this.jSPlugin.recTimer) {
         clearInterval(this.jSPlugin.recTimer);
       }
-
       this.jSPlugin.recTimer = setInterval(function () {
         var getOSDTimePromise = _this3.jSPlugin.getOSDTime();
-
         getOSDTimePromise.then(function (data) {
           var v = data.data;
-
           if (v === -1) {
             console.log("获取播放时间错误");
           } else {
@@ -16441,8 +16257,8 @@ var Rec = /*#__PURE__*/function () {
               //console.log("获取播放时间", v, this.timeLine.run);
               _this3.timeLine.run({
                 time: new Date(v > 1000000000000 ? v : v * 1000)
-              }); //$(".current-time").text(new Date(new Date(v > 1000000000000 ? v : v * 1000)).Format('yyyy-MM-dd hh:mm:ss'))
-
+              });
+              //$(".current-time").text(new Date(new Date(v > 1000000000000 ? v : v * 1000)).Format('yyyy-MM-dd hh:mm:ss'))
             }
           }
         })["catch"](function (err) {});
@@ -16459,7 +16275,6 @@ var Rec = /*#__PURE__*/function () {
     key: "renderRec",
     value: function renderRec(date) {
       var _this4 = this;
-
       this.date = date;
       var that = this;
       var dateStart = new Date(new Date(date).Format('yyyy-MM-dd 00:00:00').replace(/-/g, "/")).getTime();
@@ -16474,13 +16289,11 @@ var Rec = /*#__PURE__*/function () {
         endTime: dateEnd,
         version: '2.0'
       };
-
       var recAPISuccess = function recAPISuccess(data) {
         if (data.data && data.data.files && data.data.files.length > 0) {
           var dataArr = data.data.files;
           var nextFileTime = new Date().getTime();
           var isAll = data.data.isAll;
-
           if (isAll) {
             _this4.timeLine.getRecord(dataArr, dateStart, dateEnd);
           } else {
@@ -16492,7 +16305,6 @@ var Rec = /*#__PURE__*/function () {
                     if (data.data.files) {
                       dataArr = dataArr.concat(data.data.files);
                     }
-
                     nextFileTime = data.data.nextFileTime > 0 ? data.data.nextFileTime : new Date().getTime();
                     recTransaction();
                   } else {
@@ -16503,14 +16315,11 @@ var Rec = /*#__PURE__*/function () {
                   that.timeLine.getRecord(dataArr, dateStart, dateEnd);
                 }
               }
-
               recSliceParams.startTime = nextFileTime;
               request(this.jSPlugin.env.domain + "/api/lapp/video/by/time", 'POST', recSliceParams, '', recAPIV2Success);
             };
-
             recTransaction();
           }
-
           _this4.timeLine.run({
             time: new Date(dateStart)
           });
@@ -16522,12 +16331,10 @@ var Rec = /*#__PURE__*/function () {
           });
         } else ;
       };
-
       var recAPIUrl = this.jSPlugin.env.domain + "/api/lapp/video/by/time";
       request(recAPIUrl, 'POST', recSliceParams, '', recAPISuccess);
     }
   }]);
-
   return Rec;
 }();
 
@@ -16558,30 +16365,26 @@ var TimeLine = function TimeLine(params) {
     date: '',
     noTimeLineTxt: '',
     disabled: false // 禁用拖动轴
-
   };
 
   var _this = this;
-
   this.setState = function (obj) {
     Object.keys(obj).forEach(function (key) {
       _this.state[key] = obj[key];
-
       if (key === 'scrollTop') {
         document.getElementById('time-line-item').parentNode.scrollTo(0, obj[key]);
       }
-
       if (key === 'current') {
         document.getElementById('time-line-current').innerHTML = obj[key];
       }
     });
   };
-
   this.setDisabled = function (value) {
     this.setState({
       disabled: value
     });
-    document.getElementById('time-line-item').parentNode.style.overflowY = value ? 'hidden' : 'scroll'; // console.log(" document.getElementById('time-line-item').parentNode.style", document.getElementById('time-line-item').parentNode)
+    document.getElementById('time-line-item').parentNode.style.overflowY = value ? 'hidden' : 'scroll';
+    // console.log(" document.getElementById('time-line-item').parentNode.style", document.getElementById('time-line-item').parentNode)
   };
 
   this.timeToSecond = function (time) {
@@ -16591,55 +16394,46 @@ var TimeLine = function TimeLine(params) {
     var s = Number(e[2]);
     return h * 60 * 60 + m * 60 + (s ? s : 0);
   };
-
   this.minuteToTime = function (minute) {
     var hour = Math.floor(minute / 60);
     var m = minute % 60;
     return (hour > 9 ? hour : '0' + hour) + ':' + (m > 9 ? m : '0' + m);
   };
-
   this.timeToMinute = function (time) {
     var e = time.split(':');
     var h = Number(e[0]);
-    var m = Number(e[1]); // const s = Number(e[2]);
-
+    var m = Number(e[1]);
+    // const s = Number(e[2]);
     return h * 60 + m;
   };
-
-  this.getPalyParam = params.getPalyParam; // 监听手动滚动时间轴时，停止时间轴滚动，时刻仍然变化
-
+  this.getPalyParam = params.getPalyParam;
+  // 监听手动滚动时间轴时，停止时间轴滚动，时刻仍然变化
   document.getElementById('time-line-item').parentNode.ontouchstart = function () {
     if (_this.state.disabled) {
       return false;
     }
-
     params.ontouchstart();
-  }; // 监听手动滚动时间轴时，停止时间轴滚动，时刻仍然变化
-
-
+  };
+  // 监听手动滚动时间轴时，停止时间轴滚动，时刻仍然变化
   document.getElementById('time-line-item').parentNode.ontouchmove = function () {
     if (_this.state.disabled) {
       return false;
     }
-
     params.ontouchmove();
-  }; // 手动滚动停止，选定时刻自动播放
-
-
+  };
+  // 手动滚动停止，选定时刻自动播放
   document.getElementById('time-line-item').parentNode.ontouchend = function () {
     // var _this = this;
     if (_this.state.disabled) {
       return false;
-    } //
-
-
+    }
+    //
     var timer;
     var scollPromise = new Promise(function (resolve, reject) {
       var preTop = -1;
       timer = setInterval(function () {
         // debugger
         var reactTop = document.getElementById('time-line-item').parentNode.scrollTop; // 实际偏移高度
-
         if (reactTop !== preTop) {
           console.log("scolling", reactTop, preTop);
           preTop = reactTop;
@@ -16649,33 +16443,28 @@ var TimeLine = function TimeLine(params) {
           resolve(reactTop);
         }
       }, 100);
-    }); //
+    });
 
+    //
     scollPromise.then(function (reactTop) {
       console.log("scollPromise: then", reactTop, _this);
-
       _this.rectTopTotime(reactTop);
-
       console.log('页面滚动实际高度', reactTop, _this.state);
-
       _this.getPalyParam({
         current: _this.state.current
       });
     });
     params.ontouchend();
   };
-
   this.matchTimeDot();
 };
-
 TimeLine.prototype.changeScale = function (value) {
   this.setState({
     timelag: value // 120: 2小时， 60：1小时， 30：半小时，10：10分钟，1：1分钟
-
   });
+
   this.matchTimeDot();
 };
-
 TimeLine.prototype.setDateLine = function (news, defaultIndex) {
   // if( news.length > 0 ){
   //   if(!defaultIndex){
@@ -16689,6 +16478,7 @@ TimeLine.prototype.setDateLine = function (news, defaultIndex) {
   //   })
   //   console.log("this.state", this.state);
   //   this.matchTimeDot();
+
   //   this.primaryOffsetH();
   //   // 将当前播放时间片段传给父组件
   //   this.getPalyParam(news[defaultIndex]);
@@ -16697,7 +16487,6 @@ TimeLine.prototype.setDateLine = function (news, defaultIndex) {
     if (typeof defaultIndex === 'undefined') {
       defaultIndex = news.length - 1;
     }
-
     this.setState({
       availTimeLine: news,
       start: news[defaultIndex].st,
@@ -16706,7 +16495,8 @@ TimeLine.prototype.setDateLine = function (news, defaultIndex) {
     });
     console.log("this.state", this.state);
     this.matchRecTimeDot();
-    this.primaryOffsetH(); // 将当前播放时间片段传给父组件
+    this.primaryOffsetH();
+    // 将当前播放时间片段传给父组件
     //this.getPalyParam({ current: news[defaultIndex].st });
   } else {
     this.setState({
@@ -16716,15 +16506,15 @@ TimeLine.prototype.setDateLine = function (news, defaultIndex) {
     this.matchRecTimeDot();
   }
 };
-
 TimeLine.prototype.matchTimeDot = function () {
   var _this$state = this.state,
-      start = _this$state.start,
-      end = _this$state.end,
-      timelag = _this$state.timelag;
-      _this$state.availTimeLine;
+    start = _this$state.start,
+    end = _this$state.end,
+    timelag = _this$state.timelag;
+    _this$state.availTimeLine;
   console.log("start", start, 'end', end);
-  var timeArr = []; // // 播放时间片段时刻转分钟
+  var timeArr = [];
+  // // 播放时间片段时刻转分钟
   // let availArr = [];
   // let len = availTimeLine.length;
   // for (let i = 0; i < len; i++) {
@@ -16749,29 +16539,26 @@ TimeLine.prototype.matchTimeDot = function () {
   // }
   // console.log('availArr: ', availArr);
   // 时间转分钟
-
-  var minute = this.timeToMinute(end); // // 检测是否包含秒,则实际分钟加1
+  var minute = this.timeToMinute(end);
+  // // 检测是否包含秒,则实际分钟加1
   // const e = end.split(':');
   // const s = Number(e[2]);
   // if (s > 0) {
   //   minute = minute + 1
   // }
-
   minute = Math.floor(minute / timelag) * timelag;
-
   for (var i = minute; i >= 0;) {
     var marginTop = 0;
-    var marginBottom = 0; // 视频片段
-
+    var marginBottom = 0;
+    // 视频片段
     var recArr = [];
-
     if (i == minute) {
       marginTop = 70;
     }
-
     if (i == 0) {
       marginBottom = 230;
-    } // for (let j = 0; j < len; j++) {
+    }
+    // for (let j = 0; j < len; j++) {
     //   if (i >= availArr[j].st && i <= availArr[j].et) {
     //     // borderColor = '#f7a670';
     //     // console.log("i",i,availArr[j])
@@ -16802,9 +16589,8 @@ TimeLine.prototype.matchTimeDot = function () {
     //       }
     //     }
     //   }
+
     // }
-
-
     var time = this.minuteToTime(i);
     timeArr.push({
       id: i,
@@ -16816,25 +16602,22 @@ TimeLine.prototype.matchTimeDot = function () {
     });
     i = i - timelag;
   }
-
   this.setState({
     timeArr: timeArr
   });
   this.renderDateLine();
 };
-
 TimeLine.prototype.matchRecTimeDot = function () {
   var _this$state2 = this.state,
-      start = _this$state2.start,
-      end = _this$state2.end,
-      timelag = _this$state2.timelag,
-      availTimeLine = _this$state2.availTimeLine,
-      timeArr = _this$state2.timeArr;
-  console.log("start", start, 'end', end); // 播放时间片段时刻转分钟
-
+    start = _this$state2.start,
+    end = _this$state2.end,
+    timelag = _this$state2.timelag,
+    availTimeLine = _this$state2.availTimeLine,
+    timeArr = _this$state2.timeArr;
+  console.log("start", start, 'end', end);
+  // 播放时间片段时刻转分钟
   var availArr = [];
   var len = availTimeLine.length;
-
   if (len === 0) {
     for (var j = 0; j < timeArr.length; j++) {
       timeArr[j].recArr = [];
@@ -16843,8 +16626,8 @@ TimeLine.prototype.matchRecTimeDot = function () {
     for (var i = 0; i < len; i++) {
       var temp = availTimeLine[i];
       var st = this.timeToSecond(temp.st);
-      var et = this.timeToSecond(temp.et); // console.log('st: ', st, 'et:', et);
-
+      var et = this.timeToSecond(temp.et);
+      // console.log('st: ', st, 'et:', et);
       var stminute = void 0;
       var etminute = void 0;
       var stAvailPercent = 0;
@@ -16859,7 +16642,6 @@ TimeLine.prototype.matchRecTimeDot = function () {
         stAvailPercent: stAvailPercent,
         etAvailPercent: etAvailPercent
       };
-
       for (var j = 0; j < timeArr.length; j++) {
         if (timeArr[j].id == stminute && timeArr[j].id == etminute) {
           var height = etAvailPercent - stAvailPercent;
@@ -16889,7 +16671,6 @@ TimeLine.prototype.matchRecTimeDot = function () {
       }
     }
   }
-
   console.log('availArr: ', availArr);
   this.setState({
     timeArr: timeArr
@@ -16897,11 +16678,10 @@ TimeLine.prototype.matchRecTimeDot = function () {
   console.log('timeArr:', this.state);
   this.renderDateLine();
 };
-
 TimeLine.prototype.renderDateLine = function () {
   var _this$state3 = this.state,
-      id = _this$state3.id,
-      timeArr = _this$state3.timeArr;
+    id = _this$state3.id,
+    timeArr = _this$state3.timeArr;
   console.log("id,timeArr", id, timeArr);
   var container = document.getElementById("time-line-item");
   container.innerHTML = "";
@@ -16914,98 +16694,86 @@ TimeLine.prototype.renderDateLine = function () {
     var timeItemHtml = '<div class="scale"></div><div class="scale"></div><div class="scale"></div><div class="scale"></div><div class="scale"></div><div class="scale" style="width:10px"></div>';
     item.recArr.forEach(function (i, j) {
       timeItemHtml += "<div class=\"item-unavail\" style=\"height: ".concat(i.height, "px;background-color:#A8B9ED; top: ").concat(i.top, "px\"></div>");
-    }); //timeItemHtml += `<div class="item-unavail" style="height: ${item.availPercent}px; top: ${item.availTop}px"></div>`
-
+    });
+    //timeItemHtml += `<div class="item-unavail" style="height: ${item.availPercent}px; top: ${item.availTop}px"></div>`
     timeItemHtml += "<div id=".concat(item.label, " style=\"position: relative; top: 51px; left: 40%\"> ").concat(item.current, "</div>");
     timeItemDOM.innerHTML = timeItemHtml;
     container.appendChild(timeItemDOM);
   });
-}; // 计算初始偏移量
-
-
+};
+// 计算初始偏移量
 TimeLine.prototype.primaryOffsetH = function () {
   var _this$state4 = this.state,
-      start = _this$state4.start,
-      timelag = _this$state4.timelag,
-      timeArr = _this$state4.timeArr;
+    start = _this$state4.start,
+    timelag = _this$state4.timelag,
+    timeArr = _this$state4.timeArr;
   var currentItem = timeArr[0].current;
   var currentTime = this.timeToSecond(currentItem);
   var startSecond = this.timeToSecond(start);
   var offsetS = currentTime - startSecond;
   var offsetH = Math.ceil(offsetS / timelag) + 60; // offsetS / (timelag * 60) * 60
-
   this.setState({
     scrollTop: offsetH
   });
   console.log('起始偏移量', offsetH);
-}; // 计算当前偏移量
-
-
+};
+// 计算当前偏移量
 TimeLine.prototype.currentOffsetH = function () {
   var _this$state5 = this.state,
-      current = _this$state5.current,
-      timelag = _this$state5.timelag,
-      timeArr = _this$state5.timeArr;
+    current = _this$state5.current,
+    timelag = _this$state5.timelag,
+    timeArr = _this$state5.timeArr;
   var startItem = timeArr[0].current;
   var startSecond = this.timeToSecond(startItem);
   var currentSecond = this.timeToSecond(current);
   var offsetS = startSecond - currentSecond;
   var offsetH = Math.ceil(offsetS / timelag) + 60; // offsetS / (timelag * 60) * 60
-
   this.setState({
     scrollTop: offsetH
   });
-}; // 通过时间轴位置获取当前时间
-
-
+};
+// 通过时间轴位置获取当前时间
 TimeLine.prototype.rectTopTotime = function (reactTop) {
-  var timelag = this.state.timelag; // let rectTop = rect.top; // 获取当前元素距离父元素顶部的高度
+  var timelag = this.state.timelag;
+  // let rectTop = rect.top; // 获取当前元素距离父元素顶部的高度
   // let reactTop = 0 - rectTop; // 实际偏移高度
-
   var index = Math.floor(reactTop / 60); // 以分钟为刻度时，每个元素初始高度为60px, 向下取整并除以时刻倍数得出偏移item;
-
   var offsetH = reactTop - index * 60; // 偏移高度
-
   var current;
   var offsetSecond;
   console.log('index：', index, 'offsetH:', offsetH);
-
   if (offsetH == 0) {
     current = this.state.timeArr[index - 1].current;
     offsetSecond = 0;
   } else {
     // 当timelag==120,timelag==60,timelag==30,timelag==10,timelag==1
     var time = this.state.timeArr[index].current;
-    var minute = this.timeToMinute(time); // 相对于下一元素偏移
-
+    var minute = this.timeToMinute(time);
+    // 相对于下一元素偏移
     var offsetY = 60 - offsetH;
     var offsetS = offsetY * timelag; // offsetY / 60 * timelag * 60
-
     var offsetM = Math.floor(offsetS / 60) + minute;
     var second = Math.floor(offsetS / 60) * 60;
     offsetSecond = Math.ceil(offsetS - second); // 保留两位小数
-
     current = this.minuteToTime(offsetM);
   }
-
   this.setState({
     current: current + ':' + (offsetSecond > 9 ? offsetSecond : '0' + offsetSecond),
     scrollTop: reactTop
-  }); // console.log("rectLeft", reactTop);
+  });
+  // console.log("rectLeft", reactTop);
   // console.log("currentTime", current + ':' + (offsetSecond > 9 ? offsetSecond : '0' + offsetSecond));
-}; // 时间轴滚动，根据传参变化
-
-
+};
+// 时间轴滚动，根据传参变化
 TimeLine.prototype.stepScrollTimeLine = function (time) {
   this.setState({
     current: time
   });
   this.currentOffsetH();
 };
-
 TimeLine.prototype.secondCountDown = function (time) {
-  var current = this.state.current; // console.log('currentTime', current);
-
+  var current = this.state.current;
+  // console.log('currentTime', current);
   var temp = current.split(':');
   var hour = Number(temp[0]);
   var minute = Number(temp[1]);
@@ -17018,7 +16786,6 @@ TimeLine.prototype.secondCountDown = function (time) {
     current: (h > 9 ? h : '0' + h) + ':' + (m > 9 ? m : '0' + m) + ':' + (s > 9 ? s : '0' + s)
   });
 };
-
 var MobileTimeLine = TimeLine;
 
 Date.prototype.Format = function (fmt) {
@@ -17037,37 +16804,27 @@ Date.prototype.Format = function (fmt) {
     "q+": Math.floor((this.getMonth() + 3) / 3),
     //季度
     "S": this.getMilliseconds() //毫秒
-
   };
 
   if (/(y+)/.test(fmt)) {
     fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
   }
-
   for (var k in o) {
     if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
   }
-
   return fmt;
 };
-
 function format(now) {
   var time = new Date(now);
   var h = time.getHours(); //返回日期中的小时数（0到23）
-
   var m = time.getMinutes(); //返回日期中的分钟数（0到59）
-
   var s = time.getSeconds(); //返回日期中的秒数（0到59）
-
   return (h > 9 ? h : '0' + h) + ':' + (m > 9 ? m : '0' + m) + ':' + (s > 9 ? s : '0' + s);
 }
-
 var MobileRec = /*#__PURE__*/function () {
   function MobileRec(jSPlugin) {
     var _this = this;
-
     _classCallCheck$1(this, MobileRec);
-
     this.jSPlugin = jSPlugin;
     this.timer = null;
     this.date = new Date().Format('yyyy-MM-dd');
@@ -17080,15 +16837,12 @@ var MobileRec = /*#__PURE__*/function () {
     this.seekTimer = null;
     this.disabled = false;
     this.seekFrequency = 2000;
-
     if (this.jSPlugin.params && this.jSPlugin.params.seekFrequency) {
       this.seekFrequency = this.jSPlugin.params.seekFrequency;
     }
-
     var oS = document.createElement('style');
     oS.innerHTML = "\n    body{\n      padding: 0;\n      margin: 0;\n    }\n    .time-line-container {\n      text-align: left;\n      height: 300px;\n      /* outline: 1px solid red; */\n      /* background: gray; */\n      position: relative;\n      /* padding-top: 60px; */\n      margin-top: 20px;\n    }\n\n    .time-line-container .time-line-item-container {\n      display: inline-block;\n      /* height: 400px; */\n      width: 30%;\n      /* background: indianred; */\n      overflow-y: scroll;\n      overflow-x: hidden;\n      /* padding-top: 60px; */\n      height: 300px;\n      box-sizing: border-box;\n      white-space: nowrap;\n      position: relative;\n    }\n\n    .time-line-container .time-line-item-container::-webkit-scrollbar {\n      width: 0px;\n      /*\u6EDA\u52A8\u6761\u5BBD\u5EA6*/\n      height: 0px;\n      /*\u6EDA\u52A8\u6761\u9AD8\u5EA6*/\n    }\n\n    .time-line-item .time-item {\n      position: relative;\n      box-sizing: border-box;\n      height: 60px;\n      font-size: 12px;\n      color: rgb(150, 150, 150);\n      border-right: 6px solid;\n      border-right-color: #ddd;\n    }\n\n    .time-line-item .time-item .scale {\n      width: 6px;\n      height: 9px;\n      border-bottom: 1px solid #ccc;\n      float: right;\n      clear: both;\n    }\n\n    .time-line-item .time-item .item-unavail {\n      width: 6px;\n      position: absolute;\n      left: 100%;\n      background-color: #ddd;\n    }\n\n    .time-line-container .current-time {\n      position: absolute;\n      left: 0;\n      top: 40px;\n      height: 29px;\n      /* line-height: 58px; */\n      border-bottom: 1px solid #648FFC;\n      width: 60%;\n      margin-left: 26%;\n    }\n\n    .time-line-container .current-time .current-time-bg {\n      position: relative;\n      top: 15px;\n      width: 100px;\n      height: 29px;\n      line-height: 29px;\n      left: -70px;\n      font-size: 12px;\n      color: #2C2C2C;\n    }\n\n    .time-line-container .current-time .current-time-bg::before {\n      content: '';\n      display: inline-block;\n      width: 6px;\n      height: 6px;\n      border-radius: 100%;\n      background: #648FFC;\n      top: 11px;\n      position: absolute;\n      right: 30px;\n    }\n\n    .date-switch-container {\n      height: 40px;\n      position: relative;\n      text-align: center;\n      margin: 20px 10px;\n    }\n\n    .date-switch-container .current-date {\n      line-height: 40px;\n      height: 22px;\n      font-size: 16px;\n      color: #2C2C2C;\n      text-align: center;\n      font-weight: bold;\n    }\n\n    .date-container {\n      width: 40px;\n      height: 40px;\n      position: absolute;\n      right: 0;\n      top: 0;\n    }\n\n    .rec-type-container {\n      display: flex;\n      justify-content: space-between;\n    }\n\n    .rec-type-container .rec-type-text {\n      padding: 0 15px;\n      font-size: 12px;\n      color: #2C2C2C;\n    }\n\n    .rec-type-container .rec-type-switch {\n      padding: 0 20px;\n    }\n\n    .date-container input {\n      position: absolute;\n      opacity: 0;\n      display: inline-block;\n      width: 40px;\n      height: 40px;\n      z-index: 10;\n      left: 0;\n    }\n\n    .date-container label {\n      position: absolute;\n      left: 0;\n      top: 0;\n      /* display: none; */\n      z-index: 0;\n    }\n\n    .date-icon {\n      display: inline-block;\n      width: 40px;\n      height: 40px;\n      background: url('https://resource.eziot.com/group2/M00/00/6A/CtwQF2F6VieAQrU9AAABP-_Nsqo949.png') no-repeat 100% 100%;\n    }\n    .select-container {\n      padding: 10px;\n      display: flex;\n      justify-content: space-between;\n    }\n\n    .advice {\n      height: 24px;\n      width: 70px;\n      display: flex;\n      justify-content: space-between;\n      line-height: 24px;\n      background: #F8F8F8;\n      border-radius: 8px;\n    }\n\n    .advice span {\n      width: 40px;\n      display: inline-block;\n    }\n\n    input[type=\"checkbox\"]:not(:checked)+.advice span:first-child {\n      box-shadow: 0px 2px 5px 0px rgb(23 45 101 / 20%);\n      border-radius: 8px;\n      text-align: center;\n\n    }\n\n    input[type=\"checkbox\"]:checked+.advice span:last-child {\n      box-shadow: 0px 2px 5px 0px rgb(23 45 101 / 20%);\n      border-radius: 8px;\n      text-align: center;\n    }\n\n    input[type=\"checkbox\"]:not(:checked)+.advice span:first-child svg {\n      fill: #648FFC !important;\n    }\n\n    input[type=\"checkbox\"]:checked+.advice span:last-child svg {\n      fill: #648FFC !important;\n    }";
     document.getElementsByTagName("head")[0].appendChild(oS);
-
     if (getQueryString("begin", this.jSPlugin.url)) {
       var begin = getQueryString("begin", this.jSPlugin.url);
       this.date = begin.slice(0, 4) + '/' + begin.slice(4, 6) + '/' + begin.slice(6, 8);
@@ -17096,67 +16850,58 @@ var MobileRec = /*#__PURE__*/function () {
       this.end = this.date + ' 23:59:59';
       this.initBegin = this.begin;
     }
-
     if (getQueryString("end", this.jSPlugin.url)) {
       var end = getQueryString("end", this.jSPlugin.url);
       this.end = this.date + " ".concat(end.slice(8, 10) || "23", ":").concat(end.slice(10, 12) || "59", ":").concat(end.slice(12, 14) || "59");
       this.initEnd = this.end;
-    } // 回放时间标题
-
-
+    }
+    // 回放时间标题
     var mobileRecTitleWrap = document.createElement('div');
     mobileRecTitleWrap.id = "date-switch-container-wrap";
     mobileRecTitleWrap.className = "date-switch-container-wrap";
     mobileRecTitleWrap.style = "";
     mobileRecTitleWrap.innerHTML = "\n      <div class=\"date-switch-container\">\n      <div class=\"current-date\" id=\"current-date\">\u4ECA\u65E5\u5F55\u50CF</div>\n      <div class=\"date-container\">\n        <label for=\"date\">\n          <div class=\"date-icon\"></div>\n        </label>\n        <input type=\"date\" name=\"date\" id=\"date\" />\n      </div>\n    </div>\n        ";
-    insertAfter$1(mobileRecTitleWrap, document.getElementById("".concat(this.jSPlugin.id, "-wrap"))); // 回放时间类型选择
-
+    insertAfter$1(mobileRecTitleWrap, document.getElementById("".concat(this.jSPlugin.id, "-wrap")));
+    // 回放时间类型选择
     var mobileRecSwitchWrap = document.createElement('div');
     mobileRecSwitchWrap.id = "rec-type-container-wrap";
     mobileRecSwitchWrap.className = "rec-type-container-wrap";
     mobileRecSwitchWrap.style = "";
-    mobileRecSwitchWrap.innerHTML = "\n    <div class=\"rec-type-container\">\n    <div class=\"rec-type-text\">\u5171\u4E2A<span id=\"recCount\">0</span>\u5F55\u50CF</div>\n    <div class=\"rec-type-switch\">\n      <label>\n        <input type=\"checkbox\" name=\"type\" id=\"cloudType\" value=\"1\" hidden />\n        <label for=\"cloudType\" class=\"advice\">\n          <span>\n          <svg fill=\"#CCCCCC\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"2 0 20 20\">\n            <path class=\"st0\" d=\"M12.6,5c-2.3,0.1-4.3,1.4-5.3,3.3L7.2,8.6c-2.4,0.5-4.1,2.5-4.1,4.9c0,2.8,2.4,5,5.2,5h9.9\n            c2.4,0,4.3-1.9,4.3-4.2l0-0.2c-0.1-2-1.6-3.5-3.5-3.9l-0.1,0l0-0.2c-0.4-2.8-3-5-6.1-5L12.6,5z\"/>\n          </svg>\n        </span>\n        <span>\n          <svg fill=\"#CCCCCC\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"2 0 20 20\">\n            <path id=\"\u5F62\u72B6\u7ED3\u5408\" class=\"st0\" d=\"M14.3,4c0.6,0,1.2,0.2,1.7,0.7l0,0L18.3,7C18.7,7.4,19,8,19,8.6l0,0v9c0,1.3-1.1,2.3-2.4,2.3\n\tl0,0H8.4C7.1,20,6,19,6,17.7l0,0V6.3C6,5,7.1,4,8.4,4l0,0H14.3z M9.7,7.2C9.3,7.2,8.9,7.6,8.9,8l0,0v2.5l0,0.1\n\tc0,0.4,0.4,0.6,0.7,0.6c0.4,0,0.8-0.3,0.8-0.8l0,0V8l0-0.1C10.4,7.5,10,7.2,9.7,7.2z M12.2,7.2c-0.4,0-0.8,0.3-0.8,0.8l0,0v2.5\n\tl0,0.1c0,0.4,0.4,0.6,0.7,0.6c0.4,0,0.8-0.3,0.8-0.8l0,0V8l0-0.1C12.9,7.5,12.5,7.2,12.2,7.2z M14.7,7.2c-0.4,0-0.8,0.3-0.8,0.8l0,0\n\tv2.5l0,0.1c0,0.4,0.4,0.6,0.7,0.6c0.4,0,0.8-0.3,0.8-0.8l0,0V8l0-0.1C15.4,7.5,15,7.2,14.7,7.2z\"/>\n          </svg>\n        </span>\n        </label>\n      </label>\n    </div>\n  </div>\n        ";
-    insertAfter$1(mobileRecSwitchWrap, mobileRecTitleWrap); // 回放时间轴
-
+    mobileRecSwitchWrap.innerHTML = "\n    <div class=\"rec-type-container\">\n    <div class=\"rec-type-text\">\u5171<span id=\"recCount\">0</span>\u4E2A\u5F55\u50CF</div>\n    <div class=\"rec-type-switch\">\n      <label>\n        <input type=\"checkbox\" name=\"type\" id=\"cloudType\" value=\"1\" hidden />\n        <label for=\"cloudType\" class=\"advice\">\n          <span>\n          <svg fill=\"#CCCCCC\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"2 0 20 20\">\n            <path class=\"st0\" d=\"M12.6,5c-2.3,0.1-4.3,1.4-5.3,3.3L7.2,8.6c-2.4,0.5-4.1,2.5-4.1,4.9c0,2.8,2.4,5,5.2,5h9.9\n            c2.4,0,4.3-1.9,4.3-4.2l0-0.2c-0.1-2-1.6-3.5-3.5-3.9l-0.1,0l0-0.2c-0.4-2.8-3-5-6.1-5L12.6,5z\"/>\n          </svg>\n        </span>\n        <span>\n          <svg fill=\"#CCCCCC\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"2 0 20 20\">\n            <path id=\"\u5F62\u72B6\u7ED3\u5408\" class=\"st0\" d=\"M14.3,4c0.6,0,1.2,0.2,1.7,0.7l0,0L18.3,7C18.7,7.4,19,8,19,8.6l0,0v9c0,1.3-1.1,2.3-2.4,2.3\n\tl0,0H8.4C7.1,20,6,19,6,17.7l0,0V6.3C6,5,7.1,4,8.4,4l0,0H14.3z M9.7,7.2C9.3,7.2,8.9,7.6,8.9,8l0,0v2.5l0,0.1\n\tc0,0.4,0.4,0.6,0.7,0.6c0.4,0,0.8-0.3,0.8-0.8l0,0V8l0-0.1C10.4,7.5,10,7.2,9.7,7.2z M12.2,7.2c-0.4,0-0.8,0.3-0.8,0.8l0,0v2.5\n\tl0,0.1c0,0.4,0.4,0.6,0.7,0.6c0.4,0,0.8-0.3,0.8-0.8l0,0V8l0-0.1C12.9,7.5,12.5,7.2,12.2,7.2z M14.7,7.2c-0.4,0-0.8,0.3-0.8,0.8l0,0\n\tv2.5l0,0.1c0,0.4,0.4,0.6,0.7,0.6c0.4,0,0.8-0.3,0.8-0.8l0,0V8l0-0.1C15.4,7.5,15,7.2,14.7,7.2z\"/>\n          </svg>\n        </span>\n        </label>\n      </label>\n    </div>\n  </div>\n        ";
+    insertAfter$1(mobileRecSwitchWrap, mobileRecTitleWrap);
+    // 回放时间轴
     var mobileRecWrap = document.createElement('div');
     mobileRecWrap.id = "mobile-rec-wrap";
     mobileRecWrap.className = "mobileRec-wrap";
     mobileRecWrap.style = "";
     mobileRecWrap.innerHTML = "\n    <div class=\"time-line-container\">\n    <div class=\"current-time\">\n      <div class=\"current-time-bg\" id=\"time-line-current\">2020-01-01 00:00:00</div>\n    </div>\n    <div class=\"time-line-item-container\">\n      <div class=\"time-line-item\" id=\"time-line-item\">\n      </div>\n    </div>\n    </div>\n      ";
     insertAfter$1(mobileRecWrap, mobileRecSwitchWrap);
-
     var getPalyParam = function getPalyParam(data) {
       console.log("子组件传值到父组件", data, data.current);
       var st = data.current;
       var date = new Date(_this.date).Format('yyyyMMdd').substr(0, 8) + (data.current ? st.replace(/:/g, "") : data.current.replace(/:/g, ""));
-
       if (_this.initBegin && new Date("".concat(_this.date, " ").concat(data.current)).getTime() < new Date(_this.initBegin).getTime()) {
         console.log("超过限制最低值");
         date = new Date(_this.initBegin).Format("yyyyMMddhhmmss");
       }
-
       if (_this.initEnd && new Date("".concat(_this.date, " ").concat(data.current)).getTime() > new Date(_this.initEnd).getTime()) {
         console.log("超过限制最高值");
         date = new Date(_this.initBegin).Format("yyyyMMddhhmmss");
       }
-
       if (_this.type === 'cloud.rec') {
         var cloudSeek = function cloudSeek() {
           _this.jSPlugin.seek(date.substr(8, 6), "235959");
-
           setTimeout(function () {
             _this.syncTimeLine();
           }, 6000);
         };
-
         if (_this.seekTimer) {
           clearTimeout(_this.seekTimer);
         } else {
           cloudSeek();
         }
-
-        console.log("this.jsPlug", _this.jSPlugin.params); // 限制每2秒只触发一次拖动
-
+        console.log("this.jsPlug", _this.jSPlugin.params);
+        // 限制每2秒只触发一次拖动
         _this.seekTimer = setTimeout(function () {
           cloudSeek();
           clearTimeout(_this.seekTimer);
@@ -17168,61 +16913,47 @@ var MobileRec = /*#__PURE__*/function () {
             _this.disabled = false;
           }, _this.seekFrequency);
         };
-
         var localRecSeek = function localRecSeek(callback) {
           _this.disabled = true;
-
           _this.jSPlugin.pause().then(function () {
             console.log("暂停成功");
-
             _this.jSPlugin.resume(date).then(function (data) {
               console.log("恢复成功");
-
               if (_this.jSPlugin.Theme) {
                 _this.jSPlugin.Theme.setDecoderState({
                   play: true
                 });
-              } // 打开声音
-
-
+              }
+              // 打开声音
               if (_this.jSPlugin.Theme && _this.jSPlugin.Theme.decoderState.state.sound) {
                 _this.jSPlugin.openSound();
               }
-
               _this.syncTimeLine();
-
               if (callback) {
                 callback();
               }
             });
           })["catch"](function () {
             console.log("暂停失败");
-
             _this.jSPlugin.resume(date).then(function (data) {
               console.log("恢复成功");
-
               if (_this.jSPlugin.Theme) {
                 _this.jSPlugin.Theme.setDecoderState({
                   play: true
                 });
               }
-
               _this.syncTimeLine();
-
               if (callback) {
                 callback();
               }
             });
           });
         };
-
         if (_this.disabled) {
           console.log("操作频繁，等待2秒后执行");
-
           if (_this.seekTimer) {
             clearTimeout(_this.seekTimer);
           }
-
           _this.seekTimer = setTimeout(function () {
             localRecSeek(callback);
           }, _this.seekFrequency);
@@ -17232,11 +16963,10 @@ var MobileRec = /*#__PURE__*/function () {
         }
       }
     };
-
     var ontouchstart = function ontouchstart() {
       _this.operating = true;
-
-      _this.unSyncTimeLine(); // if (currentTimer) {
+      _this.unSyncTimeLine();
+      // if (currentTimer) {
       //   clearInterval(currentTimer)
       // }
       // if (decoder) {
@@ -17245,17 +16975,17 @@ var MobileRec = /*#__PURE__*/function () {
       //     console.log("停止成功")
       //   });
       // }
-
     };
 
-    var ontouchmove = function ontouchmove() {// if (currentTimer) {
+    var ontouchmove = function ontouchmove() {
+      // if (currentTimer) {
       //   clearInterval(currentTimer)
       // }
     };
-
     var ontouchend = function ontouchend() {
       _this.operating = false;
-      console.log("ontouchend"); // if (currentTimer) {
+      console.log("ontouchend");
+      // if (currentTimer) {
       //   clearInterval(currentTimer)
       // }
     };
@@ -17267,10 +16997,11 @@ var MobileRec = /*#__PURE__*/function () {
       ontouchmove: ontouchmove,
       ontouchend: ontouchend
     });
-    this.fetchDeviceRec(); // 监听日期变化
-
+    this.fetchDeviceRec();
+    // 监听日期变化
     document.getElementById("date").addEventListener('change', function (e) {
-      console.log("日期变化", e.target.value); // if(this.initBegin && new Date(`${e.target.value}`.replace(/-/g, "/")).getTime() < new Date(this.initBegin.slice(0, 10)).getTime()) {
+      console.log("日期变化", e.target.value);
+      // if(this.initBegin && new Date(`${e.target.value}`.replace(/-/g, "/")).getTime() < new Date(this.initBegin.slice(0, 10)).getTime()) {
       //   console.log("超过限制最低值")
       //   return false;
       // }
@@ -17278,18 +17009,14 @@ var MobileRec = /*#__PURE__*/function () {
       //   console.log("超过限制最高值")
       //   return false;
       // }
-
       if (_this.initBegin || _this.initEnd) {
         console.log("您开启了时间限制，无法切换日期");
         return false;
       }
-
       _this.date = new Date(e.target.value).Format("yyyy/MM/dd");
       _this.begin = _this.date + ' 00:00:00';
       _this.end = _this.date + ' 23:59:59';
-
       _this.fetchDeviceRec();
-
       _this.jSPlugin.changePlayUrl({
         type: _this.type,
         begin: "".concat(new Date(_this.date).Format('yyyyMMdd'), "000000")
@@ -17300,55 +17027,47 @@ var MobileRec = /*#__PURE__*/function () {
       var recType = e.target.checked ? 2 : 1;
       _this.type = e.target.checked ? "rec" : 'cloud.rec';
       console.log("recType", recType);
-
       _this.fetchDeviceRec();
-
       _this.jSPlugin.changePlayUrl({
         type: _this.type,
         begin: "".concat(new Date(_this.date).Format('yyyyMMdd'), "000000")
       }).then(function () {
         console.log("切换类型成功");
-
         _this.syncTimeLine();
       }, function (err) {
         console.log("err", err);
       })["catch"](function (err) {
         console.log(err);
-      }); // document.getElementById("cloudType").setAttribute("checked", true);
+      });
+      // document.getElementById("cloudType").setAttribute("checked", true);
       // $("#cloudType").attr("checked", recType == '2');
       // $("#cloudType .device svg").attr("checked", recType == '2');
-
     });
+
     this.syncTimeLine();
   }
-
   _createClass$1(MobileRec, [{
     key: "fetchDeviceRec",
     value: function fetchDeviceRec() {
       var _this2 = this;
-
       var doRender = function doRender(result) {
         var len = result.length;
         document.getElementById("recCount").innerHTML = len;
         var availArr = [];
-
         for (var i = len - 1; i >= 0; i--) {
           var res = result[i];
           var et = format(res.endTime);
           var st = format(res.startTime);
-
           availArr.push({
             st: st,
             et: et
           });
-        } // document.getElementById("time-line-item").style.display = "block";
-
-
+        }
+        // document.getElementById("time-line-item").style.display = "block";
         {
           _this2.TimeLineOBJ.setDateLine(availArr);
         }
       };
-
       var data = new FormData();
       data.append("deviceSerial", matchEzopenUrl(this.jSPlugin.url).deviceSerial);
       data.append("channelNo", matchEzopenUrl(this.jSPlugin.url).channelNo);
@@ -17376,29 +17095,22 @@ var MobileRec = /*#__PURE__*/function () {
     key: "syncTimeLine",
     value: function syncTimeLine() {
       var _this3 = this;
-
       var dateFormat = function dateFormat(now) {
         var time = new Date(now);
         var h = time.getHours(); //返回日期中的小时数（0到23）
-
         var m = time.getMinutes(); //返回日期中的分钟数（0到59）
-
         var s = time.getSeconds(); //返回日期中的秒数（0到59）
-
         return (h > 9 ? h : '0' + h) + ':' + (m > 9 ? m : '0' + m) + ':' + (s > 9 ? s : '0' + s);
       };
-
       if (this.timer) {
         clearInterval(this.timer);
       }
-
       this.timer = setInterval(function () {
         // 定时器
         if (_this3.operating) {
           console.log("操作中");
           return false;
         }
-
         _this3.jSPlugin.getOSDTime().then(function (res) {
           if (res.data > 0) {
             _this3.TimeLineOBJ.stepScrollTimeLine(dateFormat(res.data * 1000));
@@ -17418,23 +17130,18 @@ var MobileRec = /*#__PURE__*/function () {
       }
     }
   }]);
-
   return MobileRec;
 }();
 
 var Ptz = /*#__PURE__*/function () {
   function Ptz(jSPlugin) {
     var _this = this;
-
     _classCallCheck$1(this, Ptz);
-
     this.jSPlugin = jSPlugin;
     console.log("云台初始化");
-
     if (document.getElementById(this.jSPlugin.id + "-ez-ptz-item")) {
       return false;
     }
-
     var ptzWrap = document.createElement('div');
     ptzWrap.id = this.jSPlugin.id + "-ez-ptz-item";
     ptzWrap.className = "ez-ptz-wrap";
@@ -17443,38 +17150,30 @@ var Ptz = /*#__PURE__*/function () {
     oS.innerHTML = "\n    .ez-ptz-container {\n      position: relative;\n      width: 80px;\n      height: 80px;\n      background: rgba(255, 255, 255, 0.80);\n      box-shadow: 0px 0px 33px 4px rgb(0 0 0 / 15%);\n      border: 1px solid rgba(255, 255, 255, 0.80);\n      border-radius: 100%;\n      cursor: pointer;\n      overflow: hidden;\n      user-select: none;\n    }\n    .ez-ptz-container .ez-ptz-icon.top {\n      width: 0;\n      height: 0;\n      border-left: 3px solid transparent;\n      border-right: 3px solid transparent;\n      border-bottom: 6px solid #333333;\n      position: absolute;\n      display: inline-block;\n      left: calc(50% - 3px);\n      top: 2px;\n    }\n\n    .ez-ptz-container .ez-ptz-icon.top.active {\n      border-bottom-color: #1890FF;\n    }\n\n    .ez-ptz-container .ez-ptz-icon.bottom {\n      width: 0;\n      height: 0;\n      border-left: 3px solid transparent;\n      border-right: 3px solid transparent;\n      border-top: 6px solid #333333;\n      position: absolute;\n      display: inline-block;\n      left: calc(50% - 3px);\n      bottom: 2px;\n    }\n\n    .ez-ptz-container .ez-ptz-icon.bottom.active {\n      border-top-color: #1890FF;\n    }\n\n    .ez-ptz-container .ez-ptz-icon.right {\n      width: 0;\n      height: 0;\n      border-top: 3px solid transparent;\n      border-bottom: 3px solid transparent;\n      border-left: 6px solid #333333;\n      position: absolute;\n      display: inline-block;\n      top: calc(50% - 3px);\n      right: 2px;\n    }\n\n    .ez-ptz-container .ez-ptz-icon.right.active {\n      border-left-color: #1890FF;\n    }\n\n    .ez-ptz-container .ez-ptz-icon.left {\n      width: 0;\n      height: 0;\n      border-top: 3px solid transparent;\n      border-bottom: 3px solid transparent;\n      border-right: 6px solid #333333;\n      position: absolute;\n      display: inline-block;\n      top: calc(50% - 3px);\n      left: 2px;\n    }\n\n    .ez-ptz-container .ez-ptz-icon.left.active {\n      border-right-color: #1890FF;\n    }\n\n    .ez-ptz-container .ez-ptz-main.center {\n      width: 23px;\n      height: 23px;\n      background: #1890FF;\n      border-radius: 100%;\n      top: calc(50% - 12.3px);\n      left: calc(50% - 12.3px);\n      position: absolute;\n    }\n\n    .ez-ptz-wrap {\n      position: absolute;\n      right: 20px;\n      top: calc(50% - 50px);\n      width: 100px;\n      height: 100px;\n      z-index: 999;\n    }\n\n    .ez-ptz-close {\n      position: absolute;\n      color: #FFFFFF;\n      top: 0;\n      right: 0px;\n    }";
     document.getElementsByTagName("head")[0].appendChild(oS);
     ptzWrap.innerHTML = "\n      <div class=\"ez-ptz-container\" id=\"".concat(this.jSPlugin.id, "-ez-ptz-container\" style=\"position: relative;width: 80px;height: 80px;background: rgba(255, 255, 255, 0.80);box-shadow: 0px 0px 33px 4px rgba(0, 0, 0, 0.15);border: 1px solid rgba(255, 255, 255, 0.80);border-radius: 100%;cursor: pointer;overflow: hidden;user-select: none;\">\n        <div class=\"ez-ptz-main center\"></div>\n        <div class=\"ez-ptz-icon top active\"></div>\n        <div class=\"ez-ptz-icon left active\"></div>\n        <div class=\"ez-ptz-icon bottom active\"></div>\n        <div class=\"ez-ptz-icon right active\"></div>\n      ");
-    document.getElementById("".concat(jSPlugin.id, "-wrap")).appendChild(ptzWrap); // 云台控制事件绑定
+    document.getElementById("".concat(jSPlugin.id, "-wrap")).appendChild(ptzWrap);
+    // 云台控制事件绑定
     // 云台控制
-
     document.getElementById("".concat(this.jSPlugin.id, "-ez-ptz-container")).onmousedown = function (e) {
       e.preventDefault();
       console.log("触摸开始");
-
       _this._handlePtzTouch(e, 'start');
     };
-
     document.getElementById("".concat(this.jSPlugin.id, "-ez-ptz-container")).onmouseup = function (e) {
       e.preventDefault();
       console.log("触摸结束");
-
       _this._handlePtzTouch(e, 'stop');
     };
-
     document.getElementById("".concat(this.jSPlugin.id, "-ez-ptz-container")).ontouchstart = function (e) {
       e.preventDefault();
       console.log("触摸开始");
-
       _this._handlePtzTouch(e, 'start');
     };
-
     document.getElementById("".concat(this.jSPlugin.id, "-ez-ptz-container")).ontouchend = function (e) {
       e.preventDefault();
       console.log("触摸结束", e);
-
       _this._handlePtzTouch(e, 'stop');
     };
   }
-
   _createClass$1(Ptz, [{
     key: "show",
     value: function show() {
@@ -17489,7 +17188,6 @@ var Ptz = /*#__PURE__*/function () {
     key: "_handlePtzTouch",
     value: function _handlePtzTouch(e, type) {
       var _this2 = this;
-
       var container = document.getElementById("".concat(this.jSPlugin.id, "-ez-ptz-container")).getBoundingClientRect();
       var containerCenterX = container.left + 41;
       var containerCenterY = container.top + 41;
@@ -17499,60 +17197,53 @@ var Ptz = /*#__PURE__*/function () {
       var top = eventY - containerCenterY;
       var direction = 0; //操作命令：0-上，1-下，2-左，3-右，4-左上，5-左下，6-右上，7-右下，8-放大，9-缩小，10-近焦距，11-远焦距
 
-      var url = this.jSPlugin.env.domain + "/api/lapp/device/ptz/start"; // var nextPtzImg = ptzNormalImg;
+      var url = this.jSPlugin.env.domain + "/api/lapp/device/ptz/start";
+      // var nextPtzImg = ptzNormalImg;
       // var nextPtzImgFailed = ptzNormalImg;
       // 判读方位
-
       if (Math.abs(left) > Math.abs(top)) {
         if (left > 0) {
-          direction = 3; // nextPtzImg = ptzRightImgSuccess;
+          direction = 3;
+          // nextPtzImg = ptzRightImgSuccess;
           // nextPtzImgFailed = ptzRightImgFailed;
         } else {
-          direction = 2; // nextPtzImg = ptzLeftImgSuccess;
+          direction = 2;
+          // nextPtzImg = ptzLeftImgSuccess;
           // nextPtzImgFailed = ptzLeftImgFailed;
         }
       } else {
         if (top > 0) {
-          direction = 1; // nextPtzImg = ptzDownImgSuccess;
+          direction = 1;
+          // nextPtzImg = ptzDownImgSuccess;
           // nextPtzImgFailed = ptzDownImgFailed;
         } else {
-          direction = 0; // nextPtzImg = ptzTopImgSuccess;
+          direction = 0;
+          // nextPtzImg = ptzTopImgSuccess;
           // nextPtzImgFailed = ptzTopImgFailed;
         }
-      } // 兼容画面旋转90度
-
-
+      }
+      // 兼容画面旋转90度
       if (/^rotate\(90/.test(document.getElementById("".concat(this.jSPlugin.id, "-wrap")).style.transform)) {
         switch (direction) {
           case 0:
             direction = 2; // 上转化为左
-
             break;
-
           case 1:
             direction = 3; // 下转化为右
-
             break;
-
           case 2:
             direction = 1; // 左转化为下
-
             break;
-
           case 3:
             direction = 0; // 右转化为上
-
             break;
         }
       }
-
       document.getElementById("".concat(this.jSPlugin.id, "-ez-ptz-container")).style = "background-image:linear-gradient(".concat(direction === 0 ? 180 : direction === 1 ? 0 : direction === 2 ? 90 : 270, "deg, #1d8dd8 0%, rgba(100,143,252,0.00) 30%)");
-
       if (type === 'stop') {
         url = this.jSPlugin.env.domain + '/api/lapp/device/ptz/stop';
         document.getElementById("".concat(this.jSPlugin.id, "-ez-ptz-container")).style = "";
       }
-
       var data = new FormData();
       data.append("deviceSerial", matchEzopenUrl(this.jSPlugin.url).deviceSerial);
       data.append("channelNo", matchEzopenUrl(this.jSPlugin.url).channelNo);
@@ -17577,7 +17268,6 @@ var Ptz = /*#__PURE__*/function () {
       });
     }
   }]);
-
   return Ptz;
 }();
 
@@ -17588,7 +17278,6 @@ var Ptz = /*#__PURE__*/function () {
     define([], f);
   } else {
     var g;
-
     if (typeof window !== "undefined") {
       g = window;
     } else if (typeof global !== "undefined") {
@@ -17598,7 +17287,6 @@ var Ptz = /*#__PURE__*/function () {
     } else {
       g = this;
     }
-
     g.adapter = f();
   }
 })(function () {
@@ -17613,7 +17301,6 @@ var Ptz = /*#__PURE__*/function () {
             var a = new Error("Cannot find module '" + i + "'");
             throw a.code = "MODULE_NOT_FOUND", a;
           }
-
           var p = n[i] = {
             exports: {}
           };
@@ -17622,23 +17309,18 @@ var Ptz = /*#__PURE__*/function () {
             return o(n || r);
           }, p, p.exports, r, e, n, t);
         }
-
         return n[i].exports;
       }
-
       for (var u = "function" == typeof require && require, i = 0; i < t.length; i++) {
         o(t[i]);
       }
-
       return o;
     }
-
     return r;
   }()({
     1: [function (require, module, exports) {
 
       var _adapter_factory = require('./adapter_factory.js');
-
       var adapter = (0, _adapter_factory.adapterFactory)({
         window: window
       });
@@ -17653,48 +17335,34 @@ var Ptz = /*#__PURE__*/function () {
         value: true
       });
       exports.adapterFactory = adapterFactory;
-
       var _utils = require('./utils');
-
       var utils = _interopRequireWildcard(_utils);
-
       var _chrome_shim = require('./chrome/chrome_shim');
-
       var chromeShim = _interopRequireWildcard(_chrome_shim);
-
       var _edge_shim = require('./edge/edge_shim');
-
       var edgeShim = _interopRequireWildcard(_edge_shim);
-
       var _firefox_shim = require('./firefox/firefox_shim');
-
       var firefoxShim = _interopRequireWildcard(_firefox_shim);
-
       var _safari_shim = require('./safari/safari_shim');
-
       var safariShim = _interopRequireWildcard(_safari_shim);
-
       var _common_shim = require('./common_shim');
-
       var commonShim = _interopRequireWildcard(_common_shim);
-
       function _interopRequireWildcard(obj) {
         if (obj && obj.__esModule) {
           return obj;
         } else {
           var newObj = {};
-
           if (obj != null) {
             for (var key in obj) {
               if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
             }
           }
-
           newObj["default"] = obj;
           return newObj;
         }
-      } // Shimming starts here.
+      }
 
+      // Shimming starts here.
       /*
        *  Copyright (c) 2016 The WebRTC project authors. All Rights Reserved.
        *
@@ -17702,19 +17370,17 @@ var Ptz = /*#__PURE__*/function () {
        *  that can be found in the LICENSE file in the root of the source
        *  tree.
        */
-
-
       function adapterFactory() {
         var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-            window = _ref.window;
-
+          window = _ref.window;
         var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
           shimChrome: true,
           shimFirefox: true,
           shimEdge: true,
           shimSafari: true
-        }; // Utils.
+        };
 
+        // Utils.
         var logging = utils.log;
         var browserDetails = utils.detectBrowser(window);
         var adapter = {
@@ -17723,17 +17389,17 @@ var Ptz = /*#__PURE__*/function () {
           extractVersion: utils.extractVersion,
           disableLog: utils.disableLog,
           disableWarnings: utils.disableWarnings
-        }; // Shim browser if found.
+        };
 
+        // Shim browser if found.
         switch (browserDetails.browser) {
           case 'chrome':
             if (!chromeShim || !chromeShim.shimPeerConnection || !options.shimChrome) {
               logging('Chrome shim is not included in this adapter release.');
               return adapter;
             }
-
-            logging('adapter.js shimming chrome.'); // Export to the adapter global object visible in the browser.
-
+            logging('adapter.js shimming chrome.');
+            // Export to the adapter global object visible in the browser.
             adapter.browserShim = chromeShim;
             chromeShim.shimGetUserMedia(window);
             chromeShim.shimMediaStream(window);
@@ -17750,15 +17416,13 @@ var Ptz = /*#__PURE__*/function () {
             commonShim.shimSendThrowTypeError(window);
             commonShim.removeAllowExtmapMixed(window);
             break;
-
           case 'firefox':
             if (!firefoxShim || !firefoxShim.shimPeerConnection || !options.shimFirefox) {
               logging('Firefox shim is not included in this adapter release.');
               return adapter;
             }
-
-            logging('adapter.js shimming firefox.'); // Export to the adapter global object visible in the browser.
-
+            logging('adapter.js shimming firefox.');
+            // Export to the adapter global object visible in the browser.
             adapter.browserShim = firefoxShim;
             firefoxShim.shimGetUserMedia(window);
             firefoxShim.shimPeerConnection(window);
@@ -17775,33 +17439,31 @@ var Ptz = /*#__PURE__*/function () {
             commonShim.shimMaxMessageSize(window);
             commonShim.shimSendThrowTypeError(window);
             break;
-
           case 'edge':
             if (!edgeShim || !edgeShim.shimPeerConnection || !options.shimEdge) {
               logging('MS edge shim is not included in this adapter release.');
               return adapter;
             }
-
-            logging('adapter.js shimming edge.'); // Export to the adapter global object visible in the browser.
-
+            logging('adapter.js shimming edge.');
+            // Export to the adapter global object visible in the browser.
             adapter.browserShim = edgeShim;
             edgeShim.shimGetUserMedia(window);
             edgeShim.shimGetDisplayMedia(window);
             edgeShim.shimPeerConnection(window);
-            edgeShim.shimReplaceTrack(window); // the edge shim implements the full RTCIceCandidate object.
+            edgeShim.shimReplaceTrack(window);
+
+            // the edge shim implements the full RTCIceCandidate object.
 
             commonShim.shimMaxMessageSize(window);
             commonShim.shimSendThrowTypeError(window);
             break;
-
           case 'safari':
             if (!safariShim || !options.shimSafari) {
               logging('Safari shim is not included in this adapter release.');
               return adapter;
             }
-
-            logging('adapter.js shimming safari.'); // Export to the adapter global object visible in the browser.
-
+            logging('adapter.js shimming safari.');
+            // Export to the adapter global object visible in the browser.
             adapter.browserShim = safariShim;
             safariShim.shimRTCIceServerUrls(window);
             safariShim.shimCreateOfferLegacy(window);
@@ -17815,15 +17477,14 @@ var Ptz = /*#__PURE__*/function () {
             commonShim.shimSendThrowTypeError(window);
             commonShim.removeAllowExtmapMixed(window);
             break;
-
           default:
             logging('Unsupported browser!');
             break;
         }
-
         return adapter;
-      } // Browser shims.
+      }
 
+      // Browser shims.
     }, {
       "./chrome/chrome_shim": 3,
       "./common_shim": 6,
@@ -17838,24 +17499,19 @@ var Ptz = /*#__PURE__*/function () {
         value: true
       });
       exports.shimGetDisplayMedia = exports.shimGetUserMedia = undefined;
-
       var _typeof$1 = typeof Symbol === "function" && _typeof(Symbol.iterator) === "symbol" ? function (obj) {
         return _typeof(obj);
       } : function (obj) {
         return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof(obj);
       };
-
       var _getusermedia = require('./getusermedia');
-
       Object.defineProperty(exports, 'shimGetUserMedia', {
         enumerable: true,
         get: function get() {
           return _getusermedia.shimGetUserMedia;
         }
       });
-
       var _getdisplaymedia = require('./getdisplaymedia');
-
       Object.defineProperty(exports, 'shimGetDisplayMedia', {
         enumerable: true,
         get: function get() {
@@ -17871,28 +17527,22 @@ var Ptz = /*#__PURE__*/function () {
       exports.shimAddTrackRemoveTrack = shimAddTrackRemoveTrack;
       exports.shimPeerConnection = shimPeerConnection;
       exports.fixNegotiationNeeded = fixNegotiationNeeded;
-
       var _utils = require('../utils.js');
-
       var utils = _interopRequireWildcard(_utils);
-
       function _interopRequireWildcard(obj) {
         if (obj && obj.__esModule) {
           return obj;
         } else {
           var newObj = {};
-
           if (obj != null) {
             for (var key in obj) {
               if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
             }
           }
-
           newObj["default"] = obj;
           return newObj;
         }
       }
-
       function _defineProperty(obj, key, value) {
         if (key in obj) {
           Object.defineProperty(obj, key, {
@@ -17904,14 +17554,11 @@ var Ptz = /*#__PURE__*/function () {
         } else {
           obj[key] = value;
         }
-
         return obj;
       }
-
       function shimMediaStream(window) {
         window.MediaStream = window.MediaStream || window.webkitMediaStream;
       }
-
       function shimOnTrack(window) {
         if ((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) === 'object' && window.RTCPeerConnection && !('ontrack' in window.RTCPeerConnection.prototype)) {
           Object.defineProperty(window.RTCPeerConnection.prototype, 'ontrack', {
@@ -17922,24 +17569,20 @@ var Ptz = /*#__PURE__*/function () {
               if (this._ontrack) {
                 this.removeEventListener('track', this._ontrack);
               }
-
               this.addEventListener('track', this._ontrack = f);
             },
             enumerable: true,
             configurable: true
           });
           var origSetRemoteDescription = window.RTCPeerConnection.prototype.setRemoteDescription;
-
           window.RTCPeerConnection.prototype.setRemoteDescription = function setRemoteDescription() {
             var _this = this;
-
             if (!this._ontrackpoly) {
               this._ontrackpoly = function (e) {
                 // onaddstream does not fire when a track is added to an existing
                 // stream. But stream.onaddtrack is implemented so we use that.
                 e.stream.addEventListener('addtrack', function (te) {
                   var receiver = void 0;
-
                   if (window.RTCPeerConnection.prototype.getReceivers) {
                     receiver = _this.getReceivers().find(function (r) {
                       return r.track && r.track.id === te.track.id;
@@ -17949,7 +17592,6 @@ var Ptz = /*#__PURE__*/function () {
                       track: te.track
                     };
                   }
-
                   var event = new Event('track');
                   event.track = te.track;
                   event.receiver = receiver;
@@ -17957,12 +17599,10 @@ var Ptz = /*#__PURE__*/function () {
                     receiver: receiver
                   };
                   event.streams = [e.stream];
-
                   _this.dispatchEvent(event);
                 });
                 e.stream.getTracks().forEach(function (track) {
                   var receiver = void 0;
-
                   if (window.RTCPeerConnection.prototype.getReceivers) {
                     receiver = _this.getReceivers().find(function (r) {
                       return r.track && r.track.id === track.id;
@@ -17972,7 +17612,6 @@ var Ptz = /*#__PURE__*/function () {
                       track: track
                     };
                   }
-
                   var event = new Event('track');
                   event.track = track;
                   event.receiver = receiver;
@@ -17980,14 +17619,11 @@ var Ptz = /*#__PURE__*/function () {
                     receiver: receiver
                   };
                   event.streams = [e.stream];
-
                   _this.dispatchEvent(event);
                 });
               };
-
               this.addEventListener('addstream', this._ontrackpoly);
             }
-
             return origSetRemoteDescription.apply(this, arguments);
           };
         } else {
@@ -18002,19 +17638,16 @@ var Ptz = /*#__PURE__*/function () {
                 }
               });
             }
-
             return e;
           });
         }
       }
-
       function shimGetSendersWithDtmf(window) {
         // Overrides addTrack/removeTrack, depends on shimAddTrackRemoveTrack.
         if ((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) === 'object' && window.RTCPeerConnection && !('getSenders' in window.RTCPeerConnection.prototype) && 'createDTMFSender' in window.RTCPeerConnection.prototype) {
           var shimSenderWithDtmf = function shimSenderWithDtmf(pc, track) {
             return {
               track: track,
-
               get dtmf() {
                 if (this._dtmf === undefined) {
                   if (track.kind === 'audio') {
@@ -18023,15 +17656,13 @@ var Ptz = /*#__PURE__*/function () {
                     this._dtmf = null;
                   }
                 }
-
                 return this._dtmf;
               },
-
               _pc: pc
             };
-          }; // augment addTrack when getSenders is not available.
+          };
 
-
+          // augment addTrack when getSenders is not available.
           if (!window.RTCPeerConnection.prototype.getSenders) {
             window.RTCPeerConnection.prototype.getSenders = function getSenders() {
               this._senders = this._senders || [];
@@ -18039,56 +17670,41 @@ var Ptz = /*#__PURE__*/function () {
             };
 
             var origAddTrack = window.RTCPeerConnection.prototype.addTrack;
-
             window.RTCPeerConnection.prototype.addTrack = function addTrack(track, stream) {
               var sender = origAddTrack.apply(this, arguments);
-
               if (!sender) {
                 sender = shimSenderWithDtmf(this, track);
-
                 this._senders.push(sender);
               }
-
               return sender;
             };
-
             var origRemoveTrack = window.RTCPeerConnection.prototype.removeTrack;
-
             window.RTCPeerConnection.prototype.removeTrack = function removeTrack(sender) {
               origRemoveTrack.apply(this, arguments);
-
               var idx = this._senders.indexOf(sender);
-
               if (idx !== -1) {
                 this._senders.splice(idx, 1);
               }
             };
           }
-
           var origAddStream = window.RTCPeerConnection.prototype.addStream;
-
           window.RTCPeerConnection.prototype.addStream = function addStream(stream) {
             var _this2 = this;
-
             this._senders = this._senders || [];
             origAddStream.apply(this, [stream]);
             stream.getTracks().forEach(function (track) {
               _this2._senders.push(shimSenderWithDtmf(_this2, track));
             });
           };
-
           var origRemoveStream = window.RTCPeerConnection.prototype.removeStream;
-
           window.RTCPeerConnection.prototype.removeStream = function removeStream(stream) {
             var _this3 = this;
-
             this._senders = this._senders || [];
             origRemoveStream.apply(this, [stream]);
             stream.getTracks().forEach(function (track) {
               var sender = _this3._senders.find(function (s) {
                 return s.track === track;
               });
-
               if (sender) {
                 // remove sender
                 _this3._senders.splice(_this3._senders.indexOf(sender), 1);
@@ -18097,17 +17713,14 @@ var Ptz = /*#__PURE__*/function () {
           };
         } else if ((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) === 'object' && window.RTCPeerConnection && 'getSenders' in window.RTCPeerConnection.prototype && 'createDTMFSender' in window.RTCPeerConnection.prototype && window.RTCRtpSender && !('dtmf' in window.RTCRtpSender.prototype)) {
           var origGetSenders = window.RTCPeerConnection.prototype.getSenders;
-
           window.RTCPeerConnection.prototype.getSenders = function getSenders() {
             var _this4 = this;
-
             var senders = origGetSenders.apply(this, []);
             senders.forEach(function (sender) {
               return sender._pc = _this4;
             });
             return senders;
           };
-
           Object.defineProperty(window.RTCRtpSender.prototype, 'dtmf', {
             get: function get() {
               if (this._dtmf === undefined) {
@@ -18117,40 +17730,35 @@ var Ptz = /*#__PURE__*/function () {
                   this._dtmf = null;
                 }
               }
-
               return this._dtmf;
             }
           });
         }
       }
-
       function shimGetStats(window) {
         if (!window.RTCPeerConnection) {
           return;
         }
-
         var origGetStats = window.RTCPeerConnection.prototype.getStats;
-
         window.RTCPeerConnection.prototype.getStats = function getStats() {
           var _this5 = this;
-
           var _arguments = Array.prototype.slice.call(arguments),
-              selector = _arguments[0],
-              onSucc = _arguments[1],
-              onErr = _arguments[2]; // If selector is a function then we are in the old style stats so just
-          // pass back the original getStats format to avoid breaking old users.
+            selector = _arguments[0],
+            onSucc = _arguments[1],
+            onErr = _arguments[2];
 
+          // If selector is a function then we are in the old style stats so just
+          // pass back the original getStats format to avoid breaking old users.
 
           if (arguments.length > 0 && typeof selector === 'function') {
             return origGetStats.apply(this, arguments);
-          } // When spec-style getStats is supported, return those when called with
+          }
+
+          // When spec-style getStats is supported, return those when called with
           // either no arguments or the selector argument is null.
-
-
           if (origGetStats.length === 0 && (arguments.length === 0 || typeof selector !== 'function')) {
             return origGetStats.apply(this, []);
           }
-
           var fixChromeStats_ = function fixChromeStats_(response) {
             var standardReport = {};
             var reports = response.result();
@@ -18169,24 +17777,22 @@ var Ptz = /*#__PURE__*/function () {
               standardReport[standardStats.id] = standardStats;
             });
             return standardReport;
-          }; // shim getStats with maplike support
+          };
 
-
+          // shim getStats with maplike support
           var makeMapStats = function makeMapStats(stats) {
             return new Map(Object.keys(stats).map(function (key) {
               return [key, stats[key]];
             }));
           };
-
           if (arguments.length >= 2) {
             var successCallbackWrapper_ = function successCallbackWrapper_(response) {
               onSucc(makeMapStats(fixChromeStats_(response)));
             };
-
             return origGetStats.apply(this, [successCallbackWrapper_, selector]);
-          } // promise-support
+          }
 
-
+          // promise-support
           return new Promise(function (resolve, reject) {
             origGetStats.apply(_this5, [function (response) {
               resolve(makeMapStats(fixChromeStats_(response)));
@@ -18194,20 +17800,17 @@ var Ptz = /*#__PURE__*/function () {
           }).then(onSucc, onErr);
         };
       }
-
       function shimSenderReceiverGetStats(window) {
         if (!((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) === 'object' && window.RTCPeerConnection && window.RTCRtpSender && window.RTCRtpReceiver)) {
           return;
-        } // shim sender stats.
+        }
 
-
+        // shim sender stats.
         if (!('getStats' in window.RTCRtpSender.prototype)) {
           var origGetSenders = window.RTCPeerConnection.prototype.getSenders;
-
           if (origGetSenders) {
             window.RTCPeerConnection.prototype.getSenders = function getSenders() {
               var _this6 = this;
-
               var senders = origGetSenders.apply(this, []);
               senders.forEach(function (sender) {
                 return sender._pc = _this6;
@@ -18215,9 +17818,7 @@ var Ptz = /*#__PURE__*/function () {
               return senders;
             };
           }
-
           var origAddTrack = window.RTCPeerConnection.prototype.addTrack;
-
           if (origAddTrack) {
             window.RTCPeerConnection.prototype.addTrack = function addTrack() {
               var sender = origAddTrack.apply(this, arguments);
@@ -18225,7 +17826,6 @@ var Ptz = /*#__PURE__*/function () {
               return sender;
             };
           }
-
           window.RTCRtpSender.prototype.getStats = function getStats() {
             var sender = this;
             return this._pc.getStats().then(function (result) {
@@ -18238,16 +17838,14 @@ var Ptz = /*#__PURE__*/function () {
               );
             });
           };
-        } // shim receiver stats.
+        }
 
-
+        // shim receiver stats.
         if (!('getStats' in window.RTCRtpReceiver.prototype)) {
           var origGetReceivers = window.RTCPeerConnection.prototype.getReceivers;
-
           if (origGetReceivers) {
             window.RTCPeerConnection.prototype.getReceivers = function getReceivers() {
               var _this7 = this;
-
               var receivers = origGetReceivers.apply(this, []);
               receivers.forEach(function (receiver) {
                 return receiver._pc = _this7;
@@ -18255,12 +17853,10 @@ var Ptz = /*#__PURE__*/function () {
               return receivers;
             };
           }
-
           utils.wrapPeerConnectionEvent(window, 'track', function (e) {
             e.receiver._pc = e.srcElement;
             return e;
           });
-
           window.RTCRtpReceiver.prototype.getStats = function getStats() {
             var receiver = this;
             return this._pc.getStats().then(function (result) {
@@ -18268,14 +17864,12 @@ var Ptz = /*#__PURE__*/function () {
             });
           };
         }
-
         if (!('getStats' in window.RTCRtpSender.prototype && 'getStats' in window.RTCRtpReceiver.prototype)) {
           return;
-        } // shim RTCPeerConnection.getStats(track).
+        }
 
-
+        // shim RTCPeerConnection.getStats(track).
         var origGetStats = window.RTCPeerConnection.prototype.getStats;
-
         window.RTCPeerConnection.prototype.getStats = function getStats() {
           if (arguments.length > 0 && arguments[0] instanceof window.MediaStreamTrack) {
             var track = arguments[0];
@@ -18299,10 +17893,8 @@ var Ptz = /*#__PURE__*/function () {
                   receiver = r;
                 }
               }
-
               return r.track === track;
             });
-
             if (err || sender && receiver) {
               return Promise.reject(new DOMException('There are more than one sender or receiver for the track.', 'InvalidAccessError'));
             } else if (sender) {
@@ -18310,57 +17902,44 @@ var Ptz = /*#__PURE__*/function () {
             } else if (receiver) {
               return receiver.getStats();
             }
-
             return Promise.reject(new DOMException('There is no sender or receiver for the track.', 'InvalidAccessError'));
           }
-
           return origGetStats.apply(this, arguments);
         };
       }
-
       function shimAddTrackRemoveTrackWithNative(window) {
         // shim addTrack/removeTrack with native variants in order to make
         // the interactions with legacy getLocalStreams behave as in other browsers.
         // Keeps a mapping stream.id => [stream, rtpsenders...]
         window.RTCPeerConnection.prototype.getLocalStreams = function getLocalStreams() {
           var _this8 = this;
-
           this._shimmedLocalStreams = this._shimmedLocalStreams || {};
           return Object.keys(this._shimmedLocalStreams).map(function (streamId) {
             return _this8._shimmedLocalStreams[streamId][0];
           });
         };
-
         var origAddTrack = window.RTCPeerConnection.prototype.addTrack;
-
         window.RTCPeerConnection.prototype.addTrack = function addTrack(track, stream) {
           if (!stream) {
             return origAddTrack.apply(this, arguments);
           }
-
           this._shimmedLocalStreams = this._shimmedLocalStreams || {};
           var sender = origAddTrack.apply(this, arguments);
-
           if (!this._shimmedLocalStreams[stream.id]) {
             this._shimmedLocalStreams[stream.id] = [stream, sender];
           } else if (this._shimmedLocalStreams[stream.id].indexOf(sender) === -1) {
             this._shimmedLocalStreams[stream.id].push(sender);
           }
-
           return sender;
         };
-
         var origAddStream = window.RTCPeerConnection.prototype.addStream;
-
         window.RTCPeerConnection.prototype.addStream = function addStream(stream) {
           var _this9 = this;
-
           this._shimmedLocalStreams = this._shimmedLocalStreams || {};
           stream.getTracks().forEach(function (track) {
             var alreadyExists = _this9.getSenders().find(function (s) {
               return s.track === track;
             });
-
             if (alreadyExists) {
               throw new DOMException('Track already exists.', 'InvalidAccessError');
             }
@@ -18372,95 +17951,75 @@ var Ptz = /*#__PURE__*/function () {
           });
           this._shimmedLocalStreams[stream.id] = [stream].concat(newSenders);
         };
-
         var origRemoveStream = window.RTCPeerConnection.prototype.removeStream;
-
         window.RTCPeerConnection.prototype.removeStream = function removeStream(stream) {
           this._shimmedLocalStreams = this._shimmedLocalStreams || {};
           delete this._shimmedLocalStreams[stream.id];
           return origRemoveStream.apply(this, arguments);
         };
-
         var origRemoveTrack = window.RTCPeerConnection.prototype.removeTrack;
-
         window.RTCPeerConnection.prototype.removeTrack = function removeTrack(sender) {
           var _this10 = this;
-
           this._shimmedLocalStreams = this._shimmedLocalStreams || {};
-
           if (sender) {
             Object.keys(this._shimmedLocalStreams).forEach(function (streamId) {
               var idx = _this10._shimmedLocalStreams[streamId].indexOf(sender);
-
               if (idx !== -1) {
                 _this10._shimmedLocalStreams[streamId].splice(idx, 1);
               }
-
               if (_this10._shimmedLocalStreams[streamId].length === 1) {
                 delete _this10._shimmedLocalStreams[streamId];
               }
             });
           }
-
           return origRemoveTrack.apply(this, arguments);
         };
       }
-
       function shimAddTrackRemoveTrack(window) {
         if (!window.RTCPeerConnection) {
           return;
         }
-
-        var browserDetails = utils.detectBrowser(window); // shim addTrack and removeTrack.
-
+        var browserDetails = utils.detectBrowser(window);
+        // shim addTrack and removeTrack.
         if (window.RTCPeerConnection.prototype.addTrack && browserDetails.version >= 65) {
           return shimAddTrackRemoveTrackWithNative(window);
-        } // also shim pc.getLocalStreams when addTrack is shimmed
+        }
+
+        // also shim pc.getLocalStreams when addTrack is shimmed
         // to return the original streams.
-
-
         var origGetLocalStreams = window.RTCPeerConnection.prototype.getLocalStreams;
-
         window.RTCPeerConnection.prototype.getLocalStreams = function getLocalStreams() {
           var _this11 = this;
-
           var nativeStreams = origGetLocalStreams.apply(this);
           this._reverseStreams = this._reverseStreams || {};
           return nativeStreams.map(function (stream) {
             return _this11._reverseStreams[stream.id];
           });
         };
-
         var origAddStream = window.RTCPeerConnection.prototype.addStream;
-
         window.RTCPeerConnection.prototype.addStream = function addStream(stream) {
           var _this12 = this;
-
           this._streams = this._streams || {};
           this._reverseStreams = this._reverseStreams || {};
           stream.getTracks().forEach(function (track) {
             var alreadyExists = _this12.getSenders().find(function (s) {
               return s.track === track;
             });
-
             if (alreadyExists) {
               throw new DOMException('Track already exists.', 'InvalidAccessError');
             }
-          }); // Add identity mapping for consistency with addTrack.
+          });
+          // Add identity mapping for consistency with addTrack.
           // Unless this is being used with a stream from addTrack.
-
           if (!this._reverseStreams[stream.id]) {
             var newStream = new window.MediaStream(stream.getTracks());
             this._streams[stream.id] = newStream;
             this._reverseStreams[newStream.id] = stream;
             stream = newStream;
           }
-
           origAddStream.apply(this, [stream]);
         };
-
         var origRemoveStream = window.RTCPeerConnection.prototype.removeStream;
-
         window.RTCPeerConnection.prototype.removeStream = function removeStream(stream) {
           this._streams = this._streams || {};
           this._reverseStreams = this._reverseStreams || {};
@@ -18468,16 +18027,12 @@ var Ptz = /*#__PURE__*/function () {
           delete this._reverseStreams[this._streams[stream.id] ? this._streams[stream.id].id : stream.id];
           delete this._streams[stream.id];
         };
-
         window.RTCPeerConnection.prototype.addTrack = function addTrack(track, stream) {
           var _this13 = this;
-
           if (this.signalingState === 'closed') {
             throw new DOMException('The RTCPeerConnection\'s signalingState is \'closed\'.', 'InvalidStateError');
           }
-
           var streams = [].slice.call(arguments, 1);
-
           if (streams.length !== 1 || !streams[0].getTracks().find(function (t) {
             return t === track;
           })) {
@@ -18485,26 +18040,23 @@ var Ptz = /*#__PURE__*/function () {
             // [[associated MediaStreams]] internal slot.
             throw new DOMException('The adapter.js addTrack polyfill only supports a single ' + ' stream which is associated with the specified track.', 'NotSupportedError');
           }
-
           var alreadyExists = this.getSenders().find(function (s) {
             return s.track === track;
           });
-
           if (alreadyExists) {
             throw new DOMException('Track already exists.', 'InvalidAccessError');
           }
-
           this._streams = this._streams || {};
           this._reverseStreams = this._reverseStreams || {};
           var oldStream = this._streams[stream.id];
-
           if (oldStream) {
             // this is using odd Chrome behaviour, use with caution:
             // https://bugs.chromium.org/p/webrtc/issues/detail?id=7815
             // Note: we rely on the high-level addTrack/dtmf shim to
             // create the sender with a dtmf sender.
-            oldStream.addTrack(track); // Trigger ONN async.
+            oldStream.addTrack(track);
 
+            // Trigger ONN async.
             Promise.resolve().then(function () {
               _this13.dispatchEvent(new Event('negotiationneeded'));
             });
@@ -18514,14 +18066,13 @@ var Ptz = /*#__PURE__*/function () {
             this._reverseStreams[newStream.id] = stream;
             this.addStream(newStream);
           }
-
           return this.getSenders().find(function (s) {
             return s.track === track;
           });
-        }; // replace the internal stream id with the external one and
+        };
+
+        // replace the internal stream id with the external one and
         // vice versa.
-
-
         function replaceInternalStreamId(pc, description) {
           var sdp = description.sdp;
           Object.keys(pc._reverseStreams || []).forEach(function (internalId) {
@@ -18534,7 +18085,6 @@ var Ptz = /*#__PURE__*/function () {
             sdp: sdp
           });
         }
-
         function replaceExternalStreamId(pc, description) {
           var sdp = description.sdp;
           Object.keys(pc._reverseStreams || []).forEach(function (internalId) {
@@ -18547,16 +18097,12 @@ var Ptz = /*#__PURE__*/function () {
             sdp: sdp
           });
         }
-
         ['createOffer', 'createAnswer'].forEach(function (method) {
           var nativeMethod = window.RTCPeerConnection.prototype[method];
-
           var methodObj = _defineProperty({}, method, function () {
             var _this14 = this;
-
             var args = arguments;
             var isLegacyCall = arguments.length && typeof arguments[0] === 'function';
-
             if (isLegacyCall) {
               return nativeMethod.apply(this, [function (description) {
                 var desc = replaceInternalStreamId(_this14, description);
@@ -18567,71 +18113,59 @@ var Ptz = /*#__PURE__*/function () {
                 }
               }, arguments[2]]);
             }
-
             return nativeMethod.apply(this, arguments).then(function (description) {
               return replaceInternalStreamId(_this14, description);
             });
           });
-
           window.RTCPeerConnection.prototype[method] = methodObj[method];
         });
         var origSetLocalDescription = window.RTCPeerConnection.prototype.setLocalDescription;
-
         window.RTCPeerConnection.prototype.setLocalDescription = function setLocalDescription() {
           if (!arguments.length || !arguments[0].type) {
             return origSetLocalDescription.apply(this, arguments);
           }
-
           arguments[0] = replaceExternalStreamId(this, arguments[0]);
           return origSetLocalDescription.apply(this, arguments);
-        }; // TODO: mangle getStats: https://w3c.github.io/webrtc-stats/#dom-rtcmediastreamstats-streamidentifier
+        };
 
+        // TODO: mangle getStats: https://w3c.github.io/webrtc-stats/#dom-rtcmediastreamstats-streamidentifier
 
         var origLocalDescription = Object.getOwnPropertyDescriptor(window.RTCPeerConnection.prototype, 'localDescription');
         Object.defineProperty(window.RTCPeerConnection.prototype, 'localDescription', {
           get: function get() {
             var description = origLocalDescription.get.apply(this);
-
             if (description.type === '') {
               return description;
             }
-
             return replaceInternalStreamId(this, description);
           }
         });
-
         window.RTCPeerConnection.prototype.removeTrack = function removeTrack(sender) {
           var _this15 = this;
-
           if (this.signalingState === 'closed') {
             throw new DOMException('The RTCPeerConnection\'s signalingState is \'closed\'.', 'InvalidStateError');
-          } // We can not yet check for sender instanceof RTCRtpSender
+          }
+          // We can not yet check for sender instanceof RTCRtpSender
           // since we shim RTPSender. So we check if sender._pc is set.
-
-
           if (!sender._pc) {
             throw new DOMException('Argument 1 of RTCPeerConnection.removeTrack ' + 'does not implement interface RTCRtpSender.', 'TypeError');
           }
-
           var isLocal = sender._pc === this;
-
           if (!isLocal) {
             throw new DOMException('Sender was not created by this connection.', 'InvalidAccessError');
-          } // Search for the native stream the senders track belongs to.
+          }
 
-
+          // Search for the native stream the senders track belongs to.
           this._streams = this._streams || {};
           var stream = void 0;
           Object.keys(this._streams).forEach(function (streamid) {
             var hasTrack = _this15._streams[streamid].getTracks().find(function (track) {
               return sender.track === track;
             });
-
             if (hasTrack) {
               stream = _this15._streams[streamid];
             }
           });
-
           if (stream) {
             if (stream.getTracks().length === 1) {
               // if this is the last track of the stream, remove the stream. This
@@ -18641,68 +18175,55 @@ var Ptz = /*#__PURE__*/function () {
               // relying on the same odd chrome behaviour as above.
               stream.removeTrack(sender.track);
             }
-
             this.dispatchEvent(new Event('negotiationneeded'));
           }
         };
       }
-
       function shimPeerConnection(window) {
         var browserDetails = utils.detectBrowser(window);
-
         if (!window.RTCPeerConnection && window.webkitRTCPeerConnection) {
           // very basic support for old versions.
           window.RTCPeerConnection = window.webkitRTCPeerConnection;
         }
-
         if (!window.RTCPeerConnection) {
           return;
-        } // shim implicit creation of RTCSessionDescription/RTCIceCandidate
+        }
 
-
+        // shim implicit creation of RTCSessionDescription/RTCIceCandidate
         if (browserDetails.version < 53) {
           ['setLocalDescription', 'setRemoteDescription', 'addIceCandidate'].forEach(function (method) {
             var nativeMethod = window.RTCPeerConnection.prototype[method];
-
             var methodObj = _defineProperty({}, method, function () {
               arguments[0] = new (method === 'addIceCandidate' ? window.RTCIceCandidate : window.RTCSessionDescription)(arguments[0]);
               return nativeMethod.apply(this, arguments);
             });
-
             window.RTCPeerConnection.prototype[method] = methodObj[method];
           });
-        } // support for addIceCandidate(null or undefined)
+        }
 
-
+        // support for addIceCandidate(null or undefined)
         var nativeAddIceCandidate = window.RTCPeerConnection.prototype.addIceCandidate;
-
         window.RTCPeerConnection.prototype.addIceCandidate = function addIceCandidate() {
           if (!arguments[0]) {
             if (arguments[1]) {
               arguments[1].apply(null);
             }
-
             return Promise.resolve();
-          } // Firefox 68+ emits and processes {candidate: "", ...}, ignore
+          }
+          // Firefox 68+ emits and processes {candidate: "", ...}, ignore
           // in older versions. Native support planned for Chrome M77.
-
-
           if (browserDetails.version < 78 && arguments[0] && arguments[0].candidate === '') {
             return Promise.resolve();
           }
-
           return nativeAddIceCandidate.apply(this, arguments);
         };
       }
-
       function fixNegotiationNeeded(window) {
         utils.wrapPeerConnectionEvent(window, 'negotiationneeded', function (e) {
           var pc = e.target;
-
           if (pc.signalingState !== 'stable') {
             return;
           }
-
           return e;
         });
       }
@@ -18717,23 +18238,19 @@ var Ptz = /*#__PURE__*/function () {
         value: true
       });
       exports.shimGetDisplayMedia = shimGetDisplayMedia;
-
       function shimGetDisplayMedia(window, getSourceId) {
         if (window.navigator.mediaDevices && 'getDisplayMedia' in window.navigator.mediaDevices) {
           return;
         }
-
         if (!window.navigator.mediaDevices) {
           return;
-        } // getSourceId is a function that returns a promise resolving with
+        }
+        // getSourceId is a function that returns a promise resolving with
         // the sourceId of the screen/window/tab to be shared.
-
-
         if (typeof getSourceId !== 'function') {
           console.error('shimGetDisplayMedia: getSourceId argument is not ' + 'a function');
           return;
         }
-
         window.navigator.mediaDevices.getDisplayMedia = function getDisplayMedia(constraints) {
           return getSourceId(constraints).then(function (sourceId) {
             var widthSpecified = constraints.video && constraints.video.width;
@@ -18746,15 +18263,12 @@ var Ptz = /*#__PURE__*/function () {
                 maxFrameRate: frameRateSpecified || 3
               }
             };
-
             if (widthSpecified) {
               constraints.video.mandatory.maxWidth = widthSpecified;
             }
-
             if (heightSpecified) {
               constraints.video.mandatory.maxHeight = heightSpecified;
             }
-
             return window.navigator.mediaDevices.getUserMedia(constraints);
           });
         };
@@ -18765,78 +18279,59 @@ var Ptz = /*#__PURE__*/function () {
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-
       var _typeof$1 = typeof Symbol === "function" && _typeof(Symbol.iterator) === "symbol" ? function (obj) {
         return _typeof(obj);
       } : function (obj) {
         return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof(obj);
       };
-
       exports.shimGetUserMedia = shimGetUserMedia;
-
       var _utils = require('../utils.js');
-
       var utils = _interopRequireWildcard(_utils);
-
       function _interopRequireWildcard(obj) {
         if (obj && obj.__esModule) {
           return obj;
         } else {
           var newObj = {};
-
           if (obj != null) {
             for (var key in obj) {
               if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
             }
           }
-
           newObj["default"] = obj;
           return newObj;
         }
       }
-
       var logging = utils.log;
-
       function shimGetUserMedia(window) {
         var navigator = window && window.navigator;
-
         if (!navigator.mediaDevices) {
           return;
         }
-
         var browserDetails = utils.detectBrowser(window);
-
         var constraintsToChrome_ = function constraintsToChrome_(c) {
           if ((typeof c === 'undefined' ? 'undefined' : _typeof$1(c)) !== 'object' || c.mandatory || c.optional) {
             return c;
           }
-
           var cc = {};
           Object.keys(c).forEach(function (key) {
             if (key === 'require' || key === 'advanced' || key === 'mediaSource') {
               return;
             }
-
             var r = _typeof$1(c[key]) === 'object' ? c[key] : {
               ideal: c[key]
             };
-
             if (r.exact !== undefined && typeof r.exact === 'number') {
               r.min = r.max = r.exact;
             }
-
             var oldname_ = function oldname_(prefix, name) {
               if (prefix) {
                 return prefix + name.charAt(0).toUpperCase() + name.slice(1);
               }
-
               return name === 'deviceId' ? 'sourceId' : name;
             };
-
             if (r.ideal !== undefined) {
               cc.optional = cc.optional || [];
               var oc = {};
-
               if (typeof r.ideal === 'number') {
                 oc[oldname_('min', key)] = r.ideal;
                 cc.optional.push(oc);
@@ -18848,7 +18343,6 @@ var Ptz = /*#__PURE__*/function () {
                 cc.optional.push(oc);
               }
             }
-
             if (r.exact !== undefined && typeof r.exact !== 'number') {
               cc.mandatory = cc.mandatory || {};
               cc.mandatory[oldname_('', key)] = r.exact;
@@ -18861,21 +18355,16 @@ var Ptz = /*#__PURE__*/function () {
               });
             }
           });
-
           if (c.advanced) {
             cc.optional = (cc.optional || []).concat(c.advanced);
           }
-
           return cc;
         };
-
         var shimConstraints_ = function shimConstraints_(constraints, func) {
           if (browserDetails.version >= 61) {
             return func(constraints);
           }
-
           constraints = JSON.parse(JSON.stringify(constraints));
-
           if (constraints && _typeof$1(constraints.audio) === 'object') {
             var remap = function remap(obj, a, b) {
               if (a in obj && !(b in obj)) {
@@ -18883,13 +18372,11 @@ var Ptz = /*#__PURE__*/function () {
                 delete obj[a];
               }
             };
-
             constraints = JSON.parse(JSON.stringify(constraints));
             remap(constraints.audio, 'autoGainControl', 'googAutoGainControl');
             remap(constraints.audio, 'noiseSuppression', 'googNoiseSuppression');
             constraints.audio = constraintsToChrome_(constraints.audio);
           }
-
           if (constraints && _typeof$1(constraints.video) === 'object') {
             // Shim facingMode for mobile & surface pro.
             var face = constraints.video.facingMode;
@@ -18897,17 +18384,14 @@ var Ptz = /*#__PURE__*/function () {
               ideal: face
             });
             var getSupportedFacingModeLies = browserDetails.version < 66;
-
             if (face && (face.exact === 'user' || face.exact === 'environment' || face.ideal === 'user' || face.ideal === 'environment') && !(navigator.mediaDevices.getSupportedConstraints && navigator.mediaDevices.getSupportedConstraints().facingMode && !getSupportedFacingModeLies)) {
               delete constraints.video.facingMode;
               var matches = void 0;
-
               if (face.exact === 'environment' || face.ideal === 'environment') {
                 matches = ['back', 'rear'];
               } else if (face.exact === 'user' || face.ideal === 'user') {
                 matches = ['front'];
               }
-
               if (matches) {
                 // Look for matches in label, or use last cam for back (typical).
                 return navigator.mediaDevices.enumerateDevices().then(function (devices) {
@@ -18919,7 +18403,6 @@ var Ptz = /*#__PURE__*/function () {
                       return d.label.toLowerCase().includes(match);
                     });
                   });
-
                   if (!dev && devices.length && matches.includes('back')) {
                     dev = devices[devices.length - 1]; // more likely the back cam
                   }
@@ -18931,26 +18414,21 @@ var Ptz = /*#__PURE__*/function () {
                       ideal: dev.deviceId
                     };
                   }
-
                   constraints.video = constraintsToChrome_(constraints.video);
                   logging('chrome: ' + JSON.stringify(constraints));
                   return func(constraints);
                 });
               }
             }
-
             constraints.video = constraintsToChrome_(constraints.video);
           }
-
           logging('chrome: ' + JSON.stringify(constraints));
           return func(constraints);
         };
-
         var shimError_ = function shimError_(e) {
           if (browserDetails.version >= 64) {
             return e;
           }
-
           return {
             name: {
               PermissionDeniedError: 'NotAllowedError',
@@ -18972,7 +18450,6 @@ var Ptz = /*#__PURE__*/function () {
             }
           };
         };
-
         var getUserMedia_ = function getUserMedia_(constraints, onSuccess, onError) {
           shimConstraints_(constraints, function (c) {
             navigator.webkitGetUserMedia(c, onSuccess, function (e) {
@@ -18982,14 +18459,13 @@ var Ptz = /*#__PURE__*/function () {
             });
           });
         };
+        navigator.getUserMedia = getUserMedia_.bind(navigator);
 
-        navigator.getUserMedia = getUserMedia_.bind(navigator); // Even though Chrome 45 has navigator.mediaDevices and a getUserMedia
+        // Even though Chrome 45 has navigator.mediaDevices and a getUserMedia
         // function which returns a Promise, it does not accept spec-style
         // constraints.
-
         if (navigator.mediaDevices.getUserMedia) {
           var origGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
-
           navigator.mediaDevices.getUserMedia = function (cs) {
             return shimConstraints_(cs, function (c) {
               return origGetUserMedia(c).then(function (stream) {
@@ -18999,7 +18475,6 @@ var Ptz = /*#__PURE__*/function () {
                   });
                   throw new DOMException('', 'NotFoundError');
                 }
-
                 return stream;
               }, function (e) {
                 return Promise.reject(shimError_(e));
@@ -19016,74 +18491,59 @@ var Ptz = /*#__PURE__*/function () {
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-
       var _typeof$1 = typeof Symbol === "function" && _typeof(Symbol.iterator) === "symbol" ? function (obj) {
         return _typeof(obj);
       } : function (obj) {
         return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof(obj);
       };
-
       exports.shimRTCIceCandidate = shimRTCIceCandidate;
       exports.shimMaxMessageSize = shimMaxMessageSize;
       exports.shimSendThrowTypeError = shimSendThrowTypeError;
       exports.shimConnectionState = shimConnectionState;
       exports.removeAllowExtmapMixed = removeAllowExtmapMixed;
-
       var _sdp = require('sdp');
-
       var _sdp2 = _interopRequireDefault(_sdp);
-
       var _utils = require('./utils');
-
       var utils = _interopRequireWildcard(_utils);
-
       function _interopRequireWildcard(obj) {
         if (obj && obj.__esModule) {
           return obj;
         } else {
           var newObj = {};
-
           if (obj != null) {
             for (var key in obj) {
               if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
             }
           }
-
           newObj["default"] = obj;
           return newObj;
         }
       }
-
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
           "default": obj
         };
       }
-
       function shimRTCIceCandidate(window) {
         // foundation is arbitrarily chosen as an indicator for full support for
         // https://w3c.github.io/webrtc-pc/#rtcicecandidate-interface
         if (!window.RTCIceCandidate || window.RTCIceCandidate && 'foundation' in window.RTCIceCandidate.prototype) {
           return;
         }
-
         var NativeRTCIceCandidate = window.RTCIceCandidate;
-
         window.RTCIceCandidate = function RTCIceCandidate(args) {
           // Remove the a= which shouldn't be part of the candidate string.
           if ((typeof args === 'undefined' ? 'undefined' : _typeof$1(args)) === 'object' && args.candidate && args.candidate.indexOf('a=') === 0) {
             args = JSON.parse(JSON.stringify(args));
             args.candidate = args.candidate.substr(2);
           }
-
           if (args.candidate && args.candidate.length) {
             // Augment the native candidate with the parsed fields.
             var nativeCandidate = new NativeRTCIceCandidate(args);
-
             var parsedCandidate = _sdp2["default"].parseCandidate(args.candidate);
+            var augmentedCandidate = Object.assign(nativeCandidate, parsedCandidate);
 
-            var augmentedCandidate = Object.assign(nativeCandidate, parsedCandidate); // Add a serializer that does not serialize the extra attributes.
-
+            // Add a serializer that does not serialize the extra attributes.
             augmentedCandidate.toJSON = function toJSON() {
               return {
                 candidate: augmentedCandidate.candidate,
@@ -19092,16 +18552,14 @@ var Ptz = /*#__PURE__*/function () {
                 usernameFragment: augmentedCandidate.usernameFragment
               };
             };
-
             return augmentedCandidate;
           }
-
           return new NativeRTCIceCandidate(args);
         };
+        window.RTCIceCandidate.prototype = NativeRTCIceCandidate.prototype;
 
-        window.RTCIceCandidate.prototype = NativeRTCIceCandidate.prototype; // Hook up the augmented candidate in onicecandidate and
+        // Hook up the augmented candidate in onicecandidate and
         // addEventListener('icecandidate', ...)
-
         utils.wrapPeerConnectionEvent(window, 'icecandidate', function (e) {
           if (e.candidate) {
             Object.defineProperty(e, 'candidate', {
@@ -19109,18 +18567,14 @@ var Ptz = /*#__PURE__*/function () {
               writable: 'false'
             });
           }
-
           return e;
         });
       }
-
       function shimMaxMessageSize(window) {
         if (!window.RTCPeerConnection) {
           return;
         }
-
         var browserDetails = utils.detectBrowser(window);
-
         if (!('sctp' in window.RTCPeerConnection.prototype)) {
           Object.defineProperty(window.RTCPeerConnection.prototype, 'sctp', {
             get: function get() {
@@ -19128,42 +18582,33 @@ var Ptz = /*#__PURE__*/function () {
             }
           });
         }
-
         var sctpInDescription = function sctpInDescription(description) {
           if (!description || !description.sdp) {
             return false;
           }
-
           var sections = _sdp2["default"].splitSections(description.sdp);
-
           sections.shift();
           return sections.some(function (mediaSection) {
             var mLine = _sdp2["default"].parseMLine(mediaSection);
-
             return mLine && mLine.kind === 'application' && mLine.protocol.indexOf('SCTP') !== -1;
           });
         };
-
         var getRemoteFirefoxVersion = function getRemoteFirefoxVersion(description) {
           // TODO: Is there a better solution for detecting Firefox?
           var match = description.sdp.match(/mozilla...THIS_IS_SDPARTA-(\d+)/);
-
           if (match === null || match.length < 2) {
             return -1;
           }
-
-          var version = parseInt(match[1], 10); // Test for NaN (yes, this is ugly)
-
+          var version = parseInt(match[1], 10);
+          // Test for NaN (yes, this is ugly)
           return version !== version ? -1 : version;
         };
-
         var getCanSendMaxMessageSize = function getCanSendMaxMessageSize(remoteIsFirefox) {
           // Every implementation we know can send at least 64 KiB.
           // Note: Although Chrome is technically able to send up to 256 KiB, the
           //       data does not reach the other peer reliably.
           //       See: https://bugs.chromium.org/p/webrtc/issues/detail?id=8419
           var canSendMaxMessageSize = 65536;
-
           if (browserDetails.browser === 'firefox') {
             if (browserDetails.version < 57) {
               if (remoteIsFirefox === -1) {
@@ -19186,23 +18631,20 @@ var Ptz = /*#__PURE__*/function () {
               canSendMaxMessageSize = 2147483637;
             }
           }
-
           return canSendMaxMessageSize;
         };
-
         var getMaxMessageSize = function getMaxMessageSize(description, remoteIsFirefox) {
           // Note: 65536 bytes is the default value from the SDP spec. Also,
           //       every implementation we know supports receiving 65536 bytes.
-          var maxMessageSize = 65536; // FF 57 has a slightly incorrect default remote max message size, so
+          var maxMessageSize = 65536;
+
+          // FF 57 has a slightly incorrect default remote max message size, so
           // we need to adjust it here to avoid a failure when sending.
           // See: https://bugzilla.mozilla.org/show_bug.cgi?id=1425697
-
           if (browserDetails.browser === 'firefox' && browserDetails.version === 57) {
             maxMessageSize = 65535;
           }
-
           var match = _sdp2["default"].matchPrefix(description.sdp, 'a=max-message-size:');
-
           if (match.length > 0) {
             maxMessageSize = parseInt(match[0].substr(19), 10);
           } else if (browserDetails.browser === 'firefox' && remoteIsFirefox !== -1) {
@@ -19211,21 +18653,17 @@ var Ptz = /*#__PURE__*/function () {
             // ~2 GiB.
             maxMessageSize = 2147483637;
           }
-
           return maxMessageSize;
         };
-
         var origSetRemoteDescription = window.RTCPeerConnection.prototype.setRemoteDescription;
-
         window.RTCPeerConnection.prototype.setRemoteDescription = function setRemoteDescription() {
-          this._sctp = null; // Chrome decided to not expose .sctp in plan-b mode.
+          this._sctp = null;
+          // Chrome decided to not expose .sctp in plan-b mode.
           // As usual, adapter.js has to do an 'ugly worakaround'
           // to cover up the mess.
-
           if (browserDetails.browser === 'chrome' && browserDetails.version >= 76) {
             var _getConfiguration = this.getConfiguration(),
-                sdpSemantics = _getConfiguration.sdpSemantics;
-
+              sdpSemantics = _getConfiguration.sdpSemantics;
             if (sdpSemantics === 'plan-b') {
               Object.defineProperty(this, 'sctp', {
                 get: function get() {
@@ -19236,27 +18674,28 @@ var Ptz = /*#__PURE__*/function () {
               });
             }
           }
-
           if (sctpInDescription(arguments[0])) {
             // Check if the remote is FF.
-            var isFirefox = getRemoteFirefoxVersion(arguments[0]); // Get the maximum message size the local peer is capable of sending
+            var isFirefox = getRemoteFirefoxVersion(arguments[0]);
 
-            var canSendMMS = getCanSendMaxMessageSize(isFirefox); // Get the maximum message size of the remote peer.
+            // Get the maximum message size the local peer is capable of sending
+            var canSendMMS = getCanSendMaxMessageSize(isFirefox);
 
-            var remoteMMS = getMaxMessageSize(arguments[0], isFirefox); // Determine final maximum message size
+            // Get the maximum message size of the remote peer.
+            var remoteMMS = getMaxMessageSize(arguments[0], isFirefox);
 
+            // Determine final maximum message size
             var maxMessageSize = void 0;
-
             if (canSendMMS === 0 && remoteMMS === 0) {
               maxMessageSize = Number.POSITIVE_INFINITY;
             } else if (canSendMMS === 0 || remoteMMS === 0) {
               maxMessageSize = Math.max(canSendMMS, remoteMMS);
             } else {
               maxMessageSize = Math.min(canSendMMS, remoteMMS);
-            } // Create a dummy RTCSctpTransport object and the 'maxMessageSize'
+            }
+
+            // Create a dummy RTCSctpTransport object and the 'maxMessageSize'
             // attribute.
-
-
             var sctp = {};
             Object.defineProperty(sctp, 'maxMessageSize', {
               get: function get() {
@@ -19265,47 +18704,41 @@ var Ptz = /*#__PURE__*/function () {
             });
             this._sctp = sctp;
           }
-
           return origSetRemoteDescription.apply(this, arguments);
         };
       }
-
       function shimSendThrowTypeError(window) {
         if (!(window.RTCPeerConnection && 'createDataChannel' in window.RTCPeerConnection.prototype)) {
           return;
-        } // Note: Although Firefox >= 57 has a native implementation, the maximum
+        }
+
+        // Note: Although Firefox >= 57 has a native implementation, the maximum
         //       message size can be reset for all data channels at a later stage.
         //       See: https://bugzilla.mozilla.org/show_bug.cgi?id=1426831
 
-
         function wrapDcSend(dc, pc) {
           var origDataChannelSend = dc.send;
-
           dc.send = function send() {
             var data = arguments[0];
             var length = data.length || data.size || data.byteLength;
-
             if (dc.readyState === 'open' && pc.sctp && length > pc.sctp.maxMessageSize) {
               throw new TypeError('Message too large (can send a maximum of ' + pc.sctp.maxMessageSize + ' bytes)');
             }
-
             return origDataChannelSend.apply(dc, arguments);
           };
         }
-
         var origCreateDataChannel = window.RTCPeerConnection.prototype.createDataChannel;
-
         window.RTCPeerConnection.prototype.createDataChannel = function createDataChannel() {
           var dataChannel = origCreateDataChannel.apply(this, arguments);
           wrapDcSend(dataChannel, this);
           return dataChannel;
         };
-
         utils.wrapPeerConnectionEvent(window, 'datachannel', function (e) {
           wrapDcSend(e.channel, e.target);
           return e;
         });
       }
+
       /* shims RTCConnectionState by pretending it is the same as iceConnectionState.
        * See https://bugs.chromium.org/p/webrtc/issues/detail?id=6145#c12
        * for why this is a valid hack in Chrome. In Firefox it is slightly incorrect
@@ -19313,13 +18746,10 @@ var Ptz = /*#__PURE__*/function () {
        * https://bugzilla.mozilla.org/show_bug.cgi?id=1265827
        * for the Firefox tracking bug.
        */
-
-
       function shimConnectionState(window) {
         if (!window.RTCPeerConnection || 'connectionState' in window.RTCPeerConnection.prototype) {
           return;
         }
-
         var proto = window.RTCPeerConnection.prototype;
         Object.defineProperty(proto, 'connectionState', {
           get: function get() {
@@ -19340,7 +18770,6 @@ var Ptz = /*#__PURE__*/function () {
               this.removeEventListener('connectionstatechange', this._onconnectionstatechange);
               delete this._onconnectionstatechange;
             }
-
             if (cb) {
               this.addEventListener('connectionstatechange', this._onconnectionstatechange = cb);
             }
@@ -19350,50 +18779,39 @@ var Ptz = /*#__PURE__*/function () {
         });
         ['setLocalDescription', 'setRemoteDescription'].forEach(function (method) {
           var origMethod = proto[method];
-
           proto[method] = function () {
             if (!this._connectionstatechangepoly) {
               this._connectionstatechangepoly = function (e) {
                 var pc = e.target;
-
                 if (pc._lastConnectionState !== pc.connectionState) {
                   pc._lastConnectionState = pc.connectionState;
                   var newEvent = new Event('connectionstatechange', e);
                   pc.dispatchEvent(newEvent);
                 }
-
                 return e;
               };
-
               this.addEventListener('iceconnectionstatechange', this._connectionstatechangepoly);
             }
-
             return origMethod.apply(this, arguments);
           };
         });
       }
-
       function removeAllowExtmapMixed(window) {
         /* remove a=extmap-allow-mixed for Chrome < M71 */
         if (!window.RTCPeerConnection) {
           return;
         }
-
         var browserDetails = utils.detectBrowser(window);
-
         if (browserDetails.browser === 'chrome' && browserDetails.version >= 71) {
           return;
         }
-
         var nativeSRD = window.RTCPeerConnection.prototype.setRemoteDescription;
-
         window.RTCPeerConnection.prototype.setRemoteDescription = function setRemoteDescription(desc) {
           if (desc && desc.sdp && desc.sdp.indexOf('\na=extmap-allow-mixed') !== -1) {
             desc.sdp = desc.sdp.split('\n').filter(function (line) {
               return line.trim() !== 'a=extmap-allow-mixed';
             }).join('\n');
           }
-
           return nativeSRD.apply(this, arguments);
         };
       }
@@ -19407,18 +18825,14 @@ var Ptz = /*#__PURE__*/function () {
         value: true
       });
       exports.shimGetDisplayMedia = exports.shimGetUserMedia = undefined;
-
       var _getusermedia = require('./getusermedia');
-
       Object.defineProperty(exports, 'shimGetUserMedia', {
         enumerable: true,
         get: function get() {
           return _getusermedia.shimGetUserMedia;
         }
       });
-
       var _getdisplaymedia = require('./getdisplaymedia');
-
       Object.defineProperty(exports, 'shimGetDisplayMedia', {
         enumerable: true,
         get: function get() {
@@ -19427,59 +18841,46 @@ var Ptz = /*#__PURE__*/function () {
       });
       exports.shimPeerConnection = shimPeerConnection;
       exports.shimReplaceTrack = shimReplaceTrack;
-
       var _utils = require('../utils');
-
       var utils = _interopRequireWildcard(_utils);
-
       var _filtericeservers = require('./filtericeservers');
-
       var _rtcpeerconnectionShim = require('rtcpeerconnection-shim');
-
       var _rtcpeerconnectionShim2 = _interopRequireDefault(_rtcpeerconnectionShim);
-
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
           "default": obj
         };
       }
-
       function _interopRequireWildcard(obj) {
         if (obj && obj.__esModule) {
           return obj;
         } else {
           var newObj = {};
-
           if (obj != null) {
             for (var key in obj) {
               if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
             }
           }
-
           newObj["default"] = obj;
           return newObj;
         }
       }
-
       function shimPeerConnection(window) {
         var browserDetails = utils.detectBrowser(window);
-
         if (window.RTCIceGatherer) {
           if (!window.RTCIceCandidate) {
             window.RTCIceCandidate = function RTCIceCandidate(args) {
               return args;
             };
           }
-
           if (!window.RTCSessionDescription) {
             window.RTCSessionDescription = function RTCSessionDescription(args) {
               return args;
             };
-          } // this adds an additional event listener to MediaStrackTrack that signals
+          }
+          // this adds an additional event listener to MediaStrackTrack that signals
           // when a tracks enabled property was changed. Workaround for a bug in
           // addStream, see below. No longer required in 15025+
-
-
           if (browserDetails.version < 15025) {
             var origMSTEnabled = Object.getOwnPropertyDescriptor(window.MediaStreamTrack.prototype, 'enabled');
             Object.defineProperty(window.MediaStreamTrack.prototype, 'enabled', {
@@ -19491,10 +18892,10 @@ var Ptz = /*#__PURE__*/function () {
               }
             });
           }
-        } // ORTC defines the DTMF sender a bit different.
+        }
+
+        // ORTC defines the DTMF sender a bit different.
         // https://github.com/w3c/ortc/issues/714
-
-
         if (window.RTCRtpSender && !('dtmf' in window.RTCRtpSender.prototype)) {
           Object.defineProperty(window.RTCRtpSender.prototype, 'dtmf', {
             get: function get() {
@@ -19505,32 +18906,25 @@ var Ptz = /*#__PURE__*/function () {
                   this._dtmf = null;
                 }
               }
-
               return this._dtmf;
             }
           });
-        } // Edge currently only implements the RTCDtmfSender, not the
+        }
+        // Edge currently only implements the RTCDtmfSender, not the
         // RTCDTMFSender alias. See http://draft.ortc.org/#rtcdtmfsender2*
-
-
         if (window.RTCDtmfSender && !window.RTCDTMFSender) {
           window.RTCDTMFSender = window.RTCDtmfSender;
         }
-
         var RTCPeerConnectionShim = (0, _rtcpeerconnectionShim2["default"])(window, browserDetails.version);
-
         window.RTCPeerConnection = function RTCPeerConnection(config) {
           if (config && config.iceServers) {
             config.iceServers = (0, _filtericeservers.filterIceServers)(config.iceServers, browserDetails.version);
             utils.log('ICE servers after filtering:', config.iceServers);
           }
-
           return new RTCPeerConnectionShim(config);
         };
-
         window.RTCPeerConnection.prototype = RTCPeerConnectionShim.prototype;
       }
-
       function shimReplaceTrack(window) {
         // ORTC has replaceTrack -- https://github.com/w3c/ortc/issues/614
         if (window.RTCRtpSender && !('replaceTrack' in window.RTCRtpSender.prototype)) {
@@ -19550,63 +18944,51 @@ var Ptz = /*#__PURE__*/function () {
         value: true
       });
       exports.filterIceServers = filterIceServers;
-
       var _utils = require('../utils');
-
       var utils = _interopRequireWildcard(_utils);
-
       function _interopRequireWildcard(obj) {
         if (obj && obj.__esModule) {
           return obj;
         } else {
           var newObj = {};
-
           if (obj != null) {
             for (var key in obj) {
               if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
             }
           }
-
           newObj["default"] = obj;
           return newObj;
         }
-      } // Edge does not like
+      }
+
+      // Edge does not like
       // 1) stun: filtered after 14393 unless ?transport=udp is present
       // 2) turn: that does not have all of turn:host:port?transport=udp
       // 3) turn: with ipv6 addresses
       // 4) turn: occurring muliple times
-
-
       function filterIceServers(iceServers, edgeVersion) {
         var hasTurn = false;
         iceServers = JSON.parse(JSON.stringify(iceServers));
         return iceServers.filter(function (server) {
           if (server && (server.urls || server.url)) {
             var urls = server.urls || server.url;
-
             if (server.url && !server.urls) {
               utils.deprecated('RTCIceServer.url', 'RTCIceServer.urls');
             }
-
             var isString = typeof urls === 'string';
-
             if (isString) {
               urls = [urls];
             }
-
             urls = urls.filter(function (url) {
               // filter STUN unconditionally.
               if (url.indexOf('stun:') === 0) {
                 return false;
               }
-
               var validTurn = url.startsWith('turn') && !url.startsWith('turn:[') && url.includes('transport=udp');
-
               if (validTurn && !hasTurn) {
                 hasTurn = true;
                 return true;
               }
-
               return validTurn && !hasTurn;
             });
             delete server.url;
@@ -19624,20 +19006,16 @@ var Ptz = /*#__PURE__*/function () {
         value: true
       });
       exports.shimGetDisplayMedia = shimGetDisplayMedia;
-
       function shimGetDisplayMedia(window) {
         if (!('getDisplayMedia' in window.navigator)) {
           return;
         }
-
         if (!window.navigator.mediaDevices) {
           return;
         }
-
         if (window.navigator.mediaDevices && 'getDisplayMedia' in window.navigator.mediaDevices) {
           return;
         }
-
         window.navigator.mediaDevices.getDisplayMedia = window.navigator.getDisplayMedia.bind(window.navigator);
       }
     }, {}],
@@ -19647,10 +19025,8 @@ var Ptz = /*#__PURE__*/function () {
         value: true
       });
       exports.shimGetUserMedia = shimGetUserMedia;
-
       function shimGetUserMedia(window) {
         var navigator = window && window.navigator;
-
         var shimError_ = function shimError_(e) {
           return {
             name: {
@@ -19662,11 +19038,10 @@ var Ptz = /*#__PURE__*/function () {
               return this.name;
             }
           };
-        }; // getUserMedia error shim.
+        };
 
-
+        // getUserMedia error shim.
         var origGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
-
         navigator.mediaDevices.getUserMedia = function (c) {
           return origGetUserMedia(c)["catch"](function (e) {
             return Promise.reject(shimError_(e));
@@ -19680,24 +19055,19 @@ var Ptz = /*#__PURE__*/function () {
         value: true
       });
       exports.shimGetDisplayMedia = exports.shimGetUserMedia = undefined;
-
       var _typeof$1 = typeof Symbol === "function" && _typeof(Symbol.iterator) === "symbol" ? function (obj) {
         return _typeof(obj);
       } : function (obj) {
         return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof(obj);
       };
-
       var _getusermedia = require('./getusermedia');
-
       Object.defineProperty(exports, 'shimGetUserMedia', {
         enumerable: true,
         get: function get() {
           return _getusermedia.shimGetUserMedia;
         }
       });
-
       var _getdisplaymedia = require('./getdisplaymedia');
-
       Object.defineProperty(exports, 'shimGetDisplayMedia', {
         enumerable: true,
         get: function get() {
@@ -19713,28 +19083,22 @@ var Ptz = /*#__PURE__*/function () {
       exports.shimAddTransceiver = shimAddTransceiver;
       exports.shimCreateOffer = shimCreateOffer;
       exports.shimCreateAnswer = shimCreateAnswer;
-
       var _utils = require('../utils');
-
       var utils = _interopRequireWildcard(_utils);
-
       function _interopRequireWildcard(obj) {
         if (obj && obj.__esModule) {
           return obj;
         } else {
           var newObj = {};
-
           if (obj != null) {
             for (var key in obj) {
               if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
             }
           }
-
           newObj["default"] = obj;
           return newObj;
         }
       }
-
       function _defineProperty(obj, key, value) {
         if (key in obj) {
           Object.defineProperty(obj, key, {
@@ -19746,10 +19110,8 @@ var Ptz = /*#__PURE__*/function () {
         } else {
           obj[key] = value;
         }
-
         return obj;
       }
-
       function shimOnTrack(window) {
         if ((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) === 'object' && window.RTCTrackEvent && 'receiver' in window.RTCTrackEvent.prototype && !('transceiver' in window.RTCTrackEvent.prototype)) {
           Object.defineProperty(window.RTCTrackEvent.prototype, 'transceiver', {
@@ -19761,10 +19123,8 @@ var Ptz = /*#__PURE__*/function () {
           });
         }
       }
-
       function shimPeerConnection(window) {
         var browserDetails = utils.detectBrowser(window);
-
         if ((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) !== 'object' || !(window.RTCPeerConnection || window.mozRTCPeerConnection)) {
           return; // probably media.peerconnection.enabled=false in about:config
         }
@@ -19773,45 +19133,37 @@ var Ptz = /*#__PURE__*/function () {
           // very basic support for old versions.
           window.RTCPeerConnection = window.mozRTCPeerConnection;
         }
-
         if (browserDetails.version < 53) {
           // shim away need for obsolete RTCIceCandidate/RTCSessionDescription.
           ['setLocalDescription', 'setRemoteDescription', 'addIceCandidate'].forEach(function (method) {
             var nativeMethod = window.RTCPeerConnection.prototype[method];
-
             var methodObj = _defineProperty({}, method, function () {
               arguments[0] = new (method === 'addIceCandidate' ? window.RTCIceCandidate : window.RTCSessionDescription)(arguments[0]);
               return nativeMethod.apply(this, arguments);
             });
-
             window.RTCPeerConnection.prototype[method] = methodObj[method];
           });
-        } // support for addIceCandidate(null or undefined)
+        }
+
+        // support for addIceCandidate(null or undefined)
         // as well as ignoring {sdpMid, candidate: ""}
-
-
         if (browserDetails.version < 68) {
           var nativeAddIceCandidate = window.RTCPeerConnection.prototype.addIceCandidate;
-
           window.RTCPeerConnection.prototype.addIceCandidate = function addIceCandidate() {
             if (!arguments[0]) {
               if (arguments[1]) {
                 arguments[1].apply(null);
               }
-
               return Promise.resolve();
-            } // Firefox 68+ emits and processes {candidate: "", ...}, ignore
+            }
+            // Firefox 68+ emits and processes {candidate: "", ...}, ignore
             // in older versions.
-
-
             if (arguments[0] && arguments[0].candidate === '') {
               return Promise.resolve();
             }
-
             return nativeAddIceCandidate.apply(this, arguments);
           };
         }
-
         var modernStatsTypes = {
           inboundrtp: 'inbound-rtp',
           outboundrtp: 'outbound-rtp',
@@ -19820,13 +19172,11 @@ var Ptz = /*#__PURE__*/function () {
           remotecandidate: 'remote-candidate'
         };
         var nativeGetStats = window.RTCPeerConnection.prototype.getStats;
-
         window.RTCPeerConnection.prototype.getStats = function getStats() {
           var _arguments = Array.prototype.slice.call(arguments),
-              selector = _arguments[0],
-              onSucc = _arguments[1],
-              onErr = _arguments[2];
-
+            selector = _arguments[0],
+            onSucc = _arguments[1],
+            onErr = _arguments[2];
           return nativeGetStats.apply(this, [selector || null]).then(function (stats) {
             if (browserDetails.version < 53 && !onSucc) {
               // Shim only promise getStats with spec-hyphens in type names
@@ -19838,9 +19188,8 @@ var Ptz = /*#__PURE__*/function () {
               } catch (e) {
                 if (e.name !== 'TypeError') {
                   throw e;
-                } // Avoid TypeError: "type" is read-only, in old versions. 34-43ish
-
-
+                }
+                // Avoid TypeError: "type" is read-only, in old versions. 34-43ish
                 stats.forEach(function (stat, i) {
                   stats.set(i, Object.assign({}, stat, {
                     type: modernStatsTypes[stat.type] || stat.type
@@ -19848,27 +19197,21 @@ var Ptz = /*#__PURE__*/function () {
                 });
               }
             }
-
             return stats;
           }).then(onSucc, onErr);
         };
       }
-
       function shimSenderGetStats(window) {
         if (!((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) === 'object' && window.RTCPeerConnection && window.RTCRtpSender)) {
           return;
         }
-
         if (window.RTCRtpSender && 'getStats' in window.RTCRtpSender.prototype) {
           return;
         }
-
         var origGetSenders = window.RTCPeerConnection.prototype.getSenders;
-
         if (origGetSenders) {
           window.RTCPeerConnection.prototype.getSenders = function getSenders() {
             var _this = this;
-
             var senders = origGetSenders.apply(this, []);
             senders.forEach(function (sender) {
               return sender._pc = _this;
@@ -19876,9 +19219,7 @@ var Ptz = /*#__PURE__*/function () {
             return senders;
           };
         }
-
         var origAddTrack = window.RTCPeerConnection.prototype.addTrack;
-
         if (origAddTrack) {
           window.RTCPeerConnection.prototype.addTrack = function addTrack() {
             var sender = origAddTrack.apply(this, arguments);
@@ -19886,27 +19227,21 @@ var Ptz = /*#__PURE__*/function () {
             return sender;
           };
         }
-
         window.RTCRtpSender.prototype.getStats = function getStats() {
           return this.track ? this._pc.getStats(this.track) : Promise.resolve(new Map());
         };
       }
-
       function shimReceiverGetStats(window) {
         if (!((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) === 'object' && window.RTCPeerConnection && window.RTCRtpSender)) {
           return;
         }
-
         if (window.RTCRtpSender && 'getStats' in window.RTCRtpReceiver.prototype) {
           return;
         }
-
         var origGetReceivers = window.RTCPeerConnection.prototype.getReceivers;
-
         if (origGetReceivers) {
           window.RTCPeerConnection.prototype.getReceivers = function getReceivers() {
             var _this2 = this;
-
             var receivers = origGetReceivers.apply(this, []);
             receivers.forEach(function (receiver) {
               return receiver._pc = _this2;
@@ -19914,25 +19249,20 @@ var Ptz = /*#__PURE__*/function () {
             return receivers;
           };
         }
-
         utils.wrapPeerConnectionEvent(window, 'track', function (e) {
           e.receiver._pc = e.srcElement;
           return e;
         });
-
         window.RTCRtpReceiver.prototype.getStats = function getStats() {
           return this._pc.getStats(this.track);
         };
       }
-
       function shimRemoveStream(window) {
         if (!window.RTCPeerConnection || 'removeStream' in window.RTCPeerConnection.prototype) {
           return;
         }
-
         window.RTCPeerConnection.prototype.removeStream = function removeStream(stream) {
           var _this3 = this;
-
           utils.deprecated('removeStream', 'removeTrack');
           this.getSenders().forEach(function (sender) {
             if (sender.track && stream.getTracks().includes(sender.track)) {
@@ -19941,7 +19271,6 @@ var Ptz = /*#__PURE__*/function () {
           });
         };
       }
-
       function shimRTCDataChannel(window) {
         // rename DataChannel to RTCDataChannel (native fix in FF60):
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1173851
@@ -19949,7 +19278,6 @@ var Ptz = /*#__PURE__*/function () {
           window.RTCDataChannel = window.DataChannel;
         }
       }
-
       function shimAddTransceiver(window) {
         // https://github.com/webrtcHacks/adapter/issues/998#issuecomment-516921647
         // Firefox ignores the init sendEncodings options passed to addTransceiver
@@ -19957,32 +19285,26 @@ var Ptz = /*#__PURE__*/function () {
         if (!((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) === 'object' && window.RTCPeerConnection)) {
           return;
         }
-
         var origAddTransceiver = window.RTCPeerConnection.prototype.addTransceiver;
-
         if (origAddTransceiver) {
           window.RTCPeerConnection.prototype.addTransceiver = function addTransceiver() {
             this.setParametersPromises = [];
             var initParameters = arguments[1];
             var shouldPerformCheck = initParameters && 'sendEncodings' in initParameters;
-
             if (shouldPerformCheck) {
               // If sendEncodings params are provided, validate grammar
               initParameters.sendEncodings.forEach(function (encodingParam) {
                 if ('rid' in encodingParam) {
                   var ridRegex = /^[a-z0-9]{0,16}$/i;
-
                   if (!ridRegex.test(encodingParam.rid)) {
                     throw new TypeError('Invalid RID value provided.');
                   }
                 }
-
                 if ('scaleResolutionDownBy' in encodingParam) {
                   if (!(parseFloat(encodingParam.scaleResolutionDownBy) >= 1.0)) {
                     throw new RangeError('scale_resolution_down_by must be >= 1.0');
                   }
                 }
-
                 if ('maxFramerate' in encodingParam) {
                   if (!(parseFloat(encodingParam.maxFramerate) >= 0)) {
                     throw new RangeError('max_framerate must be >= 0.0');
@@ -19990,9 +19312,7 @@ var Ptz = /*#__PURE__*/function () {
                 }
               });
             }
-
             var transceiver = origAddTransceiver.apply(this, arguments);
-
             if (shouldPerformCheck) {
               // Check if the init options were applied. If not we do this in an
               // asynchronous way and save the promise reference in a global object.
@@ -20003,18 +19323,15 @@ var Ptz = /*#__PURE__*/function () {
               // opportunity to recreate offer.
               var sender = transceiver.sender;
               var params = sender.getParameters();
-
               if (!('encodings' in params)) {
                 params.encodings = initParameters.sendEncodings;
                 this.setParametersPromises.push(sender.setParameters(params)["catch"](function () {}));
               }
             }
-
             return transceiver;
           };
         }
       }
-
       function shimCreateOffer(window) {
         // https://github.com/webrtcHacks/adapter/issues/998#issuecomment-516921647
         // Firefox ignores the init sendEncodings options passed to addTransceiver
@@ -20022,13 +19339,10 @@ var Ptz = /*#__PURE__*/function () {
         if (!((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) === 'object' && window.RTCPeerConnection)) {
           return;
         }
-
         var origCreateOffer = window.RTCPeerConnection.prototype.createOffer;
-
         window.RTCPeerConnection.prototype.createOffer = function createOffer() {
           var _this4 = this,
-              _arguments2 = arguments;
-
+            _arguments2 = arguments;
           if (this.setParametersPromises && this.setParametersPromises.length) {
             return Promise.all(this.setParametersPromises).then(function () {
               return origCreateOffer.apply(_this4, _arguments2);
@@ -20036,11 +19350,9 @@ var Ptz = /*#__PURE__*/function () {
               _this4.setParametersPromises = [];
             });
           }
-
           return origCreateOffer.apply(this, arguments);
         };
       }
-
       function shimCreateAnswer(window) {
         // https://github.com/webrtcHacks/adapter/issues/998#issuecomment-516921647
         // Firefox ignores the init sendEncodings options passed to addTransceiver
@@ -20048,13 +19360,10 @@ var Ptz = /*#__PURE__*/function () {
         if (!((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) === 'object' && window.RTCPeerConnection)) {
           return;
         }
-
         var origCreateAnswer = window.RTCPeerConnection.prototype.createAnswer;
-
         window.RTCPeerConnection.prototype.createAnswer = function createAnswer() {
           var _this5 = this,
-              _arguments3 = arguments;
-
+            _arguments3 = arguments;
           if (this.setParametersPromises && this.setParametersPromises.length) {
             return Promise.all(this.setParametersPromises).then(function () {
               return origCreateAnswer.apply(_this5, _arguments3);
@@ -20062,7 +19371,6 @@ var Ptz = /*#__PURE__*/function () {
               _this5.setParametersPromises = [];
             });
           }
-
           return origCreateAnswer.apply(this, arguments);
         };
       }
@@ -20077,25 +19385,21 @@ var Ptz = /*#__PURE__*/function () {
         value: true
       });
       exports.shimGetDisplayMedia = shimGetDisplayMedia;
-
       function shimGetDisplayMedia(window, preferredMediaSource) {
         if (window.navigator.mediaDevices && 'getDisplayMedia' in window.navigator.mediaDevices) {
           return;
         }
-
         if (!window.navigator.mediaDevices) {
           return;
         }
-
         window.navigator.mediaDevices.getDisplayMedia = function getDisplayMedia(constraints) {
           if (!(constraints && constraints.video)) {
             var err = new DOMException('getDisplayMedia without video ' + 'constraints is undefined');
-            err.name = 'NotFoundError'; // from https://heycam.github.io/webidl/#idl-DOMException-error-names
-
+            err.name = 'NotFoundError';
+            // from https://heycam.github.io/webidl/#idl-DOMException-error-names
             err.code = 8;
             return Promise.reject(err);
           }
-
           if (constraints.video === true) {
             constraints.video = {
               mediaSource: preferredMediaSource
@@ -20103,7 +19407,6 @@ var Ptz = /*#__PURE__*/function () {
           } else {
             constraints.video.mediaSource = preferredMediaSource;
           }
-
           return window.navigator.mediaDevices.getUserMedia(constraints);
         };
       }
@@ -20113,47 +19416,37 @@ var Ptz = /*#__PURE__*/function () {
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-
       var _typeof$1 = typeof Symbol === "function" && _typeof(Symbol.iterator) === "symbol" ? function (obj) {
         return _typeof(obj);
       } : function (obj) {
         return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof(obj);
       };
-
       exports.shimGetUserMedia = shimGetUserMedia;
-
       var _utils = require('../utils');
-
       var utils = _interopRequireWildcard(_utils);
-
       function _interopRequireWildcard(obj) {
         if (obj && obj.__esModule) {
           return obj;
         } else {
           var newObj = {};
-
           if (obj != null) {
             for (var key in obj) {
               if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
             }
           }
-
           newObj["default"] = obj;
           return newObj;
         }
       }
-
       function shimGetUserMedia(window) {
         var browserDetails = utils.detectBrowser(window);
         var navigator = window && window.navigator;
         var MediaStreamTrack = window && window.MediaStreamTrack;
-
         navigator.getUserMedia = function (constraints, onSuccess, onError) {
           // Replace Firefox 44+'s deprecation warning with unprefixed version.
           utils.deprecated('navigator.getUserMedia', 'navigator.mediaDevices.getUserMedia');
           navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
         };
-
         if (!(browserDetails.version > 55 && 'autoGainControl' in navigator.mediaDevices.getSupportedConstraints())) {
           var remap = function remap(obj, a, b) {
             if (a in obj && !(b in obj)) {
@@ -20161,22 +19454,17 @@ var Ptz = /*#__PURE__*/function () {
               delete obj[a];
             }
           };
-
           var nativeGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
-
           navigator.mediaDevices.getUserMedia = function (c) {
             if ((typeof c === 'undefined' ? 'undefined' : _typeof$1(c)) === 'object' && _typeof$1(c.audio) === 'object') {
               c = JSON.parse(JSON.stringify(c));
               remap(c.audio, 'autoGainControl', 'mozAutoGainControl');
               remap(c.audio, 'noiseSuppression', 'mozNoiseSuppression');
             }
-
             return nativeGetUserMedia(c);
           };
-
           if (MediaStreamTrack && MediaStreamTrack.prototype.getSettings) {
             var nativeGetSettings = MediaStreamTrack.prototype.getSettings;
-
             MediaStreamTrack.prototype.getSettings = function () {
               var obj = nativeGetSettings.apply(this, arguments);
               remap(obj, 'mozAutoGainControl', 'autoGainControl');
@@ -20184,17 +19472,14 @@ var Ptz = /*#__PURE__*/function () {
               return obj;
             };
           }
-
           if (MediaStreamTrack && MediaStreamTrack.prototype.applyConstraints) {
             var nativeApplyConstraints = MediaStreamTrack.prototype.applyConstraints;
-
             MediaStreamTrack.prototype.applyConstraints = function (c) {
               if (this.kind === 'audio' && (typeof c === 'undefined' ? 'undefined' : _typeof$1(c)) === 'object') {
                 c = JSON.parse(JSON.stringify(c));
                 remap(c, 'autoGainControl', 'mozAutoGainControl');
                 remap(c, 'noiseSuppression', 'mozNoiseSuppression');
               }
-
               return nativeApplyConstraints.apply(this, [c]);
             };
           }
@@ -20208,13 +19493,11 @@ var Ptz = /*#__PURE__*/function () {
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-
       var _typeof$1 = typeof Symbol === "function" && _typeof(Symbol.iterator) === "symbol" ? function (obj) {
         return _typeof(obj);
       } : function (obj) {
         return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof(obj);
       };
-
       exports.shimLocalStreamsAPI = shimLocalStreamsAPI;
       exports.shimRemoteStreamsAPI = shimRemoteStreamsAPI;
       exports.shimCallbacksAPI = shimCallbacksAPI;
@@ -20223,59 +19506,46 @@ var Ptz = /*#__PURE__*/function () {
       exports.shimRTCIceServerUrls = shimRTCIceServerUrls;
       exports.shimTrackEventTransceiver = shimTrackEventTransceiver;
       exports.shimCreateOfferLegacy = shimCreateOfferLegacy;
-
       var _utils = require('../utils');
-
       var utils = _interopRequireWildcard(_utils);
-
       function _interopRequireWildcard(obj) {
         if (obj && obj.__esModule) {
           return obj;
         } else {
           var newObj = {};
-
           if (obj != null) {
             for (var key in obj) {
               if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
             }
           }
-
           newObj["default"] = obj;
           return newObj;
         }
       }
-
       function shimLocalStreamsAPI(window) {
         if ((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) !== 'object' || !window.RTCPeerConnection) {
           return;
         }
-
         if (!('getLocalStreams' in window.RTCPeerConnection.prototype)) {
           window.RTCPeerConnection.prototype.getLocalStreams = function getLocalStreams() {
             if (!this._localStreams) {
               this._localStreams = [];
             }
-
             return this._localStreams;
           };
         }
-
         if (!('addStream' in window.RTCPeerConnection.prototype)) {
           var _addTrack = window.RTCPeerConnection.prototype.addTrack;
-
           window.RTCPeerConnection.prototype.addStream = function addStream(stream) {
             var _this = this;
-
             if (!this._localStreams) {
               this._localStreams = [];
             }
-
             if (!this._localStreams.includes(stream)) {
               this._localStreams.push(stream);
-            } // Try to emulate Chrome's behaviour of adding in audio-video order.
+            }
+            // Try to emulate Chrome's behaviour of adding in audio-video order.
             // Safari orders by track id.
-
-
             stream.getAudioTracks().forEach(function (track) {
               return _addTrack.call(_this, track, stream);
             });
@@ -20283,10 +19553,8 @@ var Ptz = /*#__PURE__*/function () {
               return _addTrack.call(_this, track, stream);
             });
           };
-
           window.RTCPeerConnection.prototype.addTrack = function addTrack(track) {
             var stream = arguments[1];
-
             if (stream) {
               if (!this._localStreams) {
                 this._localStreams = [stream];
@@ -20294,27 +19562,20 @@ var Ptz = /*#__PURE__*/function () {
                 this._localStreams.push(stream);
               }
             }
-
             return _addTrack.apply(this, arguments);
           };
         }
-
         if (!('removeStream' in window.RTCPeerConnection.prototype)) {
           window.RTCPeerConnection.prototype.removeStream = function removeStream(stream) {
             var _this2 = this;
-
             if (!this._localStreams) {
               this._localStreams = [];
             }
-
             var index = this._localStreams.indexOf(stream);
-
             if (index === -1) {
               return;
             }
-
             this._localStreams.splice(index, 1);
-
             var tracks = stream.getTracks();
             this.getSenders().forEach(function (sender) {
               if (tracks.includes(sender.track)) {
@@ -20324,18 +19585,15 @@ var Ptz = /*#__PURE__*/function () {
           };
         }
       }
-
       function shimRemoteStreamsAPI(window) {
         if ((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) !== 'object' || !window.RTCPeerConnection) {
           return;
         }
-
         if (!('getRemoteStreams' in window.RTCPeerConnection.prototype)) {
           window.RTCPeerConnection.prototype.getRemoteStreams = function getRemoteStreams() {
             return this._remoteStreams ? this._remoteStreams : [];
           };
         }
-
         if (!('onaddstream' in window.RTCPeerConnection.prototype)) {
           Object.defineProperty(window.RTCPeerConnection.prototype, 'onaddstream', {
             get: function get() {
@@ -20343,181 +19601,138 @@ var Ptz = /*#__PURE__*/function () {
             },
             set: function set(f) {
               var _this3 = this;
-
               if (this._onaddstream) {
                 this.removeEventListener('addstream', this._onaddstream);
                 this.removeEventListener('track', this._onaddstreampoly);
               }
-
               this.addEventListener('addstream', this._onaddstream = f);
               this.addEventListener('track', this._onaddstreampoly = function (e) {
                 e.streams.forEach(function (stream) {
                   if (!_this3._remoteStreams) {
                     _this3._remoteStreams = [];
                   }
-
                   if (_this3._remoteStreams.includes(stream)) {
                     return;
                   }
-
                   _this3._remoteStreams.push(stream);
-
                   var event = new Event('addstream');
                   event.stream = stream;
-
                   _this3.dispatchEvent(event);
                 });
               });
             }
           });
           var origSetRemoteDescription = window.RTCPeerConnection.prototype.setRemoteDescription;
-
           window.RTCPeerConnection.prototype.setRemoteDescription = function setRemoteDescription() {
             var pc = this;
-
             if (!this._onaddstreampoly) {
               this.addEventListener('track', this._onaddstreampoly = function (e) {
                 e.streams.forEach(function (stream) {
                   if (!pc._remoteStreams) {
                     pc._remoteStreams = [];
                   }
-
                   if (pc._remoteStreams.indexOf(stream) >= 0) {
                     return;
                   }
-
                   pc._remoteStreams.push(stream);
-
                   var event = new Event('addstream');
                   event.stream = stream;
                   pc.dispatchEvent(event);
                 });
               });
             }
-
             return origSetRemoteDescription.apply(pc, arguments);
           };
         }
       }
-
       function shimCallbacksAPI(window) {
         if ((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) !== 'object' || !window.RTCPeerConnection) {
           return;
         }
-
         var prototype = window.RTCPeerConnection.prototype;
         var origCreateOffer = prototype.createOffer;
         var origCreateAnswer = prototype.createAnswer;
         var setLocalDescription = prototype.setLocalDescription;
         var setRemoteDescription = prototype.setRemoteDescription;
         var addIceCandidate = prototype.addIceCandidate;
-
         prototype.createOffer = function createOffer(successCallback, failureCallback) {
           var options = arguments.length >= 2 ? arguments[2] : arguments[0];
           var promise = origCreateOffer.apply(this, [options]);
-
           if (!failureCallback) {
             return promise;
           }
-
           promise.then(successCallback, failureCallback);
           return Promise.resolve();
         };
-
         prototype.createAnswer = function createAnswer(successCallback, failureCallback) {
           var options = arguments.length >= 2 ? arguments[2] : arguments[0];
           var promise = origCreateAnswer.apply(this, [options]);
-
           if (!failureCallback) {
             return promise;
           }
-
           promise.then(successCallback, failureCallback);
           return Promise.resolve();
         };
-
         var withCallback = function withCallback(description, successCallback, failureCallback) {
           var promise = setLocalDescription.apply(this, [description]);
-
           if (!failureCallback) {
             return promise;
           }
-
           promise.then(successCallback, failureCallback);
           return Promise.resolve();
         };
-
         prototype.setLocalDescription = withCallback;
-
         withCallback = function withCallback(description, successCallback, failureCallback) {
           var promise = setRemoteDescription.apply(this, [description]);
-
           if (!failureCallback) {
             return promise;
           }
-
           promise.then(successCallback, failureCallback);
           return Promise.resolve();
         };
-
         prototype.setRemoteDescription = withCallback;
-
         withCallback = function withCallback(candidate, successCallback, failureCallback) {
           var promise = addIceCandidate.apply(this, [candidate]);
-
           if (!failureCallback) {
             return promise;
           }
-
           promise.then(successCallback, failureCallback);
           return Promise.resolve();
         };
-
         prototype.addIceCandidate = withCallback;
       }
-
       function shimGetUserMedia(window) {
         var navigator = window && window.navigator;
-
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
           // shim not needed in Safari 12.1
           var mediaDevices = navigator.mediaDevices;
-
           var _getUserMedia = mediaDevices.getUserMedia.bind(mediaDevices);
-
           navigator.mediaDevices.getUserMedia = function (constraints) {
             return _getUserMedia(shimConstraints(constraints));
           };
         }
-
         if (!navigator.getUserMedia && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
           navigator.getUserMedia = function getUserMedia(constraints, cb, errcb) {
             navigator.mediaDevices.getUserMedia(constraints).then(cb, errcb);
           }.bind(navigator);
         }
       }
-
       function shimConstraints(constraints) {
         if (constraints && constraints.video !== undefined) {
           return Object.assign({}, constraints, {
             video: utils.compactObject(constraints.video)
           });
         }
-
         return constraints;
       }
-
       function shimRTCIceServerUrls(window) {
         // migrate from non-spec RTCIceServer.url to RTCIceServer.urls
         var OrigPeerConnection = window.RTCPeerConnection;
-
         window.RTCPeerConnection = function RTCPeerConnection(pcConfig, pcConstraints) {
           if (pcConfig && pcConfig.iceServers) {
             var newIceServers = [];
-
             for (var i = 0; i < pcConfig.iceServers.length; i++) {
               var server = pcConfig.iceServers[i];
-
               if (!server.hasOwnProperty('urls') && server.hasOwnProperty('url')) {
                 utils.deprecated('RTCIceServer.url', 'RTCIceServer.urls');
                 server = JSON.parse(JSON.stringify(server));
@@ -20528,15 +19743,12 @@ var Ptz = /*#__PURE__*/function () {
                 newIceServers.push(pcConfig.iceServers[i]);
               }
             }
-
             pcConfig.iceServers = newIceServers;
           }
-
           return new OrigPeerConnection(pcConfig, pcConstraints);
         };
-
-        window.RTCPeerConnection.prototype = OrigPeerConnection.prototype; // wrap static methods. Currently just generateCertificate.
-
+        window.RTCPeerConnection.prototype = OrigPeerConnection.prototype;
+        // wrap static methods. Currently just generateCertificate.
         if ('generateCertificate' in window.RTCPeerConnection) {
           Object.defineProperty(window.RTCPeerConnection, 'generateCertificate', {
             get: function get() {
@@ -20545,7 +19757,6 @@ var Ptz = /*#__PURE__*/function () {
           });
         }
       }
-
       function shimTrackEventTransceiver(window) {
         // Add event.transceiver member over deprecated event.receiver
         if ((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) === 'object' && window.RTCTrackEvent && 'receiver' in window.RTCTrackEvent.prototype && !('transceiver' in window.RTCTrackEvent.prototype)) {
@@ -20558,21 +19769,17 @@ var Ptz = /*#__PURE__*/function () {
           });
         }
       }
-
       function shimCreateOfferLegacy(window) {
         var origCreateOffer = window.RTCPeerConnection.prototype.createOffer;
-
         window.RTCPeerConnection.prototype.createOffer = function createOffer(offerOptions) {
           if (offerOptions) {
             if (typeof offerOptions.offerToReceiveAudio !== 'undefined') {
               // support bit values
               offerOptions.offerToReceiveAudio = !!offerOptions.offerToReceiveAudio;
             }
-
             var audioTransceiver = this.getTransceivers().find(function (transceiver) {
               return transceiver.receiver.track.kind === 'audio';
             });
-
             if (offerOptions.offerToReceiveAudio === false && audioTransceiver) {
               if (audioTransceiver.direction === 'sendrecv') {
                 if (audioTransceiver.setDirection) {
@@ -20590,16 +19797,13 @@ var Ptz = /*#__PURE__*/function () {
             } else if (offerOptions.offerToReceiveAudio === true && !audioTransceiver) {
               this.addTransceiver('audio');
             }
-
             if (typeof offerOptions.offerToReceiveVideo !== 'undefined') {
               // support bit values
               offerOptions.offerToReceiveVideo = !!offerOptions.offerToReceiveVideo;
             }
-
             var videoTransceiver = this.getTransceivers().find(function (transceiver) {
               return transceiver.receiver.track.kind === 'video';
             });
-
             if (offerOptions.offerToReceiveVideo === false && videoTransceiver) {
               if (videoTransceiver.direction === 'sendrecv') {
                 if (videoTransceiver.setDirection) {
@@ -20618,7 +19822,6 @@ var Ptz = /*#__PURE__*/function () {
               this.addTransceiver('video');
             }
           }
-
           return origCreateOffer.apply(this, arguments);
         };
       }
@@ -20630,13 +19833,11 @@ var Ptz = /*#__PURE__*/function () {
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-
       var _typeof$1 = typeof Symbol === "function" && _typeof(Symbol.iterator) === "symbol" ? function (obj) {
         return _typeof(obj);
       } : function (obj) {
         return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof(obj);
       };
-
       exports.extractVersion = extractVersion;
       exports.wrapPeerConnectionEvent = wrapPeerConnectionEvent;
       exports.disableLog = disableLog;
@@ -20647,7 +19848,6 @@ var Ptz = /*#__PURE__*/function () {
       exports.compactObject = compactObject;
       exports.walkStats = walkStats;
       exports.filterStats = filterStats;
-
       function _defineProperty(obj, key, value) {
         if (key in obj) {
           Object.defineProperty(obj, key, {
@@ -20659,12 +19859,11 @@ var Ptz = /*#__PURE__*/function () {
         } else {
           obj[key] = value;
         }
-
         return obj;
       }
-
       var logDisabled_ = true;
       var deprecationWarnings_ = true;
+
       /**
        * Extract browser version out of the provided user agent string.
        *
@@ -20673,53 +19872,43 @@ var Ptz = /*#__PURE__*/function () {
        * @param {!number} pos position in the version string to be returned.
        * @return {!number} browser version.
        */
-
       function extractVersion(uastring, expr, pos) {
         var match = uastring.match(expr);
         return match && match.length >= pos && parseInt(match[pos], 10);
-      } // Wraps the peerconnection event eventNameToWrap in a function
+      }
+
+      // Wraps the peerconnection event eventNameToWrap in a function
       // which returns the modified event object (or false to prevent
       // the event).
-
-
       function wrapPeerConnectionEvent(window, eventNameToWrap, wrapper) {
         if (!window.RTCPeerConnection) {
           return;
         }
-
         var proto = window.RTCPeerConnection.prototype;
         var nativeAddEventListener = proto.addEventListener;
-
         proto.addEventListener = function (nativeEventName, cb) {
           if (nativeEventName !== eventNameToWrap) {
             return nativeAddEventListener.apply(this, arguments);
           }
-
           var wrappedCallback = function wrappedCallback(e) {
             var modifiedEvent = wrapper(e);
-
             if (modifiedEvent) {
               cb(modifiedEvent);
             }
           };
-
           this._eventMap = this._eventMap || {};
           this._eventMap[cb] = wrappedCallback;
           return nativeAddEventListener.apply(this, [nativeEventName, wrappedCallback]);
         };
-
         var nativeRemoveEventListener = proto.removeEventListener;
-
         proto.removeEventListener = function (nativeEventName, cb) {
           if (nativeEventName !== eventNameToWrap || !this._eventMap || !this._eventMap[cb]) {
             return nativeRemoveEventListener.apply(this, arguments);
           }
-
           var unwrappedCb = this._eventMap[cb];
           delete this._eventMap[cb];
           return nativeRemoveEventListener.apply(this, [nativeEventName, unwrappedCb]);
         };
-
         Object.defineProperty(proto, 'on' + eventNameToWrap, {
           get: function get() {
             return this['_on' + eventNameToWrap];
@@ -20729,7 +19918,6 @@ var Ptz = /*#__PURE__*/function () {
               this.removeEventListener(eventNameToWrap, this['_on' + eventNameToWrap]);
               delete this['_on' + eventNameToWrap];
             }
-
             if (cb) {
               this.addEventListener(eventNameToWrap, this['_on' + eventNameToWrap] = cb);
             }
@@ -20738,74 +19926,67 @@ var Ptz = /*#__PURE__*/function () {
           configurable: true
         });
       }
-
       function disableLog(bool) {
         if (typeof bool !== 'boolean') {
           return new Error('Argument type: ' + (typeof bool === 'undefined' ? 'undefined' : _typeof$1(bool)) + '. Please use a boolean.');
         }
-
         logDisabled_ = bool;
         return bool ? 'adapter.js logging disabled' : 'adapter.js logging enabled';
       }
+
       /**
        * Disable or enable deprecation warnings
        * @param {!boolean} bool set to true to disable warnings.
        */
-
-
       function disableWarnings(bool) {
         if (typeof bool !== 'boolean') {
           return new Error('Argument type: ' + (typeof bool === 'undefined' ? 'undefined' : _typeof$1(bool)) + '. Please use a boolean.');
         }
-
         deprecationWarnings_ = !bool;
         return 'adapter.js deprecation warnings ' + (bool ? 'disabled' : 'enabled');
       }
-
       function log() {
         if ((typeof window === 'undefined' ? 'undefined' : _typeof$1(window)) === 'object') {
           if (logDisabled_) {
             return;
           }
-
           if (typeof console !== 'undefined' && typeof console.log === 'function') {
             console.log.apply(console, arguments);
           }
         }
       }
+
       /**
        * Shows a deprecation warning suggesting the modern and spec-compatible API.
        */
-
-
       function deprecated(oldMethod, newMethod) {
         if (!deprecationWarnings_) {
           return;
         }
-
         console.warn(oldMethod + ' is deprecated, please use ' + newMethod + ' instead.');
       }
+
       /**
        * Browser detector.
        *
        * @return {object} result containing browser and version
        *     properties.
        */
-
-
       function detectBrowser(window) {
-        var navigator = window.navigator; // Returned result object.
+        var navigator = window.navigator;
+
+        // Returned result object.
 
         var result = {
           browser: null,
           version: null
-        }; // Fail early if it's not a browser
+        };
 
+        // Fail early if it's not a browser
         if (typeof window === 'undefined' || !window.navigator) {
           result.browser = 'Not a browser.';
           return result;
         }
-
         if (navigator.mozGetUserMedia) {
           // Firefox.
           result.browser = 'firefox';
@@ -20831,52 +20012,44 @@ var Ptz = /*#__PURE__*/function () {
           result.browser = 'Not a supported browser.';
           return result;
         }
-
         return result;
       }
+
       /**
        * Checks if something is an object.
        *
        * @param {*} val The something you want to check.
        * @return true if val is an object, false otherwise.
        */
-
-
       function isObject(val) {
         return Object.prototype.toString.call(val) === '[object Object]';
       }
+
       /**
        * Remove all empty objects and undefined values
        * from a nested object -- an enhanced and vanilla version
        * of Lodash's `compact`.
        */
-
-
       function compactObject(data) {
         if (!isObject(data)) {
           return data;
         }
-
         return Object.keys(data).reduce(function (accumulator, key) {
           var isObj = isObject(data[key]);
           var value = isObj ? compactObject(data[key]) : data[key];
           var isEmptyObject = isObj && !Object.keys(value).length;
-
           if (value === undefined || isEmptyObject) {
             return accumulator;
           }
-
           return Object.assign(accumulator, _defineProperty({}, key, value));
         }, {});
       }
+
       /* iterates the stats graph recursively. */
-
-
       function walkStats(stats, base, resultSet) {
         if (!base || resultSet.has(base.id)) {
           return;
         }
-
         resultSet.set(base.id, base);
         Object.keys(base).forEach(function (name) {
           if (name.endsWith('Id')) {
@@ -20888,17 +20061,14 @@ var Ptz = /*#__PURE__*/function () {
           }
         });
       }
+
       /* filter getStats for a sender/receiver track. */
-
-
       function filterStats(result, track, outbound) {
         var streamStatsType = outbound ? 'outbound-rtp' : 'inbound-rtp';
         var filteredResult = new Map();
-
         if (track === null) {
           return filteredResult;
         }
-
         var trackStats = [];
         result.forEach(function (value) {
           if (value.type === 'track' && value.trackIdentifier === track.id) {
@@ -20918,7 +20088,6 @@ var Ptz = /*#__PURE__*/function () {
     16: [function (require, module, exports) {
 
       var SDPUtils = require('sdp');
-
       function fixStatsType(stat) {
         return {
           inboundrtp: 'inbound-rtp',
@@ -20928,15 +20097,15 @@ var Ptz = /*#__PURE__*/function () {
           remotecandidate: 'remote-candidate'
         }[stat.type] || stat.type;
       }
-
       function writeMediaSection(transceiver, caps, type, stream, dtlsRole) {
-        var sdp = SDPUtils.writeRtpDescription(transceiver.kind, caps); // Map ICE parameters (ufrag, pwd) to SDP.
+        var sdp = SDPUtils.writeRtpDescription(transceiver.kind, caps);
 
-        sdp += SDPUtils.writeIceParameters(transceiver.iceGatherer.getLocalParameters()); // Map DTLS parameters to SDP.
+        // Map ICE parameters (ufrag, pwd) to SDP.
+        sdp += SDPUtils.writeIceParameters(transceiver.iceGatherer.getLocalParameters());
 
+        // Map DTLS parameters to SDP.
         sdp += SDPUtils.writeDtlsParameters(transceiver.dtlsTransport.getLocalParameters(), type === 'offer' ? 'actpass' : dtlsRole || 'active');
         sdp += 'a=mid:' + transceiver.mid + '\r\n';
-
         if (transceiver.rtpSender && transceiver.rtpReceiver) {
           sdp += 'a=sendrecv\r\n';
         } else if (transceiver.rtpSender) {
@@ -20946,62 +20115,53 @@ var Ptz = /*#__PURE__*/function () {
         } else {
           sdp += 'a=inactive\r\n';
         }
-
         if (transceiver.rtpSender) {
           var trackId = transceiver.rtpSender._initialTrackId || transceiver.rtpSender.track.id;
-          transceiver.rtpSender._initialTrackId = trackId; // spec.
-
+          transceiver.rtpSender._initialTrackId = trackId;
+          // spec.
           var msid = 'msid:' + (stream ? stream.id : '-') + ' ' + trackId + '\r\n';
-          sdp += 'a=' + msid; // for Chrome. Legacy should no longer be required.
+          sdp += 'a=' + msid;
+          // for Chrome. Legacy should no longer be required.
+          sdp += 'a=ssrc:' + transceiver.sendEncodingParameters[0].ssrc + ' ' + msid;
 
-          sdp += 'a=ssrc:' + transceiver.sendEncodingParameters[0].ssrc + ' ' + msid; // RTX
-
+          // RTX
           if (transceiver.sendEncodingParameters[0].rtx) {
             sdp += 'a=ssrc:' + transceiver.sendEncodingParameters[0].rtx.ssrc + ' ' + msid;
             sdp += 'a=ssrc-group:FID ' + transceiver.sendEncodingParameters[0].ssrc + ' ' + transceiver.sendEncodingParameters[0].rtx.ssrc + '\r\n';
           }
-        } // FIXME: this should be written by writeRtpDescription.
-
-
+        }
+        // FIXME: this should be written by writeRtpDescription.
         sdp += 'a=ssrc:' + transceiver.sendEncodingParameters[0].ssrc + ' cname:' + SDPUtils.localCName + '\r\n';
-
         if (transceiver.rtpSender && transceiver.sendEncodingParameters[0].rtx) {
           sdp += 'a=ssrc:' + transceiver.sendEncodingParameters[0].rtx.ssrc + ' cname:' + SDPUtils.localCName + '\r\n';
         }
-
         return sdp;
-      } // Edge does not like
+      }
+
+      // Edge does not like
       // 1) stun: filtered after 14393 unless ?transport=udp is present
       // 2) turn: that does not have all of turn:host:port?transport=udp
       // 3) turn: with ipv6 addresses
       // 4) turn: occurring muliple times
-
-
       function filterIceServers(iceServers, edgeVersion) {
         var hasTurn = false;
         iceServers = JSON.parse(JSON.stringify(iceServers));
         return iceServers.filter(function (server) {
           if (server && (server.urls || server.url)) {
             var urls = server.urls || server.url;
-
             if (server.url && !server.urls) {
               console.warn('RTCIceServer.url is deprecated! Use urls instead.');
             }
-
             var isString = typeof urls === 'string';
-
             if (isString) {
               urls = [urls];
             }
-
             urls = urls.filter(function (url) {
               var validTurn = url.indexOf('turn:') === 0 && url.indexOf('transport=udp') !== -1 && url.indexOf('turn:[') === -1 && !hasTurn;
-
               if (validTurn) {
                 hasTurn = true;
                 return true;
               }
-
               return url.indexOf('stun:') === 0 && edgeVersion >= 14393 && url.indexOf('?transport=udp') === -1;
             });
             delete server.url;
@@ -21009,36 +20169,31 @@ var Ptz = /*#__PURE__*/function () {
             return !!urls.length;
           }
         });
-      } // Determines the intersection of local and remote capabilities.
+      }
 
-
+      // Determines the intersection of local and remote capabilities.
       function getCommonCapabilities(localCapabilities, remoteCapabilities) {
         var commonCapabilities = {
           codecs: [],
           headerExtensions: [],
           fecMechanisms: []
         };
-
         var findCodecByPayloadType = function findCodecByPayloadType(pt, codecs) {
           pt = parseInt(pt, 10);
-
           for (var i = 0; i < codecs.length; i++) {
             if (codecs[i].payloadType === pt || codecs[i].preferredPayloadType === pt) {
               return codecs[i];
             }
           }
         };
-
         var rtxCapabilityMatches = function rtxCapabilityMatches(lRtx, rRtx, lCodecs, rCodecs) {
           var lCodec = findCodecByPayloadType(lRtx.parameters.apt, lCodecs);
           var rCodec = findCodecByPayloadType(rRtx.parameters.apt, rCodecs);
           return lCodec && rCodec && lCodec.name.toLowerCase() === rCodec.name.toLowerCase();
         };
-
         localCapabilities.codecs.forEach(function (lCodec) {
           for (var i = 0; i < remoteCapabilities.codecs.length; i++) {
             var rCodec = remoteCapabilities.codecs[i];
-
             if (lCodec.name.toLowerCase() === rCodec.name.toLowerCase() && lCodec.clockRate === rCodec.clockRate) {
               if (lCodec.name.toLowerCase() === 'rtx' && lCodec.parameters && rCodec.parameters.apt) {
                 // for RTX we need to find the local rtx that has a apt
@@ -21047,25 +20202,23 @@ var Ptz = /*#__PURE__*/function () {
                   continue;
                 }
               }
-
               rCodec = JSON.parse(JSON.stringify(rCodec)); // deepcopy
               // number of channels is the highest common number of channels
+              rCodec.numChannels = Math.min(lCodec.numChannels, rCodec.numChannels);
+              // push rCodec so we reply with offerer payload type
+              commonCapabilities.codecs.push(rCodec);
 
-              rCodec.numChannels = Math.min(lCodec.numChannels, rCodec.numChannels); // push rCodec so we reply with offerer payload type
-
-              commonCapabilities.codecs.push(rCodec); // determine common feedback mechanisms
-
+              // determine common feedback mechanisms
               rCodec.rtcpFeedback = rCodec.rtcpFeedback.filter(function (fb) {
                 for (var j = 0; j < lCodec.rtcpFeedback.length; j++) {
                   if (lCodec.rtcpFeedback[j].type === fb.type && lCodec.rtcpFeedback[j].parameter === fb.parameter) {
                     return true;
                   }
                 }
-
                 return false;
-              }); // FIXME: also need to determine .parameters
+              });
+              // FIXME: also need to determine .parameters
               //  see https://github.com/openpeer/ortc/issues/569
-
               break;
             }
           }
@@ -21073,18 +20226,18 @@ var Ptz = /*#__PURE__*/function () {
         localCapabilities.headerExtensions.forEach(function (lHeaderExtension) {
           for (var i = 0; i < remoteCapabilities.headerExtensions.length; i++) {
             var rHeaderExtension = remoteCapabilities.headerExtensions[i];
-
             if (lHeaderExtension.uri === rHeaderExtension.uri) {
               commonCapabilities.headerExtensions.push(rHeaderExtension);
               break;
             }
           }
-        }); // FIXME: fecMechanisms
+        });
 
+        // FIXME: fecMechanisms
         return commonCapabilities;
-      } // is action=setLocalDescription with type allowed in signalingState
+      }
 
-
+      // is action=setLocalDescription with type allowed in signalingState
       function isActionAllowedInSignalingState(action, type, signalingState) {
         return {
           offer: {
@@ -21097,25 +20250,21 @@ var Ptz = /*#__PURE__*/function () {
           }
         }[type][action].indexOf(signalingState) !== -1;
       }
-
       function maybeAddCandidate(iceTransport, candidate) {
         // Edge's internal representation adds some fields therefore
         // not all fieldѕ are taken into account.
         var alreadyAdded = iceTransport.getRemoteCandidates().find(function (remoteCandidate) {
           return candidate.foundation === remoteCandidate.foundation && candidate.ip === remoteCandidate.ip && candidate.port === remoteCandidate.port && candidate.priority === remoteCandidate.priority && candidate.protocol === remoteCandidate.protocol && candidate.type === remoteCandidate.type;
         });
-
         if (!alreadyAdded) {
           iceTransport.addRemoteCandidate(candidate);
         }
-
         return !alreadyAdded;
       }
-
       function makeError(name, description) {
         var e = new Error(description);
-        e.name = name; // legacy error codes from https://heycam.github.io/webidl/#idl-DOMException-error-names
-
+        e.name = name;
+        // legacy error codes from https://heycam.github.io/webidl/#idl-DOMException-error-names
         e.code = {
           NotSupportedError: 9,
           InvalidStateError: 11,
@@ -21125,7 +20274,6 @@ var Ptz = /*#__PURE__*/function () {
         }[name];
         return e;
       }
-
       module.exports = function (window, edgeVersion) {
         // https://w3c.github.io/mediacapture-main/#mediastream
         // Helper function to add the track to the stream and
@@ -21136,14 +20284,12 @@ var Ptz = /*#__PURE__*/function () {
             track: track
           }));
         }
-
         function removeTrackFromStreamAndFireEvent(track, stream) {
           stream.removeTrack(track);
           stream.dispatchEvent(new window.MediaStreamTrackEvent('removetrack', {
             track: track
           }));
         }
-
         function fireAddTrack(pc, track, receiver, streams) {
           var trackEvent = new Event('track');
           trackEvent.track = track;
@@ -21156,12 +20302,9 @@ var Ptz = /*#__PURE__*/function () {
             pc._dispatchEvent('track', trackEvent);
           });
         }
-
         var RTCPeerConnection = function RTCPeerConnection(config) {
           var pc = this;
-
           var _eventTarget = document.createDocumentFragment();
-
           ['addEventListener', 'removeEventListener', 'dispatchEvent'].forEach(function (method) {
             pc[method] = _eventTarget[method].bind(_eventTarget);
           });
@@ -21177,37 +20320,30 @@ var Ptz = /*#__PURE__*/function () {
           this.iceGatheringState = 'new';
           config = JSON.parse(JSON.stringify(config || {}));
           this.usingBundle = config.bundlePolicy === 'max-bundle';
-
           if (config.rtcpMuxPolicy === 'negotiate') {
             throw makeError('NotSupportedError', 'rtcpMuxPolicy \'negotiate\' is not supported');
           } else if (!config.rtcpMuxPolicy) {
             config.rtcpMuxPolicy = 'require';
           }
-
           switch (config.iceTransportPolicy) {
             case 'all':
             case 'relay':
               break;
-
             default:
               config.iceTransportPolicy = 'all';
               break;
           }
-
           switch (config.bundlePolicy) {
             case 'balanced':
             case 'max-compat':
             case 'max-bundle':
               break;
-
             default:
               config.bundlePolicy = 'balanced';
               break;
           }
-
           config.iceServers = filterIceServers(config.iceServers || [], edgeVersion);
           this._iceGatherers = [];
-
           if (config.iceCandidatePoolSize) {
             for (var i = config.iceCandidatePoolSize; i > 0; i--) {
               this._iceGatherers.push(new window.RTCIceGatherer({
@@ -21218,10 +20354,10 @@ var Ptz = /*#__PURE__*/function () {
           } else {
             config.iceCandidatePoolSize = 0;
           }
+          this._config = config;
 
-          this._config = config; // per-track iceGathers, iceTransports, dtlsTransports, rtpSenders, ...
+          // per-track iceGathers, iceTransports, dtlsTransports, rtpSenders, ...
           // everything that is needed to describe a SDP m-line.
-
           this.transceivers = [];
           this._sdpSessionId = SDPUtils.generateSessionId();
           this._sdpSessionVersion = 0;
@@ -21229,7 +20365,6 @@ var Ptz = /*#__PURE__*/function () {
 
           this._isClosed = false;
         };
-
         Object.defineProperty(RTCPeerConnection.prototype, 'localDescription', {
           configurable: true,
           get: function get() {
@@ -21241,8 +20376,9 @@ var Ptz = /*#__PURE__*/function () {
           get: function get() {
             return this._remoteDescription;
           }
-        }); // set up event handlers on prototype
+        });
 
+        // set up event handlers on prototype
         RTCPeerConnection.prototype.onicecandidate = null;
         RTCPeerConnection.prototype.onaddstream = null;
         RTCPeerConnection.prototype.ontrack = null;
@@ -21253,39 +20389,31 @@ var Ptz = /*#__PURE__*/function () {
         RTCPeerConnection.prototype.onicegatheringstatechange = null;
         RTCPeerConnection.prototype.onnegotiationneeded = null;
         RTCPeerConnection.prototype.ondatachannel = null;
-
         RTCPeerConnection.prototype._dispatchEvent = function (name, event) {
           if (this._isClosed) {
             return;
           }
-
           this.dispatchEvent(event);
-
           if (typeof this['on' + name] === 'function') {
             this['on' + name](event);
           }
         };
-
         RTCPeerConnection.prototype._emitGatheringStateChange = function () {
           var event = new Event('icegatheringstatechange');
-
           this._dispatchEvent('icegatheringstatechange', event);
         };
-
         RTCPeerConnection.prototype.getConfiguration = function () {
           return this._config;
         };
-
         RTCPeerConnection.prototype.getLocalStreams = function () {
           return this.localStreams;
         };
-
         RTCPeerConnection.prototype.getRemoteStreams = function () {
           return this.remoteStreams;
-        }; // internal helper to create a transceiver object.
+        };
+
+        // internal helper to create a transceiver object.
         // (which is not yet the same as the WebRTC 1.0 transceiver)
-
-
         RTCPeerConnection.prototype._createTransceiver = function (kind, doNotAdd) {
           var hasBundleTransport = this.transceivers.length > 0;
           var transceiver = {
@@ -21305,64 +20433,49 @@ var Ptz = /*#__PURE__*/function () {
             associatedRemoteMediaStreams: [],
             wantReceive: true
           };
-
           if (this.usingBundle && hasBundleTransport) {
             transceiver.iceTransport = this.transceivers[0].iceTransport;
             transceiver.dtlsTransport = this.transceivers[0].dtlsTransport;
           } else {
             var transports = this._createIceAndDtlsTransports();
-
             transceiver.iceTransport = transports.iceTransport;
             transceiver.dtlsTransport = transports.dtlsTransport;
           }
-
           if (!doNotAdd) {
             this.transceivers.push(transceiver);
           }
-
           return transceiver;
         };
-
         RTCPeerConnection.prototype.addTrack = function (track, stream) {
           if (this._isClosed) {
             throw makeError('InvalidStateError', 'Attempted to call addTrack on a closed peerconnection.');
           }
-
           var alreadyExists = this.transceivers.find(function (s) {
             return s.track === track;
           });
-
           if (alreadyExists) {
             throw makeError('InvalidAccessError', 'Track already exists.');
           }
-
           var transceiver;
-
           for (var i = 0; i < this.transceivers.length; i++) {
             if (!this.transceivers[i].track && this.transceivers[i].kind === track.kind) {
               transceiver = this.transceivers[i];
             }
           }
-
           if (!transceiver) {
             transceiver = this._createTransceiver(track.kind);
           }
-
           this._maybeFireNegotiationNeeded();
-
           if (this.localStreams.indexOf(stream) === -1) {
             this.localStreams.push(stream);
           }
-
           transceiver.track = track;
           transceiver.stream = stream;
           transceiver.rtpSender = new window.RTCRtpSender(track, transceiver.dtlsTransport);
           return transceiver.rtpSender;
         };
-
         RTCPeerConnection.prototype.addStream = function (stream) {
           var pc = this;
-
           if (edgeVersion >= 15025) {
             stream.getTracks().forEach(function (track) {
               pc.addTrack(track, stream);
@@ -21383,54 +20496,45 @@ var Ptz = /*#__PURE__*/function () {
             });
           }
         };
-
         RTCPeerConnection.prototype.removeTrack = function (sender) {
           if (this._isClosed) {
             throw makeError('InvalidStateError', 'Attempted to call removeTrack on a closed peerconnection.');
           }
-
           if (!(sender instanceof window.RTCRtpSender)) {
             throw new TypeError('Argument 1 of RTCPeerConnection.removeTrack ' + 'does not implement interface RTCRtpSender.');
           }
-
           var transceiver = this.transceivers.find(function (t) {
             return t.rtpSender === sender;
           });
-
           if (!transceiver) {
             throw makeError('InvalidAccessError', 'Sender was not created by this connection.');
           }
-
           var stream = transceiver.stream;
           transceiver.rtpSender.stop();
           transceiver.rtpSender = null;
           transceiver.track = null;
-          transceiver.stream = null; // remove the stream from the set of local streams
+          transceiver.stream = null;
 
+          // remove the stream from the set of local streams
           var localStreams = this.transceivers.map(function (t) {
             return t.stream;
           });
-
           if (localStreams.indexOf(stream) === -1 && this.localStreams.indexOf(stream) > -1) {
             this.localStreams.splice(this.localStreams.indexOf(stream), 1);
           }
-
           this._maybeFireNegotiationNeeded();
         };
-
         RTCPeerConnection.prototype.removeStream = function (stream) {
           var pc = this;
           stream.getTracks().forEach(function (track) {
             var sender = pc.getSenders().find(function (s) {
               return s.track === track;
             });
-
             if (sender) {
               pc.removeTrack(sender);
             }
           });
         };
-
         RTCPeerConnection.prototype.getSenders = function () {
           return this.transceivers.filter(function (transceiver) {
             return !!transceiver.rtpSender;
@@ -21438,7 +20542,6 @@ var Ptz = /*#__PURE__*/function () {
             return transceiver.rtpSender;
           });
         };
-
         RTCPeerConnection.prototype.getReceivers = function () {
           return this.transceivers.filter(function (transceiver) {
             return !!transceiver.rtpReceiver;
@@ -21446,16 +20549,13 @@ var Ptz = /*#__PURE__*/function () {
             return transceiver.rtpReceiver;
           });
         };
-
         RTCPeerConnection.prototype._createIceGatherer = function (sdpMLineIndex, usingBundle) {
           var pc = this;
-
           if (usingBundle && sdpMLineIndex > 0) {
             return this.transceivers[0].iceGatherer;
           } else if (this._iceGatherers.length) {
             return this._iceGatherers.shift();
           }
-
           var iceGatherer = new window.RTCIceGatherer({
             iceServers: this._config.iceServers,
             gatherPolicy: this._config.iceTransportPolicy
@@ -21465,35 +20565,29 @@ var Ptz = /*#__PURE__*/function () {
             writable: true
           });
           this.transceivers[sdpMLineIndex].bufferedCandidateEvents = [];
-
           this.transceivers[sdpMLineIndex].bufferCandidates = function (event) {
-            var end = !event.candidate || Object.keys(event.candidate).length === 0; // polyfill since RTCIceGatherer.state is not implemented in
+            var end = !event.candidate || Object.keys(event.candidate).length === 0;
+            // polyfill since RTCIceGatherer.state is not implemented in
             // Edge 10547 yet.
-
             iceGatherer.state = end ? 'completed' : 'gathering';
-
             if (pc.transceivers[sdpMLineIndex].bufferedCandidateEvents !== null) {
               pc.transceivers[sdpMLineIndex].bufferedCandidateEvents.push(event);
             }
           };
-
           iceGatherer.addEventListener('localcandidate', this.transceivers[sdpMLineIndex].bufferCandidates);
           return iceGatherer;
-        }; // start gathering from an RTCIceGatherer.
+        };
 
-
+        // start gathering from an RTCIceGatherer.
         RTCPeerConnection.prototype._gather = function (mid, sdpMLineIndex) {
           var pc = this;
           var iceGatherer = this.transceivers[sdpMLineIndex].iceGatherer;
-
           if (iceGatherer.onlocalcandidate) {
             return;
           }
-
           var bufferedCandidateEvents = this.transceivers[sdpMLineIndex].bufferedCandidateEvents;
           this.transceivers[sdpMLineIndex].bufferedCandidateEvents = null;
           iceGatherer.removeEventListener('localcandidate', this.transceivers[sdpMLineIndex].bufferCandidates);
-
           iceGatherer.onlocalcandidate = function (evt) {
             if (pc.usingBundle && sdpMLineIndex > 0) {
               // if we know that we use bundle we can drop candidates with
@@ -21501,16 +20595,14 @@ var Ptz = /*#__PURE__*/function () {
               // confused since we dispose the extra ice gatherer.
               return;
             }
-
             var event = new Event('icecandidate');
             event.candidate = {
               sdpMid: mid,
               sdpMLineIndex: sdpMLineIndex
             };
-            var cand = evt.candidate; // Edge emits an empty object for RTCIceCandidateComplete‥
-
+            var cand = evt.candidate;
+            // Edge emits an empty object for RTCIceCandidateComplete‥
             var end = !cand || Object.keys(cand).length === 0;
-
             if (end) {
               // polyfill since RTCIceGatherer.state is not implemented in
               // Edge 10547 yet.
@@ -21520,16 +20612,14 @@ var Ptz = /*#__PURE__*/function () {
             } else {
               if (iceGatherer.state === 'new') {
                 iceGatherer.state = 'gathering';
-              } // RTCIceCandidate doesn't have a component, needs to be added
-
-
-              cand.component = 1; // also the usernameFragment. TODO: update SDP to take both variants.
-
+              }
+              // RTCIceCandidate doesn't have a component, needs to be added
+              cand.component = 1;
+              // also the usernameFragment. TODO: update SDP to take both variants.
               cand.ufrag = iceGatherer.getLocalParameters().usernameFragment;
               var serializedCandidate = SDPUtils.writeCandidate(cand);
               event.candidate = Object.assign(event.candidate, SDPUtils.parseCandidate(serializedCandidate));
               event.candidate.candidate = serializedCandidate;
-
               event.candidate.toJSON = function () {
                 return {
                   candidate: event.candidate.candidate,
@@ -21538,128 +20628,105 @@ var Ptz = /*#__PURE__*/function () {
                   usernameFragment: event.candidate.usernameFragment
                 };
               };
-            } // update local description.
+            }
 
-
+            // update local description.
             var sections = SDPUtils.getMediaSections(pc._localDescription.sdp);
-
             if (!end) {
               sections[event.candidate.sdpMLineIndex] += 'a=' + event.candidate.candidate + '\r\n';
             } else {
               sections[event.candidate.sdpMLineIndex] += 'a=end-of-candidates\r\n';
             }
-
             pc._localDescription.sdp = SDPUtils.getDescription(pc._localDescription.sdp) + sections.join('');
             var complete = pc.transceivers.every(function (transceiver) {
               return transceiver.iceGatherer && transceiver.iceGatherer.state === 'completed';
             });
-
             if (pc.iceGatheringState !== 'gathering') {
               pc.iceGatheringState = 'gathering';
-
               pc._emitGatheringStateChange();
-            } // Emit candidate. Also emit null candidate when all gatherers are
+            }
+
+            // Emit candidate. Also emit null candidate when all gatherers are
             // complete.
-
-
             if (!end) {
               pc._dispatchEvent('icecandidate', event);
             }
-
             if (complete) {
               pc._dispatchEvent('icecandidate', new Event('icecandidate'));
-
               pc.iceGatheringState = 'complete';
-
               pc._emitGatheringStateChange();
             }
-          }; // emit already gathered candidates.
+          };
 
-
+          // emit already gathered candidates.
           window.setTimeout(function () {
             bufferedCandidateEvents.forEach(function (e) {
               iceGatherer.onlocalcandidate(e);
             });
           }, 0);
-        }; // Create ICE transport and DTLS transport.
+        };
 
-
+        // Create ICE transport and DTLS transport.
         RTCPeerConnection.prototype._createIceAndDtlsTransports = function () {
           var pc = this;
           var iceTransport = new window.RTCIceTransport(null);
-
           iceTransport.onicestatechange = function () {
             pc._updateIceConnectionState();
-
             pc._updateConnectionState();
           };
-
           var dtlsTransport = new window.RTCDtlsTransport(iceTransport);
-
           dtlsTransport.ondtlsstatechange = function () {
             pc._updateConnectionState();
           };
-
           dtlsTransport.onerror = function () {
             // onerror does not set state to failed by itself.
             Object.defineProperty(dtlsTransport, 'state', {
               value: 'failed',
               writable: true
             });
-
             pc._updateConnectionState();
           };
-
           return {
             iceTransport: iceTransport,
             dtlsTransport: dtlsTransport
           };
-        }; // Destroy ICE gatherer, ICE transport and DTLS transport.
+        };
+
+        // Destroy ICE gatherer, ICE transport and DTLS transport.
         // Without triggering the callbacks.
-
-
         RTCPeerConnection.prototype._disposeIceAndDtlsTransports = function (sdpMLineIndex) {
           var iceGatherer = this.transceivers[sdpMLineIndex].iceGatherer;
-
           if (iceGatherer) {
             delete iceGatherer.onlocalcandidate;
             delete this.transceivers[sdpMLineIndex].iceGatherer;
           }
-
           var iceTransport = this.transceivers[sdpMLineIndex].iceTransport;
-
           if (iceTransport) {
             delete iceTransport.onicestatechange;
             delete this.transceivers[sdpMLineIndex].iceTransport;
           }
-
           var dtlsTransport = this.transceivers[sdpMLineIndex].dtlsTransport;
-
           if (dtlsTransport) {
             delete dtlsTransport.ondtlsstatechange;
             delete dtlsTransport.onerror;
             delete this.transceivers[sdpMLineIndex].dtlsTransport;
           }
-        }; // Start the RTP Sender and Receiver for a transceiver.
+        };
 
-
+        // Start the RTP Sender and Receiver for a transceiver.
         RTCPeerConnection.prototype._transceive = function (transceiver, send, recv) {
           var params = getCommonCapabilities(transceiver.localCapabilities, transceiver.remoteCapabilities);
-
           if (send && transceiver.rtpSender) {
             params.encodings = transceiver.sendEncodingParameters;
             params.rtcp = {
               cname: SDPUtils.localCName,
               compound: transceiver.rtcpParameters.compound
             };
-
             if (transceiver.recvEncodingParameters.length) {
               params.rtcp.ssrc = transceiver.recvEncodingParameters[0].ssrc;
             }
-
             transceiver.rtpSender.send(params);
           }
-
           if (recv && transceiver.rtpReceiver && params.codecs.length > 0) {
             // remove RTX field in Edge 14942
             if (transceiver.kind === 'video' && transceiver.recvEncodingParameters && edgeVersion < 15019) {
@@ -21667,43 +20734,35 @@ var Ptz = /*#__PURE__*/function () {
                 delete p.rtx;
               });
             }
-
             if (transceiver.recvEncodingParameters.length) {
               params.encodings = transceiver.recvEncodingParameters;
             } else {
               params.encodings = [{}];
             }
-
             params.rtcp = {
               compound: transceiver.rtcpParameters.compound
             };
-
             if (transceiver.rtcpParameters.cname) {
               params.rtcp.cname = transceiver.rtcpParameters.cname;
             }
-
             if (transceiver.sendEncodingParameters.length) {
               params.rtcp.ssrc = transceiver.sendEncodingParameters[0].ssrc;
             }
-
             transceiver.rtpReceiver.receive(params);
           }
         };
-
         RTCPeerConnection.prototype.setLocalDescription = function (description) {
-          var pc = this; // Note: pranswer is not supported.
+          var pc = this;
 
+          // Note: pranswer is not supported.
           if (['offer', 'answer'].indexOf(description.type) === -1) {
             return Promise.reject(makeError('TypeError', 'Unsupported type "' + description.type + '"'));
           }
-
           if (!isActionAllowedInSignalingState('setLocalDescription', description.type, pc.signalingState) || pc._isClosed) {
             return Promise.reject(makeError('InvalidStateError', 'Can not set local ' + description.type + ' in state ' + pc.signalingState));
           }
-
           var sections;
           var sessionpart;
-
           if (description.type === 'offer') {
             // VERY limited support for SDP munging. Limited to:
             // * changing the order of codecs
@@ -21726,64 +20785,56 @@ var Ptz = /*#__PURE__*/function () {
               var iceTransport = transceiver.iceTransport;
               var dtlsTransport = transceiver.dtlsTransport;
               var localCapabilities = transceiver.localCapabilities;
-              var remoteCapabilities = transceiver.remoteCapabilities; // treat bundle-only as not-rejected.
+              var remoteCapabilities = transceiver.remoteCapabilities;
 
+              // treat bundle-only as not-rejected.
               var rejected = SDPUtils.isRejected(mediaSection) && SDPUtils.matchPrefix(mediaSection, 'a=bundle-only').length === 0;
-
               if (!rejected && !transceiver.rejected) {
                 var remoteIceParameters = SDPUtils.getIceParameters(mediaSection, sessionpart);
                 var remoteDtlsParameters = SDPUtils.getDtlsParameters(mediaSection, sessionpart);
-
                 if (isIceLite) {
                   remoteDtlsParameters.role = 'server';
                 }
-
                 if (!pc.usingBundle || sdpMLineIndex === 0) {
                   pc._gather(transceiver.mid, sdpMLineIndex);
-
                   if (iceTransport.state === 'new') {
                     iceTransport.start(iceGatherer, remoteIceParameters, isIceLite ? 'controlling' : 'controlled');
                   }
-
                   if (dtlsTransport.state === 'new') {
                     dtlsTransport.start(remoteDtlsParameters);
                   }
-                } // Calculate intersection of capabilities.
+                }
 
+                // Calculate intersection of capabilities.
+                var params = getCommonCapabilities(localCapabilities, remoteCapabilities);
 
-                var params = getCommonCapabilities(localCapabilities, remoteCapabilities); // Start the RTCRtpSender. The RTCRtpReceiver for this
+                // Start the RTCRtpSender. The RTCRtpReceiver for this
                 // transceiver has already been started in setRemoteDescription.
-
                 pc._transceive(transceiver, params.codecs.length > 0, false);
               }
             });
           }
-
           pc._localDescription = {
             type: description.type,
             sdp: description.sdp
           };
-
           if (description.type === 'offer') {
             pc._updateSignalingState('have-local-offer');
           } else {
             pc._updateSignalingState('stable');
           }
-
           return Promise.resolve();
         };
-
         RTCPeerConnection.prototype.setRemoteDescription = function (description) {
-          var pc = this; // Note: pranswer is not supported.
+          var pc = this;
 
+          // Note: pranswer is not supported.
           if (['offer', 'answer'].indexOf(description.type) === -1) {
             return Promise.reject(makeError('TypeError', 'Unsupported type "' + description.type + '"'));
           }
-
           if (!isActionAllowedInSignalingState('setRemoteDescription', description.type, pc.signalingState) || pc._isClosed) {
             return Promise.reject(makeError('InvalidStateError', 'Can not set remote ' + description.type + ' in state ' + pc.signalingState));
           }
-
           var streams = {};
           pc.remoteStreams.forEach(function (stream) {
             streams[stream.id] = stream;
@@ -21795,23 +20846,22 @@ var Ptz = /*#__PURE__*/function () {
           var usingBundle = SDPUtils.matchPrefix(sessionpart, 'a=group:BUNDLE ').length > 0;
           pc.usingBundle = usingBundle;
           var iceOptions = SDPUtils.matchPrefix(sessionpart, 'a=ice-options:')[0];
-
           if (iceOptions) {
             pc.canTrickleIceCandidates = iceOptions.substr(14).split(' ').indexOf('trickle') >= 0;
           } else {
             pc.canTrickleIceCandidates = false;
           }
-
           sections.forEach(function (mediaSection, sdpMLineIndex) {
             var lines = SDPUtils.splitLines(mediaSection);
-            var kind = SDPUtils.getKind(mediaSection); // treat bundle-only as not-rejected.
-
+            var kind = SDPUtils.getKind(mediaSection);
+            // treat bundle-only as not-rejected.
             var rejected = SDPUtils.isRejected(mediaSection) && SDPUtils.matchPrefix(mediaSection, 'a=bundle-only').length === 0;
             var protocol = lines[0].substr(2).split(' ')[2];
             var direction = SDPUtils.getDirection(mediaSection, sessionpart);
             var remoteMsid = SDPUtils.parseMsid(mediaSection);
-            var mid = SDPUtils.getMid(mediaSection) || SDPUtils.generateIdentifier(); // Reject datachannels which are not implemented yet.
+            var mid = SDPUtils.getMid(mediaSection) || SDPUtils.generateIdentifier();
 
+            // Reject datachannels which are not implemented yet.
             if (rejected || kind === 'application' && (protocol === 'DTLS/SCTP' || protocol === 'UDP/DTLS/SCTP')) {
               // TODO: this is dangerous in the case where a non-rejected m-line
               //     becomes rejected.
@@ -21823,12 +20873,10 @@ var Ptz = /*#__PURE__*/function () {
               };
               return;
             }
-
             if (!rejected && pc.transceivers[sdpMLineIndex] && pc.transceivers[sdpMLineIndex].rejected) {
               // recycle a rejected transceiver.
               pc.transceivers[sdpMLineIndex] = pc._createTransceiver(kind, true);
             }
-
             var transceiver;
             var iceGatherer;
             var iceTransport;
@@ -21837,18 +20885,16 @@ var Ptz = /*#__PURE__*/function () {
             var sendEncodingParameters;
             var recvEncodingParameters;
             var localCapabilities;
-            var track; // FIXME: ensure the mediaSection has rtcp-mux set.
-
+            var track;
+            // FIXME: ensure the mediaSection has rtcp-mux set.
             var remoteCapabilities = SDPUtils.parseRtpParameters(mediaSection);
             var remoteIceParameters;
             var remoteDtlsParameters;
-
             if (!rejected) {
               remoteIceParameters = SDPUtils.getIceParameters(mediaSection, sessionpart);
               remoteDtlsParameters = SDPUtils.getDtlsParameters(mediaSection, sessionpart);
               remoteDtlsParameters.role = 'client';
             }
-
             recvEncodingParameters = SDPUtils.parseRtpEncodingParameters(mediaSection);
             var rtcpParameters = SDPUtils.parseRtcpParameters(mediaSection);
             var isComplete = SDPUtils.matchPrefix(mediaSection, 'a=end-of-candidates', sessionpart).length > 0;
@@ -21856,32 +20902,27 @@ var Ptz = /*#__PURE__*/function () {
               return SDPUtils.parseCandidate(cand);
             }).filter(function (cand) {
               return cand.component === 1;
-            }); // Check if we can use BUNDLE and dispose transports.
+            });
 
+            // Check if we can use BUNDLE and dispose transports.
             if ((description.type === 'offer' || description.type === 'answer') && !rejected && usingBundle && sdpMLineIndex > 0 && pc.transceivers[sdpMLineIndex]) {
               pc._disposeIceAndDtlsTransports(sdpMLineIndex);
-
               pc.transceivers[sdpMLineIndex].iceGatherer = pc.transceivers[0].iceGatherer;
               pc.transceivers[sdpMLineIndex].iceTransport = pc.transceivers[0].iceTransport;
               pc.transceivers[sdpMLineIndex].dtlsTransport = pc.transceivers[0].dtlsTransport;
-
               if (pc.transceivers[sdpMLineIndex].rtpSender) {
                 pc.transceivers[sdpMLineIndex].rtpSender.setTransport(pc.transceivers[0].dtlsTransport);
               }
-
               if (pc.transceivers[sdpMLineIndex].rtpReceiver) {
                 pc.transceivers[sdpMLineIndex].rtpReceiver.setTransport(pc.transceivers[0].dtlsTransport);
               }
             }
-
             if (description.type === 'offer' && !rejected) {
               transceiver = pc.transceivers[sdpMLineIndex] || pc._createTransceiver(kind);
               transceiver.mid = mid;
-
               if (!transceiver.iceGatherer) {
                 transceiver.iceGatherer = pc._createIceGatherer(sdpMLineIndex, usingBundle);
               }
-
               if (cands.length && transceiver.iceTransport.state === 'new') {
                 if (isComplete && (!usingBundle || sdpMLineIndex === 0)) {
                   transceiver.iceTransport.setRemoteCandidates(cands);
@@ -21891,30 +20932,28 @@ var Ptz = /*#__PURE__*/function () {
                   });
                 }
               }
+              localCapabilities = window.RTCRtpReceiver.getCapabilities(kind);
 
-              localCapabilities = window.RTCRtpReceiver.getCapabilities(kind); // filter RTX until additional stuff needed for RTX is implemented
+              // filter RTX until additional stuff needed for RTX is implemented
               // in adapter.js
-
               if (edgeVersion < 15019) {
                 localCapabilities.codecs = localCapabilities.codecs.filter(function (codec) {
                   return codec.name !== 'rtx';
                 });
               }
-
               sendEncodingParameters = transceiver.sendEncodingParameters || [{
                 ssrc: (2 * sdpMLineIndex + 2) * 1001
-              }]; // TODO: rewrite to use http://w3c.github.io/webrtc-pc/#set-associated-remote-streams
+              }];
 
+              // TODO: rewrite to use http://w3c.github.io/webrtc-pc/#set-associated-remote-streams
               var isNewTrack = false;
-
               if (direction === 'sendrecv' || direction === 'sendonly') {
                 isNewTrack = !transceiver.rtpReceiver;
                 rtpReceiver = transceiver.rtpReceiver || new window.RTCRtpReceiver(transceiver.dtlsTransport, kind);
-
                 if (isNewTrack) {
                   var stream;
-                  track = rtpReceiver.track; // FIXME: does not work with Plan B.
-
+                  track = rtpReceiver.track;
+                  // FIXME: does not work with Plan B.
                   if (remoteMsid && remoteMsid.stream === '-') ; else if (remoteMsid) {
                     if (!streams[remoteMsid.stream]) {
                       streams[remoteMsid.stream] = new window.MediaStream();
@@ -21924,7 +20963,6 @@ var Ptz = /*#__PURE__*/function () {
                         }
                       });
                     }
-
                     Object.defineProperty(track, 'id', {
                       get: function get() {
                         return remoteMsid.track;
@@ -21935,15 +20973,12 @@ var Ptz = /*#__PURE__*/function () {
                     if (!streams["default"]) {
                       streams["default"] = new window.MediaStream();
                     }
-
                     stream = streams["default"];
                   }
-
                   if (stream) {
                     addTrackToStreamAndFireEvent(track, stream);
                     transceiver.associatedRemoteMediaStreams.push(stream);
                   }
-
                   receiverList.push([track, rtpReceiver, stream]);
                 }
               } else if (transceiver.rtpReceiver && transceiver.rtpReceiver.track) {
@@ -21951,22 +20986,21 @@ var Ptz = /*#__PURE__*/function () {
                   var nativeTrack = s.getTracks().find(function (t) {
                     return t.id === transceiver.rtpReceiver.track.id;
                   });
-
                   if (nativeTrack) {
                     removeTrackFromStreamAndFireEvent(nativeTrack, s);
                   }
                 });
                 transceiver.associatedRemoteMediaStreams = [];
               }
-
               transceiver.localCapabilities = localCapabilities;
               transceiver.remoteCapabilities = remoteCapabilities;
               transceiver.rtpReceiver = rtpReceiver;
               transceiver.rtcpParameters = rtcpParameters;
               transceiver.sendEncodingParameters = sendEncodingParameters;
-              transceiver.recvEncodingParameters = recvEncodingParameters; // Start the RTCRtpReceiver now. The RTPSender is started in
-              // setLocalDescription.
+              transceiver.recvEncodingParameters = recvEncodingParameters;
 
+              // Start the RTCRtpReceiver now. The RTPSender is started in
+              // setLocalDescription.
               pc._transceive(pc.transceivers[sdpMLineIndex], false, isNewTrack);
             } else if (description.type === 'answer' && !rejected) {
               transceiver = pc.transceivers[sdpMLineIndex];
@@ -21979,7 +21013,6 @@ var Ptz = /*#__PURE__*/function () {
               pc.transceivers[sdpMLineIndex].recvEncodingParameters = recvEncodingParameters;
               pc.transceivers[sdpMLineIndex].remoteCapabilities = remoteCapabilities;
               pc.transceivers[sdpMLineIndex].rtcpParameters = rtcpParameters;
-
               if (cands.length && iceTransport.state === 'new') {
                 if ((isIceLite || isComplete) && (!usingBundle || sdpMLineIndex === 0)) {
                   iceTransport.setRemoteCandidates(cands);
@@ -21989,46 +21022,39 @@ var Ptz = /*#__PURE__*/function () {
                   });
                 }
               }
-
               if (!usingBundle || sdpMLineIndex === 0) {
                 if (iceTransport.state === 'new') {
                   iceTransport.start(iceGatherer, remoteIceParameters, 'controlling');
                 }
-
                 if (dtlsTransport.state === 'new') {
                   dtlsTransport.start(remoteDtlsParameters);
                 }
-              } // If the offer contained RTX but the answer did not,
+              }
+
+              // If the offer contained RTX but the answer did not,
               // remove RTX from sendEncodingParameters.
-
-
               var commonCapabilities = getCommonCapabilities(transceiver.localCapabilities, transceiver.remoteCapabilities);
               var hasRtx = commonCapabilities.codecs.filter(function (c) {
                 return c.name.toLowerCase() === 'rtx';
               }).length;
-
               if (!hasRtx && transceiver.sendEncodingParameters[0].rtx) {
                 delete transceiver.sendEncodingParameters[0].rtx;
               }
+              pc._transceive(transceiver, direction === 'sendrecv' || direction === 'recvonly', direction === 'sendrecv' || direction === 'sendonly');
 
-              pc._transceive(transceiver, direction === 'sendrecv' || direction === 'recvonly', direction === 'sendrecv' || direction === 'sendonly'); // TODO: rewrite to use http://w3c.github.io/webrtc-pc/#set-associated-remote-streams
-
-
+              // TODO: rewrite to use http://w3c.github.io/webrtc-pc/#set-associated-remote-streams
               if (rtpReceiver && (direction === 'sendrecv' || direction === 'sendonly')) {
                 track = rtpReceiver.track;
-
                 if (remoteMsid) {
                   if (!streams[remoteMsid.stream]) {
                     streams[remoteMsid.stream] = new window.MediaStream();
                   }
-
                   addTrackToStreamAndFireEvent(track, streams[remoteMsid.stream]);
                   receiverList.push([track, rtpReceiver, streams[remoteMsid.stream]]);
                 } else {
                   if (!streams["default"]) {
                     streams["default"] = new window.MediaStream();
                   }
-
                   addTrackToStreamAndFireEvent(track, streams["default"]);
                   receiverList.push([track, rtpReceiver, streams["default"]]);
                 }
@@ -22038,25 +21064,20 @@ var Ptz = /*#__PURE__*/function () {
               }
             }
           });
-
           if (pc._dtlsRole === undefined) {
             pc._dtlsRole = description.type === 'offer' ? 'active' : 'passive';
           }
-
           pc._remoteDescription = {
             type: description.type,
             sdp: description.sdp
           };
-
           if (description.type === 'offer') {
             pc._updateSignalingState('have-remote-offer');
           } else {
             pc._updateSignalingState('stable');
           }
-
           Object.keys(streams).forEach(function (sid) {
             var stream = streams[sid];
-
             if (stream.getTracks().length) {
               if (pc.remoteStreams.indexOf(stream) === -1) {
                 pc.remoteStreams.push(stream);
@@ -22066,15 +21087,12 @@ var Ptz = /*#__PURE__*/function () {
                   pc._dispatchEvent('addstream', event);
                 });
               }
-
               receiverList.forEach(function (item) {
                 var track = item[0];
                 var receiver = item[1];
-
                 if (stream.id !== item[2].id) {
                   return;
                 }
-
                 fireAddTrack(pc, track, receiver, [stream]);
               });
             }
@@ -22083,16 +21101,15 @@ var Ptz = /*#__PURE__*/function () {
             if (item[2]) {
               return;
             }
-
             fireAddTrack(pc, item[0], item[1], []);
-          }); // check whether addIceCandidate({}) was called within four seconds after
-          // setRemoteDescription.
+          });
 
+          // check whether addIceCandidate({}) was called within four seconds after
+          // setRemoteDescription.
           window.setTimeout(function () {
             if (!(pc && pc.transceivers)) {
               return;
             }
-
             pc.transceivers.forEach(function (transceiver) {
               if (transceiver.iceTransport && transceiver.iceTransport.state === 'new' && transceiver.iceTransport.getRemoteCandidates().length > 0) {
                 console.warn('Timeout for addRemoteCandidate. Consider sending ' + 'an end-of-candidates notification');
@@ -22102,7 +21119,6 @@ var Ptz = /*#__PURE__*/function () {
           }, 4000);
           return Promise.resolve();
         };
-
         RTCPeerConnection.prototype.close = function () {
           this.transceivers.forEach(function (transceiver) {
             /* not yet
@@ -22113,53 +21129,45 @@ var Ptz = /*#__PURE__*/function () {
             if (transceiver.iceTransport) {
               transceiver.iceTransport.stop();
             }
-
             if (transceiver.dtlsTransport) {
               transceiver.dtlsTransport.stop();
             }
-
             if (transceiver.rtpSender) {
               transceiver.rtpSender.stop();
             }
-
             if (transceiver.rtpReceiver) {
               transceiver.rtpReceiver.stop();
             }
-          }); // FIXME: clean up tracks, local streams, remote streams, etc
-
+          });
+          // FIXME: clean up tracks, local streams, remote streams, etc
           this._isClosed = true;
-
           this._updateSignalingState('closed');
-        }; // Update the signaling state.
+        };
 
-
+        // Update the signaling state.
         RTCPeerConnection.prototype._updateSignalingState = function (newState) {
           this.signalingState = newState;
           var event = new Event('signalingstatechange');
-
           this._dispatchEvent('signalingstatechange', event);
-        }; // Determine whether to fire the negotiationneeded event.
+        };
 
-
+        // Determine whether to fire the negotiationneeded event.
         RTCPeerConnection.prototype._maybeFireNegotiationNeeded = function () {
           var pc = this;
-
           if (this.signalingState !== 'stable' || this.needNegotiation === true) {
             return;
           }
-
           this.needNegotiation = true;
           window.setTimeout(function () {
             if (pc.needNegotiation) {
               pc.needNegotiation = false;
               var event = new Event('negotiationneeded');
-
               pc._dispatchEvent('negotiationneeded', event);
             }
           }, 0);
-        }; // Update the ice connection state.
+        };
 
-
+        // Update the ice connection state.
         RTCPeerConnection.prototype._updateIceConnectionState = function () {
           var newState;
           var states = {
@@ -22177,7 +21185,6 @@ var Ptz = /*#__PURE__*/function () {
             }
           });
           newState = 'new';
-
           if (states.failed > 0) {
             newState = 'failed';
           } else if (states.checking > 0) {
@@ -22191,16 +21198,14 @@ var Ptz = /*#__PURE__*/function () {
           } else if (states.completed > 0) {
             newState = 'completed';
           }
-
           if (newState !== this.iceConnectionState) {
             this.iceConnectionState = newState;
             var event = new Event('iceconnectionstatechange');
-
             this._dispatchEvent('iceconnectionstatechange', event);
           }
-        }; // Update the connection state.
+        };
 
-
+        // Update the connection state.
         RTCPeerConnection.prototype._updateConnectionState = function () {
           var newState;
           var states = {
@@ -22217,11 +21222,10 @@ var Ptz = /*#__PURE__*/function () {
               states[transceiver.iceTransport.state]++;
               states[transceiver.dtlsTransport.state]++;
             }
-          }); // ICETransport.completed and connected are the same for this purpose.
-
+          });
+          // ICETransport.completed and connected are the same for this purpose.
           states.connected += states.completed;
           newState = 'new';
-
           if (states.failed > 0) {
             newState = 'failed';
           } else if (states.connecting > 0) {
@@ -22233,37 +21237,31 @@ var Ptz = /*#__PURE__*/function () {
           } else if (states.connected > 0) {
             newState = 'connected';
           }
-
           if (newState !== this.connectionState) {
             this.connectionState = newState;
             var event = new Event('connectionstatechange');
-
             this._dispatchEvent('connectionstatechange', event);
           }
         };
-
         RTCPeerConnection.prototype.createOffer = function () {
           var pc = this;
-
           if (pc._isClosed) {
             return Promise.reject(makeError('InvalidStateError', 'Can not call createOffer after close'));
           }
-
           var numAudioTracks = pc.transceivers.filter(function (t) {
             return t.kind === 'audio';
           }).length;
           var numVideoTracks = pc.transceivers.filter(function (t) {
             return t.kind === 'video';
-          }).length; // Determine number of audio and video tracks we need to send/recv.
+          }).length;
 
+          // Determine number of audio and video tracks we need to send/recv.
           var offerOptions = arguments[0];
-
           if (offerOptions) {
             // Reject Chrome legacy constraints.
             if (offerOptions.mandatory || offerOptions.optional) {
               throw new TypeError('Legacy mandatory/optional constraints not supported.');
             }
-
             if (offerOptions.offerToReceiveAudio !== undefined) {
               if (offerOptions.offerToReceiveAudio === true) {
                 numAudioTracks = 1;
@@ -22273,7 +21271,6 @@ var Ptz = /*#__PURE__*/function () {
                 numAudioTracks = offerOptions.offerToReceiveAudio;
               }
             }
-
             if (offerOptions.offerToReceiveVideo !== undefined) {
               if (offerOptions.offerToReceiveVideo === true) {
                 numVideoTracks = 1;
@@ -22284,37 +21281,31 @@ var Ptz = /*#__PURE__*/function () {
               }
             }
           }
-
           pc.transceivers.forEach(function (transceiver) {
             if (transceiver.kind === 'audio') {
               numAudioTracks--;
-
               if (numAudioTracks < 0) {
                 transceiver.wantReceive = false;
               }
             } else if (transceiver.kind === 'video') {
               numVideoTracks--;
-
               if (numVideoTracks < 0) {
                 transceiver.wantReceive = false;
               }
             }
-          }); // Create M-lines for recvonly streams.
+          });
 
+          // Create M-lines for recvonly streams.
           while (numAudioTracks > 0 || numVideoTracks > 0) {
             if (numAudioTracks > 0) {
               pc._createTransceiver('audio');
-
               numAudioTracks--;
             }
-
             if (numVideoTracks > 0) {
               pc._createTransceiver('video');
-
               numVideoTracks--;
             }
           }
-
           var sdp = SDPUtils.writeSessionBoilerplate(pc._sdpSessionId, pc._sdpSessionVersion++);
           pc.transceivers.forEach(function (transceiver, sdpMLineIndex) {
             // For each track, create an ice gatherer, ice transport,
@@ -22323,29 +21314,26 @@ var Ptz = /*#__PURE__*/function () {
             var kind = transceiver.kind;
             var mid = transceiver.mid || SDPUtils.generateIdentifier();
             transceiver.mid = mid;
-
             if (!transceiver.iceGatherer) {
               transceiver.iceGatherer = pc._createIceGatherer(sdpMLineIndex, pc.usingBundle);
             }
-
-            var localCapabilities = window.RTCRtpSender.getCapabilities(kind); // filter RTX until additional stuff needed for RTX is implemented
+            var localCapabilities = window.RTCRtpSender.getCapabilities(kind);
+            // filter RTX until additional stuff needed for RTX is implemented
             // in adapter.js
-
             if (edgeVersion < 15019) {
               localCapabilities.codecs = localCapabilities.codecs.filter(function (codec) {
                 return codec.name !== 'rtx';
               });
             }
-
             localCapabilities.codecs.forEach(function (codec) {
               // work around https://bugs.chromium.org/p/webrtc/issues/detail?id=6552
               // by adding level-asymmetry-allowed=1
               if (codec.name === 'H264' && codec.parameters['level-asymmetry-allowed'] === undefined) {
                 codec.parameters['level-asymmetry-allowed'] = '1';
-              } // for subsequent offers, we might have to re-use the payload
+              }
+
+              // for subsequent offers, we might have to re-use the payload
               // type of the last offer.
-
-
               if (transceiver.remoteCapabilities && transceiver.remoteCapabilities.codecs) {
                 transceiver.remoteCapabilities.codecs.forEach(function (remoteCodec) {
                   if (codec.name.toLowerCase() === remoteCodec.name.toLowerCase() && codec.clockRate === remoteCodec.clockRate) {
@@ -22361,12 +21349,12 @@ var Ptz = /*#__PURE__*/function () {
                   hdrExt.id = rHdrExt.id;
                 }
               });
-            }); // generate an ssrc now, to be used later in rtpSender.send
+            });
 
+            // generate an ssrc now, to be used later in rtpSender.send
             var sendEncodingParameters = transceiver.sendEncodingParameters || [{
               ssrc: (2 * sdpMLineIndex + 1) * 1001
             }];
-
             if (track) {
               // add RTX
               if (edgeVersion >= 15019 && kind === 'video' && !sendEncodingParameters[0].rtx) {
@@ -22375,32 +21363,28 @@ var Ptz = /*#__PURE__*/function () {
                 };
               }
             }
-
             if (transceiver.wantReceive) {
               transceiver.rtpReceiver = new window.RTCRtpReceiver(transceiver.dtlsTransport, kind);
             }
-
             transceiver.localCapabilities = localCapabilities;
             transceiver.sendEncodingParameters = sendEncodingParameters;
-          }); // always offer BUNDLE and dispose on return if not supported.
+          });
 
+          // always offer BUNDLE and dispose on return if not supported.
           if (pc._config.bundlePolicy !== 'max-compat') {
             sdp += 'a=group:BUNDLE ' + pc.transceivers.map(function (t) {
               return t.mid;
             }).join(' ') + '\r\n';
           }
-
           sdp += 'a=ice-options:trickle\r\n';
           pc.transceivers.forEach(function (transceiver, sdpMLineIndex) {
             sdp += writeMediaSection(transceiver, transceiver.localCapabilities, 'offer', transceiver.stream, pc._dtlsRole);
             sdp += 'a=rtcp-rsize\r\n';
-
             if (transceiver.iceGatherer && pc.iceGatheringState !== 'new' && (sdpMLineIndex === 0 || !pc.usingBundle)) {
               transceiver.iceGatherer.getLocalCandidates().forEach(function (cand) {
                 cand.component = 1;
                 sdp += 'a=' + SDPUtils.writeCandidate(cand) + '\r\n';
               });
-
               if (transceiver.iceGatherer.state === 'completed') {
                 sdp += 'a=end-of-candidates\r\n';
               }
@@ -22412,33 +21396,26 @@ var Ptz = /*#__PURE__*/function () {
           });
           return Promise.resolve(desc);
         };
-
         RTCPeerConnection.prototype.createAnswer = function () {
           var pc = this;
-
           if (pc._isClosed) {
             return Promise.reject(makeError('InvalidStateError', 'Can not call createAnswer after close'));
           }
-
           if (!(pc.signalingState === 'have-remote-offer' || pc.signalingState === 'have-local-pranswer')) {
             return Promise.reject(makeError('InvalidStateError', 'Can not call createAnswer in signalingState ' + pc.signalingState));
           }
-
           var sdp = SDPUtils.writeSessionBoilerplate(pc._sdpSessionId, pc._sdpSessionVersion++);
-
           if (pc.usingBundle) {
             sdp += 'a=group:BUNDLE ' + pc.transceivers.map(function (t) {
               return t.mid;
             }).join(' ') + '\r\n';
           }
-
           sdp += 'a=ice-options:trickle\r\n';
           var mediaSectionsInOffer = SDPUtils.getMediaSections(pc._remoteDescription.sdp).length;
           pc.transceivers.forEach(function (transceiver, sdpMLineIndex) {
             if (sdpMLineIndex + 1 > mediaSectionsInOffer) {
               return;
             }
-
             if (transceiver.rejected) {
               if (transceiver.kind === 'application') {
                 if (transceiver.protocol === 'DTLS/SCTP') {
@@ -22452,21 +21429,18 @@ var Ptz = /*#__PURE__*/function () {
               } else if (transceiver.kind === 'video') {
                 sdp += 'm=video 0 UDP/TLS/RTP/SAVPF 120\r\n' + 'a=rtpmap:120 VP8/90000\r\n';
               }
-
               sdp += 'c=IN IP4 0.0.0.0\r\n' + 'a=inactive\r\n' + 'a=mid:' + transceiver.mid + '\r\n';
               return;
-            } // FIXME: look at direction.
+            }
 
-
+            // FIXME: look at direction.
             if (transceiver.stream) {
               var localTrack;
-
               if (transceiver.kind === 'audio') {
                 localTrack = transceiver.stream.getAudioTracks()[0];
               } else if (transceiver.kind === 'video') {
                 localTrack = transceiver.stream.getVideoTracks()[0];
               }
-
               if (localTrack) {
                 // add RTX
                 if (edgeVersion >= 15019 && transceiver.kind === 'video' && !transceiver.sendEncodingParameters[0].rtx) {
@@ -22475,20 +21449,17 @@ var Ptz = /*#__PURE__*/function () {
                   };
                 }
               }
-            } // Calculate intersection of capabilities.
+            }
 
-
+            // Calculate intersection of capabilities.
             var commonCapabilities = getCommonCapabilities(transceiver.localCapabilities, transceiver.remoteCapabilities);
             var hasRtx = commonCapabilities.codecs.filter(function (c) {
               return c.name.toLowerCase() === 'rtx';
             }).length;
-
             if (!hasRtx && transceiver.sendEncodingParameters[0].rtx) {
               delete transceiver.sendEncodingParameters[0].rtx;
             }
-
             sdp += writeMediaSection(transceiver, commonCapabilities, 'answer', transceiver.stream, pc._dtlsRole);
-
             if (transceiver.rtcpParameters && transceiver.rtcpParameters.reducedSize) {
               sdp += 'a=rtcp-rsize\r\n';
             }
@@ -22499,16 +21470,14 @@ var Ptz = /*#__PURE__*/function () {
           });
           return Promise.resolve(desc);
         };
-
         RTCPeerConnection.prototype.addIceCandidate = function (candidate) {
           var pc = this;
           var sections;
-
           if (candidate && !(candidate.sdpMLineIndex !== undefined || candidate.sdpMid)) {
             return Promise.reject(new TypeError('sdpMLineIndex or sdpMid required'));
-          } // TODO: needs to go into ops queue.
+          }
 
-
+          // TODO: needs to go into ops queue.
           return new Promise(function (resolve, reject) {
             if (!pc._remoteDescription) {
               return reject(makeError('InvalidStateError', 'Can not add ICE candidate without a remote description'));
@@ -22517,19 +21486,16 @@ var Ptz = /*#__PURE__*/function () {
                 if (pc.transceivers[j].rejected) {
                   continue;
                 }
-
                 pc.transceivers[j].iceTransport.addRemoteCandidate({});
                 sections = SDPUtils.getMediaSections(pc._remoteDescription.sdp);
                 sections[j] += 'a=end-of-candidates\r\n';
                 pc._remoteDescription.sdp = SDPUtils.getDescription(pc._remoteDescription.sdp) + sections.join('');
-
                 if (pc.usingBundle) {
                   break;
                 }
               }
             } else {
               var sdpMLineIndex = candidate.sdpMLineIndex;
-
               if (candidate.sdpMid) {
                 for (var i = 0; i < pc.transceivers.length; i++) {
                   if (pc.transceivers[i].mid === candidate.sdpMid) {
@@ -22538,40 +21504,33 @@ var Ptz = /*#__PURE__*/function () {
                   }
                 }
               }
-
               var transceiver = pc.transceivers[sdpMLineIndex];
-
               if (transceiver) {
                 if (transceiver.rejected) {
                   return resolve();
                 }
-
-                var cand = Object.keys(candidate.candidate).length > 0 ? SDPUtils.parseCandidate(candidate.candidate) : {}; // Ignore Chrome's invalid candidates since Edge does not like them.
-
+                var cand = Object.keys(candidate.candidate).length > 0 ? SDPUtils.parseCandidate(candidate.candidate) : {};
+                // Ignore Chrome's invalid candidates since Edge does not like them.
                 if (cand.protocol === 'tcp' && (cand.port === 0 || cand.port === 9)) {
                   return resolve();
-                } // Ignore RTCP candidates, we assume RTCP-MUX.
-
-
+                }
+                // Ignore RTCP candidates, we assume RTCP-MUX.
                 if (cand.component && cand.component !== 1) {
                   return resolve();
-                } // when using bundle, avoid adding candidates to the wrong
+                }
+                // when using bundle, avoid adding candidates to the wrong
                 // ice transport. And avoid adding candidates added in the SDP.
-
-
                 if (sdpMLineIndex === 0 || sdpMLineIndex > 0 && transceiver.iceTransport !== pc.transceivers[0].iceTransport) {
                   if (!maybeAddCandidate(transceiver.iceTransport, cand)) {
                     return reject(makeError('OperationError', 'Can not add ICE candidate'));
                   }
-                } // update the remoteDescription.
+                }
 
-
+                // update the remoteDescription.
                 var candidateString = candidate.candidate.trim();
-
                 if (candidateString.indexOf('a=') === 0) {
                   candidateString = candidateString.substr(2);
                 }
-
                 sections = SDPUtils.getMediaSections(pc._remoteDescription.sdp);
                 sections[sdpMLineIndex] += 'a=' + (cand.type ? candidateString : 'end-of-candidates') + '\r\n';
                 pc._remoteDescription.sdp = SDPUtils.getDescription(pc._remoteDescription.sdp) + sections.join('');
@@ -22579,11 +21538,9 @@ var Ptz = /*#__PURE__*/function () {
                 return reject(makeError('OperationError', 'Can not add ICE candidate'));
               }
             }
-
             resolve();
           });
         };
-
         RTCPeerConnection.prototype.getStats = function (selector) {
           if (selector && selector instanceof window.MediaStreamTrack) {
             var senderOrReceiver = null;
@@ -22594,14 +21551,11 @@ var Ptz = /*#__PURE__*/function () {
                 senderOrReceiver = transceiver.rtpReceiver;
               }
             });
-
             if (!senderOrReceiver) {
               throw makeError('InvalidAccessError', 'Invalid selector.');
             }
-
             return senderOrReceiver.getStats();
           }
-
           var promises = [];
           this.transceivers.forEach(function (transceiver) {
             ['rtpSender', 'rtpReceiver', 'iceGatherer', 'iceTransport', 'dtlsTransport'].forEach(function (method) {
@@ -22619,16 +21573,14 @@ var Ptz = /*#__PURE__*/function () {
             });
             return results;
           });
-        }; // fix low-level stat names and return Map instead of object.
+        };
 
-
+        // fix low-level stat names and return Map instead of object.
         var ortcObjects = ['RTCRtpSender', 'RTCRtpReceiver', 'RTCIceGatherer', 'RTCIceTransport', 'RTCDtlsTransport'];
         ortcObjects.forEach(function (ortcObjectName) {
           var obj = window[ortcObjectName];
-
           if (obj && obj.prototype && obj.prototype.getStats) {
             var nativeGetstats = obj.prototype.getStats;
-
             obj.prototype.getStats = function () {
               return nativeGetstats.apply(this).then(function (nativeStats) {
                 var mapStats = new Map();
@@ -22640,15 +21592,14 @@ var Ptz = /*#__PURE__*/function () {
               });
             };
           }
-        }); // legacy callback shims. Should be moved to adapter.js some days.
+        });
 
+        // legacy callback shims. Should be moved to adapter.js some days.
         var methods = ['createOffer', 'createAnswer'];
         methods.forEach(function (method) {
           var nativeMethod = RTCPeerConnection.prototype[method];
-
           RTCPeerConnection.prototype[method] = function () {
             var args = arguments;
-
             if (typeof args[0] === 'function' || typeof args[1] === 'function') {
               // legacy
               return nativeMethod.apply(this, [arguments[2]]).then(function (description) {
@@ -22661,17 +21612,14 @@ var Ptz = /*#__PURE__*/function () {
                 }
               });
             }
-
             return nativeMethod.apply(this, arguments);
           };
         });
         methods = ['setLocalDescription', 'setRemoteDescription', 'addIceCandidate'];
         methods.forEach(function (method) {
           var nativeMethod = RTCPeerConnection.prototype[method];
-
           RTCPeerConnection.prototype[method] = function () {
             var args = arguments;
-
             if (typeof args[1] === 'function' || typeof args[2] === 'function') {
               // legacy
               return nativeMethod.apply(this, arguments).then(function () {
@@ -22684,18 +21632,16 @@ var Ptz = /*#__PURE__*/function () {
                 }
               });
             }
-
             return nativeMethod.apply(this, arguments);
           };
-        }); // getStats is special. It doesn't have a spec legacy method yet we support
-        // getStats(something, cb) without error callbacks.
+        });
 
+        // getStats is special. It doesn't have a spec legacy method yet we support
+        // getStats(something, cb) without error callbacks.
         ['getStats'].forEach(function (method) {
           var nativeMethod = RTCPeerConnection.prototype[method];
-
           RTCPeerConnection.prototype[method] = function () {
             var args = arguments;
-
             if (typeof args[1] === 'function') {
               return nativeMethod.apply(this, arguments).then(function () {
                 if (typeof args[1] === 'function') {
@@ -22703,7 +21649,6 @@ var Ptz = /*#__PURE__*/function () {
                 }
               });
             }
-
             return nativeMethod.apply(this, arguments);
           };
         });
@@ -22714,62 +21659,63 @@ var Ptz = /*#__PURE__*/function () {
     }],
     17: [function (require, module, exports) {
 
-      var SDPUtils = {}; // Generate an alphanumeric identifier for cname or mids.
-      // TODO: use UUIDs instead? https://gist.github.com/jed/982883
+      // SDP helpers.
+      var SDPUtils = {};
 
+      // Generate an alphanumeric identifier for cname or mids.
+      // TODO: use UUIDs instead? https://gist.github.com/jed/982883
       SDPUtils.generateIdentifier = function () {
         return Math.random().toString(36).substr(2, 10);
-      }; // The RTCP CNAME used by all peerconnections from the same JS.
+      };
 
+      // The RTCP CNAME used by all peerconnections from the same JS.
+      SDPUtils.localCName = SDPUtils.generateIdentifier();
 
-      SDPUtils.localCName = SDPUtils.generateIdentifier(); // Splits SDP into lines, dealing with both CRLF and LF.
-
+      // Splits SDP into lines, dealing with both CRLF and LF.
       SDPUtils.splitLines = function (blob) {
         return blob.trim().split('\n').map(function (line) {
           return line.trim();
         });
-      }; // Splits SDP into sessionpart and mediasections. Ensures CRLF.
-
-
+      };
+      // Splits SDP into sessionpart and mediasections. Ensures CRLF.
       SDPUtils.splitSections = function (blob) {
         var parts = blob.split('\nm=');
         return parts.map(function (part, index) {
           return (index > 0 ? 'm=' + part : part).trim() + '\r\n';
         });
-      }; // returns the session description.
+      };
 
-
+      // returns the session description.
       SDPUtils.getDescription = function (blob) {
         var sections = SDPUtils.splitSections(blob);
         return sections && sections[0];
-      }; // returns the individual media sections.
+      };
 
-
+      // returns the individual media sections.
       SDPUtils.getMediaSections = function (blob) {
         var sections = SDPUtils.splitSections(blob);
         sections.shift();
         return sections;
-      }; // Returns lines that start with a certain prefix.
+      };
 
-
+      // Returns lines that start with a certain prefix.
       SDPUtils.matchPrefix = function (blob, prefix) {
         return SDPUtils.splitLines(blob).filter(function (line) {
           return line.indexOf(prefix) === 0;
         });
-      }; // Parses an ICE candidate line. Sample input:
+      };
+
+      // Parses an ICE candidate line. Sample input:
       // candidate:702786350 2 udp 41819902 8.8.8.8 60769 typ relay raddr 8.8.8.8
       // rport 55996"
-
-
       SDPUtils.parseCandidate = function (line) {
-        var parts; // Parse both variants.
-
+        var parts;
+        // Parse both variants.
         if (line.indexOf('a=candidate:') === 0) {
           parts = line.substring(12).split(' ');
         } else {
           parts = line.substring(10).split(' ');
         }
-
         var candidate = {
           foundation: parts[0],
           component: parseInt(parts[1], 10),
@@ -22782,38 +21728,31 @@ var Ptz = /*#__PURE__*/function () {
           // skip parts[6] == 'typ'
           type: parts[7]
         };
-
         for (var i = 8; i < parts.length; i += 2) {
           switch (parts[i]) {
             case 'raddr':
               candidate.relatedAddress = parts[i + 1];
               break;
-
             case 'rport':
               candidate.relatedPort = parseInt(parts[i + 1], 10);
               break;
-
             case 'tcptype':
               candidate.tcpType = parts[i + 1];
               break;
-
             case 'ufrag':
               candidate.ufrag = parts[i + 1]; // for backward compability.
-
               candidate.usernameFragment = parts[i + 1];
               break;
-
             default:
               // extension handling, in particular ufrag
               candidate[parts[i]] = parts[i + 1];
               break;
           }
         }
-
         return candidate;
-      }; // Translates a candidate object into SDP candidate attribute.
+      };
 
-
+      // Translates a candidate object into SDP candidate attribute.
       SDPUtils.writeCandidate = function (candidate) {
         var sdp = [];
         sdp.push(candidate.foundation);
@@ -22825,67 +21764,60 @@ var Ptz = /*#__PURE__*/function () {
         var type = candidate.type;
         sdp.push('typ');
         sdp.push(type);
-
         if (type !== 'host' && candidate.relatedAddress && candidate.relatedPort) {
           sdp.push('raddr');
           sdp.push(candidate.relatedAddress);
           sdp.push('rport');
           sdp.push(candidate.relatedPort);
         }
-
         if (candidate.tcpType && candidate.protocol.toLowerCase() === 'tcp') {
           sdp.push('tcptype');
           sdp.push(candidate.tcpType);
         }
-
         if (candidate.usernameFragment || candidate.ufrag) {
           sdp.push('ufrag');
           sdp.push(candidate.usernameFragment || candidate.ufrag);
         }
-
         return 'candidate:' + sdp.join(' ');
-      }; // Parses an ice-options line, returns an array of option tags.
+      };
+
+      // Parses an ice-options line, returns an array of option tags.
       // a=ice-options:foo bar
-
-
       SDPUtils.parseIceOptions = function (line) {
         return line.substr(14).split(' ');
-      }; // Parses an rtpmap line, returns RTCRtpCoddecParameters. Sample input:
+      };
+
+      // Parses an rtpmap line, returns RTCRtpCoddecParameters. Sample input:
       // a=rtpmap:111 opus/48000/2
-
-
       SDPUtils.parseRtpMap = function (line) {
         var parts = line.substr(9).split(' ');
         var parsed = {
           payloadType: parseInt(parts.shift(), 10) // was: id
-
         };
+
         parts = parts[0].split('/');
         parsed.name = parts[0];
         parsed.clockRate = parseInt(parts[1], 10); // was: clockrate
-
-        parsed.channels = parts.length === 3 ? parseInt(parts[2], 10) : 1; // legacy alias, got renamed back to channels in ORTC.
-
+        parsed.channels = parts.length === 3 ? parseInt(parts[2], 10) : 1;
+        // legacy alias, got renamed back to channels in ORTC.
         parsed.numChannels = parsed.channels;
         return parsed;
-      }; // Generate an a=rtpmap line from RTCRtpCodecCapability or
+      };
+
+      // Generate an a=rtpmap line from RTCRtpCodecCapability or
       // RTCRtpCodecParameters.
-
-
       SDPUtils.writeRtpMap = function (codec) {
         var pt = codec.payloadType;
-
         if (codec.preferredPayloadType !== undefined) {
           pt = codec.preferredPayloadType;
         }
-
         var channels = codec.channels || codec.numChannels || 1;
         return 'a=rtpmap:' + pt + ' ' + codec.name + '/' + codec.clockRate + (channels !== 1 ? '/' + channels : '') + '\r\n';
-      }; // Parses an a=extmap line (headerextension from RFC 5285). Sample input:
+      };
+
+      // Parses an a=extmap line (headerextension from RFC 5285). Sample input:
       // a=extmap:2 urn:ietf:params:rtp-hdrext:toffset
       // a=extmap:2/sendonly urn:ietf:params:rtp-hdrext:toffset
-
-
       SDPUtils.parseExtmap = function (line) {
         var parts = line.substr(9).split(' ');
         return {
@@ -22893,39 +21825,35 @@ var Ptz = /*#__PURE__*/function () {
           direction: parts[0].indexOf('/') > 0 ? parts[0].split('/')[1] : 'sendrecv',
           uri: parts[1]
         };
-      }; // Generates a=extmap line from RTCRtpHeaderExtensionParameters or
+      };
+
+      // Generates a=extmap line from RTCRtpHeaderExtensionParameters or
       // RTCRtpHeaderExtension.
-
-
       SDPUtils.writeExtmap = function (headerExtension) {
         return 'a=extmap:' + (headerExtension.id || headerExtension.preferredId) + (headerExtension.direction && headerExtension.direction !== 'sendrecv' ? '/' + headerExtension.direction : '') + ' ' + headerExtension.uri + '\r\n';
-      }; // Parses an ftmp line, returns dictionary. Sample input:
+      };
+
+      // Parses an ftmp line, returns dictionary. Sample input:
       // a=fmtp:96 vbr=on;cng=on
       // Also deals with vbr=on; cng=on
-
-
       SDPUtils.parseFmtp = function (line) {
         var parsed = {};
         var kv;
         var parts = line.substr(line.indexOf(' ') + 1).split(';');
-
         for (var j = 0; j < parts.length; j++) {
           kv = parts[j].trim().split('=');
           parsed[kv[0].trim()] = kv[1];
         }
-
         return parsed;
-      }; // Generates an a=ftmp line from RTCRtpCodecCapability or RTCRtpCodecParameters.
+      };
 
-
+      // Generates an a=ftmp line from RTCRtpCodecCapability or RTCRtpCodecParameters.
       SDPUtils.writeFmtp = function (codec) {
         var line = '';
         var pt = codec.payloadType;
-
         if (codec.preferredPayloadType !== undefined) {
           pt = codec.preferredPayloadType;
         }
-
         if (codec.parameters && Object.keys(codec.parameters).length) {
           var params = [];
           Object.keys(codec.parameters).forEach(function (param) {
@@ -22937,58 +21865,50 @@ var Ptz = /*#__PURE__*/function () {
           });
           line += 'a=fmtp:' + pt + ' ' + params.join(';') + '\r\n';
         }
-
         return line;
-      }; // Parses an rtcp-fb line, returns RTCPRtcpFeedback object. Sample input:
+      };
+
+      // Parses an rtcp-fb line, returns RTCPRtcpFeedback object. Sample input:
       // a=rtcp-fb:98 nack rpsi
-
-
       SDPUtils.parseRtcpFb = function (line) {
         var parts = line.substr(line.indexOf(' ') + 1).split(' ');
         return {
           type: parts.shift(),
           parameter: parts.join(' ')
         };
-      }; // Generate a=rtcp-fb lines from RTCRtpCodecCapability or RTCRtpCodecParameters.
-
-
+      };
+      // Generate a=rtcp-fb lines from RTCRtpCodecCapability or RTCRtpCodecParameters.
       SDPUtils.writeRtcpFb = function (codec) {
         var lines = '';
         var pt = codec.payloadType;
-
         if (codec.preferredPayloadType !== undefined) {
           pt = codec.preferredPayloadType;
         }
-
         if (codec.rtcpFeedback && codec.rtcpFeedback.length) {
           // FIXME: special handling for trr-int?
           codec.rtcpFeedback.forEach(function (fb) {
             lines += 'a=rtcp-fb:' + pt + ' ' + fb.type + (fb.parameter && fb.parameter.length ? ' ' + fb.parameter : '') + '\r\n';
           });
         }
-
         return lines;
-      }; // Parses an RFC 5576 ssrc media attribute. Sample input:
+      };
+
+      // Parses an RFC 5576 ssrc media attribute. Sample input:
       // a=ssrc:3735928559 cname:something
-
-
       SDPUtils.parseSsrcMedia = function (line) {
         var sp = line.indexOf(' ');
         var parts = {
           ssrc: parseInt(line.substr(7, sp - 7), 10)
         };
         var colon = line.indexOf(':', sp);
-
         if (colon > -1) {
           parts.attribute = line.substr(sp + 1, colon - sp - 1);
           parts.value = line.substr(colon + 1);
         } else {
           parts.attribute = line.substr(sp + 1);
         }
-
         return parts;
       };
-
       SDPUtils.parseSsrcGroup = function (line) {
         var parts = line.substr(13).split(' ');
         return {
@@ -22997,18 +21917,16 @@ var Ptz = /*#__PURE__*/function () {
             return parseInt(ssrc, 10);
           })
         };
-      }; // Extracts the MID (RFC 5888) from a media section.
+      };
+
+      // Extracts the MID (RFC 5888) from a media section.
       // returns the MID or undefined if no mid line was found.
-
-
       SDPUtils.getMid = function (mediaSection) {
         var mid = SDPUtils.matchPrefix(mediaSection, 'a=mid:')[0];
-
         if (mid) {
           return mid.substr(6);
         }
       };
-
       SDPUtils.parseFingerprint = function (line) {
         var parts = line.substr(14).split(' ');
         return {
@@ -23016,36 +21934,35 @@ var Ptz = /*#__PURE__*/function () {
           // algorithm is case-sensitive in Edge.
           value: parts[1]
         };
-      }; // Extracts DTLS parameters from SDP media section or sessionpart.
+      };
+
+      // Extracts DTLS parameters from SDP media section or sessionpart.
       // FIXME: for consistency with other functions this should only
       //   get the fingerprint line as input. See also getIceParameters.
-
-
       SDPUtils.getDtlsParameters = function (mediaSection, sessionpart) {
-        var lines = SDPUtils.matchPrefix(mediaSection + sessionpart, 'a=fingerprint:'); // Note: a=setup line is ignored since we use the 'auto' role.
+        var lines = SDPUtils.matchPrefix(mediaSection + sessionpart, 'a=fingerprint:');
+        // Note: a=setup line is ignored since we use the 'auto' role.
         // Note2: 'algorithm' is not case sensitive except in Edge.
-
         return {
           role: 'auto',
           fingerprints: lines.map(SDPUtils.parseFingerprint)
         };
-      }; // Serializes DTLS parameters to SDP.
+      };
 
-
+      // Serializes DTLS parameters to SDP.
       SDPUtils.writeDtlsParameters = function (params, setupType) {
         var sdp = 'a=setup:' + setupType + '\r\n';
         params.fingerprints.forEach(function (fp) {
           sdp += 'a=fingerprint:' + fp.algorithm + ' ' + fp.value + '\r\n';
         });
         return sdp;
-      }; // Parses ICE information from SDP media section or sessionpart.
+      };
+      // Parses ICE information from SDP media section or sessionpart.
       // FIXME: for consistency with other functions this should only
       //   get the ice-ufrag and ice-pwd lines as input.
-
-
       SDPUtils.getIceParameters = function (mediaSection, sessionpart) {
-        var lines = SDPUtils.splitLines(mediaSection); // Search in session part, too.
-
+        var lines = SDPUtils.splitLines(mediaSection);
+        // Search in session part, too.
         lines = lines.concat(SDPUtils.splitLines(sessionpart));
         var iceParameters = {
           usernameFragment: lines.filter(function (line) {
@@ -23056,14 +21973,14 @@ var Ptz = /*#__PURE__*/function () {
           })[0].substr(10)
         };
         return iceParameters;
-      }; // Serializes ICE parameters to SDP.
+      };
 
-
+      // Serializes ICE parameters to SDP.
       SDPUtils.writeIceParameters = function (params) {
         return 'a=ice-ufrag:' + params.usernameFragment + '\r\n' + 'a=ice-pwd:' + params.password + '\r\n';
-      }; // Parses the SDP media section and returns RTCRtpParameters.
+      };
 
-
+      // Parses the SDP media section and returns RTCRtpParameters.
       SDPUtils.parseRtpParameters = function (mediaSection) {
         var description = {
           codecs: [],
@@ -23073,20 +21990,18 @@ var Ptz = /*#__PURE__*/function () {
         };
         var lines = SDPUtils.splitLines(mediaSection);
         var mline = lines[0].split(' ');
-
         for (var i = 3; i < mline.length; i++) {
           // find all codecs from mline[3..]
           var pt = mline[i];
           var rtpmapline = SDPUtils.matchPrefix(mediaSection, 'a=rtpmap:' + pt + ' ')[0];
-
           if (rtpmapline) {
             var codec = SDPUtils.parseRtpMap(rtpmapline);
-            var fmtps = SDPUtils.matchPrefix(mediaSection, 'a=fmtp:' + pt + ' '); // Only the first a=fmtp:<pt> is considered.
-
+            var fmtps = SDPUtils.matchPrefix(mediaSection, 'a=fmtp:' + pt + ' ');
+            // Only the first a=fmtp:<pt> is considered.
             codec.parameters = fmtps.length ? SDPUtils.parseFmtp(fmtps[0]) : {};
             codec.rtcpFeedback = SDPUtils.matchPrefix(mediaSection, 'a=rtcp-fb:' + pt + ' ').map(SDPUtils.parseRtcpFb);
-            description.codecs.push(codec); // parse FEC mechanisms from rtpmap lines.
-
+            description.codecs.push(codec);
+            // parse FEC mechanisms from rtpmap lines.
             switch (codec.name.toUpperCase()) {
               case 'RED':
               case 'ULPFEC':
@@ -23095,33 +22010,32 @@ var Ptz = /*#__PURE__*/function () {
             }
           }
         }
-
         SDPUtils.matchPrefix(mediaSection, 'a=extmap:').forEach(function (line) {
           description.headerExtensions.push(SDPUtils.parseExtmap(line));
-        }); // FIXME: parse rtcp.
-
+        });
+        // FIXME: parse rtcp.
         return description;
-      }; // Generates parts of the SDP media section describing the capabilities /
+      };
+
+      // Generates parts of the SDP media section describing the capabilities /
       // parameters.
-
-
       SDPUtils.writeRtpDescription = function (kind, caps) {
-        var sdp = ''; // Build the mline.
+        var sdp = '';
 
+        // Build the mline.
         sdp += 'm=' + kind + ' ';
         sdp += caps.codecs.length > 0 ? '9' : '0'; // reject if no codecs.
-
         sdp += ' UDP/TLS/RTP/SAVPF ';
         sdp += caps.codecs.map(function (codec) {
           if (codec.preferredPayloadType !== undefined) {
             return codec.preferredPayloadType;
           }
-
           return codec.payloadType;
         }).join(' ') + '\r\n';
         sdp += 'c=IN IP4 0.0.0.0\r\n';
-        sdp += 'a=rtcp:9 IN IP4 0.0.0.0\r\n'; // Add a=rtpmap lines for each codec. Also fmtp and rtcp-fb.
+        sdp += 'a=rtcp:9 IN IP4 0.0.0.0\r\n';
 
+        // Add a=rtpmap lines for each codec. Also fmtp and rtcp-fb.
         caps.codecs.forEach(function (codec) {
           sdp += SDPUtils.writeRtpMap(codec);
           sdp += SDPUtils.writeFmtp(codec);
@@ -23133,31 +22047,28 @@ var Ptz = /*#__PURE__*/function () {
             maxptime = codec.maxptime;
           }
         });
-
         if (maxptime > 0) {
           sdp += 'a=maxptime:' + maxptime + '\r\n';
         }
-
         sdp += 'a=rtcp-mux\r\n';
-
         if (caps.headerExtensions) {
           caps.headerExtensions.forEach(function (extension) {
             sdp += SDPUtils.writeExtmap(extension);
           });
-        } // FIXME: write fecMechanisms.
-
-
+        }
+        // FIXME: write fecMechanisms.
         return sdp;
-      }; // Parses the SDP media section and returns an array of
+      };
+
+      // Parses the SDP media section and returns an array of
       // RTCRtpEncodingParameters.
-
-
       SDPUtils.parseRtpEncodingParameters = function (mediaSection) {
         var encodingParameters = [];
         var description = SDPUtils.parseRtpParameters(mediaSection);
         var hasRed = description.fecMechanisms.indexOf('RED') !== -1;
-        var hasUlpfec = description.fecMechanisms.indexOf('ULPFEC') !== -1; // filter a=ssrc:... cname:, ignore PlanB-msid
+        var hasUlpfec = description.fecMechanisms.indexOf('ULPFEC') !== -1;
 
+        // filter a=ssrc:... cname:, ignore PlanB-msid
         var ssrcs = SDPUtils.matchPrefix(mediaSection, 'a=ssrc:').map(function (line) {
           return SDPUtils.parseSsrcMedia(line);
         }).filter(function (parts) {
@@ -23171,26 +22082,21 @@ var Ptz = /*#__PURE__*/function () {
             return parseInt(part, 10);
           });
         });
-
         if (flows.length > 0 && flows[0].length > 1 && flows[0][0] === primarySsrc) {
           secondarySsrc = flows[0][1];
         }
-
         description.codecs.forEach(function (codec) {
           if (codec.name.toUpperCase() === 'RTX' && codec.parameters.apt) {
             var encParam = {
               ssrc: primarySsrc,
               codecPayloadType: parseInt(codec.parameters.apt, 10)
             };
-
             if (primarySsrc && secondarySsrc) {
               encParam.rtx = {
                 ssrc: secondarySsrc
               };
             }
-
             encodingParameters.push(encParam);
-
             if (hasRed) {
               encParam = JSON.parse(JSON.stringify(encParam));
               encParam.fec = {
@@ -23201,16 +22107,14 @@ var Ptz = /*#__PURE__*/function () {
             }
           }
         });
-
         if (encodingParameters.length === 0 && primarySsrc) {
           encodingParameters.push({
             ssrc: primarySsrc
           });
-        } // we support both b=AS and b=TIAS but interpret AS as TIAS.
+        }
 
-
+        // we support both b=AS and b=TIAS but interpret AS as TIAS.
         var bandwidth = SDPUtils.matchPrefix(mediaSection, 'b=');
-
         if (bandwidth.length) {
           if (bandwidth[0].indexOf('b=TIAS:') === 0) {
             bandwidth = parseInt(bandwidth[0].substr(7), 10);
@@ -23220,49 +22124,47 @@ var Ptz = /*#__PURE__*/function () {
           } else {
             bandwidth = undefined;
           }
-
           encodingParameters.forEach(function (params) {
             params.maxBitrate = bandwidth;
           });
         }
-
         return encodingParameters;
-      }; // parses http://draft.ortc.org/#rtcrtcpparameters*
+      };
 
-
+      // parses http://draft.ortc.org/#rtcrtcpparameters*
       SDPUtils.parseRtcpParameters = function (mediaSection) {
-        var rtcpParameters = {}; // Gets the first SSRC. Note tha with RTX there might be multiple
-        // SSRCs.
+        var rtcpParameters = {};
 
+        // Gets the first SSRC. Note tha with RTX there might be multiple
+        // SSRCs.
         var remoteSsrc = SDPUtils.matchPrefix(mediaSection, 'a=ssrc:').map(function (line) {
           return SDPUtils.parseSsrcMedia(line);
         }).filter(function (obj) {
           return obj.attribute === 'cname';
         })[0];
-
         if (remoteSsrc) {
           rtcpParameters.cname = remoteSsrc.value;
           rtcpParameters.ssrc = remoteSsrc.ssrc;
-        } // Edge uses the compound attribute instead of reducedSize
+        }
+
+        // Edge uses the compound attribute instead of reducedSize
         // compound is !reducedSize
-
-
         var rsize = SDPUtils.matchPrefix(mediaSection, 'a=rtcp-rsize');
         rtcpParameters.reducedSize = rsize.length > 0;
-        rtcpParameters.compound = rsize.length === 0; // parses the rtcp-mux attrіbute.
-        // Note that Edge does not support unmuxed RTCP.
+        rtcpParameters.compound = rsize.length === 0;
 
+        // parses the rtcp-mux attrіbute.
+        // Note that Edge does not support unmuxed RTCP.
         var mux = SDPUtils.matchPrefix(mediaSection, 'a=rtcp-mux');
         rtcpParameters.mux = mux.length > 0;
         return rtcpParameters;
-      }; // parses either a=msid: or a=ssrc:... msid lines and returns
+      };
+
+      // parses either a=msid: or a=ssrc:... msid lines and returns
       // the id of the MediaStream and MediaStreamTrack.
-
-
       SDPUtils.parseMsid = function (mediaSection) {
         var parts;
         var spec = SDPUtils.matchPrefix(mediaSection, 'a=msid:');
-
         if (spec.length === 1) {
           parts = spec[0].substr(7).split(' ');
           return {
@@ -23270,13 +22172,11 @@ var Ptz = /*#__PURE__*/function () {
             track: parts[1]
           };
         }
-
         var planB = SDPUtils.matchPrefix(mediaSection, 'a=ssrc:').map(function (line) {
           return SDPUtils.parseSsrcMedia(line);
         }).filter(function (msidParts) {
           return msidParts.attribute === 'msid';
         });
-
         if (planB.length > 0) {
           parts = planB[0].value.split(' ');
           return {
@@ -23284,26 +22184,22 @@ var Ptz = /*#__PURE__*/function () {
             track: parts[1]
           };
         }
-      }; // SCTP
+      };
+
+      // SCTP
       // parses draft-ietf-mmusic-sctp-sdp-26 first and falls back
       // to draft-ietf-mmusic-sctp-sdp-05
-
-
       SDPUtils.parseSctpDescription = function (mediaSection) {
         var mline = SDPUtils.parseMLine(mediaSection);
         var maxSizeLine = SDPUtils.matchPrefix(mediaSection, 'a=max-message-size:');
         var maxMessageSize;
-
         if (maxSizeLine.length > 0) {
           maxMessageSize = parseInt(maxSizeLine[0].substr(19), 10);
         }
-
         if (isNaN(maxMessageSize)) {
           maxMessageSize = 65536;
         }
-
         var sctpPort = SDPUtils.matchPrefix(mediaSection, 'a=sctp-port:');
-
         if (sctpPort.length > 0) {
           return {
             port: parseInt(sctpPort[0].substr(12), 10),
@@ -23311,9 +22207,7 @@ var Ptz = /*#__PURE__*/function () {
             maxMessageSize: maxMessageSize
           };
         }
-
         var sctpMapLines = SDPUtils.matchPrefix(mediaSection, 'a=sctpmap:');
-
         if (sctpMapLines.length > 0) {
           var parts = SDPUtils.matchPrefix(mediaSection, 'a=sctpmap:')[0].substr(10).split(' ');
           return {
@@ -23322,65 +22216,60 @@ var Ptz = /*#__PURE__*/function () {
             maxMessageSize: maxMessageSize
           };
         }
-      }; // SCTP
+      };
+
+      // SCTP
       // outputs the draft-ietf-mmusic-sctp-sdp-26 version that all browsers
       // support by now receiving in this format, unless we originally parsed
       // as the draft-ietf-mmusic-sctp-sdp-05 format (indicated by the m-line
       // protocol of DTLS/SCTP -- without UDP/ or TCP/)
-
-
       SDPUtils.writeSctpDescription = function (media, sctp) {
         var output = [];
-
         if (media.protocol !== 'DTLS/SCTP') {
           output = ['m=' + media.kind + ' 9 ' + media.protocol + ' ' + sctp.protocol + '\r\n', 'c=IN IP4 0.0.0.0\r\n', 'a=sctp-port:' + sctp.port + '\r\n'];
         } else {
           output = ['m=' + media.kind + ' 9 ' + media.protocol + ' ' + sctp.port + '\r\n', 'c=IN IP4 0.0.0.0\r\n', 'a=sctpmap:' + sctp.port + ' ' + sctp.protocol + ' 65535\r\n'];
         }
-
         if (sctp.maxMessageSize !== undefined) {
           output.push('a=max-message-size:' + sctp.maxMessageSize + '\r\n');
         }
-
         return output.join('');
-      }; // Generate a session ID for SDP.
+      };
+
+      // Generate a session ID for SDP.
       // https://tools.ietf.org/html/draft-ietf-rtcweb-jsep-20#section-5.2.1
       // recommends using a cryptographically random +ve 64-bit value
       // but right now this should be acceptable and within the right range
-
-
       SDPUtils.generateSessionId = function () {
         return Math.random().toString().substr(2, 21);
-      }; // Write boilder plate for start of SDP
+      };
+
+      // Write boilder plate for start of SDP
       // sessId argument is optional - if not supplied it will
       // be generated randomly
       // sessVersion is optional and defaults to 2
       // sessUser is optional and defaults to 'thisisadapterortc'
-
-
       SDPUtils.writeSessionBoilerplate = function (sessId, sessVer, sessUser) {
         var sessionId;
         var version = sessVer !== undefined ? sessVer : 2;
-
         if (sessId) {
           sessionId = sessId;
         } else {
           sessionId = SDPUtils.generateSessionId();
         }
-
-        var user = sessUser || 'thisisadapterortc'; // FIXME: sess-id should be an NTP timestamp.
-
+        var user = sessUser || 'thisisadapterortc';
+        // FIXME: sess-id should be an NTP timestamp.
         return 'v=0\r\n' + 'o=' + user + ' ' + sessionId + ' ' + version + ' IN IP4 127.0.0.1\r\n' + 's=-\r\n' + 't=0 0\r\n';
       };
-
       SDPUtils.writeMediaSection = function (transceiver, caps, type, stream) {
-        var sdp = SDPUtils.writeRtpDescription(transceiver.kind, caps); // Map ICE parameters (ufrag, pwd) to SDP.
+        var sdp = SDPUtils.writeRtpDescription(transceiver.kind, caps);
 
-        sdp += SDPUtils.writeIceParameters(transceiver.iceGatherer.getLocalParameters()); // Map DTLS parameters to SDP.
+        // Map ICE parameters (ufrag, pwd) to SDP.
+        sdp += SDPUtils.writeIceParameters(transceiver.iceGatherer.getLocalParameters());
 
+        // Map DTLS parameters to SDP.
         sdp += SDPUtils.writeDtlsParameters(transceiver.dtlsTransport.getLocalParameters(), type === 'offer' ? 'actpass' : 'active');
         sdp += 'a=mid:' + transceiver.mid + '\r\n';
-
         if (transceiver.direction) {
           sdp += 'a=' + transceiver.direction + '\r\n';
         } else if (transceiver.rtpSender && transceiver.rtpReceiver) {
@@ -23392,35 +22281,30 @@ var Ptz = /*#__PURE__*/function () {
         } else {
           sdp += 'a=inactive\r\n';
         }
-
         if (transceiver.rtpSender) {
           // spec.
           var msid = 'msid:' + stream.id + ' ' + transceiver.rtpSender.track.id + '\r\n';
-          sdp += 'a=' + msid; // for Chrome.
+          sdp += 'a=' + msid;
 
+          // for Chrome.
           sdp += 'a=ssrc:' + transceiver.sendEncodingParameters[0].ssrc + ' ' + msid;
-
           if (transceiver.sendEncodingParameters[0].rtx) {
             sdp += 'a=ssrc:' + transceiver.sendEncodingParameters[0].rtx.ssrc + ' ' + msid;
             sdp += 'a=ssrc-group:FID ' + transceiver.sendEncodingParameters[0].ssrc + ' ' + transceiver.sendEncodingParameters[0].rtx.ssrc + '\r\n';
           }
-        } // FIXME: this should be written by writeRtpDescription.
-
-
+        }
+        // FIXME: this should be written by writeRtpDescription.
         sdp += 'a=ssrc:' + transceiver.sendEncodingParameters[0].ssrc + ' cname:' + SDPUtils.localCName + '\r\n';
-
         if (transceiver.rtpSender && transceiver.sendEncodingParameters[0].rtx) {
           sdp += 'a=ssrc:' + transceiver.sendEncodingParameters[0].rtx.ssrc + ' cname:' + SDPUtils.localCName + '\r\n';
         }
-
         return sdp;
-      }; // Gets the direction from the mediaSection or the sessionpart.
+      };
 
-
+      // Gets the direction from the mediaSection or the sessionpart.
       SDPUtils.getDirection = function (mediaSection, sessionpart) {
         // Look for sendrecv, sendonly, recvonly, inactive, default to sendrecv.
         var lines = SDPUtils.splitLines(mediaSection);
-
         for (var i = 0; i < lines.length; i++) {
           switch (lines[i]) {
             case 'a=sendrecv':
@@ -23428,27 +22312,23 @@ var Ptz = /*#__PURE__*/function () {
             case 'a=recvonly':
             case 'a=inactive':
               return lines[i].substr(2);
-
+            // FIXME: What should happen here?
           }
         }
 
         if (sessionpart) {
           return SDPUtils.getDirection(sessionpart);
         }
-
         return 'sendrecv';
       };
-
       SDPUtils.getKind = function (mediaSection) {
         var lines = SDPUtils.splitLines(mediaSection);
         var mline = lines[0].split(' ');
         return mline[0].substr(2);
       };
-
       SDPUtils.isRejected = function (mediaSection) {
         return mediaSection.split(' ', 2)[1] === '0';
       };
-
       SDPUtils.parseMLine = function (mediaSection) {
         var lines = SDPUtils.splitLines(mediaSection);
         var parts = lines[0].substr(2).split(' ');
@@ -23459,7 +22339,6 @@ var Ptz = /*#__PURE__*/function () {
           fmt: parts.slice(3).join(' ')
         };
       };
-
       SDPUtils.parseOLine = function (mediaSection) {
         var line = SDPUtils.matchPrefix(mediaSection, 'o=')[0];
         var parts = line.substr(2).split(' ');
@@ -23471,27 +22350,25 @@ var Ptz = /*#__PURE__*/function () {
           addressType: parts[4],
           address: parts[5]
         };
-      }; // a very naive interpretation of a valid SDP.
+      };
 
-
+      // a very naive interpretation of a valid SDP.
       SDPUtils.isValidSDP = function (blob) {
         if (typeof blob !== 'string' || blob.length === 0) {
           return false;
         }
-
         var lines = SDPUtils.splitLines(blob);
-
         for (var i = 0; i < lines.length; i++) {
           if (lines[i].length < 2 || lines[i].charAt(1) !== '=') {
             return false;
-          } // TODO: check the modifier a bit more.
-
+          }
+          // TODO: check the modifier a bit more.
         }
 
         return true;
-      }; // Expose public methods.
+      };
 
-
+      // Expose public methods.
       if (_typeof(module) === 'object') {
         module.exports = SDPUtils;
       }
@@ -23522,32 +22399,28 @@ var Ptz = /*#__PURE__*/function () {
 	ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 	OTHER DEALINGS IN THE SOFTWARE.
  */
+
 // List of sessions
 Janus$1.sessions = {};
-
 Janus$1.isExtensionEnabled = function () {
   if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
     // No need for the extension, getDisplayMedia is supported
     return true;
   }
-
   if (window.navigator.userAgent.match('Chrome')) {
     var chromever = parseInt(window.navigator.userAgent.match(/Chrome\/(.*) /)[1], 10);
     var maxver = 33;
     if (window.navigator.userAgent.match('Linux')) maxver = 35; // "known" crash in chrome 34 and 35 on linux
-
     if (chromever >= 26 && chromever <= maxver) {
       // Older versions of Chrome don't support this extension-based approach, so lie
       return true;
     }
-
     return Janus$1.extension.isInstalled();
   } else {
     // Firefox of others, no need for the extension (but this doesn't mean it will work)
     return true;
   }
 };
-
 var defaultExtension = {
   // Screensharing Chrome Extension ID
   extensionId: 'hapfgfdkleiggjjpfpenajgdnfckjpaj',
@@ -23568,15 +22441,13 @@ var defaultExtension = {
   },
   init: function init() {
     var cache = {};
-    this.cache = cache; // Wait for events from the Chrome Extension
-
+    this.cache = cache;
+    // Wait for events from the Chrome Extension
     window.addEventListener('message', function (event) {
       if (event.origin != window.location.origin) return;
-
       if (event.data.type == 'janusGotScreen' && cache[event.data.id]) {
         var callback = cache[event.data.id];
         delete cache[event.data.id];
-
         if (event.data.sourceId === '') {
           // user canceled
           var error = new Error('NavigatorUserMediaError');
@@ -23592,7 +22463,6 @@ var defaultExtension = {
     });
   }
 };
-
 Janus$1.useDefaultDependencies = function (deps) {
   var f = deps && deps.fetch || fetch;
   var p = deps && deps.Promise || Promise;
@@ -23614,25 +22484,22 @@ Janus$1.useDefaultDependencies = function (deps) {
         },
         cache: 'no-cache'
       };
-
       if (options.verb === "POST") {
         fetchOptions.headers['Content-Type'] = 'application/json';
       }
-
       if (options.withCredentials !== undefined) {
         fetchOptions.credentials = options.withCredentials === true ? 'include' : options.withCredentials ? options.withCredentials : 'omit';
       }
-
       if (options.body !== undefined) {
         fetchOptions.body = JSON.stringify(options.body);
       }
-
       var fetching = f(url, fetchOptions)["catch"](function (error) {
         return p.reject({
           message: 'Probably a network error, is the server down?',
           error: error
         });
       });
+
       /*
        * fetch() does not natively support timeouts.
        * Work around this by starting a timeout manually, and racing it agains the fetch() to see which thing resolves first.
@@ -23650,7 +22517,6 @@ Janus$1.useDefaultDependencies = function (deps) {
         });
         fetching = p.race([fetching, timeout]);
       }
-
       fetching.then(function (response) {
         if (response.ok) {
           if (_typeof(options.success) === _typeof(Janus$1.noop)) {
@@ -23679,7 +22545,6 @@ Janus$1.useDefaultDependencies = function (deps) {
     }
   };
 };
-
 Janus$1.useOldDependencies = function (deps) {
   var jq = deps && deps.jQuery || jQuery;
   var socketCls = deps && deps.WebSocket || WebSocket;
@@ -23723,33 +22588,31 @@ Janus$1.useOldDependencies = function (deps) {
     }
   };
 };
-
 Janus$1.noop = function () {};
+Janus$1.dataChanDefaultLabel = "JanusDataChannel";
 
-Janus$1.dataChanDefaultLabel = "JanusDataChannel"; // Note: in the future we may want to change this, e.g., as was
+// Note: in the future we may want to change this, e.g., as was
 // attempted in https://github.com/meetecho/janus-gateway/issues/1670
+Janus$1.endOfCandidates = null;
 
-Janus$1.endOfCandidates = null; // Initialization
-
+// Initialization
 Janus$1.init = function (options) {
   options = options || {};
   options.callback = typeof options.callback == "function" ? options.callback : Janus$1.noop;
-
   if (Janus$1.initDone === true) {
     // Already initialized
     options.callback();
   } else {
     if (typeof console == "undefined" || typeof console.log == "undefined") console = {
       log: function log() {}
-    }; // Console logging (all debugging disabled by default)
-
+    };
+    // Console logging (all debugging disabled by default)
     Janus$1.trace = Janus$1.noop;
     Janus$1.debug = Janus$1.noop;
     Janus$1.vdebug = Janus$1.noop;
     Janus$1.log = Janus$1.noop;
     Janus$1.warn = Janus$1.noop;
     Janus$1.error = Janus$1.noop;
-
     if (options.debug === true || options.debug === "all") {
       // Enable all debugging levels
       Janus$1.trace = console.trace.bind(console);
@@ -23761,39 +22624,31 @@ Janus$1.init = function (options) {
     } else if (Array.isArray(options.debug)) {
       for (var i in options.debug) {
         var d = options.debug[i];
-
         switch (d) {
           case "trace":
             Janus$1.trace = console.trace.bind(console);
             break;
-
           case "debug":
             Janus$1.debug = console.debug.bind(console);
             break;
-
           case "vdebug":
             Janus$1.vdebug = console.debug.bind(console);
             break;
-
           case "log":
             Janus$1.log = console.log.bind(console);
             break;
-
           case "warn":
             Janus$1.warn = console.warn.bind(console);
             break;
-
           case "error":
             Janus$1.error = console.error.bind(console);
             break;
-
           default:
             console.error("Unknown debugging option '" + d + "' (supported: 'trace', 'debug', 'vdebug', 'log', warn', 'error')");
             break;
         }
       }
     }
-
     Janus$1.log("Initializing library");
     var usedDependencies = options.dependencies || Janus$1.useDefaultDependencies();
     Janus$1.isArray = usedDependencies.isArray;
@@ -23801,24 +22656,23 @@ Janus$1.init = function (options) {
     Janus$1.httpAPICall = usedDependencies.httpAPICall;
     Janus$1.newWebSocket = usedDependencies.newWebSocket;
     Janus$1.extension = usedDependencies.extension;
-    Janus$1.extension.init(); // Helper method to enumerate devices
+    Janus$1.extension.init();
 
+    // Helper method to enumerate devices
     Janus$1.listDevices = function (callback, config) {
       callback = typeof callback == "function" ? callback : Janus$1.noop;
       if (config == null) config = {
         audio: true,
         video: true
       };
-
       if (Janus$1.isGetUserMediaAvailable()) {
         navigator.mediaDevices.getUserMedia(config).then(function (stream) {
           navigator.mediaDevices.enumerateDevices().then(function (devices) {
             Janus$1.debug(devices);
-            callback(devices); // Get rid of the now useless stream
-
+            callback(devices);
+            // Get rid of the now useless stream
             try {
               var tracks = stream.getTracks();
-
               for (var i in tracks) {
                 var mst = tracks[i];
                 if (mst !== null && mst !== undefined) mst.stop();
@@ -23833,13 +22687,11 @@ Janus$1.init = function (options) {
         Janus$1.warn("navigator.mediaDevices unavailable");
         callback([]);
       }
-    }; // Helper methods to attach/reattach a stream to a video element (previously part of adapter.js)
-
-
+    };
+    // Helper methods to attach/reattach a stream to a video element (previously part of adapter.js)
     Janus$1.attachMediaStream = function (element, stream) {
       if (Janus$1.webRTCAdapter.browserDetails.browser === 'chrome') {
         var chromever = Janus$1.webRTCAdapter.browserDetails.version;
-
         if (chromever >= 52) {
           element.srcObject = stream;
         } else if (typeof element.src !== 'undefined') {
@@ -23851,11 +22703,9 @@ Janus$1.init = function (options) {
         element.srcObject = stream;
       }
     };
-
     Janus$1.reattachMediaStream = function (to, from) {
       if (Janus$1.webRTCAdapter.browserDetails.browser === 'chrome') {
         var chromever = Janus$1.webRTCAdapter.browserDetails.version;
-
         if (chromever >= 52) {
           to.srcObject = from.srcObject;
         } else if (typeof to.src !== 'undefined') {
@@ -23866,17 +22716,15 @@ Janus$1.init = function (options) {
       } else {
         to.srcObject = from.srcObject;
       }
-    }; // Detect tab close: make sure we don't loose existing onbeforeunload handlers
+    };
+    // Detect tab close: make sure we don't loose existing onbeforeunload handlers
     // (note: for iOS we need to subscribe to a different event, 'pagehide', see
     // https://gist.github.com/thehunmonkgroup/6bee8941a49b86be31a787fe8f4b8cfe)
-
-
     var iOS = ['iPad', 'iPhone', 'iPod'].indexOf(navigator.platform) >= 0;
     var eventName = iOS ? 'pagehide' : 'beforeunload';
     var oldOBF = window["on" + eventName];
     window.addEventListener(eventName, function (event) {
       Janus$1.log("Closing window");
-
       for (var s in Janus$1.sessions) {
         if (Janus$1.sessions[s] !== null && Janus$1.sessions[s] !== undefined && Janus$1.sessions[s].destroyOnUnload) {
           Janus$1.log("Destroying session " + s);
@@ -23886,24 +22734,20 @@ Janus$1.init = function (options) {
           });
         }
       }
-
       if (oldOBF && typeof oldOBF == "function") oldOBF();
-    }); // If this is a Safari Technology Preview, check if VP8 is supported
-
+    });
+    // If this is a Safari Technology Preview, check if VP8 is supported
     Janus$1.safariVp8 = false;
-
     if (Janus$1.webRTCAdapter.browserDetails.browser === 'safari' && Janus$1.webRTCAdapter.browserDetails.version >= 605) {
       // Let's see if RTCRtpSender.getCapabilities() is there
       if (RTCRtpSender && RTCRtpSender.getCapabilities && RTCRtpSender.getCapabilities("video") && RTCRtpSender.getCapabilities("video").codecs && RTCRtpSender.getCapabilities("video").codecs.length) {
         for (var i in RTCRtpSender.getCapabilities("video").codecs) {
           var codec = RTCRtpSender.getCapabilities("video").codecs[i];
-
           if (codec && codec.mimeType && codec.mimeType.toLowerCase() === "video/vp8") {
             Janus$1.safariVp8 = true;
             break;
           }
         }
-
         if (Janus$1.safariVp8) {
           Janus$1.log("This version of Safari supports VP8");
         } else {
@@ -23917,23 +22761,19 @@ Janus$1.init = function (options) {
           offerToReceiveVideo: true
         }).then(function (offer) {
           Janus$1.safariVp8 = offer.sdp.indexOf("VP8") !== -1;
-
           if (Janus$1.safariVp8) {
             Janus$1.log("This version of Safari supports VP8");
           } else {
             Janus$1.warn("This version of Safari does NOT support VP8: if you're using a Technology Preview, " + "try enabling the 'WebRTC VP8 codec' setting in the 'Experimental Features' Develop menu");
           }
-
           testpc.close();
           testpc = null;
         });
       }
-    } // Check if this browser supports Unified Plan and transceivers
+    }
+    // Check if this browser supports Unified Plan and transceivers
     // Based on https://codepen.io/anon/pen/ZqLwWV?editors=0010
-
-
     Janus$1.unifiedPlan = false;
-
     if (Janus$1.webRTCAdapter.browserDetails.browser === 'firefox' && Janus$1.webRTCAdapter.browserDetails.version >= 59) {
       // Firefox definitely does, starting from version 59
       Janus$1.unifiedPlan = true;
@@ -23947,73 +22787,61 @@ Janus$1.init = function (options) {
     } else {
       // Check if addTransceiver() throws an exception
       var tempPc = new RTCPeerConnection();
-
       try {
         tempPc.addTransceiver('audio');
         Janus$1.unifiedPlan = true;
       } catch (e) {}
-
       tempPc.close();
     }
-
     Janus$1.initDone = true;
     options.callback();
   }
-}; // Helper method to check whether WebRTC is supported by this browser
+};
 
-
+// Helper method to check whether WebRTC is supported by this browser
 Janus$1.isWebrtcSupported = function () {
   return window.RTCPeerConnection !== undefined && window.RTCPeerConnection !== null;
-}; // Helper method to check whether devices can be accessed by this browser (e.g., not possible via plain HTTP)
-
-
+};
+// Helper method to check whether devices can be accessed by this browser (e.g., not possible via plain HTTP)
 Janus$1.isGetUserMediaAvailable = function () {
   return navigator.mediaDevices !== undefined && navigator.mediaDevices !== null && navigator.mediaDevices.getUserMedia !== undefined && navigator.mediaDevices.getUserMedia !== null;
-}; // Helper method to create random identifiers (e.g., transaction)
+};
 
-
+// Helper method to create random identifiers (e.g., transaction)
 Janus$1.randomString = function (len) {
   var charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   var randomString = '';
-
   for (var i = 0; i < len; i++) {
     var randomPoz = Math.floor(Math.random() * charSet.length);
     randomString += charSet.substring(randomPoz, randomPoz + 1);
   }
-
   return randomString;
 };
-
 function Janus$1(gatewayCallbacks) {
   if (Janus$1.initDone === undefined) {
     gatewayCallbacks.error("Library not initialized");
     return {};
   }
-
   if (!Janus$1.isWebrtcSupported()) {
     gatewayCallbacks.error("WebRTC not supported by this browser");
     return {};
   }
-
   Janus$1.log("Library initialized: " + Janus$1.initDone);
   gatewayCallbacks = gatewayCallbacks || {};
   gatewayCallbacks.success = typeof gatewayCallbacks.success == "function" ? gatewayCallbacks.success : Janus$1.noop;
   gatewayCallbacks.error = typeof gatewayCallbacks.error == "function" ? gatewayCallbacks.error : Janus$1.noop;
   gatewayCallbacks.destroyed = typeof gatewayCallbacks.destroyed == "function" ? gatewayCallbacks.destroyed : Janus$1.noop;
-
   if (gatewayCallbacks.server === null || gatewayCallbacks.server === undefined) {
     gatewayCallbacks.error("Invalid server url");
     return {};
   }
-
   var websockets = false;
   var ws = null;
   var wsHandlers = {};
   var wsKeepaliveTimeoutId = null;
   var servers = null,
-      serversIndex = 0;
+    serversIndex = 0;
   var server = gatewayCallbacks.server;
-
   if (Janus$1.isArray(server)) {
     Janus$1.log("Multiple servers provided (" + server.length + "), will use the first that works");
     server = null;
@@ -24028,72 +22856,68 @@ function Janus$1(gatewayCallbacks) {
       Janus$1.log("Using REST API to contact Janus: " + server);
     }
   }
-
   var iceServers = gatewayCallbacks.iceServers;
   if (iceServers === undefined || iceServers === null) iceServers = [{
     urls: "stun:stun.l.google.com:19302"
   }];
   var iceTransportPolicy = gatewayCallbacks.iceTransportPolicy;
-  var bundlePolicy = gatewayCallbacks.bundlePolicy; // Whether IPv6 candidates should be gathered
-
+  var bundlePolicy = gatewayCallbacks.bundlePolicy;
+  // Whether IPv6 candidates should be gathered
   var ipv6Support = gatewayCallbacks.ipv6;
-  if (ipv6Support === undefined || ipv6Support === null) ipv6Support = false; // Whether we should enable the withCredentials flag for XHR requests
-
+  if (ipv6Support === undefined || ipv6Support === null) ipv6Support = false;
+  // Whether we should enable the withCredentials flag for XHR requests
   var withCredentials = false;
-  if (gatewayCallbacks.withCredentials !== undefined && gatewayCallbacks.withCredentials !== null) withCredentials = gatewayCallbacks.withCredentials === true; // Optional max events
-
+  if (gatewayCallbacks.withCredentials !== undefined && gatewayCallbacks.withCredentials !== null) withCredentials = gatewayCallbacks.withCredentials === true;
+  // Optional max events
   var maxev = 10;
   if (gatewayCallbacks.max_poll_events !== undefined && gatewayCallbacks.max_poll_events !== null) maxev = gatewayCallbacks.max_poll_events;
-  if (maxev < 1) maxev = 1; // Token to use (only if the token based authentication mechanism is enabled)
-
+  if (maxev < 1) maxev = 1;
+  // Token to use (only if the token based authentication mechanism is enabled)
   var token = null;
-  if (gatewayCallbacks.token !== undefined && gatewayCallbacks.token !== null) token = gatewayCallbacks.token; // API secret to use (only if the shared API secret is enabled)
-
+  if (gatewayCallbacks.token !== undefined && gatewayCallbacks.token !== null) token = gatewayCallbacks.token;
+  // API secret to use (only if the shared API secret is enabled)
   var apisecret = null;
-  if (gatewayCallbacks.apisecret !== undefined && gatewayCallbacks.apisecret !== null) apisecret = gatewayCallbacks.apisecret; // Whether we should destroy this session when onbeforeunload is called
-
+  if (gatewayCallbacks.apisecret !== undefined && gatewayCallbacks.apisecret !== null) apisecret = gatewayCallbacks.apisecret;
+  // Whether we should destroy this session when onbeforeunload is called
   this.destroyOnUnload = true;
-  if (gatewayCallbacks.destroyOnUnload !== undefined && gatewayCallbacks.destroyOnUnload !== null) this.destroyOnUnload = gatewayCallbacks.destroyOnUnload === true; // Some timeout-related values
-
+  if (gatewayCallbacks.destroyOnUnload !== undefined && gatewayCallbacks.destroyOnUnload !== null) this.destroyOnUnload = gatewayCallbacks.destroyOnUnload === true;
+  // Some timeout-related values
   var keepAlivePeriod = 25000;
   if (gatewayCallbacks.keepAlivePeriod !== undefined && gatewayCallbacks.keepAlivePeriod !== null) keepAlivePeriod = gatewayCallbacks.keepAlivePeriod;
   if (isNaN(keepAlivePeriod)) keepAlivePeriod = 25000;
   var longPollTimeout = 60000;
   if (gatewayCallbacks.longPollTimeout !== undefined && gatewayCallbacks.longPollTimeout !== null) longPollTimeout = gatewayCallbacks.longPollTimeout;
-  if (isNaN(longPollTimeout)) longPollTimeout = 60000; // overrides for default maxBitrate values for simulcasting
+  if (isNaN(longPollTimeout)) longPollTimeout = 60000;
 
+  // overrides for default maxBitrate values for simulcasting
   function getMaxBitrates(simulcastMaxBitrates) {
     var maxBitrates = {
       high: 900000,
       medium: 300000,
       low: 100000
     };
-
     if (simulcastMaxBitrates !== undefined && simulcastMaxBitrates !== null) {
       if (simulcastMaxBitrates.high) maxBitrates.high = simulcastMaxBitrates.high;
       if (simulcastMaxBitrates.medium) maxBitrates.medium = simulcastMaxBitrates.medium;
       if (simulcastMaxBitrates.low) maxBitrates.low = simulcastMaxBitrates.low;
     }
-
     return maxBitrates;
   }
-
   var connected = false;
   var sessionId = null;
   var pluginHandles = {};
   var that = this;
   var retries = 0;
   var transactions = {};
-  createSession(gatewayCallbacks); // Public methods
+  createSession(gatewayCallbacks);
 
+  // Public methods
   this.getServer = function () {
     return server;
   };
-
   this.isConnected = function () {
     return connected;
   };
-
   this.reconnect = function (callbacks) {
     callbacks = callbacks || {};
     callbacks.success = typeof callbacks.success == "function" ? callbacks.success : Janus$1.noop;
@@ -24101,28 +22925,22 @@ function Janus$1(gatewayCallbacks) {
     callbacks["reconnect"] = true;
     createSession(callbacks);
   };
-
   this.getSessionId = function () {
     return sessionId;
   };
-
   this.destroy = function (callbacks) {
     destroySession(callbacks);
   };
-
   this.attach = function (callbacks) {
     createHandle(callbacks);
   };
-
   function eventHandler() {
     if (sessionId == null) return;
     Janus$1.debug('Long poll...');
-
     if (!connected) {
       Janus$1.warn("Is the server down? (connected=false)");
       return;
     }
-
     var longpoll = server + "/" + sessionId + "?rid=" + new Date().getTime();
     if (maxev !== undefined && maxev !== null) longpoll = longpoll + "&maxev=" + maxev;
     if (token !== null && token !== undefined) longpoll = longpoll + "&token=" + encodeURIComponent(token);
@@ -24135,33 +22953,28 @@ function Janus$1(gatewayCallbacks) {
       error: function error(textStatus, errorThrown) {
         Janus$1.error(textStatus + ":", errorThrown);
         retries++;
-
         if (retries > 3) {
           // Did we just lose the server? :-(
           connected = false;
           gatewayCallbacks.error("Lost connection to the server (is it down?)");
           return;
         }
-
         eventHandler();
       }
     });
-  } // Private event handler: this will trigger plugin callbacks, if set
+  }
 
-
+  // Private event handler: this will trigger plugin callbacks, if set
   function handleEvent(json, skipTimeout) {
     retries = 0;
     if (!websockets && sessionId !== undefined && sessionId !== null && skipTimeout !== true) eventHandler();
-
     if (!websockets && Janus$1.isArray(json)) {
       // We got an array: it means we passed a maxev > 1, iterate on all objects
       for (var i = 0; i < json.length; i++) {
         handleEvent(json[i], true);
       }
-
       return;
     }
-
     if (json["rtcgw"] === "keepalive") {
       // Nothing happened
       Janus$1.vdebug("Got a keepalive on session " + sessionId);
@@ -24171,60 +22984,46 @@ function Janus$1(gatewayCallbacks) {
       Janus$1.debug("Got an ack on session " + sessionId);
       Janus$1.debug(json);
       var transaction = json["transaction"];
-
       if (transaction !== null && transaction !== undefined) {
         var reportSuccess = transactions[transaction];
-
         if (reportSuccess !== null && reportSuccess !== undefined) {
           reportSuccess(json);
         }
-
         delete transactions[transaction];
       }
-
       return;
     } else if (json["rtcgw"] === "success") {
       // Success!
       Janus$1.debug("Got a success on session " + sessionId);
       Janus$1.debug(json);
       var transaction = json["transaction"];
-
       if (transaction !== null && transaction !== undefined) {
         var reportSuccess = transactions[transaction];
-
         if (reportSuccess !== null && reportSuccess !== undefined) {
           reportSuccess(json);
         }
-
         delete transactions[transaction];
       }
-
       return;
     } else if (json["rtcgw"] === "trickle") {
       // We got a trickle candidate from Janus
       var sender = json["sender"];
-
       if (sender === undefined || sender === null) {
         Janus$1.warn("Missing sender...");
         return;
       }
-
       var pluginHandle = pluginHandles[sender];
-
       if (pluginHandle === undefined || pluginHandle === null) {
         Janus$1.debug("This handle is not attached to this session");
         return;
       }
-
       var candidate = json["candidate"];
       Janus$1.debug("Got a trickled candidate on session " + sessionId);
       Janus$1.debug(candidate);
       var config = pluginHandle.webrtcStuff;
-
       if (config.pc && config.remoteSdp) {
         // Add candidate right now
         Janus$1.debug("Adding remote candidate:", candidate);
-
         if (!candidate || candidate.completed === true) {
           // end-of-candidates
           config.pc.addIceCandidate(Janus$1.endOfCandidates);
@@ -24244,19 +23043,15 @@ function Janus$1(gatewayCallbacks) {
       Janus$1.debug("Got a webrtcup event on session " + sessionId);
       Janus$1.debug(json);
       var sender = json["sender"];
-
       if (sender === undefined || sender === null) {
         Janus$1.warn("Missing sender...");
         return;
       }
-
       var pluginHandle = pluginHandles[sender];
-
       if (pluginHandle === undefined || pluginHandle === null) {
         Janus$1.debug("This handle is not attached to this session");
         return;
       }
-
       pluginHandle.webrtcState(true);
       return;
     } else if (json["rtcgw"] === "hangup") {
@@ -24264,19 +23059,15 @@ function Janus$1(gatewayCallbacks) {
       Janus$1.debug("Got a hangup event on session " + sessionId);
       Janus$1.debug(json);
       var sender = json["sender"];
-
       if (sender === undefined || sender === null) {
         Janus$1.warn("Missing sender...");
         return;
       }
-
       var pluginHandle = pluginHandles[sender];
-
       if (pluginHandle === undefined || pluginHandle === null) {
         Janus$1.debug("This handle is not attached to this session");
         return;
       }
-
       pluginHandle.webrtcState(false, json["reason"]);
       pluginHandle.hangup();
     } else if (json["rtcgw"] === "detached") {
@@ -24284,19 +23075,15 @@ function Janus$1(gatewayCallbacks) {
       Janus$1.debug("Got a detached event on session " + sessionId);
       Janus$1.debug(json);
       var sender = json["sender"];
-
       if (sender === undefined || sender === null) {
         Janus$1.warn("Missing sender...");
         return;
       }
-
       var pluginHandle = pluginHandles[sender];
-
       if (pluginHandle === undefined || pluginHandle === null) {
         // Don't warn here because destroyHandle causes this situation.
         return;
       }
-
       pluginHandle.detached = true;
       pluginHandle.ondetached();
       pluginHandle.detach();
@@ -24305,96 +23092,74 @@ function Janus$1(gatewayCallbacks) {
       Janus$1.debug("Got a media event on session " + sessionId);
       Janus$1.debug(json);
       var sender = json["sender"];
-
       if (sender === undefined || sender === null) {
         Janus$1.warn("Missing sender...");
         return;
       }
-
       var pluginHandle = pluginHandles[sender];
-
       if (pluginHandle === undefined || pluginHandle === null) {
         Janus$1.debug("This handle is not attached to this session");
         return;
       }
-
       pluginHandle.mediaState(json["type"], json["receiving"]);
     } else if (json["rtcgw"] === "slowlink") {
       Janus$1.debug("Got a slowlink event on session " + sessionId);
-      Janus$1.debug(json); // Trouble uplink or downlink
-
+      Janus$1.debug(json);
+      // Trouble uplink or downlink
       var sender = json["sender"];
-
       if (sender === undefined || sender === null) {
         Janus$1.warn("Missing sender...");
         return;
       }
-
       var pluginHandle = pluginHandles[sender];
-
       if (pluginHandle === undefined || pluginHandle === null) {
         Janus$1.debug("This handle is not attached to this session");
         return;
       }
-
       pluginHandle.slowLink(json["uplink"], json["lost"]);
     } else if (json["rtcgw"] === "error") {
       // Oops, something wrong happened
       Janus$1.error("Ooops: " + json["error"].code + " " + json["error"].reason); // FIXME
-
       Janus$1.debug(json);
       var transaction = json["transaction"];
-
       if (transaction !== null && transaction !== undefined) {
         var reportSuccess = transactions[transaction];
-
         if (reportSuccess !== null && reportSuccess !== undefined) {
           reportSuccess(json);
         }
-
         delete transactions[transaction];
       }
-
       return;
     } else if (json["rtcgw"] === "event") {
       Janus$1.debug("Got a plugin event on session " + sessionId);
       Janus$1.debug(json);
       var sender = json["sender"];
-
       if (sender === undefined || sender === null) {
         Janus$1.warn("Missing sender...");
         return;
       }
-
       var plugindata = json["plugindata"];
-
       if (plugindata === undefined || plugindata === null) {
         Janus$1.warn("Missing plugindata...");
         return;
       }
-
       Janus$1.debug("  -- Event is coming from " + sender + " (" + plugindata["plugin"] + ")");
       var data = plugindata["data"];
       Janus$1.debug(data);
       var pluginHandle = pluginHandles[sender];
-
       if (pluginHandle === undefined || pluginHandle === null) {
         Janus$1.warn("This handle is not attached to this session");
         return;
       }
-
       var jsep = json["jsep"];
-
       if (jsep !== undefined && jsep !== null) {
         Janus$1.debug("Handling SDP as well...");
         Janus$1.debug(jsep);
       }
-
       var callback = pluginHandle.onmessage;
-
       if (callback !== null && callback !== undefined) {
-        Janus$1.debug("Notifying application..."); // Send to callback specified when attaching plugin handle
-
+        Janus$1.debug("Notifying application...");
+        // Send to callback specified when attaching plugin handle
         callback(data, jsep);
       } else {
         // Send to generic callback (?)
@@ -24403,19 +23168,17 @@ function Janus$1(gatewayCallbacks) {
     } else if (json["rtcgw"] === "timeout") {
       Janus$1.error("Timeout on session " + sessionId);
       Janus$1.debug(json);
-
       if (websockets) {
         ws.close(3504, "Gateway timeout");
       }
-
       return;
     } else {
       Janus$1.warn("Unknown message/event  '" + json["rtcgw"] + "' on session " + sessionId);
       Janus$1.debug(json);
     }
-  } // Private helper to send keep-alive messages on WebSockets
+  }
 
-
+  // Private helper to send keep-alive messages on WebSockets
   function keepAlive() {
     if (server === null || !websockets || !connected) return;
     wsKeepaliveTimeoutId = setTimeout(keepAlive, keepAlivePeriod);
@@ -24427,12 +23190,12 @@ function Janus$1(gatewayCallbacks) {
     if (token !== null && token !== undefined) request["token"] = token;
     if (apisecret !== null && apisecret !== undefined) request["apisecret"] = apisecret;
     ws.send(JSON.stringify(request));
-  } // Private method to create a session
+  }
 
-
+  // Private method to create a session
   function createSession(callbacks) {
-    var transaction = Janus$1.randomString(12); // console.log("jannus create_token",stream);
-
+    var transaction = Janus$1.randomString(12);
+    // console.log("jannus create_token",stream);
     var request = {
       "rtcgw": "create",
       "transaction": transaction,
@@ -24440,32 +23203,27 @@ function Janus$1(gatewayCallbacks) {
       "device": window.EZUIKit.opt.deviceSerial,
       "channel": window.EZUIKit.opt.channelNo
     };
-
     if (callbacks["reconnect"]) {
       // We're reconnecting, claim the session
       connected = false;
       request["rtcgw"] = "claim";
-      request["session_id"] = sessionId; // If we were using websockets, ignore the old connection
-
+      request["session_id"] = sessionId;
+      // If we were using websockets, ignore the old connection
       if (ws) {
         ws.onopen = null;
         ws.onerror = null;
         ws.onclose = null;
-
         if (wsKeepaliveTimeoutId) {
           clearTimeout(wsKeepaliveTimeoutId);
           wsKeepaliveTimeoutId = null;
         }
       }
     }
-
     if (token !== null && token !== undefined) request["token"] = token;
     if (apisecret !== null && apisecret !== undefined) request["apisecret"] = apisecret;
-
     if (server === null && Janus$1.isArray(servers)) {
       // We still need to find a working server from the list we were given
       server = servers[serversIndex];
-
       if (server.indexOf("ws") === 0) {
         websockets = true;
         Janus$1.log("Server #" + (serversIndex + 1) + ": trying WebSockets to contact Janus (" + server + ")");
@@ -24474,58 +23232,47 @@ function Janus$1(gatewayCallbacks) {
         Janus$1.log("Server #" + (serversIndex + 1) + ": trying REST API to contact Janus (" + server + ")");
       }
     }
-
     if (websockets) {
       ws = Janus$1.newWebSocket(server, 'rtcgw-protocol');
       wsHandlers = {
         'error': function error() {
           Janus$1.error("Error connecting to the Janus WebSockets server... " + server);
-
           if (Janus$1.isArray(servers) && !callbacks["reconnect"]) {
             serversIndex++;
-
             if (serversIndex == servers.length) {
               // We tried all the servers the user gave us and they all failed
               callbacks.error("Error connecting to any of the provided Janus servers: Is the server down?");
               return;
-            } // Let's try the next server
-
-
+            }
+            // Let's try the next server
             server = null;
             setTimeout(function () {
               createSession(callbacks);
             }, 200);
             return;
           }
-
           callbacks.error("Error connecting to the Janus WebSockets server: Is the server down?");
         },
         'open': function open() {
           // We need to be notified about the success
           transactions[transaction] = function (json) {
             Janus$1.debug(json);
-
             if (json["rtcgw"] !== "success") {
               Janus$1.error("Ooops: " + json["error"].code + " " + json["error"].reason); // FIXME
-
               callbacks.error(json["error"].reason);
               return;
             }
-
             wsKeepaliveTimeoutId = setTimeout(keepAlive, keepAlivePeriod);
             connected = true;
             sessionId = json["session_id"] ? json["session_id"] : json.data["id"];
-
             if (callbacks["reconnect"]) {
               Janus$1.log("Claimed session: " + sessionId);
             } else {
               Janus$1.log("Created session: " + sessionId);
             }
-
             Janus$1.sessions[sessionId] = that;
             callbacks.success();
           };
-
           ws.send(JSON.stringify(request));
         },
         'message': function message(event) {
@@ -24535,76 +23282,63 @@ function Janus$1(gatewayCallbacks) {
           if (server === null || !connected) {
             return;
           }
-
-          connected = false; // FIXME What if this is called when the page is closed?
-
+          connected = false;
+          // FIXME What if this is called when the page is closed?
           gatewayCallbacks.error("Lost connection to the server (is it down?)");
         }
       };
-
       for (var eventName in wsHandlers) {
         ws.addEventListener(eventName, wsHandlers[eventName]);
       }
-
       return;
     }
-
     Janus$1.httpAPICall(server, {
       verb: 'POST',
       withCredentials: withCredentials,
       body: request,
       success: function success(json) {
         Janus$1.debug(json);
-
         if (json["rtcgw"] !== "success") {
           Janus$1.error("Ooops: " + json["error"].code + " " + json["error"].reason); // FIXME
-
           callbacks.error(json["error"].reason);
           return;
         }
-
         connected = true;
         sessionId = json["session_id"] ? json["session_id"] : json.data["id"];
-
         if (callbacks["reconnect"]) {
           Janus$1.log("Claimed session: " + sessionId);
         } else {
           Janus$1.log("Created session: " + sessionId);
         }
-
         Janus$1.sessions[sessionId] = that;
         eventHandler();
         callbacks.success();
       },
       error: function error(textStatus, errorThrown) {
         Janus$1.error(textStatus + ":", errorThrown); // FIXME
-
         if (Janus$1.isArray(servers) && !callbacks["reconnect"]) {
           serversIndex++;
-
           if (serversIndex == servers.length) {
             // We tried all the servers the user gave us and they all failed
             callbacks.error("Error connecting to any of the provided Janus servers: Is the server down?");
             return;
-          } // Let's try the next server
-
-
+          }
+          // Let's try the next server
           server = null;
           setTimeout(function () {
             createSession(callbacks);
           }, 200);
           return;
         }
-
         if (errorThrown === "") callbacks.error(textStatus + ": Is the server down?");else callbacks.error(textStatus + ": " + errorThrown);
       }
     });
-  } // Private method to destroy a session
+  }
 
-
+  // Private method to destroy a session
   function destroySession(callbacks) {
-    callbacks = callbacks || {}; // FIXME This method triggers a success even when we fail
-
+    callbacks = callbacks || {};
+    // FIXME This method triggers a success even when we fail
     callbacks.success = typeof callbacks.success == "function" ? callbacks.success : Janus$1.noop;
     var asyncRequest = true;
     if (callbacks.asyncRequest !== undefined && callbacks.asyncRequest !== null) asyncRequest = callbacks.asyncRequest === true;
@@ -24613,76 +23347,62 @@ function Janus$1(gatewayCallbacks) {
     var cleanupHandles = false;
     if (callbacks.cleanupHandles !== undefined && callbacks.cleanupHandles !== null) cleanupHandles = callbacks.cleanupHandles === true;
     Janus$1.log("Destroying session " + sessionId + " (async=" + asyncRequest + ")");
-
     if (!connected) {
       Janus$1.warn("Is the server down? (connected=false)");
       callbacks.success();
       return;
     }
-
     if (sessionId === undefined || sessionId === null) {
       Janus$1.warn("No session to destroy");
       callbacks.success();
       if (notifyDestroyed) gatewayCallbacks.destroyed();
       return;
     }
-
     if (cleanupHandles) {
       for (var handleId in pluginHandles) {
         destroyHandle(handleId, {
           noRequest: true
         });
       }
-    } // No need to destroy all handles first, Janus will do that itself
-
-
+    }
+    // No need to destroy all handles first, Janus will do that itself
     var request = {
       "rtcgw": "destroy",
       "transaction": Janus$1.randomString(12)
     };
     if (token !== null && token !== undefined) request["token"] = token;
     if (apisecret !== null && apisecret !== undefined) request["apisecret"] = apisecret;
-
     if (websockets) {
       request["session_id"] = sessionId;
-
       var unbindWebSocket = function unbindWebSocket() {
         for (var eventName in wsHandlers) {
           ws.removeEventListener(eventName, wsHandlers[eventName]);
         }
-
         ws.removeEventListener('message', onUnbindMessage);
         ws.removeEventListener('error', onUnbindError);
-
         if (wsKeepaliveTimeoutId) {
           clearTimeout(wsKeepaliveTimeoutId);
         }
-
         ws.close();
       };
-
       var onUnbindMessage = function onUnbindMessage(event) {
         var data = JSON.parse(event.data);
-
         if (data.session_id == request.session_id && data.transaction == request.transaction) {
           unbindWebSocket();
           callbacks.success();
           if (notifyDestroyed) gatewayCallbacks.destroyed();
         }
       };
-
       var onUnbindError = function onUnbindError(event) {
         unbindWebSocket();
         callbacks.error("Failed to destroy the server: Is the server down?");
         if (notifyDestroyed) gatewayCallbacks.destroyed();
       };
-
       ws.addEventListener('message', onUnbindMessage);
       ws.addEventListener('error', onUnbindError);
       ws.send(JSON.stringify(request));
       return;
     }
-
     Janus$1.httpAPICall(server + "/" + sessionId, {
       verb: 'POST',
       async: asyncRequest,
@@ -24694,7 +23414,6 @@ function Janus$1(gatewayCallbacks) {
         Janus$1.debug(json);
         sessionId = null;
         connected = false;
-
         if (json["rtcgw"] !== "success") {
           Janus$1.error("Ooops: " + json["error"].code + " " + json["error"].reason); // FIXME
         }
@@ -24705,16 +23424,15 @@ function Janus$1(gatewayCallbacks) {
       error: function error(textStatus, errorThrown) {
         Janus$1.error(textStatus + ":", errorThrown); // FIXME
         // Reset everything anyway
-
         sessionId = null;
         connected = false;
         callbacks.success();
         if (notifyDestroyed) gatewayCallbacks.destroyed();
       }
     });
-  } // Private method to create a plugin handle
+  }
 
-
+  // Private method to create a plugin handle
   function createHandle(callbacks) {
     callbacks = callbacks || {};
     callbacks.success = typeof callbacks.success == "function" ? callbacks.success : Janus$1.noop;
@@ -24731,21 +23449,17 @@ function Janus$1(gatewayCallbacks) {
     callbacks.ondataopen = typeof callbacks.ondataopen == "function" ? callbacks.ondataopen : Janus$1.noop;
     callbacks.oncleanup = typeof callbacks.oncleanup == "function" ? callbacks.oncleanup : Janus$1.noop;
     callbacks.ondetached = typeof callbacks.ondetached == "function" ? callbacks.ondetached : Janus$1.noop;
-
     if (!connected) {
       Janus$1.warn("Is the server down? (connected=false)");
       callbacks.error("Is the server down? (connected=false)");
       return;
     }
-
     var plugin = callbacks.plugin;
-
     if (plugin === undefined || plugin === null) {
       Janus$1.error("Invalid plugin");
       callbacks.error("Invalid plugin");
       return;
     }
-
     var opaqueId = callbacks.opaqueId;
     var handleToken = callbacks.token ? callbacks.token : token;
     var transaction = Janus$1.randomString(12);
@@ -24757,18 +23471,14 @@ function Janus$1(gatewayCallbacks) {
     };
     if (handleToken !== null && handleToken !== undefined) request["token"] = handleToken;
     if (apisecret !== null && apisecret !== undefined) request["apisecret"] = apisecret;
-
     if (websockets) {
       transactions[transaction] = function (json) {
         Janus$1.debug(json);
-
         if (json["rtcgw"] !== "success") {
           Janus$1.error("Ooops: " + json["error"].code + " " + json["error"].reason); // FIXME
-
           callbacks.error("Ooops: " + json["error"].code + " " + json["error"].reason);
           return;
         }
-
         var handleId = json.data["id"];
         Janus$1.log("Created handle: " + handleId);
         var pluginHandle = {
@@ -24878,26 +23588,21 @@ function Janus$1(gatewayCallbacks) {
         pluginHandles[handleId] = pluginHandle;
         callbacks.success(pluginHandle);
       };
-
       request["session_id"] = sessionId;
       ws.send(JSON.stringify(request));
       return;
     }
-
     Janus$1.httpAPICall(server + "/" + sessionId, {
       verb: 'POST',
       withCredentials: withCredentials,
       body: request,
       success: function success(json) {
         Janus$1.debug(json);
-
         if (json["rtcgw"] !== "success") {
           Janus$1.error("Ooops: " + json["error"].code + " " + json["error"].reason); // FIXME
-
           callbacks.error("Ooops: " + json["error"].code + " " + json["error"].reason);
           return;
         }
-
         var handleId = json.data["id"];
         Janus$1.log("Created handle: " + handleId);
         var pluginHandle = {
@@ -25011,28 +23716,24 @@ function Janus$1(gatewayCallbacks) {
         Janus$1.error(textStatus + ":", errorThrown); // FIXME
       }
     });
-  } // Private method to send a message
+  }
 
-
+  // Private method to send a message
   function sendMessage(handleId, callbacks) {
     callbacks = callbacks || {};
     callbacks.success = typeof callbacks.success == "function" ? callbacks.success : Janus$1.noop;
     callbacks.error = typeof callbacks.error == "function" ? callbacks.error : Janus$1.noop;
-
     if (!connected) {
       Janus$1.warn("Is the server down? (connected=false)");
       callbacks.error("Is the server down? (connected=false)");
       return;
     }
-
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.webrtcStuff === null || pluginHandle.webrtcStuff === undefined) {
       Janus$1.warn("Invalid handle");
       callbacks.error("Invalid handle");
       return;
     }
-
     var message = callbacks.message;
     var jsep = callbacks.jsep;
     var transaction = Janus$1.randomString(12);
@@ -25046,25 +23747,20 @@ function Janus$1(gatewayCallbacks) {
     if (jsep !== null && jsep !== undefined) request.jsep = jsep;
     Janus$1.debug("Sending message to plugin (handle=" + handleId + "):");
     Janus$1.debug(request);
-
     if (websockets) {
       request["session_id"] = sessionId;
       request["handle_id"] = handleId;
-
       transactions[transaction] = function (json) {
         Janus$1.debug("Message sent!");
         Janus$1.debug(json);
-
         if (json["rtcgw"] === "success") {
           // We got a success, must have been a synchronous transaction
           var plugindata = json["plugindata"];
-
           if (plugindata === undefined || plugindata === null) {
             Janus$1.warn("Request succeeded, but missing plugindata...");
             callbacks.success();
             return;
           }
-
           Janus$1.log("Synchronous transaction successful (" + plugindata["plugin"] + ")");
           var data = plugindata["data"];
           Janus$1.debug(data);
@@ -25074,25 +23770,19 @@ function Janus$1(gatewayCallbacks) {
           // Not a success and not an ack, must be an error
           if (json["error"] !== undefined && json["error"] !== null) {
             Janus$1.error("Ooops: " + json["error"].code + " " + json["error"].reason); // FIXME
-
             callbacks.error(json["error"].code + " " + json["error"].reason);
           } else {
             Janus$1.error("Unknown error"); // FIXME
-
             callbacks.error("Unknown error");
           }
-
           return;
-        } // If we got here, the plugin decided to handle the request asynchronously
-
-
+        }
+        // If we got here, the plugin decided to handle the request asynchronously
         callbacks.success();
       };
-
       ws.send(JSON.stringify(request));
       return;
     }
-
     Janus$1.httpAPICall(server + "/" + sessionId + "/" + handleId, {
       verb: 'POST',
       withCredentials: withCredentials,
@@ -25100,17 +23790,14 @@ function Janus$1(gatewayCallbacks) {
       success: function success(json) {
         Janus$1.debug("Message sent!");
         Janus$1.debug(json);
-
         if (json["rtcgw"] === "success") {
           // We got a success, must have been a synchronous transaction
           var plugindata = json["plugindata"];
-
           if (plugindata === undefined || plugindata === null) {
             Janus$1.warn("Request succeeded, but missing plugindata...");
             callbacks.success();
             return;
           }
-
           Janus$1.log("Synchronous transaction successful (" + plugindata["plugin"] + ")");
           var data = plugindata["data"];
           Janus$1.debug(data);
@@ -25120,42 +23807,34 @@ function Janus$1(gatewayCallbacks) {
           // Not a success and not an ack, must be an error
           if (json["error"] !== undefined && json["error"] !== null) {
             Janus$1.error("Ooops: " + json["error"].code + " " + json["error"].reason); // FIXME
-
             callbacks.error(json["error"].code + " " + json["error"].reason);
           } else {
             Janus$1.error("Unknown error"); // FIXME
-
             callbacks.error("Unknown error");
           }
-
           return;
-        } // If we got here, the plugin decided to handle the request asynchronously
-
-
+        }
+        // If we got here, the plugin decided to handle the request asynchronously
         callbacks.success();
       },
       error: function error(textStatus, errorThrown) {
         Janus$1.error(textStatus + ":", errorThrown); // FIXME
-
         callbacks.error(textStatus + ": " + errorThrown);
       }
     });
-  } // Private method to send a trickle candidate
+  }
 
-
+  // Private method to send a trickle candidate
   function sendTrickleCandidate(handleId, candidate) {
     if (!connected) {
       Janus$1.warn("Is the server down? (connected=false)");
       return;
     }
-
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.webrtcStuff === null || pluginHandle.webrtcStuff === undefined) {
       Janus$1.warn("Invalid handle");
       return;
     }
-
     var request = {
       "rtcgw": "trickle",
       "candidate": candidate,
@@ -25165,14 +23844,12 @@ function Janus$1(gatewayCallbacks) {
     if (apisecret !== null && apisecret !== undefined) request["apisecret"] = apisecret;
     Janus$1.vdebug("Sending trickle candidate (handle=" + handleId + "):");
     Janus$1.vdebug(request);
-
     if (websockets) {
       request["session_id"] = sessionId;
       request["handle_id"] = handleId;
       ws.send(JSON.stringify(request));
       return;
     }
-
     Janus$1.httpAPICall(server + "/" + sessionId + "/" + handleId, {
       verb: 'POST',
       withCredentials: withCredentials,
@@ -25180,10 +23857,8 @@ function Janus$1(gatewayCallbacks) {
       success: function success(json) {
         Janus$1.vdebug("Candidate sent!");
         Janus$1.vdebug(json);
-
         if (json["rtcgw"] !== "ack") {
           Janus$1.error("Ooops: " + json["error"].code + " " + json["error"].reason); // FIXME
-
           return;
         }
       },
@@ -25191,52 +23866,44 @@ function Janus$1(gatewayCallbacks) {
         Janus$1.error(textStatus + ":", errorThrown); // FIXME
       }
     });
-  } // Private method to create a data channel
+  }
 
-
+  // Private method to create a data channel
   function createDataChannel(handleId, dclabel, incoming, pendingText) {
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.webrtcStuff === null || pluginHandle.webrtcStuff === undefined) {
       Janus$1.warn("Invalid handle");
       return;
     }
-
     var config = pluginHandle.webrtcStuff;
-
     var onDataChannelMessage = function onDataChannelMessage(event) {
       Janus$1.log('Received message on data channel:', event);
       var label = event.target.label;
       pluginHandle.ondata(event.data, label);
     };
-
     var onDataChannelStateChange = function onDataChannelStateChange(event) {
       Janus$1.log('Received state change on data channel:', event);
       var label = event.target.label;
       var dcState = config.dataChannel[label] ? config.dataChannel[label].readyState : "null";
       Janus$1.log('State change on <' + label + '> data channel: ' + dcState);
-
       if (dcState === 'open') {
         // Any pending messages to send?
         if (config.dataChannel[label].pending && config.dataChannel[label].pending.length > 0) {
           Janus$1.log("Sending pending messages on <" + label + ">:", config.dataChannel[label].pending.length);
-
           for (var i in config.dataChannel[label].pending) {
             var text = config.dataChannel[label].pending[i];
             Janus$1.log("Sending string on data channel <" + label + ">: " + text);
             config.dataChannel[label].send(text);
           }
-
           config.dataChannel[label].pending = [];
-        } // Notify the open data channel
-
-
+        }
+        // Notify the open data channel
         pluginHandle.ondataopen(label);
       }
     };
-
     var onDataChannelError = function onDataChannelError(error) {
-      Janus$1.error('Got error on data channel:', error); // TODO
+      Janus$1.error('Got error on data channel:', error);
+      // TODO
     };
 
     if (!incoming) {
@@ -25248,72 +23915,61 @@ function Janus$1(gatewayCallbacks) {
       // The channel was created by Janus
       config.dataChannel[dclabel] = incoming;
     }
-
     config.dataChannel[dclabel].onmessage = onDataChannelMessage;
     config.dataChannel[dclabel].onopen = onDataChannelStateChange;
     config.dataChannel[dclabel].onclose = onDataChannelStateChange;
     config.dataChannel[dclabel].onerror = onDataChannelError;
     config.dataChannel[dclabel].pending = [];
     if (pendingText) config.dataChannel[dclabel].pending.push(pendingText);
-  } // Private method to send a data channel message
+  }
 
-
+  // Private method to send a data channel message
   function sendData(handleId, callbacks) {
     callbacks = callbacks || {};
     callbacks.success = typeof callbacks.success == "function" ? callbacks.success : Janus$1.noop;
     callbacks.error = typeof callbacks.error == "function" ? callbacks.error : Janus$1.noop;
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.webrtcStuff === null || pluginHandle.webrtcStuff === undefined) {
       Janus$1.warn("Invalid handle");
       callbacks.error("Invalid handle");
       return;
     }
-
     var config = pluginHandle.webrtcStuff;
     var text = callbacks.text;
-
     if (text === null || text === undefined) {
       Janus$1.warn("Invalid text");
       callbacks.error("Invalid text");
       return;
     }
-
     var label = callbacks.label ? callbacks.label : Janus$1.dataChanDefaultLabel;
-
     if (!config.dataChannel[label]) {
       // Create new data channel and wait for it to open
       createDataChannel(handleId, label, false, text);
       callbacks.success();
       return;
     }
-
     if (config.dataChannel[label].readyState !== "open") {
       config.dataChannel[label].pending.push(text);
       callbacks.success();
       return;
     }
-
     Janus$1.log("Sending string on data channel <" + label + ">: " + text);
     config.dataChannel[label].send(text);
     callbacks.success();
-  } // Private method to send a DTMF tone
+  }
 
-
+  // Private method to send a DTMF tone
   function sendDtmf(handleId, callbacks) {
     callbacks = callbacks || {};
     callbacks.success = typeof callbacks.success == "function" ? callbacks.success : Janus$1.noop;
     callbacks.error = typeof callbacks.error == "function" ? callbacks.error : Janus$1.noop;
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.webrtcStuff === null || pluginHandle.webrtcStuff === undefined) {
       Janus$1.warn("Invalid handle");
       callbacks.error("Invalid handle");
       return;
     }
-
     var config = pluginHandle.webrtcStuff;
-
     if (config.dtmfSender === null || config.dtmfSender === undefined) {
       // Create the DTMF sender the proper way, if possible
       if (config.pc !== undefined && config.pc !== null) {
@@ -25321,59 +23977,47 @@ function Janus$1(gatewayCallbacks) {
         var audioSender = senders.find(function (sender) {
           return sender.track && sender.track.kind === 'audio';
         });
-
         if (!audioSender) {
           Janus$1.warn("Invalid DTMF configuration (no audio track)");
           callbacks.error("Invalid DTMF configuration (no audio track)");
           return;
         }
-
         config.dtmfSender = audioSender.dtmf;
-
         if (config.dtmfSender) {
           Janus$1.log("Created DTMF Sender");
-
           config.dtmfSender.ontonechange = function (tone) {
             Janus$1.debug("Sent DTMF tone: " + tone.tone);
           };
         }
       }
-
       if (config.dtmfSender === null || config.dtmfSender === undefined) {
         Janus$1.warn("Invalid DTMF configuration");
         callbacks.error("Invalid DTMF configuration");
         return;
       }
     }
-
     var dtmf = callbacks.dtmf;
-
     if (dtmf === null || dtmf === undefined) {
       Janus$1.warn("Invalid DTMF parameters");
       callbacks.error("Invalid DTMF parameters");
       return;
     }
-
     var tones = dtmf.tones;
-
     if (tones === null || tones === undefined) {
       Janus$1.warn("Invalid DTMF string");
       callbacks.error("Invalid DTMF string");
       return;
     }
-
     var duration = dtmf.duration;
     if (duration === null || duration === undefined) duration = 500; // We choose 500ms as the default duration for a tone
-
     var gap = dtmf.gap;
     if (gap === null || gap === undefined) gap = 50; // We choose 50ms as the default gap between tones
-
     Janus$1.debug("Sending DTMF string " + tones + " (duration " + duration + "ms, gap " + gap + "ms)");
     config.dtmfSender.insertDTMF(tones, duration, gap);
     callbacks.success();
-  } // Private method to destroy a plugin handle
+  }
 
-
+  // Private method to destroy a plugin handle
   function destroyHandle(handleId, callbacks) {
     callbacks = callbacks || {};
     callbacks.success = typeof callbacks.success == "function" ? callbacks.success : Janus$1.noop;
@@ -25385,34 +24029,29 @@ function Janus$1(gatewayCallbacks) {
     Janus$1.log("Destroying handle " + handleId + " (async=" + asyncRequest + ")");
     cleanupWebrtc(handleId);
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.detached) {
       // Plugin was already detached by Janus, calling detach again will return a handle not found error, so just exit here
       delete pluginHandles[handleId];
       callbacks.success();
       return;
     }
-
     if (noRequest) {
       // We're only removing the handle locally
       delete pluginHandles[handleId];
       callbacks.success();
       return;
     }
-
     if (!connected) {
       Janus$1.warn("Is the server down? (connected=false)");
       callbacks.error("Is the server down? (connected=false)");
       return;
     }
-
     var request = {
       "rtcgw": "detach",
       "transaction": Janus$1.randomString(12)
     };
     if (pluginHandle.token !== null && pluginHandle.token !== undefined) request["token"] = pluginHandle.token;
     if (apisecret !== null && apisecret !== undefined) request["apisecret"] = apisecret;
-
     if (websockets) {
       request["session_id"] = sessionId;
       request["handle_id"] = handleId;
@@ -25421,7 +24060,6 @@ function Janus$1(gatewayCallbacks) {
       callbacks.success();
       return;
     }
-
     Janus$1.httpAPICall(server + "/" + sessionId + "/" + handleId, {
       verb: 'POST',
       async: asyncRequest,
@@ -25431,7 +24069,6 @@ function Janus$1(gatewayCallbacks) {
       success: function success(json) {
         Janus$1.log("Destroyed handle:");
         Janus$1.debug(json);
-
         if (json["rtcgw"] !== "success") {
           Janus$1.error("Ooops: " + json["error"].code + " " + json["error"].reason); // FIXME
         }
@@ -25442,34 +24079,28 @@ function Janus$1(gatewayCallbacks) {
       error: function error(textStatus, errorThrown) {
         Janus$1.error(textStatus + ":", errorThrown); // FIXME
         // We cleanup anyway
-
         delete pluginHandles[handleId];
         callbacks.success();
       }
     });
-  } // WebRTC stuff
+  }
 
-
+  // WebRTC stuff
   function streamsDone(handleId, jsep, media, callbacks, stream) {
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.webrtcStuff === null || pluginHandle.webrtcStuff === undefined) {
       Janus$1.warn("Invalid handle");
       callbacks.error("Invalid handle");
       return;
     }
-
     var config = pluginHandle.webrtcStuff;
     Janus$1.debug("streamsDone:", stream);
-
     if (stream) {
       Janus$1.debug("  -- Audio tracks:", stream.getAudioTracks());
       Janus$1.debug("  -- Video tracks:", stream.getVideoTracks());
-    } // We're now capturing the new stream: check if we're updating or if it's a new thing
-
-
+    }
+    // We're now capturing the new stream: check if we're updating or if it's a new thing
     var addTracks = false;
-
     if (!config.myStream || !media.update || config.streamExternal) {
       config.myStream = stream;
       addTracks = true;
@@ -25477,24 +24108,20 @@ function Janus$1(gatewayCallbacks) {
       // We only need to update the existing stream
       if ((!media.update && isAudioSendEnabled(media) || media.update && (media.addAudio || media.replaceAudio)) && stream.getAudioTracks() && stream.getAudioTracks().length) {
         config.myStream.addTrack(stream.getAudioTracks()[0]);
-
         if (Janus$1.unifiedPlan) {
           // Use Transceivers
           Janus$1.log((media.replaceAudio ? "Replacing" : "Adding") + " audio track:", stream.getAudioTracks()[0]);
           var audioTransceiver = null;
           var transceivers = config.pc.getTransceivers();
-
           if (transceivers && transceivers.length > 0) {
             for (var i in transceivers) {
               var t = transceivers[i];
-
               if (t.sender && t.sender.track && t.sender.track.kind === "audio" || t.receiver && t.receiver.track && t.receiver.track.kind === "audio") {
                 audioTransceiver = t;
                 break;
               }
             }
           }
-
           if (audioTransceiver && audioTransceiver.sender) {
             audioTransceiver.sender.replaceTrack(stream.getAudioTracks()[0]);
           } else {
@@ -25505,27 +24132,22 @@ function Janus$1(gatewayCallbacks) {
           config.pc.addTrack(stream.getAudioTracks()[0], stream);
         }
       }
-
       if ((!media.update && isVideoSendEnabled(media) || media.update && (media.addVideo || media.replaceVideo)) && stream.getVideoTracks() && stream.getVideoTracks().length) {
         config.myStream.addTrack(stream.getVideoTracks()[0]);
-
         if (Janus$1.unifiedPlan) {
           // Use Transceivers
           Janus$1.log((media.replaceVideo ? "Replacing" : "Adding") + " video track:", stream.getVideoTracks()[0]);
           var videoTransceiver = null;
           var transceivers = config.pc.getTransceivers();
-
           if (transceivers && transceivers.length > 0) {
             for (var i in transceivers) {
               var t = transceivers[i];
-
               if (t.sender && t.sender.track && t.sender.track.kind === "video" || t.receiver && t.receiver.track && t.receiver.track.kind === "video") {
                 videoTransceiver = t;
                 break;
               }
             }
           }
-
           if (videoTransceiver && videoTransceiver.sender) {
             videoTransceiver.sender.replaceTrack(stream.getVideoTracks()[0]);
           } else {
@@ -25536,69 +24158,56 @@ function Janus$1(gatewayCallbacks) {
           config.pc.addTrack(stream.getVideoTracks()[0], stream);
         }
       }
-    } // If we still need to create a PeerConnection, let's do that
-
-
+    }
+    // If we still need to create a PeerConnection, let's do that
     if (!config.pc) {
       var pc_config = {
         "iceServers": iceServers,
         "iceTransportPolicy": iceTransportPolicy,
         "bundlePolicy": bundlePolicy
       };
-
       if (Janus$1.webRTCAdapter.browserDetails.browser === "chrome") {
         // For Chrome versions before 72, we force a plan-b semantic, and unified-plan otherwise
         pc_config["sdpSemantics"] = Janus$1.webRTCAdapter.browserDetails.version < 72 ? "plan-b" : "unified-plan";
       }
-
       var pc_constraints = {
         "optional": [{
           "DtlsSrtpKeyAgreement": true
         }]
       };
-
       if (ipv6Support === true) {
         pc_constraints.optional.push({
           "googIPv6": true
         });
-      } // Any custom constraint to add?
-
-
+      }
+      // Any custom constraint to add?
       if (callbacks.rtcConstraints && _typeof(callbacks.rtcConstraints) === 'object') {
         Janus$1.debug("Adding custom PeerConnection constraints:", callbacks.rtcConstraints);
-
         for (var i in callbacks.rtcConstraints) {
           pc_constraints.optional.push(callbacks.rtcConstraints[i]);
         }
       }
-
       if (Janus$1.webRTCAdapter.browserDetails.browser === "edge") {
         // This is Edge, enable BUNDLE explicitly
         pc_config.bundlePolicy = "max-bundle";
       }
-
       Janus$1.log("Creating PeerConnection");
       Janus$1.debug(pc_constraints);
       config.pc = new RTCPeerConnection(pc_config, pc_constraints);
       Janus$1.debug(config.pc);
-
       if (config.pc.getStats) {
         // FIXME
         config.volume = {};
         config.bitrate.value = "0 kbits/sec";
       }
-
       Janus$1.log("Preparing local SDP and gathering candidates (trickle=" + config.trickle + ")");
-
       config.pc.oniceconnectionstatechange = function (e) {
         if (config.pc) pluginHandle.iceState(config.pc.iceConnectionState);
       };
-
       config.pc.onicecandidate = function (event) {
         if (event.candidate == null || Janus$1.webRTCAdapter.browserDetails.browser === 'edge' && event.candidate.candidate.indexOf('endOfCandidates') > 0) {
           Janus$1.log("End of candidates.");
           config.iceDone = true;
-
           if (config.trickle === true) {
             // Notify end of candidates
             sendTrickleCandidate(handleId, {
@@ -25616,14 +24225,12 @@ function Janus$1(gatewayCallbacks) {
             "sdpMid": event.candidate.sdpMid,
             "sdpMLineIndex": event.candidate.sdpMLineIndex
           };
-
           if (config.trickle === true) {
             // Send candidate
             sendTrickleCandidate(handleId, candidate);
           }
         }
       };
-
       config.pc.ontrack = function (event) {
         Janus$1.log("Handling Remote Track");
         Janus$1.debug(event);
@@ -25632,21 +24239,16 @@ function Janus$1(gatewayCallbacks) {
         pluginHandle.onremotestream(config.remoteStream);
         if (event.track.onended) return;
         Janus$1.log("Adding onended callback to track:", event.track);
-
         event.track.onended = function (ev) {
           Janus$1.log("Remote track muted/removed:", ev);
-
           if (config.remoteStream) {
             config.remoteStream.removeTrack(ev.target);
             pluginHandle.onremotestream(config.remoteStream);
           }
         };
-
         event.track.onmute = event.track.onended;
-
         event.track.onunmute = function (ev) {
           Janus$1.log("Remote track flowing again:", ev);
-
           try {
             config.remoteStream.addTrack(ev.target);
             pluginHandle.onremotestream(config.remoteStream);
@@ -25656,13 +24258,11 @@ function Janus$1(gatewayCallbacks) {
         };
       };
     }
-
     if (addTracks && stream !== null && stream !== undefined) {
       Janus$1.log('Adding local stream');
       var simulcast2 = callbacks.simulcast2 === true ? true : false;
       stream.getTracks().forEach(function (track) {
         Janus$1.log('Adding local track:', track);
-
         if (!simulcast2) {
           config.pc.addTrack(track, stream);
         } else {
@@ -25693,34 +24293,30 @@ function Janus$1(gatewayCallbacks) {
           }
         }
       });
-    } // Any data channel to create?
-
-
+    }
+    // Any data channel to create?
     if (isDataEnabled(media) && !config.dataChannel[Janus$1.dataChanDefaultLabel]) {
       Janus$1.log("Creating data channel");
       createDataChannel(handleId, Janus$1.dataChanDefaultLabel, false);
-
       config.pc.ondatachannel = function (event) {
         Janus$1.log("Data channel created by Janus:", event);
         createDataChannel(handleId, event.channel.label, event.channel);
       };
-    } // If there's a new local stream, let's notify the application
-
-
-    if (config.myStream) pluginHandle.onlocalstream(config.myStream); // Create offer/answer now
-
+    }
+    // If there's a new local stream, let's notify the application
+    if (config.myStream) pluginHandle.onlocalstream(config.myStream);
+    // Create offer/answer now
     if (jsep === null || jsep === undefined) {
       createOffer(handleId, media, callbacks);
     } else {
       config.pc.setRemoteDescription(jsep).then(function () {
         Janus$1.log("Remote description accepted!");
-        config.remoteSdp = jsep.sdp; // Any trickle candidate we cached?
-
+        config.remoteSdp = jsep.sdp;
+        // Any trickle candidate we cached?
         if (config.candidates && config.candidates.length > 0) {
           for (var i = 0; i < config.candidates.length; i++) {
             var candidate = config.candidates[i];
             Janus$1.debug("Adding remote candidate:", candidate);
-
             if (!candidate || candidate.completed === true) {
               // end-of-candidates
               config.pc.addIceCandidate(Janus$1.endOfCandidates);
@@ -25729,22 +24325,18 @@ function Janus$1(gatewayCallbacks) {
               config.pc.addIceCandidate(candidate);
             }
           }
-
           config.candidates = [];
-        } // Create the answer now
-
-
+        }
+        // Create the answer now
         createAnswer(handleId, media, callbacks);
       }, callbacks.error);
     }
   }
-
   function prepareWebrtc(handleId, offer, callbacks) {
     callbacks = callbacks || {};
     callbacks.success = typeof callbacks.success == "function" ? callbacks.success : Janus$1.noop;
     callbacks.error = typeof callbacks.error == "function" ? callbacks.error : webrtcError;
     var jsep = callbacks.jsep;
-
     if (offer && jsep) {
       Janus$1.error("Provided a JSEP to a createOffer");
       callbacks.error("Provided a JSEP to a createOffer");
@@ -25754,23 +24346,20 @@ function Janus$1(gatewayCallbacks) {
       callbacks.error("A valid JSEP is required for createAnswer");
       return;
     }
-
     callbacks.media = callbacks.media || {
       audio: true,
       video: true
     };
     var media = callbacks.media;
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.webrtcStuff === null || pluginHandle.webrtcStuff === undefined) {
       Janus$1.warn("Invalid handle");
       callbacks.error("Invalid handle");
       return;
     }
-
     var config = pluginHandle.webrtcStuff;
-    config.trickle = isTrickleEnabled(callbacks.trickle); // Are we updating a session?
-
+    config.trickle = isTrickleEnabled(callbacks.trickle);
+    // Are we updating a session?
     if (config.pc === undefined || config.pc === null) {
       // Nope, new PeerConnection
       media.update = false;
@@ -25778,9 +24367,9 @@ function Janus$1(gatewayCallbacks) {
       media.keepVideo = false;
     } else if (config.pc !== undefined && config.pc !== null) {
       Janus$1.log("Updating existing media session");
-      media.update = true; // Check if there's anything to add/remove/replace, or if we
+      media.update = true;
+      // Check if there's anything to add/remove/replace, or if we
       // can go directly to preparing the new SDP offer or answer
-
       if (callbacks.stream !== null && callbacks.stream !== undefined) {
         // External stream: is this the same as the one we were using before?
         if (callbacks.stream !== config.myStream) {
@@ -25793,7 +24382,6 @@ function Janus$1(gatewayCallbacks) {
           media.replaceAudio = false;
           media.removeAudio = false;
           media.audioSend = true;
-
           if (config.myStream && config.myStream.getAudioTracks() && config.myStream.getAudioTracks().length) {
             Janus$1.error("Can't add audio stream, there already is one");
             callbacks.error("Can't add audio stream, there already is one");
@@ -25810,7 +24398,6 @@ function Janus$1(gatewayCallbacks) {
           media.removeAudio = false;
           media.audioSend = true;
         }
-
         if (config.myStream === null || config.myStream === undefined) {
           // No media stream: if we were asked to replace, it's actually an "add"
           if (media.replaceAudio) {
@@ -25819,7 +24406,6 @@ function Janus$1(gatewayCallbacks) {
             media.addAudio = true;
             media.audioSend = true;
           }
-
           if (isAudioSendEnabled(media)) {
             media.keepAudio = false;
             media.addAudio = true;
@@ -25833,7 +24419,6 @@ function Janus$1(gatewayCallbacks) {
               media.addAudio = true;
               media.audioSend = true;
             }
-
             if (isAudioSendEnabled(media)) {
               media.keepVideo = false;
               media.addAudio = true;
@@ -25844,15 +24429,13 @@ function Janus$1(gatewayCallbacks) {
               media.keepAudio = true;
             }
           }
-        } // Check if there are changes on video
-
-
+        }
+        // Check if there are changes on video
         if (media.addVideo) {
           media.keepVideo = false;
           media.replaceVideo = false;
           media.removeVideo = false;
           media.videoSend = true;
-
           if (config.myStream && config.myStream.getVideoTracks() && config.myStream.getVideoTracks().length) {
             Janus$1.error("Can't add video stream, there already is one");
             callbacks.error("Can't add video stream, there already is one");
@@ -25869,7 +24452,6 @@ function Janus$1(gatewayCallbacks) {
           media.removeVideo = false;
           media.videoSend = true;
         }
-
         if (config.myStream === null || config.myStream === undefined) {
           // No media stream: if we were asked to replace, it's actually an "add"
           if (media.replaceVideo) {
@@ -25878,7 +24460,6 @@ function Janus$1(gatewayCallbacks) {
             media.addVideo = true;
             media.videoSend = true;
           }
-
           if (isVideoSendEnabled(media)) {
             media.keepVideo = false;
             media.addVideo = true;
@@ -25892,7 +24473,6 @@ function Janus$1(gatewayCallbacks) {
               media.addVideo = true;
               media.videoSend = true;
             }
-
             if (isVideoSendEnabled(media)) {
               media.keepVideo = false;
               media.addVideo = true;
@@ -25903,45 +24483,37 @@ function Janus$1(gatewayCallbacks) {
               media.keepVideo = true;
             }
           }
-        } // Data channels can only be added
-
-
+        }
+        // Data channels can only be added
         if (media.addData) media.data = true;
-      } // If we're updating and keeping all tracks, let's skip the getUserMedia part
-
-
+      }
+      // If we're updating and keeping all tracks, let's skip the getUserMedia part
       if (isAudioSendEnabled(media) && media.keepAudio && isVideoSendEnabled(media) && media.keepVideo) {
         pluginHandle.consentDialog(false);
         streamsDone(handleId, jsep, media, callbacks, config.myStream);
         return;
       }
-    } // If we're updating, check if we need to remove/replace one of the tracks
-
-
+    }
+    // If we're updating, check if we need to remove/replace one of the tracks
     if (media.update && !config.streamExternal) {
       if (media.removeAudio || media.replaceAudio) {
         if (config.myStream && config.myStream.getAudioTracks() && config.myStream.getAudioTracks().length) {
           var s = config.myStream.getAudioTracks()[0];
           Janus$1.log("Removing audio track:", s);
           config.myStream.removeTrack(s);
-
           try {
             s.stop();
           } catch (e) {}
         }
-
         if (config.pc.getSenders() && config.pc.getSenders().length) {
           var ra = true;
-
           if (media.replaceAudio && Janus$1.unifiedPlan) {
             // We can use replaceTrack
             ra = false;
           }
-
           if (ra) {
             for (var index in config.pc.getSenders()) {
               var s = config.pc.getSenders()[index];
-
               if (s && s.track && s.track.kind === "audio") {
                 Janus$1.log("Removing audio sender:", s);
                 config.pc.removeTrack(s);
@@ -25950,30 +24522,24 @@ function Janus$1(gatewayCallbacks) {
           }
         }
       }
-
       if (media.removeVideo || media.replaceVideo) {
         if (config.myStream && config.myStream.getVideoTracks() && config.myStream.getVideoTracks().length) {
           var s = config.myStream.getVideoTracks()[0];
           Janus$1.log("Removing video track:", s);
           config.myStream.removeTrack(s);
-
           try {
             s.stop();
           } catch (e) {}
         }
-
         if (config.pc.getSenders() && config.pc.getSenders().length) {
           var rv = true;
-
           if (media.replaceVideo && Janus$1.unifiedPlan) {
             // We can use replaceTrack
             rv = false;
           }
-
           if (rv) {
             for (var index in config.pc.getSenders()) {
               var s = config.pc.getSenders()[index];
-
               if (s && s.track && s.track.kind === "video") {
                 Janus$1.log("Removing video sender:", s);
                 config.pc.removeTrack(s);
@@ -25982,73 +24548,63 @@ function Janus$1(gatewayCallbacks) {
           }
         }
       }
-    } // Was a MediaStream object passed, or do we need to take care of that?
-
-
+    }
+    // Was a MediaStream object passed, or do we need to take care of that?
     if (callbacks.stream !== null && callbacks.stream !== undefined) {
       var stream = callbacks.stream;
       Janus$1.log("MediaStream provided by the application");
-      Janus$1.debug(stream); // If this is an update, let's check if we need to release the previous stream
-
+      Janus$1.debug(stream);
+      // If this is an update, let's check if we need to release the previous stream
       if (media.update) {
         if (config.myStream && config.myStream !== callbacks.stream && !config.streamExternal) {
           // We're replacing a stream we captured ourselves with an external one
           try {
             // Try a MediaStreamTrack.stop() for each track
             var tracks = config.myStream.getTracks();
-
             for (var i in tracks) {
               var mst = tracks[i];
               Janus$1.log(mst);
               if (mst !== null && mst !== undefined) mst.stop();
             }
-          } catch (e) {// Do nothing if this fails
+          } catch (e) {
+            // Do nothing if this fails
           }
-
           config.myStream = null;
         }
-      } // Skip the getUserMedia part
-
-
+      }
+      // Skip the getUserMedia part
       config.streamExternal = true;
       pluginHandle.consentDialog(false);
       streamsDone(handleId, jsep, media, callbacks, stream);
       return;
     }
-
     if (isAudioSendEnabled(media) || isVideoSendEnabled(media)) {
       if (!Janus$1.isGetUserMediaAvailable()) {
         callbacks.error("getUserMedia not available");
         return;
       }
-
       var constraints = {
         mandatory: {},
         optional: []
       };
       pluginHandle.consentDialog(true);
       var audioSupport = isAudioSendEnabled(media);
-
       if (audioSupport === true && media != undefined && media != null) {
         if (_typeof(media.audio) === 'object') {
           audioSupport = media.audio;
         }
       }
-
       var videoSupport = isVideoSendEnabled(media);
-
       if (videoSupport === true && media != undefined && media != null) {
         var simulcast = callbacks.simulcast === true ? true : false;
         var simulcast2 = callbacks.simulcast2 === true ? true : false;
         if ((simulcast || simulcast2) && !jsep && (media.video === undefined || media.video === false)) media.video = "hires";
-
         if (media.video && media.video != 'screen' && media.video != 'window') {
           if (_typeof(media.video) === 'object') {
             videoSupport = media.video;
           } else {
             var width = 0;
             var height = 0;
-
             if (media.video === 'lowres') {
               // Small resolution, 4:3
               height = 240;
@@ -26082,7 +24638,6 @@ function Janus$1(gatewayCallbacks) {
               height = 480;
               width = 640;
             }
-
             Janus$1.log("Adding media constraint:", media.video);
             videoSupport = {
               'height': {
@@ -26099,14 +24654,12 @@ function Janus$1(gatewayCallbacks) {
           // for older versions of Chrome, or the experimental support in Firefox 33+
           var callbackUserMedia = function callbackUserMedia(error, stream) {
             pluginHandle.consentDialog(false);
-
             if (error) {
               callbacks.error(error);
             } else {
               streamsDone(handleId, jsep, media, callbacks, stream);
             }
           };
-
           var getScreenMedia = function getScreenMedia(constraints, gsmCallback, useAudio) {
             Janus$1.log("Adding media constraint (screen capture)");
             Janus$1.debug(constraints);
@@ -26127,11 +24680,9 @@ function Janus$1(gatewayCallbacks) {
               gsmCallback(error);
             });
           };
-
           if (!media.screenshareFrameRate) {
             media.screenshareFrameRate = 3;
           }
-
           if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
             // The new experimental getDisplayMedia API is available, let's use that
             // https://groups.google.com/forum/#!topic/discuss-webrtc/Uf0SrR4uxzk
@@ -26140,7 +24691,6 @@ function Janus$1(gatewayCallbacks) {
               video: true
             }).then(function (stream) {
               pluginHandle.consentDialog(false);
-
               if (isAudioSendEnabled(media) && !media.keepAudio) {
                 navigator.mediaDevices.getUserMedia({
                   audio: true,
@@ -26158,12 +24708,10 @@ function Janus$1(gatewayCallbacks) {
             });
             return;
           }
-
           if (Janus$1.webRTCAdapter.browserDetails.browser === 'chrome') {
             var chromever = Janus$1.webRTCAdapter.browserDetails.version;
             var maxver = 33;
             if (window.navigator.userAgent.match('Linux')) maxver = 35; // "known" crash in chrome 34 and 35 on linux
-
             if (chromever >= 26 && chromever <= maxver) {
               // Chrome 26->33 requires some awkward chrome://flags manipulation
               constraints = {
@@ -26187,7 +24735,6 @@ function Janus$1(gatewayCallbacks) {
                   pluginHandle.consentDialog(false);
                   return callbacks.error(error);
                 }
-
                 constraints = {
                   audio: false,
                   video: {
@@ -26220,21 +24767,18 @@ function Janus$1(gatewayCallbacks) {
                 audio: isAudioSendEnabled(media) && !media.keepAudio
               };
               getScreenMedia(constraints, function (err, stream) {
-                callbackUserMedia(err, stream); // Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1045810
-
+                callbackUserMedia(err, stream);
+                // Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1045810
                 if (!err) {
                   var lastTime = stream.currentTime;
                   var polly = window.setInterval(function () {
                     if (!stream) window.clearInterval(polly);
-
                     if (stream.currentTime == lastTime) {
                       window.clearInterval(polly);
-
                       if (stream.onended) {
                         stream.onended();
                       }
                     }
-
                     lastTime = stream.currentTime;
                   }, 500);
                 }
@@ -26247,32 +24791,29 @@ function Janus$1(gatewayCallbacks) {
               return;
             }
           }
-
           return;
         }
-      } // If we got here, we're not screensharing
-
-
+      }
+      // If we got here, we're not screensharing
       if (media === null || media === undefined || media.video !== 'screen') {
         // Check whether all media sources are actually available or not
         navigator.mediaDevices.enumerateDevices().then(function (devices) {
           var audioExist = devices.some(function (device) {
-            return device.kind === 'audioinput';
-          }),
-              videoExist = isScreenSendEnabled(media) || devices.some(function (device) {
-            return device.kind === 'videoinput';
-          }); // Check whether a missing device is really a problem
+              return device.kind === 'audioinput';
+            }),
+            videoExist = isScreenSendEnabled(media) || devices.some(function (device) {
+              return device.kind === 'videoinput';
+            });
 
+          // Check whether a missing device is really a problem
           var audioSend = isAudioSendEnabled(media);
           var videoSend = isVideoSendEnabled(media);
           var needAudioDevice = isAudioSendRequired(media);
           var needVideoDevice = isVideoSendRequired(media);
-
           if (audioSend || videoSend || needAudioDevice || needVideoDevice) {
             // We need to send either audio or video
             var haveAudioDevice = audioSend ? audioExist : false;
             var haveVideoDevice = videoSend ? videoExist : false;
-
             if (!haveAudioDevice && !haveVideoDevice) {
               // FIXME Should we really give up, or just assume recvonly for both?
               pluginHandle.consentDialog(false);
@@ -26288,13 +24829,11 @@ function Janus$1(gatewayCallbacks) {
               return false;
             }
           }
-
           var gumConstraints = {
             audio: audioExist && !media.keepAudio ? audioSupport : false,
             video: videoExist && !media.keepVideo ? videoSupport : false
           };
           Janus$1.debug("getUserMedia constraints", gumConstraints);
-
           if (!gumConstraints.audio && !gumConstraints.video) {
             pluginHandle.consentDialog(false);
             streamsDone(handleId, jsep, media, callbacks, stream);
@@ -26321,38 +24860,32 @@ function Janus$1(gatewayCallbacks) {
       streamsDone(handleId, jsep, media, callbacks);
     }
   }
-
   function prepareWebrtcPeer(handleId, callbacks) {
     callbacks = callbacks || {};
     callbacks.success = typeof callbacks.success == "function" ? callbacks.success : Janus$1.noop;
     callbacks.error = typeof callbacks.error == "function" ? callbacks.error : webrtcError;
     var jsep = callbacks.jsep;
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.webrtcStuff === null || pluginHandle.webrtcStuff === undefined) {
       Janus$1.warn("Invalid handle");
       callbacks.error("Invalid handle");
       return;
     }
-
     var config = pluginHandle.webrtcStuff;
-
     if (jsep !== undefined && jsep !== null) {
       if (config.pc === null) {
         Janus$1.warn("Wait, no PeerConnection?? if this is an answer, use createAnswer and not handleRemoteJsep");
         callbacks.error("No PeerConnection: if this is an answer, use createAnswer and not handleRemoteJsep");
         return;
       }
-
       config.pc.setRemoteDescription(jsep).then(function () {
         Janus$1.log("Remote description accepted!");
-        config.remoteSdp = jsep.sdp; // Any trickle candidate we cached?
-
+        config.remoteSdp = jsep.sdp;
+        // Any trickle candidate we cached?
         if (config.candidates && config.candidates.length > 0) {
           for (var i = 0; i < config.candidates.length; i++) {
             var candidate = config.candidates[i];
             Janus$1.debug("Adding remote candidate:", candidate);
-
             if (!candidate || candidate.completed === true) {
               // end-of-candidates
               config.pc.addIceCandidate(Janus$1.endOfCandidates);
@@ -26361,69 +24894,56 @@ function Janus$1(gatewayCallbacks) {
               config.pc.addIceCandidate(candidate);
             }
           }
-
           config.candidates = [];
-        } // Done
-
-
+        }
+        // Done
         callbacks.success();
       }, callbacks.error);
     } else {
       callbacks.error("Invalid JSEP");
     }
   }
-
   function createOffer(handleId, media, callbacks) {
     callbacks = callbacks || {};
     callbacks.success = typeof callbacks.success == "function" ? callbacks.success : Janus$1.noop;
     callbacks.error = typeof callbacks.error == "function" ? callbacks.error : Janus$1.noop;
     callbacks.customizeSdp = typeof callbacks.customizeSdp == "function" ? callbacks.customizeSdp : Janus$1.noop;
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.webrtcStuff === null || pluginHandle.webrtcStuff === undefined) {
       Janus$1.warn("Invalid handle");
       callbacks.error("Invalid handle");
       return;
     }
-
     var config = pluginHandle.webrtcStuff;
     var simulcast = callbacks.simulcast === true ? true : false;
-
     if (!simulcast) {
       Janus$1.log("Creating offer (iceDone=" + config.iceDone + ")");
     } else {
       Janus$1.log("Creating offer (iceDone=" + config.iceDone + ", simulcast=" + simulcast + ")");
-    } // https://code.google.com/p/webrtc/issues/detail?id=3508
-
-
+    }
+    // https://code.google.com/p/webrtc/issues/detail?id=3508
     var mediaConstraints = {};
-
     if (Janus$1.unifiedPlan) {
       // We can use Transceivers
       var audioTransceiver = null,
-          videoTransceiver = null;
+        videoTransceiver = null;
       var transceivers = config.pc.getTransceivers();
-
       if (transceivers && transceivers.length > 0) {
         for (var i in transceivers) {
           var t = transceivers[i];
-
           if (t.sender && t.sender.track && t.sender.track.kind === "audio" || t.receiver && t.receiver.track && t.receiver.track.kind === "audio") {
             if (!audioTransceiver) audioTransceiver = t;
             continue;
           }
-
           if (t.sender && t.sender.track && t.sender.track.kind === "video" || t.receiver && t.receiver.track && t.receiver.track.kind === "video") {
             if (!videoTransceiver) videoTransceiver = t;
             continue;
           }
         }
-      } // Handle audio (and related changes, if any)
-
-
+      }
+      // Handle audio (and related changes, if any)
       var audioSend = isAudioSendEnabled(media);
       var audioRecv = isAudioRecvEnabled(media);
-
       if (!audioSend && !audioRecv) {
         // Audio disabled: have we removed it?
         if (media.removeAudio && audioTransceiver) {
@@ -26432,7 +24952,6 @@ function Janus$1(gatewayCallbacks) {
           } else {
             audioTransceiver.direction = "inactive";
           }
-
           Janus$1.log("Setting audio transceiver to inactive:", audioTransceiver);
         }
       } else {
@@ -26444,7 +24963,6 @@ function Janus$1(gatewayCallbacks) {
             } else {
               audioTransceiver.direction = "sendrecv";
             }
-
             Janus$1.log("Setting audio transceiver to sendrecv:", audioTransceiver);
           }
         } else if (audioSend && !audioRecv) {
@@ -26454,7 +24972,6 @@ function Janus$1(gatewayCallbacks) {
             } else {
               audioTransceiver.direction = "sendonly";
             }
-
             Janus$1.log("Setting audio transceiver to sendonly:", audioTransceiver);
           }
         } else if (!audioSend && audioRecv) {
@@ -26464,7 +24981,6 @@ function Janus$1(gatewayCallbacks) {
             } else {
               audioTransceiver.direction = "recvonly";
             }
-
             Janus$1.log("Setting audio transceiver to recvonly:", audioTransceiver);
           } else {
             // In theory, this is the only case where we might not have a transceiver yet
@@ -26474,12 +24990,10 @@ function Janus$1(gatewayCallbacks) {
             Janus$1.log("Adding recvonly audio transceiver:", audioTransceiver);
           }
         }
-      } // Handle video (and related changes, if any)
-
-
+      }
+      // Handle video (and related changes, if any)
       var videoSend = isVideoSendEnabled(media);
       var videoRecv = isVideoRecvEnabled(media);
-
       if (!videoSend && !videoRecv) {
         // Video disabled: have we removed it?
         if (media.removeVideo && videoTransceiver) {
@@ -26488,7 +25002,6 @@ function Janus$1(gatewayCallbacks) {
           } else {
             videoTransceiver.direction = "inactive";
           }
-
           Janus$1.log("Setting video transceiver to inactive:", videoTransceiver);
         }
       } else {
@@ -26500,7 +25013,6 @@ function Janus$1(gatewayCallbacks) {
             } else {
               videoTransceiver.direction = "sendrecv";
             }
-
             Janus$1.log("Setting video transceiver to sendrecv:", videoTransceiver);
           }
         } else if (videoSend && !videoRecv) {
@@ -26510,7 +25022,6 @@ function Janus$1(gatewayCallbacks) {
             } else {
               videoTransceiver.direction = "sendonly";
             }
-
             Janus$1.log("Setting video transceiver to sendonly:", videoTransceiver);
           }
         } else if (!videoSend && videoRecv) {
@@ -26520,7 +25031,6 @@ function Janus$1(gatewayCallbacks) {
             } else {
               videoTransceiver.direction = "recvonly";
             }
-
             Janus$1.log("Setting video transceiver to recvonly:", videoTransceiver);
           } else {
             // In theory, this is the only case where we might not have a transceiver yet
@@ -26535,24 +25045,19 @@ function Janus$1(gatewayCallbacks) {
       mediaConstraints["offerToReceiveAudio"] = isAudioRecvEnabled(media);
       mediaConstraints["offerToReceiveVideo"] = isVideoRecvEnabled(media);
     }
-
     var iceRestart = callbacks.iceRestart === true ? true : false;
-
     if (iceRestart) {
       mediaConstraints["iceRestart"] = true;
     }
-
-    Janus$1.debug(mediaConstraints); // Check if this is Firefox and we've been asked to do simulcasting
-
+    Janus$1.debug(mediaConstraints);
+    // Check if this is Firefox and we've been asked to do simulcasting
     var sendVideo = isVideoSendEnabled(media);
-
     if (sendVideo && simulcast && Janus$1.webRTCAdapter.browserDetails.browser === "firefox") {
       // FIXME Based on https://gist.github.com/voluntas/088bc3cc62094730647b
       Janus$1.log("Enabling Simulcasting for Firefox (RID)");
       var sender = config.pc.getSenders().find(function (s) {
         return s.track.kind == "video";
       });
-
       if (sender) {
         var parameters = sender.getParameters();
         if (!parameters) parameters = {};
@@ -26575,11 +25080,10 @@ function Janus$1(gatewayCallbacks) {
         sender.setParameters(parameters);
       }
     }
-
     config.pc.createOffer(mediaConstraints).then(function (offer) {
-      Janus$1.debug(offer); // JSON.stringify doesn't work on some WebRTC objects anymore
+      Janus$1.debug(offer);
+      // JSON.stringify doesn't work on some WebRTC objects anymore
       // See https://code.google.com/p/chromium/issues/detail?id=467366
-
       var jsep = {
         "type": offer.type,
         "sdp": offer.sdp
@@ -26587,7 +25091,6 @@ function Janus$1(gatewayCallbacks) {
       callbacks.customizeSdp(jsep);
       offer.sdp = jsep.sdp;
       Janus$1.log("Setting local description");
-
       if (sendVideo && simulcast) {
         // This SDP munging only works with Chrome (Safari STP may support it too)
         if (Janus$1.webRTCAdapter.browserDetails.browser === "chrome" || Janus$1.webRTCAdapter.browserDetails.browser === "safari") {
@@ -26597,74 +25100,60 @@ function Janus$1(gatewayCallbacks) {
           Janus$1.warn("simulcast=true, but this is not Chrome nor Firefox, ignoring");
         }
       }
-
       config.mySdp = offer.sdp;
       config.pc.setLocalDescription(offer)["catch"](callbacks.error);
       config.mediaConstraints = mediaConstraints;
-
       if (!config.iceDone && !config.trickle) {
         // Don't do anything until we have all candidates
         Janus$1.log("Waiting for all candidates...");
         return;
       }
-
       Janus$1.log("Offer ready");
       Janus$1.debug(callbacks);
       callbacks.success(offer);
     }, callbacks.error);
   }
-
   function createAnswer(handleId, media, callbacks) {
     callbacks = callbacks || {};
     callbacks.success = typeof callbacks.success == "function" ? callbacks.success : Janus$1.noop;
     callbacks.error = typeof callbacks.error == "function" ? callbacks.error : Janus$1.noop;
     callbacks.customizeSdp = typeof callbacks.customizeSdp == "function" ? callbacks.customizeSdp : Janus$1.noop;
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.webrtcStuff === null || pluginHandle.webrtcStuff === undefined) {
       Janus$1.warn("Invalid handle");
       callbacks.error("Invalid handle");
       return;
     }
-
     var config = pluginHandle.webrtcStuff;
     var simulcast = callbacks.simulcast === true ? true : false;
-
     if (!simulcast) {
       Janus$1.log("Creating answer (iceDone=" + config.iceDone + ")");
     } else {
       Janus$1.log("Creating answer (iceDone=" + config.iceDone + ", simulcast=" + simulcast + ")");
     }
-
     var mediaConstraints = null;
-
     if (Janus$1.unifiedPlan) {
       // We can use Transceivers
       mediaConstraints = {};
       var audioTransceiver = null,
-          videoTransceiver = null;
+        videoTransceiver = null;
       var transceivers = config.pc.getTransceivers();
-
       if (transceivers && transceivers.length > 0) {
         for (var i in transceivers) {
           var t = transceivers[i];
-
           if (t.sender && t.sender.track && t.sender.track.kind === "audio" || t.receiver && t.receiver.track && t.receiver.track.kind === "audio") {
             if (!audioTransceiver) audioTransceiver = t;
             continue;
           }
-
           if (t.sender && t.sender.track && t.sender.track.kind === "video" || t.receiver && t.receiver.track && t.receiver.track.kind === "video") {
             if (!videoTransceiver) videoTransceiver = t;
             continue;
           }
         }
-      } // Handle audio (and related changes, if any)
-
-
+      }
+      // Handle audio (and related changes, if any)
       var audioSend = isAudioSendEnabled(media);
       var audioRecv = isAudioRecvEnabled(media);
-
       if (!audioSend && !audioRecv) {
         // Audio disabled: have we removed it?
         if (media.removeAudio && audioTransceiver) {
@@ -26674,7 +25163,6 @@ function Janus$1(gatewayCallbacks) {
             } else {
               audioTransceiver.direction = "inactive";
             }
-
             Janus$1.log("Setting audio transceiver to inactive:", audioTransceiver);
           } catch (e) {
             Janus$1.error(e);
@@ -26690,7 +25178,6 @@ function Janus$1(gatewayCallbacks) {
               } else {
                 audioTransceiver.direction = "sendrecv";
               }
-
               Janus$1.log("Setting audio transceiver to sendrecv:", audioTransceiver);
             } catch (e) {
               Janus$1.error(e);
@@ -26704,7 +25191,6 @@ function Janus$1(gatewayCallbacks) {
               } else {
                 audioTransceiver.direction = "sendonly";
               }
-
               Janus$1.log("Setting audio transceiver to sendonly:", audioTransceiver);
             }
           } catch (e) {
@@ -26718,7 +25204,6 @@ function Janus$1(gatewayCallbacks) {
               } else {
                 audioTransceiver.direction = "recvonly";
               }
-
               Janus$1.log("Setting audio transceiver to recvonly:", audioTransceiver);
             } catch (e) {
               Janus$1.error(e);
@@ -26731,12 +25216,10 @@ function Janus$1(gatewayCallbacks) {
             Janus$1.log("Adding recvonly audio transceiver:", audioTransceiver);
           }
         }
-      } // Handle video (and related changes, if any)
-
-
+      }
+      // Handle video (and related changes, if any)
       var videoSend = isVideoSendEnabled(media);
       var videoRecv = isVideoRecvEnabled(media);
-
       if (!videoSend && !videoRecv) {
         // Video disabled: have we removed it?
         if (media.removeVideo && videoTransceiver) {
@@ -26746,7 +25229,6 @@ function Janus$1(gatewayCallbacks) {
             } else {
               videoTransceiver.direction = "inactive";
             }
-
             Janus$1.log("Setting video transceiver to inactive:", videoTransceiver);
           } catch (e) {
             Janus$1.error(e);
@@ -26762,7 +25244,6 @@ function Janus$1(gatewayCallbacks) {
               } else {
                 videoTransceiver.direction = "sendrecv";
               }
-
               Janus$1.log("Setting video transceiver to sendrecv:", videoTransceiver);
             } catch (e) {
               Janus$1.error(e);
@@ -26776,7 +25257,6 @@ function Janus$1(gatewayCallbacks) {
               } else {
                 videoTransceiver.direction = "sendonly";
               }
-
               Janus$1.log("Setting video transceiver to sendonly:", videoTransceiver);
             } catch (e) {
               Janus$1.error(e);
@@ -26790,7 +25270,6 @@ function Janus$1(gatewayCallbacks) {
               } else {
                 videoTransceiver.direction = "recvonly";
               }
-
               Janus$1.log("Setting video transceiver to recvonly:", videoTransceiver);
             } catch (e) {
               Janus$1.error(e);
@@ -26819,11 +25298,9 @@ function Janus$1(gatewayCallbacks) {
         };
       }
     }
-
-    Janus$1.debug(mediaConstraints); // Check if this is Firefox and we've been asked to do simulcasting
-
+    Janus$1.debug(mediaConstraints);
+    // Check if this is Firefox and we've been asked to do simulcasting
     var sendVideo = isVideoSendEnabled(media);
-
     if (sendVideo && simulcast && Janus$1.webRTCAdapter.browserDetails.browser === "firefox") {
       // FIXME Based on https://gist.github.com/voluntas/088bc3cc62094730647b
       Janus$1.log("Enabling Simulcasting for Firefox (RID)");
@@ -26851,11 +25328,10 @@ function Janus$1(gatewayCallbacks) {
         }]
       });
     }
-
     config.pc.createAnswer(mediaConstraints).then(function (answer) {
-      Janus$1.debug(answer); // JSON.stringify doesn't work on some WebRTC objects anymore
+      Janus$1.debug(answer);
+      // JSON.stringify doesn't work on some WebRTC objects anymore
       // See https://code.google.com/p/chromium/issues/detail?id=467366
-
       var jsep = {
         "type": answer.type,
         "sdp": answer.sdp
@@ -26863,7 +25339,6 @@ function Janus$1(gatewayCallbacks) {
       callbacks.customizeSdp(jsep);
       answer.sdp = jsep.sdp;
       Janus$1.log("Setting local description");
-
       if (sendVideo && simulcast) {
         // This SDP munging only works with Chrome
         if (Janus$1.webRTCAdapter.browserDetails.browser === "chrome") {
@@ -26875,40 +25350,32 @@ function Janus$1(gatewayCallbacks) {
           Janus$1.warn("simulcast=true, but this is not Chrome nor Firefox, ignoring");
         }
       }
-
       config.mySdp = answer.sdp;
       config.pc.setLocalDescription(answer)["catch"](callbacks.error);
       config.mediaConstraints = mediaConstraints;
-
       if (!config.iceDone && !config.trickle) {
         // Don't do anything until we have all candidates
         Janus$1.log("Waiting for all candidates...");
         return;
       }
-
       callbacks.success(answer);
     }, callbacks.error);
   }
-
   function sendSDP(handleId, callbacks) {
     callbacks = callbacks || {};
     callbacks.success = typeof callbacks.success == "function" ? callbacks.success : Janus$1.noop;
     callbacks.error = typeof callbacks.error == "function" ? callbacks.error : Janus$1.noop;
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.webrtcStuff === null || pluginHandle.webrtcStuff === undefined) {
       Janus$1.warn("Invalid handle, not sending anything");
       return;
     }
-
     var config = pluginHandle.webrtcStuff;
     Janus$1.log("Sending offer/answer SDP...");
-
     if (config.mySdp === null || config.mySdp === undefined) {
       Janus$1.warn("Local SDP instance is invalid, not sending anything...");
       return;
     }
-
     config.mySdp = {
       "type": config.pc.localDescription.type,
       "sdp": config.pc.localDescription.sdp
@@ -26918,21 +25385,18 @@ function Janus$1(gatewayCallbacks) {
     config.sdpSent = true;
     callbacks.success(config.mySdp);
   }
-
   function _getVolume(handleId, remote) {
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.webrtcStuff === null || pluginHandle.webrtcStuff === undefined) {
       Janus$1.warn("Invalid handle");
       return 0;
     }
-
     var stream = remote ? "remote" : "local";
     var config = pluginHandle.webrtcStuff;
     if (!config.volume[stream]) config.volume[stream] = {
       value: 0
-    }; // Start getting the volume, if getStats is supported
-
+    };
+    // Start getting the volume, if getStats is supported
     if (config.pc.getStats && Janus$1.webRTCAdapter.browserDetails.browser === "chrome") {
       if (remote && (config.remoteStream === null || config.remoteStream === undefined)) {
         Janus$1.warn("Remote stream unavailable");
@@ -26941,16 +25405,13 @@ function Janus$1(gatewayCallbacks) {
         Janus$1.warn("Local stream unavailable");
         return 0;
       }
-
       if (config.volume[stream].timer === null || config.volume[stream].timer === undefined) {
         Janus$1.log("Starting " + stream + " volume monitor");
         config.volume[stream].timer = setInterval(function () {
           config.pc.getStats(function (stats) {
             var results = stats.result();
-
             for (var i = 0; i < results.length; i++) {
               var res = results[i];
-
               if (res.type == 'ssrc') {
                 if (remote && res.stat('audioOutputLevel')) config.volume[stream].value = parseInt(res.stat('audioOutputLevel'));else if (!remote && res.stat('audioInputLevel')) config.volume[stream].value = parseInt(res.stat('audioInputLevel'));
               }
@@ -26968,34 +25429,27 @@ function Janus$1(gatewayCallbacks) {
       return 0;
     }
   }
-
   function isMuted(handleId, video) {
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.webrtcStuff === null || pluginHandle.webrtcStuff === undefined) {
       Janus$1.warn("Invalid handle");
       return true;
     }
-
     var config = pluginHandle.webrtcStuff;
-
     if (config.pc === null || config.pc === undefined) {
       Janus$1.warn("Invalid PeerConnection");
       return true;
     }
-
     if (config.myStream === undefined || config.myStream === null) {
       Janus$1.warn("Invalid local MediaStream");
       return true;
     }
-
     if (video) {
       // Check video track
       if (config.myStream.getVideoTracks() === null || config.myStream.getVideoTracks() === undefined || config.myStream.getVideoTracks().length === 0) {
         Janus$1.warn("No video track");
         return true;
       }
-
       return !config.myStream.getVideoTracks()[0].enabled;
     } else {
       // Check audio track
@@ -27003,38 +25457,30 @@ function Janus$1(gatewayCallbacks) {
         Janus$1.warn("No audio track");
         return true;
       }
-
       return !config.myStream.getAudioTracks()[0].enabled;
     }
   }
-
   function mute(handleId, video, mute) {
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.webrtcStuff === null || pluginHandle.webrtcStuff === undefined) {
       Janus$1.warn("Invalid handle");
       return false;
     }
-
     var config = pluginHandle.webrtcStuff;
-
     if (config.pc === null || config.pc === undefined) {
       Janus$1.warn("Invalid PeerConnection");
       return false;
     }
-
     if (config.myStream === undefined || config.myStream === null) {
       Janus$1.warn("Invalid local MediaStream");
       return false;
     }
-
     if (video) {
       // Mute/unmute video track
       if (config.myStream.getVideoTracks() === null || config.myStream.getVideoTracks() === undefined || config.myStream.getVideoTracks().length === 0) {
         Janus$1.warn("No video track");
         return false;
       }
-
       config.myStream.getVideoTracks()[0].enabled = mute ? false : true;
       return true;
     } else {
@@ -27043,23 +25489,19 @@ function Janus$1(gatewayCallbacks) {
         Janus$1.warn("No audio track");
         return false;
       }
-
       config.myStream.getAudioTracks()[0].enabled = mute ? false : true;
       return true;
     }
   }
-
   function _getBitrate(handleId) {
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined || pluginHandle.webrtcStuff === null || pluginHandle.webrtcStuff === undefined) {
       Janus$1.warn("Invalid handle");
       return "Invalid handle";
     }
-
     var config = pluginHandle.webrtcStuff;
-    if (config.pc === null || config.pc === undefined) return "Invalid PeerConnection"; // Start getting the bitrate, if getStats is supported
-
+    if (config.pc === null || config.pc === undefined) return "Invalid PeerConnection";
+    // Start getting the bitrate, if getStats is supported
     if (config.pc.getStats) {
       if (config.bitrate.timer === null || config.bitrate.timer === undefined) {
         Janus$1.log("Starting bitrate timer (via getStats)");
@@ -27067,21 +25509,19 @@ function Janus$1(gatewayCallbacks) {
           config.pc.getStats().then(function (stats) {
             stats.forEach(function (res) {
               if (!res) return;
-              var inStats = false; // Check if these are statistics on incoming media
-
+              var inStats = false;
+              // Check if these are statistics on incoming media
               if ((res.mediaType === "video" || res.id.toLowerCase().indexOf("video") > -1) && res.type === "inbound-rtp" && res.id.indexOf("rtcp") < 0) {
                 // New stats
                 inStats = true;
               } else if (res.type == 'ssrc' && res.bytesReceived && (res.googCodecName === "VP8" || res.googCodecName === "")) {
                 // Older Chromer versions
                 inStats = true;
-              } // Parse stats now
-
-
+              }
+              // Parse stats now
               if (inStats) {
                 config.bitrate.bsnow = res.bytesReceived;
                 config.bitrate.tsnow = res.timestamp;
-
                 if (config.bitrate.bsbefore === null || config.bitrate.tsbefore === null) {
                   // Skip this round
                   config.bitrate.bsbefore = config.bitrate.bsnow;
@@ -27090,11 +25530,10 @@ function Janus$1(gatewayCallbacks) {
                   // Calculate bitrate
                   var timePassed = config.bitrate.tsnow - config.bitrate.tsbefore;
                   if (Janus$1.webRTCAdapter.browserDetails.browser == "safari") timePassed = timePassed / 1000; // Apparently the timestamp is in microseconds, in Safari
-
                   var bitRate = Math.round((config.bitrate.bsnow - config.bitrate.bsbefore) * 8 / timePassed);
                   if (Janus$1.webRTCAdapter.browserDetails.browser === 'safari') bitRate = parseInt(bitRate / 1000);
-                  config.bitrate.value = bitRate + ' kbits/sec'; //~ Janus.log("Estimated bitrate is " + config.bitrate.value);
-
+                  config.bitrate.value = bitRate + ' kbits/sec';
+                  //~ Janus.log("Estimated bitrate is " + config.bitrate.value);
                   config.bitrate.bsbefore = config.bitrate.bsnow;
                   config.bitrate.tsbefore = config.bitrate.tsnow;
                 }
@@ -27111,22 +25550,17 @@ function Janus$1(gatewayCallbacks) {
       return "Feature unsupported by browser";
     }
   }
-
   function webrtcError(error) {
     Janus$1.error("WebRTC error:", error);
   }
-
   function cleanupWebrtc(handleId, hangupRequest) {
     Janus$1.log("Cleaning WebRTC stuff");
     var pluginHandle = pluginHandles[handleId];
-
     if (pluginHandle === null || pluginHandle === undefined) {
       // Nothing to clean
       return;
     }
-
     var config = pluginHandle.webrtcStuff;
-
     if (config !== null && config !== undefined) {
       if (hangupRequest === true) {
         // Send a hangup request (we don't really care about the response)
@@ -27138,7 +25572,6 @@ function Janus$1(gatewayCallbacks) {
         if (apisecret !== null && apisecret !== undefined) request["apisecret"] = apisecret;
         Janus$1.debug("Sending hangup request (handle=" + handleId + "):");
         Janus$1.debug(request);
-
         if (websockets) {
           request["session_id"] = sessionId;
           request["handle_id"] = handleId;
@@ -27150,16 +25583,13 @@ function Janus$1(gatewayCallbacks) {
             body: request
           });
         }
-      } // Cleanup stack
-
-
+      }
+      // Cleanup stack
       config.remoteStream = null;
-
       if (config.volume) {
         if (config.volume["local"] && config.volume["local"].timer) clearInterval(config.volume["local"].timer);
         if (config.volume["remote"] && config.volume["remote"].timer) clearInterval(config.volume["remote"].timer);
       }
-
       config.volume = {};
       if (config.bitrate.timer) clearInterval(config.bitrate.timer);
       config.bitrate.timer = null;
@@ -27168,30 +25598,28 @@ function Janus$1(gatewayCallbacks) {
       config.bitrate.tsnow = null;
       config.bitrate.tsbefore = null;
       config.bitrate.value = null;
-
       try {
         // Try a MediaStreamTrack.stop() for each track
         if (!config.streamExternal && config.myStream !== null && config.myStream !== undefined) {
           Janus$1.log("Stopping local stream tracks");
           var tracks = config.myStream.getTracks();
-
           for (var i in tracks) {
             var mst = tracks[i];
             Janus$1.log(mst);
             if (mst !== null && mst !== undefined) mst.stop();
           }
         }
-      } catch (e) {// Do nothing if this fails
+      } catch (e) {
+        // Do nothing if this fails
       }
-
       config.streamExternal = false;
-      config.myStream = null; // Close PeerConnection
-
+      config.myStream = null;
+      // Close PeerConnection
       try {
         config.pc.close();
-      } catch (e) {// Do nothing
+      } catch (e) {
+        // Do nothing
       }
-
       config.pc = null;
       config.candidates = null;
       config.mySdp = null;
@@ -27200,30 +25628,26 @@ function Janus$1(gatewayCallbacks) {
       config.dataChannel = {};
       config.dtmfSender = null;
     }
-
     pluginHandle.oncleanup();
-  } // Helper method to munge an SDP to enable simulcasting (Chrome only)
+  }
 
-
+  // Helper method to munge an SDP to enable simulcasting (Chrome only)
   function mungeSdpForSimulcasting(sdp) {
     // Let's munge the SDP to add the attributes for enabling simulcasting
     // (based on https://gist.github.com/ggarber/a19b4c33510028b9c657)
     var lines = sdp.split("\r\n");
     var video = false;
     var ssrc = [-1],
-        ssrc_fid = [-1];
+      ssrc_fid = [-1];
     var cname = null,
-        msid = null,
-        mslabel = null,
-        label = null;
+      msid = null,
+      mslabel = null,
+      label = null;
     var insertAt = -1;
-
     for (var i = 0; i < lines.length; i++) {
       var mline = lines[i].match(/m=(\w+) */);
-
       if (mline) {
         var medium = mline[1];
-
         if (medium === "video") {
           // New video m-line: make sure it's the first one
           if (ssrc[0] < 0) {
@@ -27241,13 +25665,10 @@ function Janus$1(gatewayCallbacks) {
             break;
           }
         }
-
         continue;
       }
-
       if (!video) continue;
       var fid = lines[i].match(/a=ssrc-group:FID (\d+) (\d+)/);
-
       if (fid) {
         ssrc[0] = fid[1];
         ssrc_fid[0] = fid[2];
@@ -27255,63 +25676,48 @@ function Janus$1(gatewayCallbacks) {
         i--;
         continue;
       }
-
       if (ssrc[0]) {
         var match = lines[i].match('a=ssrc:' + ssrc[0] + ' cname:(.+)');
-
         if (match) {
           cname = match[1];
         }
-
         match = lines[i].match('a=ssrc:' + ssrc[0] + ' msid:(.+)');
-
         if (match) {
           msid = match[1];
         }
-
         match = lines[i].match('a=ssrc:' + ssrc[0] + ' mslabel:(.+)');
-
         if (match) {
           mslabel = match[1];
         }
-
         match = lines[i].match('a=ssrc:' + ssrc[0] + ' label:(.+)');
-
         if (match) {
           label = match[1];
         }
-
         if (lines[i].indexOf('a=ssrc:' + ssrc_fid[0]) === 0) {
           lines.splice(i, 1);
           i--;
           continue;
         }
-
         if (lines[i].indexOf('a=ssrc:' + ssrc[0]) === 0) {
           lines.splice(i, 1);
           i--;
           continue;
         }
       }
-
       if (lines[i].length == 0) {
         lines.splice(i, 1);
         i--;
         continue;
       }
     }
-
     if (ssrc[0] < 0) {
       // Couldn't find a FID attribute, let's just take the first video SSRC we find
       insertAt = -1;
       video = false;
-
       for (var i = 0; i < lines.length; i++) {
         var mline = lines[i].match(/m=(\w+) */);
-
         if (mline) {
           var medium = mline[1];
-
           if (medium === "video") {
             // New video m-line: make sure it's the first one
             if (ssrc[0] < 0) {
@@ -27329,15 +25735,11 @@ function Janus$1(gatewayCallbacks) {
               break;
             }
           }
-
           continue;
         }
-
         if (!video) continue;
-
         if (ssrc[0] < 0) {
           var value = lines[i].match(/a=ssrc:(\d+)/);
-
           if (value) {
             ssrc[0] = value[1];
             lines.splice(i, 1);
@@ -27346,42 +25748,32 @@ function Janus$1(gatewayCallbacks) {
           }
         } else {
           var match = lines[i].match('a=ssrc:' + ssrc[0] + ' cname:(.+)');
-
           if (match) {
             cname = match[1];
           }
-
           match = lines[i].match('a=ssrc:' + ssrc[0] + ' msid:(.+)');
-
           if (match) {
             msid = match[1];
           }
-
           match = lines[i].match('a=ssrc:' + ssrc[0] + ' mslabel:(.+)');
-
           if (match) {
             mslabel = match[1];
           }
-
           match = lines[i].match('a=ssrc:' + ssrc[0] + ' label:(.+)');
-
           if (match) {
             label = match[1];
           }
-
           if (lines[i].indexOf('a=ssrc:' + ssrc_fid[0]) === 0) {
             lines.splice(i, 1);
             i--;
             continue;
           }
-
           if (lines[i].indexOf('a=ssrc:' + ssrc[0]) === 0) {
             lines.splice(i, 1);
             i--;
             continue;
           }
         }
-
         if (lines[i].length == 0) {
           lines.splice(i, 1);
           i--;
@@ -27389,68 +25781,57 @@ function Janus$1(gatewayCallbacks) {
         }
       }
     }
-
     if (ssrc[0] < 0) {
       // Still nothing, let's just return the SDP we were asked to munge
       Janus$1.warn("Couldn't find the video SSRC, simulcasting NOT enabled");
       return sdp;
     }
-
     if (insertAt < 0) {
       // Append at the end
       insertAt = lines.length;
-    } // Generate a couple of SSRCs (for retransmissions too)
+    }
+    // Generate a couple of SSRCs (for retransmissions too)
     // Note: should we check if there are conflicts, here?
-
-
     ssrc[1] = Math.floor(Math.random() * 0xFFFFFFFF);
     ssrc[2] = Math.floor(Math.random() * 0xFFFFFFFF);
     ssrc_fid[1] = Math.floor(Math.random() * 0xFFFFFFFF);
-    ssrc_fid[2] = Math.floor(Math.random() * 0xFFFFFFFF); // Add attributes to the SDP
-
+    ssrc_fid[2] = Math.floor(Math.random() * 0xFFFFFFFF);
+    // Add attributes to the SDP
     for (var i = 0; i < ssrc.length; i++) {
       if (cname) {
         lines.splice(insertAt, 0, 'a=ssrc:' + ssrc[i] + ' cname:' + cname);
         insertAt++;
       }
-
       if (msid) {
         lines.splice(insertAt, 0, 'a=ssrc:' + ssrc[i] + ' msid:' + msid);
         insertAt++;
       }
-
       if (mslabel) {
         lines.splice(insertAt, 0, 'a=ssrc:' + ssrc[i] + ' mslabel:' + mslabel);
         insertAt++;
       }
-
       if (label) {
         lines.splice(insertAt, 0, 'a=ssrc:' + ssrc[i] + ' label:' + label);
         insertAt++;
-      } // Add the same info for the retransmission SSRC
-
-
+      }
+      // Add the same info for the retransmission SSRC
       if (cname) {
         lines.splice(insertAt, 0, 'a=ssrc:' + ssrc_fid[i] + ' cname:' + cname);
         insertAt++;
       }
-
       if (msid) {
         lines.splice(insertAt, 0, 'a=ssrc:' + ssrc_fid[i] + ' msid:' + msid);
         insertAt++;
       }
-
       if (mslabel) {
         lines.splice(insertAt, 0, 'a=ssrc:' + ssrc_fid[i] + ' mslabel:' + mslabel);
         insertAt++;
       }
-
       if (label) {
         lines.splice(insertAt, 0, 'a=ssrc:' + ssrc_fid[i] + ' label:' + label);
         insertAt++;
       }
     }
-
     lines.splice(insertAt, 0, 'a=ssrc-group:FID ' + ssrc[2] + ' ' + ssrc_fid[2]);
     lines.splice(insertAt, 0, 'a=ssrc-group:FID ' + ssrc[1] + ' ' + ssrc_fid[1]);
     lines.splice(insertAt, 0, 'a=ssrc-group:FID ' + ssrc[0] + ' ' + ssrc_fid[0]);
@@ -27458,75 +25839,51 @@ function Janus$1(gatewayCallbacks) {
     sdp = lines.join("\r\n");
     if (!sdp.endsWith("\r\n")) sdp += "\r\n";
     return sdp;
-  } // Helper methods to parse a media object
+  }
 
-
+  // Helper methods to parse a media object
   function isAudioSendEnabled(media) {
     Janus$1.debug("isAudioSendEnabled:", media);
     if (media === undefined || media === null) return true; // Default
-
     if (media.audio === false) return false; // Generic audio has precedence
-
     if (media.audioSend === undefined || media.audioSend === null) return true; // Default
-
     return media.audioSend === true;
   }
-
   function isAudioSendRequired(media) {
     Janus$1.debug("isAudioSendRequired:", media);
     if (media === undefined || media === null) return false; // Default
-
     if (media.audio === false || media.audioSend === false) return false; // If we're not asking to capture audio, it's not required
-
     if (media.failIfNoAudio === undefined || media.failIfNoAudio === null) return false; // Default
-
     return media.failIfNoAudio === true;
   }
-
   function isAudioRecvEnabled(media) {
     Janus$1.debug("isAudioRecvEnabled:", media);
     if (media === undefined || media === null) return true; // Default
-
     if (media.audio === false) return false; // Generic audio has precedence
-
     if (media.audioRecv === undefined || media.audioRecv === null) return true; // Default
-
     return media.audioRecv === true;
   }
-
   function isVideoSendEnabled(media) {
     Janus$1.debug("isVideoSendEnabled:", media);
     if (media === undefined || media === null) return true; // Default
-
     if (media.video === false) return false; // Generic video has precedence
-
     if (media.videoSend === undefined || media.videoSend === null) return true; // Default
-
     return media.videoSend === true;
   }
-
   function isVideoSendRequired(media) {
     Janus$1.debug("isVideoSendRequired:", media);
     if (media === undefined || media === null) return false; // Default
-
     if (media.video === false || media.videoSend === false) return false; // If we're not asking to capture video, it's not required
-
     if (media.failIfNoVideo === undefined || media.failIfNoVideo === null) return false; // Default
-
     return media.failIfNoVideo === true;
   }
-
   function isVideoRecvEnabled(media) {
     Janus$1.debug("isVideoRecvEnabled:", media);
     if (media === undefined || media === null) return true; // Default
-
     if (media.video === false) return false; // Generic video has precedence
-
     if (media.videoRecv === undefined || media.videoRecv === null) return true; // Default
-
     return media.videoRecv === true;
   }
-
   function isScreenSendEnabled(media) {
     Janus$1.debug("isScreenSendEnabled:", media);
     if (media === undefined || media === null) return false;
@@ -27535,24 +25892,18 @@ function Janus$1(gatewayCallbacks) {
     if (constraints.chromeMediaSource) return constraints.chromeMediaSource === 'desktop' || constraints.chromeMediaSource === 'screen';else if (constraints.mozMediaSource) return constraints.mozMediaSource === 'window' || constraints.mozMediaSource === 'screen';else if (constraints.mediaSource) return constraints.mediaSource === 'window' || constraints.mediaSource === 'screen';
     return false;
   }
-
   function isDataEnabled(media) {
     Janus$1.debug("isDataEnabled:", media);
-
     if (Janus$1.webRTCAdapter.browserDetails.browser == "edge") {
       Janus$1.warn("Edge doesn't support data channels yet");
       return false;
     }
-
     if (media === undefined || media === null) return false; // Default
-
     return media.data === true;
   }
-
   function isTrickleEnabled(trickle) {
     Janus$1.debug("isTrickleEnabled:", trickle);
     if (trickle === undefined || trickle === null) return true; // Default is true
-
     return trickle === true;
   }
 }
@@ -27563,29 +25914,31 @@ var janus = null;
 var tts = null;
 var opaqueId = "tts-" + Janus.randomString(12);
 var spinner = null;
-Janus = window.Janus; // Initialize the library (all console debuggers enabled)
+Janus = window.Janus;
 
+// Initialize the library (all console debuggers enabled)
 Janus.init({
   debug: "all",
   callback: function callback() {
     window.stopTalk = function () {
       janus.destroy();
-    }; // debugger;
-
-
+    };
+    // debugger;
     window.startTalk = function () {
       // Make sure the browser supports WebRTC
       if (!Janus.isWebrtcSupported()) {
         bootbox.alert("No WebRTC support... ");
         return;
-      } // if($('#tts_url').val().length == 0){
+      }
+
+      // if($('#tts_url').val().length == 0){
       // 	bootbox.alert("Please input tts url... ");
       // 	return;
       // }
+
       // $(this).attr('disabled', true).unbind('click');
+
       // Create session
-
-
       janus = new Janus({
         server: window.EZUIKit.opt.rtcUrl,
         // No "iceServers" is provided, meaning janus.js will use a default STUN server
@@ -27605,15 +25958,16 @@ Janus.init({
             success: function success(pluginHandle) {
               // $('#details').remove();
               tts = pluginHandle;
-              Janus.log("Plugin attached! (" + tts.getPlugin() + ", id=" + tts.getId() + ")"); // Negotiate WebRTC
+              Janus.log("Plugin attached! (" + tts.getPlugin() + ", id=" + tts.getId() + ")");
+              // Negotiate WebRTC
               //var url = "tts://61.130.6.23:8664/talk://D13781761:0:1:cas.ys7.com:6500?97fbd2a75fa94b7682c994d3d1fac8ca:ut.5porslgu79e9r7ca48z32k8abgl3rp58-77bhb6i7xr-1kmumtg-jkhy7pvfr:0:3"
+
               //var url = "tts://10.86.15.209:8664/talk://D13781761:0:1:cas.ys7.com:6500?32db2578ba7c4a84be22ecc0bcd0f8db:ut.5lqpkhim5m7cdk2y5w60g7hm9vd7i3v0-3d2pwhxe2t-11wx2ge-sh4yazbll:0:3"
               //var url = "tts://10.86.15.209:8664/talk://D13781761:0:1:cas.ys7.com:6500"
               //test12.ys.com
               //var url = "tts://10.86.15.209:8664/talk://D08197169:0:1:cas.ys7.com:6500"
               //test10.ys.com
               //var url = "tts://10.86.29.210:8664/talk://D08197169:0:1:cas.ys7.com:6500"
-
               var url = window.EZUIKit.opt.talkLink;
               console.log("ttsUlr", url);
               var body = {
@@ -27623,12 +25977,10 @@ Janus.init({
                 "dir": "sendrecv",
                 "audio_debug": 1
               };
-
               if (window.EZUIKit.opt.talkType === 'gb28181') {
                 body['devProto'] = 'gb28181';
-              } //tts.send({"message": body});
-
-
+              }
+              //tts.send({"message": body});
               Janus.debug("Trying a createOffer too (audio/video sendrecv)");
               tts.createOffer({
                 // No media provided: by default, it's sendrecv for audio and video
@@ -27650,28 +26002,28 @@ Janus.init({
                     "message": body,
                     "jsep": jsep
                   });
-
                   if (typeof window.EZUIKit.handleTalkSuccess !== 'undefined') {
                     window.EZUIKit.handleTalkSuccess();
                   }
                 },
                 error: function error(_error) {
-                  Janus.error("WebRTC error:", _error); //	bootbox.alert("WebRTC error... " + JSON.stringify(error));
-
+                  Janus.error("WebRTC error:", _error);
+                  //	bootbox.alert("WebRTC error... " + JSON.stringify(error));
                   if (typeof window.EZUIKit.handleTalkError !== 'undefined') {
                     window.EZUIKit.handleTalkError(_error);
                   }
                 }
-              }); // $('#start').removeAttr('disabled').html("Stop")
+              });
+              // $('#start').removeAttr('disabled').html("Stop")
               // 	.click(function() {
               // 		$(this).attr('disabled', true);
               // 		janus.destroy();
               // 	});
             },
+
             error: function error(_error2) {
               console.error("  -- Error attaching plugin...", _error2);
               bootbox.alert("Error attaching plugin... " + _error2);
-
               if (window.EZUIKit.handleTalkError !== 'undefined') {
                 window.EZUIKit.handleTalkError(_error2);
               }
@@ -27686,15 +26038,16 @@ Janus.init({
               Janus.log("Janus " + (on ? "started" : "stopped") + " receiving our " + medium);
             },
             webrtcState: function webrtcState(on) {
-              Janus.log("Janus says our WebRTC PeerConnection is " + (on ? "up" : "down") + " now"); // $("#audioleft").parent().unblock();
+              Janus.log("Janus says our WebRTC PeerConnection is " + (on ? "up" : "down") + " now");
+              // $("#audioleft").parent().unblock();
             },
+
             slowLink: function slowLink(uplink, lost) {
               Janus.warn("Janus reports problems " + (uplink ? "sending" : "receiving") + " packets on this PeerConnection (" + lost + " lost packets)");
             },
             onmessage: function onmessage(msg, jsep) {
               Janus.debug(" ::: Got a message :::");
               Janus.debug(msg);
-
               if (jsep !== undefined && jsep !== null) {
                 Janus.debug("Handling SDP as well...");
                 Janus.debug(jsep);
@@ -27702,30 +26055,25 @@ Janus.init({
                   jsep: jsep
                 });
               }
-
               var result = msg["result"];
-
               if (result !== null && result !== undefined) {
                 if (result === "done") {
                   // The plugin closed
                   bootbox.alert("The TTS Test is over");
                   if (spinner !== null && spinner !== undefined) spinner.stop();
-                  spinner = null; // $('#myaudio').remove();
+                  spinner = null;
+                  // $('#myaudio').remove();
                   //$('#waitingvideo').remove();
                   // $('#peeraudio').remove();
-
                   return;
                 }
-
                 if (result === "msg") {
                   if (typeof window.EZUIKit.handleTalkMessage !== 'undefined') {
                     window.EZUIKit.handleTalkMessage(msg);
                   }
-                } // Any loss?
-
-
+                }
+                // Any loss?
                 var status = result["status"];
-
                 if (status === "slow_link") {
                   //~ var bitrate = result["bitrate"];
                   //~ toastr.warning("The bitrate has been cut to " + (bitrate/1000) + "kbps", "Packet loss?", {timeOut: 2000});
@@ -27737,13 +26085,14 @@ Janus.init({
             },
             onlocalstream: function onlocalstream(stream) {
               Janus.debug(" ::: Got a local stream :::");
-              Janus.debug(stream); // if($('#myaudio').length === 0) {
+              Janus.debug(stream);
+
+              // if($('#myaudio').length === 0) {
               // 	$('#audios').removeClass('hide').show();
               // 	$('#audioleft').append('<audio id="myaudio" autoplay controls muted>Your browser does not support audio tag</audio>');
               // }
-
-              Janus.attachMediaStream(document.getElementById("myaudio"), stream); //$("#myaudio").get(0).muted = "muted";
-
+              Janus.attachMediaStream(document.getElementById("myaudio"), stream);
+              //$("#myaudio").get(0).muted = "muted";
               if (tts.webrtcStuff.pc.iceConnectionState !== "completed" && tts.webrtcStuff.pc.iceConnectionState !== "connected") {
                 // $("#audioleft").parent().block({
                 // 	message: '<b>Publishing...</b>',
@@ -27756,19 +26105,19 @@ Janus.init({
                 // No remote video yet
                 //$('#audioright').append('<video class="rounded centered" id="waitingvideo" width=320 height=240 />');
                 if (spinner == null) {
-                  document.getElementById('audioright'); //spinner = new Spinner({top:100}).spin(target);
+                  document.getElementById('audioright');
+                  //spinner = new Spinner({top:100}).spin(target);
                 } else {
                   spinner.spin();
                 }
               }
-
               var audioTracks = stream.getAudioTracks();
-
               if (audioTracks === null || audioTracks === undefined || audioTracks.length === 0) ;
             },
             onremotestream: function onremotestream(stream) {
               Janus.debug(" ::: Got a remote stream :::");
-              Janus.debug(stream); // if($('#peeraudio').length === 0) {
+              Janus.debug(stream);
+              // if($('#peeraudio').length === 0) {
               // 	$('#audios').removeClass('hide').show();
               // 	// $('#audioright').append('<audio id="peeraudio" autoplay controls>Your browser does not support audio tag</audio>');
               // 	// Show the video, hide the spinner and show the resolution when we get a playing event
@@ -27787,10 +26136,8 @@ Janus.init({
               // 		spinner = null;
               // 	});
               // }
-
               Janus.attachMediaStream(document.getElementById("peeraudio"), stream);
               var audioTracks = stream.getAudioTracks();
-
               if (audioTracks === null || audioTracks === undefined || audioTracks.length === 0) ; else {
                 //	$('#peeraudio').removeClass('hide').show();
                 document.getElementById('peeraudio').play();
@@ -27805,36 +26152,35 @@ Janus.init({
             oncleanup: function oncleanup() {
               Janus.log(" ::: Got a cleanup notification :::");
               if (spinner !== null && spinner !== undefined) spinner.stop();
-              spinner = null; // $('#myaudio').remove();
+              spinner = null;
+              // $('#myaudio').remove();
               // //$('#waitingvideo').remove();
               // $("#audioleft").parent().unblock();
               // $('#peeraudio').remove();
             }
           });
         },
+
         error: function error(_error3) {
           Janus.error(_error3);
-
           if (window.EZUIKit.handleTalkError !== 'undefined') {
             window.EZUIKit.handleTalkError(_error3);
           }
         },
-        destroyed: function destroyed() {// window.location.reload();
+        destroyed: function destroyed() {
+          // window.location.reload();
         }
       });
     };
   }
 });
-
 window.janus = janus;
 window.tts = tts;
 
 var Talk = /*#__PURE__*/function () {
   function Talk(jSPlugin) {
     var _this = this;
-
     _classCallCheck$1(this, Talk);
-
     this.jSPlugin = jSPlugin;
     var audioLeft = document.createElement('div');
     audioLeft.id = "audioleft";
@@ -27852,27 +26198,24 @@ var Talk = /*#__PURE__*/function () {
     audioRightDOM.id = "peeraudio";
     audioRightDOM.setAttribute("autoplay", true);
     audioRightDOM.setAttribute("controls", true);
-    audioRight.appendChild(audioRightDOM); // addJs(`${this.jSPlugin.staticPath}/talk/adapeter.js`, () => {
+    audioRight.appendChild(audioRightDOM);
+
+    // addJs(`${this.jSPlugin.staticPath}/talk/adapeter.js`, () => {
     //   addJs(`${this.jSPlugin.staticPath}/talk/janus.js`, () => {
     //     addJs(`${this.jSPlugin.staticPath}/talk/tts-v4.js`, () => {
     // 临时处理
-
     window.EZUIKit["handleTalkError"] = function (err) {
       console.log("talk err", err);
-
       if (typeof _this.jSPlugin.handleTalkError !== 'undefined') {
         _this.jSPlugin.handleTalkError(err);
       }
     };
-
     window.EZUIKit["handleTalkSuccess"] = function (data) {
       console.log("talk success", data);
-
       if (typeof _this.jSPlugin.handleTalkSuccess !== 'undefined') {
         _this.jSPlugin.handleTalkSuccess(data);
       }
     };
-
     window.EZUIKit.opt = {
       rtcUrl: "",
       talkLink: "",
@@ -27882,11 +26225,11 @@ var Talk = /*#__PURE__*/function () {
       channelNo: matchEzopenUrl(this.jSPlugin.url).channelNo
     };
     document.body.appendChild(audioLeft);
-    document.body.appendChild(audioRight); //     });
+    document.body.appendChild(audioRight);
+    //     });
     //   });
     // });
   }
-
   _createClass$1(Talk, [{
     key: "toString",
     value: function toString() {
@@ -27896,7 +26239,6 @@ var Talk = /*#__PURE__*/function () {
     key: "startTalk",
     value: function startTalk() {
       var _this2 = this;
-
       if (this.jSPlugin.capacity && this.jSPlugin.capacity.support_talk && !(this.jSPlugin.capacity && (this.jSPlugin.capacity.support_talk === '3' || this.jSPlugin.capacity.support_talk === '1'))) {
         if (typeof this.jSPlugin.params.handleError === 'function') {
           this.jSPlugin.params.handleError({
@@ -27909,7 +26251,6 @@ var Talk = /*#__PURE__*/function () {
         console.log("设备不支持对讲");
         return false;
       }
-
       var formData = new FormData();
       formData.append("accessToken", this.jSPlugin.accessToken);
       formData.append("deviceSerial", matchEzopenUrl(this.jSPlugin.url).deviceSerial);
@@ -27925,21 +26266,17 @@ var Talk = /*#__PURE__*/function () {
       }).then(function (data) {
         if (data.code == 200) {
           var apiResult = data.data;
-
           if (apiResult) {
             // 临时将https转换为websocket
             var rtcTrunk = apiResult.rtcUrl;
-
             if (rtcTrunk.indexOf("ws") === -1) {
               rtcTrunk = rtcTrunk.replace("https", "wss").replace("rtcgw", "rtcgw-ws");
             }
-
             window.EZUIKit.opt.rtcUrl = rtcTrunk;
             window.EZUIKit.opt.ttsUrl = "tts://" + apiResult.ttsUrl;
             window.EZUIKit.opt.deviceSerial = matchEzopenUrl(_this2.jSPlugin.url).deviceSerial;
             window.EZUIKit.opt.channelNo = matchEzopenUrl(_this2.jSPlugin.url).channelNo;
             var urlList = window.EZUIKit.opt.ttsUrl.split("?");
-
             if (urlList.length === 2) {
               // 国标设备
               var talk = "talk?dev=" + window.EZUIKit.opt.deviceSerial + "&chann=" + window.EZUIKit.opt.channelNo + "&encodetype=2";
@@ -27950,7 +26287,6 @@ var Talk = /*#__PURE__*/function () {
               var talk = "talk://" + window.EZUIKit.opt.deviceSerial + ":0:" + window.EZUIKit.opt.channelNo + ":cas.ys7.com:6500";
               window.EZUIKit.opt.talkLink = window.EZUIKit.opt.ttsUrl.split("?")[0] + "/" + talk;
             }
-
             window.EZUIKit.opt.stream = apiResult.stream;
             window.startTalk();
           }
@@ -27972,22 +26308,18 @@ var Talk = /*#__PURE__*/function () {
     key: "stopTalk",
     value: function stopTalk() {
       window.stopTalk();
-
       if (document.getElementById("myaudio") && document.getElementById("myaudio").srcObject) {
         document.getElementById("myaudio").srcObject.getTracks()[0].stop();
       }
     }
   }]);
-
   return Talk;
 }();
 
 var MobilePtz = /*#__PURE__*/function () {
   function MobilePtz(jSPlugin) {
     var _this = this;
-
     _classCallCheck$1(this, MobilePtz);
-
     this.jSPlugin = jSPlugin;
     var oS = document.createElement('style');
     oS.innerHTML = "\n    body{\n      padding: 0;\n      margin: 0;\n    }\n    #mobile-ez-ptz-container {\n      display: inline-block;\n      width: 375px;\n      text-align: center;\n    }\n    .live-ptz-title{\n      height: 25px;\n      font-size: 18px;\n      color: #2c2c2c;\n      text-align: center;\n      font-weight: 700;\n      margin: 24px 0 12px;\n    }\n    .live-ptz-intro {\n      margin-bottom: 24px;\n      color: #aaaaaa;\n    }\n    .mobile-ez-ptz-wrap {\n      background-image: linear-gradient(180deg, #f6f8ff 0%, #ededed6b 50%)\n    }\n    #mobile-ez-ptz-container .mobile-ez-ptz-container {\n      position: relative;\n      width: 260px;\n      height: 260px;\n      background: rgba(255, 255, 255, 0.80);\n      border: 1px solid rgba(255, 255, 255, 0.80);\n      border-radius: 100%;\n      cursor: pointer;\n      overflow: hidden;\n      margin: auto;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.top {\n      width: 0;\n      height: 0;\n      border-left: 6px solid transparent;\n      border-right: 6px solid transparent;\n      border-bottom: 6px solid #aaaaaa;\n      position: absolute;\n      display: inline-block;\n      left: calc(50% - 6px);\n      top: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.top.active {\n      border-bottom-color: #1890FF;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.bottom {\n      width: 0;\n      height: 0;\n      border-left: 6px solid transparent;\n      border-right: 6px solid transparent;\n      border-top: 6px solid #aaaaaa;\n      position: absolute;\n      display: inline-block;\n      left: calc(50% - 6px);\n      bottom: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.bottom.active {\n      border-top-color: #1890FF;\n\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.right {\n      width: 0;\n      height: 0;\n      border-top: 6px solid transparent;\n      border-bottom: 6px solid transparent;\n      border-left: 6px solid #aaaaaa;\n      position: absolute;\n      display: inline-block;\n      top: calc(50% - 6px);\n      right: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.right.active {\n      border-left-color: #1890FF;\n\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.left {\n      width: 0;\n      height: 0;\n      border-top: 6px solid transparent;\n      border-bottom: 6px solid transparent;\n      border-right: 6px solid #aaaaaa;\n      position: absolute;\n      display: inline-block;\n      top: calc(50% - 6px);\n      left: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.left.active {\n      border-right-color: #1890FF;\n\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .ez-ptz-main.center {\n      width: 52px;\n      height: 52px;\n      background: #FFFFFF;\n      border: 2px solid #eee;\n      border-radius: 100%;\n      top: calc(50% - 26px);\n      left: calc(50% - 26px);\n      position: absolute;\n      /* box-shadow: 0px -39px 40px 6px #1890ff; */\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-wrap {\n      display: inline-block;\n      padding: 24px 24px;\n      border-radius: 100%;\n      overflow: hidden;\n    }\n\n    #mobile-ez-ptz-container .ez-ptz-close {\n      position: absolute;\n      color: #FFFFFF;\n      top: 0;\n      right: 0px;\n    }";
@@ -28000,63 +26332,49 @@ var MobilePtz = /*#__PURE__*/function () {
     mobileContainerTitle.className = "live-ptz-title";
     mobileContainerTitle.id = "live-ptz-title";
     mobileContainerTitle.innerHTML = "云台控制";
-
     if (!document.getElementById("live-ptz-title")) {
       mobileContainer.appendChild(mobileContainerTitle);
     }
-
     var mobileContainerIntro = document.createElement('div');
     mobileContainerIntro.className = "live-ptz-intro";
     mobileContainerIntro.id = "live-ptz-intro";
     mobileContainerIntro.innerHTML = "请通过操控云台来调整摄像机视角";
-
     if (!document.getElementById("live-ptz-intro")) {
       mobileContainer.appendChild(mobileContainerIntro);
     }
-
     var ptzWrap = document.createElement('div');
     ptzWrap.id = "mobile-ez-ptz-item";
     ptzWrap.className = "mobile-ez-ptz-wrap";
     ptzWrap.innerHTML = "\n    <div class=\"mobile-ez-ptz-container\" id=\"mobile-ez-ptz-container\">\n      <div class=\"ez-ptz-main center\"></div>\n      <div class=\"mobile-ez-ptz-icon top default\"></div>\n      <div class=\"mobile-ez-ptz-icon left default\"></div>\n      <div class=\"mobile-ez-ptz-icon bottom default\"></div>\n      <div class=\"mobile-ez-ptz-icon right default\"></div>\n    </div>\n      ";
-
     if (!document.getElementById("mobile-ez-ptz-item")) {
       mobileContainer.appendChild(ptzWrap);
-    } //document.getElementById(jSPlugin.id).appendChild(mobileContainer);
-
-
-    insertAfter$1(mobileContainer, document.getElementById("".concat(this.jSPlugin.id, "-wrap"))); // 云台控制事件绑定
+    }
+    //document.getElementById(jSPlugin.id).appendChild(mobileContainer);
+    insertAfter$1(mobileContainer, document.getElementById("".concat(this.jSPlugin.id, "-wrap")));
+    // 云台控制事件绑定
     // 云台控制
-
     document.getElementById("mobile-ez-ptz-item").ontouchstart = function (e) {
       e.preventDefault();
       console.log("触摸开始");
-
       _this._handlePtzTouch(e, 'start');
     };
-
     document.getElementById("mobile-ez-ptz-item").ontouchend = function (e) {
       e.preventDefault();
       console.log("触摸结束", e);
-
       _this._handlePtzTouch(e, 'stop');
-    }; // 云台控制
-
-
+    };
+    // 云台控制
     document.getElementById("mobile-ez-ptz-item").onmousedown = function (e) {
       e.preventDefault();
       console.log("触摸开始");
-
       _this._handlePtzTouch(e, 'start');
     };
-
     document.getElementById("mobile-ez-ptz-item").onmouseup = function (e) {
       e.preventDefault();
       console.log("触摸结束", e);
-
       _this._handlePtzTouch(e, 'stop');
     };
   }
-
   _createClass$1(MobilePtz, [{
     key: "show",
     value: function show() {
@@ -28079,10 +26397,10 @@ var MobilePtz = /*#__PURE__*/function () {
       var top = eventY - containerCenterY;
       var direction = 0; //操作命令：0-上，1-下，2-左，3右，4-左上，5-左下，6-右上，7-右下，8-放大，9-缩小，10-近焦距，11-远焦距
 
-      var url = this.jSPlugin.env.domain + "/api/lapp/device/ptz/start"; // var nextPtzImg = ptzNormalImg;
+      var url = this.jSPlugin.env.domain + "/api/lapp/device/ptz/start";
+      // var nextPtzImg = ptzNormalImg;
       // var nextPtzImgFailed = ptzNormalImg;
       // 判读方位
-
       if (Math.abs(left) > Math.abs(top)) {
         if (left > 0) {
           direction = 3;
@@ -28100,9 +26418,7 @@ var MobilePtz = /*#__PURE__*/function () {
           document.getElementsByClassName("mobile-ez-ptz-icon")[0].className = document.getElementsByClassName("mobile-ez-ptz-icon")[0].className.replace("default", "active");
         }
       }
-
       document.getElementById("mobile-ez-ptz-item").style = "background-image:linear-gradient(".concat(direction === 0 ? 180 : direction === 1 ? 0 : direction === 2 ? 90 : 270, "deg, #c0ddf1 0%, rgba(100,143,252,0.00) 50%)");
-
       if (type === 'stop') {
         url = this.jSPlugin.env.domain + '/api/lapp/device/ptz/stop';
         document.getElementById("mobile-ez-ptz-item").style = "";
@@ -28111,7 +26427,6 @@ var MobilePtz = /*#__PURE__*/function () {
         document.getElementsByClassName("mobile-ez-ptz-icon")[2].className = document.getElementsByClassName("mobile-ez-ptz-icon")[2].className.replace("active", "default");
         document.getElementsByClassName("mobile-ez-ptz-icon")[0].className = document.getElementsByClassName("mobile-ez-ptz-icon")[0].className.replace("active", "default");
       }
-
       var data = new FormData();
       data.append("deviceSerial", matchEzopenUrl(this.jSPlugin.url).deviceSerial);
       data.append("channelNo", matchEzopenUrl(this.jSPlugin.url).channelNo);
@@ -28136,7 +26451,6 @@ var MobilePtz = /*#__PURE__*/function () {
       });
     }
   }]);
-
   return MobilePtz;
 }();
 
@@ -29112,9 +27426,7 @@ var officeTemplateList = [{
 var Zoom = /*#__PURE__*/function () {
   function Zoom(jSPlugin) {
     var _this = this;
-
     _classCallCheck$1(this, Zoom);
-
     this.jSPlugin = jSPlugin;
     this.enableZoom = false;
     this.isMouseDown = false, this.videoWidth = 1920;
@@ -29138,38 +27450,34 @@ var Zoom = /*#__PURE__*/function () {
       bottom: 1080
     };
     this.DOM = document.getElementById(jSPlugin.id);
-    this.clientRect = document.getElementById(jSPlugin.id).getBoundingClientRect(); //audioControls-left
-
+    this.clientRect = document.getElementById(jSPlugin.id).getBoundingClientRect();
+    //audioControls-left
     var scaleDOMContainer = document.createElement('div');
     scaleDOMContainer.id = "".concat(jSPlugin.id, "-zoom-container");
     scaleDOMContainer.style = "position: absolute;\n    display:none;\n    left: 12px;\n    bottom: 80px;";
     var scaleDOMHTML = "\n    <div\n    style=\"display: inline-flex;flex-direction: column;width: 38px;height: 160px;background:rgba(0,0,0,0.60);border-radius: 8px;align-items: center;\">\n    <div id=\"".concat(this.jSPlugin.id, "-scale-value\" style=\"font-size: 12px;color:#FFFFFF;margin-top:10px;margin-bottom:4px;\">2.0X</div>\n    <div style=\"width: 24px;\" id=\"").concat(this.jSPlugin.id, "-addScale\">\n      <?xml version=\"1.0\" encoding=\"utf-8\"?>\n      <svg version=\"1.1\" fill=\"#FFFFFF\" id=\"\u56FE\u5C42_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n         viewBox=\"0 0 20 20\" style=\"enable-background:new 0 0 20 20;\" xml:space=\"preserve\">\n      <title>\u653E\u5927</title>\n      <g id=\"\u77E9\u5F62\">\n        <rect class=\"st0\" width=\"20\" height=\"20\" fill=\"none\"/>\n      </g>\n      <g id=\"\u5F62\u72B6\u7ED3\u5408\">\n        <path class=\"st1\" d=\"M10,3.8c3.5,0,6.2,2.8,6.2,6.2s-2.8,6.2-6.2,6.2S3.8,13.5,3.8,10S6.5,3.8,10,3.8z M10,5c-2.8,0-5,2.2-5,5\n          s2.2,5,5,5s5-2.2,5-5S12.8,5,10,5z\"/>\n      </g>\n      <g id=\"\u8DEF\u5F84-4\">\n        <path class=\"st2\" d=\"M12.5,10.7h-5c-0.3,0-0.6-0.3-0.6-0.6s0.3-0.6,0.6-0.6h5c0.3,0,0.6,0.3,0.6,0.6S12.8,10.7,12.5,10.7z\"/>\n      </g>\n      <g id=\"\u8DEF\u5F84-4\u5907\u4EFD\">\n        <path class=\"st2\" d=\"M10,13.2c-0.3,0-0.6-0.3-0.6-0.6v-5c0-0.3,0.3-0.6,0.6-0.6s0.6,0.3,0.6,0.6v5C10.6,12.9,10.3,13.2,10,13.2z\"/>\n      </g>\n      </svg>\n    </div>\n    <div style=\"\n    position: relative;\n    width: 1px;\n    height: 64px;\n    border: 1px solid rgba(255,255,255,0.75);\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: flex-end;\">\n    <div class=\"scale-body-line-dot\" id=\"").concat(this.jSPlugin.id, "-scale-body-line-dot\" style=\"width: 8px;\n      height: 8px;\n      background: #FFFFFF;\n      border-radius: 100%;\n      position: absolute;\n      border: 1.5px solid rgba(64,122,255,1);\"></div>\n      <div id=\"").concat(this.jSPlugin.id, "-line-dot\" style=\"width: 1px;\n      height: 0%;\n      background: #1890FF;\n      bottom: 0;\"></div>\n    </div>\n    <div style=\"width: 24px;margin-top: 6px;\" id=\"").concat(this.jSPlugin.id, "-subScale\">\n      <?xml version=\"1.0\" encoding=\"utf-8\"?>\n      <svg fill=\"#FFFFFF\" version=\"1.1\" id=\"\u56FE\u5C42_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n        viewBox=\"0 0 20 20\" style=\"enable-background:new 0 0 20 20;\" xml:space=\"preserve\">\n        <title>\u7F29\u5C0F</title>\n        <g id=\"\u77E9\u5F62\">\n          <rect class=\"st0\" width=\"20\" height=\"20\" fill=\"none\"/>\n        </g>\n        <g id=\"\u5F62\u72B6\u7ED3\u5408\">\n          <path class=\"st1\" d=\"M10,3.8c3.5,0,6.2,2.8,6.2,6.2s-2.8,6.2-6.2,6.2S3.8,13.5,3.8,10S6.5,3.8,10,3.8z M10,5c-2.8,0-5,2.2-5,5\n            s2.2,5,5,5s5-2.2,5-5S12.8,5,10,5z\"/>\n        </g>\n        <g id=\"\u8DEF\u5F84-4\">\n          <path class=\"st2\" d=\"M12.5,10.7h-5c-0.3,0-0.6-0.3-0.6-0.6s0.3-0.6,0.6-0.6h5c0.3,0,0.6,0.3,0.6,0.6S12.8,10.7,12.5,10.7z\"/>\n        </g>\n      </svg>\n    </div>\n  </div>\n    ");
     scaleDOMContainer.innerHTML = scaleDOMHTML;
     document.getElementById("".concat(jSPlugin.id, "-audioControls-left")).parentNode.appendChild(scaleDOMContainer);
-
     document.getElementById("".concat(jSPlugin.id, "-addScale")).onclick = function () {
       _this.addScale();
     };
-
     document.getElementById("".concat(jSPlugin.id, "-subScale")).onclick = function () {
       _this.subScale();
-    }; // document.getElementById("video-container").addEventListener("mouseenter",(event)=> {
+    };
+
+    // document.getElementById("video-container").addEventListener("mouseenter",(event)=> {
     //   console.log("鼠标进入", event);
     // });
-
   }
-
   _createClass$1(Zoom, [{
     key: "onMouseDown",
     value: function onMouseDown(event) {
       this.currentPosition;
-          this.currentScale;
-          var enableZoom = this.enableZoom;
-
+        this.currentScale;
+        var enableZoom = this.enableZoom;
       if (!enableZoom) {
         return false;
       }
-
       this.moveX = event.clientX;
       this.moveY = event.clientY;
       this.isMouseDown = true;
@@ -29178,12 +27486,10 @@ var Zoom = /*#__PURE__*/function () {
     key: "onMouseUp",
     value: function onMouseUp(event) {
       var currentPosition = this.currentPosition,
-          enableZoom = this.enableZoom;
-
+        enableZoom = this.enableZoom;
       if (!enableZoom) {
         return false;
       }
-
       this.isMouseDown = false;
       currentPosition.left = currentPosition.left - (event.clientX - this.moveX);
       currentPosition.top = currentPosition.top - (event.clientY - this.moveY);
@@ -29193,16 +27499,13 @@ var Zoom = /*#__PURE__*/function () {
     key: "onMouseOut",
     value: function onMouseOut(event) {
       var enableZoom = this.enableZoom;
-
       if (!enableZoom) {
         return false;
       }
-
       if (this.isMouseDown) {
         console.log("鼠标按上", event);
         this.isMouseDown = false;
       }
-
       this.isMouseDown = false;
     }
   }, {
@@ -29217,21 +27520,16 @@ var Zoom = /*#__PURE__*/function () {
     key: "startZoom",
     value: function startZoom() {
       var _this2 = this;
-
       var info = this.jSPlugin.jSPlugin._JSPlayM4_GetFrameInfo(0);
-
       this.videoWidth = info.width;
       this.videoHeight = info.height;
       this.currentPosition.right = info.width;
       this.currentPosition.bottom = info.height;
       this.currentScale = 1;
       document.getElementById("".concat(this.jSPlugin.id, "-zoom-container")).style.display = "block";
-
       this.jSPlugin.jSPlugin._JSPlayM4_SetDisplayRegion(0, this.videoWidth, 0, this.videoHeight);
-
       this.renderDot();
       this.enableZoom = true;
-
       if (document.getElementById("".concat(this.jSPlugin.id, "canvas_draw0"))) {
         document.getElementById("".concat(this.jSPlugin.id, "canvas_draw0")).addEventListener("mousedown", function (event) {
           return _this2.onMouseDown(event);
@@ -29258,11 +27556,8 @@ var Zoom = /*#__PURE__*/function () {
     key: "stopZoom",
     value: function stopZoom() {
       var _this3 = this;
-
       this.currentScale = 1;
-
       this.jSPlugin.jSPlugin._JSPlayM4_SetDisplayRegion(0, this.videoWidth, 0, this.videoHeight);
-
       document.getElementById("".concat(this.jSPlugin.id, "-zoom-container")).style.display = "none";
       this.renderDot();
       this.enableZoom = false;
@@ -29275,7 +27570,8 @@ var Zoom = /*#__PURE__*/function () {
       document.getElementById(this.jSPlugin.id).removeEventListener("mouseout", function (event) {
         return _this3.onMouseOut(event);
       });
-    } // scrollFunc(e) {
+    }
+    // scrollFunc(e) {
     //   e = e || window.event;
     //   if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件               
     //     if (e.wheelDelta > 0) { //当滑轮向上滚动时  
@@ -29312,47 +27608,41 @@ var Zoom = /*#__PURE__*/function () {
     //   }
     //   return false
     // }
-
   }, {
     key: "doScale",
     value: function doScale() {
       console.log("执行放大");
       var currentPosition = this.currentPosition,
-          currentScale = this.currentScale;
+        currentScale = this.currentScale;
       currentPosition.left = currentPosition.left + currentPosition.xPercent * (currentPosition.right - currentPosition.left) - 1 / 2 * (this.videoWidth / currentScale);
-
       if (currentPosition.left < 0) {
         currentPosition.left = 0;
       } else if (currentPosition.left > this.videoWidth - this.videoWidth / currentScale) {
         currentPosition.left = this.videoWidth - this.videoWidth / currentScale;
       }
-
       currentPosition.right = currentPosition.left + this.videoWidth / currentScale;
       currentPosition.top = currentPosition.top + currentPosition.yPercent * (currentPosition.bottom - currentPosition.top) - 1 / 2 * (this.videoHeight / currentScale);
-
       if (currentPosition.top < 0) {
         currentPosition.top = 0;
       } else if (currentPosition.top > this.videoHeight - this.videoHeight / currentScale) {
         currentPosition.top = this.videoHeight - this.videoHeight / currentScale;
       }
+      currentPosition.bottom = currentPosition.top + this.videoHeight / currentScale;
 
-      currentPosition.bottom = currentPosition.top + this.videoHeight / currentScale; //整数化
-
+      //整数化
       currentPosition.left = parseInt(currentPosition.left, 10);
       currentPosition.right = parseInt(currentPosition.right, 10);
       currentPosition.top = parseInt(currentPosition.top, 10);
       currentPosition.bottom = parseInt(currentPosition.bottom, 10);
       console.log("计算后，", this.jSPlugin.jSPlugin, currentPosition.left, currentPosition.right, currentPosition.top, currentPosition.bottom, currentPosition.xPercent, currentPosition.yPercent);
-
       this.jSPlugin.jSPlugin._JSPlayM4_SetDisplayRegion(currentPosition.left, currentPosition.right, currentPosition.top, currentPosition.bottom);
-
       this.renderDot();
     }
   }, {
     key: "calCurrentPosition",
     value: function calCurrentPosition(e) {
       var currentPosition = this.currentPosition,
-          clientRect = this.clientRect;
+        clientRect = this.clientRect;
       currentPosition.x = e.clientX;
       currentPosition.y = e.clientY;
       currentPosition.xPercent = (e.clientX - clientRect.x) / clientRect.width;
@@ -29364,18 +27654,14 @@ var Zoom = /*#__PURE__*/function () {
     key: "addScale",
     value: function addScale() {
       var currentScale = this.currentScale,
-          currentPosition = this.currentPosition;
-
+        currentPosition = this.currentPosition;
       if (currentScale >= 8) {
         console.log("达到最大倍率了");
-
         if (this.jSPlugin.Message) {
           this.jSPlugin.Message["default"]("已经放大到最大倍数8.0X");
         }
-
         return false;
       }
-
       this.currentScale++;
       currentPosition.xPercent = 0.5;
       currentPosition.yPercent = 0.5;
@@ -29385,33 +27671,27 @@ var Zoom = /*#__PURE__*/function () {
     key: "subScale",
     value: function subScale() {
       var currentScale = this.currentScale,
-          currentPosition = this.currentPosition;
-
+        currentPosition = this.currentPosition;
       if (currentScale <= 1) {
         console.log("达到最小倍率了");
         return false;
       }
-
       this.currentScale--;
       currentPosition.xPercent = 0.5;
       currentPosition.yPercent = 0.5;
       this.doScale();
     }
   }]);
-
   return Zoom;
 }();
 
 function lineLength(point1, point2) {
   return Math.abs(point2.clientX - point1.clientX) * Math.abs(point2.clientX - point1.clientX) + Math.abs(point2.clientY - point1.clientY) * Math.abs(point2.clientY - point1.clientY);
 }
-
 var MobileZoom = /*#__PURE__*/function () {
   function MobileZoom(jSPlugin) {
     var _this = this;
-
     _classCallCheck$1(this, MobileZoom);
-
     this.jSPlugin = jSPlugin;
     this.enableZoom = false;
     this.isDubboTouch = false, this.videoWidth = 0;
@@ -29451,47 +27731,44 @@ var MobileZoom = /*#__PURE__*/function () {
     scaleDOMContainer.style = "display:none;\n    position: absolute;\n    left: 10px;\n    top: -30px;\n    border: 1px solid rgba(0,0,0,0.6);\n    color: #FFFFFF;\n    background: rgba(0,0,0,0.6);\n    border-radius: 10px;\n    width: 36px;\n    font-size: 12px;\n    text-align: center;\n    height: 22px;\n    line-height: 22px;";
     var scaleDOMHTML = "1X";
     scaleDOMContainer.innerHTML = scaleDOMHTML;
-    document.getElementById("".concat(jSPlugin.id, "-audioControls-left")).parentNode.appendChild(scaleDOMContainer); // document.getElementById(this.jSPlugin.id).addEventListener("mousedown",(event)=>this.onMouseDown(event));
+    document.getElementById("".concat(jSPlugin.id, "-audioControls-left")).parentNode.appendChild(scaleDOMContainer);
+
+    // document.getElementById(this.jSPlugin.id).addEventListener("mousedown",(event)=>this.onMouseDown(event));
     // document.getElementById(this.jSPlugin.id).addEventListener("mouseup",(event)=>this.onMouseUp(event));
     // document.getElementById(this.jSPlugin.id).addEventListener("mouseout",(event)=>this.onMouseOut(event));
-
     document.getElementById(this.jSPlugin.id).addEventListener("touchstart", function (event) {
       return _this.onTouchstart(event);
     });
     document.getElementById(this.jSPlugin.id).addEventListener("touchmove", function (event) {
       return _this.onTouchmove(event);
-    }); // var info = jSPlugin.jSPlugin._JSPlayM4_GetFrameInfo(0);
+    });
+    // var info = jSPlugin.jSPlugin._JSPlayM4_GetFrameInfo(0);
     // this.videoWidth = info.width;
     // this.videoHeight = info.height;
     // this.currentPosition.right = info.width;
     // this.currentPosition.bottom = info.height;
   }
-
   _createClass$1(MobileZoom, [{
     key: "onTouchstart",
     value: function onTouchstart(event) {
       if (!this.inited) {
         var info = this.jSPlugin.jSPlugin._JSPlayM4_GetFrameInfo(0);
-
         this.videoWidth = info.width;
         this.videoHeight = info.height;
         this.currentPosition.right = info.width;
         this.currentPosition.bottom = info.height;
         this.inited = true;
       }
-
       var currentPosition = this.currentPosition;
-          this.currentScale;
+        this.currentScale;
       console.log("双指按下", currentPosition);
       var touches = event.touches;
       var events = touches[0];
       var events2 = touches[1];
-
       if (events) {
         this.point1.clientX = events.clientX;
         this.point1.clientY = events.clientY;
       }
-
       if (events2) {
         this.point2.clientX = events2.clientX;
         this.point2.clientY = events2.clientY;
@@ -29500,19 +27777,18 @@ var MobileZoom = /*#__PURE__*/function () {
         this.moveX = events.clientX;
         this.moveY = events.clientY;
       }
-
       console.log("双指按下2", currentPosition);
     }
   }, {
     key: "onTouchmove",
     value: function onTouchmove(event) {
       var isDubboTouch = this.isDubboTouch,
-          currentPosition = this.currentPosition,
-          clientRect = this.clientRect; // console.log("event.touches.lenght",event.touches.length);
-
+        currentPosition = this.currentPosition,
+        clientRect = this.clientRect;
+      // console.log("event.touches.lenght",event.touches.length);
       if (event.touches.length === 1) {
-        var events = event.touches[0]; //console.log("currentPosition.xPercent",event.touches)
-
+        var events = event.touches[0];
+        //console.log("currentPosition.xPercent",event.touches)
         currentPosition.xPercent = currentPosition.xPercent + (this.point1.clientX - events.clientX) / clientRect.width / this.currentScale;
         currentPosition.yPercent = currentPosition.yPercent + (this.point1.clientY - events.clientY) / clientRect.height / this.currentScale;
         this.doScale();
@@ -29520,25 +27796,20 @@ var MobileZoom = /*#__PURE__*/function () {
         this.point1.clientY = events.clientY;
         return false;
       }
-
       if (!isDubboTouch) {
         return false;
       }
-
       var touches = event.touches;
       var events = touches[0];
       var events2 = touches[1];
-
       if (events) {
         this.point1.clientX = events.clientX;
         this.point1.clientY = events.clientY;
       }
-
       if (events2) {
         this.point2.clientX = events2.clientX;
         this.point2.clientY = events2.clientY;
         var newtTouchLineLength = lineLength(this.point1, this.point2);
-
         if (newtTouchLineLength !== this.touchLineLength) {
           if (newtTouchLineLength > this.touchLineLength) {
             if (this.currentScale < 8) {
@@ -29559,7 +27830,6 @@ var MobileZoom = /*#__PURE__*/function () {
               console.log("已经是最小1倍率了");
             }
           }
-
           this.isDubboTouch = false;
         }
       }
@@ -29568,25 +27838,20 @@ var MobileZoom = /*#__PURE__*/function () {
     key: "startZoom",
     value: function startZoom() {
       var info = this.jSPlugin.jSPlugin._JSPlayM4_GetFrameInfo(0);
-
       this.videoWidth = info.width;
       this.videoHeight = info.height;
       this.currentPosition.right = info.width;
       this.currentPosition.bottom = info.height;
       this.currentScale = 1;
       document.getElementById("".concat(this.jSPlugin.id, "-zoom-container")).style.display = "block";
-
       this.jSPlugin.jSPlugin._JSPlayM4_SetDisplayRegion(0, this.videoWidth, 0, this.videoHeight);
-
       this.renderDot();
     }
   }, {
     key: "stopZoom",
     value: function stopZoom() {
       this.currentScale = 1;
-
       this.jSPlugin.jSPlugin._JSPlayM4_SetDisplayRegion(0, this.videoWidth, 0, this.videoHeight);
-
       document.getElementById("".concat(this.jSPlugin.id, "-zoom-container")).style.display = "none";
       this.renderDot();
     }
@@ -29594,37 +27859,33 @@ var MobileZoom = /*#__PURE__*/function () {
     key: "doScale",
     value: function doScale() {
       var currentPosition = this.currentPosition,
-          currentScale = this.currentScale;
+        currentScale = this.currentScale;
       currentPosition.left = currentPosition.left + currentPosition.xPercent * (currentPosition.right - currentPosition.left) - 1 / 2 * (this.videoWidth / currentScale);
-
       if (currentPosition.left < 0) {
         currentPosition.left = 0;
       } else if (currentPosition.left > this.videoWidth - this.videoWidth / currentScale) {
         currentPosition.left = this.videoWidth - this.videoWidth / currentScale;
       }
-
       currentPosition.right = currentPosition.left + this.videoWidth / currentScale;
       currentPosition.top = currentPosition.top + currentPosition.yPercent * (currentPosition.bottom - currentPosition.top) - 1 / 2 * (this.videoHeight / currentScale);
-
       if (currentPosition.top < 0) {
         currentPosition.top = 0;
       } else if (currentPosition.top > this.videoHeight - this.videoHeight / currentScale) {
         currentPosition.top = this.videoHeight - this.videoHeight / currentScale;
       }
+      currentPosition.bottom = currentPosition.top + this.videoHeight / currentScale;
 
-      currentPosition.bottom = currentPosition.top + this.videoHeight / currentScale; //整数化
-
+      //整数化
       currentPosition.left = parseInt(currentPosition.left, 10);
       currentPosition.right = parseInt(currentPosition.right, 10);
       currentPosition.top = parseInt(currentPosition.top, 10);
       currentPosition.bottom = parseInt(currentPosition.bottom, 10);
       console.log("视频宽高", this.videoWidth, this.videoHeight);
-      console.log("计算后，", currentPosition.left, currentPosition.right, currentPosition.top, currentPosition.bottom, currentPosition.xPercent, currentPosition.yPercent); // 注意，和PC
-
+      console.log("计算后，", currentPosition.left, currentPosition.right, currentPosition.top, currentPosition.bottom, currentPosition.xPercent, currentPosition.yPercent);
+      // 注意，和PC
       if (currentPosition.left < currentPosition.right && currentPosition.top < currentPosition.bottom && currentPosition.bottom <= this.videoHeight && currentPosition.right <= this.videoWidth) {
         this.jSPlugin.jSPlugin._JSPlayM4_SetDisplayRegion(currentPosition.left, currentPosition.right, currentPosition.top, currentPosition.bottom);
       }
-
       document.getElementById("".concat(this.jSPlugin.id, "-zoom-container")).innerHTML = "".concat(currentScale, ".0X");
       document.getElementById("".concat(this.jSPlugin.id, "-zoom-container")).style.display = currentScale === 1 ? "none" : "inline-block";
     }
@@ -29632,7 +27893,7 @@ var MobileZoom = /*#__PURE__*/function () {
     key: "calCurrentPosition",
     value: function calCurrentPosition(e) {
       var currentPosition = this.currentPosition,
-          clientRect = this.clientRect;
+        clientRect = this.clientRect;
       currentPosition.x = e.clientX;
       currentPosition.y = e.clientY;
       currentPosition.xPercent = (e.clientX - clientRect.x) / clientRect.width;
@@ -29641,7 +27902,6 @@ var MobileZoom = /*#__PURE__*/function () {
       return;
     }
   }]);
-
   return MobileZoom;
 }();
 
@@ -29652,14 +27912,11 @@ var styleToString = function styleToString(obj) {
   });
   return styleString;
 };
-
 var MEDIAWIDTH = 500;
 var Theme = /*#__PURE__*/function () {
   function Theme(jSPlugin) {
     var _this = this;
-
     _classCallCheck$1(this, Theme);
-
     this.jSPlugin = jSPlugin;
     this.isNeedRenderHeader = false;
     this.isNeedRenderFooter = false;
@@ -29689,21 +27946,18 @@ var Theme = /*#__PURE__*/function () {
     console.log(" matchEzopenUrl(jSPlugin.url)", matchEzopenUrl(jSPlugin.url), this.decoderState.state);
     this.inited = false;
     this.isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
-
     if (typeof jSPlugin.isMobile !== 'undefined') {
       this.isMobile = jSPlugin.isMobile;
-    } // 默认主题 - 按钮全部展示
-
-
-    this.themeData = emptyData.data; // 自适应主题数据
-
+    }
+    // 默认主题 - 按钮全部展示
+    this.themeData = emptyData.data;
+    // 自适应主题数据
     /*
      移动端 & 直播 =》 mobileLive
      移动端 & 回放地址 => mobileRec
      PC端 & 直播 =》 pcLive
      PC端 & 回放地址 => pcRec
     */
-
     if (this.jSPlugin.themeId) {
       switch (this.jSPlugin.themeId) {
         case 'pcLive':
@@ -29716,72 +27970,57 @@ var Theme = /*#__PURE__*/function () {
           var ezuikitTemplateDetail = lodash.find(officeTemplateList, function (item) {
             return item.themeId === _this.jSPlugin.themeId;
           });
-
           if (ezuikitTemplateDetail) {
             this.themeData = ezuikitTemplateDetail;
           }
-
           this.initThemeData();
           this.renderThemeData();
           break;
-
         case 'themeData':
           this.themeData = this.jSPlugin.params.themeData;
           this.initThemeData();
           this.renderThemeData();
           break;
-
         default:
           this.fetchThemeData(this.jSPlugin.themeId);
           break;
       }
     }
-
     if (!this.jSPlugin.Talk) {
       this.jSPlugin.Talk = new Talk(this.jSPlugin);
     }
-
     addCss("".concat(this.jSPlugin.staticPath, "/speed/speed.css"));
     addCss("".concat(this.jSPlugin.staticPath, "/css/theme.css"));
   }
-
   _createClass$1(Theme, [{
     key: "fetchThemeData",
     value: function fetchThemeData(themeId) {
       var _this2 = this;
-
       var url = "".concat(this.jSPlugin.env.domain, "/console/jssdk/ezopen/template/getDetail?accessToken=").concat(this.jSPlugin.accessToken, "&id=").concat(themeId);
-
       if (window.location.hostname === "test11open.ys7.com" || window.location.hostname === "127.0.0.1" || window.location.hostname === "jianboyu.top") {
         url = url.replace("test12open.ys7.com/console/jssdk", "test11open.ys7.com/console/jssdk");
       }
-
       fetch(url, {
         method: 'GET'
       }).then(function (response) {
         return response.json();
       }).then(function (data) {
         console.log("get theme data", data);
-
         if (data.meta.code === 0 && data.data) {
           _this2.themeData = data.data;
-
           if (data.data.header) {
             _this2.themeData.header = data.data.header;
             _this2.themeData.header.btnList = _this2.themeData.header.btnList.sort(function (a, b) {
               return a.btnKey.split("-")[3] - b.btnKey.split("-")[3];
             });
           }
-
           if (data.data.footer) {
             _this2.themeData.footer = data.data.footer;
             _this2.themeData.footer.btnList = _this2.themeData.footer.btnList.sort(function (a, b) {
               return a.btnKey.split("-")[3] - b.btnKey.split("-")[3];
             });
           }
-
           _this2.initThemeData();
-
           _this2.renderThemeData();
         }
       })["catch"](function (error) {
@@ -29792,10 +28031,8 @@ var Theme = /*#__PURE__*/function () {
     key: "changeTheme",
     value: function changeTheme(options) {
       var _this3 = this;
-
       if (typeof options === 'string') {
         this.jSPlugin.themeId = options;
-
         switch (this.jSPlugin.themeId) {
           case 'pcLive':
           case 'pcRec':
@@ -29807,15 +28044,12 @@ var Theme = /*#__PURE__*/function () {
             var ezuikitTemplateDetail = lodash.find(officeTemplateList, function (item) {
               return item.themeId === _this3.jSPlugin.themeId;
             });
-
             if (ezuikitTemplateDetail) {
               this.themeData = ezuikitTemplateDetail;
             }
-
             this.initThemeData();
             this.renderThemeData();
             break;
-
           default:
             this.fetchThemeData(options);
             break;
@@ -29824,12 +28058,10 @@ var Theme = /*#__PURE__*/function () {
         this.themeData = options;
         this.initThemeData();
         this.renderThemeData();
-
         if (this.decoderState.state.isEditing) {
           this.editStart();
         }
       }
-
       if (this.jSPlugin && this.jSPlugin.handleThemeChange) {
         this.jSPlugin.handleThemeChange(options);
       }
@@ -29838,11 +28070,9 @@ var Theme = /*#__PURE__*/function () {
     key: "renderThemeData",
     value: function renderThemeData() {
       var _this4 = this;
-
       var _this$themeData = this.themeData,
-          header = _this$themeData.header,
-          footer = _this$themeData.footer;
-
+        header = _this$themeData.header,
+        footer = _this$themeData.footer;
       if (this.isNeedRenderHeader && header) {
         document.getElementById("".concat(this.jSPlugin.id, "-headControl")).style.background = header.backgroundColor.replace("-diy", "");
         document.getElementById("".concat(this.jSPlugin.id, "-headControl")).style.color = header.color.replace("-diy", "");
@@ -29852,7 +28082,6 @@ var Theme = /*#__PURE__*/function () {
           }
         });
       }
-
       if (this.isNeedRenderFooter && footer) {
         document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).style.background = footer.backgroundColor.replace("-diy", "");
         document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).style.color = footer.color.replace("-diy", "");
@@ -29860,39 +28089,35 @@ var Theme = /*#__PURE__*/function () {
           if (item.isrender) {
             _this4.setDecoderState(_defineProperty({}, item.iconId, _this4.decoderState.state[item.iconId]));
           }
-
           if (item.iconId === "play" && item.defaultActive && !_this4.themeInited) {
             var checkTimer = setInterval(function () {
               if (window.EZUIKit[_this4.jSPlugin.id].state.EZUIKitPlayer.init) {
                 clearInterval(checkTimer);
-
                 _this4.jSPlugin.play();
-
                 _this4.themeInited = true;
               }
             }, 50);
           }
-        }); // 判断标清高清
-
+        });
+        // 判断标清高清
         if (this.jSPlugin.url.indexOf("hd.live") !== -1) {
           this.setDecoderState({
             hd: true
           });
-        } // 判断是否自动隐藏控件
-
-
+        }
+        // 判断是否自动隐藏控件
         if (this.themeData.autoFocus > 0) {
           this.autoFocus = parseInt(this.themeData.autoFocus);
           this.startAutoFocus();
           document.getElementById("".concat(this.jSPlugin.id, "-wrap")).addEventListener("click", function () {
             _this4.stopAutoFocus();
-          }); // document.getElementById(`${this.jSPlugin.id}-wrap`).addEventListener("mouseout", ()=>{
+          });
+          // document.getElementById(`${this.jSPlugin.id}-wrap`).addEventListener("mouseout", ()=>{
           //   console.log("开启自动隐藏")
           //   this.startAutoFocus();
           // })
-        } // 设置当前播放类型
-
-
+        }
+        // 设置当前播放类型
         this.setDecoderState({
           cloudRec: matchEzopenUrl(this.jSPlugin.url).type === 'cloud.rec',
           rec: matchEzopenUrl(this.jSPlugin.url).type === 'rec',
@@ -29903,19 +28128,15 @@ var Theme = /*#__PURE__*/function () {
           var _checkTimer = setInterval(function () {
             if (window.EZUIKit[_this4.jSPlugin.id].state.EZUIKitPlayer.init) {
               clearInterval(_checkTimer);
-
               _this4.jSPlugin.play();
-
               _this4.themeInited = true;
             }
           }, 50);
         }
       }
-
       var isNeedRoom = lodash.findIndex(this.themeData.footer.btnList, function (v) {
         return v.iconId === 'zoom' && v.isrender > 0;
       }) >= 0;
-
       if (isNeedRoom) {
         if (this.isMobile) {
           this.jSPlugin.Zoom = new MobileZoom(this.jSPlugin);
@@ -29923,11 +28144,10 @@ var Theme = /*#__PURE__*/function () {
           this.jSPlugin.Zoom = new Zoom(this.jSPlugin);
         }
       }
-
       var checkTimer = setInterval(function () {
         if (window.EZUIKit[_this4.jSPlugin.id].state.EZUIKitPlayer.init) {
-          clearInterval(checkTimer); // 执行一次reSize
-
+          clearInterval(checkTimer);
+          // 执行一次reSize
           _this4.jSPlugin.reSize(_this4.jSPlugin.params.width, _this4.jSPlugin.params.height);
         }
       }, 50);
@@ -29936,27 +28156,23 @@ var Theme = /*#__PURE__*/function () {
     key: "setDecoderState",
     value: function setDecoderState(options) {
       var _this5 = this;
-
       var _this$themeData2 = this.themeData,
-          header = _this$themeData2.header,
-          footer = _this$themeData2.footer;
+        header = _this$themeData2.header,
+        footer = _this$themeData2.footer;
       Object.keys(options).map(function (item, index) {
         var color = "#FFFFFF";
         var activeColor = "#FFFFFF";
-
         var _index = header.btnList.findIndex(function (i) {
           return i.iconId === item;
         });
-
         if (_index === -1) {
           color = footer.color.replace("-diy", "");
           activeColor = footer.activeColor.replace("-diy", "");
         } else {
-          color = header.color.replace("-diy", ""); // 按钮相关的激活颜色统一使用底部的
-
+          color = header.color.replace("-diy", "");
+          // 按钮相关的激活颜色统一使用底部的
           activeColor = footer.activeColor.replace("-diy", "");
         }
-
         switch (item) {
           case 'play':
             if (options[item]) {
@@ -29974,9 +28190,7 @@ var Theme = /*#__PURE__*/function () {
                 document.getElementById("".concat(_this5.jSPlugin.id, "-play-content")).childNodes[0].children[1].style.fill = options[item] ? activeColor : color;
               }
             }
-
             break;
-
           case 'sound':
             if (document.getElementById("".concat(_this5.jSPlugin.id, "-sound"))) {
               if (options[item]) {
@@ -29991,58 +28205,49 @@ var Theme = /*#__PURE__*/function () {
                 document.getElementById("".concat(_this5.jSPlugin.id, "-sound-content")).childNodes[0].children[0].style.fill = options[item] ? activeColor : color;
               }
             }
-
             break;
-
           case 'recordvideo':
             if (document.getElementById("".concat(_this5.jSPlugin.id, "-recordvideo"))) {
               document.getElementById("".concat(_this5.jSPlugin.id, "-recordvideo")).className = options[item] ? 'active' : '';
-              document.getElementById("".concat(_this5.jSPlugin.id, "-recordvideo-content")).childNodes[0].style.fill = options[item] ? activeColor : color; // 定时器处理
+              document.getElementById("".concat(_this5.jSPlugin.id, "-recordvideo-content")).childNodes[0].style.fill = options[item] ? activeColor : color;
 
+              // 定时器处理
               if (options[item]) {
-                _this5.countTime('add', 0); // this.recordTimer = setInterval(() => {
+                _this5.countTime('add', 0);
+                // this.recordTimer = setInterval(() => {
                 // }, 1000);
-
               } else {
-                _this5.countTime('destroy', 0); // clearInterval(this.recordTimer);
-
+                _this5.countTime('destroy', 0);
+                // clearInterval(this.recordTimer);
               }
             }
 
             break;
-
           case 'talk':
             if (document.getElementById("".concat(_this5.jSPlugin.id, "-talk"))) {
               document.getElementById("".concat(_this5.jSPlugin.id, "-talk")).className = options[item] ? 'active' : '';
               document.getElementById("".concat(_this5.jSPlugin.id, "-talk-content")).childNodes[1].style.fill = options[item] ? activeColor : color;
             }
-
             break;
-
           case 'zoom':
             if (document.getElementById("".concat(_this5.jSPlugin.id, "-zoom"))) {
               document.getElementById("".concat(_this5.jSPlugin.id, "-zoom")).className = options[item] ? 'active' : '';
               document.getElementById("".concat(_this5.jSPlugin.id, "-zoom-content")).childNodes[1].style.fill = options[item] ? activeColor : color;
             }
-
             break;
-
           case 'pantile':
             if (document.getElementById("".concat(_this5.jSPlugin.id, "-pantile"))) {
               document.getElementById("".concat(_this5.jSPlugin.id, "-pantile")).className = options[item] ? 'active' : '';
               document.getElementById("".concat(_this5.jSPlugin.id, "-pantile-content")).childNodes[0].style.fill = options[item] ? activeColor : color;
             }
-
             break;
-
           case 'webExpend':
             if (options[item]) {
               if (document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend"))) {
                 document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend-content")).children[0].children[1].style = "display:inline-block";
                 document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend-content")).children[0].children[0].style = "display:none";
-              } // 全屏置灰
-
-
+              }
+              // 全屏置灰
               if (document.getElementById("".concat(_this5.jSPlugin.id, "-expend"))) {
                 document.getElementById("".concat(_this5.jSPlugin.id, "-expend")).className = "disabled";
               }
@@ -30050,38 +28255,31 @@ var Theme = /*#__PURE__*/function () {
               if (document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend"))) {
                 document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend-content")).children[0].children[0].style = "display:inline-block";
                 document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend-content")).children[0].children[1].style = "display:none";
-              } // 全屏置灰
-
-
+              }
+              // 全屏置灰
               if (document.getElementById("".concat(_this5.jSPlugin.id, "-expend"))) {
                 document.getElementById("".concat(_this5.jSPlugin.id, "-expend")).className = "";
               }
             }
-
             if (document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend"))) {
               document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend")).className = options[item] ? 'active' : '';
               document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend-content")).childNodes[0].childNodes[0].style.fill = options[item] ? activeColor : color;
               document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend-content")).childNodes[0].childNodes[1].style.fill = options[item] ? activeColor : color;
             }
-
             break;
-
           case 'capturePicture':
             if (document.getElementById("".concat(_this5.jSPlugin.id, "-capturePicture"))) {
               document.getElementById("".concat(_this5.jSPlugin.id, "-capturePicture")).className = options[item] ? 'active' : '';
               document.getElementById("".concat(_this5.jSPlugin.id, "-capturePicture-content")).childNodes[0].style.fill = options[item] ? activeColor : color;
             }
-
             break;
-
           case 'expend':
             if (options[item]) {
               if (document.getElementById("".concat(_this5.jSPlugin.id, "-expend"))) {
                 document.getElementById("".concat(_this5.jSPlugin.id, "-expend-content")).children[0].children[1].style = "display:inline-block";
                 document.getElementById("".concat(_this5.jSPlugin.id, "-expend-content")).children[0].children[0].style = "display:none";
-              } // 网站全屏置灰
-
-
+              }
+              // 网站全屏置灰
               if (document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend"))) {
                 document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend")).className = "disabled";
               }
@@ -30089,22 +28287,18 @@ var Theme = /*#__PURE__*/function () {
               if (document.getElementById("".concat(_this5.jSPlugin.id, "-expend"))) {
                 document.getElementById("".concat(_this5.jSPlugin.id, "-expend-content")).children[0].children[0].style = "display:inline-block";
                 document.getElementById("".concat(_this5.jSPlugin.id, "-expend-content")).children[0].children[1].style = "display:none";
-              } // 网站全屏置灰
-
-
+              }
+              // 网站全屏置灰
               if (document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend"))) {
                 document.getElementById("".concat(_this5.jSPlugin.id, "-webExpend")).className = "";
               }
             }
-
             if (document.getElementById("".concat(_this5.jSPlugin.id, "-expend"))) {
               document.getElementById("".concat(_this5.jSPlugin.id, "-expend")).className = options[item] ? 'active' : '';
               document.getElementById("".concat(_this5.jSPlugin.id, "-expend-content")).childNodes[0].childNodes[0].style.fill = options[item] ? activeColor : color;
               document.getElementById("".concat(_this5.jSPlugin.id, "-expend-content")).childNodes[0].childNodes[1].style.fill = options[item] ? activeColor : color;
             }
-
             break;
-
           case 'hd':
             if (options[item]) {
               if (document.getElementById("".concat(_this5.jSPlugin.id, "-hd"))) {
@@ -30117,51 +28311,40 @@ var Theme = /*#__PURE__*/function () {
                 document.getElementById("".concat(_this5.jSPlugin.id, "-hd-content")).children[1].children[0].style = "display:none";
               }
             }
-
             break;
-
           case 'speed':
             if (document.getElementById("".concat(_this5.jSPlugin.id, "-speed"))) {
               document.getElementById("".concat(_this5.jSPlugin.id, "-speed-content")).children[1].children[0].style.color = options[item] ? activeColor : color;
               document.getElementById("".concat(_this5.jSPlugin.id, "-speed-content")).children[1].children[0].style.borderColor = options[item] ? activeColor : color;
             }
-
             if (_this5.isMobile && options[item]) {
               document.getElementById("".concat(_this5.jSPlugin.id, "-select-mask")).style.display = "block";
             } else {
               document.getElementById("".concat(_this5.jSPlugin.id, "-select-mask")).style.display = "none";
             }
-
             break;
-
           case 'cloudRec':
             if (document.getElementById("".concat(_this5.jSPlugin.id, "-cloudRec"))) {
               console.log("document.getElementById(`${this.jSPlugin.id}-cloudRec-content`)", document.getElementById("".concat(_this5.jSPlugin.id, "-cloudRec")));
               document.getElementById("".concat(_this5.jSPlugin.id, "-cloudRec")).className = options[item] ? 'active' : '';
               document.getElementById("".concat(_this5.jSPlugin.id, "-cloudRec-content")).children[0].children[0].style.fill = options[item] ? activeColor : color;
             }
-
             if (document.getElementById("".concat(_this5.jSPlugin.id, "-rec"))) {
               document.getElementById("".concat(_this5.jSPlugin.id, "-rec")).className = options[item] ? 'active' : '';
               document.getElementById("".concat(_this5.jSPlugin.id, "-rec-content")).children[0].children[0].style.fill = options[item] ? color : activeColor;
             }
-
             break;
-
           case 'rec':
             if (document.getElementById("".concat(_this5.jSPlugin.id, "-cloudRec"))) {
               document.getElementById("".concat(_this5.jSPlugin.id, "-cloudRec")).className = options[item] ? 'active' : '';
               document.getElementById("".concat(_this5.jSPlugin.id, "-cloudRec-content")).children[0].children[0].style.fill = options[item] ? color : activeColor;
             }
-
             if (document.getElementById("".concat(_this5.jSPlugin.id, "-rec"))) {
               document.getElementById("".concat(_this5.jSPlugin.id, "-rec")).className = options[item] ? 'active' : '';
               document.getElementById("".concat(_this5.jSPlugin.id, "-rec-content")).children[0].children[0].style.fill = options[item] ? activeColor : color;
             }
-
             break;
         }
-
         _this5.decoderState.state = Object.assign(_this5.decoderState.state, options);
       });
     }
@@ -30169,17 +28352,16 @@ var Theme = /*#__PURE__*/function () {
     key: "startAutoFocus",
     value: function startAutoFocus() {
       var _this6 = this;
-
       //console.log("开始自动隐藏",this.autoFocus);
-      var autoFocus = this.autoFocus; // if(document.getElementById(`${this.jSPlugin.id}-audioControls`)) {
-
+      var autoFocus = this.autoFocus;
+      // if(document.getElementById(`${this.jSPlugin.id}-audioControls`)) {
       if (this.autoFocusTimer) {
         clearTimeout(this.autoFocusTimer);
       }
-
       this.autoFocusTimer = setTimeout(function () {
         if (document.getElementById("".concat(_this6.jSPlugin.id, "-audioControls"))) {
           document.getElementById("".concat(_this6.jSPlugin.id, "-audioControls")).style.opacity = 0;
+          document.getElementById("".concat(_this6.jSPlugin.id, "-audioControls")).style.pointerEvents = 'none';
         }
       }, autoFocus * 1000);
     }
@@ -30189,12 +28371,11 @@ var Theme = /*#__PURE__*/function () {
       //console.log("结束自动隐藏")
       if (document.getElementById("".concat(this.jSPlugin.id, "-audioControls"))) {
         document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).style.opacity = 1;
+        document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).style.pointerEvents = 'all';
       }
-
       if (this.autoFocusTimer) {
         clearTimeout(this.autoFocusTimer);
       }
-
       this.startAutoFocus();
     }
   }, {
@@ -30206,82 +28387,66 @@ var Theme = /*#__PURE__*/function () {
     key: "renderFooter",
     value: function renderFooter(id, part) {
       var _this7 = this;
-
       // 播放停止
-      var objItem = this.matchBtn(id); // 移动端不展示电子放大
-
+      var objItem = this.matchBtn(id);
+      // 移动端不展示电子放大
       if (this.isMobile && objItem.id === "zoom") {
         return false;
       }
-
       var objDOM = document.createElement('div');
       objDOM.className = "theme-icon-item";
       objDOM.innerHTML = "".concat("<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "\" style=\"position:relative;\">") // +`<span id="${this.jSPlugin.id}-${objItem.id}-left" class="ezuikit-theme-icon" title="左移" style="position: absolute;top: calc(50% - 26px);left: -6px;display: none;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080;"><path d="M7.4,10V5.3c0-0.3-0.3-0.6-0.6-0.6c-0.1,0-0.3,0.1-0.4,0.2L3.7,7.4c-0.2,0.2-0.3,0.6,0,0.8 c0,0,0,0,0.1,0.1l2.7,2.2c0.2,0.2,0.6,0.2,0.8-0.1C7.3,10.3,7.4,10.2,7.4,10z"></path></svg></span>`  
       + "<div id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-content\" title=\"").concat(objItem.title, "\" style=\"height:").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px;display: flex;align-items: center;position:relative;\">")).concat(objItem.domString, "</div>") // +`<span id="${this.jSPlugin.id}-${objItem.id}-right" class="ezuikit-theme-icon" title="右移" style="position: absolute;top: calc(50% - 26px);left: calc(100% - 0px);display: none;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080"><path d="M3.4,5.2v4.7c0,0.3,0.3,0.6,0.6,0.6c0.1,0,0.3-0.1,0.4-0.2l2.7-2.5c0.2-0.2,0.3-0.6,0-0.8 c0,0,0,0-0.1-0.1L4.4,4.8C4.1,4.6,3.8,4.6,3.6,4.9C3.5,5,3.4,5.1,3.4,5.2z"></path></svg></span>`
       + '</span>';
-
       objDOM.onclick = function (e) {
         if (_this7.decoderState.state.isEditing) {
           return false;
         }
-
         objItem.onclick(e);
       };
-
       if (objItem.onmouseenter) {
         objDOM.onmouseenter = function (e) {
           if (_this7.decoderState.state.isEditing) {
             return false;
           }
-
           objItem.onmouseenter(e);
         };
       }
-
       if (objItem.onmouseleave) {
         objDOM.onmouseleave = function (e) {
           if (_this7.decoderState.state.isEditing) {
             return false;
           }
-
           objItem.onmouseleave(e);
         };
       }
-
       var toLeft = document.createElement('span');
       toLeft.className = "icon-move left";
       toLeft.innerHTML = "<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-left\" title=\"\u5DE6\u79FB\" style=\"position: absolute;top: calc(50% - 10px);left: -4px;\"><svg fill=\"#ffffff\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"24\" viewBox=\"0 0 10 15\" style=\"background:#00000080;\"><path d=\"M7.4,10V5.3c0-0.3-0.3-0.6-0.6-0.6c-0.1,0-0.3,0.1-0.4,0.2L3.7,7.4c-0.2,0.2-0.3,0.6,0,0.8 c0,0,0,0,0.1,0.1l2.7,2.2c0.2,0.2,0.6,0.2,0.8-0.1C7.3,10.3,7.4,10.2,7.4,10z\"></path></svg></span>");
-
       toLeft.onclick = function () {
         _this7.editIcon(objItem.id, 'left', 'footer');
       };
-
       objDOM.appendChild(toLeft);
       var toRight = document.createElement('span');
       toRight.className = "icon-move right";
       toRight.innerHTML = "<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-right\" class=\"ezuikit-theme-icon\" title=\"\u53F3\u79FB\" style=\"position: absolute;top: calc(50% - 10px);left: calc(100% - 8px);\"><svg fill=\"#ffffff\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"24\" viewBox=\"0 0 10 15\" style=\"background:#00000080\"><path d=\"M3.4,5.2v4.7c0,0.3,0.3,0.6,0.6,0.6c0.1,0,0.3-0.1,0.4-0.2l2.7-2.5c0.2-0.2,0.3-0.6,0-0.8 c0,0,0,0-0.1-0.1L4.4,4.8C4.1,4.6,3.8,4.6,3.6,4.9C3.5,5,3.4,5.1,3.4,5.2z\"></path></svg></span>");
-
       toRight.onclick = function () {
         _this7.editIcon(objItem.id, 'right', 'footer');
       };
-
       objDOM.appendChild(toRight);
       var toClose = document.createElement('span');
       toClose.className = "icon-move close";
       toClose.innerHTML = "<span id=\"".concat(objItem.id, "-remove\" class=\"ezuikit-theme-icon\" title=\"\u79FB\u9664\" style=\"position: absolute;top: -10px;right: -10px;\">") + '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 15 15">' + '<circle style="fill-rule:evenodd;clip-rule:evenodd;fill-opacity:0.8011;" cx="7.5" cy="7.6" r="7" />' + '<rect x="3.9" y="3.5" class="st1" style="fill:none;" width="8.1" height="8.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="5" x2="10" y2="10.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="10.1" x2="10" y2="5" />' + '</svg>' + '</span>';
-
       toClose.onclick = function () {
         _this7.editIcon(objItem.id, 'delete', 'footer');
       };
-
       objDOM.appendChild(toClose);
-
       if (part === 'left') {
         document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).childNodes[0].appendChild(objDOM);
       } else {
         document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).childNodes[1].appendChild(objDOM);
-      } // 截图
-
+      }
+      // 截图
     }
   }, {
     key: "editIcon",
@@ -30290,13 +28455,10 @@ var Theme = /*#__PURE__*/function () {
       var newThemeData = this.themeData;
       console.log("themeData", this.themeData);
       var btnList = this.themeData[area].btnList;
-
       var _index = lodash.findIndex(btnList, function (item) {
         return item.iconId === id;
       });
-
       var tmp = btnList[_index];
-
       switch (type) {
         case 'delete':
           // btnList.splice(_index, 1);
@@ -30308,7 +28470,6 @@ var Theme = /*#__PURE__*/function () {
               if (this.jSPlugin.Message) {
                 this.jSPlugin.Message["default"]("必须选中一种存储介质");
               }
-
               return false;
             }
           } else if (id === "cloudRec") {
@@ -30318,59 +28479,47 @@ var Theme = /*#__PURE__*/function () {
               if (this.jSPlugin.Message) {
                 this.jSPlugin.Message["default"]("必须选中一种存储介质");
               }
-
               return false;
             }
           }
-
           btnList[_index].isrender = 0;
           break;
-
         case 'right':
           var nextRightBtnIndex = -1;
-
           for (var i = _index + 1; i < btnList.length; i++) {
             if (btnList[i].part === btnList[_index].part && btnList[i].isrender == 1) {
               nextRightBtnIndex = i;
               break;
             }
           }
-
           if (nextRightBtnIndex !== -1) {
             btnList[_index] = btnList[nextRightBtnIndex];
             btnList[nextRightBtnIndex] = tmp;
           }
-
           break;
-
         case 'left':
           var nextLeftBtnIndex = -1;
-
           for (var _i = _index - 1; _i >= 0; _i--) {
             if (btnList[_i].part === btnList[_index].part && btnList[_i].isrender == 1) {
               nextLeftBtnIndex = _i;
               break;
             }
           }
-
           if (nextLeftBtnIndex !== -1) {
             btnList[_index] = btnList[nextLeftBtnIndex];
             btnList[nextLeftBtnIndex] = tmp;
           }
-
           break;
       }
-
       console.log("new btnList", btnList);
-      newThemeData[area].btnList = btnList; //this.renderThemeData();
-
+      newThemeData[area].btnList = btnList;
+      //this.renderThemeData();
       this.changeTheme(newThemeData);
     }
   }, {
     key: "renderHeader",
     value: function renderHeader(id, part) {
       var _this8 = this;
-
       // 播放停止
       var objItem = this.matchBtn(id);
       var objDOM = document.createElement('div');
@@ -30378,38 +28527,36 @@ var Theme = /*#__PURE__*/function () {
       objDOM.style = "max-width:50%;";
       objDOM.innerHTML = "".concat("<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "\" style=\"position:relative;\";>") // +`<span id="${this.jSPlugin.id}-${objItem.id}-left" title="左移" style="position: absolute;top: calc(50% - 10px);left: -6px;display: none;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080;"><path d="M7.4,10V5.3c0-0.3-0.3-0.6-0.6-0.6c-0.1,0-0.3,0.1-0.4,0.2L3.7,7.4c-0.2,0.2-0.3,0.6,0,0.8 c0,0,0,0,0.1,0.1l2.7,2.2c0.2,0.2,0.6,0.2,0.8-0.1C7.3,10.3,7.4,10.2,7.4,10z"></path></svg></span>`  
       + "<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-content\" title=\"").concat(objItem.title, "\" style=\"display:inline-block;height:").concat(this.width > MEDIAWIDTH ? 48 : 32, "px;\">")).concat(objItem.domString, "</span>") //+`<span id="${this.jSPlugin.id}-${objItem.id}-right" title="右移" style="position: absolute;top: calc(50% - 10px);left: calc(100% - 6px);display: none;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080"><path d="M3.4,5.2v4.7c0,0.3,0.3,0.6,0.6,0.6c0.1,0,0.3-0.1,0.4-0.2l2.7-2.5c0.2-0.2,0.3-0.6,0-0.8 c0,0,0,0-0.1-0.1L4.4,4.8C4.1,4.6,3.8,4.6,3.6,4.9C3.5,5,3.4,5.1,3.4,5.2z"></path></svg></span>`
-      + "<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-remove\" title=\"\u79FB\u9664\" style=\"position: absolute;top: -6px;left: 38px;display: none;\">") + '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 15 15">' + '<circle style="fill-rule:evenodd;clip-rule:evenodd;fill-opacity:0.8011;" cx="7.5" cy="7.6" r="7" />' + '<rect x="3.9" y="3.5" class="st1" style="fill:none;" width="8.1" height="8.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="5" x2="10" y2="10.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="10.1" x2="10" y2="5" />' + '</svg>' + '</span>' + '</span>'; // var toLeft = document.createElement('span');
+      + "<span id=\"".concat(this.jSPlugin.id, "-").concat(objItem.id, "-remove\" title=\"\u79FB\u9664\" style=\"position: absolute;top: -6px;left: 38px;display: none;\">") + '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 15 15">' + '<circle style="fill-rule:evenodd;clip-rule:evenodd;fill-opacity:0.8011;" cx="7.5" cy="7.6" r="7" />' + '<rect x="3.9" y="3.5" class="st1" style="fill:none;" width="8.1" height="8.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="5" x2="10" y2="10.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="10.1" x2="10" y2="5" />' + '</svg>' + '</span>' + '</span>';
+      // var toLeft = document.createElement('span');
       // toLeft.innerHTML =  +`<span id="${this.jSPlugin.id}-${objItem.id}-left" title="左移" style="position: absolute;top: calc(50% - 10px);left: -6px;display: none;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080;"><path d="M7.4,10V5.3c0-0.3-0.3-0.6-0.6-0.6c-0.1,0-0.3,0.1-0.4,0.2L3.7,7.4c-0.2,0.2-0.3,0.6,0,0.8 c0,0,0,0,0.1,0.1l2.7,2.2c0.2,0.2,0.6,0.2,0.8-0.1C7.3,10.3,7.4,10.2,7.4,10z"></path></svg></span>`;
       // toLeft.onclick = () => {console.log("左移动")};
-
       objDOM.onclick = function (e) {
         if (_this8.decoderState.state.isEditing) {
           return false;
         }
-
         objItem.onclick(e);
-      }; // var toLeft = document.createElement('span');
+      };
+      // var toLeft = document.createElement('span');
       // toLeft.className = "icon-move left";
       // toLeft.innerHTML =  `<span id="${this.jSPlugin.id}-${objItem.id}-left" title="左移" style="position: absolute;top: calc(50% - 10px);left: -4px;"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080;"><path d="M7.4,10V5.3c0-0.3-0.3-0.6-0.6-0.6c-0.1,0-0.3,0.1-0.4,0.2L3.7,7.4c-0.2,0.2-0.3,0.6,0,0.8 c0,0,0,0,0.1,0.1l2.7,2.2c0.2,0.2,0.6,0.2,0.8-0.1C7.3,10.3,7.4,10.2,7.4,10z"></path></svg></span>`;
       // toLeft.onclick = () => {this.editIcon(objItem.id,'left','header')};
       // objDOM.appendChild(toLeft);
+
       // var toRight = document.createElement('span');
       // toRight.className = "icon-move right";
       // toRight.innerHTML = `<span id="${this.jSPlugin.id}-${objItem.id}-right" class="ezuikit-theme-icon" title="右移" style="position: absolute;top: calc(50% - 10px);left: calc(100% - 8px);"><svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 10 15" style="background:#00000080"><path d="M3.4,5.2v4.7c0,0.3,0.3,0.6,0.6,0.6c0.1,0,0.3-0.1,0.4-0.2l2.7-2.5c0.2-0.2,0.3-0.6,0-0.8 c0,0,0,0-0.1-0.1L4.4,4.8C4.1,4.6,3.8,4.6,3.6,4.9C3.5,5,3.4,5.1,3.4,5.2z"></path></svg></span>`;
       // toRight.onclick = () => {this.editIcon(objItem.id,'right','header')};
       // objDOM.appendChild(toRight);
 
-
       var toClose = document.createElement('span');
       toClose.className = "icon-move close";
       toClose.innerHTML = "<span id=\"".concat(objItem.id, "-remove\" class=\"ezuikit-theme-icon\" title=\"\u79FB\u9664\" style=\"position: absolute;top: -6px;right: -6px;\">") + '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 15 15">' + '<circle style="fill-rule:evenodd;clip-rule:evenodd;fill-opacity:0.8011;" cx="7.5" cy="7.6" r="7" />' + '<rect x="3.9" y="3.5" class="st1" style="fill:none;" width="8.1" height="8.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="5" x2="10" y2="10.1" />' + '<line style="fill:none;stroke:#ffffff;stroke-width:0.5833;stroke-linecap:round;" x1="4.9" y1="10.1" x2="10" y2="5" />' + '</svg>' + '</span>';
-
       toClose.onclick = function () {
         _this8.editIcon(objItem.id, 'delete', 'header');
       };
-
-      objDOM.appendChild(toClose); // objDOM.appendChild(toLeft);
-
+      objDOM.appendChild(toClose);
+      // objDOM.appendChild(toLeft);
       if (part === 'left') {
         document.getElementById("".concat(this.jSPlugin.id, "-headControl")).childNodes[0].appendChild(objDOM);
       } else {
@@ -30421,22 +28568,18 @@ var Theme = /*#__PURE__*/function () {
     value: function countTime(type) {
       var start = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
       var that = this;
-
       if (!document.getElementById(this.jSPlugin.id + "time-area")) {
         var recordDOM = document.createElement("div");
         recordDOM.id = this.jSPlugin.id + "time-area";
         recordDOM.className = "time-area";
         recordDOM.innerHTML = "<span class=\"dot\"></span><span class=\"value\">00:00</span>";
-
         if (document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container"))) {
           document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")).appendChild(recordDOM);
         }
       }
-
       if (this.countTimer) {
         clearInterval(this.countTimer);
       }
-
       if (type === 'add') {
         var i = start;
         document.getElementById(that.jSPlugin.id + "time-area").style.display = 'flex';
@@ -30449,39 +28592,30 @@ var Theme = /*#__PURE__*/function () {
           clearInterval(this.countTimer);
         }
         this.countTimer = undefined;
-
         if (document.getElementById(that.jSPlugin.id + "time-area")) {
           document.getElementById(that.jSPlugin.id + "time-area").children[1].innerHTML = '00:00';
           document.getElementById(that.jSPlugin.id + "time-area").style.display = 'none';
         }
-      } //将秒数转换为时分秒格式
-
-
+      }
+      //将秒数转换为时分秒格式
       function formatSeconds(value) {
         var theTime = parseInt(value); // 秒
-
         var middle = 0; // 分
-
         var hour = 0; // 小时
-
         var secondV = '00';
         var minV = '00';
         var hourV = '00';
-
         if (theTime > 59) {
           middle = parseInt(theTime / 60);
           theTime = parseInt(theTime % 60);
-
           if (middle > 59) {
             hour = parseInt(middle / 60);
             middle = parseInt(middle % 60);
           }
         }
-
         secondV = parseInt(theTime) > 9 ? parseInt(theTime) : '0' + parseInt(theTime);
         minV = parseInt(middle) > 9 ? parseInt(middle) : '0' + parseInt(middle);
         hourV = parseInt(hour) > 9 ? parseInt(hour) : '0' + parseInt(hour);
-
         if (hour > 0) {
           return hourV + ':' + minV + ':' + secondV;
         } else if (middle > 0) {
@@ -30495,10 +28629,9 @@ var Theme = /*#__PURE__*/function () {
     key: "matchBtn",
     value: function matchBtn(btnId) {
       var _this9 = this;
-
       var _this$themeData3 = this.themeData,
-          header = _this$themeData3.header,
-          footer = _this$themeData3.footer;
+        header = _this$themeData3.header,
+        footer = _this$themeData3.footer;
       var btnItem = {
         title: "",
         id: "",
@@ -30510,11 +28643,9 @@ var Theme = /*#__PURE__*/function () {
         onmoveright: function onmoveright() {},
         onremove: function onremove() {}
       };
-
       var _index = header.btnList.findIndex(function (item) {
         return item.iconId === btnId;
       });
-
       if (_index === -1) {
         btnItem.color = footer.color;
         btnItem.backgroundColor = footer.backgroundColor;
@@ -30524,268 +28655,208 @@ var Theme = /*#__PURE__*/function () {
         btnItem.backgroundColor = header.backgroundColor;
         btnItem.activeColor = header.activeColor;
       }
-
       switch (btnId) {
         case 'play':
           btnItem.title = "播放/结束播放";
           btnItem.id = btnId;
           btnItem.domString = '<div style="height: 100%">' + "<svg class=\"theme-icon-item-icon\" style=\"display:none\" width=\"".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\"  fill=\"").concat(btnItem.color, "\" viewBox=\"-6 -6 32 32\">\n            <path id=\"Stroke-1\" class=\"st1\" d=\"M10.5,1.7c-4.9,0-8.8,4-8.8,8.8s4,8.8,8.8,8.8s8.8-4,8.8-8.8S15.4,1.7,10.5,1.7z M10.5,2.7\n              c4.3,0,7.8,3.5,7.8,7.8s-3.5,7.8-7.8,7.8s-7.8-3.5-7.8-7.8S6.2,2.7,10.5,2.7z\"/>\n            <path class=\"st2\" d=\"M8.7,8C9,8,9.3,8.3,9.3,8.6v3.8C9.3,12.7,9,13,8.7,13C8.3,13,8,12.7,8,12.4V8.6C8,8.3,8.3,8,8.7,8z\"/>\n            <path id=\"Rectangle-Copy-10\" class=\"st2\" d=\"M12.8,8c0.3,0,0.6,0.3,0.6,0.6v3.8c0,0.3-0.3,0.6-0.6,0.6c-0.3,0-0.6-0.3-0.6-0.6V8.6\n              C12.2,8.3,12.5,8,12.8,8z\"/>\n          </svg>") + "<svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M13,9.8L10.1,8C9.9,7.9,9.7,7.9,9.5,7.9c-0.6,0-1,0.4-1,1v3.7c0,0.2,0.1,0.4,0.2,0.5c0.3,0.5,0.9,0.6,1.4,0.3 l2.9-1.8c0.1-0.1,0.2-0.2,0.3-0.3C13.6,10.7,13.4,10.1,13,9.8z" />' + '<path d="M10.5,1.9c-4.9,0-8.8,4-8.8,8.8c0,4.9,4,8.8,8.8,8.8s8.8-4,8.8-8.8C19.4,5.8,15.4,1.9,10.5,1.9z M10.5,18.5 c-4.3,0-7.8-3.5-7.8-7.8s3.5-7.8,7.8-7.8c4.3,0,7.8,3.5,7.8,7.8S14.9,18.5,10.5,18.5z" />' + '</svg>' + '</div>';
-
           btnItem.onclick = function () {
             var _this9$decoderState$s = _this9.decoderState.state,
-                play = _this9$decoderState$s.play,
-                isEditing = _this9$decoderState$s.isEditing;
-
+              play = _this9$decoderState$s.play,
+              isEditing = _this9$decoderState$s.isEditing;
             if (isEditing) {
               return false;
             }
-
             if (play) {
               _this9.jSPlugin.stop();
             } else {
               _this9.jSPlugin.play();
             }
-
             _this9.setDecoderState({
               play: !play
             });
           };
-
           return btnItem;
-
         case 'sound':
           btnItem.title = "声音";
           btnItem.id = btnId;
           btnItem.domString = '<span style="height: 100%">' + "<svg class=\"theme-icon-item-icon\" style=\"display:none\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">\n            <path d=\"M8.5,4.2c0.8-0.7,2.1-0.2,2.2,0.9l0,0.1v10c0,1.1-1.2,1.7-2.1,1.1l-0.1-0.1l-3.3-2.8C5,13.2,5,12.9,5.1,12.7 c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.3,2.8c0.2,0.2,0.5,0.1,0.5-0.2l0-0.1v-10c0-0.3-0.3-0.4-0.5-0.3L9.2,5L5.9,7.8 C5.6,7.9,5.3,7.9,5.1,7.7C5,7.5,5,7.3,5.1,7.1L5.2,7L8.5,4.2z\"/>\n            <path d=\"M5.5,6.9C5.8,6.9,6,7.1,6,7.4c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2C3.4,7.9,3.3,8,3.2,8.2l0,0.1v4 c0,0.2,0.1,0.3,0.3,0.3l0.1,0h2C5.8,12.5,6,12.7,6,13c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2c-0.7,0-1.3-0.5-1.3-1.2l0-0.1v-4 c0-0.7,0.5-1.3,1.2-1.3l0.1,0H5.5z\"/>\n            <path d=\"M17.4,7.9c0.2-0.2,0.5-0.2,0.7,0c0.2,0.2,0.2,0.4,0.1,0.6l-0.1,0.1l-3.8,3.8c-0.2,0.2-0.5,0.2-0.7,0 c-0.2-0.2-0.2-0.4-0.1-0.6l0.1-0.1L17.4,7.9z\"/>\n            <path d=\"M13.7,7.9c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.8,3.8c0.2,0.2,0.2,0.5,0,0.7c-0.2,0.2-0.4,0.2-0.6,0.1l-0.1-0.1 l-3.7-3.8C13.5,8.4,13.5,8.1,13.7,7.9z\"/>\n            </svg>") + "<svg class=\"theme-icon-item-icon\" style=\"display:inline-block\" width=\"".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" fill=\"").concat(btnItem.color, "\" viewBox=\"-6 -6 32 32\">\n              <path d=\"M13.2,7.1c0.1-0.2,0.5-0.3,0.7-0.2c1.1,0.7,1.9,2.2,1.9,3.7c0,1.6-0.7,3-1.9,3.7\n                c-0.2,0.1-0.5,0.1-0.7-0.2c-0.1-0.2-0.1-0.5,0.2-0.7c0.8-0.5,1.4-1.6,1.4-2.9c0-1.3-0.6-2.4-1.4-2.9C13.1,7.6,13,7.3,13.2,7.1z\"/>\n              <path d=\"M15.7,4.5c0.2-0.2,0.5-0.2,0.7-0.1C18,5.8,19,8.2,19,10.7c0,2.5-1,4.8-2.7,6.3\n                c-0.2,0.2-0.5,0.2-0.7-0.1c-0.2-0.2-0.2-0.5,0.1-0.7c1.4-1.2,2.3-3.3,2.3-5.5c0-2.2-0.9-4.3-2.3-5.5C15.5,5,15.5,4.7,15.7,4.5z\"/>\n              <path id=\"Stroke-5\" class=\"st1\" d=\"M8.5,4.7c0.8-0.7,2.1-0.2,2.2,0.9l0,0.1v10c0,1.1-1.2,1.7-2.1,1.1l-0.1-0.1l-3.3-2.8\n                C5,13.7,5,13.4,5.1,13.2c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.3,2.8c0.2,0.2,0.5,0.1,0.5-0.2l0-0.1v-10c0-0.3-0.3-0.4-0.5-0.3l-0.1,0\n                L5.9,8.3C5.6,8.4,5.3,8.4,5.1,8.2C5,8,5,7.7,5.1,7.6l0.1-0.1L8.5,4.7z\"/>\n              <path  d=\"M5.5,7.4C5.8,7.4,6,7.6,6,7.9c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2c-0.2,0-0.3,0.1-0.3,0.3l0,0.1v4\n                c0,0.2,0.1,0.3,0.3,0.3l0.1,0h2C5.8,13,6,13.2,6,13.5c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-2c-0.7,0-1.3-0.5-1.3-1.2l0-0.1v-4\n                c0-0.7,0.5-1.3,1.2-1.3l0.1,0H5.5z\"/>\n            </svg>") + '</span>';
-
           btnItem.onclick = function () {
             var _this9$decoderState$s2 = _this9.decoderState.state,
-                play = _this9$decoderState$s2.play,
-                sound = _this9$decoderState$s2.sound;
-
+              play = _this9$decoderState$s2.play,
+              sound = _this9$decoderState$s2.sound;
             if (play) {
               if (sound) {
                 _this9.jSPlugin.closeSound();
-
                 _this9.setDecoderState({
                   sound: false
                 });
               } else {
                 _this9.jSPlugin.openSound();
-
                 _this9.setDecoderState({
                   sound: true
                 });
               }
             }
           };
-
           return btnItem;
-
         case 'recordvideo':
           btnItem.title = "录屏";
           btnItem.id = btnId;
           btnItem.domString = "<svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M11.6,5.3H4.7c-1.4,0-2.5,1.1-2.5,2.5v5.9c0,1.4,1.1,2.5,2.5,2.5h6.9c1.4,0,2.5-1.1,2.5-2.5V7.7 C14.1,6.4,13,5.3,11.6,5.3z M4.7,6.3h6.9c0.8,0,1.5,0.7,1.5,1.5v5.9c0,0.8-0.7,1.5-1.5,1.5H4.7c-0.8,0-1.5-0.7-1.5-1.5V7.7 C3.3,6.9,3.9,6.3,4.7,6.3z" />' + '<path d="M16.6,6.7c0.9-0.8,2.3-0.1,2.4,1l0,0.1v5.7c0,1.2-1.3,1.9-2.3,1.2l-0.1-0.1L13.3,12 c-0.2-0.2-0.2-0.5-0.1-0.7c0.2-0.2,0.4-0.2,0.6-0.1l0.1,0.1l3.3,2.7c0.3,0.2,0.7,0.1,0.8-0.3l0-0.1V7.8c0-0.4-0.4-0.6-0.7-0.4 l-0.1,0l-3.3,2.7c-0.2,0.2-0.5,0.1-0.7-0.1c-0.2-0.2-0.1-0.5,0-0.6l0.1-0.1L16.6,6.7z" />' + '</svg>';
-
           btnItem.onclick = function () {
             var _this9$decoderState$s3 = _this9.decoderState.state,
-                play = _this9$decoderState$s3.play,
-                recordvideo = _this9$decoderState$s3.recordvideo;
-
+              play = _this9$decoderState$s3.play,
+              recordvideo = _this9$decoderState$s3.recordvideo;
             if (play) {
               if (recordvideo) {
                 _this9.jSPlugin.stopSave();
-
                 _this9.setDecoderState({
                   recordvideo: false
                 });
               } else {
                 _this9.jSPlugin.startSave("".concat(new Date().getTime()));
-
                 _this9.setDecoderState({
                   recordvideo: true
                 });
               }
             }
           };
-
           return btnItem;
-
         case 'capturePicture':
           btnItem.title = "截图";
           btnItem.id = btnId;
           btnItem.domString = "<svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M10.8,7.7c-2,0-3.7,1.6-3.7,3.7S8.7,15,10.8,15c2,0,3.7-1.6,3.7-3.7S12.8,7.7,10.8,7.7z M10.8,8.7c1.5,0,2.7,1.2,2.7,2.7S12.2,14,10.8,14c-1.5,0-2.7-1.2-2.7-2.7S9.3,8.7,10.8,8.7z" />' + '<path d="M8.6,3.7l-0.1,0C8,3.7,7.7,4,7.5,4.3l-1,1.7l-1.3,0C4,6.1,3.1,7,3.1,8.2v7.1 c0,1.2,0.9,2.1,2.1,2.1h11.1c1.2,0,2.1-0.9,2.1-2.1V8.2l0-0.1c-0.1-1.1-1-1.9-2.1-1.9l-1.3,0l-1.1-1.8c-0.2-0.4-0.7-0.6-1.1-0.6H8.6 z M8.6,4.7h4.2c0.1,0,0.2,0.1,0.3,0.1l1.2,2c0.1,0.2,0.3,0.2,0.4,0.2h1.6c0.6,0,1.1,0.5,1.1,1.1v7.1c0,0.6-0.5,1.1-1.1,1.1H5.1 c-0.6,0-1.1-0.5-1.1-1.1V8.2c0-0.6,0.5-1.1,1.1-1.1h1.6c0.2,0,0.3-0.1,0.4-0.2l1.2-2C8.4,4.7,8.5,4.7,8.6,4.7z" />' + '</svg>';
-
           btnItem.onclick = function () {
             var play = _this9.decoderState.state.play;
-
             if (play) {
               _this9.jSPlugin.capturePicture("".concat(new Date().getTime()));
             } else {
               console.log("视频未播放，无法截图");
             }
           };
-
           return btnItem;
-
         case 'talk':
           btnItem.title = "对讲";
           btnItem.id = btnId;
           btnItem.domString = '<div></div>' + "<svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M10.1,2.7C8.5,2.7,7.2,4,7.2,5.6v5.2c0,1.6,1.3,2.9,2.9,2.9l0.2,0c1.5-0.1,2.7-1.4,2.7-2.9V5.6	C13,4,11.7,2.7,10.1,2.7z M10.1,3.7c1.1,0,1.9,0.9,1.9,1.9v5.2c0,1-0.8,1.8-1.8,1.9l-0.1,0c-1,0-1.9-0.9-1.9-1.9V5.6 C8.2,4.5,9,3.7,10.1,3.7z" />' + '<path d="M15.1,8.5c0.2,0,0.4,0.2,0.5,0.4l0,0.1v1.7c0,3-2.5,5.5-5.5,5.5c-3,0-5.4-2.3-5.5-5.3l0-0.2V9 c0-0.3,0.2-0.5,0.5-0.5c0.2,0,0.4,0.2,0.5,0.4l0,0.1v1.7c0,2.5,2,4.5,4.5,4.5c2.4,0,4.4-1.9,4.5-4.3l0-0.2V9 C14.6,8.7,14.8,8.5,15.1,8.5z" />' + '<path d="M13.5,17.7c0.3,0,0.5,0.2,0.5,0.5c0,0.2-0.2,0.4-0.4,0.5l-0.1,0h-7c-0.3,0-0.5-0.2-0.5-0.5 c0-0.2,0.2-0.4,0.4-0.5l0.1,0H13.5z" />' + '<path d="M10.1,15.2c0.2,0,0.4,0.2,0.5,0.4l0,0.1v2.5c0,0.3-0.2,0.5-0.5,0.5c-0.2,0-0.4-0.2-0.5-0.4l0-0.1 v-2.5C9.6,15.4,9.8,15.2,10.1,15.2z" />' + '</svg>';
-
           btnItem.onclick = function () {
             var _this9$decoderState$s4 = _this9.decoderState.state,
-                talk = _this9$decoderState$s4.talk,
-                sound = _this9$decoderState$s4.sound;
-
+              talk = _this9$decoderState$s4.talk,
+              sound = _this9$decoderState$s4.sound;
             if (talk) {
               console.log('结束对讲');
-
               _this9.setDecoderState({
                 talk: false
               });
-
               _this9.jSPlugin.Talk.stopTalk();
-
               var isReOpenSound = lodash.findIndex(_this9.themeData.footer.btnList, function (v) {
                 return v.iconId === 'sound' && v.isrender === 1 && v.defaultActive === 1;
               }) > -1;
-
               if (_this9.themeData && isReOpenSound) {
                 _this9.jSPlugin.openSound();
-
                 _this9.setDecoderState({
                   sound: true
                 });
               }
             } else {
               console.log('开始对讲');
-
               _this9.setDecoderState({
                 talk: true
               });
-
               if (sound) {
                 _this9.jSPlugin.closeSound();
-
                 _this9.setDecoderState({
                   sound: false
                 });
               }
-
               _this9.jSPlugin.Talk.startTalk();
             }
           };
-
           return btnItem;
-
         case 'zoom':
           btnItem.title = "电子放大";
           btnItem.id = btnId;
           btnItem.domString = '<div></div>' + "<svg class=\"theme-icon-item-icon\"  fill=\"".concat(btnItem.color, "\" version=\"1.1\" id=\"\u56FE\u5C42_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n          width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"5 -6 5 32\" style=\"enable-background:new 0 0 20 20.1;\" xml:space=\"preserve\">\n              <path class=\"st1\" d=\"M8.8,2.6c3.5,0,6.2,2.8,6.2,6.2s-2.8,6.2-6.2,6.2s-6.2-2.8-6.2-6.2S5.3,2.6,8.8,2.6z M8.8,3.9\n                c-2.8,0-5,2.2-5,5s2.2,5,5,5s5-2.2,5-5S11.5,3.9,8.8,3.9z M12.7,12.7l3.9,3.9\"/>\n              <path class=\"st2\" d=\"M11.2,9.5h-5c-0.3,0-0.6-0.3-0.6-0.6s0.3-0.6,0.6-0.6h5c0.3,0,0.6,0.3,0.6,0.6S11.6,9.5,11.2,9.5z\"/>\n              <path class=\"st2\" d=\"M8.7,12c-0.3,0-0.6-0.3-0.6-0.6v-5c0-0.3,0.3-0.6,0.6-0.6s0.6,0.3,0.6,0.6v5C9.3,11.8,9.1,12,8.7,12z\"/>\n              <path class=\"st2\" d=\"M16.9,17.6c-0.1,0-0.3-0.1-0.4-0.2l-3.9-3.9c-0.2-0.2-0.2-0.6,0-0.8s0.6-0.2,0.8,0l3.9,3.9\n                c0.2,0.2,0.2,0.6,0,0.8C17.2,17.5,17,17.6,16.9,17.6z\"/>\n          </svg>");
-
           btnItem.onclick = function () {
             var _this9$decoderState$s5 = _this9.decoderState.state,
-                zoom = _this9$decoderState$s5.zoom,
-                play = _this9$decoderState$s5.play;
-
+              zoom = _this9$decoderState$s5.zoom,
+              play = _this9$decoderState$s5.play;
             if (!play) {
               return false;
             }
-
             if (zoom) {
               console.log('结束电子放大');
-
               _this9.setDecoderState({
                 zoom: false
               });
-
               _this9.jSPlugin.Zoom.stopZoom();
             } else {
               console.log('开始电子放大');
-
               _this9.jSPlugin.Zoom.startZoom();
-
               _this9.setDecoderState({
                 zoom: true
               });
             }
           };
-
           return btnItem;
-
         case 'pantile':
           btnItem.title = "云台控制";
           btnItem.id = btnId;
           btnItem.domString = "<svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M10.2,7.8c1.6,0,2.9,1.3,2.9,2.9s-1.3,2.9-2.9,2.9s-2.9-1.3-2.9-2.9S8.5,7.8,10.2,7.8z M10.2,8.8c-1.1,0-1.9,0.9-1.9,1.9s0.9,1.9,1.9,1.9s1.9-0.9,1.9-1.9S11.2,8.8,10.2,8.8z" />' + '<path d="M8.8,3.5c0.7-0.6,1.8-0.6,2.5-0.1l0.1,0.1l1.4,1.1c0.2,0.2,0.3,0.5,0.1,0.7 c-0.2,0.2-0.4,0.2-0.6,0.1l-0.1,0l-1.4-1.1C10.5,3.9,10,3.9,9.6,4.2L9.4,4.3L8,5.4C7.8,5.5,7.5,5.5,7.3,5.3c-0.2-0.2-0.1-0.5,0-0.6 l0.1-0.1L8.8,3.5z" />' + '<path d="M2.5,12.3c-0.6-0.7-0.6-1.8-0.1-2.5l0.1-0.1l1.1-1.4c0.2-0.2,0.5-0.3,0.7-0.1 c0.2,0.2,0.2,0.4,0.1,0.6l0,0.1l-1.1,1.4C3,10.6,3,11.1,3.2,11.5l0.1,0.1L4.4,13c0.2,0.2,0.1,0.5-0.1,0.7c-0.2,0.2-0.5,0.1-0.6,0 l-0.1-0.1L2.5,12.3z" />' + '<path d="M17.7,12.3c0.6-0.7,0.6-1.8,0.1-2.5l-0.1-0.1l-1.1-1.4c-0.2-0.2-0.5-0.3-0.7-0.1 c-0.2,0.2-0.2,0.4-0.1,0.6l0,0.1l1.1,1.4c0.3,0.4,0.3,0.9,0.1,1.3l-0.1,0.1L15.8,13c-0.2,0.2-0.1,0.5,0.1,0.7c0.2,0.2,0.5,0.1,0.6,0 l0.1-0.1L17.7,12.3z" />' + '<path d="M8.8,18.2c0.7,0.6,1.8,0.6,2.5,0.1l0.1-0.1l1.4-1.1c0.2-0.2,0.3-0.5,0.1-0.7 c-0.2-0.2-0.4-0.2-0.6-0.1l-0.1,0l-1.4,1.1c-0.4,0.3-0.9,0.3-1.3,0.1l-0.1-0.1L8,16.3c-0.2-0.2-0.5-0.1-0.7,0.1 c-0.2,0.2-0.1,0.5,0,0.6l0.1,0.1L8.8,18.2z" />' + '</svg>';
-
           btnItem.onclick = function () {
             var _this9$decoderState$s6 = _this9.decoderState.state,
-                pantile = _this9$decoderState$s6.pantile,
-                expend = _this9$decoderState$s6.expend;
-
+              pantile = _this9$decoderState$s6.pantile,
+              expend = _this9$decoderState$s6.expend;
             if (!pantile) {
               console.log('显示云台');
-
               if (_this9.isMobile && !expend) {
-                console.log("移动端，非全屏状态不展示云台"); // 移动端，非全屏状态不展示云台
-
+                console.log("移动端，非全屏状态不展示云台");
+                // 移动端，非全屏状态不展示云台
                 return false;
               }
-
               _this9.Ptz.show();
-
               _this9.setDecoderState({
                 pantile: true
               });
             } else {
               console.log('隐藏云台');
-
               _this9.Ptz.hide();
-
               _this9.setDecoderState({
                 pantile: false
               });
             }
           };
-
           return btnItem;
-
         case 'expend':
           btnItem.title = "全局全屏";
           btnItem.id = btnId;
           btnItem.domString = "<span><svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M3.4,7.6c-0.3,0-0.5-0.2-0.5-0.5V5.3c0-1.2,1-2.3,2.2-2.3h1.8c0.3,0,0.5,0.2,0.5,0.5S7.2,4.1,6.9,4.1H5.2 c-0.7,0-1.2,0.6-1.2,1.3v1.8C3.9,7.4,3.7,7.6,3.4,7.6z" />' + '<path d="M6.9,18.1H5.2c-1.2,0-2.2-1-2.2-2.2v-1.8c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v1.8c0,0.7,0.6,1.2,1.2,1.2 h1.8c0.3,0,0.5,0.2,0.5,0.5S7.2,18.1,6.9,18.1z" />' + '<path d="M15.7,18.1h-1.8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h1.8c0.7,0,1.2-0.6,1.2-1.2v-1.8 c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v1.8C17.9,17.1,16.9,18.1,15.7,18.1z" />' + '<path d="M17.4,7.6c-0.3,0-0.5-0.2-0.5-0.5V5.3c0-0.7-0.6-1.3-1.2-1.3h-1.8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h1.8 c1.2,0,2.2,1,2.2,2.3v1.8C17.9,7.4,17.7,7.6,17.4,7.6z" />' + '</svg>' + "<svg class=\"theme-icon-item-icon\" style=\"display:none\" width=\"".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" fill=\"").concat(btnItem.color, "\" viewBox=\"-6 -6 32 32\">\n            <path class=\"st1\" d=\"M5.7,8.1H3.9c-0.3,0-0.6-0.2-0.6-0.6S3.6,7,3.9,7h1.9c0.7,0,1.3-0.6,1.3-1.3V3.8c0-0.3,0.2-0.6,0.6-0.6\n              s0.6,0.2,0.6,0.6v1.9C8.2,7,7.1,8.1,5.7,8.1z\"/>\n            <path class=\"st1\" d=\"M7.6,17.7c-0.3,0-0.6-0.2-0.6-0.6v-1.9c0-0.7-0.6-1.3-1.3-1.3H3.9c-0.3,0-0.6-0.2-0.6-0.6s0.2-0.6,0.6-0.6h1.9\n              c1.3,0,2.4,1.1,2.4,2.4v1.9C8.2,17.5,7.9,17.7,7.6,17.7z\"/>\n            <path class=\"st1\" d=\"M13.4,17.7c-0.3,0-0.6-0.2-0.6-0.6v-1.9c0-1.3,1.1-2.4,2.4-2.4h1.9c0.3,0,0.6,0.2,0.6,0.6S17.5,14,17.2,14\n              h-1.9c-0.7,0-1.3,0.6-1.3,1.3v1.9C14,17.5,13.8,17.7,13.4,17.7z\"/>\n            <path class=\"st1\" d=\"M17.2,8.1h-1.9c-1.3,0-2.4-1.1-2.4-2.4V3.8c0-0.3,0.2-0.6,0.6-0.6S14,3.5,14,3.8v1.9C14,6.4,14.6,7,15.3,7h1.9\n              c0.3,0,0.6,0.2,0.6,0.6S17.5,8.1,17.2,8.1z\"/>\n          </svg>\n          </span>");
-
           btnItem.onclick = function () {
             var _this9$decoderState$s7 = _this9.decoderState.state,
-                webExpend = _this9$decoderState$s7.webExpend,
-                expend = _this9$decoderState$s7.expend,
-                play = _this9$decoderState$s7.play,
-                pantile = _this9$decoderState$s7.pantile;
-
+              webExpend = _this9$decoderState$s7.webExpend,
+              expend = _this9$decoderState$s7.expend,
+              play = _this9$decoderState$s7.play,
+              pantile = _this9$decoderState$s7.pantile;
             if (!play) {
               return false;
             }
-
             if (webExpend) {
               console.log("正在网站全屏");
               return false;
             }
-
             if (!expend) {
               console.log("执行全局全屏");
-
               if (_this9.isMobile) {
                 var heightIntercept = parseInt(getComputedStyle(document.getElementById("".concat(_this9.jSPlugin.id, "-wrap"))).height, 10) - parseInt(getComputedStyle(document.getElementById(_this9.jSPlugin.id)).height, 10);
                 requestMobileFullScreen(document.getElementById("".concat(_this9.jSPlugin.id, "-wrap")));
                 setTimeout(function () {
                   var width = document.documentElement.clientWidth;
-                  var height = document.documentElement.clientHeight; // 兼容微信浏览器footer被隐藏
+                  var height = document.documentElement.clientHeight;
+                  // 兼容微信浏览器footer被隐藏
                   // document.getElementById(`${this.jSPlugin.id}-ez-iframe-footer-container`).style.marginTop = "0px";
                   // document.getElementById(`${this.jSPlugin.id}-headControl`).style.position = "absolute";
-
                   document.getElementById("".concat(_this9.jSPlugin.id)).style["backface-visibility"] = "hidden";
-
                   _this9.jSPlugin.jSPlugin.JS_Resize(height, width - heightIntercept);
                 }, 100);
               } else {
@@ -30801,23 +28872,17 @@ var Theme = /*#__PURE__*/function () {
             } else {
               if (_this9.isMobile) {
                 var heightIntercept = parseInt(getComputedStyle(document.getElementById("".concat(_this9.jSPlugin.id, "-wrap"))).height, 10) - parseInt(getComputedStyle(document.getElementById(_this9.jSPlugin.id)).height, 10);
-
                 if (document.getElementById("".concat(_this9.jSPlugin.id, "-ez-iframe-footer-container"))) {
                   document.getElementById("".concat(_this9.jSPlugin.id, "-ez-iframe-footer-container")).style.marginTop = "-32px";
                 }
-
                 if (document.getElementById("".concat(_this9.jSPlugin.id, "-headControl"))) {
                   document.getElementById("".concat(_this9.jSPlugin.id, "-headControl")).style.position = "relative";
                 }
-
                 cancelMobileFullScreen(document.getElementById("".concat(_this9.jSPlugin.id, "-wrap")), _this9.jSPlugin.width, _this9.jSPlugin.height + heightIntercept);
-
-                _this9.jSPlugin.jSPlugin.JS_Resize(_this9.jSPlugin.width, _this9.jSPlugin.height); // 移动端取消全屏，如果开启了云台，取消云台
-
-
+                _this9.jSPlugin.jSPlugin.JS_Resize(_this9.jSPlugin.width, _this9.jSPlugin.height);
+                // 移动端取消全屏，如果开启了云台，取消云台
                 if (pantile) {
                   _this9.Ptz.hide();
-
                   _this9.setDecoderState({
                     pantile: false
                   });
@@ -30827,43 +28892,36 @@ var Theme = /*#__PURE__*/function () {
                 var cancelPromise = cancelFullScreenPromise();
                 cancelPromise.then(function (data) {
                   console.log("取消全屏", data, _this9.jSPlugin);
-
                   _this9.jSPlugin.jSPlugin.JS_Resize(_this9.jSPlugin.width, _this9.jSPlugin.height);
                 });
               }
             }
-
             _this9.setDecoderState({
               expend: !expend
             });
           };
-
           return btnItem;
-
         case 'webExpend':
           btnItem.title = "网页全屏";
           btnItem.id = btnId;
           btnItem.domString = "<span><svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M3.1,7.6c-0.3,0-0.5-0.2-0.5-0.5V5.3c0-1.2,1-2.3,2.2-2.3h1.8c0.3,0,0.5,0.2,0.5,0.5S6.8,4.1,6.6,4.1H4.8 c-0.7,0-1.2,0.6-1.2,1.3v1.8C3.6,7.4,3.3,7.6,3.1,7.6z" />' + '<path d="M15.3,18.1h-1.8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h1.8c0.7,0,1.2-0.6,1.2-1.2v-1.8 c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v1.8C17.6,17.1,16.6,18.1,15.3,18.1z" />' + '<circle class="st2" cx="10.2" cy="10.4" r="1.1"/>' + '</svg>' + "<svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" style=\"display:none;\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">\n          <path class=\"st1\" d=\"M5.4,8.1H3.5C3.2,8.1,3,7.9,3,7.6s0.2-0.5,0.5-0.5h1.9c0.8,0,1.4-0.6,1.4-1.4V3.8c0-0.3,0.2-0.5,0.5-0.5\n            s0.5,0.2,0.5,0.5v1.9C7.7,7,6.7,8.1,5.4,8.1z\"/>\n          <path class=\"st1\" d=\"M13.1,17.7c-0.3,0-0.5-0.2-0.5-0.5v-1.9c0-1.3,1.1-2.4,2.4-2.4h1.9c0.3,0,0.5,0.2,0.5,0.5s-0.2,0.5-0.5,0.5H15\n            c-0.8,0-1.4,0.6-1.4,1.4v1.9C13.6,17.4,13.4,17.7,13.1,17.7z\"/>\n            <circle class=\"st2\" cx=\"10.2\" cy=\"10.4\" r=\"1.1\"/>\n          ") + '</svg></span>';
-
           btnItem.onclick = function () {
             var _this9$decoderState$s8 = _this9.decoderState.state,
-                webExpend = _this9$decoderState$s8.webExpend,
-                expend = _this9$decoderState$s8.expend,
-                play = _this9$decoderState$s8.play;
-
+              webExpend = _this9$decoderState$s8.webExpend,
+              expend = _this9$decoderState$s8.expend,
+              play = _this9$decoderState$s8.play;
             if (!play) {
               return false;
             }
-
             if (expend) {
               console.log("正在全局全屏");
               return false;
             }
-
             if (!webExpend) {
               console.log("执行网页全屏");
               var footerDOMHeight = 0;
-              var headerDOMHeight = 0; // ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange'].forEach((item) => {
+              var headerDOMHeight = 0;
+              // ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange'].forEach((item) => {
               //   window.addEventListener(item, (data) => fullscreenchange("fullscreenchange", data));
               // });
               // //  监听全屏事件触发
@@ -30871,7 +28929,6 @@ var Theme = /*#__PURE__*/function () {
               //   let isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
               //   return isFullScreen;
               // }
-
               var width = window.screen.width;
               var height = window.screen.height;
               var promise = requestFullScreenPromise(document.getElementById("".concat(_this9.jSPlugin.id, "-wrap")));
@@ -30879,13 +28936,10 @@ var Theme = /*#__PURE__*/function () {
                 if (document.getElementById("".concat(_this9.jSPlugin.id, "-canvas-container"))) {
                   footerDOMHeight = parseInt(window.getComputedStyle(document.getElementById("".concat(_this9.jSPlugin.id, "-canvas-container"))).height, 10);
                 }
-
                 if (document.getElementById("".concat(_this9.jSPlugin.id, "-headControl"))) {
                   headerDOMHeight = parseInt(window.getComputedStyle(document.getElementById("".concat(_this9.jSPlugin.id, "-headControl"))).height, 10);
                 }
-
                 _this9.jSPlugin.jSPlugin.JS_Resize(width, height - footerDOMHeight - headerDOMHeight);
-
                 if (_this9.jSPlugin.Theme.Rec) {
                   _this9.jSPlugin.Theme.Rec.recAutoSize();
                 }
@@ -30897,195 +28951,130 @@ var Theme = /*#__PURE__*/function () {
               var cancelPromise = cancelFullScreenPromise();
               cancelPromise.then(function (data) {
                 _this9.jSPlugin.jSPlugin.JS_Resize(_this9.jSPlugin.width, _this9.jSPlugin.height);
-
                 if (_this9.jSPlugin.Theme.Rec) {
                   _this9.jSPlugin.Theme.Rec.recAutoSize();
                 }
               });
             }
-
             _this9.setDecoderState({
               webExpend: !webExpend
             });
           };
-
           return btnItem;
-
         case 'hd':
           btnItem.title = "画面清晰度";
           btnItem.id = btnId;
           btnItem.domString = "<ul id=\"".concat(this.jSPlugin.id, "-hdSelect\" class=\"hd speed-select ").concat(this.isMobile ? "mobile" : "", "\" style=\"display:none;\">") // + `<li class="selectOption" style="width: 60px;height: 32px;text-align: center;line-height: 32px;list-style: none;cursor: pointer;font-size: 13px;color: rgba(0, 0, 0, .85);" name="option" id="${this.jSPlugin.id}-select-hd">高清</li>`
           // + `<li class="selectOption" style="width: 60px;height: 32px;text-align: center;line-height: 32px;list-style: none;cursor: pointer;font-size: 13px;color: rgba(0, 0, 0, .85);" name="option" id="${this.jSPlugin.id}-select-sd">标清</li>`
           + "<li class=\"selectOption default\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;\" name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-hd\">\u9AD8\u6E05</li>") + "<li class=\"selectOption default\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;\"  name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-sd\">\u6807\u6E05</li>") + "<li class=\"selectOption cancel\" style=\"".concat(this.isMobile ? "" : "display:none;", "\" name=\"option\" id=\"").concat(this.jSPlugin.id, "-select-speed\">\u53D6\u6D88</li>") + '</ul>' + "<span><svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -6 32 32\">") + '<path d="M17.4,16.5H3.1c-0.8,0-1.4-0.6-1.4-1.4V5.4c0-0.9,0.7-1.6,1.6-1.6h14.1c0.8,0,1.4,0.6,1.4,1.4v9.8 C18.8,15.9,18.2,16.5,17.4,16.5z M3.3,5C3.1,5,2.9,5.2,2.9,5.4v9.7c0,0.2,0.1,0.3,0.3,0.3h14.3c0.2,0,0.3-0.1,0.3-0.3V5.3 c0-0.2-0.1-0.3-0.3-0.3H3.3z" />' + '<path d="M13.3,13.6h-1.6c-0.4,0-0.7-0.3-0.7-0.7V7.4c0-0.4,0.3-0.7,0.7-0.7h1.6c1.2,0,2.2,1,2.2,2.2v2.4 C15.6,12.6,14.6,13.6,13.3,13.6z M12.2,12.5h1.1c0.6,0,1.1-0.5,1.1-1.1V9c0-0.6-0.5-1.1-1.1-1.1h-1.1V12.5z" />' + '<path d="M5.5,13.6c-0.3,0-0.6-0.2-0.6-0.6V7.3C5,7,5.2,6.8,5.5,6.8S6.1,7,6.1,7.3v5.7C6.1,13.4,5.8,13.6,5.5,13.6z" />' + '<path d="M9.2,13.6c-0.3,0-0.6-0.2-0.6-0.6V7.3c0-0.3,0.2-0.6,0.6-0.6S9.8,7,9.8,7.3v5.7C9.8,13.4,9.5,13.6,9.2,13.6z" />' + '<rect x="5.6" y="9.6" width="3.6" height="1.1" />' + '</svg>' + "<svg class=\"theme-icon-item-icon\" style=\"display:none\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-6 -8 40 44\">\n                <path d=\"M24.1,23.8h-20c-1.1,0-1.9-0.9-1.9-1.9V8.4c0-1.2,1-2.2,2.1-2.2h19.7c1.1,0,1.9,0.9,1.9,1.9v13.8\n                    C26,23,25.1,23.8,24.1,23.8z M4.3,7.7C4,7.7,3.7,8,3.7,8.4v13.5c0,0.2,0.2,0.4,0.4,0.4h20c0.2,0,0.4-0.2,0.4-0.4V8.2\n                    c0-0.2-0.2-0.4-0.4-0.4H4.3z\"/>\n                <path d=\"M18.4,19.8h-2.2c-0.5,0-0.9-0.4-0.9-0.9v-7.8c0-0.5,0.4-0.9,0.9-0.9h2.2c1.7,0,3.1,1.4,3.1,3.1v3.3\n                C21.5,18.4,20.1,19.8,18.4,19.8z M16.7,18.3h1.6c0.9,0,1.6-0.7,1.6-1.6v-3.3c0-0.9-0.7-1.6-1.6-1.6h-1.6V18.3z\"/>\n                <path d=\"M10.5,19.8c1.2,0,2.1-0.3,2.7-0.9c0.6-0.6,0.9-1.3,0.9-2.1c0-0.8-0.3-1.4-0.9-1.8c-0.4-0.2-1.1-0.5-2.2-0.8\n                    l0,0l-1-0.2c-0.4-0.1-0.8-0.2-1-0.4c-0.4-0.2-0.6-0.5-0.6-0.9c0-0.4,0.1-0.6,0.4-0.9s0.7-0.3,1.3-0.3c0.8,0,1.4,0.2,1.8,0.6\n                    c0.2,0.3,0.3,0.6,0.4,0.9l0,0h1.4c0-0.6-0.2-1.1-0.5-1.6c-0.6-0.8-1.6-1.2-2.9-1.2c-1,0-1.8,0.3-2.4,0.8c-0.6,0.5-0.9,1.2-0.9,2\n                    c0,0.7,0.3,1.3,1,1.7c0.4,0.2,0.9,0.4,1.7,0.6l0,0l1.2,0.3c0.6,0.2,1.1,0.3,1.3,0.4c0.3,0.2,0.5,0.5,0.5,0.9c0,0.5-0.2,0.9-0.6,1.1\n                    s-0.9,0.4-1.5,0.4c-0.9,0-1.6-0.2-2-0.7c-0.2-0.3-0.3-0.6-0.4-1.1l0,0H6.8c0,0.9,0.3,1.6,0.9,2.2C8.2,19.5,9.2,19.8,10.5,19.8z\"/>\n                <defs>\n                  <filter id=\"Adobe_OpacityMaskFilter\" filterUnits=\"userSpaceOnUse\" x=\"15.2\" y=\"10.3\" width=\"6.2\" height=\"9.5\">\n                    <feColorMatrix  type=\"matrix\" values=\"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0\"/>\n                  </filter>\n                </defs>\n                <mask maskUnits=\"userSpaceOnUse\" x=\"15.2\" y=\"10.3\" width=\"6.2\" height=\"9.5\" id=\"mask-2_2_\">\n                  <g class=\"st2\">\n                    <path id=\"path-1_2_\" class=\"st3\" d=\"M24.1,23.1h-20c-0.6,0-1.2-0.5-1.2-1.2V8.2C2.9,7.5,3.5,7,4.1,7h19.7c0.8,0,1.4,0.6,1.4,1.4\n                      v13.5C25.2,22.6,24.7,23.1,24.1,23.1z\"/>\n                  </g>\n                </mask>\n                <defs>\n                  <filter id=\"Adobe_OpacityMaskFilter_1_\" filterUnits=\"userSpaceOnUse\" x=\"6.8\" y=\"10.3\" width=\"7.3\" height=\"9.5\">\n                    <feColorMatrix  type=\"matrix\" values=\"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0\"/>\n                  </filter>\n                </defs>\n                <mask maskUnits=\"userSpaceOnUse\" x=\"6.8\" y=\"10.3\" width=\"7.3\" height=\"9.5\" id=\"mask-2_3_\">\n                  <g class=\"st5\">\n                    <path id=\"path-1_3_\" class=\"st3\" d=\"M24.1,23.1h-20c-0.6,0-1.2-0.5-1.2-1.2V8.2C2.9,7.5,3.5,7,4.1,7h19.7c0.8,0,1.4,0.6,1.4,1.4\n                      v13.5C25.2,22.6,24.7,23.1,24.1,23.1z\"/>\n                  </g>\n                </mask>\n                </svg>\n                ") + "<span class='speed-select-mask' style=\"display:none\" id=\"".concat(this.jSPlugin.id, "-select-hd-mask\"></span>") + '</span>';
-
           btnItem.onclick = function (e) {
             var _this9$decoderState$s9 = _this9.decoderState.state,
-                hd = _this9$decoderState$s9.hd,
-                expend = _this9$decoderState$s9.expend; // 选择清晰度选项时才触发事件
-
+              hd = _this9$decoderState$s9.hd,
+              expend = _this9$decoderState$s9.expend;
+            // 选择清晰度选项时才触发事件
             if (hd && e.target.id === "".concat(_this9.jSPlugin.id, "-select-sd")) {
               //decoder.changePlayUrl({ hd: false });
               console.log("切换到标清");
-
               _this9.jSPlugin.changeVideoLevel(0);
-
               _this9.setDecoderState({
                 hd: false
               });
             } else if (!hd && e.target.id === "".concat(_this9.jSPlugin.id, "-select-hd")) {
               _this9.jSPlugin.changeVideoLevel(1);
-
               _this9.setDecoderState({
                 hd: true
               });
             }
-
             _this9.showHD = !_this9.showHD;
-
             if (document.getElementById("".concat(_this9.jSPlugin.id, "-hdSelect"))) {
               document.getElementById("".concat(_this9.jSPlugin.id, "-hdSelect")).style.display = document.getElementById("".concat(_this9.jSPlugin.id, "-hdSelect")).style.display === 'none' ? 'block' : 'none';
-
               if (_this9.isMobile) {
                 document.getElementById("".concat(_this9.jSPlugin.id, "-select-hd-mask")).style.display = document.getElementById("".concat(_this9.jSPlugin.id, "-select-hd-mask")).style.display === 'none' ? 'block' : 'none';
               }
             }
-
             if (_this9.isMobile && expend && _this9.showHD) {
               document.getElementById("".concat(_this9.jSPlugin.id, "-hdSelect")).className = "hd speed-select mobile expend";
             } else {
               document.getElementById("".concat(_this9.jSPlugin.id, "-hdSelect")).className = _this9.isMobile ? "hd speed-select mobile" : "speed-select";
             }
           };
-
           return btnItem;
-
         case 'speed':
           btnItem.title = "回放倍速";
           btnItem.id = btnId;
           btnItem.domString = "<ul id=\"".concat(this.jSPlugin.id, "-speedSelect\" class=\"speed speed-select ").concat(this.isMobile ? "mobile" : "", "\" style=\"display:none;\">") + "<li class=\"selectOption default\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;font-size: 13px;\" name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-speed4\">4\u500D</li>") + "<li class=\"selectOption default\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;font-size: 13px;\" name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-speed2\">2\u500D</li>") + "<li class=\"selectOption active\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;font-size: 13px;\" name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-speed1\">1\u500D\uFF08\u6B63\u5E38\u64AD\u653E\uFF09</li>") + "<li class=\"selectOption default\" style=\"height: 45px;text-align: center;line-height: 45px;list-style: none;cursor: pointer;font-size: 13px;\" name=\"option\" id=\"".concat(this.jSPlugin.id, "-select-speed05\">0.5\u500D</li>") + "<li class=\"selectOption cancel\" style=\"".concat(this.isMobile ? "" : "display:none;", "\" name=\"option\" id=\"").concat(this.jSPlugin.id, "-select-speed\">\u53D6\u6D88</li>") + '</ul>' + "<span>\n          <div style=\"font-size: 12px;\n          vertical-align: bottom;\n          display: inline-flex;\n          padding: 0px 7px;\n          width: 48px;\n          line-height: 24px;\n          justify-content: center;\n          border: 1px solid ".concat(btnItem.color, ";\n          text-align: center;border-radius: 12.5px;\"\n          id=\"").concat(this.jSPlugin.id, "-speed-text\"\n          >").concat(this.nextRate === 1 ? "倍速" : "".concat(this.nextRate, "\u500D").replace("3", "0.5"), "</div>\n                ") + "<span class='speed-select-mask' style=\"display:none\" id=\"".concat(this.jSPlugin.id, "-select-mask\"></span>") + '</span>';
-
-          var setLiActive = function setLiActive(index) {
-            console.log("setLiActive", index);
-            document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[0].className = document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[0].className.replace("active", "default");
-            document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[1].className = document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[1].className.replace("active", "default");
-            document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[2].className = document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[2].className.replace("active", "default");
-            document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[3].className = document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[3].className.replace("active", "default");
-            document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[index].className = document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).childNodes[index].className.replace("default", "active");
-          };
-
           if (!this.isMobile) {
             btnItem.onmouseenter = function (e) {
               console.log("鼠标移入", e);
-
               _this9.setDecoderState({
                 speed: true
               });
-
               if (document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect"))) {
                 document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).style.display = 'block';
               }
             };
-
             btnItem.onmouseleave = function (e) {
               console.log("鼠标移出", e);
-
               _this9.setDecoderState({
                 speed: false
               });
-
               if (document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect"))) {
                 document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).style.display = 'none';
               }
             };
           }
-
           btnItem.onclick = function (e) {
             var _this9$decoderState$s10 = _this9.decoderState.state,
-                speed = _this9$decoderState$s10.speed,
-                expend = _this9$decoderState$s10.expend;
-
+              speed = _this9$decoderState$s10.speed,
+              expend = _this9$decoderState$s10.expend;
             if (!speed && _this9.isMobile) {
               document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).className = expend ? "speed speed-select mobile expend" : "speed speed-select mobile";
             }
-
-            _this9.nextRate = 1; // 选择清晰度选项时才触发事件
+            _this9.nextRate = 1;
+            // 选择清晰度选项时才触发事件
             // if(this.isMobile) {
             //   console.log("请执行移动端倍速");
             //   return false;
             // }
-
             if (e.target.id) {
               switch (e.target.id) {
                 case "".concat(_this9.jSPlugin.id, "-select-speed1"):
                   // case `${this.jSPlugin.id}-select-speed`:
                   console.log("倍速1");
                   _this9.nextRate = 1;
-
                   _this9.jSPlugin.jSPlugin.JS_Speed(_this9.nextRate);
-
-                  if (document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text"))) {
-                    document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text")).innerHTML = "倍速";
-                    setLiActive(2);
-                  }
-
+                  _this9.changeRecSpeed(1);
                   _this9.setDecoderState({
                     speed: !speed
                   });
-
                   break;
-
                 case "".concat(_this9.jSPlugin.id, "-select-speed2"):
                   console.log("倍速2");
                   _this9.nextRate = 2;
-
                   _this9.jSPlugin.jSPlugin.JS_Speed(_this9.nextRate);
-
-                  if (document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text"))) {
-                    document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text")).innerHTML = "2倍"; // 设置2倍速选中效果
-
-                    setLiActive(1);
-                  }
-
+                  _this9.changeRecSpeed(2);
                   _this9.setDecoderState({
                     speed: !speed
                   });
-
                   break;
-
                 case "".concat(_this9.jSPlugin.id, "-select-speed4"):
                   console.log("倍速4");
                   _this9.nextRate = 4;
-
                   _this9.jSPlugin.jSPlugin.JS_Speed(_this9.nextRate);
-
-                  if (document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text"))) {
-                    document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text")).innerHTML = "4倍";
-                    setLiActive(0);
-                  }
-
+                  _this9.changeRecSpeed(4);
                   _this9.setDecoderState({
                     speed: !speed
                   });
-
                   break;
-
                 case "".concat(_this9.jSPlugin.id, "-select-speed05"):
                   console.log("倍速05");
                   _this9.nextRate = 3;
-
                   _this9.jSPlugin.jSPlugin.JS_Speed(_this9.nextRate);
-
-                  if (document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text"))) {
-                    document.getElementById("".concat(_this9.jSPlugin.id, "-speed-text")).innerHTML = "0.5倍";
-                    setLiActive(3);
-                  }
-
+                  _this9.changeRecSpeed(0.5);
                   _this9.setDecoderState({
                     speed: !speed
                   });
-
                   break;
-
                 default:
                   // if(document.getElementById(`${this.jSPlugin.id}-speed-text`)){
                   //   document.getElementById(`${this.jSPlugin.id}-speed-text`).innerHTML = this.nextRate +"倍";
@@ -31100,12 +29089,10 @@ var Theme = /*#__PURE__*/function () {
                       speed: !speed
                     });
                   }
-
                   break;
               }
-            } // pc 端点击不再隐藏，只通过移出隐藏
-
-
+            }
+            // pc 端点击不再隐藏，只通过移出隐藏
             if (!_this9.isMobile && e.target.id === "".concat(_this9.jSPlugin.id, "-speed-text")) {
               document.getElementById("".concat(_this9.jSPlugin.id, "-speedSelect")).style.display = 'block';
             } else {
@@ -31114,105 +29101,122 @@ var Theme = /*#__PURE__*/function () {
               }
             }
           };
-
           return btnItem;
-
         case 'deviceName':
           btnItem.title = "设备名称";
           btnItem.id = btnId;
           btnItem.domString = '<span>设备名称</span>';
-
           btnItem.onclick = function () {};
-
           return btnItem;
-
         case 'deviceID':
           btnItem.title = "设备序列号";
           btnItem.id = btnId;
           btnItem.domString = '<span>设备序列号</span>';
-
           btnItem.onclick = function () {};
-
           return btnItem;
-
         case 'cloudRec':
           btnItem.title = "云存储回放";
           btnItem.id = btnId;
           btnItem.domString = "\n        <span>\n          <svg class=\"theme-icon-item-icon\" fill=\"".concat(btnItem.color, "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"  width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"-10 0 40 15\">\n\t<path d=\"M9.5,13.1c-0.3,0-0.5-0.2-0.5-0.5V8.8c0-0.3,0.2-0.5,0.5-0.5S10,8.5,10,8.8v3.8C10,12.8,9.8,13.1,9.5,13.1z\"/>\n\t<path d=\"M7.6,10.6c-0.1,0-0.3-0.1-0.4-0.2C7,10.2,7,9.9,7.3,9.7l1.9-1.7c0.2-0.2,0.5-0.2,0.7,0l1.8,1.7\n\t\tc0.2,0.2,0.2,0.5,0,0.7c-0.2,0.2-0.5,0.2-0.7,0L9.5,9.1l-1.6,1.4C7.8,10.6,7.7,10.6,7.6,10.6z\"/>\n\t<path d=\"M13.2,15.7H5.6c-2.1-0.1-3.8-1.8-3.8-3.9c0-1.8,1.3-3.4,3-3.8c0.4-2.2,2.3-3.9,4.6-3.9c2.3,0,4.2,1.7,4.6,3.8\n\t\tc1.8,0.4,3.1,1.9,3.1,3.8C17.1,13.9,15.4,15.7,13.2,15.7z M5.6,14.7h7.6c1.6,0,2.9-1.3,2.9-2.9c0-1.5-1.1-2.7-2.6-2.9l-0.4,0l0-0.4\n\t\tc-0.2-1.9-1.7-3.3-3.6-3.3C7.5,5.1,6,6.6,5.8,8.5l0,0.4l-0.4,0c-1.4,0.2-2.5,1.4-2.5,2.9C2.8,13.3,4.1,14.6,5.6,14.7z\"/>\n          </svg>\n        </span>\n        ");
-
           btnItem.onclick = function () {
             console.log("点击云回放");
-
             _this9.setDecoderState({
               type: 'cloud.rec',
               cloudRec: true,
               rec: false
             });
-
             _this9.jSPlugin.changePlayUrl({
               type: 'cloud.rec'
             });
-
             console.log(_this9.jSPlugin);
             var initDate = getQueryString("begin", _this9.jSPlugin.url) || new Date().Format('yyyyMMdd');
-
             _this9.Rec.renderRec("".concat(initDate.slice(0, 4), "-").concat(initDate.slice(4, 6), "-").concat(initDate.slice(6, 8)));
           };
-
           return btnItem;
-
         case 'rec':
           btnItem.title = "本地存储";
           btnItem.id = btnId;
           btnItem.domString = "\n        <span>\n        <svg class=\"theme-icon-item-icon\" fill=".concat(btnItem.color, " version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"  width=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" height=\"").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "\" viewBox=\"0 0 40 15\">\n          <path d=\"M13,16.3H5.5c-1.1,0-2-0.9-2-2V3.8c0-1.1,0.9-2,2-2h5.4c0.5,0,1,0.2,1.4,0.6l2.1,2.1C14.8,4.8,15,5.3,15,5.9\n  v8.4C15,15.4,14.1,16.3,13,16.3z M5.5,2.8c-0.6,0-1,0.4-1,1v10.5c0,0.6,0.4,1,1,1H13c0.6,0,1-0.4,1-1V5.9c0-0.3-0.1-0.5-0.3-0.7\n  L11.6,3c-0.2-0.2-0.4-0.3-0.7-0.3H5.5z\"/>\n<path d=\"M6.3,7.3C6,7.3,5.8,7,5.8,6.8V4.5C5.8,4.2,6,4,6.3,4s0.5,0.2,0.5,0.5v2.2C6.8,7,6.6,7.3,6.3,7.3z\"/>\n<path d=\"M8.5,7.3C8.3,7.3,8,7,8,6.8V4.5C8,4.2,8.3,4,8.5,4S9,4.2,9,4.5v2.2C9,7,8.8,7.3,8.5,7.3z\"/>\n<path d=\"M10.8,7.3c-0.3,0-0.5-0.2-0.5-0.5V4.5c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v2.2C11.3,7,11.1,7.3,10.8,7.3z\"\n  />\n        </svg>\n      </span>\n        ");
-
           btnItem.onclick = function () {
             console.log("点击本地回放");
-
             _this9.setDecoderState({
               type: 'rec',
               cloudRec: false,
               rec: true
             });
-
             _this9.jSPlugin.changePlayUrl({
               type: 'rec'
             });
-
             console.log(_this9.jSPlugin);
             var initDate = getQueryString("begin", _this9.jSPlugin.url) || new Date().Format('yyyyMMdd');
-
             _this9.Rec.renderRec("".concat(initDate.slice(0, 4), "-").concat(initDate.slice(4, 6), "-").concat(initDate.slice(6, 8)));
           };
-
           return btnItem;
-
         default:
           return btnItem;
       }
     }
   }, {
+    key: "changeRecSpeed",
+    value: function changeRecSpeed(speed) {
+      var _this10 = this;
+      var setLiActive = function setLiActive(index) {
+        console.log("setLiActive", index);
+        if (!document.getElementById("".concat(_this10.jSPlugin.id, "-speedSelect"))) {
+          return false;
+        }
+        document.getElementById("".concat(_this10.jSPlugin.id, "-speedSelect")).childNodes[0].className = document.getElementById("".concat(_this10.jSPlugin.id, "-speedSelect")).childNodes[0].className.replace("active", "default");
+        document.getElementById("".concat(_this10.jSPlugin.id, "-speedSelect")).childNodes[1].className = document.getElementById("".concat(_this10.jSPlugin.id, "-speedSelect")).childNodes[1].className.replace("active", "default");
+        document.getElementById("".concat(_this10.jSPlugin.id, "-speedSelect")).childNodes[2].className = document.getElementById("".concat(_this10.jSPlugin.id, "-speedSelect")).childNodes[2].className.replace("active", "default");
+        document.getElementById("".concat(_this10.jSPlugin.id, "-speedSelect")).childNodes[3].className = document.getElementById("".concat(_this10.jSPlugin.id, "-speedSelect")).childNodes[3].className.replace("active", "default");
+        document.getElementById("".concat(_this10.jSPlugin.id, "-speedSelect")).childNodes[index].className = document.getElementById("".concat(_this10.jSPlugin.id, "-speedSelect")).childNodes[index].className.replace("default", "active");
+      };
+      var speedText = "1";
+      switch (speed) {
+        case 1:
+          setLiActive(2);
+          speedText = "倍速";
+          break;
+        case 2:
+          setLiActive(1);
+          speedText = "".concat(speed, "\u500D");
+          break;
+        case 4:
+          setLiActive(0);
+          speedText = "".concat(speed, "\u500D");
+          break;
+        case 0.5:
+          setLiActive(3);
+          speedText = "".concat(speed, "\u500D");
+          break;
+        default:
+          setLiActive(2);
+          speedText = "".concat(speed, "\u500D");
+          break;
+      }
+      if (document.getElementById("".concat(this.jSPlugin.id, "-speed-text"))) {
+        document.getElementById("".concat(this.jSPlugin.id, "-speed-text")).innerHTML = speedText;
+      }
+    }
+  }, {
     key: "initThemeData",
     value: function initThemeData() {
-      var _this10 = this;
-
+      var _this11 = this;
       var _this$themeData4 = this.themeData,
-          header = _this$themeData4.header,
-          footer = _this$themeData4.footer;
+        header = _this$themeData4.header,
+        footer = _this$themeData4.footer;
       var videoId = this.jSPlugin.id;
       this.header = defaultTheme.header;
       this.footer = defaultTheme.footer;
       this.isNeedRenderHeader = lodash.findIndex(header.btnList, function (v) {
         return v.isrender > 0;
       }) >= 0;
-
       if (this.isMobile) {
         // 移动端回放，需要判断设备序列号，设备名称
         this.isNeedRenderHeader = lodash.findIndex(header.btnList, function (v) {
           return v.isrender > 0 && v.iconId === "deviceID" || v.isrender > 0 && v.iconId === "deviceName";
         }) >= 0;
       }
-
       this.isNeedRenderFooter = lodash.findIndex(footer.btnList, function (v) {
         return v.isrender > 0;
       }) >= 0;
@@ -31224,7 +29228,6 @@ var Theme = /*#__PURE__*/function () {
           document.getElementById(item).parentElement.removeChild(document.getElementById(item));
         }
       });
-
       if (this.isNeedRenderHeader) {
         if (!document.getElementById("".concat(this.jSPlugin.id, "-headControl"))) {
           var headerContainer = document.createElement('div');
@@ -31243,11 +29246,12 @@ var Theme = /*#__PURE__*/function () {
             width: "100%"
           };
           headerContainer.style = styleToString(headerStyle);
-          document.getElementById("".concat(videoId, "-wrap")).insertBefore(headerContainer, document.getElementById(videoId)); // 头部预留x像素空间
-
+          document.getElementById("".concat(videoId, "-wrap")).insertBefore(headerContainer, document.getElementById(videoId));
+          // 头部预留x像素空间
           var _checkTimer2 = setInterval(function () {
-            if (window.EZUIKit[_this10.jSPlugin.id].state.EZUIKitPlayer.init) {
-              clearInterval(_checkTimer2); // 检测到渲染头部，执行一次reSize
+            if (window.EZUIKit[_this11.jSPlugin.id].state.EZUIKitPlayer.init) {
+              clearInterval(_checkTimer2);
+              // 检测到渲染头部，执行一次reSize
               // this.jSPlugin.reSize(this.jSPlugin.params.width,this.jSPlugin.params.height);
             }
           }, 50);
@@ -31257,8 +29261,8 @@ var Theme = /*#__PURE__*/function () {
       } else {
         if (document.getElementById("".concat(this.jSPlugin.id, "-headControl"))) {
           document.getElementById("".concat(this.jSPlugin.id, "-headControl")).parentElement.removeChild(document.getElementById("".concat(this.jSPlugin.id, "-headControl")));
-        } // this.jSPlugin.reSize(this.jSPlugin.params.width,this.jSPlugin.params.height);
-
+        }
+        // this.jSPlugin.reSize(this.jSPlugin.params.width,this.jSPlugin.params.height);
       }
 
       if (this.isNeedRenderFooter) {
@@ -31293,33 +29297,29 @@ var Theme = /*#__PURE__*/function () {
           document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")).parentElement.removeChild(document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")));
         }
       }
-
       if (this.isNeedRenderHeader && document.getElementById("".concat(this.jSPlugin.id, "-headControl"))) {
         document.getElementById("".concat(this.jSPlugin.id, "-headControl")).style.background = header.backgroundColor;
         document.getElementById("".concat(this.jSPlugin.id, "-headControl")).style.color = header.color;
         header.btnList.map(function (item, index) {
           if (item.isrender) {
-            _this10.renderHeader(item.iconId, item.part);
+            _this11.renderHeader(item.iconId, item.part);
           }
         });
       }
-
       if (this.isNeedRenderFooter && document.getElementById("".concat(this.jSPlugin.id, "-audioControls"))) {
         document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).style.background = footer.backgroundColor;
         document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).style.color = footer.color;
         footer.btnList.map(function (item, index) {
           if (item.isrender) {
-            _this10.renderFooter(item.iconId, item.part);
+            _this11.renderFooter(item.iconId, item.part);
           }
         });
       }
-
       if (this.isNeedRenderTimeLine) {
         if (this.isMobile) {
           if (document.getElementById("".concat(this.jSPlugin.id, "-headControl-right"))) {
             document.getElementById("".concat(this.jSPlugin.id, "-headControl-right")).style.display = "none";
           }
-
           this.Rec = new MobileRec(this.jSPlugin);
         } else {
           if (this.Rec) {
@@ -31328,106 +29328,93 @@ var Theme = /*#__PURE__*/function () {
             this.Rec.recInit();
           } else {
             this.Rec = new Rec(this.jSPlugin);
-          } // 回放时间轴预留48像素空间
+          }
 
-
+          // 回放时间轴预留48像素空间
           var _checkTimer3 = setInterval(function () {
-            if (window.EZUIKit[_this10.jSPlugin.id].state.EZUIKitPlayer.init) {
-              clearInterval(_checkTimer3); // 检测到渲染回放时间轴，执行一次reSize
+            if (window.EZUIKit[_this11.jSPlugin.id].state.EZUIKitPlayer.init) {
+              clearInterval(_checkTimer3);
+              // 检测到渲染回放时间轴，执行一次reSize
               // this.jSPlugin.reSize(this.jSPlugin.params.width, this.jSPlugin.params.height);
             }
           }, 50);
         }
       }
-
       var isNeedRenderPTZ = lodash.findIndex(this.themeData.footer.btnList, function (v) {
         return v.iconId === 'pantile' && v.isrender === 1;
       }) >= 0 && !this.jSPlugin.disabledPTZ;
-
       if (isNeedRenderPTZ) {
         if (this.isMobile) {
           this.MobilePtz = new MobilePtz(this.jSPlugin);
         }
-
         this.Ptz = new Ptz(this.jSPlugin);
-      } //  监听全屏事件触发
-
-
+      }
+      //  监听全屏事件触发
       var fullscreenchange = function fullscreenchange() {
-        var _this10$decoderState$ = _this10.decoderState.state,
-            expend = _this10$decoderState$.expend,
-            webExpend = _this10$decoderState$.webExpend;
+        var _this11$decoderState$ = _this11.decoderState.state,
+          expend = _this11$decoderState$.expend,
+          webExpend = _this11$decoderState$.webExpend;
         var isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
-
         if (!isFullScreen) {
-          _this10.jSPlugin.jSPlugin.JS_Resize(_this10.jSPlugin.width, _this10.jSPlugin.height);
-
+          _this11.jSPlugin.jSPlugin.JS_Resize(_this11.jSPlugin.width, _this11.jSPlugin.height);
           if (expend) {
-            _this10.setDecoderState({
+            _this11.setDecoderState({
               expend: false
             });
           }
-
           if (webExpend) {
-            _this10.setDecoderState({
+            _this11.setDecoderState({
               webExpend: false
             });
           }
         }
-
-        if (_this10.jSPlugin.Theme.Rec) {
-          _this10.jSPlugin.Theme.Rec.recAutoSize();
+        if (_this11.jSPlugin.Theme.Rec) {
+          _this11.jSPlugin.Theme.Rec.recAutoSize();
         }
       };
-
       ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange'].forEach(function (item) {
         window.addEventListener(item, function (data) {
           return fullscreenchange();
         });
-      }); // // 判断是否配置封面
-
+      });
+      // // 判断是否配置封面
       if (this.themeData.poster) {
         this.jSPlugin.poster = this.themeData.poster;
         var checkTimer = setInterval(function () {
-          if (window.EZUIKit[_this10.jSPlugin.id].state.EZUIKitPlayer.init) {
+          if (window.EZUIKit[_this11.jSPlugin.id].state.EZUIKitPlayer.init) {
             clearInterval(checkTimer);
-
-            _this10.jSPlugin.setPoster(_this10.themeData.poster);
+            _this11.jSPlugin.setPoster(_this11.themeData.poster);
           }
         }, 50);
       }
-
-      this.inited = true; //设备信息
-
+      this.inited = true;
+      //设备信息
       this.getDeviceInfo();
     }
   }, {
     key: "getDeviceInfo",
     value: function getDeviceInfo() {
-      var _this11 = this;
-
+      var _this12 = this;
       var deviceAPISuccess = function deviceAPISuccess(data) {
         if (data.code == 200 && data.data) {
           // 设备序列号
-          if (document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content"))) {
-            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content")).style.maxWidth = "100%";
-            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content")).style.overflow = "hidden";
-            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content")).style.textOverflow = "ellipsis";
-            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content")).style.whiteSpace = "nowrap";
-            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceName-content")).innerHTML = data.data.deviceName;
-          } // 设备序列号
-
-
-          if (document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content"))) {
-            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content")).style.maxWidth = "100%";
-            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content")).style.overflow = "hidden";
-            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content")).style.textOverflow = "ellipsis";
-            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content")).style.whiteSpace = "nowrap";
-            document.getElementById("".concat(_this11.jSPlugin.id, "-deviceID-content")).innerHTML = matchEzopenUrl(_this11.jSPlugin.url).deviceSerial;
+          if (document.getElementById("".concat(_this12.jSPlugin.id, "-deviceName-content"))) {
+            document.getElementById("".concat(_this12.jSPlugin.id, "-deviceName-content")).style.maxWidth = "100%";
+            document.getElementById("".concat(_this12.jSPlugin.id, "-deviceName-content")).style.overflow = "hidden";
+            document.getElementById("".concat(_this12.jSPlugin.id, "-deviceName-content")).style.textOverflow = "ellipsis";
+            document.getElementById("".concat(_this12.jSPlugin.id, "-deviceName-content")).style.whiteSpace = "nowrap";
+            document.getElementById("".concat(_this12.jSPlugin.id, "-deviceName-content")).innerHTML = data.data.deviceName;
+          }
+          // 设备序列号
+          if (document.getElementById("".concat(_this12.jSPlugin.id, "-deviceID-content"))) {
+            document.getElementById("".concat(_this12.jSPlugin.id, "-deviceID-content")).style.maxWidth = "100%";
+            document.getElementById("".concat(_this12.jSPlugin.id, "-deviceID-content")).style.overflow = "hidden";
+            document.getElementById("".concat(_this12.jSPlugin.id, "-deviceID-content")).style.textOverflow = "ellipsis";
+            document.getElementById("".concat(_this12.jSPlugin.id, "-deviceID-content")).style.whiteSpace = "nowrap";
+            document.getElementById("".concat(_this12.jSPlugin.id, "-deviceID-content")).innerHTML = matchEzopenUrl(_this12.jSPlugin.url).deviceSerial;
           }
         }
       };
-
       request(this.jSPlugin.env.domain + '/api/lapp/device/info', 'POST', {
         accessToken: this.jSPlugin.accessToken,
         deviceSerial: matchEzopenUrl(this.jSPlugin.url).deviceSerial
@@ -31438,15 +29425,12 @@ var Theme = /*#__PURE__*/function () {
     value: function editStart(callback) {
       var audioControlsDOM = document.getElementById("".concat(this.jSPlugin.id, "-audioControls"));
       var headerMessageDOM = document.getElementById("".concat(this.jSPlugin.id, "-headControl"));
-
       if (headerMessageDOM) {
         headerMessageDOM.setAttribute('class', 'header-controls themeEditing');
       }
-
       if (audioControlsDOM) {
         audioControlsDOM.setAttribute('class', 'footer-controls themeEditing');
       }
-
       this.setDecoderState({
         isEditing: true
       });
@@ -31456,15 +29440,12 @@ var Theme = /*#__PURE__*/function () {
     value: function editEnd(callback) {
       var audioControlsDOM = document.getElementById("".concat(this.jSPlugin.id, "-audioControls"));
       var headerMessageDOM = document.getElementById("".concat(this.jSPlugin.id, "-headControl"));
-
       if (headerMessageDOM) {
         headerMessageDOM.setAttribute('class', 'header-controls');
       }
-
       if (audioControlsDOM) {
         audioControlsDOM.setAttribute('class', 'footer-controls');
       }
-
       this.setDecoderState({
         isEditing: false
       });
@@ -31472,25 +29453,22 @@ var Theme = /*#__PURE__*/function () {
   }, {
     key: "webExpend",
     value: function webExpend() {
-      var _this12 = this;
-
+      var _this13 = this;
       var _this$decoderState$st = this.decoderState.state;
-          _this$decoderState$st.webExpend;
-          var expend = _this$decoderState$st.expend,
-          play = _this$decoderState$st.play;
-
+        _this$decoderState$st.webExpend;
+        var expend = _this$decoderState$st.expend,
+        play = _this$decoderState$st.play;
       if (!play) {
         return false;
       }
-
       if (expend) {
         console.log("正在全局全屏");
         return false;
       }
-
       console.log("执行网页全屏");
       var footerDOMHeight = 0;
-      var headerDOMHeight = 0; // ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange'].forEach((item) => {
+      var headerDOMHeight = 0;
+      // ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange'].forEach((item) => {
       //   window.addEventListener(item, (data) => fullscreenchange("fullscreenchange", data));
       // });
       // //  监听全屏事件触发
@@ -31498,22 +29476,17 @@ var Theme = /*#__PURE__*/function () {
       //   let isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
       //   return isFullScreen;
       // }
-
       var promise = requestFullScreenPromise(document.getElementById("".concat(this.jSPlugin.id, "-wrap")));
       promise.then(function (data) {
         console.log("全屏promise", window.screen.width);
-
-        if (document.getElementById("".concat(_this12.jSPlugin.id, "-canvas-container"))) {
-          footerDOMHeight = parseInt(window.getComputedStyle(document.getElementById("".concat(_this12.jSPlugin.id, "-canvas-container"))).height, 10);
+        if (document.getElementById("".concat(_this13.jSPlugin.id, "-canvas-container"))) {
+          footerDOMHeight = parseInt(window.getComputedStyle(document.getElementById("".concat(_this13.jSPlugin.id, "-canvas-container"))).height, 10);
         }
-
-        if (document.getElementById("".concat(_this12.jSPlugin.id, "-headControl"))) {
-          headerDOMHeight = parseInt(window.getComputedStyle(document.getElementById("".concat(_this12.jSPlugin.id, "-headControl"))).height, 10);
+        if (document.getElementById("".concat(_this13.jSPlugin.id, "-headControl"))) {
+          headerDOMHeight = parseInt(window.getComputedStyle(document.getElementById("".concat(_this13.jSPlugin.id, "-headControl"))).height, 10);
         }
-
         console.log("this.jSPlugin.JS_Resiz", footerDOMHeight, headerDOMHeight, document.body.clientWidth);
-
-        _this12.jSPlugin.jSPlugin.JS_Resize(window.screen.width, window.screen.height - footerDOMHeight - headerDOMHeight);
+        _this13.jSPlugin.jSPlugin.JS_Resize(window.screen.width, window.screen.height - footerDOMHeight - headerDOMHeight);
       })["catch"](function (err) {
         console.log(err);
       });
@@ -31521,49 +29494,42 @@ var Theme = /*#__PURE__*/function () {
   }, {
     key: "expend",
     value: function expend() {
-      var _this13 = this;
-
+      var _this14 = this;
       var _this$decoderState$st2 = this.decoderState.state,
-          webExpend = _this$decoderState$st2.webExpend;
-          _this$decoderState$st2.expend;
-          var play = _this$decoderState$st2.play;
-          _this$decoderState$st2.pantile;
-
+        webExpend = _this$decoderState$st2.webExpend;
+        _this$decoderState$st2.expend;
+        var play = _this$decoderState$st2.play;
+        _this$decoderState$st2.pantile;
       if (!play) {
         return false;
       }
-
       if (webExpend) {
         console.log("正在网站全屏");
         return false;
       }
-
       console.log("执行全局全屏");
-
       if (this.isMobile) {
         var heightIntercept = parseInt(getComputedStyle(document.getElementById("".concat(this.jSPlugin.id, "-wrap"))).height, 10) - parseInt(getComputedStyle(document.getElementById(this.jSPlugin.id)).height, 10);
         requestMobileFullScreen(document.getElementById("".concat(this.jSPlugin.id, "-wrap")));
         setTimeout(function () {
           var width = document.documentElement.clientWidth;
-          var height = document.documentElement.clientHeight; // 兼容微信浏览器footer被隐藏
+          var height = document.documentElement.clientHeight;
+          // 兼容微信浏览器footer被隐藏
           // document.getElementById(`${this.jSPlugin.id}-ez-iframe-footer-container`).style.marginTop = "0px";
           // document.getElementById(`${this.jSPlugin.id}-headControl`).style.position = "absolute";
-
-          document.getElementById("".concat(_this13.jSPlugin.id)).style["backface-visibility"] = "hidden";
-
-          _this13.jSPlugin.jSPlugin.JS_Resize(height, width - heightIntercept);
+          document.getElementById("".concat(_this14.jSPlugin.id)).style["backface-visibility"] = "hidden";
+          _this14.jSPlugin.jSPlugin.JS_Resize(height, width - heightIntercept);
         }, 100);
       } else {
         var promise = requestFullScreenPromise(document.getElementById("".concat(this.jSPlugin.id)));
         promise.then(function (data) {
-          _this13.jSPlugin.jSPlugin.JS_Resize(window.screen.width, window.screen.height);
+          _this14.jSPlugin.jSPlugin.JS_Resize(window.screen.width, window.screen.height);
         })["catch"](function (err) {
           console.log(err);
         });
       }
     }
   }]);
-
   return Theme;
 }();
 
@@ -31583,35 +29549,28 @@ Date.prototype.Format = function (fmt) {
     "q+": Math.floor((this.getMonth() + 3) / 3),
     //季度
     "S": this.getMilliseconds() //毫秒
-
   };
-  if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
 
+  if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
   for (var k in o) {
     if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
   }
-
   return fmt;
 };
-
 var Monitor = /*#__PURE__*/function () {
   function Monitor(params, jsPlugin) {
     _classCallCheck$1(this, Monitor);
-
     this.params = params;
     this.state = {};
     this.jsPlugin = jsPlugin;
     this.url = "https://log.ys7.com/statistics.do?";
-
     if (params.env) {
       switch (params.env) {
         case 'test12':
           this.url = "https://test12dclog.ys7.com/statistics.do?";
           break;
-
         case 'online':
           break;
-
         default:
           this.url = params.env;
           break;
@@ -31619,14 +29578,11 @@ var Monitor = /*#__PURE__*/function () {
     }
   }
   /** 生成uuid */
-
-
   _createClass$1(Monitor, [{
     key: "uuid",
     value: function uuid() {
       var s = [];
       var hexDigits = "0123456789abcdef";
-
       for (var i = 0; i < 36; i++) {
         s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
       }
@@ -31650,10 +29606,8 @@ var Monitor = /*#__PURE__*/function () {
         st: new Date().getTime(),
         h: window.location.pathname
       }); // usr_name 更改为un，兼容旧
-
       Object.keys(obj).forEach(function (item, index) {
         var value = obj[item];
-
         if (typeof obj[item] === 'string') {
           value = obj[item].replace('%', '%25'); // decodeURIComponent 无法解析%
         }
@@ -31661,7 +29615,6 @@ var Monitor = /*#__PURE__*/function () {
         if (typeof obj[item] === 'undefined') {
           return;
         }
-
         imgUrl += "".concat(index === 0 ? '' : '&').concat(item, "=").concat(encodeURIComponent(value));
       });
       var img = new Image();
@@ -31670,8 +29623,8 @@ var Monitor = /*#__PURE__*/function () {
   }, {
     key: "localInfoLog",
     value: function localInfoLog(dclogObj) {
-      var imgUrl = this.url; // var obj = Object.assign({}, { systemName: "open_netstream_localinfo" }, dclogObj, {un:dclogObj.url}, { st: new Date().getTime(), h: window.location.pathname }); // usr_name 更改为un，兼容旧
-
+      var imgUrl = this.url;
+      // var obj = Object.assign({}, { systemName: "open_netstream_localinfo" }, dclogObj, {un:dclogObj.url}, { st: new Date().getTime(), h: window.location.pathname }); // usr_name 更改为un，兼容旧
       var domain = window.location.protocol + '//' + window.location.host;
       var obj = {
         systemName: "open_netstream_localinfo",
@@ -31689,7 +29642,6 @@ var Monitor = /*#__PURE__*/function () {
       obj = Object.assign(obj, dclogObj);
       Object.keys(obj).forEach(function (item, index) {
         var value = obj[item];
-
         if (typeof obj[item] === 'string') {
           value = obj[item].replace('%', '%25'); // decodeURIComponent 无法解析%
         }
@@ -31697,7 +29649,6 @@ var Monitor = /*#__PURE__*/function () {
         if (typeof obj[item] === 'undefined') {
           return;
         }
-
         imgUrl += "".concat(index === 0 ? '' : '&').concat(item, "=").concat(encodeURIComponent(value));
       });
       var img = new Image();
@@ -31717,15 +29668,15 @@ var Monitor = /*#__PURE__*/function () {
         Via: 2,
         // 2 服务端取流
         //ErrCd: 0,
-        OpId: this.uuid() //Cost: (new Date()).getTime() - _this.initTime,  // 毫秒数
+        OpId: this.uuid()
+        //Cost: (new Date()).getTime() - _this.initTime,  // 毫秒数
         //Serial: getQueryString('dev', item),
         //Channel: getQueryString('chn', item),
-
       };
+
       obj = Object.assign(obj, dclogObj);
       Object.keys(obj).forEach(function (item, index) {
         var value = obj[item];
-
         if (typeof obj[item] === 'string') {
           value = obj[item].replace('%', '%25'); // decodeURIComponent 无法解析%
         }
@@ -31733,14 +29684,12 @@ var Monitor = /*#__PURE__*/function () {
         if (typeof obj[item] === 'undefined') {
           return;
         }
-
         imgUrl += "".concat(index === 0 ? '' : '&').concat(item, "=").concat(encodeURIComponent(value));
       });
       var img = new Image();
       img.src = imgUrl;
     }
   }]);
-
   return Monitor;
 }();
 
@@ -31751,28 +29700,23 @@ var Monitor = /*#__PURE__*/function () {
       if (!w.document) {
         throw new Error("EZUIPlayer requires a window with a document");
       }
-
       return factory(w);
     };
   } else {
     factory(global);
   } // Pass this if window is not defined yet
-
 })(typeof window !== "undefined" ? window : void 0, function (window, noGlobal) {
   var _state;
-
   // 加载js
   function addJs(filepath, callback) {
     var headerScript = document.getElementsByTagName('head')[0].getElementsByTagName("script");
     var isReady = false;
-
     for (var i = 0; i < headerScript.length; i++) {
       if (headerScript[i].getAttribute("src") == filepath) {
         isReady = true;
         callback();
       }
     }
-
     if (!isReady) {
       var oJs = document.createElement("script");
       oJs.setAttribute("src", filepath);
@@ -31781,18 +29725,15 @@ var Monitor = /*#__PURE__*/function () {
     }
   } // 加载css
 
-
   function addCss(filepath, callback) {
     var headerLink = document.getElementsByTagName('head')[0].getElementsByTagName("link");
     var isReady = false;
-
     for (var i = 0; i < headerLink.length; i++) {
       if (headerLink[i].getAttribute("href") == filepath) {
         isReady = true;
         callback();
       }
     }
-
     if (!isReady) {
       var oJs = document.createElement('link');
       oJs.rel = 'stylesheet';
@@ -31803,32 +29744,25 @@ var Monitor = /*#__PURE__*/function () {
     }
   } // 通用请求方法
 
-
   function request(url, method, params, header, success, error) {
     var _url = url;
     var http_request = new XMLHttpRequest();
-
     http_request.onreadystatechange = function () {
       if (http_request.readyState == 4) {
         if (http_request.status == 200) {
           var _data = JSON.parse(http_request.responseText);
-
           success(_data);
         }
       }
     };
-
     http_request.open(method, _url, true); // http_request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
     var data = new FormData();
-
     for (var i in params) {
       data.append(i, params[i]);
     }
-
     http_request.send(data);
   }
-
 
   var EZUIKit = {
     EZUIKitPlayer: undefined,
@@ -31871,10 +29805,8 @@ var Monitor = /*#__PURE__*/function () {
 
   var domain = "https://open.ys7.com";
   var filePathDomain = domain;
-
   var EZUIKitPlayer = function EZUIKitPlayer(params) {
     var _this = this;
-
     this.opt = {
       id: params.id,
       apiDomain: domain + '/api/lapp/live/talk/url',
@@ -31901,68 +29833,55 @@ var Monitor = /*#__PURE__*/function () {
       videoLoading: false
     };
     this.params = params;
-
     if (params.id) {
       this.opt.id = params.id;
     }
-
     if (params.accessToken) {
       this.opt.accessToken = params.accessToken;
     }
-
     if (typeof params.audio !== 'undefined') {
       this.opt.audio = params.audio;
     }
-
     if (typeof params.decoderVersion !== 'undefined') {
       this.opt.decoderVersion = params.decoderVersion;
     }
-
     if (typeof params.env !== 'undefined') {
       if (typeof params.env.domain !== 'undefined') {
         domain = params.env.domain;
         this.opt.apiDomain = domain + '/api/lapp/live/talk/url';
       }
-
       if (typeof params.env.filePathDomain !== 'undefined') {
         filePathDomain = params.env.filePathDomain;
         this.opt.filePathDomain = params.env.filePathDomain;
       }
-    } // if(typeof params.domain !== 'undefined'){
+    }
+    // if(typeof params.domain !== 'undefined'){
     //   this.opt.apiDomain = params.domain + '/api/lapp/live/talk/url';
     // }
-
 
     if (params.url) {
       this.opt.url = params.url;
       this.opt.deviceSerial = params.url.split("/")[3];
       this.opt.channelNo = params.url.split("/")[4].split(".")[0];
     }
-
     if (typeof params.template !== 'undefined') {
       this.opt.template = params.template;
     }
-
     if (params.plugin) {
       this.opt.plugin = params.plugin;
     }
-
     if (typeof params.autoplay !== 'undefined') {
       this.opt.autoplay = params.autoplay ? 1 : 0;
     }
-
     if (typeof params.bSupporDoubleClickFull !== 'undefined') {
       this.opt.bSupporDoubleClickFull = params.bSupporDoubleClickFull;
     }
-
     if (typeof params.handleTalkSuccess !== 'undefined') {
       window.EZUIKit.handleTalkSuccess = params.handleTalkSuccess;
     }
-
     if (typeof params.handleTalkError !== 'undefined') {
       window.EZUIKit.handleTalkError = params.handleTalkError;
     }
-
     var id = this.opt.id;
     var domElement = document.getElementById(id); // 间隙
 
@@ -31974,51 +29893,38 @@ var Monitor = /*#__PURE__*/function () {
      */
 
     var iframe = document.createElement('iframe');
-
     function matchIframeUrl() {
       switch (_this.opt.template) {
         case 'simple':
           var iframeUrl = domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?", "&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id + "&decoderVersion=" + _this.opt.decoderVersion;
-
           var controlsValue = "";
-
           if (typeof params.controls !== 'undefined' && params.controls) {
             console.log("typeof", _typeof(params.controls));
             controlsValue = "play,voice,hd,fullScreen";
-
             if (params.controls.length > 0) {
               controlsValue = params.controls.join(",");
               iframeUrl += '&controls=' + controlsValue;
             }
           }
-
           if (params.websocketParams) {
             iframeUrl += '&websocketParams=' + JSON.stringify(params.websocketParams);
           }
-
           return iframeUrl;
-
         case 'standard':
           return domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?", "&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=1" + "&id=" + id + "&decoderVersion=" + _this.opt.decoderVersion;
-
         case 'security':
           return domain + "/ezopen/h5/iframe_se?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?", "&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id + "&decoderVersion=" + _this.opt.decoderVersion;
-
         case 'theme':
           iframeUrl = domain + "/jssdk/theme.html?url=".concat(params.url, "&accessToken=").concat(params.accessToken, "&id=").concat(id, "&isMobile=").concat(params.isMobile);
-
           if (typeof params.isMobile !== 'undefined') {
             iframeUrl += '&isMobile=' + params.isMobile;
           }
-
           if (typeof params.autoplay !== 'undefined') {
             iframeUrl += '&autoplay=' + params.autoplay;
           }
-
           if (typeof params.domain !== 'undefined') {
             if (params.domain == 'https://test12open.ys7.com') iframeUrl += '&env=' + 'test12';
           }
-
           if (typeof params.env !== 'undefined') {
             if (typeof params.env.domain !== 'undefined') {
               if (params.env.domain == 'https://test12open.ys7.com') {
@@ -32026,39 +29932,30 @@ var Monitor = /*#__PURE__*/function () {
               }
             }
           }
-
           if (typeof params.header !== 'undefined') {
             iframeUrl += '&header=' + params.header;
           }
-
           return iframeUrl;
-
         default:
           return domain + "/ezopen/h5/iframe?bSupporDoubleClickFull=0&url=" + _this.opt.url.replace("?", "&") + "&autoplay=" + _this.opt.autoplay + "&audio=" + _this.opt.audio + "&accessToken=" + params.accessToken + "&templete=0" + "&id=" + id + "&decoderVersion=" + _this.opt.decoderVersion;
       }
     }
-
     iframe.src = matchIframeUrl(); // 默认取容器宽高
 
     var iframeHeight = document.getElementById(id).offsetHeight;
     var iframeWidth = document.getElementById(id).offsetWidth;
-
     if (params.height) {
       iframeHeight = parseInt(params.height);
-
       if (/\%$/.test(params.height)) {
         iframeWidth = document.getElementById(id).offsetWidth * (parseInt(params.height) / 100);
       }
     }
-
     if (params.width) {
       iframeWidth = parseInt(params.width);
-
       if (/\%$/.test(params.width)) {
         iframeWidth = document.getElementById(id).offsetWidth * (parseInt(params.width) / 100);
       }
     }
-
     iframe.width = iframeWidth;
     iframe.height = iframeHeight;
     iframe.id = 'EZUIKitPlayer-' + id; // 部分iframe属性
@@ -32073,10 +29970,10 @@ var Monitor = /*#__PURE__*/function () {
       addJs(layerJs, function () {
         //   });
         // });
-
         /**
         * 渲染header
         */
+
         if (matchHeaderOpt().headerContainer) {
           // if (params.header && params.header instanceof Array) {
           var headerContainer = document.createElement('div');
@@ -32085,68 +29982,50 @@ var Monitor = /*#__PURE__*/function () {
           controsDOM.setAttribute('class', 'contros');
           headerContainer.appendChild(controsDOM);
           domElement.insertBefore(headerContainer, iframe);
-
           if (matchHeaderOpt().capturePictureModule) {
             // 截图
             var capturePictureDOM = document.createElement('span');
             capturePictureDOM.innerHTML = '<span title="截图">' + '<svg id="capturePicture" title="截图" t="1578882764585" class="icon" viewBox="0 0 1024 1024" version="1.1"' + '  xmlns="http://www.w3.org/2000/svg" p-id="5958" width="24" height="24">' + '  <path' + '    d="M887.296 315.904h-153.6c-51.2 0-68.096-102.4-119.296-102.4H392.704c-34.304 0-51.2 102.4-102.4 102.4h-153.6c-29.696 0-51.2 21.504-51.2 51.2v439.296c0 25.6 21.504 47.104 51.2 47.104h751.104c29.696 0 51.2-21.504 51.2-51.2v-435.2c-0.512-30.208-21.504-51.2-51.712-51.2zM512 768c-115.2 0-204.8-89.6-204.8-200.704s89.6-200.704 204.8-200.704 204.8 89.6 204.8 200.704-93.696 200.704-204.8 200.704z m247.296-354.304c-12.8 0-25.6-12.8-25.6-25.6s12.8-25.6 25.6-25.6 25.6 12.8 25.6 25.6c0 17.408-12.8 25.6-25.6 25.6zM256 264.704c0-8.704-8.704-16.896-16.896-16.896h-51.2c-8.704 0-16.896 8.704-16.896 16.896V281.6H256v-16.896z m256 148.992c-85.504 0-153.6 68.096-153.6 153.6s68.096 153.6 153.6 153.6 153.6-68.096 153.6-153.6-68.096-153.6-153.6-153.6z"' + '    fill="#ffffff" p-id="5959"></path>' + '</svg>' + '</span>';
-
             capturePictureDOM.onclick = function () {
               _this.capturePicture();
             };
-
             controsDOM.appendChild(capturePictureDOM);
           }
-
           console.log("matchHeaderOpt().saveModule", matchHeaderOpt().saveModule);
-
           if (matchHeaderOpt().saveModule) {
             var startSaveDOM = document.createElement('span');
             startSaveDOM.innerHTML = '<span title="开始录像">' + '  <svg id="startSave" t="1578882716693" class="icon" viewBox="0 0 1024 1024" version="1.1"' + '    xmlns="http://www.w3.org/2000/svg" p-id="3782" width="24" height="24">' + '    <path' + '      d="M915.2 729.6l-128-76.8c-25.6-12.8-44.8-32-44.8-51.2V435.2c0-25.6 19.2-38.4 44.8-51.2l128-76.8c25.6-12.8 44.8 0 44.8 19.2V704c0 32-19.2 38.4-44.8 25.6z m-332.8 89.6H96c-51.2 0-89.6-38.4-89.6-89.6V332.8c0-51.2 38.4-89.6 89.6-89.6h486.4c51.2 0 89.6 38.4 89.6 89.6v396.8c0 51.2-38.4 89.6-89.6 89.6zM192 364.8c-32 6.4-57.6 32-64 64-12.8 57.6 38.4 115.2 96 102.4 32-6.4 57.6-32 64-70.4 12.8-57.6-38.4-108.8-96-96z m0 0"' + '      p-id="3783" fill="#ffffff"></path>' + '  </svg>' + '</span>';
-
             startSaveDOM.onclick = function () {
               _this.startSave();
-
               document.getElementById('startSave').setAttribute('class', 'icon hide');
               document.getElementById('stopSave').setAttribute('class', 'icon');
             };
-
             controsDOM.appendChild(startSaveDOM);
             var stopSaveDOM = document.createElement('span');
             stopSaveDOM.innerHTML = '<span title="结束录像">' + ' <svg id="stopSave" t="1578882716693" class="icon hide" viewBox="0 0 1024 1024" version="1.1"' + '   xmlns="http://www.w3.org/2000/svg" p-id="3782" width="24" height="24">' + '   <path' + '     d="M915.2 729.6l-128-76.8c-25.6-12.8-44.8-32-44.8-51.2V435.2c0-25.6 19.2-38.4 44.8-51.2l128-76.8c25.6-12.8 44.8 0 44.8 19.2V704c0 32-19.2 38.4-44.8 25.6z m-332.8 89.6H96c-51.2 0-89.6-38.4-89.6-89.6V332.8c0-51.2 38.4-89.6 89.6-89.6h486.4c51.2 0 89.6 38.4 89.6 89.6v396.8c0 51.2-38.4 89.6-89.6 89.6zM192 364.8c-32 6.4-57.6 32-64 64-12.8 57.6 38.4 115.2 96 102.4 32-6.4 57.6-32 64-70.4 12.8-57.6-38.4-108.8-96-96z m0 0"' + '     p-id="3783" fill="red"></path>' + ' </svg>' + ' </span>';
-
             stopSaveDOM.onclick = function () {
               _this.stopSave();
-
               document.getElementById('stopSave').setAttribute('class', 'icon hide');
               document.getElementById('startSave').setAttribute('class', 'icon');
             };
-
             controsDOM.appendChild(stopSaveDOM);
           }
-
           if (matchHeaderOpt().zoomModule) {
             var enableZoomDOM = document.createElement('span');
             enableZoomDOM.innerHTML = '<span title="开启电子放大">' + '  <svg id="enableZoom" t="1578882639834" class="icon" viewBox="0 0 1000 1000" version="1.1"' + '    xmlns="http://www.w3.org/2000/svg" p-id="2227" width="24" height="24">' + '    <path' + '      d="M830.6119 441.1089c0-193.7756-157.0939-350.8641-350.8775-350.8641S128.8559 247.3333 128.8559 441.1089 285.9508 791.972 479.7344 791.972 830.6119 634.8845 830.6119 441.1089zM483.2821 710.4863c-146.7975 0-265.8187-118.9953-265.8187-265.8088S336.4847 178.8697 483.2821 178.8697s265.8197 118.9953 265.8197 265.8078S630.0796 710.4863 483.2821 710.4863zM770.6031 653.5739l-72.6417 75.9485 141.6917 160.1814 82.0737-90.0739L770.6031 653.5739zM527.5849 267.4727h-88.60655762279428v132.90489048425167H306.0690340253259v88.60292721534799h132.90933675248866v132.9038911617923h88.60655762279428V488.9794719180395h132.90933675248866v-88.60292721534799H527.5849284006089V267.4726535408993z"' + '      p-id="2228" fill="#ffffff"></path>' + '  </svg>' + '</span>';
-
             enableZoomDOM.onclick = function () {
               _this.enableZoom();
-
               document.getElementById('enableZoom').setAttribute('class', 'icon hide');
               document.getElementById('closeZoom').setAttribute('class', 'icon');
             };
-
             controsDOM.appendChild(enableZoomDOM);
             var closeZoomDOM = document.createElement('span');
             closeZoomDOM.innerHTML = '<span title="关闭电子放大">' + '  <svg id="closeZoom" t="1578882639834" class="icon hide" viewBox="0 0 1000 1000" version="1.1"' + '    xmlns="http://www.w3.org/2000/svg" p-id="2227" width="24" height="24">' + '    <path' + '      d="M830.6119 441.1089c0-193.7756-157.0939-350.8641-350.8775-350.8641S128.8559 247.3333 128.8559 441.1089 285.9508 791.972 479.7344 791.972 830.6119 634.8845 830.6119 441.1089zM483.2821 710.4863c-146.7975 0-265.8187-118.9953-265.8187-265.8088S336.4847 178.8697 483.2821 178.8697s265.8197 118.9953 265.8197 265.8078S630.0796 710.4863 483.2821 710.4863zM770.6031 653.5739l-72.6417 75.9485 141.6917 160.1814 82.0737-90.0739L770.6031 653.5739zM527.5849 267.4727h-88.60655762279428v132.90489048425167H306.0690340253259v88.60292721534799h132.90933675248866v132.9038911617923h88.60655762279428V488.9794719180395h132.90933675248866v-88.60292721534799H527.5849284006089V267.4726535408993z"' + '      p-id="2228" fill="red"></path>' + '  </svg>' + '</span>';
-
             closeZoomDOM.onclick = function () {
               _this.closeZoom();
-
               document.getElementById('closeZoom').setAttribute('class', 'icon hide');
               document.getElementById('enableZoom').setAttribute('class', 'icon');
             };
-
             controsDOM.appendChild(closeZoomDOM);
           }
         }
@@ -32155,7 +30034,6 @@ var Monitor = /*#__PURE__*/function () {
          */
 
         /** 根据配置匹配底部渲染 */
-
 
         function matchFooterOpt() {
           var result = {
@@ -32166,7 +30044,6 @@ var Monitor = /*#__PURE__*/function () {
             fullScreenModule: false
           };
           var template = _this.opt.template;
-
           switch (template) {
             case 'simple':
               if (params.footer && params.footer instanceof Array) {
@@ -32179,9 +30056,7 @@ var Monitor = /*#__PURE__*/function () {
                   fullScreenModule: footer.indexOf('fullScreen') !== -1
                 };
               }
-
               break;
-
             case 'standard':
               if (params.footer && params.footer instanceof Array) {
                 var footer = params.footer;
@@ -32193,12 +30068,9 @@ var Monitor = /*#__PURE__*/function () {
                   fullScreenModule: footer.indexOf('fullScreen') !== -1
                 };
               }
-
               break;
-
             case 'security':
               break;
-
             case 'voice':
               result = {
                 footerContainer: true,
@@ -32209,11 +30081,9 @@ var Monitor = /*#__PURE__*/function () {
               };
               break;
           }
-
           return result;
         }
         /** 根据配置匹配底部渲染 */
-
 
         function matchHeaderOpt() {
           var result = {
@@ -32223,7 +30093,6 @@ var Monitor = /*#__PURE__*/function () {
             zoomModule: false
           };
           var template = _this.opt.template;
-
           switch (template) {
             case 'simple':
               if (params.header && params.header instanceof Array) {
@@ -32235,15 +30104,11 @@ var Monitor = /*#__PURE__*/function () {
                   zoomModule: header.indexOf('zoom') !== -1
                 };
               }
-
               break;
-
             case 'standard':
               break;
-
             case 'security':
               break;
-
             case 'voice':
               result = {
                 headerContainer: true,
@@ -32253,10 +30118,8 @@ var Monitor = /*#__PURE__*/function () {
               };
               break;
           }
-
           return result;
         }
-
         if (matchFooterOpt().footerContainer || _this.opt.plugin.indexOf('talk') !== -1) {
           var recoderCSS = _this.opt.filePath + '/npm/css/recoder.css';
           var recoderJs = _this.opt.filePath + '/npm/js/recoder.js';
@@ -32270,18 +30133,14 @@ var Monitor = /*#__PURE__*/function () {
           if (_this.opt.plugin.indexOf('talk') !== -1 || matchFooterOpt().talkModule) {
             var apiSuccess = function apiSuccess(data) {
               console.log("data", data);
-
               if (data.code == 200) {
                 var apiResult = data.data;
-
                 if (apiResult) {
                   // 临时将https转换为websocket
                   var rtcTrunk = apiResult.rtcUrl;
-
                   if (rtcTrunk.indexOf("ws") === -1) {
                     rtcTrunk = rtcTrunk.replace("https", "wss").replace("rtcgw", "rtcgw-ws");
                   }
-
                   _this.opt.rtcUrl = rtcTrunk;
                   _this.opt.ttsUrl = "tts://" + apiResult.ttsUrl;
                   var talk = "talk://" + _this.opt.deviceSerial + ":0:" + _this.opt.channelNo + ":cas.ys7.com:6500";
@@ -32309,14 +30168,12 @@ var Monitor = /*#__PURE__*/function () {
                     });
                   } // 创建DOM
 
-
                   if (!document.getElementById("audioleft")) {
                     var audioleft = document.createElement('div');
                     audioleft.style.display = 'none';
                     audioleft.id = 'audioleft';
                     document.body.appendChild(audioleft);
                   }
-
                   if (!document.getElementById("audioright")) {
                     var audioright = document.createElement('div');
                     audioright.style.display = 'none';
@@ -32325,26 +30182,21 @@ var Monitor = /*#__PURE__*/function () {
                   }
                 }
               }
-
               EZUIKit.opt = _this.opt;
-
               if (window.EZUIKit) {
                 window.EZUIKit.opt = _this.opt;
               }
             };
-
             request(_this.opt.apiDomain, 'POST', {
               accessToken: _this.opt.accessToken,
               deviceSerial: _this.opt.deviceSerial,
               channelNo: _this.opt.channelNo
             }, '', apiSuccess);
           }
-
           if (matchFooterOpt().footerContainer) {
             /* 时间计数 */
             var countTime = function countTime(type, start) {
               clearInterval(EZUIKit.state.countTimer);
-
               if (type === 'add') {
                 var i = start;
                 EZUIKit.state.countTimer = setInterval(function () {
@@ -32369,7 +30221,6 @@ var Monitor = /*#__PURE__*/function () {
                 document.getElementById("time-area").innerHTML = '00:00';
               } //将秒数转换为时分秒格式
 
-
               function formatSeconds(value) {
                 var theTime = parseInt(value); // 秒
 
@@ -32380,21 +30231,17 @@ var Monitor = /*#__PURE__*/function () {
                 var secondV = '00';
                 var minV = '00';
                 var hourV = '00';
-
                 if (theTime > 59) {
                   middle = parseInt(theTime / 60);
                   theTime = parseInt(theTime % 60);
-
                   if (middle > 59) {
                     hour = parseInt(middle / 60);
                     middle = parseInt(middle % 60);
                   }
                 }
-
                 secondV = parseInt(theTime) > 9 ? parseInt(theTime) : '0' + parseInt(theTime);
                 minV = parseInt(middle) > 9 ? parseInt(middle) : '0' + parseInt(middle);
                 hourV = parseInt(hour) > 9 ? parseInt(hour) : '0' + parseInt(hour);
-
                 if (hour > 0) {
                   return hourV + ':' + minV + ':' + secondV;
                 } else if (middle > 0) {
@@ -32404,24 +30251,20 @@ var Monitor = /*#__PURE__*/function () {
                 }
               }
             };
-
             // 底部容器
             var footerContainer = document.createElement('div');
             footerContainer.setAttribute("class", 'audio-controls');
             domElement.appendChild(footerContainer);
-
             if (matchFooterOpt().hdModule || matchFooterOpt().fullScreenModule) {
               // 底部右侧元素
               var rightContros = document.createElement('div');
               rightContros.setAttribute('class', 'contros');
               footerContainer.appendChild(rightContros);
-
               if (matchFooterOpt().hdModule) {
                 // 高清-标清切换
                 var hdDom = document.createElement('span');
                 hdDom.setAttribute('id', 'video-hd');
                 hdDom.innerHTML = _this.opt.url.indexOf('.hd') === -1 ? '标清' : '高清';
-
                 hdDom.onclick = function () {
                   // 停止
                   if (_this.opt.videoLoading) {
@@ -32429,11 +30272,9 @@ var Monitor = /*#__PURE__*/function () {
                     return false;
                   } else {
                     var stopPromise = _this.stop();
-
                     _this.opt.videoLoading = true;
                     stopPromise.then(function (data) {
                       _this.opt.videoLoading = false;
-
                       if (_this.opt.url.indexOf('.hd') === -1) {
                         _this.opt.url = _this.opt.url.replace('.live', '.hd.live');
                         hdDom.innerHTML = _this.opt.url.indexOf('.hd') === -1 ? '标清' : '高清';
@@ -32441,18 +30282,16 @@ var Monitor = /*#__PURE__*/function () {
                         _this.opt.url = _this.opt.url.replace('.hd.live', '.live');
                         hdDom.innerHTML = _this.opt.url.indexOf('.hd') === -1 ? '标清' : '高清';
                       }
-
                       _this.play(_this.opt.url);
                     })["catch"](function (error) {
                       console.log("error", error);
                     });
-                  } //iframe.src = domain +"/ezopen/h5/iframe?url=" + _this.opt.url.replace('.hd.live', '.live') + "&autoplay=1&audio=" + _this.opt.audio + "&accessToken=" + _this.opt.accessToken + "&templete=" + 0;
-
+                  }
+                  //iframe.src = domain +"/ezopen/h5/iframe?url=" + _this.opt.url.replace('.hd.live', '.live') + "&autoplay=1&audio=" + _this.opt.audio + "&accessToken=" + _this.opt.accessToken + "&templete=" + 0;
                 };
 
                 rightContros.appendChild(hdDom);
               }
-
               if (matchFooterOpt().fullScreenModule) {
                 // 声音控制
                 var openSoundDOM = document.createElement('span');
@@ -32461,14 +30300,11 @@ var Monitor = /*#__PURE__*/function () {
                 openSoundDOM.setAttribute('title', '打开声音');
                 openSoundDOM.setAttribute('style', 'vertical-align: top;');
                 openSoundDOM.innerHTML = '<svg t="1590476263239" class="icon" viewBox="0 0 1178 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2273" width="16" height="16"><path d="M665.6 51.2 665.6 51.2c-10.24-30.72-40.96-51.2-71.68-51.2-5.12 0-15.36 0-20.48 5.12l0 0L358.4 153.6 51.2 209.92l0 0C20.48 220.16 0 250.88 0 281.6 0 286.72 0 291.84 0 307.2l0 0 0 409.6 0 0c0 15.36 0 20.48 0 25.6 0 30.72 20.48 61.44 51.2 71.68l0 0L358.4 870.4l97.28 71.68 107.52 76.8 0 0c5.12 5.12 15.36 5.12 25.6 5.12 40.96 0 76.8-35.84 76.8-76.8 0-10.24 0-10.24 0-25.6l0 0L665.6 51.2zM563.2 870.4l-153.6-102.4-307.2-51.2L102.4 307.2l307.2-51.2 153.6-102.4L563.2 870.4z" p-id="2274" fill="#FF0000"></path><path d="M1049.6 537.6l112.64-112.64c20.48-20.48 20.48-56.32 0-76.8-20.48-20.48-56.32-20.48-76.8 0L972.8 460.8l-112.64-112.64c0 0 0 0 0 0-20.48-20.48-56.32-20.48-76.8 0 0 0 0 0 0 0-20.48 20.48-20.48 56.32 0 76.8l112.64 112.64-112.64 112.64c-20.48 20.48-20.48 56.32 0 76.8 20.48 20.48 56.32 20.48 76.8 0L972.8 614.4l112.64 112.64c20.48 20.48 56.32 20.48 76.8 0s20.48-56.32 0-76.8L1049.6 537.6z" p-id="2275" fill="#FF0000"></path></svg>';
-
                 openSoundDOM.onclick = function () {
                   _this.openSound(0);
-
                   openSoundDOM.setAttribute('class', 'hide');
                   closeSoundDOM.setAttribute('class', '');
                 }; // 声音控制
-
 
                 var closeSoundDOM = document.createElement('span');
                 openSoundDOM.setAttribute('id', 'ezuikit-close-sound');
@@ -32476,95 +30312,70 @@ var Monitor = /*#__PURE__*/function () {
                 closeSoundDOM.setAttribute('title', '关闭声音');
                 closeSoundDOM.setAttribute('style', 'vertical-align: top;');
                 closeSoundDOM.innerHTML = '<svg t="1590414410633" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="20545" width="16" height="16"><path d="M840.533333 98.133333c-17.066667-17.066667-42.666667-17.066667-59.733333 0-17.066667 17.066667-17.066667 42.666667 0 59.733334C883.2 256 938.666667 392.533333 938.666667 533.333333c0 140.8-55.466667 277.333333-157.866667 375.466667-17.066667 17.066667-17.066667 42.666667 0 59.733333 8.533333 8.533333 21.333333 12.8 29.866667 12.8 8.533333 0 21.333333-4.266667 29.866666-12.8 115.2-110.933333 183.466667-268.8 183.466667-435.2 0-166.4-68.266667-324.266667-183.466667-435.2zM571.733333 12.8c-17.066667-8.533333-34.133333-4.266667-46.933333 8.533333L281.6 256H42.666667c-25.6 0-42.666667 17.066667-42.666667 42.666667v426.666666c0 25.6 17.066667 42.666667 42.666667 42.666667h238.933333l243.2 234.666667c8.533333 8.533333 17.066667 12.8 29.866667 12.8 4.266667 0 12.8 0 17.066666-4.266667 17.066667-8.533333 25.6-21.333333 25.6-38.4V51.2c0-17.066667-8.533333-34.133333-25.6-38.4zM512 870.4l-183.466667-179.2c-8.533333-4.266667-17.066667-8.533333-29.866666-8.533333H85.333333V341.333333h213.333334c12.8 0 21.333333-4.266667 29.866666-12.8L512 153.6v716.8z" p-id="20546" fill="#ffffff"></path><path d="M759.466667 349.866667c-12.8-21.333333-38.4-25.6-59.733334-8.533334-21.333333 12.8-25.6 38.4-8.533333 59.733334 21.333333 29.866667 34.133333 76.8 34.133333 123.733333 0 46.933333-12.8 93.866667-34.133333 123.733333-12.8 21.333333-8.533333 46.933333 8.533333 59.733334 8.533333 4.266667 17.066667 8.533333 25.6 8.533333 12.8 0 25.6-4.266667 34.133334-17.066667 34.133333-46.933333 51.2-106.666667 51.2-174.933333 0-68.266667-17.066667-128-51.2-174.933333z" p-id="20547" fill="#ffffff"></path></svg>';
-
                 closeSoundDOM.onclick = function () {
                   _this.closeSound(0);
-
                   openSoundDOM.setAttribute('class', '');
                   closeSoundDOM.setAttribute('class', 'hide');
                 };
-
                 rightContros.appendChild(openSoundDOM);
                 rightContros.appendChild(closeSoundDOM);
               } // 根据当前音频配置展示
-
 
               if (_this.opt.audio == 1) {
                 closeSoundDOM.setAttribute('class', '');
               } else {
                 openSoundDOM.setAttribute('class', '');
-
                 _this.closeSound(0);
               }
-
               if (matchFooterOpt().fullScreenModule) {
                 // 全屏控制
                 var fullScreenDOM = document.createElement('span');
                 fullScreenDOM.setAttribute('title', '全屏');
                 fullScreenDOM.setAttribute('style', 'vertical-align: top;');
                 fullScreenDOM.innerHTML = '<svg id="fullScreen" t="1578020167938" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5035" width="16" height="16"> <path d="M348.373333 625.706667l-128 128-64 64v-128a33.28 33.28 0 0 0-35.413333-35.413334A33.493333 33.493333 0 0 0 85.333333 689.706667v213.333333A33.706667 33.706667 0 0 0 120.96 938.666667h213.333333a35.626667 35.626667 0 0 0 0-71.04h-128l64-64 128-128a35.2 35.2 0 0 0-49.92-49.92zM206.293333 156.373333h128a33.28 33.28 0 0 0 35.413334-35.413333A33.493333 33.493333 0 0 0 334.293333 85.333333H113.706667c-7.04 0-14.08 7.04-21.333334 14.293334a26.026667 26.026667 0 0 0-7.04 21.333333v213.333333a33.493333 33.493333 0 0 0 35.626667 35.413334 33.28 33.28 0 0 0 35.413333-35.413334v-128l192 192a35.2 35.2 0 0 0 49.92-49.92zM903.04 85.333333h-213.333333a33.493333 33.493333 0 0 0-35.413334 35.626667 33.28 33.28 0 0 0 35.413334 35.413333h128l-64 64-128 128a35.2 35.2 0 0 0 49.92 49.92l128-128 64-64v128a35.626667 35.626667 0 0 0 71.04 0v-213.333333A33.706667 33.706667 0 0 0 903.04 85.333333zM903.04 654.293333a33.28 33.28 0 0 0-35.413333 35.413334v128l-64-64-128-128a35.2 35.2 0 0 0-49.92 49.92l128 128 64 64h-128a35.626667 35.626667 0 0 0 0 71.04h213.333333A33.706667 33.706667 0 0 0 938.666667 903.04v-213.333333a33.493333 33.493333 0 0 0-35.626667-35.413334z" p-id="5036" fill="#ffffff"></path></svg>';
-
                 fullScreenDOM.onclick = function () {
                   _this.fullScreen();
                 };
-
                 rightContros.appendChild(fullScreenDOM);
               }
             }
-
             if (matchFooterOpt().talkModule) {
               // 对讲
               var startTalkDOM = document.createElement('div');
               var stopTalkDOM = document.createElement('div');
               startTalkDOM.setAttribute("class", "ptp-talk off");
               startTalkDOM.innerHTML = '<span title="对讲">' + '<svg t="1581930496966" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"' + '  p-id="1641" width="16" height="16">' + '  <path' + '    d="M715.648 647.872c-30.208-22.336-61.568 39.36-100.992 77.44-39.36 38.08-34.112 31.488-123.392-17.088S311.488 540.224 280 491.648C248.448 443.072 265.472 424.704 265.472 424.704s78.72-62.976 97.152-81.344c18.368-18.368 13.12-30.208 13.12-30.208l-128.64-190.144c-23.616-5.184-64.32 5.12-128.576 57.6C54.208 233.088 30.592 353.856 151.296 575.68c120.768 221.824 347.84 330.752 485.568 374.08 137.856 43.328 228.416-61.696 249.408-103.68 21.056-41.984 13.12-85.312 13.12-85.312S745.856 670.208 715.648 647.872z"' + '    p-id="1642" fill="#ffffff"></path>' + '  <path' + '    d="M715.328 64C580.992 64 472.192 172.864 472.192 307.2s108.8 243.2 243.136 243.2 243.2-108.864 243.2-243.2S849.6 64 715.328 64zM715.328 461.056c-84.992 0-153.856-68.864-153.856-153.856s68.864-153.856 153.856-153.856 153.856 68.928 153.856 153.856S800.32 461.056 715.328 461.056z"' + '    p-id="1643" fill="#ffffff"></path>' + '  <path' + '    d="M777.472 277.376c-18.176 0-32.96-14.784-32.96-33.024 0-8.448 3.136-16.064 8.32-21.888-11.52-5.12-24.128-8-37.568-8-51.2 0-92.672 41.472-92.672 92.736s41.472 92.736 92.672 92.736S808.064 358.4 808.064 307.2c0-13.696-3.072-26.688-8.384-38.4C793.728 274.112 786.048 277.376 777.472 277.376zM715.328 340.928c-18.624 0-33.664-15.104-33.664-33.728 0-18.624 15.04-33.728 33.664-33.728 18.688 0 33.728 15.104 33.728 33.728C749.056 325.824 734.016 340.928 715.328 340.928z"' + '    p-id="1644" fill="#ffffff"></path>' + ' </svg>' + ' </span>' + ' <span>开启对讲</span>';
-
               startTalkDOM.onclick = function () {
                 console.log("EZUIKit.state.countTimer", EZUIKit.state.countTimer);
-
                 if (EZUIKit.state.countTimer) {
                   window.layer.msg("语音设备正忙，请稍后重试");
                   return false;
                 }
-
                 countTime('add', 0);
                 console.log("开始对讲，关闭声音");
-
                 _this.closeSound(0);
-
                 console.log(_this.opt);
-
                 _this.startTalk();
-
                 this.setAttribute("class", "ptp-talk off hide");
                 stopTalkDOM.setAttribute("class", "ptp-talk on");
               };
-
               stopTalkDOM.setAttribute("class", "ptp-talk on hide");
               stopTalkDOM.innerHTML = '<span title="对讲">' + ' <svg t="1581930496966" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"' + '    p-id="1641" width="16" height="16">' + '    <path' + '      d="M715.648 647.872c-30.208-22.336-61.568 39.36-100.992 77.44-39.36 38.08-34.112 31.488-123.392-17.088S311.488 540.224 280 491.648C248.448 443.072 265.472 424.704 265.472 424.704s78.72-62.976 97.152-81.344c18.368-18.368 13.12-30.208 13.12-30.208l-128.64-190.144c-23.616-5.184-64.32 5.12-128.576 57.6C54.208 233.088 30.592 353.856 151.296 575.68c120.768 221.824 347.84 330.752 485.568 374.08 137.856 43.328 228.416-61.696 249.408-103.68 21.056-41.984 13.12-85.312 13.12-85.312S745.856 670.208 715.648 647.872z"' + '      p-id="1642" fill="#ff0000"></path>' + '    <path' + '      d="M715.328 64C580.992 64 472.192 172.864 472.192 307.2s108.8 243.2 243.136 243.2 243.2-108.864 243.2-243.2S849.6 64 715.328 64zM715.328 461.056c-84.992 0-153.856-68.864-153.856-153.856s68.864-153.856 153.856-153.856 153.856 68.928 153.856 153.856S800.32 461.056 715.328 461.056z"' + '      p-id="1643" fill="#ff0000"></path>' + '    <path' + '      d="M777.472 277.376c-18.176 0-32.96-14.784-32.96-33.024 0-8.448 3.136-16.064 8.32-21.888-11.52-5.12-24.128-8-37.568-8-51.2 0-92.672 41.472-92.672 92.736s41.472 92.736 92.672 92.736S808.064 358.4 808.064 307.2c0-13.696-3.072-26.688-8.384-38.4C793.728 274.112 786.048 277.376 777.472 277.376zM715.328 340.928c-18.624 0-33.664-15.104-33.664-33.728 0-18.624 15.04-33.728 33.664-33.728 18.688 0 33.728 15.104 33.728 33.728C749.056 325.824 734.016 340.928 715.328 340.928z"' + '      p-id="1644" fill="#ff0000"></path>' + '  </svg>' + ' </span>' + '<span>关闭对讲</span>';
-
               stopTalkDOM.onclick = function () {
                 console.log(_this.opt);
-
                 _this.stopTalk();
-
                 countTime('destory', 0);
-
                 _this.openSound(0);
-
                 this.setAttribute("class", "ptp-talk on hide");
                 startTalkDOM.setAttribute("class", "ptp-talk off");
               };
-
               footerContainer.appendChild(startTalkDOM);
               footerContainer.appendChild(stopTalkDOM);
             }
-
             if (matchFooterOpt().broadcastModule) {
               var fetchVoiceList = function fetchVoiceList(page) {
                 function apiSuccess(data) {
                   console.log("data", data);
-
                   if (data.code == 200) {
                     randerVoliceList(data.data, 5);
                     EZUIKit.state.page = data.page.page; // 如果用户语音列表为空
@@ -32576,7 +30387,6 @@ var Monitor = /*#__PURE__*/function () {
                     }
                   }
                 }
-
                 request(domain + '/api/lapp/voice/query', 'POST', {
                   accessToken: _this.opt.accessToken,
                   pageStart: page,
@@ -32584,10 +30394,8 @@ var Monitor = /*#__PURE__*/function () {
                   "default": EZUIKit.state.fetchDefaultList ? 'true' : 'false'
                 }, '', apiSuccess);
               };
-
               var randerVoliceList = function randerVoliceList(data) {
                 console.log("renderVoliceList", data);
-
                 if (data && data.length > 0) {
                   for (var i = 0; i < data.length; i++) {
                     var voiceItem = document.createElement('li');
@@ -32602,7 +30410,6 @@ var Monitor = /*#__PURE__*/function () {
                       playListOfVoice(voiceUrl, time);
                     };
                   }
-
                   if (data.length === EZUIKit.state.pageSize) {
                     document.getElementById('voice-list-end').innerHTML = "向下滚动加载更多";
                   } else {
@@ -32610,13 +30417,11 @@ var Monitor = /*#__PURE__*/function () {
                   }
                 }
               };
-
               var playListOfVoice = function playListOfVoice(voiceUrl, time) {
                 console.log("播放语音", voiceUrl, time); // decoder && decoder.closeSound(0);
 
                 function apiSuccess(data) {
                   console.log("data.data", data.data);
-
                   if (data.code == 200) {
                     // $("#startBroadcast").show();
                     // $("#stopBroadcast").hide();
@@ -32626,9 +30431,7 @@ var Monitor = /*#__PURE__*/function () {
                   } else {
                     window.layer.msg(data.msg || '发送失败，请稍后再试');
                   } // padding = false;
-
                 }
-
                 request(domain + '/api/lapp/voice/send', 'POST', {
                   accessToken: _this.opt.accessToken,
                   deviceSerial: _this.opt.deviceSerial,
@@ -32637,19 +30440,15 @@ var Monitor = /*#__PURE__*/function () {
                 }, '', apiSuccess);
               }; // 自定义语音
               // 对讲
-
-
               var startBroadcastDOM = document.createElement('div');
               var stopBroadcastDOM = document.createElement('div');
               startBroadcastDOM.setAttribute("class", 'broadcast off');
               stopBroadcastDOM.setAttribute("class", "broadcast on hide");
               startBroadcastDOM.innerHTML = ' <span title="语音播报">' + '  <svg t="1583561695846" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"' + '    p-id="1126" width="16" height="16">' + '    <path' + '      d="M513.82044445 964.38044445c-8.192 0-15.47377778-2.73066667-21.84533334-8.192 0 0-46.42133333-41.87022222-99.21422222-86.47111112-89.20177778-73.728-117.41866667-88.29155555-123.79022222-90.112H35.04355555c-14.56355555 0-26.39644445-11.83288889-26.39644444-27.30666666V271.70133333c0-14.56355555 11.83288889-27.30666667 26.39644444-27.30666666H246.21511111c7.28177778-2.73066667 37.31911111-15.47377778 137.44355556-91.02222222 58.25422222-43.69066667 111.04711111-86.47111111 111.04711111-86.47111112 5.46133333-4.55111111 12.74311111-7.28177778 20.02488889-7.28177778 4.55111111 0 10.01244445 0.91022222 14.56355555 3.6408889 10.92266667 5.46133333 18.20444445 17.29422222 18.20444445 30.03733333v837.40444444c0 12.74311111-7.28177778 25.48622222-19.11466667 30.94755556-5.46133333 1.82044445-10.01244445 2.73066667-14.56355555 2.73066667zM270.79111111 724.992c19.11466667 0 48.24177778 8.192 167.48088889 106.496 16.384 13.65333333 33.67822222 28.21688889 51.88266667 43.69066667l5.46133333 4.55111111V139.71911111l-5.46133333 3.64088889c-22.75555555 17.29422222-44.60088889 34.58844445-65.536 50.06222222C293.54666667 291.72622222 264.41955555 299.008 245.30488889 299.008H82.37511111c-20.02488889 0-21.84533333 12.74311111-21.84533333 26.39644445V694.04444445c0 23.66577778 6.37155555 30.03733333 28.21688889 30.03733333h180.224l1.82044444 0.91022222z m520.64711111 162.01955555c-14.56355555 0-26.39644445-11.83288889-26.39644444-27.30666666 0-11.83288889 8.192-20.02488889 16.384-24.576 112.86755555-67.35644445 182.04444445-191.14666667 182.04444444-324.03911111 0-132.89244445-70.08711111-256.68266667-182.04444444-324.03911111-10.01244445-5.46133333-15.47377778-14.56355555-15.47377778-24.576 0-14.56355555 11.83288889-27.30666667 26.39644445-27.30666667 5.46133333 0 10.01244445 1.82044445 16.384 5.46133333 128.34133333 76.45866667 207.53066667 218.45333333 207.53066666 369.55022222 0 152.00711111-80.09955555 293.09155555-208.44088889 369.55022223-6.37155555 5.46133333-10.92266667 7.28177778-16.384 7.28177777z m-90.112-152.91733333c-14.56355555 0-26.39644445-11.83288889-26.39644444-27.30666667 0-10.01244445 4.55111111-18.20444445 12.74311111-23.66577777 61.89511111-34.58844445 100.12444445-100.12444445 100.12444444-171.12177778 0-70.08711111-37.31911111-134.71288889-96.48355555-170.21155555-8.192-4.55111111-12.74311111-13.65333333-12.74311111-23.66577778 0-14.56355555 11.83288889-27.30666667 26.39644444-27.30666667 4.55111111 0 11.83288889 2.73066667 15.47377778 4.55111111 74.63822222 44.60088889 121.96977778 127.43111111 121.96977778 215.72266667 0 90.112-48.24177778 173.85244445-125.61066667 218.45333333-1.82044445 0-9.10222222 4.55111111-15.47377778 4.55111111z"' + '      fill="#ffffff" p-id="1127"></path>' + '  </svg>' + '</span>' + '<span>语音播报</span>';
-
               startBroadcastDOM.onclick = function () {
                 this.setAttribute("class", "broadcast off hide");
                 stopBroadcastDOM.setAttribute("class", "broadcast on");
               };
-
               stopBroadcastDOM.innerHTML = '<div class="pop-hover">' + '  <div class="pop-hover-content">' + '    <div class="vioce-list" id="voice-list">' + '      <ul class="voice-list-ul">' + '      </ul>' + '      <div id="voice-list-end"></div>' + '    </div>' + '    <div id="voice-custom" style="text-align: center;">自定义语音</div>' + '  </div>' + '</div>' + '<span title="语音播报">' + '  <svg t="1583561695846" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"' + '    p-id="1126" width="16" height="16">' + '    <path' + '      d="M513.82044445 964.38044445c-8.192 0-15.47377778-2.73066667-21.84533334-8.192 0 0-46.42133333-41.87022222-99.21422222-86.47111112-89.20177778-73.728-117.41866667-88.29155555-123.79022222-90.112H35.04355555c-14.56355555 0-26.39644445-11.83288889-26.39644444-27.30666666V271.70133333c0-14.56355555 11.83288889-27.30666667 26.39644444-27.30666666H246.21511111c7.28177778-2.73066667 37.31911111-15.47377778 137.44355556-91.02222222 58.25422222-43.69066667 111.04711111-86.47111111 111.04711111-86.47111112 5.46133333-4.55111111 12.74311111-7.28177778 20.02488889-7.28177778 4.55111111 0 10.01244445 0.91022222 14.56355555 3.6408889 10.92266667 5.46133333 18.20444445 17.29422222 18.20444445 30.03733333v837.40444444c0 12.74311111-7.28177778 25.48622222-19.11466667 30.94755556-5.46133333 1.82044445-10.01244445 2.73066667-14.56355555 2.73066667zM270.79111111 724.992c19.11466667 0 48.24177778 8.192 167.48088889 106.496 16.384 13.65333333 33.67822222 28.21688889 51.88266667 43.69066667l5.46133333 4.55111111V139.71911111l-5.46133333 3.64088889c-22.75555555 17.29422222-44.60088889 34.58844445-65.536 50.06222222C293.54666667 291.72622222 264.41955555 299.008 245.30488889 299.008H82.37511111c-20.02488889 0-21.84533333 12.74311111-21.84533333 26.39644445V694.04444445c0 23.66577778 6.37155555 30.03733333 28.21688889 30.03733333h180.224l1.82044444 0.91022222z m520.64711111 162.01955555c-14.56355555 0-26.39644445-11.83288889-26.39644444-27.30666666 0-11.83288889 8.192-20.02488889 16.384-24.576 112.86755555-67.35644445 182.04444445-191.14666667 182.04444444-324.03911111 0-132.89244445-70.08711111-256.68266667-182.04444444-324.03911111-10.01244445-5.46133333-15.47377778-14.56355555-15.47377778-24.576 0-14.56355555 11.83288889-27.30666667 26.39644445-27.30666667 5.46133333 0 10.01244445 1.82044445 16.384 5.46133333 128.34133333 76.45866667 207.53066667 218.45333333 207.53066666 369.55022222 0 152.00711111-80.09955555 293.09155555-208.44088889 369.55022223-6.37155555 5.46133333-10.92266667 7.28177778-16.384 7.28177777z m-90.112-152.91733333c-14.56355555 0-26.39644445-11.83288889-26.39644444-27.30666667 0-10.01244445 4.55111111-18.20444445 12.74311111-23.66577777 61.89511111-34.58844445 100.12444445-100.12444445 100.12444444-171.12177778 0-70.08711111-37.31911111-134.71288889-96.48355555-170.21155555-8.192-4.55111111-12.74311111-13.65333333-12.74311111-23.66577778 0-14.56355555 11.83288889-27.30666667 26.39644444-27.30666667 4.55111111 0 11.83288889 2.73066667 15.47377778 4.55111111 74.63822222 44.60088889 121.96977778 127.43111111 121.96977778 215.72266667 0 90.112-48.24177778 173.85244445-125.61066667 218.45333333-1.82044445 0-9.10222222 4.55111111-15.47377778 4.55111111z"' + '      fill="#ff0000" p-id="1127"></path>' + '  </svg>' + '</span>' + '<span>语音播报</span>'; // //自定义语音唤起
               // document.getElementById("voice-custom").onclick = function(){
               //   console.log("显示自定义语音");
@@ -32659,7 +30458,6 @@ var Monitor = /*#__PURE__*/function () {
                 this.setAttribute("class", "broadcast on hide");
                 startBroadcastDOM.setAttribute("class", "broadcast off");
               };
-
               footerContainer.appendChild(startBroadcastDOM);
               footerContainer.appendChild(stopBroadcastDOM); // 召唤自定义语言
 
@@ -32667,7 +30465,6 @@ var Monitor = /*#__PURE__*/function () {
                 console.log("显示自定义语音");
                 startSpeakDOM.setAttribute('class', 'speak off');
               }; // 获取语音列表
-
 
               fetchVoiceList(0);
               var startSpeakDOM = document.createElement('div');
@@ -32680,11 +30477,9 @@ var Monitor = /*#__PURE__*/function () {
               stopSpeakDOM.innerHTML = '<span title="按住说话">' + '<svg t="1581994757678" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"' + '  p-id="1639" width="16" height="16">' + '  <path' + '    d="M757.059829 393.846154v-52.512821h262.564103v52.512821H757.059829z m-420.102564 481.367521v96.273504h175.042735a8.752137 8.752137 0 0 1 8.752137 8.752137v35.008547a8.752137 8.752137 0 0 1-8.752137 8.752137H109.401709a8.752137 8.752137 0 0 1-8.752136-8.752137v-35.008547a8.752137 8.752137 0 0 1 8.752136-8.752137h175.042735v-96.273504C129.767932 875.213675 4.376068 749.821812 4.376068 595.145299V463.863248a26.25641 26.25641 0 1 1 52.512821 0v113.777778c0 140.174222 113.637744 253.811966 253.811966 253.811965s253.811966-113.637744 253.811966-253.811965V463.863248a26.25641 26.25641 0 1 1 52.51282 0v131.282051c0 154.676513-125.391863 280.068376-280.068376 280.068376z m-26.25641-96.273504c-111.178393 0-201.299145-90.120752-201.299146-201.299145V201.299145C109.401709 90.120752 199.522462 0 310.700855 0s201.299145 90.120752 201.299145 201.299145v376.341881c0 111.178393-90.120752 201.299145-201.299145 201.299145z m691.418803-280.068376H757.059829v-52.512821h245.059829v52.512821z m-17.504273 105.025641H757.059829v-52.512821h227.555556v52.512821z m-17.504274 105.025641H757.059829v-52.512821h210.051282v52.512821z m-8.752137 105.025641H757.059829v-52.512821h201.299145v52.512821z m-17.504273 105.025641H757.059829v-52.512821h183.794872v52.512821z m-26.25641 105.025641H757.059829v-52.512821h157.538462v52.512821z"' + '    p-id="1640" fill="#ff0000"></path>' + '</svg>' + '</span>' + '<span>松开发送</span>';
               footerContainer.appendChild(startSpeakDOM);
               footerContainer.appendChild(stopSpeakDOM);
-
               document.getElementById("voice-list").onscroll = function (e) {
                 var sum = this.scrollHeight;
                 console.log("sum", sum, this.scrollTop, document.getElementById("voice-list").clientHeight);
-
                 if (sum <= this.scrollTop + this.clientHeight) {
                   console.log("拖动到底，执行加载", EZUIKit.state.page);
                   fetchVoiceList(++EZUIKit.state.page);
@@ -32700,7 +30495,6 @@ var Monitor = /*#__PURE__*/function () {
               // });
               // time-area 
 
-
               var timeAreaDOM = document.createElement('div');
               timeAreaDOM.setAttribute('class', 'time-area');
               timeAreaDOM.setAttribute('id', 'time-area');
@@ -32708,13 +30502,11 @@ var Monitor = /*#__PURE__*/function () {
               footerContainer.appendChild(timeAreaDOM); // 按住说话
 
               var recorder;
-
               document.getElementById('startSpeak').onmousedown = function () {
                 if (EZUIKit.state.countTimer) {
                   window.layer.msg("语音设备正忙，请稍后重试");
                   return false;
                 }
-
                 console.log("按住说话");
                 startSpeakDOM.setAttribute('class', 'speak off hide');
                 stopSpeakDOM.setAttribute('class', 'speak on'); // console.log("startRecording",startRecording);
@@ -32726,16 +30518,13 @@ var Monitor = /*#__PURE__*/function () {
                   EZUIKit.state.recodeTime = 0;
                   startRecording();
                 }, 1000);
-
                 if (EZUIKit.state.recodeTimer) {
                   // 先清空计数器
                   clearInterval(EZUIKit.state.recodeTimer);
                 }
-
                 EZUIKit.state.recodeTimer = setInterval(function () {
                   if (EZUIKit.state.recodeTime >= 59) {
                     _this.stopTalk();
-
                     countTime('destory', 0);
                     this.setAttribute("class", "ptp-talk on hide");
                     startTalkDOM.setAttribute("class", "ptp-talk off");
@@ -32747,19 +30536,15 @@ var Monitor = /*#__PURE__*/function () {
                 /** 录音控制 */
 
                 var audio_context;
-
                 function startUserMedia(stream) {
                   var input = audio_context.createMediaStreamSource(stream);
                   recorder = new window.Recorder(input);
                 }
-
                 function startRecording() {
                   recorder && recorder.record();
                 }
-
                 function voiceInit() {
                   console.log("run init");
-
                   try {
                     // webkit shim
                     window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -32772,7 +30557,6 @@ var Monitor = /*#__PURE__*/function () {
                     console.log("err", e);
                     window.layer.msg('No web audio support in this browser!');
                   }
-
                   navigator.getUserMedia({
                     audio: true
                   }, startUserMedia, function (e) {
@@ -32781,39 +30565,32 @@ var Monitor = /*#__PURE__*/function () {
                 }
               }; // 松开发送
 
-
               document.getElementById('stopSpeak').onmouseup = function () {
                 console.log("松开发送");
                 stopSpeakDOM.setAttribute('class', 'speak on hide');
                 stopSpeakFun();
-
                 function stopSpeakFun() {
                   countTime('destory', 0);
-
                   if (EZUIKit.state.recodeTime < 1) {
                     window.layer.msg("说话时间过短");
                     clearInterval(EZUIKit.state.recodeTimer);
                     return false;
                   }
-
                   clearInterval(EZUIKit.state.recodeTimer);
                   wavUpload();
                 }
-
                 function wavUpload() {
                   try {
                     recorder && recorder.stop(); // createAudioDom();
 
                     recorder && recorder.exportWAV(function (wav_file) {
                       console.log("wav_file", wav_file);
-
                       if (wav_file.size < 1000) {
                         window.layer.msg("录音失败，请重试"); // recodeTime = 0;
 
                         EZUIKit.state.recodeTime = 0;
                         return false;
                       } // 测试
-
 
                       countTime('sub', EZUIKit.state.recodeTime + 2); // 延时
 
@@ -32827,7 +30604,6 @@ var Monitor = /*#__PURE__*/function () {
 
                       function apiSuccess(data) {
                         console.log("data.data", data.data);
-
                         if (data.code == 200) {
                           // $("#startBroadcast").show();
                           // $("#stopBroadcast").hide();
@@ -32837,13 +30613,11 @@ var Monitor = /*#__PURE__*/function () {
                         } else {
                           window.layer.msg(data.msg || '发送失败，请稍后再试');
                         } // padding = false;
-
                       }
 
                       function apiError(err) {
                         console.log("err", err);
                       }
-
                       request(domain + '/api/lapp/voice/sendonce', 'POST', {
                         voiceFile: wav_file,
                         accessToken: _this.opt.accessToken,
@@ -32861,79 +30635,60 @@ var Monitor = /*#__PURE__*/function () {
           }
         }
       });
-    }); // iframe 传递数据
+    });
+    // iframe 传递数据
 
     var _this = this;
-
     window.addEventListener("message", function (event) {
       event.origin;
       var id = _this.opt.id;
-
       if (event.data.type) {
         switch (event.data.type) {
           case 'openSound':
             if (id == event.data.id && params.openSoundCallBack) {
               params.openSoundCallBack(event.data);
             }
-
             break;
-
           case 'closeSound':
             if (id == event.data.id && params.closeSoundCallBack) {
               params.closeSoundCallBack(event.data);
             }
-
             break;
-
           case 'capturePicture':
             if (id == event.data.id && params.capturePictureCallBack) {
               params.capturePictureCallBack(event.data);
             }
-
             break;
-
           case 'startSave':
             if (id == event.data.id && params.startSaveCallBack) {
               params.startSaveCallBack(event.data);
             }
-
             break;
-
           case 'stopSave':
             if (id == event.data.id && params.stopSaveCallBack) {
               params.stopSaveCallBack(event.data);
             }
-
             break;
-
           case 'fullScreen':
             if (id == event.data.id && params.fullScreenCallBack) {
               params.fullScreenCallBack(event.data);
             }
-
             break;
-
           case 'getOSDTime':
             if (id == event.data.id && params.getOSDTimeCallBack) {
               params.getOSDTimeCallBack(event.data);
             }
-
             break;
-
           case 'handleSuccess':
             if (id == event.data.id && params.handleSuccess) {
               params.handleSuccess(event.data);
             }
-
             break;
-
           case 'handleError':
             if (id == event.data.id && params.handleError) {
               params.handleError(event.data);
             }
-
             break;
-
           case 'dblclick':
             if (id == event.data.id && _this.opt.bSupporDoubleClickFull) {
               if (_this.opt.fullScreenStatus === 0) {
@@ -32942,75 +30697,55 @@ var Monitor = /*#__PURE__*/function () {
                 _this.cancelFullScreen();
               }
             }
-
             break;
-
           case 'startTalk':
-            _this.startTalk(); // params.startTalk();
-
-
+            _this.startTalk();
+            // params.startTalk();
             _this.closeSound();
-
             break;
-
           case 'stopTalk':
             // window.stopTalk()
             _this.stopTalk();
-
             _this.openSound();
-
             break;
-
           case 'clickEventHandle':
             console.log("event.data", event.data);
-
             if (params.clickEventHandle) {
               params.clickEventHandle(event.data);
             }
-
             break;
-
           case 'removeEventHandle':
             if (params.removeEventHandle) {
               params.removeEventHandle(event.data);
             }
-
             break;
-
           case 'esc':
             if (params.clickEventHandle) {
               params.clickEventHandle(event.data);
             }
-
             break;
-
           case 'iframeFullScreen':
             if (id == event.data.id) {
               var requestFullScreen = function requestFullScreen(element) {
                 var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
-
                 if (requestMethod) {
                   requestMethod.call(element);
                 } else if (typeof window.ActiveXObject !== "undefined") {
                   var wscript = new ActiveXObject("WScript.Shell");
-
                   if (wscript !== null) {
                     wscript.SendKeys("{F11}");
                   }
                 }
               };
-
               requestFullScreen(document.getElementById("EZUIKitPlayer-" + event.data.id));
             }
-
             break;
         }
       }
-    }); // 全屏变化回调
-
+    });
+    // 全屏变化回调
     function fullscreenchange(data) {
       _this.opt.fullScreenStatus = data ? 1 : 0;
-
       if (params.fullScreenChangeCallBack) {
         params.fullScreenChangeCallBack({
           data: data,
@@ -33018,7 +30753,6 @@ var Monitor = /*#__PURE__*/function () {
         });
       }
     }
-
     if (typeof document.fullScreen !== "undefined") {
       document.addEventListener("fullscreenchange", function () {
         var e = document.fullscreen || false;
@@ -33037,36 +30771,28 @@ var Monitor = /*#__PURE__*/function () {
     }
   }; // 播放相关API
 
-
   EZUIKitPlayer.prototype.play = function (data) {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
-
     if (_typeof(data) === 'object' && data.url) {
       this.opt.url = data.url;
     }
-
     if (_typeof(data) === 'object' && data.accessToken) {
       this.opt.accessToken = data.accessToken;
     }
-
     if (typeof data === 'string') {
       this.opt.url = data;
     }
-
     player.postMessage({
       action: "play",
       accessToken: this.opt.accessToken,
       url: this.opt.url
     }, domain + "/ezopen/h5/iframe");
-
     var _this = this;
-
     this.opt.videoLoading = true;
     var promise = new Promise(function (resolve, reject) {
       window.addEventListener("message", function (event) {
         var playId = _this.opt.id;
-
         if (playId == event.data.id && event.data.type === 'handleSuccess') {
           setTimeout(function () {
             _this.opt.videoLoading = false;
@@ -33077,18 +30803,14 @@ var Monitor = /*#__PURE__*/function () {
     });
     return promise;
   };
-
   EZUIKitPlayer.prototype.stop = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("stop", domain + "/ezopen/h5/iframe");
-
     var _this = this;
-
     var promise = new Promise(function (resolve, reject) {
       window.addEventListener("message", function (event) {
         var playId = _this.opt.id;
-
         if (playId == event.data.id && event.data.type === 'stop') {
           resolve(event.data);
         }
@@ -33096,18 +30818,14 @@ var Monitor = /*#__PURE__*/function () {
     });
     return promise;
   };
-
   EZUIKitPlayer.prototype.openSound = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("openSound", domain + "/ezopen/h5/iframe");
-
     var _this = this;
-
     var promise = new Promise(function (resolve, reject) {
       window.addEventListener("message", function (event) {
         var playId = _this.opt.id;
-
         if (playId == event.data.id && event.data.type === 'openSound') {
           resolve(event.data);
         }
@@ -33115,18 +30833,14 @@ var Monitor = /*#__PURE__*/function () {
     });
     return promise;
   };
-
   EZUIKitPlayer.prototype.closeSound = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("closeSound", domain + "/ezopen/h5/iframe");
-
     var _this = this;
-
     var promise = new Promise(function (resolve, reject) {
       window.addEventListener("message", function (event) {
         var playId = _this.opt.id;
-
         if (playId == event.data.id && event.data.type === 'closeSound') {
           resolve(event.data);
         }
@@ -33134,7 +30848,6 @@ var Monitor = /*#__PURE__*/function () {
     });
     return promise;
   };
-
   EZUIKitPlayer.prototype.startSave = function (fileName) {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
@@ -33142,13 +30855,10 @@ var Monitor = /*#__PURE__*/function () {
       action: "startSave",
       fileName: fileName || 'default'
     }, domain + "/ezopen/h5/iframe");
-
     var _this = this;
-
     var promise = new Promise(function (resolve, reject) {
       window.addEventListener("message", function (event) {
         var playId = _this.opt.id;
-
         if (playId == event.data.id && event.data.type === 'startSave') {
           resolve(event.data);
         }
@@ -33156,18 +30866,14 @@ var Monitor = /*#__PURE__*/function () {
     });
     return promise;
   };
-
   EZUIKitPlayer.prototype.stopSave = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("stopSave", domain + "/ezopen/h5/iframe");
-
     var _this = this;
-
     var promise = new Promise(function (resolve, reject) {
       window.addEventListener("message", function (event) {
         var playId = _this.opt.id;
-
         if (playId == event.data.id && event.data.type === 'stopSave') {
           resolve(event.data);
         }
@@ -33175,33 +30881,29 @@ var Monitor = /*#__PURE__*/function () {
     });
     return promise;
   };
-
   EZUIKitPlayer.prototype.fullScreen = function () {
     if (this.opt.fullScreenStatus === 1) {
       return false;
     }
-
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
-
     if (navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
       // console.log('移动端全屏');
       var width = document.documentElement.clientWidth;
-      var height = document.documentElement.clientHeight; // wrapper = document.getElementById("test"),
-
+      var height = document.documentElement.clientHeight;
+      // wrapper = document.getElementById("test"),
       var wrapper = document.body; //document.body 属性返回 <body> 元素， document.documentElement 属性返回 <html> 元素。
-
       wrapper = document.getElementById(id);
       var style = "";
       style += "width:" + height + "px;"; // 注意旋转后的宽高切换
-
       style += "height:" + width + "px;";
-      style += "-webkit-transform: rotate(90deg); transform: rotate(90deg);"; // 注意旋转中点的处理
-
+      style += "-webkit-transform: rotate(90deg); transform: rotate(90deg);";
+      // 注意旋转中点的处理
       style += "-webkit-transform-origin: " + width / 2 + "px " + width / 2 + "px;";
       style += "transform-origin: " + width / 2 + "px " + width / 2 + "px;";
       style += 'position: fixed;top: 0;left: 0;z-index:10';
-      wrapper.style.cssText = style; // var cancelFullDOM = document.createElement('div');
+      wrapper.style.cssText = style;
+      // var cancelFullDOM = document.createElement('div');
       // cancelFullDOM.id = id + "cancel-full-screen"
       // var cancelFullDOMStyle="width:30px;height:"+height+"px;z-index:1000;position:fixed;top:0px;right:0px;";
       // cancelFullDOMStyle += "background-image: url(https://resource.ys7cloud.com/group1/M00/00/7E/CtwQE1-01qeAH2wAAAABOliqQ5g167.png);"
@@ -33211,7 +30913,6 @@ var Monitor = /*#__PURE__*/function () {
       //   _this.cancelFullScreen();
       // }
       // document.body.appendChild(cancelFullDOM);
-
       setTimeout(function () {
         player.postMessage('autoResize', domain + "/ezopen/h5/iframe");
       }, 500);
@@ -33219,42 +30920,33 @@ var Monitor = /*#__PURE__*/function () {
       // console.log('pc端全屏');
       var requestFullScreen = function requestFullScreen(element) {
         var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
-
         if (requestMethod) {
           requestMethod.call(element);
         } else if (typeof window.ActiveXObject !== "undefined") {
           var wscript = new ActiveXObject("WScript.Shell");
-
           if (wscript !== null) {
             wscript.SendKeys("{F11}");
           }
         }
       };
-
       requestFullScreen(document.getElementById(id));
     }
-
     if (this.params.fullScreenCallBack) {
       this.params.fullScreenCallBack(this.opt.id);
     }
-
     this.opt.fullScreenStatus = 1;
   };
-
   EZUIKitPlayer.prototype.cancelFullScreen = function () {
     if (this.opt.fullScreenStatus === 0) {
       return false;
     }
-
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
-
     if (navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
       var width = document.getElementById(id).width;
-      var height = document.getElementById(id).height; // wrapper = document.getElementById("test"),
-
+      var height = document.getElementById(id).height;
+      // wrapper = document.getElementById("test"),
       var wrapper = document.body; //document.body 属性返回 <body> 元素， document.documentElement 属性返回 <html> 元素。
-
       wrapper = document.getElementById(id);
       var style = "";
       style += "width:" + width + "px;";
@@ -33268,7 +30960,6 @@ var Monitor = /*#__PURE__*/function () {
       }, 500);
       var cancelFullDOMId = id + "cancel-full-screen";
       var cancelFullDOM = document.getElementById(cancelFullDOMId);
-
       if (cancelFullDOM) {
         document.body.removeChild(cancelFullDOM);
       }
@@ -33281,14 +30972,11 @@ var Monitor = /*#__PURE__*/function () {
         document.mozCancelFullScreen();
       }
     }
-
     if (this.params.cancelFullScreenCallBack) {
       this.params.cancelFullScreenCallBack(this.opt.id);
     }
-
     this.opt.fullScreenStatus = 0;
   };
-
   EZUIKitPlayer.prototype.capturePicture = function (fileName, isUndownload) {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
@@ -33297,13 +30985,10 @@ var Monitor = /*#__PURE__*/function () {
       fileName: fileName || 'default',
       isUndownload: isUndownload
     }, domain + "/ezopen/h5/iframe");
-
     var _this = this;
-
     var promise = new Promise(function (resolve, reject) {
       window.addEventListener("message", function (event) {
         var playId = _this.opt.id;
-
         if (playId == event.data.id && event.data.type === 'capturePicture') {
           resolve(event.data);
         }
@@ -33311,30 +30996,24 @@ var Monitor = /*#__PURE__*/function () {
     });
     return promise;
   };
-
   EZUIKitPlayer.prototype.enableZoom = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("enableZoom", domain + "/ezopen/h5/iframe");
   };
-
   EZUIKitPlayer.prototype.closeZoom = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("closeZoom", domain + "/ezopen/h5/iframe");
   };
-
   EZUIKitPlayer.prototype.getOSDTime = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("getOSDTime", domain + "/ezopen/h5/iframe");
-
     var _this = this;
-
     var promise = new Promise(function (resolve, reject) {
       window.addEventListener("message", function (event) {
         var playId = _this.opt.id;
-
         if (playId == event.data.id && event.data.type === 'getOSDTime') {
           resolve(event.data);
         }
@@ -33342,13 +31021,11 @@ var Monitor = /*#__PURE__*/function () {
     });
     return promise;
   };
-
   EZUIKitPlayer.prototype.autoResize = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("autoResize", domain + "/ezopen/h5/iframe");
   };
-
   EZUIKitPlayer.prototype.reSize = function (width, height) {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
@@ -33368,31 +31045,23 @@ var Monitor = /*#__PURE__*/function () {
       }, domain + "/ezopen/h5/iframe");
     }, 500);
   };
-
   EZUIKitPlayer.prototype.startTalk = function () {
     console.log("执行开始对讲");
     console.log(this.opt);
-
     var _this = this;
-
     EZUIKit.opt = this.opt;
-
     if (window.EZUIKit) {
       window.EZUIKit.opt = this.opt;
     }
-
     var apiSuccess = function apiSuccess(data) {
       if (data.code == 200) {
         var apiResult = data.data;
-
         if (apiResult) {
           // 临时将https转换为websocket
           var rtcTrunk = apiResult.rtcUrl;
-
           if (rtcTrunk.indexOf("ws") === -1) {
             rtcTrunk = rtcTrunk.replace("https", "wss").replace("rtcgw", "rtcgw-ws");
           }
-
           _this.opt.rtcUrl = rtcTrunk;
           _this.opt.ttsUrl = "tts://" + apiResult.ttsUrl;
           var talk = "talk://" + _this.opt.deviceSerial + ":0:" + _this.opt.channelNo + ":cas.ys7.com:6500";
@@ -33402,25 +31071,21 @@ var Monitor = /*#__PURE__*/function () {
         }
       }
     };
-
     request(_this.opt.apiDomain, 'POST', {
       accessToken: _this.opt.accessToken,
       deviceSerial: _this.opt.deviceSerial,
       channelNo: _this.opt.channelNo
     }, '', apiSuccess);
   };
-
   EZUIKitPlayer.prototype.stopTalk = function () {
     console.log("执行结束对讲");
     window.stopTalk();
   };
-
   EZUIKitPlayer.prototype.edit = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage("edit", domain + "/ezopen/h5/iframe");
   };
-
   EZUIKitPlayer.prototype.btnReRender = function (data) {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
@@ -33429,20 +31094,16 @@ var Monitor = /*#__PURE__*/function () {
       data: data
     }, domain + "/ezopen/h5/iframe");
   };
-
   EZUIKitPlayer.prototype.changePlayUrl = function (data) {
     if (data.deviceSerial) {
       this.opt.deviceSerial = data.deviceSerial;
     }
-
     if (data.channelNo) {
       this.opt.channelNo = data.channelNo;
     }
-
     if (data.accessToken) {
       this.opt.accessToken = data.accessToken;
     }
-
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
     player.postMessage({
@@ -33450,7 +31111,6 @@ var Monitor = /*#__PURE__*/function () {
       data: data
     }, domain + "/ezopen/h5/iframe");
   };
-
   EZUIKitPlayer.prototype.fetchThemeData = function () {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
@@ -33458,7 +31118,6 @@ var Monitor = /*#__PURE__*/function () {
       action: "fetchThemeData"
     }, domain + "/ezopen/h5/iframe");
   };
-
   EZUIKitPlayer.prototype.setThemeData = function (accessToken, header, footer) {
     var id = 'EZUIKitPlayer-' + this.opt.id;
     var player = document.getElementById(id).contentWindow;
@@ -33475,13 +31134,11 @@ var Monitor = /*#__PURE__*/function () {
    * 视频播放器-结束
    */
 
-
   EZUIKit.EZUIKitPlayer = EZUIKitPlayer;
   window.EZUIKitV3 = EZUIKit;
   var EZUIKitV3 = EZUIKit;
   return EZUIKitV3;
 });
-
 var EZUIKitV3$1 = EZUIKitV3;
 
 /**
@@ -33498,20 +31155,17 @@ var _createClass = function () {
       Object.defineProperty(target, descriptor.key, descriptor);
     }
   }
-
   return function (Constructor, protoProps, staticProps) {
     if (protoProps) defineProperties(Constructor.prototype, protoProps);
     if (staticProps) defineProperties(Constructor, staticProps);
     return Constructor;
   };
 }();
-
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
   }
 }
-
 var __instance = function () {
   var instance = void 0;
   return function (newInstance) {
@@ -33519,45 +31173,39 @@ var __instance = function () {
     return instance;
   };
 }();
-
 (function () {
   function AudioRenderer() {
     _classCallCheck(this, AudioRenderer);
+    if (__instance()) return __instance();
 
-    if (__instance()) return __instance(); // 确保只有单例
-
+    // 确保只有单例
     if (AudioRenderer.unique !== undefined) {
       return AudioRenderer.unique;
     }
-
     AudioRenderer.unique = this;
     this.oAudioContext = null;
     this.currentVolume = 80; // 初始音量
-
     this.bSetVolume = false;
     this.gainNode = null;
     this.iWndNum = -1; // 窗口号
-
     this.mVolumes = new Map(); // 用于存储所有音量
-    // Init AudioContext
 
+    // Init AudioContext
     var AudioContext = window.AudioContext || window.webkitAudioContext;
     this.oAudioContext = new AudioContext();
-
     this.writeString = function (view, offset, string) {
       for (var i = 0; i < string.length; i++) {
         view.setUint8(offset + i, string.charCodeAt(i));
       }
     };
-
     this.setBufferToDataview = function (output, offset, input) {
       for (var i = 0; i < input.length; i++, offset++) {
         output.setUint8(offset, input[i]);
       }
     };
-
     __instance(this);
   }
+
   /**
    * @synopsis 音频播放
    *
@@ -33568,7 +31216,6 @@ var __instance = function () {
    * @returns 状态码
    */
 
-
   _createClass(AudioRenderer, [{
     key: 'Play',
     value: function Play(dataBuf, dataLen, audioInfo) {
@@ -33576,69 +31223,55 @@ var __instance = function () {
       var viewTalk = new DataView(bufferData);
       var sampleRates = audioInfo.samplesPerSec;
       var channels = audioInfo.channels;
-      var bitsPerSample = audioInfo.bitsPerSample; //console.log("audiorender sampleRates"+sampleRates+"channels:"+channels+"bitsPerSample:"+bitsPerSample);
+      var bitsPerSample = audioInfo.bitsPerSample;
+
+      //console.log("audiorender sampleRates"+sampleRates+"channels:"+channels+"bitsPerSample:"+bitsPerSample);
 
       /* RIFF identifier */
-
       this.writeString(viewTalk, 0, 'RIFF');
       /* file length */
-
       viewTalk.setUint32(4, 32 + dataLen * 2, true);
       /* RIFF type */
-
       this.writeString(viewTalk, 8, 'WAVE');
       /* format chunk identifier */
-
       this.writeString(viewTalk, 12, 'fmt ');
       /* format chunk length */
-
       viewTalk.setUint32(16, 16, true);
       /* sample format (raw) */
-
       viewTalk.setUint16(20, 1, true);
       /* channel count */
-
       viewTalk.setUint16(22, channels, true);
       /* sample rate */
-
       viewTalk.setUint32(24, sampleRates, true);
       /* byte rate (sample rate * block align) */
-
       viewTalk.setUint32(28, sampleRates * 2, true);
       /* block align (channel count * bytes per sample)/8 */
-
       viewTalk.setUint16(32, channels * bitsPerSample / 8, true);
       /* bits per sample */
-
       viewTalk.setUint16(34, bitsPerSample, true);
       /* data chunk identifier */
-
       this.writeString(viewTalk, 36, 'data');
       /* data chunk length */
-
       viewTalk.setUint32(40, dataLen, true);
       this.setBufferToDataview(viewTalk, 44, dataBuf);
       var self = this;
       this.oAudioContext.decodeAudioData(viewTalk.buffer, function (buffer) {
         var bufferSource = self.oAudioContext.createBufferSource();
-
         if (bufferSource == null) {
           return -1;
         }
-
         bufferSource.buffer = buffer;
         bufferSource.start(0);
-
         if (self.gainNode == null || self.bSetVolume) {
-          self.gainNode = self.oAudioContext.createGain(); // self.gainNode.gain.value = self.currentVolume;
+          self.gainNode = self.oAudioContext.createGain();
+          // self.gainNode.gain.value = self.currentVolume;
           // // self.currentVolume = self.gainNode.gain.value;
           // self.gainNode.connect(self.oAudioContext.destination);
 
           self.bSetVolume = false;
         }
-
-        self.gainNode.gain.value = self.currentVolume / 100; // self.currentVolume = self.gainNode.gain.value;
-
+        self.gainNode.gain.value = self.currentVolume / 100;
+        // self.currentVolume = self.gainNode.gain.value;
         self.gainNode.connect(self.oAudioContext.destination);
         bufferSource.connect(self.gainNode);
       }, function (e) {
@@ -33647,25 +31280,27 @@ var __instance = function () {
       });
       return 0;
     }
+
     /**
      * @synopsis 停止播放
      *
      * @returns 返回音量
      */
-
   }, {
     key: 'Stop',
     value: function Stop() {
       if (this.gainNode != null) {
         this.gainNode.disconnect();
         this.gainNode = null;
-      } // this.oAudioContext.close();
+      }
+
+      // this.oAudioContext.close();
+
       // AudioRenderer.unique = undefined;
       // __instance() = null;
-
-
       return true;
     }
+
     /**
      * @synopsis 设置音量
      *
@@ -33673,16 +31308,17 @@ var __instance = function () {
      *
      * @returns 状态码
      */
-
   }, {
     key: 'SetVolume',
     value: function SetVolume(iVolume) {
       this.bSetVolume = true;
-      this.currentVolume = iVolume; // 储存当前窗口设置音量值
+      this.currentVolume = iVolume;
 
+      // 储存当前窗口设置音量值
       this.mVolumes.set(this.iWndNum, this.currentVolume);
       return true;
     }
+
     /**
      * @synopsis 设置窗口号
      *
@@ -33690,14 +31326,13 @@ var __instance = function () {
      *
      * @returns 状态码
      */
-
   }, {
     key: 'SetWndNum',
     value: function SetWndNum(iWndNum) {
-      this.iWndNum = iWndNum; // 获取当前窗口设置音量值
+      this.iWndNum = iWndNum;
 
+      // 获取当前窗口设置音量值
       var iVolume = this.mVolumes.get(iWndNum);
-
       if (iVolume == undefined) {
         iVolume = 80; // 默认音量
       }
@@ -33705,18 +31340,17 @@ var __instance = function () {
       this.currentVolume = iVolume;
       return true;
     }
+
     /**
      * @synopsis 获取音量
      *
      * @returns 返回音量
      */
-
   }, {
     key: 'GetVolume',
     value: function GetVolume() {
       // 获取当前窗口设置音量值
       var iVolume = this.mVolumes.get(this.iWndNum);
-
       if (iVolume == undefined) {
         iVolume = 80; // 默认音量
       }
@@ -33724,19 +31358,17 @@ var __instance = function () {
       return iVolume;
     }
   }]);
-
   window.AudioRenderer = AudioRenderer;
   return AudioRenderer;
 })();
 
+//顶点着色器
 //attribute修饰符用于声明由浏览器（javascript）传输给顶点着色器的变量值；
 // vertexPos即我们定义的顶点坐标；
 // gl_Position是一个内建的传出变量。
-
-var vertexYUVShader = ['attribute vec4 vertexPos;', 'attribute vec2 texturePos;', 'varying vec2 textureCoord;', 'void main()', '{', 'gl_Position = vertexPos;', 'textureCoord = texturePos;', '}'].join('\n'); //像素着色器(yuv->rgb)
-
+var vertexYUVShader = ['attribute vec4 vertexPos;', 'attribute vec2 texturePos;', 'varying vec2 textureCoord;', 'void main()', '{', 'gl_Position = vertexPos;', 'textureCoord = texturePos;', '}'].join('\n');
+//像素着色器(yuv->rgb)
 var fragmentYUVShader = ['precision highp float;', 'varying highp vec2 textureCoord;', 'uniform sampler2D ySampler;', 'uniform sampler2D uSampler;', 'uniform sampler2D vSampler;', 'const mat4 YUV2RGB = mat4', '(', '1.1643828125, 0, 1.59602734375, -.87078515625,', '1.1643828125, -.39176171875, -.81296875, .52959375,', '1.1643828125, 2.017234375, 0, -1.081390625,', '0, 0, 0, 1', ');', 'void main(void) {', 'highp float y = texture2D(ySampler,  textureCoord).r;', 'highp float u = texture2D(uSampler,  textureCoord).r;', 'highp float v = texture2D(vSampler,  textureCoord).r;', 'gl_FragColor = vec4(y, u, v, 1) * YUV2RGB;', '}'].join('\n');
-
 (function (root, factory) {
   // root.SuperRender = factory();
   window.SuperRender = factory();
@@ -33744,78 +31376,65 @@ var fragmentYUVShader = ['precision highp float;', 'varying highp vec2 textureCo
   function RenderManager(canvas) {
     this.canvasElement = document.getElementById(canvas);
     this.initContextGL();
-
     if (this.contextGL) {
       this.YUVProgram = this.initProgram(vertexYUVShader, fragmentYUVShader);
       this.initBuffers();
       this.initTextures();
     }
   }
+
   /**
    * 初始化WebGL上下文
    */
-
   RenderManager.prototype.initContextGL = function () {
     var canvas = this.canvasElement;
     var gl = null;
-
     try {
       gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
     } catch (e) {
       gl = null;
     }
-
     if (!gl || typeof gl.getParameter !== "function") {
       gl = null;
     }
-
     this.contextGL = gl;
     console.log("WebGL1.0");
   };
+
   /**
    * 初始化着色器程序
    * @param vertexShaderScript    顶点着色器脚本
    * @param fragmentShaderScript  片段着色器脚本
    */
-
-
   RenderManager.prototype.initProgram = function (vertexShaderScript, fragmentShaderScript) {
     var gl = this.contextGL;
     var vertexShader = gl.createShader(gl.VERTEX_SHADER); //创建定点着色器
-
     gl.shaderSource(vertexShader, vertexShaderScript);
     gl.compileShader(vertexShader);
-
     if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
       console.log('Vertex shader failed to compile: ' + gl.getShaderInfoLog(vertexShader));
     }
-
     var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
     gl.shaderSource(fragmentShader, fragmentShaderScript);
     gl.compileShader(fragmentShader);
-
     if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
       console.log('Fragment shader failed to compile: ' + gl.getShaderInfoLog(fragmentShader));
     }
-
     var program = gl.createProgram();
     gl.attachShader(program, vertexShader);
     gl.attachShader(program, fragmentShader);
     gl.linkProgram(program);
-
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
       console.log('Program failed to compile: ' + gl.getProgramInfoLog(program));
     }
-
     gl.deleteShader(vertexShader);
     gl.deleteShader(fragmentShader);
     return program;
   };
+
   /**
    * 初始化数据缓存
    */
-
-
   RenderManager.prototype.initBuffers = function () {
     var gl = this.contextGL;
     var vertexPosBuffer = gl.createBuffer();
@@ -33829,11 +31448,10 @@ var fragmentYUVShader = ['precision highp float;', 'varying highp vec2 textureCo
     this.vertexPosBuffer = vertexPosBuffer;
     this.texturePosBuffer = texturePosBuffer;
   };
+
   /**
    * 创建纹理
    */
-
-
   RenderManager.prototype.initTexture = function () {
     var gl = this.contextGL;
     var textureRef = gl.createTexture();
@@ -33845,11 +31463,10 @@ var fragmentYUVShader = ['precision highp float;', 'varying highp vec2 textureCo
     gl.bindTexture(gl.TEXTURE_2D, null);
     return textureRef;
   };
+
   /**
    * 初始化YUV纹理
    */
-
-
   RenderManager.prototype.initTextures = function () {
     var gl = this.contextGL;
     var program = this.YUVProgram;
@@ -33868,27 +31485,23 @@ var fragmentYUVShader = ['precision highp float;', 'varying highp vec2 textureCo
     this.vTextureRef = vTextureRef;
     gl.useProgram(null);
   };
+
   /**
    * 显示帧数据
    * @param nWidth    宽度
    * @param nHeight   高度
    * @param nHeight   帧数据
    */
-
-
   RenderManager.prototype.SR_DisplayFrameData = function (nWidth, nHeight, pData, dWidth, dHeight) {
     if (nWidth <= 0 || nHeight <= 0) {
       return;
     }
-
     var gl = this.contextGL;
-
     if (null == pData) {
       gl.clearColor(0.0, 0.0, 0.0, 0.0);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       return;
     }
-
     var canvas = this.canvasElement;
     this.nWindowWidth = canvas.width;
     this.nWindowHeight = canvas.height;
@@ -33917,21 +31530,20 @@ var fragmentYUVShader = ['precision highp float;', 'varying highp vec2 textureCo
     gl.disableVertexAttribArray(texturePosRef);
     gl.useProgram(null);
   };
+
   /**
    * 上传YUV数据到纹理
    * @param nWidth    宽度
    * @param nHeight   高度
    * @param nHeight   帧数据
    */
-
-
   RenderManager.prototype.updateFrameData = function (width, height, data, dWidth, dHeight) {
     var gl = this.contextGL;
     var yTextureRef = this.yTextureRef;
     var uTextureRef = this.uTextureRef;
     var vTextureRef = this.vTextureRef;
-    var i420Data = data; // debugger;
-
+    var i420Data = data;
+    // debugger;
     if (width == dWidth && height == dHeight) {
       var yDataLength = width * height;
       var yData = i420Data.subarray(0, yDataLength);
@@ -33952,32 +31564,27 @@ var fragmentYUVShader = ['precision highp float;', 'varying highp vec2 textureCo
       // //裁剪宽
       var yDataLength = dWidth * dHeight;
       var yData = new Uint8Array(yDataLength);
-
       for (var i = 0; i < dHeight; i++) {
         //var ySonData=new Uint8Array(dWidth) ;
         var ySonData = i420Data.subarray(i * width, i * width + dWidth);
-
         for (var j = 0; j < dWidth; j++) {
           yData[i * dWidth + j] = ySonData[j];
         }
       }
-
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D, yTextureRef);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, dWidth, dHeight, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, yData);
       yData = null;
       ySonData = null;
       var cbDataLength = dWidth / 2 * dHeight / 2;
-      var cbData = new Uint8Array(cbDataLength); //var cbSonData=new Uint8Array(dWidth/2) ;
-
+      var cbData = new Uint8Array(cbDataLength);
+      //var cbSonData=new Uint8Array(dWidth/2) ;
       for (var i = 0; i < dHeight / 2; i++) {
         var cbSonData = i420Data.subarray(width * height + i * width / 2, width * height + i * width / 2 + dWidth / 2);
-
         for (var j = 0; j < dWidth / 2; j++) {
           cbData[i * dWidth / 2 + j] = cbSonData[j];
         }
       }
-
       gl.activeTexture(gl.TEXTURE2);
       gl.bindTexture(gl.TEXTURE_2D, vTextureRef);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, dWidth / 2, dHeight / 2, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, cbData);
@@ -33985,15 +31592,12 @@ var fragmentYUVShader = ['precision highp float;', 'varying highp vec2 textureCo
       cbSonData = null;
       var crDataLength = cbDataLength;
       var crData = new Uint8Array(crDataLength);
-
       for (var i = 0; i < dHeight / 2; i++) {
         var crSonData = i420Data.subarray(width * height * 5 / 4 + i * width / 2, width * height * 5 / 4 + i * width / 2 + dWidth / 2);
-
         for (var j = 0; j < dWidth / 2; j++) {
           crData[i * dWidth / 2 + j] = crSonData[j];
         }
       }
-
       gl.activeTexture(gl.TEXTURE1);
       gl.bindTexture(gl.TEXTURE_2D, uTextureRef);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, dWidth / 2, dHeight / 2, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, crData);
@@ -34001,18 +31605,16 @@ var fragmentYUVShader = ['precision highp float;', 'varying highp vec2 textureCo
       crSonData = null;
     }
   };
+
   /**
    * 设置显示区域
    * @param stDisplayRect    显示区域
    */
-
-
   RenderManager.prototype.SR_SetDisplayRect = function (stDisplayRect) {
     var gl = this.contextGL;
     var nWindowWidth = this.nWindowWidth;
     var nWindowHeight = this.nWindowHeight;
     var texturePosValues = null;
-
     if (stDisplayRect && nWindowWidth > 0 && nWindowHeight > 0) {
       var fLeft = stDisplayRect.left / nWindowWidth;
       var fTop = stDisplayRect.top / nWindowHeight;
@@ -34022,17 +31624,15 @@ var fragmentYUVShader = ['precision highp float;', 'varying highp vec2 textureCo
     } else {
       texturePosValues = new Float32Array([1, 0, 0, 0, 1, 1, 0, 1]);
     }
-
     var texturePosBuffer = this.texturePosBuffer;
     gl.bindBuffer(gl.ARRAY_BUFFER, texturePosBuffer);
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, texturePosValues);
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
   };
+
   /**
    * 释放显示资源
    */
-
-
   RenderManager.prototype.SR_Destroy = function () {
     var gl = this.contextGL;
     var YUVProgram = this.YUVProgram;
@@ -34046,16 +31646,23 @@ var fragmentYUVShader = ['precision highp float;', 'varying highp vec2 textureCo
     var vTextureRef = this.vTextureRef;
     gl.deleteTexture(yTextureRef);
     gl.deleteTexture(uTextureRef);
-    gl.deleteTexture(vTextureRef); //gl.getExtension('WEBGL_lose_context').loseContext();
+    gl.deleteTexture(vTextureRef);
+    //gl.getExtension('WEBGL_lose_context').loseContext();
   };
 
   return RenderManager;
 });
 
+// 插件资源静态域名
+var uikitStaticDomain = 'https://open.ys7.com';
+// const uikitStaticDomain = 'https://test13open.ys7.com';
+var uikitStaticPathV2 = "".concat(uikitStaticDomain, "/console/ezuikit_static/v65/v2");
+var uikitStaticPathV1 = "".concat(uikitStaticDomain, "/console/ezuikit_static/v65/v1");
+
+// iframe模板 - 兼容旧版本
 var matchTemplate = function matchTemplate(templateName, params) {
   var IFRAMETEMPLATE = ['theme', 'standard'];
   var LOCALTEMPLATE = ['pcLive', 'pcRec', 'mobileLive', 'mobileRec', 'noData', 'security', 'voice', 'simple'];
-
   if (typeof templateName === 'undefined') {
     if (params.themeData) {
       return {
@@ -34063,13 +31670,11 @@ var matchTemplate = function matchTemplate(templateName, params) {
         templateId: 'themeData'
       };
     }
-
     return {
       templateType: 'local',
       templateId: ''
     };
   }
-
   if (typeof templateName === 'string') {
     if (templateName.length === 32) {
       return {
@@ -34084,7 +31689,6 @@ var matchTemplate = function matchTemplate(templateName, params) {
           templateId: ''
         };
       }
-
       return {
         templateType: 'iframe',
         templateId: templateName
@@ -34098,56 +31702,47 @@ var matchTemplate = function matchTemplate(templateName, params) {
   }
 };
 
+// 是否多进程可用
 var isVersion2Available = function isVersion2Available() {
   var ua = window.navigator.userAgent.toLowerCase(); //获取用户端信息
-
   var info = {
     sa: /version.*safari/.test(ua),
     //匹配Safari浏览器
     ch: /chrome/.test(ua),
     //匹配Chrome浏览器
     ff: /gecko/.test(ua) && !/webkit/.test(ua) //匹配Firefox浏览器
-
   };
-  var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
+  var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   if (isMobile) {
     return false;
   } else if (info.ch) {
     var getChromeVersion = function getChromeVersion() {
       var arr = window.navigator.userAgent.split(' ');
       var chromeVersion = '';
-
       for (var i = 0; i < arr.length; i++) {
         if (/chrome/i.test(arr[i])) chromeVersion = arr[i];
       }
-
       if (chromeVersion) {
         return Number(chromeVersion.split('/')[1].split('.')[0]);
       } else {
         return false;
       }
     };
-
     return getChromeVersion() > 91 && !!window.SharedArrayBuffer;
   }
-
   return false;
 };
-
 var EZUIKitPlayer = /*#__PURE__*/function () {
   function EZUIKitPlayer(params) {
     var _this = this;
-
     _classCallCheck$1(this, EZUIKitPlayer);
-
     var _params$autoplay = params.autoplay,
-        autoplay = _params$autoplay === void 0 ? true : _params$autoplay; // 如果设置了模板（除精简版），此处不自动播放，根据模板判断是否执行自动播放:
-
+      autoplay = _params$autoplay === void 0 ? true : _params$autoplay;
+    // 如果设置了模板（除精简版），此处不自动播放，根据模板判断是否执行自动播放:
     if (params.template || params.themeData) {
       autoplay = false;
     }
-
     this.params = params;
     this.autoplay = autoplay;
     window.EZUIKit[params.id] = {
@@ -34159,7 +31754,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         }
       }
     };
-
     if (matchTemplate(this.params.template, params).templateType !== 'iframe') {
       this.Monitor = new Monitor({
         env: !(typeof params.disableMonitor !== 'undefined' && params.disableMonitor) ? 'online' : 'test12'
@@ -34179,63 +31773,51 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       this.enableSharedArrayBufferGuide = false;
       this.capacity = {};
       this.playTimer = null; // 播放定时器，限制至少1秒触发播放
-
       this.env = {
         domain: "https://open.ys7.com"
       };
       var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      this.isMobile = isMobile; // 兼容多次初始化
-
+      this.isMobile = isMobile;
+      // 兼容多次初始化
       if (document.getElementById("".concat(this.id, "-wrap"))) {
         document.getElementById("".concat(this.id, "-wrap")).innerHTML = "";
         document.getElementById("".concat(this.id, "-wrap")).id = this.id;
       }
-
-      this.staticPath = isVersion2Available() ? "https://open.ys7.com/console/ezuikit_static/v64/v2" : "https://open.ys7.com/console/ezuikit_static/v64/v1";
-
+      this.staticPath = isVersion2Available() ? uikitStaticPathV2 : uikitStaticPathV1;
       if (typeof params.staticPath === 'string') {
         if (params.staticPath.startsWith("http")) {
           this.staticPath = params.staticPath;
         } else {
           this.staticPath = window.location.protocol + '//' + window.location.host + params.staticPath;
         }
-
         if (isVersion2Available()) {
           this.staticPath += '/v2';
         } else {
           this.staticPath += '/v1';
         }
       }
-
       if (typeof params.audio !== 'undefined') {
         this.audio = params.audio;
       }
-
       if (typeof params.env !== 'undefined') {
         this.env = Object.assign(this.env, params.env);
       }
-
       if (typeof params.isMobile !== 'undefined') {
         this.isMobile = params.isMobile;
       }
-
       if (typeof params.disabledTimeLine !== 'undefined') {
         this.disabledTimeLine = params.disabledTimeLine;
       }
-
       if (typeof params.disabledPTZ !== 'undefined') {
         this.disabledPTZ = params.disabledPTZ;
       }
-
       if (typeof params.enableSharedArrayBufferGuide !== 'undefined') {
         this.enableSharedArrayBufferGuide = params.enableSharedArrayBufferGuide;
       }
-
-      var pluginUrl = "".concat(this.staticPath, "/js/jsPluginV1-1.0.0.min.js"); // 执行初始化；
-
+      var pluginUrl = "".concat(this.staticPath, "/js/jsPluginV1-1.0.0.min.js");
+      // 执行初始化；
       var doInit = function doInit() {
         window.addPluginUrlIng = true;
-
         if (isVersion2Available()) {
           console.log("启用多线程解析视频");
           pluginUrl = "".concat(_this.staticPath, "/js/jsPluginV2-2.0.1.min.js");
@@ -34245,21 +31827,17 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           var getChromeVersion = function getChromeVersion() {
             var arr = navigator.userAgent.split(' ');
             var chromeVersion = '';
-
             for (var i = 0; i < arr.length; i++) {
               if (/chrome/i.test(arr[i])) {
                 chromeVersion = arr[i];
               }
             }
-
             if (chromeVersion) {
               return Number(chromeVersion.split('/')[1].split('.')[0]);
             }
-
             return false;
-          }; // pc端 谷歌浏览器 版本 > 91
-
-
+          };
+          // pc端 谷歌浏览器 版本 > 91
           if (!isMobile && 91 < getChromeVersion && _this.enableSharedArrayBufferGuide) {
             console.log("提示用户开启谷歌实验室特性");
             var wapDomId = "".concat(_this.id, "-wrap");
@@ -34271,8 +31849,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             guideLink.href = "https://open.ys7.com/help/384";
             guideLink.setAttribute("target", "_blank");
             guideDom.appendChild(guideLink);
-            guideLink.innerHTML = "开启说明"; //guideDom.innerHTML = "您的浏览器当前使用单进程播放视频，可能因内存占用过高导致浏览器卡顿,您可参考·谷歌浏览器开启多线程（链接）·开启谷歌实验室多线程特性，获取更好播放体验";
-
+            guideLink.innerHTML = "开启说明";
+            //guideDom.innerHTML = "您的浏览器当前使用单进程播放视频，可能因内存占用过高导致浏览器卡顿,您可参考·谷歌浏览器开启多线程（链接）·开启谷歌实验室多线程特性，获取更好播放体验";
             guideDom.id = "".concat(_this.id, "-guide");
             guideDom.style = "font-size:12px;color:red;";
             setTimeout(function () {
@@ -34282,38 +31860,29 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             }, 5000);
           }
         }
-
         _this.pluginStatus = new Status(_this, _this.id);
         addJs(pluginUrl, function () {
           if (_this.autoplay) {
             _this.initTime = new Date().getTime();
-
             _this.Monitor.dclog({
               url: _this.url,
               action: 0,
               text: 'startInit'
             });
-
             _this.Monitor.localInfoLog({
               Serial: matchEzopenUrl(_this.url).deviceSerial,
               Channel: matchEzopenUrl(_this.url).channelNo,
               Ver: isVersion2Available() ? "v7.0.0" : "v6.0.0",
               ExterVer: isVersion2Available() ? "v7.0.0" : "v6.0.0"
             });
-
             console.log("初始化-");
-
             var initEZUIKitPlayerPromise = _this.initEZUIKitPlayer(params);
-
             var getRealUrlPromise = _this._getRealUrlPromise(params.accessToken, params.url);
-
             Promise.all([initEZUIKitPlayerPromise, getRealUrlPromise]).then(function (values) {
               if (values[1]) {
                 _this.playStartTime = new Date().getTime();
-
                 _this._pluginPlay(values[1], function () {
                   console.log("自动播放成功");
-
                   _this.Monitor.dclog({
                     url: _this.url,
                     action: 202,
@@ -34322,7 +31891,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                   });
                 }, function () {
                   console.log("自动播放失败");
-
                   _this.Monitor.dclog({
                     url: _this.url,
                     action: 402,
@@ -34333,15 +31901,12 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               } else {
                 console.log("promise of one", values);
               }
-
               window.EZUIKit[params.id].state.EZUIKitPlayer.init = true;
-
               if (document.getElementById("".concat(params.id, "canvas_draw0"))) {
                 document.getElementById("".concat(params.id, "canvas_draw0")).style.border = "none";
               }
             })["catch"](function (err) {
               console.log("err", err);
-
               _this.pluginStatus.loadingSetText({
                 text: err && err.msg || "获取播放地址失败",
                 color: 'red'
@@ -34349,29 +31914,23 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             });
           } else {
             _this.initTime = new Date().getTime();
-
             _this.Monitor.dclog({
               url: _this.url,
               action: 0,
               text: 'startInit'
             });
-
             _this.Monitor.localInfoLog({
               Serial: matchEzopenUrl(_this.url).deviceSerial,
               Channel: matchEzopenUrl(_this.url).channelNo,
               Ver: isVersion2Available() ? "v7.0.0" : "v6.0.0"
             });
-
             var initEZUIKitPlayerPromise = _this.initEZUIKitPlayer(params);
-
             initEZUIKitPlayerPromise.then(function (data) {
               console.log("初始化成功", data);
               window.EZUIKit[params.id].state.EZUIKitPlayer.init = true;
-
               if (document.getElementById("".concat(params.id, "canvas_draw0"))) {
                 document.getElementById("".concat(params.id, "canvas_draw0")).style.border = "none";
               }
-
               _this.Monitor.dclog({
                 url: _this.url,
                 action: 201,
@@ -34384,19 +31943,15 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           if (isVersion2Available()) {
             return !!window.JSPluginV2 || !!window.addPluginUrled;
           }
-
           return !!window.JSPluginV1 || !!window.addPluginUrled;
         });
-
         if (params.plugin && params.plugin.indexOf("talk") !== -1) {
           _this.Talk = new Talk(_this);
           window.EZUIKit[params.id].state.EZUIKitPlayer.talkInit = true;
         }
-
         _this.getDeviceCapacity();
-      }; // 如果浏览器正在加载插件
-
-
+      };
+      // 如果浏览器正在加载插件
       if (window.addPluginUrlIng) {
         var doInitTimer = setInterval(function () {
           if (window.JSPluginV1 || window.JSPluginV2) {
@@ -34410,61 +31965,52 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       }
     } else {
       return new EZUIKitV3$1.EZUIKitPlayer(params);
-    } // this.stop = debouncePromise(()=>this._stop(),0,true);
-
-
+    }
+    // this.stop = debouncePromise(()=>this._stop(),0,true);
     this.play = debouncePromise(function (options) {
       return _this._play(options);
-    }, 1000, true); // this.pause = debouncePromise(()=>this._pause(),1000,true);
-
+    }, 1000, true);
+    // this.pause = debouncePromise(()=>this._pause(),1000,true);
     this.resume = debouncePromise(function (time) {
       return _this._resume(time);
-    }, 1000, true); //this.changePlayUrl = debouncePromise((time)=>this._changePlayUrl(time),1000,true);
+    }, 1000, true);
+    //this.changePlayUrl = debouncePromise((time)=>this._changePlayUrl(time),1000,true);
     // 监听到页面退出
     // 研究院反馈，播放过程中退出页面需要执行停止视频，否则可能导致浏览器崩溃
-
     window.addEventListener("beforeunload", function () {
       console.log("退出页面，停止视频流");
-
       _this.stop();
     });
   }
-
   _createClass$1(EZUIKitPlayer, [{
     key: "initEZUIKitPlayer",
     value: function initEZUIKitPlayer(params) {
       var _this2 = this;
-
       var id = params.id,
-          _params$width = params.width,
-          width = _params$width === void 0 ? 600 : _params$width,
-          _params$height = params.height,
-          height = _params$height === void 0 ? 400 : _params$height;
-
+        _params$width = params.width,
+        width = _params$width === void 0 ? 600 : _params$width,
+        _params$height = params.height,
+        height = _params$height === void 0 ? 400 : _params$height;
       if (!params.width || !params.height) {
         var videoDOMBounding = document.getElementById(id).getBoundingClientRect();
-
         if (!params.width && videoDOMBounding.width > 0) {
           width = videoDOMBounding.width;
         }
-
         if (!params.height && videoDOMBounding.height > 0) {
           height = videoDOMBounding.height;
         }
       }
-
       if (!document.getElementById("".concat(id, "-wrap"))) {
         var wapDom = document.createElement("div");
         wapDom.id = "".concat(id, "-wrap");
         wapDom.style = "display:inline-block;width:".concat(width, "px;position:relative;vertical-align: bottom;");
         document.getElementById(id).parentNode.insertBefore(wapDom, document.getElementById(id));
-        document.getElementById(id).parentNode.removeChild(document.getElementById(id)); // wapDom.appendChild(document.getElementById(id));
-
+        document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+        // wapDom.appendChild(document.getElementById(id));
         wapDom.innerHTML = "<div id=".concat(id, "></div>");
         document.getElementById(id).style = "display:inline-block;width:".concat(width, "px;height:").concat(height, "px;");
         document.getElementById(id).style.verticalAlign = "top";
       }
-
       if (this.themeId) {
         this.Theme = new Theme(this, params.id);
         window.EZUIKit[params.id].state.EZUIKitPlayer.themeInit = true;
@@ -34473,19 +32019,15 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           action: 2,
           text: this.themeId
         });
-
         if (typeof this.params.handleThemeChange === 'function') {
           this.handleThemeChange = this.params.handleThemeChange;
         }
-      } // 初始化Message模块
-
-
+      }
+      // 初始化Message模块
       var pluginMessage = new Message(this, id);
       this.Message = pluginMessage;
-
       var initDecoder = function initDecoder(resolve, reject) {
         var jSPlugin;
-
         if (isVersion2Available()) {
           jSPlugin = new window.JSPluginV2({
             szId: id,
@@ -34500,30 +32042,25 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               border: "none",
               background: "#000000"
             }
-          }); // 增加视频容器
+          });
+          // 增加视频容器
           //var pluginStatus = new Status(this, id);
-
           _this2.pluginStatus.loadingStart(id);
-
           _this2.pluginStatus.loadingSetText({
             text: '初始化播放器完成'
           });
-
           jSPlugin.EventCallback = {
             pluginErrorHandler: function pluginErrorHandler(iWndIndex, iErrorCode, oError) {
               //插件错误回调
               console.log(iWndIndex, iErrorCode, oError);
-
               if (iErrorCode === 1003) {
                 console.log("断流");
-
                 if (!jSPlugin.bPlay) {
                   _this2.pluginStatus.loadingSetText({
                     text: "连接断开，请重试",
                     color: 'red'
                   });
                 }
-
                 if (typeof _this2.params.handleError === 'function') {
                   _this2.params.handleError({
                     msg: "连接断开，请重试",
@@ -34538,30 +32075,25 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           _this2.env = {
             domain: "https://open.ys7.com"
           };
-
           if (typeof params.env !== 'undefined') {
             _this2.env = Object.assign(_this2.env, params.env);
           }
-
           if (typeof params.handleTalkSuccess !== 'undefined') {
             _this2.handleTalkSuccess = params.handleTalkSuccess;
           }
-
           if (typeof params.handleTalkError !== 'undefined') {
             _this2.handleTalkError = params.handleTalkError;
           }
-
           _this2.errorHander = new Code();
-          _this2.jSPlugin = jSPlugin; // if (this.themeId) {
+          _this2.jSPlugin = jSPlugin;
+          // if (this.themeId) {
           //   this.Theme = new Theme(this, id);
           //   window.EZUIKit[params.id].state.EZUIKitPlayer.themeInit = true;
           // }
-
           var checkTimer = setInterval(function () {
             //轮询是否加载解码库成功
             if (window.JSPlayerModuleLoaded) {
               clearInterval(checkTimer);
-
               if (typeof _this2.params.handleInitSuccess === 'function') {
                 _this2.params.handleInitSuccess({
                   retcode: 0,
@@ -34569,7 +32101,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                   type: "handleInitSuccess"
                 });
               }
-
               resolve({
                 meta: {
                   retcode: 200,
@@ -34592,19 +32123,16 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               border: "none",
               background: "#000000"
             }
-          }); // 增加视频容器
+          });
+          // 增加视频容器
           //var pluginStatus = new Status(this, id);
-
           _this2.pluginStatus.loadingStart(id);
-
           _this2.pluginStatus.loadingSetText({
             text: '初始化播放器完成'
           });
-
           jSPlugin.EventCallback = {
             loadEventHandler: function loadEventHandler() {},
-            zoomEventResponse: function
-              /*iMode, aPoint*/
+            zoomEventResponse: function /*iMode, aPoint*/
             zoomEventResponse() {//电子放大回调
             },
             windowEventSelect: function windowEventSelect(iWndIndex) {//插件选中窗口回调
@@ -34612,17 +32140,14 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             pluginErrorHandler: function pluginErrorHandler(iWndIndex, iErrorCode, oError) {
               //插件错误回调
               console.log(iWndIndex, iErrorCode, oError);
-
               if (iErrorCode === 1003) {
                 console.log("断流");
-
                 if (!jSPlugin.bPlay) {
                   _this2.pluginStatus.loadingSetText({
                     text: "连接断开，请重试",
                     color: 'red'
                   });
                 }
-
                 if (typeof _this2.params.handleError === 'function') {
                   _this2.params.handleError({
                     msg: "连接断开，请重试",
@@ -34640,7 +32165,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             firstFrameDisplay: function firstFrameDisplay(iWndIndex, iWidth, iHeight) {
               console.log(iWidth, iHeight);
               jSPlugin.JS_SetCanFullScreen(false);
-
               _this2.pluginStatus.loadingClear();
             },
             performanceLack: function performanceLack() {},
@@ -34649,26 +32173,22 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           _this2.env = {
             domain: "https://open.ys7.com"
           };
-
           if (typeof params.env !== 'undefined') {
             _this2.env = Object.assign(_this2.env, params.env);
           }
-
           if (typeof params.handleTalkSuccess !== 'undefined') {
             _this2.handleTalkSuccess = params.handleTalkSuccess;
           }
-
           if (typeof params.handleTalkError !== 'undefined') {
             _this2.handleTalkError = params.handleTalkError;
           }
-
           _this2.errorHander = new Code();
-          _this2.jSPlugin = jSPlugin; // if (this.themeId) {
+          _this2.jSPlugin = jSPlugin;
+          // if (this.themeId) {
           //   this.Theme = new Theme(this, id);
           //   window.EZUIKit[params.id].state.EZUIKitPlayer.themeInit = true;
           // }
           // 待需要改造plugin，异步判断；
-
           if (typeof _this2.params.handleInitSuccess === 'function') {
             _this2.params.handleInitSuccess({
               retcode: 0,
@@ -34676,7 +32196,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               type: "handleInitSuccess"
             });
           }
-
           resolve({
             meta: {
               retcode: 200,
@@ -34685,7 +32204,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           });
         }
       };
-
       var initDecoderPromise = new Promise(initDecoder);
       return initDecoderPromise;
     }
@@ -34693,13 +32211,10 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "_getRealUrlPromise",
     value: function _getRealUrlPromise(accessToken, url) {
       var _this3 = this;
-
       var apiDomain = this.env.domain;
-
       if (this.env) {
         apiDomain = this.env.domain;
       }
-
       var getRealUrlPromise = function getRealUrlPromise(resolve, reject) {
         var realUrl = '';
         var apiUrl = apiDomain + "/api/lapp/live/url/ezopen";
@@ -34721,7 +32236,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           if (data.code == 200 || data.retcode == 0) {
             var playUrl = "";
             var stream = "";
-
             if (data.ext && data.ext.token) {
               realUrl += data.data;
               stream = data.ext.token;
@@ -34731,72 +32245,60 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               stream = data.data.token;
               playUrl = data.data.url;
             }
-
             var type = url.indexOf('live') !== -1 ? 'live' : 'playback';
-
             if (type === 'live') {
               realUrl = realUrl + '&ssn=' + stream + '&auth=1&biz=4&cln=100';
             } else {
               realUrl = realUrl + '&ssn=' + stream + '&auth=1&cln=100';
             }
-
-            console.log(realUrl); // 设置秘钥 - 如果地址中包含秘钥参数，播放前配置到JSPlugin对应实例中
-
+            console.log(realUrl);
+            // 设置秘钥 - 如果地址中包含秘钥参数，播放前配置到JSPlugin对应实例中
             var validateCode = getQueryString('checkCode', realUrl);
-
             if (validateCode) {
               if (typeof _this3.jSPlugin.decoderVersion !== 'undefined' && _this3.jSPlugin.decoderVersion === '2.0') {
                 _this3.validateCode = validateCode;
               } else {
                 console.log("设置密钥", validateCode);
-
                 _this3.jSPlugin.JS_SetSecretKey(0, validateCode);
               }
-            } // 回放处理
-
-
+            }
+            // 回放处理
             if (realUrl.indexOf('playback') !== -1) {
               var wsBegin = getQueryString('begin', playUrl) || getQueryString('begin', url);
-              var wsEnd = getQueryString('end', playUrl) || getQueryString('end', url); // 兼容各种时间格式
-
+              var wsEnd = getQueryString('end', playUrl) || getQueryString('end', url);
+              // 兼容各种时间格式
               if (!wsBegin) {
                 var defaultDate = new Date();
                 realUrl = realUrl + '&begin=' + defaultDate.Format('yyyyMMdd') + 'T000000Z';
               } else {
                 realUrl = realUrl.replace('&begin=' + getQueryString('begin', playUrl), '&begin=' + formatRecTime(wsBegin, '000000'));
-
                 if (!getQueryString('begin', realUrl)) {
                   realUrl += '&begin=' + formatRecTime(wsBegin, '000000');
                 }
               }
-
               if (!wsEnd) {
                 realUrl = realUrl + '&end=' + formatRecTime(getQueryString('begin', realUrl).substr(0, 8), '235959');
               } else {
                 realUrl = realUrl.replace('&end=' + getQueryString('end', playUrl), '&end=' + formatRecTime(wsEnd, '235959'));
-
                 if (!getQueryString('end', realUrl)) {
                   realUrl += '&end=' + formatRecTime(wsEnd, '235959');
                 }
-              } // api错误处理
-
-
+              }
+              // api错误处理
               if (!getQueryString('stream', playUrl)) {
                 realUrl = realUrl.replace('stream', '&stream');
               }
-
               if (url.indexOf('.cloud') !== -1) {
                 var recAPISuccess = function recAPISuccess(data) {
                   if (data.code == 200) {
                     var recSliceArr = [];
-
                     if (data.data && data.data.files && data.data.files.length > 0) {
                       var dataArr = data.data.files;
                       var nextFileTime = new Date().getTime();
-                      var isAll = data.data.isAll; // mock
+                      var isAll = data.data.isAll;
+                      // mock
                       // var number = 0;
                       //isAll = false;
-
                       if (isAll) {
                         recSliceArr = recSliceArrFun(dataArr);
                         var recSliceArrJSON = JSON.stringify(recSliceArr).replace('\\', '');
@@ -34812,7 +32314,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                                 if (data.data.files) {
                                   dataArr = dataArr.concat(data.data.files);
                                 }
-
                                 nextFileTime = data.data.nextFileTime > 0 ? data.data.nextFileTime : new Date().getTime();
                                 recTransaction();
                               } else {
@@ -34820,9 +32321,9 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                                 var recSliceArrJSON = JSON.stringify(recSliceArr).replace('\\', '');
                                 realUrl += '&recSlice=' + recSliceArrJSON.replace('\\', '') + '&r=' + Math.random();
                                 resolve(realUrl);
-                              } // mock
+                              }
+                              // mock
                               //number = number + 1;
-
                             } else {
                               recSliceArr = recSliceArrFun(dataArr);
                               var recSliceArrJSON = JSON.stringify(recSliceArr).replace('\\', '');
@@ -34830,11 +32331,9 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                               resolve(realUrl);
                             }
                           }
-
                           recSliceParams.startTime = nextFileTime;
                           request(recSliceUrl, 'POST', recSliceParams, '', recAPIV2Success);
                         };
-
                         recTransaction();
                       }
                     } else {
@@ -34849,7 +32348,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                       msg: "未找到录像片段"
                     });
                   }
-
                   function recSliceArrFun(data) {
                     var downloadPathArr = [];
                     data.forEach(function (item, index) {
@@ -34870,7 +32368,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                     return downloadPathArr;
                   }
                 };
-
                 //云存储回放
                 // 调用回放API接口获取回放片段 - start
                 var recBegin = reRormatRecTime(getQueryString('begin', realUrl));
@@ -34895,24 +32392,21 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                   var _recAPISuccess = function _recAPISuccess(data) {
                     if (data.code == 200) {
                       var recSliceArr = [];
-
                       if (data.data) {
                         recSliceArr = recSliceArrFun([data.data]);
                         var recSliceArrJSON = JSON.stringify(recSliceArr).replace('\\', '');
                         realUrl += '&recSlice=' + recSliceArrJSON.replace('\\', '');
                         console.log("realUrl", realUrl, data.data.recType);
-
                         if (data.data.recType == 1) {
                           realUrl = realUrl.replace('/playback', '/cloudplayback');
                         } else {
                           realUrl = realUrl.replace('/cloudplayback', '/playback');
-                        } // _this.opt.sources[0] = realUrl;
-
-
-                        resolve(realUrl); // request(nodeUrl, 'GET', '', '', nodeSuccess, nodeError);
+                        }
+                        // _this.opt.sources[0] = realUrl;
+                        resolve(realUrl);
+                        // request(nodeUrl, 'GET', '', '', nodeSuccess, nodeError);
                       }
                     }
-
                     function recSliceArrFun(data) {
                       var downloadPathArr = [];
                       data.forEach(function (item, index) {
@@ -34934,9 +32428,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                       return downloadPathArr;
                     }
                   };
-
-                  console.log("进入alarmId回放"); // 调用回放API接口获取回放片段 - start
-
+                  console.log("进入alarmId回放");
+                  // 调用回放API接口获取回放片段 - start
                   var alarmId = getQueryString('alarmId', realUrl);
                   var recBegin = reRormatRecTime(getQueryString('begin', realUrl));
                   var recEnd = reRormatRecTime(getQueryString('end', realUrl));
@@ -34948,10 +32441,11 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                     // recType: 1,
                     deviceSerial: deviceSerial,
                     channelNo: channelNo,
-                    alarmId: alarmId // startTime:recBegin,
+                    alarmId: alarmId
+                    // startTime:recBegin,
                     // endTime:recEnd
-
                   };
+
                   request(recSliceUrl, 'POST', recSliceParams, '', _recAPISuccess);
                 } else {
                   // arlar rec - end
@@ -34967,7 +32461,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               text: data.msg,
               color: 'red'
             });
-
             if (typeof _this3.params.handleError === 'function') {
               _this3.params.handleError({
                 retcode: data.code,
@@ -34976,17 +32469,17 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                 type: "handleError"
               });
             }
-
             reject(data);
-          } // fetch real url end
+          }
 
+          // fetch real url end
         });
       };
 
       return new Promise(function (resolve, reject) {
         return getRealUrlPromise(resolve, reject);
-      }); // 格式化回放时间
-
+      });
+      // 格式化回放时间
       function formatRecTime(time, defaultTime) {
         // 用户格式 无需更改 => 20182626T000000Z
         // return time
@@ -34998,7 +32491,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         // 结果 20181226000000 14位
         // 插入 TZ
         var reg = /^[0-9]{8}T[0-9]{6}Z$/;
-
         if (reg.test(time)) {
           // 用户格式 无需更改 => 20182626T000000Z
           return time;
@@ -35008,10 +32500,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           var standardTime = time + defaultTime.substring(start, end);
           return standardTime.slice(0, 8) + 'T' + standardTime.slice(8) + 'Z';
         }
-
         throw new Error('回放时间格式有误，请确认');
       }
-
       function reRormatRecTime(time) {
         var year = time.slice(0, 4);
         var month = time.slice(4, 6);
@@ -35019,10 +32509,10 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         var hour = time.slice(9, 11);
         var minute = time.slice(11, 13);
         var second = time.slice(13, 15);
-        var date = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second; // if (_this.opt.domain !== 'open') {
+        var date = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+        // if (_this.opt.domain !== 'open') {
         //   return new Date(date.replace(/-/g, '/')).getTime() + (8 * 60 * 60 * 1000);
         // }
-
         return new Date(date.replace(/-/g, '/')).getTime();
       }
     }
@@ -35030,68 +32520,53 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "_pluginPlay",
     value: function _pluginPlay(data, successCallback, errorCallback) {
       var _this4 = this;
-
       console.log("get real url result ===", data);
-
       if (!data) {
         return false;
       }
-
       function getPlayParams(url) {
         var websocketConnectUrl = url.split('?')[0].replace('/live', '').replace('/playback', '');
         var websocketStreamingParam = (url.indexOf('/live') === -1 ? url.indexOf('cloudplayback') !== -1 ? '/cloudplayback?' : '/playback?' : '/live?') + url.split('?')[1];
-
         if (websocketStreamingParam.indexOf('/playback') !== -1) {
           websocketStreamingParam = websocketStreamingParam.replace("stream=2", 'stream=1');
-        } // 本地回放仅支持主码流
-
-
+        }
+        // 本地回放仅支持主码流
         return {
           websocketConnectUrl: websocketConnectUrl,
           websocketStreamingParam: websocketStreamingParam
         };
       }
-
       var wsUrl = getPlayParams(data).websocketConnectUrl;
-
       if (this.env && this.env.wsUrl) {
         wsUrl = this.env.wsUrl;
       }
-
       var wsParams = {
         playURL: getPlayParams(data).websocketStreamingParam
       };
       this.jSPlugin.JS_Play(wsUrl, wsParams, 0).then(function () {
         console.log("播放成功");
-
         if (_this4.validateCode && typeof _this4.jSPlugin.decoderVersion !== 'undefined' && _this4.jSPlugin.decoderVersion === '2.0') {
           _this4.jSPlugin.JS_SetSecretKey(0, _this4.validateCode);
         }
-
         _this4.pluginStatus.loadingClear();
-
         _this4.pluginStatus.setPlayStatus({
           play: true,
           loading: false
         });
-
         if (_this4.Theme) {
           _this4.Theme.setDecoderState({
             play: true
           });
-
           var isOpenSound = lodash.findIndex(_this4.Theme.themeData.footer.btnList, function (v) {
             return v.iconId === 'sound' && v.isrender === 1 && v.defaultActive === 1;
           }) > -1;
           _this4.audio = isOpenSound;
         }
-
         if (_this4.audio) {
           setTimeout(function () {
             _this4.openSound();
           }, 500);
         }
-
         if (typeof _this4.params.handleSuccess === 'function') {
           _this4.params.handleSuccess({
             retcode: 0,
@@ -35099,16 +32574,13 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             type: "handleSuccess"
           });
         }
-
         successCallback();
-
         _this4.Monitor.dclog({
           url: _this4.url,
           action: 211,
           d: new Date().getTime() - _this4.playStartTime,
           text: 'startPlaySuccess'
         });
-
         _this4.Monitor.playLog({
           Enc: _this4.url.indexOf("@") === -1 ? 0 : 1,
           // 0 不加密 1 加密
@@ -35127,23 +32599,18 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         console.log("err", err);
         var msg = '播放失败，请检查设备及客户端网络';
         var retcode = -1;
-
         if (_this4.jSPlugin.bPlay) {
           return false;
         }
-
         if (err && err.oError && err.oError.errorCode) {
           var errorInfo = _this4.errorHander.matchErrorInfo(err.oError.errorCode);
-
           msg = errorInfo && errorInfo.description ? errorInfo.description : '播放失败，请检查设备及客户端网络';
           retcode = err.oError.errorCode;
         }
-
         _this4.pluginStatus.loadingSetText({
           text: msg,
           color: 'red'
         });
-
         if (typeof _this4.params.handleError === 'function') {
           _this4.params.handleError({
             retcode: retcode,
@@ -35152,16 +32619,13 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             type: "handleError"
           });
         }
-
         errorCallback();
-
         _this4.Monitor.dclog({
           url: _this4.url,
           action: 411,
           d: new Date().getTime() - _this4.playStartTime,
           text: 'startPlayError'
         });
-
         _this4.Monitor.playLog({
           Enc: _this4.url.indexOf("@") === -1 ? 0 : 1,
           // 0 不加密 1 加密
@@ -35182,7 +32646,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "_play",
     value: function _play(options) {
       var _this5 = this;
-
       this.pluginStatus.setPlayStatus({
         play: false,
         loading: true
@@ -35194,29 +32657,23 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         d: new Date().getTime() - this.initTime,
         text: 'startPlay'
       });
-
       if (options) {
         if (typeof options === 'string') {
           this.url = options;
         }
-
         if (typeof options.url === 'string') {
           this.url = options.url;
         }
-
         if (typeof options.accessToken === 'string') {
           this.accessToken = options.accessToken;
         }
-
         if (this.Theme && (typeof options.url === 'string' || typeof options.accessToken === 'string')) {
           this.Theme.getDeviceInfo();
         }
       }
-
       var promise = new Promise(function (resolve, reject) {
-        _this5.stop().then(function () {
+        _this5.jSPlugin.JS_Stop(0).then(function () {
           console.log("play_stop- success");
-
           _this5._getRealUrlPromise(_this5.accessToken, _this5.url).then(function (data) {
             _this5._pluginPlay(data, function () {
               return resolve(true);
@@ -35225,12 +32682,10 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             });
           })["catch"](function (err) {
             var msg = err.msg ? err.msg : '播放失败，请检查设备及客户端网络';
-
             _this5.pluginStatus.loadingSetText({
               text: msg,
               color: 'red'
             });
-
             if (typeof _this5.params.handleError === 'function') {
               _this5.params.handleError({
                 retcode: err.oError ? err.oError.errorCode : -1,
@@ -35239,7 +32694,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                 type: "handleError"
               });
             }
-
             reject(false);
           });
         });
@@ -35250,19 +32704,16 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "stop",
     value: function stop() {
       var _this6 = this;
-
       this.pluginStatus.setPlayStatus({
         loading: true
       });
       this.reSetTheme();
       return this.jSPlugin.JS_Stop(0).then(function () {
         console.log("停止成功");
-
         _this6.pluginStatus.setPlayStatus({
           play: false,
           loading: false
         });
-
         if (_this6.Theme) {
           _this6.Theme.setDecoderState({
             play: false
@@ -35282,13 +32733,11 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       var promise = new Promise(function (resolve, reject) {
         _this7.pause().then(function () {
           console.log("暂停成功");
-
           _this7.resume().then(function (data) {
             console.log("恢复成功");
           });
         })["catch"](function () {
           console.log("暂停失败");
-
           _this7.resume().then(function (data) {
             console.log("恢复成功");
           });
@@ -35305,107 +32754,72 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           pantile: false
         });
         this.Theme.Ptz.hide();
-      } // 录制初始化
-
-
+      }
+      // 录制初始化
       if (this.Theme) {
-        this.Theme.setDecoderState({
-          recordvideo: false
-        });
-      } // 电子放大初始化
-
-
+        if (this.Theme.decoderState.state.recordvideo) {
+          this.Theme.setDecoderState({
+            recordvideo: false
+          });
+        }
+      }
+      // 电子放大初始化
       if (this.Theme && this.Theme.decoderState.state.zoom) {
         this.Zoom.stopZoom();
         this.Theme.setDecoderState({
           zoom: false
         });
-      } // 对讲初始化
-
-
+      }
+      // 对讲初始化
       if (this.Theme && this.Theme.decoderState.state.talk) {
         this.stopTalk();
         this.Theme.setDecoderState({
           talk: false
         });
       }
+      // 回放日期选择
+      if (this.Theme && this.Theme.Rec && !this.Theme.isMobile) {
+        this.Theme.Rec.datepickerHide();
+      }
+      // 回放倍速
+      if (this.Theme && this.Theme.Rec) {
+        this.Theme.changeRecSpeed(1);
+      }
     }
   }, {
     key: "changePlayUrl",
     value: function changePlayUrl(options) {
       var _this8 = this;
-
+      this.reSetTheme();
       var initUrl = this.url;
       var url = matchUrl(initUrl, options);
-      console.log("changePlayUrl", url);
+      if (options.accessToken) {
+        this.accessToken = options.accessToken;
+      }
       var promise = new Promise(function (resolve, reject) {
-        // play中已经处理stop;
-        // this.stop()
-        //   .then(() => {
         console.log("changePlayUrl stop success");
-
+        var changePlayUrlParams = {
+          url: url
+        };
         if (options.accessToken) {
-          _this8.accessToken = options.accessToken;
-          return _this8.play({
-            accessToken: options.accessToken,
-            url: url
-          }).then(function () {
-            console.log("changePlayUrl replay success");
-            _this8.url = url; // 当前处于网页全屏状态
-
-            if (_this8.Theme && _this8.Theme.decoderState.state.webExpend) {
-              _this8.Theme.webExpend();
-            } // 当前处于全屏状态
-
-
-            if (_this8.Theme && _this8.Theme.decoderState.state.expend) {
-              _this8.Theme.expend();
-            }
-
-            resolve(url);
-          })["catch"](function (err) {
-            reject(url);
-          });
+          changePlayUrlParams["accessToken"] = options.accessToken;
         }
-
-        _this8.play(url).then(function () {
+        console.log("changePlayUrlParams", changePlayUrlParams);
+        return _this8.play(changePlayUrlParams).then(function () {
           console.log("changePlayUrl replay success");
-          _this8.url = url; // 当前处于网页全屏状态
-
+          _this8.url = url;
+          // 当前处于网页全屏状态
           if (_this8.Theme && _this8.Theme.decoderState.state.webExpend) {
             _this8.Theme.webExpend();
-          } // 当前处于全屏状态
-
-
+          }
+          // 当前处于全屏状态
           if (_this8.Theme && _this8.Theme.decoderState.state.expend) {
             _this8.Theme.expend();
           }
-
           resolve(url);
         })["catch"](function (err) {
           reject(url);
-        }); // })
-        // .catch((err) => {
-        //   console.log("切换过程停止失败", err);
-        //   if (options.accessToken) {
-        //     this.accessToken = options.accessToken;
-        //     return this.play({
-        //       accessToken: options.accessToken,
-        //       url: url
-        //     }).then(() => {
-        //       resolve(url);
-        //     }).catch((err) => {
-        //       reject(url);
-        //     });
-        //   }
-        //   this.play(url)
-        //     .then(() => {
-        //       resolve(url);
-        //     }).catch((err) => {
-        //       reject(url);
-        //     });
-        // });
-
+        });
       });
       /**
       * 匹配播放地址 用户播放地址切换
@@ -35417,50 +32831,36 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       * begin
       * end
       */
-
       function matchUrl(matchInitUrl, matchOptions) {
         if (matchOptions.url) {
           return matchOptions.url;
         }
-
         var type = matchInitUrl.split("/")[4].split(".")[matchInitUrl.split("/")[4].split(".").length - 1].split("?")[0];
-
         if (type === 'rec' && matchInitUrl.indexOf(".cloud.rec") !== -1) {
           type = 'cloud.rec';
         }
-
         if (matchOptions.type) {
           type = matchOptions.type;
         }
-
         var deviceSerial = matchInitUrl.split("/")[3];
-
         if (matchOptions.deviceSerial) {
           deviceSerial = matchOptions.deviceSerial;
         }
-
         var channelNo = matchInitUrl.split("/")[4].split(".")[0];
-
         if (matchOptions.channelNo) {
           channelNo = matchOptions.channelNo;
-        } // 如果切换设备，之前设备有验证码，新设备无验证码，建议传空验证码,清理验证码（降低解码消耗）
-
-
+        }
+        // 如果切换设备，之前设备有验证码，新设备无验证码，建议传空验证码,清理验证码（降低解码消耗）
         var validCode = matchInitUrl.split("/")[2].split("@").length === 2 ? matchInitUrl.split("/")[2].split("@")[0] : "";
-
         if (typeof matchOptions.validCode !== 'undefined') {
           validCode = matchOptions.validCode;
         }
-
         var hd = typeof matchOptions.hd === 'undefined' ? matchInitUrl.indexOf('.hd') !== -1 : matchOptions.hd;
         var result = "ezopen://".concat(validCode ? "".concat(validCode, "@") : "", "open.ys7.com/").concat(deviceSerial, "/").concat(channelNo).concat(hd ? '.hd' : '', ".").concat(type);
-
         if (type === 'live') {
           return result;
         }
-
         result = "ezopen://".concat(validCode ? "".concat(validCode, "@") : "", "open.ys7.com/").concat(deviceSerial, "/").concat(channelNo, ".").concat(type);
-
         if (matchOptions.begin && matchOptions.end) {
           result += "?begin=".concat(matchOptions.begin, "&end=").concat(matchOptions.end);
         } else if (matchOptions.begin) {
@@ -35468,25 +32868,22 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         } else if (getQueryString("begin", matchInitUrl)) {
           result += "?begin=".concat(getQueryString("begin", matchInitUrl));
         }
-
         return result;
       }
-
       return promise;
     }
   }, {
     key: "getOSDTime",
     value: function getOSDTime() {
       var _this9 = this;
-
       var promise = new Promise(function (resolve, reject) {
         _this9.jSPlugin.JS_GetOSDTime(0).then(function (data) {
           resolve({
             code: 0,
             retcode: 0,
             data: data
-          }); // 兼容旧版本callback
-
+          });
+          // 兼容旧版本callback
           if (typeof _this9.params.getOSDTimeCallBack === 'function') {
             _this9.params.getOSDTimeCallBack({
               id: _this9.id,
@@ -35500,8 +32897,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             code: -1,
             retcode: -1,
             data: err
-          }); // 兼容旧版本callback
-
+          });
+          // 兼容旧版本callback
           if (typeof _this9.params.getOSDTimeCallBack === 'function') {
             _this9.params.getOSDTimeCallBack({
               id: _this9.id,
@@ -35518,10 +32915,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "capturePicture",
     value: function capturePicture(name) {
       var _this10 = this;
-
       var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var capturePictureRT = this.jSPlugin.JS_CapturePicture(0, name, "JPEG", callback, !!callback);
-
       if (isPromise(capturePictureRT)) {
         // 兼容旧版本callback
         if (typeof this.params.capturePictureCallBack === 'function') {
@@ -35539,10 +32934,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             });
           });
         }
-
         return capturePictureRT;
       }
-
       return new Promise(function (resolve) {
         resolve(capturePictureRT);
       });
@@ -35551,9 +32944,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "startSave",
     value: function startSave(name) {
       var _this11 = this;
-
       var startSaveRT = this.jSPlugin.JS_StartSave(0, name);
-
       if (isPromise(startSaveRT)) {
         // 兼容旧版本callback
         if (typeof this.params.startSaveCallBack === 'function') {
@@ -35571,16 +32962,13 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             });
           });
         }
-
         return startSaveRT;
       }
-
       if (this.Theme) {
         this.Theme.setDecoderState({
           recordvideo: true
         });
       }
-
       return new Promise(function (resolve) {
         resolve(startSaveRT);
       });
@@ -35589,9 +32977,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "stopSave",
     value: function stopSave() {
       var _this12 = this;
-
       var stopSaveRT = this.jSPlugin.JS_StopSave(0);
-
       if (isPromise(stopSaveRT)) {
         // 兼容旧版本callback
         if (typeof this.params.startSaveCallBack === 'function') {
@@ -35609,16 +32995,13 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             });
           });
         }
-
         return stopSaveRT;
       }
-
       if (this.Theme) {
         this.Theme.setDecoderState({
           recordvideo: false
         });
       }
-
       return new Promise(function (resolve) {
         resolve(stopSaveRT);
       });
@@ -35628,18 +33011,15 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     value: function openSound() {
       var openSoundRT = this.jSPlugin.JS_OpenSound(0);
       console.log("打开声音", openSoundRT);
-
       if (isPromise(openSoundRT)) {
         return openSoundRT;
       }
-
       if (this.Theme) {
         this.Theme.setDecoderState({
           sound: true
         });
-      } // 兼容旧版本callback
-
-
+      }
+      // 兼容旧版本callback
       if (typeof this.params.openSoundCallBack === 'function') {
         this.params.openSoundCallBack({
           id: this.id,
@@ -35647,7 +33027,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           code: openSoundRT
         });
       }
-
       return new Promise(function (resolve) {
         resolve(openSoundRT);
       });
@@ -35656,18 +33035,15 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "closeSound",
     value: function closeSound() {
       var closeSoundRT = this.jSPlugin.JS_CloseSound(0);
-
       if (isPromise(closeSoundRT)) {
         return closeSoundRT;
       }
-
       if (this.Theme) {
         this.Theme.setDecoderState({
           sound: false
         });
-      } // 兼容旧版本callback
-
-
+      }
+      // 兼容旧版本callback
       if (typeof this.params.closeSoundCallBack === 'function') {
         this.params.closeSoundCallBack({
           id: this.id,
@@ -35675,7 +33051,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           code: closeSoundRT
         });
       }
-
       return new Promise(function (resolve) {
         resolve(closeSoundRT);
       });
@@ -35684,11 +33059,9 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "enableZoom",
     value: function enableZoom() {
       var enableZoomRT = this.jSPlugin.JS_EnableZoom(0);
-
       if (isPromise(enableZoomRT)) {
         return enableZoomRT;
       }
-
       return new Promise(function (resolve) {
         resolve(enableZoomRT);
       });
@@ -35697,11 +33070,9 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "closeZoom",
     value: function closeZoom() {
       var closeZoomRT = this.jSPlugin.JS_DisableZoom(0);
-
       if (isPromise(closeZoomRT)) {
         return closeZoomRT;
       }
-
       return new Promise(function (resolve) {
         resolve(closeZoomRT);
       });
@@ -35728,29 +33099,25 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       var headerHeight = 0;
       var timeLineHeight = 0;
       this.params.height = height;
-      this.params.width = width; //总体高度包含模板
-
+      this.params.width = width;
+      //总体高度包含模板
       if (this.Theme && this.Theme.isNeedRenderHeader && document.getElementById("".concat(this.id, "-headControl"))) {
         headerHeight = parseInt(document.getElementById("".concat(this.id, "-headControl")).style.height, 10);
       }
-
       if (this.Theme && this.Theme.isNeedRenderTimeLine && !this.isMobile) {
         timeLineHeight = 48;
       }
-
       height = height - headerHeight - timeLineHeight;
       this.width = width;
       this.height = height;
       document.getElementById("".concat(this.id, "-wrap")).style = "width:".concat(width, "px;position:relative;display:inline-block;vertical-align: bottom;");
       document.getElementById("".concat(this.id)).style.width = width + 'px';
       document.getElementById("".concat(this.id)).style.height = height + 'px';
-
       if (this.jSPlugin && this.jSPlugin.bPlay) {
         if (this.jSPlugin) {
           this.jSPlugin.iHeight = height;
           this.jSPlugin.iWidth = width;
         }
-
         this.jSPlugin.JS_Resize(width, height);
       } else {
         if (document.getElementById("".concat(this.id, "-player"))) {
@@ -35759,16 +33126,12 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           document.getElementById("".concat(this.id, "-player")).style.width = width + "px";
           document.getElementById("".concat(this.id, "-player")).style.height = height + "px";
         }
-
         var scale = 1;
-
         if (document.getElementById("".concat(this.id, "canvas0"))) {
           var isNeedScale = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
-
           if (isNeedScale) {
             scale = 2;
           }
-
           document.getElementById("".concat(this.id, "canvas0")).style.width = width * scale + "px";
           document.getElementById("".concat(this.id, "canvas0")).style.height = height * scale + "px";
           document.getElementById("".concat(this.id, "canvas0")).width = width * scale;
@@ -35777,7 +33140,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           document.getElementById("".concat(this.id, "canvas0")).parentNode.style.height = height * scale + "px";
           document.getElementById("".concat(this.id, "canvas_draw0")).height = height * scale;
         }
-
         if (this.jSPlugin) {
           this.jSPlugin.iHeight = height * scale;
           this.jSPlugin.iWidth = width * scale;
@@ -35788,9 +33150,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "fast",
     value: function fast(next) {
       var _this13 = this;
-
       var speed = this.speed;
-
       if (next) {
         var fastRT = this.jSPlugin.JS_Fast(0, next);
       } else {
@@ -35807,7 +33167,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               type: "handleError"
             });
           }
-
           return new Promise(function (resolve, reject) {
             _this13.speed = speed;
             reject({
@@ -35819,10 +33178,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             });
           });
         }
-
         var fastRT = this.jSPlugin.JS_Fast(0);
       }
-
       return new Promise(function (resolve) {
         _this13.speed = speed;
         resolve({
@@ -35838,9 +33195,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "slow",
     value: function slow() {
       var _this14 = this;
-
       var speed = this.speed;
-
       if (speed === 4) {
         speed = 2;
       } else if (speed === 2) {
@@ -35854,7 +33209,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             type: "handleError"
           });
         }
-
         return new Promise(function (resolve, reject) {
           _this14.speed = speed;
           reject({
@@ -35866,7 +33220,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           });
         });
       }
-
       var slowRT = this.jSPlugin.JS_Slow(0);
       return new Promise(function (resolve) {
         _this14.speed = speed;
@@ -35885,7 +33238,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       var url = this.url;
       var currentDay = (getQueryString('begin', url) || new Date().Format('yyyyMMdd')).substr(0, 8);
       endTime = formatRecTime(currentDay, '235959');
-
       if (startTime.length === 6) {
         startTime = formatRecTime(currentDay, startTime);
       } else if (startTime.length === 16) {
@@ -35898,7 +33250,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               type: "handleError"
             });
           }
-
           return false;
         }
       } else {
@@ -35910,11 +33261,9 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             type: "handleError"
           });
         }
-
         return false;
-      } // 格式化回放时间
-
-
+      }
+      // 格式化回放时间
       function formatRecTime(time, defaultTime) {
         // 用户格式 无需更改 => 20182626T000000Z
         // return time
@@ -35926,7 +33275,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         // 结果 20181226000000 14位
         // 插入 TZ
         var reg = /^[0-9]{8}T[0-9]{6}Z$/;
-
         if (reg.test(time)) {
           // 用户格式 无需更改 => 20182626T000000Z
           return time;
@@ -35936,17 +33284,13 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           var standardTime = time + defaultTime.substring(start, end);
           return standardTime.slice(0, 8) + 'T' + standardTime.slice(8) + 'Z';
         }
-
         throw new Error('回放时间格式有误，请确认');
       }
-
       var seekRT = this.jSPlugin.JS_Seek(0, startTime, endTime);
       console.log("seekRT", seekRT);
-
       if (isPromise(seekRT)) {
         return seekRT;
       }
-
       return new Promise(function (resolve) {
         resolve(seekRT);
       });
@@ -35955,14 +33299,11 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "fullScreen",
     value: function fullScreen() {
       var _this15 = this;
-
       var promise = requestFullScreenPromise(document.getElementById("".concat(this.id)));
       promise.then(function (data) {
         console.log("全屏promise", window.screen.availWidth);
-
-        _this15.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight); // 兼容旧版本callback
-
-
+        _this15.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight);
+        // 兼容旧版本callback
         if (typeof _this15.params.fullScreenCallBack === 'function') {
           _this15.params.fullScreenCallBack({
             id: _this15.id,
@@ -35970,16 +33311,14 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             code: 0
           });
         }
-      }); //  监听全屏事件触发
-
+      });
+      //  监听全屏事件触发
       var fullscreenchange = function fullscreenchange() {
         var isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
-
         if (!isFullScreen) {
           _this15.jSPlugin.JS_Resize(_this15.width, _this15.height);
-        } // 兼容旧版本callback
-
-
+        }
+        // 兼容旧版本callback
         if (typeof _this15.params.fullScreenChangeCallBack === 'function') {
           _this15.params.fullScreenChangeCallBack({
             id: _this15.id,
@@ -35988,7 +33327,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           });
         }
       };
-
       ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange'].forEach(function (item) {
         window.addEventListener(item, function (data) {
           return fullscreenchange();
@@ -35999,11 +33337,9 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "cancelFullScreen",
     value: function cancelFullScreen() {
       var _this16 = this;
-
       var cancelPromise = cancelFullScreenPromise();
       cancelPromise.then(function (data) {
         console.log("取消全屏", data, _this16.jSPlugin);
-
         _this16.jSPlugin.JS_Resize(_this16.width, _this16.height);
       });
     }
@@ -36021,16 +33357,13 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "destroy",
     value: function destroy() {
       var destroyRT = this.jSPlugin.JS_DestroyWorker(0);
-
       if (this.Theme) {
         this.Theme = null;
         window.EZUIKit[this.params.id].state.EZUIKitPlayer.themeInit = false;
       }
-
       if (isPromise(destroyRT)) {
         return destroyRT;
       }
-
       return new Promise(function (resolve) {
         resolve(destroyRT);
       });
@@ -36039,45 +33372,86 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "getDeviceCapacity",
     value: function getDeviceCapacity() {
       var _this17 = this;
-
       var apiDomain = this.env.domain;
-
       if (this.env) {
         apiDomain = this.env.domain;
       }
-
       var capacityUrl = apiDomain + "/api/lapp/device/capacity";
-
       var capacitySuccess = function capacitySuccess(data) {
         if (data.code == 200 && data.data) {
           _this17.capacity = data.data;
         }
       };
-
       var capacityParams = {
         accessToken: this.accessToken,
         deviceSerial: matchEzopenUrl(this.url).deviceSerial
       };
       request(capacityUrl, 'POST', capacityParams, '', capacitySuccess);
-    } // pause() {
+    }
+    // pause() {
     //   return this.jSPlugin.JS_Pause(0);
     // }
     // resume(time) {
     //   return this.jSPlugin.JS_Resume(time);
     // }
-
   }, {
     key: "pause",
     value: function pause() {
-      return this.jSPlugin.JS_Pause(0);
+      var _this18 = this;
+      // return this.jSPlugin.JS_Pause(0);
+      this.reSetTheme();
+      return new Promise(function (resolve, reject) {
+        // 兼容单线程未关闭声音无法再次开启声音问题
+        _this18.jSPlugin.JS_CloseSound(0);
+        _this18.jSPlugin.JS_Pause(0).then(function (data) {
+          // 暂停成功
+          if (_this18.Theme) {
+            _this18.Theme.setDecoderState({
+              play: false
+            });
+          }
+          resolve();
+        })["catch"](function (err) {
+          // 暂停失败
+          console.log(err);
+          reject(err);
+        });
+      });
     }
   }, {
     key: "_resume",
     value: function _resume(time) {
-      return this.jSPlugin.JS_Resume(time);
+      var _this19 = this;
+      return new Promise(function (resolve) {
+        _this19.pluginStatus.setPlayStatus({
+          play: false,
+          loading: true
+        });
+        _this19.jSPlugin.JS_Resume(time).then(function (data) {
+          // 暂停恢复后，保持倍速
+          if (_this19.url.indexOf(".rec") !== -1 && _this19.Theme && _this19.Theme.nextRate !== 1) {
+            _this19.jSPlugin.JS_Speed(_this19.Theme.nextRate);
+          }
+          // 主题播放状态及声音状态
+          if (_this19.Theme) {
+            _this19.Theme.setDecoderState({
+              play: true
+            });
+            var isOpenSound = _this19.Theme.decoderState.state.sound;
+            if (isOpenSound) {
+              setTimeout(function () {
+                _this19.openSound();
+              }, 500);
+            }
+          }
+          resolve(data);
+        })["catch"](function (err) {
+          console.log("resume err", err);
+        });
+      });
+      // return this.jSPlugin.JS_Resume(time);
     }
   }]);
-
   return EZUIKitPlayer;
 }();
 
@@ -36088,13 +33462,12 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       if (!w.document) {
         throw new Error("EZUIPlayer requires a window with a document");
       }
-
       return factory(w);
     };
   } else {
     factory(global);
-  } // Pass this if window is not defined yet
-
+  }
+  // Pass this if window is not defined yet
 })(typeof window !== "undefined" ? window : undefined, function (window, noGlobal) {
   var EZUIKit = {
     Core: Core,

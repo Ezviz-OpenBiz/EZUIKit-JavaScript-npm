@@ -15,7 +15,7 @@ $ npm install ezuikit-js
 ### 引入ezuikit-js
 
 ```
-import  EZUIKit from 'ezuikit-js';
+import EZUIKit from 'ezuikit-js';
 ```
 
 #### 如果你使用原生方法,可以通过标签引用
@@ -398,16 +398,17 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 ```
 options参数说明
 
-|参数名|类型|描述|是否必选|
-|:--|:--|:--|:--|
-|type|	String| 播放地址类型，"live":预览，"rec"：回放；“cloud.rec”：云存储回放|	Y|
-|accessToken|	String|	授权过程获取的access_token|	Y|
-|deviceSerial    | String    |  设备序列号,存在英文字母的设备序列号，字母需为大写   | Y |
-|channelNo    | int    | 通道号    | Y |
-|hd    | boolean    | 是否为高清 true-主码流（高清） false-子码流(标清)   | Y |
-|validCode	|String|	设备验证码（加密设备播放需要输入验证码）	|Y|
-|begin|	String	| type类型为回放有效，开始时间 格式为“YYYYMMDDHHmmss”	|N|
-|end|	String	| type类型为回放有效，结束时间 格式为 “YYYYMMDDHHmmss”	|N|
+|参数名|类型|是否必选|默认值|描述|
+|:--|:--|:--|:--|:--|
+|type|	String|	Y|无|播放地址类型，"live":预览，"rec"：回放；“cloud.rec”：云存储回放|
+|deviceSerial | String | Y |无|设备序列号,存在英文字母的设备序列号，字母需为大写|
+|channelNo    | int    | Y | 无 | 通道号|
+|accessToken|	String|	N | 初始化时获取 | 授权过程获取的access_token|
+|hd    | boolean    |  N |初始化时获取|是否为高清 true-主码流（高清） false-子码流(标清)   |
+|validCode	|String	|N| 初始化时获取 |	设备验证码（加密设备播放需要输入验证码）|
+|validCode	|String	|N| 初始化时获取 |	设备验证码（加密设备播放需要输入验证码）|
+|begin|	String	|N|初始化时获取|type类型为回放有效，开始时间 格式为“YYYYMMDDHHmmss”	|
+|end|	String	| N| 初始化时获取|type类型为回放有效，结束时间 格式为 “YYYYMMDDHHmmss”	|
 
 
   
