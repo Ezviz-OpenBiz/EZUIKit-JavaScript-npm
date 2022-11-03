@@ -275,57 +275,6 @@ var request = function request(url, method, params, header, success, error) {
   }
   http_request.send(data);
 };
-// 增加防抖函数
-var debouncePromise = function debouncePromise(fn, delay) {
-  var immdiate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  var timer = null;
-  var isInvoke = false;
-  return function _debounce() {
-    var _this = this;
-    for (var _len = arguments.length, arg = new Array(_len), _key = 0; _key < _len; _key++) {
-      arg[_key] = arguments[_key];
-    }
-    return new Promise(function (resolve, reject) {
-      if (timer) {
-        console.log("防抖, delay 后执行", timer, delay, fn);
-        clearTimeout(timer);
-      }
-      // 双击执行2次
-      if (immdiate && !isInvoke) {
-        console.log("防抖 第一次执行...", isInvoke, fn);
-        isInvoke = true;
-        fn.apply(_this, arg).then(function () {
-          resolve();
-        })["catch"](function (err) {
-          console.log("防抖,err", err);
-          reject();
-        });
-        setTimeout(function () {
-          isInvoke = false;
-        }, delay);
-      } else {
-        if (isInvoke) {
-          console.log("操作过于频繁，仅支持" + delay + "ms时间内切换一次");
-          reject({
-            code: -1,
-            msg: "操作过于频繁，仅支持" + delay + "ms时间内切换一次"
-          });
-          return false;
-        }
-        timer = setTimeout(function () {
-          console.log("防抖 执行...", fn);
-          fn.apply(_this, arg).then(function () {
-            resolve();
-          })["catch"](function (err) {
-            console.log("防抖,err", err);
-            reject();
-          });
-          isInvoke = false;
-        }, delay);
-      }
-    });
-  };
-};
 
 var HLS = /*#__PURE__*/function () {
   function HLS(videoId, url) {
@@ -31141,6 +31090,62 @@ var Monitor = /*#__PURE__*/function () {
 });
 var EZUIKitV3$1 = EZUIKitV3;
 
+/* global setTimeout, clearTimeout */
+var dist = function debounce(fn) {
+  var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var lastCallAt = void 0;
+  var deferred = void 0;
+  var timer = void 0;
+  var pendingArgs = [];
+  return function debounced() {
+    var currentWait = getWait(wait);
+    var currentTime = new Date().getTime();
+    var isCold = !lastCallAt || currentTime - lastCallAt > currentWait;
+    lastCallAt = currentTime;
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    if (isCold && options.leading) {
+      return options.accumulate ? Promise.resolve(fn.call(this, [args])).then(function (result) {
+        return result[0];
+      }) : Promise.resolve(fn.call.apply(fn, [this].concat(args)));
+    }
+    if (deferred) {
+      clearTimeout(timer);
+    } else {
+      deferred = defer();
+    }
+    pendingArgs.push(args);
+    timer = setTimeout(flush.bind(this), currentWait);
+    if (options.accumulate) {
+      var argsIndex = pendingArgs.length - 1;
+      return deferred.promise.then(function (results) {
+        return results[argsIndex];
+      });
+    }
+    return deferred.promise;
+  };
+  function flush() {
+    var thisDeferred = deferred;
+    clearTimeout(timer);
+    Promise.resolve(options.accumulate ? fn.call(this, pendingArgs) : fn.apply(this, pendingArgs[pendingArgs.length - 1])).then(thisDeferred.resolve, thisDeferred.reject);
+    pendingArgs = [];
+    deferred = null;
+  }
+};
+function getWait(wait) {
+  return typeof wait === 'function' ? wait() : wait;
+}
+function defer() {
+  var deferred = {};
+  deferred.promise = new Promise(function (resolve, reject) {
+    deferred.resolve = resolve;
+    deferred.reject = reject;
+  });
+  return deferred;
+}
+
 /**
  * Created by wangweijie5 on 2016/12/16.
  */
@@ -31737,6 +31742,9 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   function EZUIKitPlayer(params) {
     var _this = this;
     _classCallCheck$1(this, EZUIKitPlayer);
+    // 解决当ws连接建立但是没有推流导致未触发播放成功事件，
+    // 此时切换设备执行 播放器 stop 时触发了播放成功事件导致设备序列号重置
+    this.isStoping = false; // 是否在播放前 stop 执行过程中
     var _params$autoplay = params.autoplay,
       autoplay = _params$autoplay === void 0 ? true : _params$autoplay;
     // 如果设置了模板（除精简版），此处不自动播放，根据模板判断是否执行自动播放:
@@ -31967,14 +31975,15 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       return new EZUIKitV3$1.EZUIKitPlayer(params);
     }
     // this.stop = debouncePromise(()=>this._stop(),0,true);
-    this.play = debouncePromise(function (options) {
+    this.play = dist(function (options) {
       return _this._play(options);
-    }, 1000, true);
-    // this.pause = debouncePromise(()=>this._pause(),1000,true);
-    this.resume = debouncePromise(function (time) {
+    }, 500, true);
+    this.resume = dist(function (time) {
       return _this._resume(time);
-    }, 1000, true);
-    //this.changePlayUrl = debouncePromise((time)=>this._changePlayUrl(time),1000,true);
+    }, 500, true);
+    this.changePlayUrl = dist(function (options) {
+      return _this._changePlayUrl(options);
+    }, 500);
     // 监听到页面退出
     // 研究院反馈，播放过程中退出页面需要执行停止视频，否则可能导致浏览器崩溃
     window.addEventListener("beforeunload", function () {
@@ -32211,6 +32220,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "_getRealUrlPromise",
     value: function _getRealUrlPromise(accessToken, url) {
       var _this3 = this;
+      console.log("\u83B7\u53D6\u64AD\u653E\u5730\u5740 url => ".concat(url, " ").concat(this.accessToken));
       var apiDomain = this.env.domain;
       if (this.env) {
         apiDomain = this.env.domain;
@@ -32520,7 +32530,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "_pluginPlay",
     value: function _pluginPlay(data, successCallback, errorCallback) {
       var _this4 = this;
-      console.log("get real url result ===", data);
+      console.log("执行播放 _pluginPlay", data);
       if (!data) {
         return false;
       }
@@ -32543,8 +32553,17 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       var wsParams = {
         playURL: getPlayParams(data).websocketStreamingParam
       };
+      console.log('播放前 stop 阶段 结束');
+      this.isStoping = false;
+      var now = Date.now();
+      console.log('执行播放 ... this.jSPlugin.JS_Play at ', now);
       this.jSPlugin.JS_Play(wsUrl, wsParams, 0).then(function () {
-        console.log("播放成功");
+        console.log("执行播放 ... this.jSPlugin.JS_Play 播放成功", wsUrl, wsParams);
+        console.log("执行播放耗时 ", Date.now() - now);
+        if (_this4.isStoping) {
+          console.log('现在在播放前 stop 阶段，此次应为无效播放成功触发。不执行后续回调， 此次耗时无效');
+          return;
+        }
         if (_this4.validateCode && typeof _this4.jSPlugin.decoderVersion !== 'undefined' && _this4.jSPlugin.decoderVersion === '2.0') {
           _this4.jSPlugin.JS_SetSecretKey(0, _this4.validateCode);
         }
@@ -32646,6 +32665,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "_play",
     value: function _play(options) {
       var _this5 = this;
+      console.log("\u6267\u884C\u64AD\u653E play options.url =>", options);
       this.pluginStatus.setPlayStatus({
         play: false,
         loading: true
@@ -32672,8 +32692,10 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         }
       }
       var promise = new Promise(function (resolve, reject) {
+        console.log('执行 播放前 stop');
+        _this5.isStoping = true;
         _this5.jSPlugin.JS_Stop(0).then(function () {
-          console.log("play_stop- success");
+          console.log("\u64AD\u653E\u524D stop \u6267\u884C\u6210\u529F this.url => ".concat(_this5.url, " ").concat(_this5.accessToken));
           _this5._getRealUrlPromise(_this5.accessToken, _this5.url).then(function (data) {
             _this5._pluginPlay(data, function () {
               return resolve(true);
@@ -32787,26 +32809,27 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       }
     }
   }, {
-    key: "changePlayUrl",
-    value: function changePlayUrl(options) {
+    key: "_changePlayUrl",
+    value: function _changePlayUrl(options) {
       var _this8 = this;
+      console.log('_changePlayUrl');
       this.reSetTheme();
       var initUrl = this.url;
       var url = matchUrl(initUrl, options);
       if (options.accessToken) {
         this.accessToken = options.accessToken;
       }
+      this.url = url;
       var promise = new Promise(function (resolve, reject) {
-        console.log("changePlayUrl stop success");
         var changePlayUrlParams = {
           url: url
         };
         if (options.accessToken) {
           changePlayUrlParams["accessToken"] = options.accessToken;
         }
-        console.log("changePlayUrlParams", changePlayUrlParams);
+        console.log("切换播放地址 参数 ", changePlayUrlParams);
         return _this8.play(changePlayUrlParams).then(function () {
-          console.log("changePlayUrl replay success");
+          console.log("切换播放地址 play 执行成功 ", url);
           _this8.url = url;
           // 当前处于网页全屏状态
           if (_this8.Theme && _this8.Theme.decoderState.state.webExpend) {
