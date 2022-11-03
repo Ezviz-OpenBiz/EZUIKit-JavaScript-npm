@@ -32829,8 +32829,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         }
         console.log("切换播放地址 参数 ", changePlayUrlParams);
         return _this8.play(changePlayUrlParams).then(function () {
-          console.log("切换播放地址 play 执行成功 ", url);
-          _this8.url = url;
+          console.log("切换播放地址 play 执行成功 ", _this8.url, _this8.accessToken);
           // 当前处于网页全屏状态
           if (_this8.Theme && _this8.Theme.decoderState.state.webExpend) {
             _this8.Theme.webExpend();
