@@ -9,7 +9,7 @@ function _typeof(obj) {
     return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
   }, _typeof(obj);
 }
-function _classCallCheck$1(instance, Constructor) {
+function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
   }
@@ -23,7 +23,7 @@ function _defineProperties(target, props) {
     Object.defineProperty(target, descriptor.key, descriptor);
   }
 }
-function _createClass$1(Constructor, protoProps, staticProps) {
+function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
   Object.defineProperty(Constructor, "prototype", {
@@ -47,11 +47,11 @@ function _defineProperty(obj, key, value) {
 
 var Core = /*#__PURE__*/function () {
   function Core(x, y) {
-    _classCallCheck$1(this, Core);
+    _classCallCheck(this, Core);
     this.coreX = x;
     this.coreY = y;
   }
-  _createClass$1(Core, [{
+  _createClass(Core, [{
     key: "toString",
     value: function toString() {
       return "".concat(this.coreX, "-").concat(this.coreY);
@@ -129,7 +129,7 @@ var getQueryString = function getQueryString(name, url) {
   var m = (url || window.location.href).match(r);
   return decodeURIComponent(m ? m[2] : '');
 };
-var insertAfter$1 = function insertAfter(newElement, targetElement) {
+var insertAfter = function insertAfter(newElement, targetElement) {
   var parent = targetElement.parentNode;
   if (parent.lastChild == targetElement) {
     parent.appendChild(newElement);
@@ -275,11 +275,62 @@ var request = function request(url, method, params, header, success, error) {
   }
   http_request.send(data);
 };
+// 增加防抖函数
+var debouncePromise = function debouncePromise(fn, delay) {
+  var immdiate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var timer = null;
+  var isInvoke = false;
+  return function _debounce() {
+    var _this = this;
+    for (var _len = arguments.length, arg = new Array(_len), _key = 0; _key < _len; _key++) {
+      arg[_key] = arguments[_key];
+    }
+    return new Promise(function (resolve, reject) {
+      if (timer) {
+        console.log("防抖, delay 后执行", timer, delay, fn);
+        clearTimeout(timer);
+      }
+      // 双击执行2次
+      if (immdiate && !isInvoke) {
+        console.log("防抖 第一次执行...", isInvoke, fn);
+        isInvoke = true;
+        fn.apply(_this, arg).then(function () {
+          resolve();
+        })["catch"](function (err) {
+          console.log("防抖,err", err);
+          reject();
+        });
+        setTimeout(function () {
+          isInvoke = false;
+        }, delay);
+      } else {
+        if (isInvoke) {
+          console.log("操作过于频繁，仅支持" + delay + "ms时间内切换一次");
+          reject({
+            code: -1,
+            msg: "操作过于频繁，仅支持" + delay + "ms时间内切换一次"
+          });
+          return false;
+        }
+        timer = setTimeout(function () {
+          console.log("防抖 执行...", fn);
+          fn.apply(_this, arg).then(function () {
+            resolve();
+          })["catch"](function (err) {
+            console.log("防抖,err", err);
+            reject();
+          });
+          isInvoke = false;
+        }, delay);
+      }
+    });
+  };
+};
 
 var HLS = /*#__PURE__*/function () {
   function HLS(videoId, url) {
     var _this = this;
-    _classCallCheck$1(this, HLS);
+    _classCallCheck(this, HLS);
     addJs("https://open.ys7.com/assets/ezuikit_v3.4/js/hls.js", function () {
       console.log("加载hls.min.js成功", window.Hls);
       console.log("isSupportHls", window.Hls.isSupported());
@@ -290,7 +341,7 @@ var HLS = /*#__PURE__*/function () {
       return !!window.Hls;
     });
   }
-  _createClass$1(HLS, [{
+  _createClass(HLS, [{
     key: "toString",
     value: function toString() {
       return "hls ".concat(this.coreX, "-").concat(this.coreY);
@@ -356,7 +407,7 @@ var HLS = /*#__PURE__*/function () {
 var FLV = /*#__PURE__*/function () {
   function FLV(videoId, url) {
     var _this = this;
-    _classCallCheck$1(this, FLV);
+    _classCallCheck(this, FLV);
     addJs("https://open.ys7.com/assets/ezuikit_v3.4/js/flv.min.js", function () {
       console.log("加载flv.min.js成功", window.flvjs);
       console.log("isSupportFlv", window.flvjs.isSupported());
@@ -365,7 +416,7 @@ var FLV = /*#__PURE__*/function () {
       }
     });
   }
-  _createClass$1(FLV, [{
+  _createClass(FLV, [{
     key: "toString",
     value: function toString() {
       return "Flv ".concat(this.coreX, "-").concat(this.coreY);
@@ -1097,14 +1148,14 @@ lodash.prototype=baseLodash.prototype;lodash.prototype.constructor=lodash;Lodash
      * @name reverse
      * @memberOf LazyWrapper
      * @returns {Object} Returns the new reversed `LazyWrapper` object.
-     */function lazyReverse(){if(this.__filtered__){var result=new LazyWrapper(this);result.__dir__=-1;result.__filtered__=true;}else {result=this.clone();result.__dir__*=-1;}return result;}/**
+     */function lazyReverse(){if(this.__filtered__){var result=new LazyWrapper(this);result.__dir__=-1;result.__filtered__=true;}else{result=this.clone();result.__dir__*=-1;}return result;}/**
      * Extracts the unwrapped value from its lazy wrapper.
      *
      * @private
      * @name value
      * @memberOf LazyWrapper
      * @returns {*} Returns the unwrapped value.
-     */function lazyValue(){var array=this.__wrapped__.value(),dir=this.__dir__,isArr=isArray(array),isRight=dir<0,arrLength=isArr?array.length:0,view=getView(0,arrLength,this.__views__),start=view.start,end=view.end,length=end-start,index=isRight?end:start-1,iteratees=this.__iteratees__,iterLength=iteratees.length,resIndex=0,takeCount=nativeMin(length,this.__takeCount__);if(!isArr||!isRight&&arrLength==length&&takeCount==length){return baseWrapperValue(array,this.__actions__);}var result=[];outer:while(length--&&resIndex<takeCount){index+=dir;var iterIndex=-1,value=array[index];while(++iterIndex<iterLength){var data=iteratees[iterIndex],iteratee=data.iteratee,type=data.type,computed=iteratee(value);if(type==LAZY_MAP_FLAG){value=computed;}else if(!computed){if(type==LAZY_FILTER_FLAG){continue outer;}else {break outer;}}}result[resIndex++]=value;}return result;}// Ensure `LazyWrapper` is an instance of `baseLodash`.
+     */function lazyValue(){var array=this.__wrapped__.value(),dir=this.__dir__,isArr=isArray(array),isRight=dir<0,arrLength=isArr?array.length:0,view=getView(0,arrLength,this.__views__),start=view.start,end=view.end,length=end-start,index=isRight?end:start-1,iteratees=this.__iteratees__,iterLength=iteratees.length,resIndex=0,takeCount=nativeMin(length,this.__takeCount__);if(!isArr||!isRight&&arrLength==length&&takeCount==length){return baseWrapperValue(array,this.__actions__);}var result=[];outer:while(length--&&resIndex<takeCount){index+=dir;var iterIndex=-1,value=array[index];while(++iterIndex<iterLength){var data=iteratees[iterIndex],iteratee=data.iteratee,type=data.type,computed=iteratee(value);if(type==LAZY_MAP_FLAG){value=computed;}else if(!computed){if(type==LAZY_FILTER_FLAG){continue outer;}else{break outer;}}}result[resIndex++]=value;}return result;}// Ensure `LazyWrapper` is an instance of `baseLodash`.
 LazyWrapper.prototype=baseCreate(baseLodash.prototype);LazyWrapper.prototype.constructor=LazyWrapper;/*------------------------------------------------------------------------*/ /**
      * Creates a hash object.
      *
@@ -1172,7 +1223,7 @@ Hash.prototype.clear=hashClear;Hash.prototype['delete']=hashDelete;Hash.prototyp
      * @memberOf ListCache
      * @param {string} key The key of the value to remove.
      * @returns {boolean} Returns `true` if the entry was removed, else `false`.
-     */function listCacheDelete(key){var data=this.__data__,index=assocIndexOf(data,key);if(index<0){return false;}var lastIndex=data.length-1;if(index==lastIndex){data.pop();}else {splice.call(data,index,1);}--this.size;return true;}/**
+     */function listCacheDelete(key){var data=this.__data__,index=assocIndexOf(data,key);if(index<0){return false;}var lastIndex=data.length-1;if(index==lastIndex){data.pop();}else{splice.call(data,index,1);}--this.size;return true;}/**
      * Gets the list cache value for `key`.
      *
      * @private
@@ -1197,7 +1248,7 @@ Hash.prototype.clear=hashClear;Hash.prototype['delete']=hashDelete;Hash.prototyp
      * @param {string} key The key of the value to set.
      * @param {*} value The value to set.
      * @returns {Object} Returns the list cache instance.
-     */function listCacheSet(key,value){var data=this.__data__,index=assocIndexOf(data,key);if(index<0){++this.size;data.push([key,value]);}else {data[index][1]=value;}return this;}// Add methods to `ListCache`.
+     */function listCacheSet(key,value){var data=this.__data__,index=assocIndexOf(data,key);if(index<0){++this.size;data.push([key,value]);}else{data[index][1]=value;}return this;}// Add methods to `ListCache`.
 ListCache.prototype.clear=listCacheClear;ListCache.prototype['delete']=listCacheDelete;ListCache.prototype.get=listCacheGet;ListCache.prototype.has=listCacheHas;ListCache.prototype.set=listCacheSet;/*------------------------------------------------------------------------*/ /**
      * Creates a map cache object to store key-value pairs.
      *
@@ -1403,7 +1454,7 @@ isIndex(key,length)))){result.push(key);}}return result;}/**
      * @param {Object} object The object to modify.
      * @param {string} key The key of the property to assign.
      * @param {*} value The value to assign.
-     */function baseAssignValue(object,key,value){if(key=='__proto__'&&defineProperty){defineProperty(object,key,{'configurable':true,'enumerable':true,'value':value,'writable':true});}else {object[key]=value;}}/**
+     */function baseAssignValue(object,key,value){if(key=='__proto__'&&defineProperty){defineProperty(object,key,{'configurable':true,'enumerable':true,'value':value,'writable':true});}else{object[key]=value;}}/**
      * The base implementation of `_.at` without support for individual paths.
      *
      * @private
@@ -1433,7 +1484,7 @@ isIndex(key,length)))){result.push(key);}}return result;}/**
      * @param {Object} [object] The parent object of `value`.
      * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
      * @returns {*} Returns the cloned value.
-     */function baseClone(value,bitmask,customizer,key,object,stack){var result,isDeep=bitmask&CLONE_DEEP_FLAG,isFlat=bitmask&CLONE_FLAT_FLAG,isFull=bitmask&CLONE_SYMBOLS_FLAG;if(customizer){result=object?customizer(value,key,object,stack):customizer(value);}if(result!==undefined$1){return result;}if(!isObject(value)){return value;}var isArr=isArray(value);if(isArr){result=initCloneArray(value);if(!isDeep){return copyArray(value,result);}}else {var tag=getTag(value),isFunc=tag==funcTag||tag==genTag;if(isBuffer(value)){return cloneBuffer(value,isDeep);}if(tag==objectTag||tag==argsTag||isFunc&&!object){result=isFlat||isFunc?{}:initCloneObject(value);if(!isDeep){return isFlat?copySymbolsIn(value,baseAssignIn(result,value)):copySymbols(value,baseAssign(result,value));}}else {if(!cloneableTags[tag]){return object?value:{};}result=initCloneByTag(value,tag,isDeep);}}// Check for circular references and return its corresponding clone.
+     */function baseClone(value,bitmask,customizer,key,object,stack){var result,isDeep=bitmask&CLONE_DEEP_FLAG,isFlat=bitmask&CLONE_FLAT_FLAG,isFull=bitmask&CLONE_SYMBOLS_FLAG;if(customizer){result=object?customizer(value,key,object,stack):customizer(value);}if(result!==undefined$1){return result;}if(!isObject(value)){return value;}var isArr=isArray(value);if(isArr){result=initCloneArray(value);if(!isDeep){return copyArray(value,result);}}else{var tag=getTag(value),isFunc=tag==funcTag||tag==genTag;if(isBuffer(value)){return cloneBuffer(value,isDeep);}if(tag==objectTag||tag==argsTag||isFunc&&!object){result=isFlat||isFunc?{}:initCloneObject(value);if(!isDeep){return isFlat?copySymbolsIn(value,baseAssignIn(result,value)):copySymbols(value,baseAssign(result,value));}}else{if(!cloneableTags[tag]){return object?value:{};}result=initCloneByTag(value,tag,isDeep);}}// Check for circular references and return its corresponding clone.
 stack||(stack=new Stack());var stacked=stack.get(value);if(stacked){return stacked;}stack.set(value,result);if(isSet(value)){value.forEach(function(subValue){result.add(baseClone(subValue,bitmask,customizer,subValue,value,stack));});}else if(isMap(value)){value.forEach(function(subValue,key){result.set(key,baseClone(subValue,bitmask,customizer,key,value,stack));});}var keysFunc=isFull?isFlat?getAllKeysIn:getAllKeys:isFlat?keysIn:keys;var props=isArr?undefined$1:keysFunc(value);arrayEach(props||value,function(subValue,key){if(props){key=subValue;subValue=value[key];}// Recursively populate clone (susceptible to call stack limits).
 assignValue(result,key,baseClone(subValue,bitmask,customizer,key,value,stack));});return result;}/**
      * The base implementation of `_.conforms` which doesn't clone `source`.
@@ -1525,7 +1576,7 @@ assignValue(result,key,baseClone(subValue,bitmask,customizer,key,value,stack));}
      * @param {Array} [result=[]] The initial result value.
      * @returns {Array} Returns the new flattened array.
      */function baseFlatten(array,depth,predicate,isStrict,result){var index=-1,length=array.length;predicate||(predicate=isFlattenable);result||(result=[]);while(++index<length){var value=array[index];if(depth>0&&predicate(value)){if(depth>1){// Recursively flatten arrays (susceptible to call stack limits).
-baseFlatten(value,depth-1,predicate,isStrict,result);}else {arrayPush(result,value);}}else if(!isStrict){result[result.length]=value;}}return result;}/**
+baseFlatten(value,depth-1,predicate,isStrict,result);}else{arrayPush(result,value);}}else if(!isStrict){result[result.length]=value;}}return result;}/**
      * The base implementation of `baseForOwn` which iterates over `object`
      * properties returned by `keysFunc` and invokes `iteratee` for each property.
      * Iteratee functions may exit iteration early by explicitly returning `false`.
@@ -1706,7 +1757,7 @@ baseFlatten(value,depth-1,predicate,isStrict,result);}else {arrayPush(result,val
      * @param {Array} matchData The property names, values, and compare flags to match.
      * @param {Function} [customizer] The function to customize comparisons.
      * @returns {boolean} Returns `true` if `object` is a match, else `false`.
-     */function baseIsMatch(object,source,matchData,customizer){var index=matchData.length,length=index,noCustomizer=!customizer;if(object==null){return !length;}object=Object(object);while(index--){var data=matchData[index];if(noCustomizer&&data[2]?data[1]!==object[data[0]]:!(data[0]in object)){return false;}}while(++index<length){data=matchData[index];var key=data[0],objValue=object[key],srcValue=data[1];if(noCustomizer&&data[2]){if(objValue===undefined$1&&!(key in object)){return false;}}else {var stack=new Stack();if(customizer){var result=customizer(objValue,srcValue,key,object,source,stack);}if(!(result===undefined$1?baseIsEqual(srcValue,objValue,COMPARE_PARTIAL_FLAG|COMPARE_UNORDERED_FLAG,customizer,stack):result)){return false;}}}return true;}/**
+     */function baseIsMatch(object,source,matchData,customizer){var index=matchData.length,length=index,noCustomizer=!customizer;if(object==null){return !length;}object=Object(object);while(index--){var data=matchData[index];if(noCustomizer&&data[2]?data[1]!==object[data[0]]:!(data[0]in object)){return false;}}while(++index<length){data=matchData[index];var key=data[0],objValue=object[key],srcValue=data[1];if(noCustomizer&&data[2]){if(objValue===undefined$1&&!(key in object)){return false;}}else{var stack=new Stack();if(customizer){var result=customizer(objValue,srcValue,key,object,source,stack);}if(!(result===undefined$1?baseIsEqual(srcValue,objValue,COMPARE_PARTIAL_FLAG|COMPARE_UNORDERED_FLAG,customizer,stack):result)){return false;}}}return true;}/**
      * The base implementation of `_.isNative` without bad shim checks.
      *
      * @private
@@ -1789,7 +1840,7 @@ if(typeof value=='function'){return value;}if(value==null){return identity;}if(t
      * @param {Function} [customizer] The function to customize merged values.
      * @param {Object} [stack] Tracks traversed source values and their merged
      *  counterparts.
-     */function baseMerge(object,source,srcIndex,customizer,stack){if(object===source){return;}baseFor(source,function(srcValue,key){stack||(stack=new Stack());if(isObject(srcValue)){baseMergeDeep(object,source,key,srcIndex,baseMerge,customizer,stack);}else {var newValue=customizer?customizer(safeGet(object,key),srcValue,key+'',object,source,stack):undefined$1;if(newValue===undefined$1){newValue=srcValue;}assignMergeValue(object,key,newValue);}},keysIn);}/**
+     */function baseMerge(object,source,srcIndex,customizer,stack){if(object===source){return;}baseFor(source,function(srcValue,key){stack||(stack=new Stack());if(isObject(srcValue)){baseMergeDeep(object,source,key,srcIndex,baseMerge,customizer,stack);}else{var newValue=customizer?customizer(safeGet(object,key),srcValue,key+'',object,source,stack):undefined$1;if(newValue===undefined$1){newValue=srcValue;}assignMergeValue(object,key,newValue);}},keysIn);}/**
      * A specialized version of `baseMerge` for arrays and objects which performs
      * deep merges and tracks traversed objects enabling objects with circular
      * references to be merged.
@@ -1803,7 +1854,7 @@ if(typeof value=='function'){return value;}if(value==null){return identity;}if(t
      * @param {Function} [customizer] The function to customize assigned values.
      * @param {Object} [stack] Tracks traversed source values and their merged
      *  counterparts.
-     */function baseMergeDeep(object,source,key,srcIndex,mergeFunc,customizer,stack){var objValue=safeGet(object,key),srcValue=safeGet(source,key),stacked=stack.get(srcValue);if(stacked){assignMergeValue(object,key,stacked);return;}var newValue=customizer?customizer(objValue,srcValue,key+'',object,source,stack):undefined$1;var isCommon=newValue===undefined$1;if(isCommon){var isArr=isArray(srcValue),isBuff=!isArr&&isBuffer(srcValue),isTyped=!isArr&&!isBuff&&isTypedArray(srcValue);newValue=srcValue;if(isArr||isBuff||isTyped){if(isArray(objValue)){newValue=objValue;}else if(isArrayLikeObject(objValue)){newValue=copyArray(objValue);}else if(isBuff){isCommon=false;newValue=cloneBuffer(srcValue,true);}else if(isTyped){isCommon=false;newValue=cloneTypedArray(srcValue,true);}else {newValue=[];}}else if(isPlainObject(srcValue)||isArguments(srcValue)){newValue=objValue;if(isArguments(objValue)){newValue=toPlainObject(objValue);}else if(!isObject(objValue)||isFunction(objValue)){newValue=initCloneObject(srcValue);}}else {isCommon=false;}}if(isCommon){// Recursively merge objects and arrays (susceptible to call stack limits).
+     */function baseMergeDeep(object,source,key,srcIndex,mergeFunc,customizer,stack){var objValue=safeGet(object,key),srcValue=safeGet(source,key),stacked=stack.get(srcValue);if(stacked){assignMergeValue(object,key,stacked);return;}var newValue=customizer?customizer(objValue,srcValue,key+'',object,source,stack):undefined$1;var isCommon=newValue===undefined$1;if(isCommon){var isArr=isArray(srcValue),isBuff=!isArr&&isBuffer(srcValue),isTyped=!isArr&&!isBuff&&isTypedArray(srcValue);newValue=srcValue;if(isArr||isBuff||isTyped){if(isArray(objValue)){newValue=objValue;}else if(isArrayLikeObject(objValue)){newValue=copyArray(objValue);}else if(isBuff){isCommon=false;newValue=cloneBuffer(srcValue,true);}else if(isTyped){isCommon=false;newValue=cloneTypedArray(srcValue,true);}else{newValue=[];}}else if(isPlainObject(srcValue)||isArguments(srcValue)){newValue=objValue;if(isArguments(objValue)){newValue=toPlainObject(objValue);}else if(!isObject(objValue)||isFunction(objValue)){newValue=initCloneObject(srcValue);}}else{isCommon=false;}}if(isCommon){// Recursively merge objects and arrays (susceptible to call stack limits).
 stack.set(srcValue,newValue);mergeFunc(newValue,srcValue,srcIndex,customizer,stack);stack['delete'](srcValue);}assignMergeValue(object,key,newValue);}/**
      * The base implementation of `_.nth` which doesn't coerce arguments.
      *
@@ -1819,7 +1870,7 @@ stack.set(srcValue,newValue);mergeFunc(newValue,srcValue,srcIndex,customizer,sta
      * @param {Function[]|Object[]|string[]} iteratees The iteratees to sort by.
      * @param {string[]} orders The sort orders of `iteratees`.
      * @returns {Array} Returns the new sorted array.
-     */function baseOrderBy(collection,iteratees,orders){if(iteratees.length){iteratees=arrayMap(iteratees,function(iteratee){if(isArray(iteratee)){return function(value){return baseGet(value,iteratee.length===1?iteratee[0]:iteratee);};}return iteratee;});}else {iteratees=[identity];}var index=-1;iteratees=arrayMap(iteratees,baseUnary(getIteratee()));var result=baseMap(collection,function(value,key,collection){var criteria=arrayMap(iteratees,function(iteratee){return iteratee(value);});return {'criteria':criteria,'index':++index,'value':value};});return baseSortBy(result,function(object,other){return compareMultiple(object,other,orders);});}/**
+     */function baseOrderBy(collection,iteratees,orders){if(iteratees.length){iteratees=arrayMap(iteratees,function(iteratee){if(isArray(iteratee)){return function(value){return baseGet(value,iteratee.length===1?iteratee[0]:iteratee);};}return iteratee;});}else{iteratees=[identity];}var index=-1;iteratees=arrayMap(iteratees,baseUnary(getIteratee()));var result=baseMap(collection,function(value,key,collection){var criteria=arrayMap(iteratees,function(iteratee){return iteratee(value);});return {'criteria':criteria,'index':++index,'value':value};});return baseSortBy(result,function(object,other){return compareMultiple(object,other,orders);});}/**
      * The base implementation of `_.pick` without support for individual
      * property identifiers.
      *
@@ -1859,7 +1910,7 @@ stack.set(srcValue,newValue);mergeFunc(newValue,srcValue,srcIndex,customizer,sta
      * @param {Array} array The array to modify.
      * @param {number[]} indexes The indexes of elements to remove.
      * @returns {Array} Returns `array`.
-     */function basePullAt(array,indexes){var length=array?indexes.length:0,lastIndex=length-1;while(length--){var index=indexes[length];if(length==lastIndex||index!==previous){var previous=index;if(isIndex(index)){splice.call(array,index,1);}else {baseUnset(array,index);}}}return array;}/**
+     */function basePullAt(array,indexes){var length=array?indexes.length:0,lastIndex=length-1;while(length--){var index=indexes[length];if(length==lastIndex||index!==previous){var previous=index;if(isIndex(index)){splice.call(array,index,1);}else{baseUnset(array,index);}}}return array;}/**
      * The base implementation of `_.random` without support for returning
      * floating-point numbers.
      *
@@ -1962,7 +2013,7 @@ do{if(n%2){result+=string;}n=nativeFloor(n/2);if(n){string+=string;}}while(n);re
      * @param {boolean} [retHighest] Specify returning the highest qualified index.
      * @returns {number} Returns the index at which `value` should be inserted
      *  into `array`.
-     */function baseSortedIndex(array,value,retHighest){var low=0,high=array==null?low:array.length;if(typeof value=='number'&&value===value&&high<=HALF_MAX_ARRAY_LENGTH){while(low<high){var mid=low+high>>>1,computed=array[mid];if(computed!==null&&!isSymbol(computed)&&(retHighest?computed<=value:computed<value)){low=mid+1;}else {high=mid;}}return high;}return baseSortedIndexBy(array,value,identity,retHighest);}/**
+     */function baseSortedIndex(array,value,retHighest){var low=0,high=array==null?low:array.length;if(typeof value=='number'&&value===value&&high<=HALF_MAX_ARRAY_LENGTH){while(low<high){var mid=low+high>>>1,computed=array[mid];if(computed!==null&&!isSymbol(computed)&&(retHighest?computed<=value:computed<value)){low=mid+1;}else{high=mid;}}return high;}return baseSortedIndexBy(array,value,identity,retHighest);}/**
      * The base implementation of `_.sortedIndexBy` and `_.sortedLastIndexBy`
      * which invokes `iteratee` for `value` and each element of `array` to compute
      * their sort ranking. The iteratee is invoked with one argument; (value).
@@ -1974,7 +2025,7 @@ do{if(n%2){result+=string;}n=nativeFloor(n/2);if(n){string+=string;}}while(n);re
      * @param {boolean} [retHighest] Specify returning the highest qualified index.
      * @returns {number} Returns the index at which `value` should be inserted
      *  into `array`.
-     */function baseSortedIndexBy(array,value,iteratee,retHighest){var low=0,high=array==null?0:array.length;if(high===0){return 0;}value=iteratee(value);var valIsNaN=value!==value,valIsNull=value===null,valIsSymbol=isSymbol(value),valIsUndefined=value===undefined$1;while(low<high){var mid=nativeFloor((low+high)/2),computed=iteratee(array[mid]),othIsDefined=computed!==undefined$1,othIsNull=computed===null,othIsReflexive=computed===computed,othIsSymbol=isSymbol(computed);if(valIsNaN){var setLow=retHighest||othIsReflexive;}else if(valIsUndefined){setLow=othIsReflexive&&(retHighest||othIsDefined);}else if(valIsNull){setLow=othIsReflexive&&othIsDefined&&(retHighest||!othIsNull);}else if(valIsSymbol){setLow=othIsReflexive&&othIsDefined&&!othIsNull&&(retHighest||!othIsSymbol);}else if(othIsNull||othIsSymbol){setLow=false;}else {setLow=retHighest?computed<=value:computed<value;}if(setLow){low=mid+1;}else {high=mid;}}return nativeMin(high,MAX_ARRAY_INDEX);}/**
+     */function baseSortedIndexBy(array,value,iteratee,retHighest){var low=0,high=array==null?0:array.length;if(high===0){return 0;}value=iteratee(value);var valIsNaN=value!==value,valIsNull=value===null,valIsSymbol=isSymbol(value),valIsUndefined=value===undefined$1;while(low<high){var mid=nativeFloor((low+high)/2),computed=iteratee(array[mid]),othIsDefined=computed!==undefined$1,othIsNull=computed===null,othIsReflexive=computed===computed,othIsSymbol=isSymbol(computed);if(valIsNaN){var setLow=retHighest||othIsReflexive;}else if(valIsUndefined){setLow=othIsReflexive&&(retHighest||othIsDefined);}else if(valIsNull){setLow=othIsReflexive&&othIsDefined&&(retHighest||!othIsNull);}else if(valIsSymbol){setLow=othIsReflexive&&othIsDefined&&!othIsNull&&(retHighest||!othIsSymbol);}else if(othIsNull||othIsSymbol){setLow=false;}else{setLow=retHighest?computed<=value:computed<value;}if(setLow){low=mid+1;}else{high=mid;}}return nativeMin(high,MAX_ARRAY_INDEX);}/**
      * The base implementation of `_.sortedUniq` and `_.sortedUniqBy` without
      * support for iteratee shorthands.
      *
@@ -2006,7 +2057,7 @@ return arrayMap(value,baseToString)+'';}if(isSymbol(value)){return symbolToStrin
      * @param {Function} [iteratee] The iteratee invoked per element.
      * @param {Function} [comparator] The comparator invoked per element.
      * @returns {Array} Returns the new duplicate free array.
-     */function baseUniq(array,iteratee,comparator){var index=-1,includes=arrayIncludes,length=array.length,isCommon=true,result=[],seen=result;if(comparator){isCommon=false;includes=arrayIncludesWith;}else if(length>=LARGE_ARRAY_SIZE){var set=iteratee?null:createSet(array);if(set){return setToArray(set);}isCommon=false;includes=cacheHas;seen=new SetCache();}else {seen=iteratee?[]:result;}outer:while(++index<length){var value=array[index],computed=iteratee?iteratee(value):value;value=comparator||value!==0?value:0;if(isCommon&&computed===computed){var seenIndex=seen.length;while(seenIndex--){if(seen[seenIndex]===computed){continue outer;}}if(iteratee){seen.push(computed);}result.push(value);}else if(!includes(seen,computed,comparator)){if(seen!==result){seen.push(computed);}result.push(value);}}return result;}/**
+     */function baseUniq(array,iteratee,comparator){var index=-1,includes=arrayIncludes,length=array.length,isCommon=true,result=[],seen=result;if(comparator){isCommon=false;includes=arrayIncludesWith;}else if(length>=LARGE_ARRAY_SIZE){var set=iteratee?null:createSet(array);if(set){return setToArray(set);}isCommon=false;includes=cacheHas;seen=new SetCache();}else{seen=iteratee?[]:result;}outer:while(++index<length){var value=array[index],computed=iteratee?iteratee(value):value;value=comparator||value!==0?value:0;if(isCommon&&computed===computed){var seenIndex=seen.length;while(seenIndex--){if(seen[seenIndex]===computed){continue outer;}}if(iteratee){seen.push(computed);}result.push(value);}else if(!includes(seen,computed,comparator)){if(seen!==result){seen.push(computed);}result.push(value);}}return result;}/**
      * The base implementation of `_.unset`.
      *
      * @private
@@ -2200,7 +2251,7 @@ return object.index-other.index;}/**
      * @param {Object} [object={}] The object to copy properties to.
      * @param {Function} [customizer] The function to customize copied values.
      * @returns {Object} Returns `object`.
-     */function copyObject(source,props,object,customizer){var isNew=!object;object||(object={});var index=-1,length=props.length;while(++index<length){var key=props[index];var newValue=customizer?customizer(object[key],source[key],key,object,source):undefined$1;if(newValue===undefined$1){newValue=source[key];}if(isNew){baseAssignValue(object,key,newValue);}else {assignValue(object,key,newValue);}}return object;}/**
+     */function copyObject(source,props,object,customizer){var isNew=!object;object||(object={});var index=-1,length=props.length;while(++index<length){var key=props[index];var newValue=customizer?customizer(object[key],source[key],key,object,source):undefined$1;if(newValue===undefined$1){newValue=source[key];}if(isNew){baseAssignValue(object,key,newValue);}else{assignValue(object,key,newValue);}}return object;}/**
      * Copies own symbols of `source` to `object`.
      *
      * @private
@@ -2293,7 +2344,7 @@ return isObject(result)?result:thisBinding;};}/**
      * @private
      * @param {boolean} [fromRight] Specify iterating from right to left.
      * @returns {Function} Returns the new flow function.
-     */function createFlow(fromRight){return flatRest(function(funcs){var length=funcs.length,index=length,prereq=LodashWrapper.prototype.thru;if(fromRight){funcs.reverse();}while(index--){var func=funcs[index];if(typeof func!='function'){throw new TypeError(FUNC_ERROR_TEXT);}if(prereq&&!wrapper&&getFuncName(func)=='wrapper'){var wrapper=new LodashWrapper([],true);}}index=wrapper?index:length;while(++index<length){func=funcs[index];var funcName=getFuncName(func),data=funcName=='wrapper'?getData(func):undefined$1;if(data&&isLaziable(data[0])&&data[1]==(WRAP_ARY_FLAG|WRAP_CURRY_FLAG|WRAP_PARTIAL_FLAG|WRAP_REARG_FLAG)&&!data[4].length&&data[9]==1){wrapper=wrapper[getFuncName(data[0])].apply(wrapper,data[3]);}else {wrapper=func.length==1&&isLaziable(func)?wrapper[funcName]():wrapper.thru(func);}}return function(){var args=arguments,value=args[0];if(wrapper&&args.length==1&&isArray(value)){return wrapper.plant(value).value();}var index=0,result=length?funcs[index].apply(this,args):value;while(++index<length){result=funcs[index].call(this,result);}return result;};});}/**
+     */function createFlow(fromRight){return flatRest(function(funcs){var length=funcs.length,index=length,prereq=LodashWrapper.prototype.thru;if(fromRight){funcs.reverse();}while(index--){var func=funcs[index];if(typeof func!='function'){throw new TypeError(FUNC_ERROR_TEXT);}if(prereq&&!wrapper&&getFuncName(func)=='wrapper'){var wrapper=new LodashWrapper([],true);}}index=wrapper?index:length;while(++index<length){func=funcs[index];var funcName=getFuncName(func),data=funcName=='wrapper'?getData(func):undefined$1;if(data&&isLaziable(data[0])&&data[1]==(WRAP_ARY_FLAG|WRAP_CURRY_FLAG|WRAP_PARTIAL_FLAG|WRAP_REARG_FLAG)&&!data[4].length&&data[9]==1){wrapper=wrapper[getFuncName(data[0])].apply(wrapper,data[3]);}else{wrapper=func.length==1&&isLaziable(func)?wrapper[funcName]():wrapper.thru(func);}}return function(){var args=arguments,value=args[0];if(wrapper&&args.length==1&&isArray(value)){return wrapper.plant(value).value();}var index=0,result=length?funcs[index].apply(this,args):value;while(++index<length){result=funcs[index].call(this,result);}return result;};});}/**
      * Creates a function that wraps `func` to invoke it with optional `this`
      * binding of `thisArg`, partial application, and currying.
      *
@@ -2325,7 +2376,7 @@ return isObject(result)?result:thisBinding;};}/**
      * @param {Function} operator The function to perform the operation.
      * @param {number} [defaultValue] The value used for `undefined` arguments.
      * @returns {Function} Returns the new mathematical operation function.
-     */function createMathOperation(operator,defaultValue){return function(value,other){var result;if(value===undefined$1&&other===undefined$1){return defaultValue;}if(value!==undefined$1){result=value;}if(other!==undefined$1){if(result===undefined$1){return other;}if(typeof value=='string'||typeof other=='string'){value=baseToString(value);other=baseToString(other);}else {value=baseToNumber(value);other=baseToNumber(other);}result=operator(value,other);}return result;};}/**
+     */function createMathOperation(operator,defaultValue){return function(value,other){var result;if(value===undefined$1&&other===undefined$1){return defaultValue;}if(value!==undefined$1){result=value;}if(other!==undefined$1){if(result===undefined$1){return other;}if(typeof value=='string'||typeof other=='string'){value=baseToString(value);other=baseToString(other);}else{value=baseToNumber(value);other=baseToNumber(other);}result=operator(value,other);}return result;};}/**
      * Creates a function like `_.over`.
      *
      * @private
@@ -2357,7 +2408,7 @@ return isObject(result)?result:thisBinding;};}/**
      * @param {boolean} [fromRight] Specify iterating from right to left.
      * @returns {Function} Returns the new range function.
      */function createRange(fromRight){return function(start,end,step){if(step&&typeof step!='number'&&isIterateeCall(start,end,step)){end=step=undefined$1;}// Ensure the sign of `-0` is preserved.
-start=toFinite(start);if(end===undefined$1){end=start;start=0;}else {end=toFinite(end);}step=step===undefined$1?start<end?1:-1:toFinite(step);return baseRange(start,end,step,fromRight);};}/**
+start=toFinite(start);if(end===undefined$1){end=start;start=0;}else{end=toFinite(end);}step=step===undefined$1?start<end?1:-1:toFinite(step);return baseRange(start,end,step,fromRight);};}/**
      * Creates a function that performs a relational operation on two values.
      *
      * @private
@@ -2423,7 +2474,7 @@ var pair=(toString(number)+'e').split('e'),value=func(pair[0]+'e'+(+pair[1]+prec
      * @param {number} [ary] The arity cap of `func`.
      * @param {number} [arity] The arity of `func`.
      * @returns {Function} Returns the new wrapped function.
-     */function createWrap(func,bitmask,thisArg,partials,holders,argPos,ary,arity){var isBindKey=bitmask&WRAP_BIND_KEY_FLAG;if(!isBindKey&&typeof func!='function'){throw new TypeError(FUNC_ERROR_TEXT);}var length=partials?partials.length:0;if(!length){bitmask&=~(WRAP_PARTIAL_FLAG|WRAP_PARTIAL_RIGHT_FLAG);partials=holders=undefined$1;}ary=ary===undefined$1?ary:nativeMax(toInteger(ary),0);arity=arity===undefined$1?arity:toInteger(arity);length-=holders?holders.length:0;if(bitmask&WRAP_PARTIAL_RIGHT_FLAG){var partialsRight=partials,holdersRight=holders;partials=holders=undefined$1;}var data=isBindKey?undefined$1:getData(func);var newData=[func,bitmask,thisArg,partials,holders,partialsRight,holdersRight,argPos,ary,arity];if(data){mergeData(newData,data);}func=newData[0];bitmask=newData[1];thisArg=newData[2];partials=newData[3];holders=newData[4];arity=newData[9]=newData[9]===undefined$1?isBindKey?0:func.length:nativeMax(newData[9]-length,0);if(!arity&&bitmask&(WRAP_CURRY_FLAG|WRAP_CURRY_RIGHT_FLAG)){bitmask&=~(WRAP_CURRY_FLAG|WRAP_CURRY_RIGHT_FLAG);}if(!bitmask||bitmask==WRAP_BIND_FLAG){var result=createBind(func,bitmask,thisArg);}else if(bitmask==WRAP_CURRY_FLAG||bitmask==WRAP_CURRY_RIGHT_FLAG){result=createCurry(func,bitmask,arity);}else if((bitmask==WRAP_PARTIAL_FLAG||bitmask==(WRAP_BIND_FLAG|WRAP_PARTIAL_FLAG))&&!holders.length){result=createPartial(func,bitmask,thisArg,partials);}else {result=createHybrid.apply(undefined$1,newData);}var setter=data?baseSetData:setData;return setWrapToString(setter(result,newData),func,bitmask);}/**
+     */function createWrap(func,bitmask,thisArg,partials,holders,argPos,ary,arity){var isBindKey=bitmask&WRAP_BIND_KEY_FLAG;if(!isBindKey&&typeof func!='function'){throw new TypeError(FUNC_ERROR_TEXT);}var length=partials?partials.length:0;if(!length){bitmask&=~(WRAP_PARTIAL_FLAG|WRAP_PARTIAL_RIGHT_FLAG);partials=holders=undefined$1;}ary=ary===undefined$1?ary:nativeMax(toInteger(ary),0);arity=arity===undefined$1?arity:toInteger(arity);length-=holders?holders.length:0;if(bitmask&WRAP_PARTIAL_RIGHT_FLAG){var partialsRight=partials,holdersRight=holders;partials=holders=undefined$1;}var data=isBindKey?undefined$1:getData(func);var newData=[func,bitmask,thisArg,partials,holders,partialsRight,holdersRight,argPos,ary,arity];if(data){mergeData(newData,data);}func=newData[0];bitmask=newData[1];thisArg=newData[2];partials=newData[3];holders=newData[4];arity=newData[9]=newData[9]===undefined$1?isBindKey?0:func.length:nativeMax(newData[9]-length,0);if(!arity&&bitmask&(WRAP_CURRY_FLAG|WRAP_CURRY_RIGHT_FLAG)){bitmask&=~(WRAP_CURRY_FLAG|WRAP_CURRY_RIGHT_FLAG);}if(!bitmask||bitmask==WRAP_BIND_FLAG){var result=createBind(func,bitmask,thisArg);}else if(bitmask==WRAP_CURRY_FLAG||bitmask==WRAP_CURRY_RIGHT_FLAG){result=createCurry(func,bitmask,arity);}else if((bitmask==WRAP_PARTIAL_FLAG||bitmask==(WRAP_BIND_FLAG|WRAP_PARTIAL_FLAG))&&!holders.length){result=createPartial(func,bitmask,thisArg,partials);}else{result=createHybrid.apply(undefined$1,newData);}var setter=data?baseSetData:setData;return setWrapToString(setter(result,newData),func,bitmask);}/**
      * Used by `_.defaults` to customize its `_.assignIn` use to assign properties
      * of source objects to the destination object for all destination properties
      * that resolve to `undefined`.
@@ -2582,7 +2633,7 @@ if(objCtor!=othCtor&&'constructor'in object&&'constructor'in other&&!(typeof obj
      * @private
      * @param {*} value The value to query.
      * @returns {string} Returns the raw `toStringTag`.
-     */function getRawTag(value){var isOwn=hasOwnProperty.call(value,symToStringTag),tag=value[symToStringTag];try{value[symToStringTag]=undefined$1;var unmasked=true;}catch(e){}var result=nativeObjectToString.call(value);if(unmasked){if(isOwn){value[symToStringTag]=tag;}else {delete value[symToStringTag];}}return result;}/**
+     */function getRawTag(value){var isOwn=hasOwnProperty.call(value,symToStringTag),tag=value[symToStringTag];try{value[symToStringTag]=undefined$1;var unmasked=true;}catch(e){}var result=nativeObjectToString.call(value);if(unmasked){if(isOwn){value[symToStringTag]=tag;}else{delete value[symToStringTag];}}return result;}/**
      * Creates an array of the own enumerable symbols of `object`.
      *
      * @private
@@ -2850,7 +2901,7 @@ data[0]=source[0];data[1]=newBitmask;return data;}/**
      * @private
      * @param {Function} func The function to restrict.
      * @returns {Function} Returns the new shortable function.
-     */function shortOut(func){var count=0,lastCalled=0;return function(){var stamp=nativeNow(),remaining=HOT_SPAN-(stamp-lastCalled);lastCalled=stamp;if(remaining>0){if(++count>=HOT_COUNT){return arguments[0];}}else {count=0;}return func.apply(undefined$1,arguments);};}/**
+     */function shortOut(func){var count=0,lastCalled=0;return function(){var stamp=nativeNow(),remaining=HOT_SPAN-(stamp-lastCalled);lastCalled=stamp;if(remaining>0){if(++count>=HOT_COUNT){return arguments[0];}}else{count=0;}return func.apply(undefined$1,arguments);};}/**
      * A specialized version of `_.shuffle` which mutates and sets the size of `array`.
      *
      * @private
@@ -2908,7 +2959,7 @@ data[0]=source[0];data[1]=newBitmask;return data;}/**
      *
      * _.chunk(['a', 'b', 'c', 'd'], 3);
      * // => [['a', 'b', 'c'], ['d']]
-     */function chunk(array,size,guard){if(guard?isIterateeCall(array,size,guard):size===undefined$1){size=1;}else {size=nativeMax(toInteger(size),0);}var length=array==null?0:array.length;if(!length||size<1){return [];}var index=0,resIndex=0,result=Array(nativeCeil(length/size));while(index<length){result[resIndex++]=baseSlice(array,index,index+=size);}return result;}/**
+     */function chunk(array,size,guard){if(guard?isIterateeCall(array,size,guard):size===undefined$1){size=1;}else{size=nativeMax(toInteger(size),0);}var length=array==null?0:array.length;if(!length||size<1){return [];}var index=0,resIndex=0,result=Array(nativeCeil(length/size));while(index<length){result[resIndex++]=baseSlice(array,index,index+=size);}return result;}/**
      * Creates an array with all falsey values removed. The values `false`, `null`,
      * `0`, `""`, `undefined`, and `NaN` are falsey.
      *
@@ -3371,7 +3422,7 @@ data[0]=source[0];data[1]=newBitmask;return data;}/**
      * // The `_.property` iteratee shorthand.
      * _.intersectionBy([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x');
      * // => [{ 'x': 1 }]
-     */var intersectionBy=baseRest(function(arrays){var iteratee=last(arrays),mapped=arrayMap(arrays,castArrayLikeObject);if(iteratee===last(mapped)){iteratee=undefined$1;}else {mapped.pop();}return mapped.length&&mapped[0]===arrays[0]?baseIntersection(mapped,getIteratee(iteratee,2)):[];});/**
+     */var intersectionBy=baseRest(function(arrays){var iteratee=last(arrays),mapped=arrayMap(arrays,castArrayLikeObject);if(iteratee===last(mapped)){iteratee=undefined$1;}else{mapped.pop();}return mapped.length&&mapped[0]===arrays[0]?baseIntersection(mapped,getIteratee(iteratee,2)):[];});/**
      * This method is like `_.intersection` except that it accepts `comparator`
      * which is invoked to compare elements of `arrays`. The order and references
      * of result values are determined by the first array. The comparator is
@@ -3630,7 +3681,7 @@ data[0]=source[0];data[1]=newBitmask;return data;}/**
      * @param {number} [start=0] The start position.
      * @param {number} [end=array.length] The end position.
      * @returns {Array} Returns the slice of `array`.
-     */function slice(array,start,end){var length=array==null?0:array.length;if(!length){return [];}if(end&&typeof end!='number'&&isIterateeCall(array,start,end)){start=0;end=length;}else {start=start==null?0:toInteger(start);end=end===undefined$1?length:toInteger(end);}return baseSlice(array,start,end);}/**
+     */function slice(array,start,end){var length=array==null?0:array.length;if(!length){return [];}if(end&&typeof end!='number'&&isIterateeCall(array,start,end)){start=0;end=length;}else{start=start==null?0:toInteger(start);end=end===undefined$1?length:toInteger(end);}return baseSlice(array,start,end);}/**
      * Uses a binary search to determine the lowest index at which `value`
      * should be inserted into `array` in order to maintain its sort order.
      *
@@ -4392,7 +4443,7 @@ data[0]=source[0];data[1]=newBitmask;return data;}/**
      *
      * wrapped.value();
      * // => [1, 4]
-     */function wrapperPlant(value){var result,parent=this;while(parent instanceof baseLodash){var clone=wrapperClone(parent);clone.__index__=0;clone.__values__=undefined$1;if(result){previous.__wrapped__=clone;}else {result=clone;}var previous=clone;parent=parent.__wrapped__;}previous.__wrapped__=value;return result;}/**
+     */function wrapperPlant(value){var result,parent=this;while(parent instanceof baseLodash){var clone=wrapperClone(parent);clone.__index__=0;clone.__values__=undefined$1;if(result){previous.__wrapped__=clone;}else{result=clone;}var previous=clone;parent=parent.__wrapped__;}previous.__wrapped__=value;return result;}/**
      * This method is the wrapper version of `_.reverse`.
      *
      * **Note:** This method mutates the wrapped array.
@@ -4445,7 +4496,7 @@ data[0]=source[0];data[1]=newBitmask;return data;}/**
      * // The `_.property` iteratee shorthand.
      * _.countBy(['one', 'two', 'three'], 'length');
      * // => { '3': 2, '5': 1 }
-     */var countBy=createAggregator(function(result,value,key){if(hasOwnProperty.call(result,key)){++result[key];}else {baseAssignValue(result,key,1);}});/**
+     */var countBy=createAggregator(function(result,value,key){if(hasOwnProperty.call(result,key)){++result[key];}else{baseAssignValue(result,key,1);}});/**
      * Checks if `predicate` returns truthy for **all** elements of `collection`.
      * Iteration is stopped once `predicate` returns falsey. The predicate is
      * invoked with three arguments: (value, index|key, collection).
@@ -4707,7 +4758,7 @@ data[0]=source[0];data[1]=newBitmask;return data;}/**
      * // The `_.property` iteratee shorthand.
      * _.groupBy(['one', 'two', 'three'], 'length');
      * // => { '3': ['one', 'two'], '5': ['three'] }
-     */var groupBy=createAggregator(function(result,value,key){if(hasOwnProperty.call(result,key)){result[key].push(value);}else {baseAssignValue(result,key,[value]);}});/**
+     */var groupBy=createAggregator(function(result,value,key){if(hasOwnProperty.call(result,key)){result[key].push(value);}else{baseAssignValue(result,key,[value]);}});/**
      * Checks if `value` is in `collection`. If `collection` is a string, it's
      * checked for a substring of `value`, otherwise
      * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
@@ -5011,7 +5062,7 @@ data[0]=source[0];data[1]=newBitmask;return data;}/**
      *
      * _.sampleSize([1, 2, 3], 4);
      * // => [2, 3, 1]
-     */function sampleSize(collection,n,guard){if(guard?isIterateeCall(collection,n,guard):n===undefined$1){n=1;}else {n=toInteger(n);}var func=isArray(collection)?arraySampleSize:baseSampleSize;return func(collection,n);}/**
+     */function sampleSize(collection,n,guard){if(guard?isIterateeCall(collection,n,guard):n===undefined$1){n=1;}else{n=toInteger(n);}var func=isArray(collection)?arraySampleSize:baseSampleSize;return func(collection,n);}/**
      * Creates an array of shuffled values, using a version of the
      * [Fisher-Yates shuffle](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle).
      *
@@ -7553,7 +7604,7 @@ return isNumber(value)&&value!=+value;}/**
      *   return 'group' + value;
      * });
      * // => { 'group1': ['a', 'c'], 'group2': ['b'] }
-     */var invertBy=createInverter(function(result,value,key){if(value!=null&&typeof value.toString!='function'){value=nativeObjectToString.call(value);}if(hasOwnProperty.call(result,value)){result[value].push(key);}else {result[value]=[key];}},getIteratee);/**
+     */var invertBy=createInverter(function(result,value,key){if(value!=null&&typeof value.toString!='function'){value=nativeObjectToString.call(value);}if(hasOwnProperty.call(result,value)){result[value].push(key);}else{result[value]=[key];}},getIteratee);/**
      * Invokes the method at `path` of `object`.
      *
      * @static
@@ -7951,7 +8002,7 @@ if(!length){length=1;object=undefined$1;}while(++index<length){var value=object=
      *   (result[value] || (result[value] = [])).push(key);
      * }, {});
      * // => { '1': ['a', 'c'], '2': ['b'] }
-     */function transform(object,iteratee,accumulator){var isArr=isArray(object),isArrLike=isArr||isBuffer(object)||isTypedArray(object);iteratee=getIteratee(iteratee,4);if(accumulator==null){var Ctor=object&&object.constructor;if(isArrLike){accumulator=isArr?new Ctor():[];}else if(isObject(object)){accumulator=isFunction(Ctor)?baseCreate(getPrototype(object)):{};}else {accumulator={};}}(isArrLike?arrayEach:baseForOwn)(object,function(value,index,object){return iteratee(accumulator,value,index,object);});return accumulator;}/**
+     */function transform(object,iteratee,accumulator){var isArr=isArray(object),isArrLike=isArr||isBuffer(object)||isTypedArray(object);iteratee=getIteratee(iteratee,4);if(accumulator==null){var Ctor=object&&object.constructor;if(isArrLike){accumulator=isArr?new Ctor():[];}else if(isObject(object)){accumulator=isFunction(Ctor)?baseCreate(getPrototype(object)):{};}else{accumulator={};}}(isArrLike?arrayEach:baseForOwn)(object,function(value,index,object){return iteratee(accumulator,value,index,object);});return accumulator;}/**
      * Removes the property at `path` of `object`.
      *
      * **Note:** This method mutates `object`.
@@ -8129,7 +8180,7 @@ if(!length){length=1;object=undefined$1;}while(++index<length){var value=object=
      *
      * _.inRange(-3, -2, -6);
      * // => true
-     */function inRange(number,start,end){start=toFinite(start);if(end===undefined$1){end=start;start=0;}else {end=toFinite(end);}number=toNumber(number);return baseInRange(number,start,end);}/**
+     */function inRange(number,start,end){start=toFinite(start);if(end===undefined$1){end=start;start=0;}else{end=toFinite(end);}number=toNumber(number);return baseInRange(number,start,end);}/**
      * Produces a random number between the inclusive `lower` and `upper` bounds.
      * If only one argument is provided a number between `0` and the given number
      * is returned. If `floating` is `true`, or either `lower` or `upper` are
@@ -8159,7 +8210,7 @@ if(!length){length=1;object=undefined$1;}while(++index<length){var value=object=
      *
      * _.random(1.2, 5.2);
      * // => a floating-point number between 1.2 and 5.2
-     */function random(lower,upper,floating){if(floating&&typeof floating!='boolean'&&isIterateeCall(lower,upper,floating)){upper=floating=undefined$1;}if(floating===undefined$1){if(typeof upper=='boolean'){floating=upper;upper=undefined$1;}else if(typeof lower=='boolean'){floating=lower;lower=undefined$1;}}if(lower===undefined$1&&upper===undefined$1){lower=0;upper=1;}else {lower=toFinite(lower);if(upper===undefined$1){upper=lower;lower=0;}else {upper=toFinite(upper);}}if(lower>upper){var temp=lower;lower=upper;upper=temp;}if(floating||lower%1||upper%1){var rand=nativeRandom();return nativeMin(lower+rand*(upper-lower+freeParseFloat('1e-'+((rand+'').length-1))),upper);}return baseRandom(lower,upper);}/*------------------------------------------------------------------------*/ /**
+     */function random(lower,upper,floating){if(floating&&typeof floating!='boolean'&&isIterateeCall(lower,upper,floating)){upper=floating=undefined$1;}if(floating===undefined$1){if(typeof upper=='boolean'){floating=upper;upper=undefined$1;}else if(typeof lower=='boolean'){floating=lower;lower=undefined$1;}}if(lower===undefined$1&&upper===undefined$1){lower=0;upper=1;}else{lower=toFinite(lower);if(upper===undefined$1){upper=lower;lower=0;}else{upper=toFinite(upper);}}if(lower>upper){var temp=lower;lower=upper;upper=temp;}if(floating||lower%1||upper%1){var rand=nativeRandom();return nativeMin(lower+rand*(upper-lower+freeParseFloat('1e-'+((rand+'').length-1))),upper);}return baseRandom(lower,upper);}/*------------------------------------------------------------------------*/ /**
      * Converts `string` to [camel case](https://en.wikipedia.org/wiki/CamelCase).
      *
      * @static
@@ -8437,7 +8488,7 @@ if(!length){length=1;object=undefined$1;}while(++index<length){var value=object=
      *
      * _.repeat('abc', 0);
      * // => ''
-     */function repeat(string,n,guard){if(guard?isIterateeCall(string,n,guard):n===undefined$1){n=1;}else {n=toInteger(n);}return baseRepeat(toString(string),n);}/**
+     */function repeat(string,n,guard){if(guard?isIterateeCall(string,n,guard):n===undefined$1){n=1;}else{n=toInteger(n);}return baseRepeat(toString(string),n);}/**
      * Replaces matches for `pattern` in `string` with `replacement`.
      *
      * **Note:** This method is based on
@@ -9869,7 +9920,7 @@ lodash.each=forEach;lodash.eachRight=forEachRight;lodash.first=head;mixin(lodash
      * @type {string}
      */lodash.VERSION=VERSION;// Assign default placeholders.
 arrayEach(['bind','bindKey','curry','curryRight','partial','partialRight'],function(methodName){lodash[methodName].placeholder=lodash;});// Add `LazyWrapper` methods for `_.drop` and `_.take` variants.
-arrayEach(['drop','take'],function(methodName,index){LazyWrapper.prototype[methodName]=function(n){n=n===undefined$1?1:nativeMax(toInteger(n),0);var result=this.__filtered__&&!index?new LazyWrapper(this):this.clone();if(result.__filtered__){result.__takeCount__=nativeMin(n,result.__takeCount__);}else {result.__views__.push({'size':nativeMin(n,MAX_ARRAY_LENGTH),'type':methodName+(result.__dir__<0?'Right':'')});}return result;};LazyWrapper.prototype[methodName+'Right']=function(n){return this.reverse()[methodName](n).reverse();};});// Add `LazyWrapper` methods that accept an `iteratee` value.
+arrayEach(['drop','take'],function(methodName,index){LazyWrapper.prototype[methodName]=function(n){n=n===undefined$1?1:nativeMax(toInteger(n),0);var result=this.__filtered__&&!index?new LazyWrapper(this):this.clone();if(result.__filtered__){result.__takeCount__=nativeMin(n,result.__takeCount__);}else{result.__views__.push({'size':nativeMin(n,MAX_ARRAY_LENGTH),'type':methodName+(result.__dir__<0?'Right':'')});}return result;};LazyWrapper.prototype[methodName+'Right']=function(n){return this.reverse()[methodName](n).reverse();};});// Add `LazyWrapper` methods that accept an `iteratee` value.
 arrayEach(['filter','map','takeWhile'],function(methodName,index){var type=index+1,isFilter=type==LAZY_FILTER_FLAG||type==LAZY_WHILE_FLAG;LazyWrapper.prototype[methodName]=function(iteratee){var result=this.clone();result.__iteratees__.push({'iteratee':getIteratee(iteratee,3),'type':type});result.__filtered__=result.__filtered__||isFilter;return result;};});// Add `LazyWrapper` methods for `_.head` and `_.last`.
 arrayEach(['head','last'],function(methodName,index){var takeName='take'+(index?'Right':'');LazyWrapper.prototype[methodName]=function(){return this[takeName](1).value()[0];};});// Add `LazyWrapper` methods for `_.initial` and `_.tail`.
 arrayEach(['initial','tail'],function(methodName,index){var dropName='drop'+(index?'':'Right');LazyWrapper.prototype[methodName]=function(){return this.__filtered__?new LazyWrapper(this):this[dropName](1);};});LazyWrapper.prototype.compact=function(){return this.filter(identity);};LazyWrapper.prototype.find=function(predicate){return this.filter(predicate).head();};LazyWrapper.prototype.findLast=function(predicate){return this.reverse().find(predicate);};LazyWrapper.prototype.invokeMap=baseRest(function(path,args){if(typeof path=='function'){return new LazyWrapper(this);}return this.map(function(value){return baseInvoke(value,path,args);});});LazyWrapper.prototype.reject=function(predicate){return this.filter(negate(getIteratee(predicate)));};LazyWrapper.prototype.slice=function(start,end){start=toInteger(start);var result=this;if(result.__filtered__&&(start>0||end<0)){return new LazyWrapper(result);}if(start<0){result=result.takeRight(-start);}else if(start){result=result.drop(start);}if(end!==undefined$1){end=toInteger(end);result=end<0?result.dropRight(-end):result.take(end-start);}return result;};LazyWrapper.prototype.takeRightWhile=function(predicate){return this.reverse().takeWhile(predicate).reverse();};LazyWrapper.prototype.toArray=function(){return this.take(MAX_ARRAY_LENGTH);};// Add `LazyWrapper` methods to `lodash.prototype`.
@@ -9883,13 +9934,13 @@ lodash.prototype.first=lodash.prototype.head;if(symIterator){lodash.prototype[sy
 var _=runInContext();// Some AMD build optimizers, like r.js, check for condition patterns like:
 if(freeModule){// Export for Node.js.
 (freeModule.exports=_)._=_;// Export for CommonJS support.
-freeExports._=_;}else {// Export to the global object.
+freeExports._=_;}else{// Export to the global object.
 root._=_;}}).call(commonjsGlobal);
 });
 
 /* eslint-disable valid-jsdoc */
 /** insertAfter */
-function insertAfter(newElement, targetElement) {
+function insertAfter$1(newElement, targetElement) {
   var parent = targetElement.parentNode;
   if (parent.lastChild == targetElement) {
     parent.appendChild(newElement);
@@ -9899,7 +9950,7 @@ function insertAfter(newElement, targetElement) {
 }
 var Status = /*#__PURE__*/function () {
   function Status(jSPlugin, id) {
-    _classCallCheck$1(this, Status);
+    _classCallCheck(this, Status);
     this.id = id;
     this.jSPlugin = jSPlugin;
     this.state = {
@@ -9907,7 +9958,7 @@ var Status = /*#__PURE__*/function () {
       loading: false
     };
   }
-  _createClass$1(Status, [{
+  _createClass(Status, [{
     key: "toString",
     value: function toString() {
       return "".concat(this.coreX, "-").concat(this.coreY);
@@ -9945,7 +9996,7 @@ var Status = /*#__PURE__*/function () {
       loadingContainerDOM.style.height = windowHeight;
       loadingContainerDOM.setAttribute('class', 'loading-container');
       // loadingContainerDOM.innerHTML= loading;
-      insertAfter(loadingContainerDOM, domElement);
+      insertAfter$1(loadingContainerDOM, domElement);
       var splitBasis = 1;
       var loadingItemContainer = document.createElement('div');
       var loadingStatusDOM = document.createElement('div');
@@ -10036,7 +10087,7 @@ var Status = /*#__PURE__*/function () {
 
 var Message = /*#__PURE__*/function () {
   function Message(jSPlugin, id) {
-    _classCallCheck$1(this, Message);
+    _classCallCheck(this, Message);
     this.id = id;
     this.jSPlugin = jSPlugin;
     this.timer = null;
@@ -10045,7 +10096,7 @@ var Message = /*#__PURE__*/function () {
       loading: false
     };
   }
-  _createClass$1(Message, [{
+  _createClass(Message, [{
     key: "default",
     value: function _default(msg) {
       var _this = this;
@@ -10069,7 +10120,7 @@ var Message = /*#__PURE__*/function () {
   return Message;
 }();
 
-var data$8 = [
+var data = [
 	{
 		moduleCode: "",
 		detailCode: "405984",
@@ -15357,21 +15408,21 @@ var data$8 = [
 	}
 ];
 var code = "200";
-var msg$1 = "操作成功!";
+var msg = "操作成功!";
 var errorCode = {
-	data: data$8,
+	data: data,
 	code: code,
-	msg: msg$1
+	msg: msg
 };
 
 var Code = /*#__PURE__*/function () {
   function Code(x, y) {
-    _classCallCheck$1(this, Code);
+    _classCallCheck(this, Code);
     this.coreX = x;
     this.coreY = y;
     console.log("ErrorCode", errorCode);
   }
-  _createClass$1(Code, [{
+  _createClass(Code, [{
     key: "toString",
     value: function toString() {
       return "".concat(this.coreX, "-").concat(this.coreY);
@@ -15431,7 +15482,7 @@ var defaultTheme = {
 };
 
 // 通用请求方法
-var TimeLine$1 = function TimeLine(jsPlugin) {
+var TimeLine = function TimeLine(jsPlugin) {
   this.jsPlugin = jsPlugin;
   var status = {
     isMouseDown: false,
@@ -15942,7 +15993,7 @@ var TimeLine$1 = function TimeLine(jsPlugin) {
 
 var Rec = /*#__PURE__*/function () {
   function Rec(jSPlugin) {
-    _classCallCheck$1(this, Rec);
+    _classCallCheck(this, Rec);
     this.jSPlugin = jSPlugin;
     if (!document.getElementById("".concat(this.jSPlugin.id, "-audioControls"))) {
       return false;
@@ -15958,7 +16009,7 @@ var Rec = /*#__PURE__*/function () {
     }
     this.recInit();
   }
-  _createClass$1(Rec, [{
+  _createClass(Rec, [{
     key: "recInit",
     value: function recInit() {
       var _this = this;
@@ -15974,14 +16025,14 @@ var Rec = /*#__PURE__*/function () {
       canvasItem.style = "display:inline-block;";
       canvasItem.innerHTML = "该浏览器不支持canvas";
       canvasContainer.appendChild(canvasItem);
-      insertAfter$1(canvasContainer, document.getElementById("".concat(this.jSPlugin.id, "-audioControls")));
+      insertAfter(canvasContainer, document.getElementById("".concat(this.jSPlugin.id, "-audioControls")));
       var timeLineControlsContainer = document.createElement('div');
       timeLineControlsContainer.className = "timeline-controls";
       timeLineControlsContainer.style = "display:flex;width:100px;height:48px;text-align:center;line-height: 48px;vertical-align: top;background: #000000;";
       var timeLineControls = "\n<div class=\"timeline-controls-scale\" style=\"display: inline-flex;flex-direction: column;justify-content: center;vertical-align: top;padding: 0 20px;\">\n  <span style=\"vertical-Align: middle;line-height: 14px;height: 18px; width: 18px;cursor:pointer;\" id=\"".concat(this.jSPlugin.id, "-timeline-scale-add\">\n    <svg fill=\"#2C2C2C\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"\n      viewBox=\"0 0 20 20\">\n      <title>add</title>\n      <g>\n        <polygon points=\"0.1,0.5 15,0.5 15,15.4 0.1,15.4 \t\" />\n      </g>\n      <g>\n        <path\n          fill=\"#FFFFFF\";\n          d=\"M7.6,12.4c-0.3,0-0.5-0.2-0.5-0.5v-8c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v8C8.1,12.2,7.9,12.4,7.6,12.4z\" />\n      </g>\n      <g>\n        <path\n          fill=\"#FFFFFF\";\n          d=\"M11.6,8.4h-8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h8c0.3,0,0.5,0.2,0.5,0.5S11.8,8.4,11.6,8.4z\" />\n      </g>\n    </svg>\n  </span>\n  <span style=\"vertical-Align: middle;line-height: 14px;height: 18px; width: 18px;cursor:pointer;\" id=\"").concat(this.jSPlugin.id, "-timeline-scale-sub\">\n    <svg fill=\"#2C2C2C\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"\n      viewBox=\"0 0 20 20\">\n      <title>reduce</title>\n      <g>\n        <polygon class=\"st0\" points=\"1,0.8 15.2,0.8 15.2,15 1,15 \t\" />\n      </g>\n      <g>\n        <path class=\"st1\"\n          fill=\"#FFFFFF\";\n          d=\"M12.1,8.4h-8c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h8c0.3,0,0.5,0.2,0.5,0.5S12.4,8.4,12.1,8.4z\" />\n      </g>\n    </svg>\n  </span>\n</div>\n<label for=\"").concat(this.jSPlugin.id, "-datepicker\">\n  <div class=\"timeline-controls-date\">\n    <span>\n      <svg fill=\"#2C2C2C\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"\n        viewBox=\"0 0 20 20\">\n        <title>ifttt</title>\n        <g id=\"Rectangle\">\n          <rect x=\"0.6\" y=\"0.9\" class=\"st0\" width=\"20\" height=\"20\" />\n        </g>\n        <g id=\"Stroke-1\">\n          <path fill=\"#FFFFFF\"; class=\"st1\"\n            d=\"M14,7.2c-0.3,0-0.5-0.2-0.5-0.5V3.4c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v3.3C14.5,7,14.2,7.2,14,7.2z\" />\n        </g>\n        <g id=\"Stroke-3\">\n          <path fill=\"#FFFFFF\"; class=\"st1\"\n            d=\"M7.3,7.2C7,7.2,6.8,7,6.8,6.7V3.4c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v3.3C7.8,7,7.6,7.2,7.3,7.2z\" />\n        </g>\n        <g id=\"Stroke-5\">\n          <path fill=\"#FFFFFF\"; class=\"st1\"\n            d=\"M18.1,9.7h-15c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h15c0.3,0,0.5,0.2,0.5,0.5S18.4,9.7,18.1,9.7z\" />\n        </g>\n        <g id=\"Stroke-7\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M16.5,19.7H4.8c-1.2,0-2.2-1-2.2-2.2V6.7c0-1.2,1-2.2,2.2-2.2h11.7c1.2,0,2.2,1,2.2,2.2v10.8\nC18.6,18.8,17.7,19.7,16.5,19.7z M4.8,5.6c-0.6,0-1.2,0.5-1.2,1.2v10.8c0,0.6,0.5,1.2,1.2,1.2h11.7c0.6,0,1.2-0.5,1.2-1.2V6.7\nc0-0.6-0.5-1.2-1.2-1.2H4.8z\" />\n        </g>\n        <g id=\"Stroke-9\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M10.6,13.3c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5s0.3-0.2,0.5-0.2h0h0c0.4,0,0.7,0.3,0.7,0.7\nS11,13.3,10.6,13.3z\" />\n        </g>\n        <g id=\"Stroke-11\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M14.8,13.3c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2c0.4,0,0.7,0.3,0.7,0.7\nS15.2,13.3,14.8,13.3z M14.8,12.3c-0.2,0-0.3,0.1-0.3,0.3c0,0.2,0.3,0.4,0.5,0.2c0.1-0.1,0.1-0.1,0.1-0.2\nC15.1,12.4,15,12.3,14.8,12.3z\" />\n        </g>\n        <g id=\"Stroke-13\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M6.5,16.6c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2h0h0c0.4,0,0.7,0.3,0.7,0.7\nC7.2,16.3,6.9,16.6,6.5,16.6z\" />\n        </g>\n        <g id=\"Stroke-15\">\n          <path fill=\"#FFFFFF\"; class=\"st1\" d=\"M10.6,16.6c-0.4,0-0.7-0.3-0.7-0.7c0-0.2,0.1-0.4,0.2-0.5c0.1-0.1,0.3-0.2,0.5-0.2h0h0c0.4,0,0.7,0.3,0.7,0.7\nC11.4,16.3,11,16.6,10.6,16.6z\" />\n        </g>\n      </svg>\n    </span>\n  </div>\n</label>\n<input data-toggle=\"").concat(this.jSPlugin.id, "-datepicker\" id=\"").concat(this.jSPlugin.id, "-datepicker\" name=\"").concat(this.jSPlugin.id, "-datepicker\" style=\"opacity:0;width:24px;margin-left:-24px;cursor:pointer;\" />\n");
       timeLineControlsContainer.innerHTML = timeLineControls;
-      insertAfter$1(timeLineControlsContainer, canvasContainer);
-      this.timeLine = new TimeLine$1(this.jSPlugin);
+      insertAfter(timeLineControlsContainer, canvasContainer);
+      this.timeLine = new TimeLine(this.jSPlugin);
       this.timeLine.init({
         id: this.jSPlugin.id + '-canvas',
         width: canvasItemWidth,
@@ -16278,7 +16329,7 @@ var Rec = /*#__PURE__*/function () {
           that.timeLine.run({
             time: new Date(dateStart)
           });
-        } else ;
+        }
       };
       var recAPIUrl = this.jSPlugin.env.domain + "/api/lapp/video/by/time";
       request(recAPIUrl, 'POST', recSliceParams, '', recAPISuccess);
@@ -16287,7 +16338,7 @@ var Rec = /*#__PURE__*/function () {
   return Rec;
 }();
 
-var TimeLine = function TimeLine(params) {
+var TimeLine$1 = function TimeLine(params) {
   console.log("执行TimeLine - params", params);
   this.state = {
     id: params.id,
@@ -16407,14 +16458,14 @@ var TimeLine = function TimeLine(params) {
   };
   this.matchTimeDot();
 };
-TimeLine.prototype.changeScale = function (value) {
+TimeLine$1.prototype.changeScale = function (value) {
   this.setState({
     timelag: value // 120: 2小时， 60：1小时， 30：半小时，10：10分钟，1：1分钟
   });
 
   this.matchTimeDot();
 };
-TimeLine.prototype.setDateLine = function (news, defaultIndex) {
+TimeLine$1.prototype.setDateLine = function (news, defaultIndex) {
   // if( news.length > 0 ){
   //   if(!defaultIndex){
   //     defaultIndex = 0;
@@ -16455,12 +16506,12 @@ TimeLine.prototype.setDateLine = function (news, defaultIndex) {
     this.matchRecTimeDot();
   }
 };
-TimeLine.prototype.matchTimeDot = function () {
+TimeLine$1.prototype.matchTimeDot = function () {
   var _this$state = this.state,
     start = _this$state.start,
     end = _this$state.end,
-    timelag = _this$state.timelag;
-    _this$state.availTimeLine;
+    timelag = _this$state.timelag,
+    availTimeLine = _this$state.availTimeLine;
   console.log("start", start, 'end', end);
   var timeArr = [];
   // // 播放时间片段时刻转分钟
@@ -16556,7 +16607,7 @@ TimeLine.prototype.matchTimeDot = function () {
   });
   this.renderDateLine();
 };
-TimeLine.prototype.matchRecTimeDot = function () {
+TimeLine$1.prototype.matchRecTimeDot = function () {
   var _this$state2 = this.state,
     start = _this$state2.start,
     end = _this$state2.end,
@@ -16627,7 +16678,7 @@ TimeLine.prototype.matchRecTimeDot = function () {
   console.log('timeArr:', this.state);
   this.renderDateLine();
 };
-TimeLine.prototype.renderDateLine = function () {
+TimeLine$1.prototype.renderDateLine = function () {
   var _this$state3 = this.state,
     id = _this$state3.id,
     timeArr = _this$state3.timeArr;
@@ -16651,7 +16702,7 @@ TimeLine.prototype.renderDateLine = function () {
   });
 };
 // 计算初始偏移量
-TimeLine.prototype.primaryOffsetH = function () {
+TimeLine$1.prototype.primaryOffsetH = function () {
   var _this$state4 = this.state,
     start = _this$state4.start,
     timelag = _this$state4.timelag,
@@ -16667,7 +16718,7 @@ TimeLine.prototype.primaryOffsetH = function () {
   console.log('起始偏移量', offsetH);
 };
 // 计算当前偏移量
-TimeLine.prototype.currentOffsetH = function () {
+TimeLine$1.prototype.currentOffsetH = function () {
   var _this$state5 = this.state,
     current = _this$state5.current,
     timelag = _this$state5.timelag,
@@ -16682,7 +16733,7 @@ TimeLine.prototype.currentOffsetH = function () {
   });
 };
 // 通过时间轴位置获取当前时间
-TimeLine.prototype.rectTopTotime = function (reactTop) {
+TimeLine$1.prototype.rectTopTotime = function (reactTop) {
   var timelag = this.state.timelag;
   // let rectTop = rect.top; // 获取当前元素距离父元素顶部的高度
   // let reactTop = 0 - rectTop; // 实际偏移高度
@@ -16714,13 +16765,13 @@ TimeLine.prototype.rectTopTotime = function (reactTop) {
   // console.log("currentTime", current + ':' + (offsetSecond > 9 ? offsetSecond : '0' + offsetSecond));
 };
 // 时间轴滚动，根据传参变化
-TimeLine.prototype.stepScrollTimeLine = function (time) {
+TimeLine$1.prototype.stepScrollTimeLine = function (time) {
   this.setState({
     current: time
   });
   this.currentOffsetH();
 };
-TimeLine.prototype.secondCountDown = function (time) {
+TimeLine$1.prototype.secondCountDown = function (time) {
   var current = this.state.current;
   // console.log('currentTime', current);
   var temp = current.split(':');
@@ -16735,7 +16786,7 @@ TimeLine.prototype.secondCountDown = function (time) {
     current: (h > 9 ? h : '0' + h) + ':' + (m > 9 ? m : '0' + m) + ':' + (s > 9 ? s : '0' + s)
   });
 };
-var MobileTimeLine = TimeLine;
+var MobileTimeLine = TimeLine$1;
 
 Date.prototype.Format = function (fmt) {
   //author: meizz
@@ -16773,7 +16824,7 @@ function format(now) {
 var MobileRec = /*#__PURE__*/function () {
   function MobileRec(jSPlugin) {
     var _this = this;
-    _classCallCheck$1(this, MobileRec);
+    _classCallCheck(this, MobileRec);
     this.jSPlugin = jSPlugin;
     this.timer = null;
     this.date = new Date().Format('yyyy-MM-dd');
@@ -16810,21 +16861,21 @@ var MobileRec = /*#__PURE__*/function () {
     mobileRecTitleWrap.className = "date-switch-container-wrap";
     mobileRecTitleWrap.style = "";
     mobileRecTitleWrap.innerHTML = "\n      <div class=\"date-switch-container\">\n      <div class=\"current-date\" id=\"current-date\">\u4ECA\u65E5\u5F55\u50CF</div>\n      <div class=\"date-container\">\n        <label for=\"date\">\n          <div class=\"date-icon\"></div>\n        </label>\n        <input type=\"date\" name=\"date\" id=\"date\" />\n      </div>\n    </div>\n        ";
-    insertAfter$1(mobileRecTitleWrap, document.getElementById("".concat(this.jSPlugin.id, "-wrap")));
+    insertAfter(mobileRecTitleWrap, document.getElementById("".concat(this.jSPlugin.id, "-wrap")));
     // 回放时间类型选择
     var mobileRecSwitchWrap = document.createElement('div');
     mobileRecSwitchWrap.id = "rec-type-container-wrap";
     mobileRecSwitchWrap.className = "rec-type-container-wrap";
     mobileRecSwitchWrap.style = "";
     mobileRecSwitchWrap.innerHTML = "\n    <div class=\"rec-type-container\">\n    <div class=\"rec-type-text\">\u5171<span id=\"recCount\">0</span>\u4E2A\u5F55\u50CF</div>\n    <div class=\"rec-type-switch\">\n      <label>\n        <input type=\"checkbox\" name=\"type\" id=\"cloudType\" value=\"1\" hidden />\n        <label for=\"cloudType\" class=\"advice\">\n          <span>\n          <svg fill=\"#CCCCCC\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"2 0 20 20\">\n            <path class=\"st0\" d=\"M12.6,5c-2.3,0.1-4.3,1.4-5.3,3.3L7.2,8.6c-2.4,0.5-4.1,2.5-4.1,4.9c0,2.8,2.4,5,5.2,5h9.9\n            c2.4,0,4.3-1.9,4.3-4.2l0-0.2c-0.1-2-1.6-3.5-3.5-3.9l-0.1,0l0-0.2c-0.4-2.8-3-5-6.1-5L12.6,5z\"/>\n          </svg>\n        </span>\n        <span>\n          <svg fill=\"#CCCCCC\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"2 0 20 20\">\n            <path id=\"\u5F62\u72B6\u7ED3\u5408\" class=\"st0\" d=\"M14.3,4c0.6,0,1.2,0.2,1.7,0.7l0,0L18.3,7C18.7,7.4,19,8,19,8.6l0,0v9c0,1.3-1.1,2.3-2.4,2.3\n\tl0,0H8.4C7.1,20,6,19,6,17.7l0,0V6.3C6,5,7.1,4,8.4,4l0,0H14.3z M9.7,7.2C9.3,7.2,8.9,7.6,8.9,8l0,0v2.5l0,0.1\n\tc0,0.4,0.4,0.6,0.7,0.6c0.4,0,0.8-0.3,0.8-0.8l0,0V8l0-0.1C10.4,7.5,10,7.2,9.7,7.2z M12.2,7.2c-0.4,0-0.8,0.3-0.8,0.8l0,0v2.5\n\tl0,0.1c0,0.4,0.4,0.6,0.7,0.6c0.4,0,0.8-0.3,0.8-0.8l0,0V8l0-0.1C12.9,7.5,12.5,7.2,12.2,7.2z M14.7,7.2c-0.4,0-0.8,0.3-0.8,0.8l0,0\n\tv2.5l0,0.1c0,0.4,0.4,0.6,0.7,0.6c0.4,0,0.8-0.3,0.8-0.8l0,0V8l0-0.1C15.4,7.5,15,7.2,14.7,7.2z\"/>\n          </svg>\n        </span>\n        </label>\n      </label>\n    </div>\n  </div>\n        ";
-    insertAfter$1(mobileRecSwitchWrap, mobileRecTitleWrap);
+    insertAfter(mobileRecSwitchWrap, mobileRecTitleWrap);
     // 回放时间轴
     var mobileRecWrap = document.createElement('div');
     mobileRecWrap.id = "mobile-rec-wrap";
     mobileRecWrap.className = "mobileRec-wrap";
     mobileRecWrap.style = "";
     mobileRecWrap.innerHTML = "\n    <div class=\"time-line-container\">\n    <div class=\"current-time\">\n      <div class=\"current-time-bg\" id=\"time-line-current\">2020-01-01 00:00:00</div>\n    </div>\n    <div class=\"time-line-item-container\">\n      <div class=\"time-line-item\" id=\"time-line-item\">\n      </div>\n    </div>\n    </div>\n      ";
-    insertAfter$1(mobileRecWrap, mobileRecSwitchWrap);
+    insertAfter(mobileRecWrap, mobileRecSwitchWrap);
     var getPalyParam = function getPalyParam(data) {
       console.log("子组件传值到父组件", data, data.current);
       var st = data.current;
@@ -16995,7 +17046,7 @@ var MobileRec = /*#__PURE__*/function () {
 
     this.syncTimeLine();
   }
-  _createClass$1(MobileRec, [{
+  _createClass(MobileRec, [{
     key: "fetchDeviceRec",
     value: function fetchDeviceRec() {
       var _this2 = this;
@@ -17085,7 +17136,7 @@ var MobileRec = /*#__PURE__*/function () {
 var Ptz = /*#__PURE__*/function () {
   function Ptz(jSPlugin) {
     var _this = this;
-    _classCallCheck$1(this, Ptz);
+    _classCallCheck(this, Ptz);
     this.jSPlugin = jSPlugin;
     console.log("云台初始化");
     if (document.getElementById(this.jSPlugin.id + "-ez-ptz-item")) {
@@ -17123,7 +17174,7 @@ var Ptz = /*#__PURE__*/function () {
       _this._handlePtzTouch(e, 'stop');
     };
   }
-  _createClass$1(Ptz, [{
+  _createClass(Ptz, [{
     key: "show",
     value: function show() {
       document.getElementById("".concat(this.jSPlugin.id, "-ez-ptz-item")).style = "display: inline-block";
@@ -17185,6 +17236,8 @@ var Ptz = /*#__PURE__*/function () {
             break;
           case 3:
             direction = 0; // 右转化为上
+            break;
+          default:
             break;
         }
       }
@@ -21956,6 +22009,9 @@ var Ptz = /*#__PURE__*/function () {
               case 'ULPFEC':
                 description.fecMechanisms.push(codec.name.toUpperCase());
                 break;
+              default:
+                // only RED and ULPFEC are recognized as FEC mechanisms.
+                break;
             }
           }
         }
@@ -22261,6 +22317,7 @@ var Ptz = /*#__PURE__*/function () {
             case 'a=recvonly':
             case 'a=inactive':
               return lines[i].substr(2);
+            default:
             // FIXME: What should happen here?
           }
         }
@@ -26054,7 +26111,7 @@ Janus.init({
                 // No remote video yet
                 //$('#audioright').append('<video class="rounded centered" id="waitingvideo" width=320 height=240 />');
                 if (spinner == null) {
-                  document.getElementById('audioright');
+                  var target = document.getElementById('audioright');
                   //spinner = new Spinner({top:100}).spin(target);
                 } else {
                   spinner.spin();
@@ -26129,7 +26186,7 @@ window.tts = tts;
 var Talk = /*#__PURE__*/function () {
   function Talk(jSPlugin) {
     var _this = this;
-    _classCallCheck$1(this, Talk);
+    _classCallCheck(this, Talk);
     this.jSPlugin = jSPlugin;
     var audioLeft = document.createElement('div');
     audioLeft.id = "audioleft";
@@ -26179,7 +26236,7 @@ var Talk = /*#__PURE__*/function () {
     //   });
     // });
   }
-  _createClass$1(Talk, [{
+  _createClass(Talk, [{
     key: "toString",
     value: function toString() {
       return "".concat(this.coreX, "-").concat(this.coreY);
@@ -26268,7 +26325,7 @@ var Talk = /*#__PURE__*/function () {
 var MobilePtz = /*#__PURE__*/function () {
   function MobilePtz(jSPlugin) {
     var _this = this;
-    _classCallCheck$1(this, MobilePtz);
+    _classCallCheck(this, MobilePtz);
     this.jSPlugin = jSPlugin;
     var oS = document.createElement('style');
     oS.innerHTML = "\n    body{\n      padding: 0;\n      margin: 0;\n    }\n    #mobile-ez-ptz-container {\n      display: inline-block;\n      width: 375px;\n      text-align: center;\n    }\n    .live-ptz-title{\n      height: 25px;\n      font-size: 18px;\n      color: #2c2c2c;\n      text-align: center;\n      font-weight: 700;\n      margin: 24px 0 12px;\n    }\n    .live-ptz-intro {\n      margin-bottom: 24px;\n      color: #aaaaaa;\n    }\n    .mobile-ez-ptz-wrap {\n      background-image: linear-gradient(180deg, #f6f8ff 0%, #ededed6b 50%)\n    }\n    #mobile-ez-ptz-container .mobile-ez-ptz-container {\n      position: relative;\n      width: 260px;\n      height: 260px;\n      background: rgba(255, 255, 255, 0.80);\n      border: 1px solid rgba(255, 255, 255, 0.80);\n      border-radius: 100%;\n      cursor: pointer;\n      overflow: hidden;\n      margin: auto;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.top {\n      width: 0;\n      height: 0;\n      border-left: 6px solid transparent;\n      border-right: 6px solid transparent;\n      border-bottom: 6px solid #aaaaaa;\n      position: absolute;\n      display: inline-block;\n      left: calc(50% - 6px);\n      top: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.top.active {\n      border-bottom-color: #1890FF;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.bottom {\n      width: 0;\n      height: 0;\n      border-left: 6px solid transparent;\n      border-right: 6px solid transparent;\n      border-top: 6px solid #aaaaaa;\n      position: absolute;\n      display: inline-block;\n      left: calc(50% - 6px);\n      bottom: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.bottom.active {\n      border-top-color: #1890FF;\n\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.right {\n      width: 0;\n      height: 0;\n      border-top: 6px solid transparent;\n      border-bottom: 6px solid transparent;\n      border-left: 6px solid #aaaaaa;\n      position: absolute;\n      display: inline-block;\n      top: calc(50% - 6px);\n      right: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.right.active {\n      border-left-color: #1890FF;\n\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.left {\n      width: 0;\n      height: 0;\n      border-top: 6px solid transparent;\n      border-bottom: 6px solid transparent;\n      border-right: 6px solid #aaaaaa;\n      position: absolute;\n      display: inline-block;\n      top: calc(50% - 6px);\n      left: 10px;\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .mobile-ez-ptz-icon.left.active {\n      border-right-color: #1890FF;\n\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-container .ez-ptz-main.center {\n      width: 52px;\n      height: 52px;\n      background: #FFFFFF;\n      border: 2px solid #eee;\n      border-radius: 100%;\n      top: calc(50% - 26px);\n      left: calc(50% - 26px);\n      position: absolute;\n      /* box-shadow: 0px -39px 40px 6px #1890ff; */\n    }\n\n    #mobile-ez-ptz-container .mobile-ez-ptz-wrap {\n      display: inline-block;\n      padding: 24px 24px;\n      border-radius: 100%;\n      overflow: hidden;\n    }\n\n    #mobile-ez-ptz-container .ez-ptz-close {\n      position: absolute;\n      color: #FFFFFF;\n      top: 0;\n      right: 0px;\n    }";
@@ -26299,7 +26356,7 @@ var MobilePtz = /*#__PURE__*/function () {
       mobileContainer.appendChild(ptzWrap);
     }
     //document.getElementById(jSPlugin.id).appendChild(mobileContainer);
-    insertAfter$1(mobileContainer, document.getElementById("".concat(this.jSPlugin.id, "-wrap")));
+    insertAfter(mobileContainer, document.getElementById("".concat(this.jSPlugin.id, "-wrap")));
     // 云台控制事件绑定
     // 云台控制
     document.getElementById("mobile-ez-ptz-item").ontouchstart = function (e) {
@@ -26324,7 +26381,7 @@ var MobilePtz = /*#__PURE__*/function () {
       _this._handlePtzTouch(e, 'stop');
     };
   }
-  _createClass$1(MobilePtz, [{
+  _createClass(MobilePtz, [{
     key: "show",
     value: function show() {
       document.getElementById("mobile-ez-ptz-item").style = "display: inline-block";
@@ -26404,8 +26461,8 @@ var MobilePtz = /*#__PURE__*/function () {
 }();
 
 var retcode = 0;
-var msg = "成功";
-var data$7 = {
+var msg$1 = "成功";
+var data$1 = {
 	header: {
 		color: "#FFFFFF",
 		backgroundColor: "#000000",
@@ -26527,11 +26584,11 @@ var data$7 = {
 };
 var emptyData = {
 	retcode: retcode,
-	msg: msg,
-	data: data$7
+	msg: msg$1,
+	data: data$1
 };
 
-var data$6 = {
+var data$2 = {
 	header: {
 		color: "#FFFFFF",
 		backgroundColor: "#000000",
@@ -26632,10 +26689,10 @@ var data$6 = {
 	}
 };
 var mobileLiveFullData = {
-	data: data$6
+	data: data$2
 };
 
-var data$5 = {
+var data$3 = {
 	header: {
 		color: "#FFFFFF",
 		backgroundColor: "#000000",
@@ -26742,7 +26799,7 @@ var data$5 = {
 	}
 };
 var mobileRecFullData = {
-	data: data$5
+	data: data$3
 };
 
 var data$4 = {
@@ -26859,7 +26916,7 @@ var pcLiveFullData = {
 	data: data$4
 };
 
-var data$3 = {
+var data$5 = {
 	header: {
 		color: "#FFFFFF",
 		backgroundColor: "#000000",
@@ -26964,10 +27021,10 @@ var data$3 = {
 	}
 };
 var pcLiveSecurityData = {
-	data: data$3
+	data: data$5
 };
 
-var data$2 = {
+var data$6 = {
 	header: {
 		color: "#FFFFFF",
 		backgroundColor: "#000000",
@@ -27068,10 +27125,10 @@ var data$2 = {
 	}
 };
 var pcLiveSimpleData = {
-	data: data$2
+	data: data$6
 };
 
-var data$1 = {
+var data$7 = {
 	header: {
 		color: "#FFFFFF",
 		backgroundColor: "#000000",
@@ -27172,10 +27229,10 @@ var data$1 = {
 	}
 };
 var pcLiveVoiceData = {
-	data: data$1
+	data: data$7
 };
 
-var data = {
+var data$8 = {
 	header: {
 		color: "#FFFFFF",
 		backgroundColor: "#000000",
@@ -27276,7 +27333,7 @@ var data = {
 	}
 };
 var pcRecFullDataData = {
-	data: data
+	data: data$8
 };
 
 var officeTemplateList = [{
@@ -27375,7 +27432,7 @@ var officeTemplateList = [{
 var Zoom = /*#__PURE__*/function () {
   function Zoom(jSPlugin) {
     var _this = this;
-    _classCallCheck$1(this, Zoom);
+    _classCallCheck(this, Zoom);
     this.jSPlugin = jSPlugin;
     this.enableZoom = false;
     this.isMouseDown = false, this.videoWidth = 1920;
@@ -27418,12 +27475,12 @@ var Zoom = /*#__PURE__*/function () {
     //   console.log("鼠标进入", event);
     // });
   }
-  _createClass$1(Zoom, [{
+  _createClass(Zoom, [{
     key: "onMouseDown",
     value: function onMouseDown(event) {
-      this.currentPosition;
-        this.currentScale;
-        var enableZoom = this.enableZoom;
+      var currentPosition = this.currentPosition,
+        currentScale = this.currentScale,
+        enableZoom = this.enableZoom;
       if (!enableZoom) {
         return false;
       }
@@ -27640,7 +27697,7 @@ function lineLength(point1, point2) {
 var MobileZoom = /*#__PURE__*/function () {
   function MobileZoom(jSPlugin) {
     var _this = this;
-    _classCallCheck$1(this, MobileZoom);
+    _classCallCheck(this, MobileZoom);
     this.jSPlugin = jSPlugin;
     this.enableZoom = false;
     this.isDubboTouch = false, this.videoWidth = 0;
@@ -27697,7 +27754,7 @@ var MobileZoom = /*#__PURE__*/function () {
     // this.currentPosition.right = info.width;
     // this.currentPosition.bottom = info.height;
   }
-  _createClass$1(MobileZoom, [{
+  _createClass(MobileZoom, [{
     key: "onTouchstart",
     value: function onTouchstart(event) {
       if (!this.inited) {
@@ -27708,8 +27765,8 @@ var MobileZoom = /*#__PURE__*/function () {
         this.currentPosition.bottom = info.height;
         this.inited = true;
       }
-      var currentPosition = this.currentPosition;
-        this.currentScale;
+      var currentPosition = this.currentPosition,
+        currentScale = this.currentScale;
       console.log("双指按下", currentPosition);
       var touches = event.touches;
       var events = touches[0];
@@ -27865,7 +27922,7 @@ var MEDIAWIDTH = 500;
 var Theme = /*#__PURE__*/function () {
   function Theme(jSPlugin) {
     var _this = this;
-    _classCallCheck$1(this, Theme);
+    _classCallCheck(this, Theme);
     this.jSPlugin = jSPlugin;
     this.isNeedRenderHeader = false;
     this.isNeedRenderFooter = false;
@@ -27941,7 +27998,7 @@ var Theme = /*#__PURE__*/function () {
     addCss("".concat(this.jSPlugin.staticPath, "/speed/speed.css"));
     addCss("".concat(this.jSPlugin.staticPath, "/css/theme.css"));
   }
-  _createClass$1(Theme, [{
+  _createClass(Theme, [{
     key: "fetchThemeData",
     value: function fetchThemeData(themeId) {
       var _this2 = this;
@@ -28292,6 +28349,8 @@ var Theme = /*#__PURE__*/function () {
               document.getElementById("".concat(_this5.jSPlugin.id, "-rec")).className = options[item] ? 'active' : '';
               document.getElementById("".concat(_this5.jSPlugin.id, "-rec-content")).children[0].children[0].style.fill = options[item] ? activeColor : color;
             }
+            break;
+          default:
             break;
         }
         _this5.decoderState.state = Object.assign(_this5.decoderState.state, options);
@@ -29234,7 +29293,7 @@ var Theme = /*#__PURE__*/function () {
           };
           footerContainer.style = styleToString(footerStyle);
           footerContainer.innerHTML = "<div id=\"".concat(this.jSPlugin.id, "-audioControls\" class=\"footer-controls\" style='display:flex;height:").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px;justify-content: space-between;width:100%;z-index:999;position: relative;'><div id='").concat(this.jSPlugin.id, "-audioControls-left' class=\"footer-controls-left\" style='display:flex;margin-lefacti'></div><div id='").concat(this.jSPlugin.id, "-audioControls-right' class=\"footer-controls-right\" style='display:flex'></div></div>");
-          insertAfter$1(footerContainer, document.getElementById(videoId));
+          insertAfter(footerContainer, document.getElementById(videoId));
         } else {
           if (document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container"))) {
             document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")).style.marginTop = "-".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px");
@@ -29403,9 +29462,9 @@ var Theme = /*#__PURE__*/function () {
     key: "webExpend",
     value: function webExpend() {
       var _this13 = this;
-      var _this$decoderState$st = this.decoderState.state;
-        _this$decoderState$st.webExpend;
-        var expend = _this$decoderState$st.expend,
+      var _this$decoderState$st = this.decoderState.state,
+        webExpend = _this$decoderState$st.webExpend,
+        expend = _this$decoderState$st.expend,
         play = _this$decoderState$st.play;
       if (!play) {
         return false;
@@ -29445,10 +29504,10 @@ var Theme = /*#__PURE__*/function () {
     value: function expend() {
       var _this14 = this;
       var _this$decoderState$st2 = this.decoderState.state,
-        webExpend = _this$decoderState$st2.webExpend;
-        _this$decoderState$st2.expend;
-        var play = _this$decoderState$st2.play;
-        _this$decoderState$st2.pantile;
+        webExpend = _this$decoderState$st2.webExpend,
+        expend = _this$decoderState$st2.expend,
+        play = _this$decoderState$st2.play,
+        pantile = _this$decoderState$st2.pantile;
       if (!play) {
         return false;
       }
@@ -29508,7 +29567,7 @@ Date.prototype.Format = function (fmt) {
 };
 var Monitor = /*#__PURE__*/function () {
   function Monitor(params, jsPlugin) {
-    _classCallCheck$1(this, Monitor);
+    _classCallCheck(this, Monitor);
     this.params = params;
     this.state = {};
     this.jsPlugin = jsPlugin;
@@ -29527,7 +29586,7 @@ var Monitor = /*#__PURE__*/function () {
     }
   }
   /** 生成uuid */
-  _createClass$1(Monitor, [{
+  _createClass(Monitor, [{
     key: "uuid",
     value: function uuid() {
       var s = [];
@@ -30112,8 +30171,6 @@ var Monitor = /*#__PURE__*/function () {
                           _this.opt.isReliesReady = true;
                         });
                       });
-                    }, function () {
-                      return !!window.adapter;
                     });
                   } // 创建DOM
 
@@ -30589,7 +30646,7 @@ var Monitor = /*#__PURE__*/function () {
 
     var _this = this;
     window.addEventListener("message", function (event) {
-      event.origin;
+      var origin = event.origin;
       var id = _this.opt.id;
       if (event.data.type) {
         switch (event.data.type) {
@@ -31088,69 +31145,12 @@ var Monitor = /*#__PURE__*/function () {
   var EZUIKitV3 = EZUIKit;
   return EZUIKitV3;
 });
-var EZUIKitV3$1 = EZUIKitV3;
-
-/* global setTimeout, clearTimeout */
-var dist = function debounce(fn) {
-  var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var lastCallAt = void 0;
-  var deferred = void 0;
-  var timer = void 0;
-  var pendingArgs = [];
-  return function debounced() {
-    var currentWait = getWait(wait);
-    var currentTime = new Date().getTime();
-    var isCold = !lastCallAt || currentTime - lastCallAt > currentWait;
-    lastCallAt = currentTime;
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    if (isCold && options.leading) {
-      return options.accumulate ? Promise.resolve(fn.call(this, [args])).then(function (result) {
-        return result[0];
-      }) : Promise.resolve(fn.call.apply(fn, [this].concat(args)));
-    }
-    if (deferred) {
-      clearTimeout(timer);
-    } else {
-      deferred = defer();
-    }
-    pendingArgs.push(args);
-    timer = setTimeout(flush.bind(this), currentWait);
-    if (options.accumulate) {
-      var argsIndex = pendingArgs.length - 1;
-      return deferred.promise.then(function (results) {
-        return results[argsIndex];
-      });
-    }
-    return deferred.promise;
-  };
-  function flush() {
-    var thisDeferred = deferred;
-    clearTimeout(timer);
-    Promise.resolve(options.accumulate ? fn.call(this, pendingArgs) : fn.apply(this, pendingArgs[pendingArgs.length - 1])).then(thisDeferred.resolve, thisDeferred.reject);
-    pendingArgs = [];
-    deferred = null;
-  }
-};
-function getWait(wait) {
-  return typeof wait === 'function' ? wait() : wait;
-}
-function defer() {
-  var deferred = {};
-  deferred.promise = new Promise(function (resolve, reject) {
-    deferred.resolve = resolve;
-    deferred.reject = reject;
-  });
-  return deferred;
-}
 
 /**
  * Created by wangweijie5 on 2016/12/16.
  */
 
-var _createClass = function () {
+var _createClass$1 = function () {
   function defineProperties(target, props) {
     for (var i = 0; i < props.length; i++) {
       var descriptor = props[i];
@@ -31166,7 +31166,7 @@ var _createClass = function () {
     return Constructor;
   };
 }();
-function _classCallCheck(instance, Constructor) {
+function _classCallCheck$1(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
   }
@@ -31178,9 +31178,9 @@ var __instance = function () {
     return instance;
   };
 }();
-(function () {
+var AudioRenderer = function () {
   function AudioRenderer() {
-    _classCallCheck(this, AudioRenderer);
+    _classCallCheck$1(this, AudioRenderer);
     if (__instance()) return __instance();
 
     // 确保只有单例
@@ -31221,7 +31221,7 @@ var __instance = function () {
    * @returns 状态码
    */
 
-  _createClass(AudioRenderer, [{
+  _createClass$1(AudioRenderer, [{
     key: 'Play',
     value: function Play(dataBuf, dataLen, audioInfo) {
       var bufferData = new ArrayBuffer(44 + dataLen);
@@ -31365,7 +31365,7 @@ var __instance = function () {
   }]);
   window.AudioRenderer = AudioRenderer;
   return AudioRenderer;
-})();
+}();
 
 //顶点着色器
 //attribute修饰符用于声明由浏览器（javascript）传输给顶点着色器的变量值；
@@ -31741,10 +31741,7 @@ var isVersion2Available = function isVersion2Available() {
 var EZUIKitPlayer = /*#__PURE__*/function () {
   function EZUIKitPlayer(params) {
     var _this = this;
-    _classCallCheck$1(this, EZUIKitPlayer);
-    // 解决当ws连接建立但是没有推流导致未触发播放成功事件，
-    // 此时切换设备执行 播放器 stop 时触发了播放成功事件导致设备序列号重置
-    this.isStoping = false; // 是否在播放前 stop 执行过程中
+    _classCallCheck(this, EZUIKitPlayer);
     var _params$autoplay = params.autoplay,
       autoplay = _params$autoplay === void 0 ? true : _params$autoplay;
     // 如果设置了模板（除精简版），此处不自动播放，根据模板判断是否执行自动播放:
@@ -31972,18 +31969,17 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         doInit();
       }
     } else {
-      return new EZUIKitV3$1.EZUIKitPlayer(params);
+      return new EZUIKitV3.EZUIKitPlayer(params);
     }
     // this.stop = debouncePromise(()=>this._stop(),0,true);
-    this.play = dist(function (options) {
+    this.play = debouncePromise(function (options) {
       return _this._play(options);
-    }, 500, true);
-    this.resume = dist(function (time) {
+    }, 1000, true);
+    // this.pause = debouncePromise(()=>this._pause(),1000,true);
+    this.resume = debouncePromise(function (time) {
       return _this._resume(time);
-    }, 500, true);
-    this.changePlayUrl = dist(function (options) {
-      return _this._changePlayUrl(options);
-    }, 500);
+    }, 1000, true);
+    //this.changePlayUrl = debouncePromise((time)=>this._changePlayUrl(time),1000,true);
     // 监听到页面退出
     // 研究院反馈，播放过程中退出页面需要执行停止视频，否则可能导致浏览器崩溃
     window.addEventListener("beforeunload", function () {
@@ -31991,7 +31987,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       _this.stop();
     });
   }
-  _createClass$1(EZUIKitPlayer, [{
+  _createClass(EZUIKitPlayer, [{
     key: "initEZUIKitPlayer",
     value: function initEZUIKitPlayer(params) {
       var _this2 = this;
@@ -32220,7 +32216,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "_getRealUrlPromise",
     value: function _getRealUrlPromise(accessToken, url) {
       var _this3 = this;
-      console.log("\u83B7\u53D6\u64AD\u653E\u5730\u5740 url => ".concat(url, " ").concat(this.accessToken));
       var apiDomain = this.env.domain;
       if (this.env) {
         apiDomain = this.env.domain;
@@ -32530,7 +32525,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "_pluginPlay",
     value: function _pluginPlay(data, successCallback, errorCallback) {
       var _this4 = this;
-      console.log("执行播放 _pluginPlay", data);
+      console.log("get real url result ===", data);
       if (!data) {
         return false;
       }
@@ -32553,17 +32548,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       var wsParams = {
         playURL: getPlayParams(data).websocketStreamingParam
       };
-      console.log('播放前 stop 阶段 结束');
-      this.isStoping = false;
-      var now = Date.now();
-      console.log('执行播放 ... this.jSPlugin.JS_Play at ', now);
       this.jSPlugin.JS_Play(wsUrl, wsParams, 0).then(function () {
-        console.log("执行播放 ... this.jSPlugin.JS_Play 播放成功", wsUrl, wsParams);
-        console.log("执行播放耗时 ", Date.now() - now);
-        if (_this4.isStoping) {
-          console.log('现在在播放前 stop 阶段，此次应为无效播放成功触发。不执行后续回调， 此次耗时无效');
-          return;
-        }
+        console.log("播放成功");
         if (_this4.validateCode && typeof _this4.jSPlugin.decoderVersion !== 'undefined' && _this4.jSPlugin.decoderVersion === '2.0') {
           _this4.jSPlugin.JS_SetSecretKey(0, _this4.validateCode);
         }
@@ -32665,7 +32651,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     key: "_play",
     value: function _play(options) {
       var _this5 = this;
-      console.log("\u6267\u884C\u64AD\u653E play options.url =>", options);
       this.pluginStatus.setPlayStatus({
         play: false,
         loading: true
@@ -32692,10 +32677,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         }
       }
       var promise = new Promise(function (resolve, reject) {
-        console.log('执行 播放前 stop');
-        _this5.isStoping = true;
         _this5.jSPlugin.JS_Stop(0).then(function () {
-          console.log("\u64AD\u653E\u524D stop \u6267\u884C\u6210\u529F this.url => ".concat(_this5.url, " ").concat(_this5.accessToken));
+          console.log("play_stop- success");
           _this5._getRealUrlPromise(_this5.accessToken, _this5.url).then(function (data) {
             _this5._pluginPlay(data, function () {
               return resolve(true);
@@ -32809,27 +32792,27 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       }
     }
   }, {
-    key: "_changePlayUrl",
-    value: function _changePlayUrl(options) {
+    key: "changePlayUrl",
+    value: function changePlayUrl(options) {
       var _this8 = this;
-      console.log('_changePlayUrl');
       this.reSetTheme();
       var initUrl = this.url;
       var url = matchUrl(initUrl, options);
       if (options.accessToken) {
         this.accessToken = options.accessToken;
       }
-      this.url = url;
       var promise = new Promise(function (resolve, reject) {
+        console.log("changePlayUrl stop success");
         var changePlayUrlParams = {
           url: url
         };
         if (options.accessToken) {
           changePlayUrlParams["accessToken"] = options.accessToken;
         }
-        console.log("切换播放地址 参数 ", changePlayUrlParams);
+        console.log("changePlayUrlParams", changePlayUrlParams);
         return _this8.play(changePlayUrlParams).then(function () {
-          console.log("切换播放地址 play 执行成功 ", _this8.url, _this8.accessToken);
+          console.log("changePlayUrl replay success");
+          _this8.url = url;
           // 当前处于网页全屏状态
           if (_this8.Theme && _this8.Theme.decoderState.state.webExpend) {
             _this8.Theme.webExpend();
@@ -33477,6 +33460,2185 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   return EZUIKitPlayer;
 }();
 
+var oWebControl = null;
+
+/**
+ * video 初始化及配置
+ * @param {*video挂载的dom id} id
+ * @param {*连接成功的回调} cbConnectSuccess
+ * @param {*连接报错的回调} cbConnectError
+ * @param {*连接关闭的回调} cbConnectClose
+ */
+function WebControlInit(id, cbConnectSuccess, cbConnectError, cbConnectClose) {
+  return new WebControl({
+    szPluginContainer: id,
+    iServicePortStart: 14510,
+    // 对应 LocalServiceConfig.xml 中的ServicePortStart值
+    iServicePortEnd: 14519,
+    // 对应 LocalServiceConfig.xml 中的ServicePortEnd值
+    cbConnectSuccess: cbConnectSuccess,
+    cbConnectError: cbConnectError,
+    cbConnectClose: cbConnectClose
+  });
+}
+/**
+ * 离开页面时调用 断开链接的方法
+ * @param {*视频插件实例} oWebControl
+ */
+function WebControlDistory() {
+  if (oWebControl != null) {
+    oWebControl.JS_DestroyWnd().then(function () {
+      console.log('JS_DestroyWnd');
+    }, function () {});
+    oWebControl.JS_StopService('window').then(function () {
+      oWebControl.JS_Disconnect().then(function () {
+        console.log('JS_Disconnect');
+      }, function () {});
+    });
+  }
+}
+// 监听视频控件的事件-todo
+function cbIntegrationCallBack(oData) {
+  if (oData.responseMsg.eventName === 'FireTransFunction') ;
+
+  // if (typeof onHDCallbackMessage === 'function' && oData && oData.responseMsg) {
+  //   onHDCallbackMessage(oData.responseMsg)
+  // }
+  console.log(oData.responseMsg);
+}
+function cbConnectSuccess() {
+  // 设置窗口控制回调
+  oWebControl.JS_SetWindowControlCallback({
+    cbIntegrationCallBack: cbIntegrationCallBack
+  });
+  //创建视频窗口
+  oWebControl.JS_StartService('window', {
+    dllPath: './chain/cloudTransform.dll'
+  }).then(function () {
+    oWebControl.JS_CreateWnd('playWnd', 900, 500).then(function () {
+      console.log('JS_CreateWnd success');
+    });
+  });
+}
+function cbConnectError() {
+  console.log('cbConnectError');
+  oWebControl = null;
+  console.error('确认本地进程是否已安装并开启成功！');
+}
+function cbConnectClose(bNormalClose) {
+  // 连接异常断开：bNormalClose = false
+  // JS_Disconnect正常断开：bNormalClose = true
+  console.log('cbConnectClose');
+  oWebControl = null;
+}
+
+// //销毁视频控件
+// function WebControlDistory() {
+//   // var bIE = !!window.ActiveXObject || 'ActiveXObject' in window // 是否为IE浏览器
+//   if (oWebControl != null) {
+//     oWebControl.JS_DestroyWnd().then(
+//       function () {
+//         console.log('JS_DestroyWnd');
+//       },
+//       function () { }
+//     );
+//     oWebControl.JS_StopService('window').then(function () {
+//       oWebControl.JS_Disconnect().then(
+//         function () {
+//           console.log('JS_Disconnect');
+//         },
+//         function () { }
+//       );
+//     });
+//   }
+// }
+window.onscroll = function () {
+  if (oWebControl != null) {
+    oWebControl.JS_Resize(900, 500);
+  }
+};
+window.onresize = function () {
+  if (oWebControl != null) {
+    oWebControl.JS_Resize(900, 500);
+  }
+};
+window.onunload = function () {
+  try {
+    oWebControl.JS_HideWnd();
+    WebControlDistory();
+  } catch (error) {
+    console.error(error);
+  }
+};
+window.onpagehide = function () {
+  try {
+    oWebControl.JS_HideWnd();
+  } catch (error) {
+    console.error(error);
+  }
+};
+var limitStart = parseInt(new Date('2021-07-29T16:01:00').getTime() / 1000).toString();
+var limitEnd = parseInt(new Date('2021-07-29T17:01:30').getTime() / 1000).toString();
+var EZUIKitHD = /*#__PURE__*/function () {
+  function EZUIKitHD(params) {
+    var _this = this;
+    _classCallCheck(this, EZUIKitHD);
+    _defineProperty(this, "changeModel", function (num, playParams) {
+      var self = _this;
+      _this.switchVideo = parseInt(num);
+      // if (num == 0) {
+      //   this.setLayout(this.layout);
+      // } else {
+      //   this.setLayout(1)
+      // }
+
+      if (oWebControl) {
+        oWebControl.JS_RequestInterface({
+          funcName: 'ChangeModel',
+          arguments: encodeURI(JSON.stringify({
+            model: num
+          }))
+        }).then(function (oData) {
+          // self.play();
+          if (num == 0) {
+            // 预览
+            self.play({
+              deviceSerial: playParams.deviceSerial,
+              channelNo: playParams.channelNo,
+              validateCode: playParams.validateCode
+            });
+          } else {
+            // 回放
+            self.play({
+              deviceSerial: playParams.deviceSerial,
+              channelNo: playParams.channelNo,
+              validateCode: playParams.validateCode,
+              startTime: playParams.startTime,
+              endTime: playParams.endTime
+            });
+          }
+        });
+      }
+    });
+    _defineProperty(this, "init", function (initParams) {
+      var _argumentsPram;
+      var self = _this;
+      if (!initParams.appKey || !initParams.accessToken) {
+        self.showTips(false, '请输入appkey和token');
+        return;
+      }
+      if (typeof initParams.appKey !== 'undefined') {
+        _this.appKey = initParams.appKey;
+      }
+      if (typeof initParams.accessToken !== 'undefined') {
+        _this.accessToken = initParams.accessToken;
+      }
+      if (typeof initParams.platformId !== 'undefined') {
+        _this.platformId = initParams.platformId;
+      }
+
+      // const onHDCallbackMessage = typeof initParams.onCallbackMessage === 'function';
+      // if (onHDCallbackMessage) {
+      //   onHDCallbackMessage = initParams.onHDCallbackMessage
+      // }
+
+      // 初始化入参
+      var argumentsPram = (_argumentsPram = {
+        layout: +self.layout,
+        userName: "",
+        waterMark: "test@qq.com"
+      }, _defineProperty(_argumentsPram, "waterMark", "1"), _defineProperty(_argumentsPram, "iWndType", 0), _defineProperty(_argumentsPram, "intelligenceEnable", 1), _defineProperty(_argumentsPram, "isRecord", 1), _defineProperty(_argumentsPram, "isSetPos", 1), _defineProperty(_argumentsPram, "motionDetectEnable", 0), _defineProperty(_argumentsPram, "playBackAlarmOverlyingEnable", 0), _defineProperty(_argumentsPram, "response", {
+        code: 0,
+        message: null,
+        data: {
+          appKey: initParams.appKey,
+          ezvizToken: initParams.accessToken,
+          videoLevel: 0,
+          logLevel: 3,
+          showMainTool: 1,
+          showSubTool: 1,
+          waterMark: "1",
+          userName: "test@qq.com",
+          platformId: initParams.platformId
+        }
+      }), _argumentsPram);
+      console.log('初始化入参', argumentsPram);
+      // 调用视频控件初始化方法
+      oWebControl.JS_RequestInterface({
+        funcName: 'Init',
+        arguments: encodeURI(JSON.stringify(argumentsPram))
+      }).then(function (oData) {
+        console.log(oData.responseMsg);
+        self.showTips(true, '视频初始化成功！');
+      });
+    });
+    _defineProperty(this, "play", function (playParams) {
+      var self = _this;
+      if (!playParams.deviceSerial || !playParams.channelNo) {
+        return;
+      }
+      if (typeof playParams.deviceSerial !== 'undefined') {
+        _this.deviceSerial = playParams.deviceSerial;
+      }
+      if (typeof playParams.channelNo !== 'undefined') {
+        _this.channelNo = playParams.channelNo;
+      }
+      if (typeof playParams.startTime !== 'undefined' && playParams.startTime) {
+        _this.startTime = playParams.startTime + ' 00:00:00';
+      }
+      if (typeof playParams.endTime !== 'undefined' && playParams.endTime) {
+        _this.endTime = playParams.endTime + ' 23:59:59';
+      }
+      if (typeof playParams.validateCode !== 'undefined' && playParams.validateCode) {
+        _this.validateCode = playParams.validateCode;
+      }
+      // 预览入参
+      var argumentsPram = {
+        response: {
+          code: 0,
+          message: null,
+          data: {
+            deviceSerial: playParams.deviceSerial,
+            channelCode: playParams.channelNo,
+            channelNo: +playParams.channelNo,
+            codeIsEncrypt: 0,
+            validateCode: playParams.validateCode,
+            deviceClass: self.deviceClass,
+            deviceType: "10222",
+            //deviceType:"10240",
+            channelId: "2222222222",
+            channelName: "channelNameTest",
+            storeName: "storeName",
+            storeId: "storeid",
+            // startTime: '2022-09-13 20:00:00',
+            // endTime: '2022-09-13 21:40:00',
+            startTime: _this.startTime,
+            endTime: _this.endTime
+
+            //Limited_start:limitStart,
+            //Limited_end:limitEnd,
+          }
+        }
+      };
+
+      if (self.deviceClass === '1') {
+        // 国标协议对应的两个字段
+        argumentsPram.response.data.channelCode = self.channelNo;
+        argumentsPram.response.data.platformId = self.platformId;
+      } else {
+        // 海康协议对应的一个字段
+        argumentsPram.response.data.channelNo = +self.channelNo;
+      }
+      // 回放时对应的两个字段
+      if (_this.switchVideo === 1) {
+        if (_this.startTime) argumentsPram.response.data.startTime = _this.startTime;
+        if (_this.endTime) argumentsPram.response.data.endTime = _this.endTime;
+      }
+      console.log('预览/回放入参', argumentsPram);
+      // 调用视频控件预览方法
+      oWebControl.JS_RequestInterface({
+        funcName: _this.switchVideo === 0 ? 'StartPreview' : 'StartPlayback',
+        arguments: encodeURI(JSON.stringify(argumentsPram))
+      }).then(function (oData) {
+        console.log(oData.responseMsg);
+        self.showTips(true, '预览/回放成功！');
+      })["catch"](function (res) {
+        console.log('开始播放：', res);
+      });
+    });
+    _defineProperty(this, "showCBInfo", function (message) {
+      _this.callbackMessage = _this.callbackMessage + JSON.stringify(message) + '\n\n';
+      console.log(_this.callbackMessage);
+    });
+    _defineProperty(this, "showTips", function (status, message) {
+      // let self = this;
+      // this.successTip = status;
+      // this.tips = message;
+      // this.tipsShow = true;
+      // setTimeout(() => {
+      //   self.tipsShow = false;
+      // }, 1000);
+    });
+    _defineProperty(this, "hideVideo", function () {
+      oWebControl.JS_HideWnd();
+    });
+    _defineProperty(this, "showVideo", function () {
+      oWebControl.JS_ShowWnd();
+    });
+    _defineProperty(this, "GetLayout", function () {
+      var data = null;
+      oWebControl.JS_RequestInterface({
+        funcName: 'GetLayout',
+        arguments: encodeURI(JSON.stringify({
+          response: {
+            code: 0,
+            message: null,
+            data: data
+          }
+        }))
+      }).then(function (oData) {
+        console.log(JSON.stringify(oData.responseMsg));
+        console.log(oData.responseMsg);
+      });
+    });
+    _defineProperty(this, "capturePicture", function (wndId) {
+      var data = null;
+      oWebControl.JS_RequestInterface({
+        funcName: 'CaptureJPGEx',
+        arguments: encodeURI(JSON.stringify({
+          response: {
+            code: 0,
+            message: null,
+            data: data
+          }
+        }))
+      }).then(function (oData) {
+        console.log(JSON.stringify(oData.responseMsg));
+        console.log(oData.responseMsg);
+      });
+    });
+    _defineProperty(this, "stop", function () {
+      var wndId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -1;
+      oWebControl.JS_RequestInterface({
+        funcName: 'StopPlay',
+        arguments: encodeURI(JSON.stringify({
+          response: {
+            code: 0,
+            message: null,
+            data: {
+              wndId: parseInt(wndId) //传入1表示停止窗口1，传入-1表示停止当前活动窗口
+            }
+          }
+        }))
+      }).then(function (oData) {
+        console.log(JSON.stringify(oData.responseMsg));
+        console.log(oData.responseMsg);
+      });
+    });
+    _defineProperty(this, "setLayout", function (num) {
+      var layout = parseInt(num);
+      if (isNaN(layout) || layout == 0 || layout >= 13) {
+        console.log('不支持实际布局大于16的窗口数');
+        return;
+      }
+      _this.layout = layout;
+      oWebControl.JS_RequestInterface({
+        funcName: 'SetLayout',
+        arguments: encodeURI(JSON.stringify({
+          response: {
+            code: 0,
+            message: null,
+            data: {
+              layout: layout //参数int为布局编号，其定义参见控件初始化函数 init方法中指定的编号。
+            }
+          }
+        }))
+      }).then(function (oData) {
+        console.log(JSON.stringify(oData.responseMsg));
+        console.log(oData.responseMsg);
+      });
+    });
+    _defineProperty(this, "setSoundVolumn", function () {
+      var wndId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -1;
+      var num = arguments.length > 1 ? arguments[1] : undefined;
+      oWebControl.JS_RequestInterface({
+        funcName: 'SoundVolumn',
+        arguments: encodeURI(JSON.stringify({
+          response: {
+            code: 0,
+            message: null,
+            data: {
+              wndId: parseInt(wndId),
+              //传入1表示停止窗口1，传入-1表示停止当前活动窗口
+              volumn: parseInt(num)
+            }
+          }
+        }))
+      }).then(function (oData) {
+        console.log(JSON.stringify(oData.responseMsg));
+        console.log(oData.responseMsg);
+      });
+    });
+    _defineProperty(this, "testMute", function () {
+      var num = parseInt(prompt('请输入窗口ID'));
+      oWebControl.JS_RequestInterface({
+        funcName: 'MuteOnOff',
+        arguments: encodeURI(JSON.stringify({
+          response: {
+            code: 0,
+            message: null,
+            data: {
+              wndId: num
+            }
+          }
+        }))
+      }).then(function (oData) {
+        console.log(JSON.stringify(oData.responseMsg));
+        console.log(oData.responseMsg);
+      });
+    });
+    _defineProperty(this, "testSelectWnd", function () {
+      var num = parseInt(prompt('请输入窗口ID'));
+      oWebControl.JS_RequestInterface({
+        funcName: 'SelectPlayWnd',
+        arguments: encodeURI(JSON.stringify({
+          response: {
+            code: 0,
+            message: null,
+            data: {
+              wndId: num
+            }
+          }
+        }))
+      }).then(function (oData) {
+        console.log(JSON.stringify(oData.responseMsg));
+        console.log(oData.responseMsg);
+      });
+    });
+    _defineProperty(this, "setVideoLevel", function (wndId, level) {
+      oWebControl.JS_RequestInterface({
+        funcName: 'SetVideoLevel',
+        arguments: encodeURI(JSON.stringify({
+          response: {
+            code: 0,
+            message: null,
+            data: {
+              wndId: _this.switchVideo == 1 ? 0 : parseInt(wndId),
+              level: parseInt(level, 10) //0：流畅 1：均衡 2：高品质 3：超清
+            }
+          }
+        }))
+      }).then(function (oData) {
+        console.log(JSON.stringify(oData.responseMsg));
+        console.log(oData.responseMsg);
+      });
+    });
+    _defineProperty(this, "startTalk", function (wndId) {
+      oWebControl.JS_RequestInterface({
+        funcName: 'StartTalk',
+        arguments: encodeURI(JSON.stringify({
+          response: {
+            code: 0,
+            message: null,
+            data: {
+              wndId: parseInt(wndId)
+            }
+          }
+        }))
+      }).then(function (oData) {
+        console.log(JSON.stringify(oData.responseMsg));
+        console.log(oData.responseMsg);
+      });
+    });
+    _defineProperty(this, "stopTalk", function (wndId) {
+      oWebControl.JS_RequestInterface({
+        funcName: 'StopTalk',
+        arguments: encodeURI(JSON.stringify({
+          response: {
+            code: 0,
+            message: null,
+            data: {
+              wndId: parseInt(wndId)
+            }
+          }
+        }))
+      }).then(function (oData) {
+        console.log(JSON.stringify(oData.responseMsg));
+        console.log(oData.responseMsg);
+      });
+    });
+    _defineProperty(this, "startSave", function (wndId) {
+      oWebControl.JS_RequestInterface({
+        funcName: 'StartRecord',
+        arguments: encodeURI(JSON.stringify({
+          response: {
+            code: 0,
+            message: null,
+            data: {
+              wndId: parseInt(wndId)
+            }
+          }
+        }))
+      }).then(function (oData) {
+        console.log(JSON.stringify(oData.responseMsg));
+        console.log(oData.responseMsg);
+      });
+    });
+    _defineProperty(this, "stopSave", function (wndId) {
+      oWebControl.JS_RequestInterface({
+        funcName: 'StopRecord',
+        arguments: encodeURI(JSON.stringify({
+          response: {
+            code: 0,
+            message: null,
+            data: {
+              wndId: parseInt(wndId)
+            }
+          }
+        }))
+      }).then(function (oData) {
+        console.log(JSON.stringify(oData.responseMsg));
+        console.log(oData.responseMsg);
+      });
+    });
+    this.appKey = 'b9a3ad6e8026410095d8252169fa430a', this.accessToken = 'at.2vtum8873rrcwbrv431qb6pn94dkbv23-8dw2twn355-1u3x014-wrthellzk', this.deviceSerial = 'C33368372', this.channelNo = '1', this.validateCode = ''; // 设备验证码
+    this.deviceClass = '0';
+    this.platformId = '';
+    this.startTime = '';
+    this.endTime = '';
+    this.layout = 2;
+    this.switchVideo = 0; // 0实时预览 1录像回放
+
+    this.tips = '调用成功';
+    this.successTip = false;
+    this.tipsShow = false;
+    oWebControl = WebControlInit('playWnd', cbConnectSuccess, cbConnectError, cbConnectClose);
+  }
+
+  /**
+   * 切换模式
+   * @param {*} num  0： 预览 1：回放
+   */
+  _createClass(EZUIKitHD, [{
+    key: "alarmMsg",
+    value: function alarmMsg() {
+      var res = {
+        "request": {
+          "body": {
+            "alarmTypes": [10800, 0, 0, 0, 0],
+            "channelId": "066dde0465dd4abaab6afe355baf9d0b",
+            "endTime": "1621007999000",
+            "startTime": "1620921600000"
+          },
+          "callBack": "GetAlarmMsgOrders",
+          "majorKey": "",
+          "method": "POST",
+          "storeId": "",
+          "url": "/videoplugin/message/getMessageByTypes"
+        },
+        "response": {
+          "code": 0,
+          "message": null,
+          "data": [{
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620921217000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620920678000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620920586000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620919513000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620919483000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620919333000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620918913000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620918616000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620918305000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620917858000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620917658000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620917244000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620917064000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620916994000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620916668000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620916571000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620916529000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620916343000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620916081000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620915825000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620915676000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620915531000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620915394000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620915197000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620914971000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620914644000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620914533000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620914457000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620914376000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620914284000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620913973000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620913431000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620912834000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620912771000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620912354000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620912275000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620912093000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620912024000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620911890000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620911839000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620911807000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620911760000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620911682000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620911270000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620911184000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620910982000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620910931000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620910851000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620910781000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620910727000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620910677000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620910647000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620910588000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620910544000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620910484000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620910410000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620910350000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620910278000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620910217000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620910124000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620909976000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620909939000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620909847000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620909817000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620909736000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620909664000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620909605000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620909575000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620909346000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620909247000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620909216000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620909149000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620909120000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620909028000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908999000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908969000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908909000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908880000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908835000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908750000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908720000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908652000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908612000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908582000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908552000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908456000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908426000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908299000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908268000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620908050000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620907918000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620907758000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620907625000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620907386000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620907292000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620907127000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620906864000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620906828000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620906797000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620906747000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620906717000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620906632000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620906501000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620906412000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620906368000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620906329000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620906142000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620906112000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620906013000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905946000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905823000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905697000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905622000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905571000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905541000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905511000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905481000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905442000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905412000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905382000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905352000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905322000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905262000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905196000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620905150000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620904994000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620904931000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620904813000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620904730000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620904700000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620904618000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620904286000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620904173000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620904143000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620904112000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620904053000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620904023000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620903854000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620903789000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620903723000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620903643000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620903612000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620903573000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620903505000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620903383000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620903329000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620903299000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620903268000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620903200000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620903149000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620903120000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620902977000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620902860000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620902770000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620902639000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620902609000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620902517000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620902373000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620902320000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620902253000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620902198000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620902132000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620901940000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620901850000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620901789000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620901746000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620901685000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620901638000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620901520000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620901489000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620901424000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620901271000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620901233000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620901157000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620900915000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620900834000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620900774000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620900744000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620900650000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620900440000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620900409000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620900175000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620900134000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620900069000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620900016000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620899976000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620899908000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620899879000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620899826000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620899756000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620899599000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620899559000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620899467000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620899406000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620899265000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620899211000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620899140000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620899110000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620899050000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620898991000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620898926000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620898834000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620898785000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620898746000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620898697000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620898666000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620898507000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620898293000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620898248000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620898218000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620898157000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620898088000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620898020000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897960000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897850000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897807000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897771000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897719000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897690000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897630000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897600000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897570000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897540000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897475000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897412000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897369000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897339000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897279000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897237000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897207000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897172000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897142000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897112000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620897024000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620896985000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620896874000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620896843000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620896814000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620896783000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620896736000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620896621000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620896478000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620896447000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620896358000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620896307000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620896277000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620896247000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620896214000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620896040000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620895953000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620895921000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620895868000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620895770000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620895704000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620895590000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620895559000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620895480000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620895442000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620895377000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620895347000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620895293000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620895171000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620895136000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620895017000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620894926000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620894896000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620894864000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620894834000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620894738000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620894599000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620894539000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620894426000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620894359000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620894297000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620894213000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620894183000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620894051000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620893964000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620893934000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620893843000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620893754000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620893676000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620893606000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620893530000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620893452000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620893423000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620893357000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620893288000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620893143000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620893051000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620893006000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620892904000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620892824000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620892764000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620892541000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620892479000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620892412000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620892311000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620892281000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620892209000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620892063000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891991000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891931000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891870000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891810000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891708000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891655000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891585000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891531000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891501000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891401000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891297000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891257000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891216000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891178000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891128000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620891033000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620890973000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620890940000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620890879000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620890794000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620890714000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620890616000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620890586000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620890469000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620890414000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620890346000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620890288000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620890179000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620890108000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620890041000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620890011000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620889937000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620889719000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620889635000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620889481000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620889451000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620889317000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620889227000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620889139000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620889034000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620888973000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620888902000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620888837000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620888767000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620888737000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620888706000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620888633000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620888571000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620888413000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620888353000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620888323000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620888249000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620888162000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620888000000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620887859000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620887776000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620887734000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620887692000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620887619000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620887501000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620887355000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620887320000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620887289000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620887126000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620887066000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620887034000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620886970000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620886884000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620886804000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620886728000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620886609000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620886538000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620886478000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620886396000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620886334000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620886246000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620886111000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620886011000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620885956000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620885894000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620885696000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620885514000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620885484000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620885414000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620885383000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620885341000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620885306000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620885276000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620885216000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620885186000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620885114000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620885037000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620885006000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620884975000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620884945000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620884911000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620884851000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620884780000
+          }, {
+            "alarmType": 10800,
+            "alarmName": "移动侦测报警",
+            "alarmTime": 1620884696000
+          }],
+          "success": true
+        }
+      };
+      console.log(res);
+
+      //let res = {"request":{"body":{"alarmTypes":[10800,0,0,0,0],"channelId":"066dde0465dd4abaab6afe355baf9d0b","endTime":"1621007999000","startTime":"1620921600000"},"callBack":"GetAlarmMsgOrders","majorKey":"","method":"POST","storeId":"","url":"/videoplugin/message/getMessageByTypes"},"response":{"code":0,"message":null,"data":[{"alarmType":10800,"alarmName":"移动侦测报警","alarmTime":1620864635000},{"alarmType":10800,"alarmName":"移动侦测报警","alarmTime":1620840908000}],"success":true}}
+      oWebControl.JS_RequestInterface({
+        funcName: 'TransFunctionResult',
+        arguments: encodeURI(JSON.stringify(res))
+      });
+
+      //.JS_RequestInterface({funcName: 'TransFunctionResult', arguments: {
+      //  response: res
+      //}})
+    }
+  }]);
+  return EZUIKitHD;
+}();
+
 (function (global, factory) {
 
   if ((typeof module === "undefined" ? "undefined" : _typeof(module)) === "object" && _typeof(module.exports) === "object") {
@@ -33495,7 +35657,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     Core: Core,
     HLS: HLS,
     FLV: FLV,
-    EZUIKitPlayer: EZUIKitPlayer
+    EZUIKitPlayer: EZUIKitPlayer,
+    EZUIKitHD: EZUIKitHD
   };
   window.EZUIKit = EZUIKit;
   return EZUIKit;

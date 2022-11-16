@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EZUIKitHD</title>
+  <script src="./js/jsWebControl-1.0.0.min.js"></script>
+  <script src="../ezuikit.js"></script>
+  <style>
+    input {
+      width: 100%;
+    }
+
+    .fun-area {
+      margin-bottom: 24px;
+    }
+
+    .demo {
+      display: flex;
+    }
+
+    .input-area {
+      width: 600px;
+    }
+
+    /* .hide {
+      overflow: hidden;
+    } */
+  </style>
+</head>
+
+<body>
+  <div class="demo">
+    <div class="input-area">
+      <div class="fun-area">
+        <div>请输入appKey</div>
+        <input type="text" id="appKey" value="">
+        <div>请输入accessToken</div>
+        <input type="text" id="accessToken" value="">
+        <button onclick="init()">初始化</button>
+      </div>
+      <div class="fun-area">
+        <div>请输入设备序列号('C33368372','J15283664'; ,"","G10820169", "")</div>
+        <input type="text" id="deviceSerial" value="">
+        <div>请输入通道号</div>
+        <input type="text" id="channelNo" value="1">
+        <div>请输入验证码</div>
+        <input type="text" id="validateCode" value="" placeholder="加密设备需输入设备验证码进行播放">
+        <button onclick="play()">播放</button>
+        <button onclick="toPreView()">切换到预览</button>
+        <button onclick="toRec()">切换到回放</button>
+      </div>
+      <div class="fun-area">
+        <div>请输入窗口号</div>
+        <input type="text" id="wndId" value="0">
+        <div>请输入开始时间（回放）</div>
+        <input type="text" id="startTime" value="" placeholder="2022-10-20">
+
+        <div>请输入结束时间（回放）</div>
+        <input type="text" id="endTime" value="" placeholder="2022-10-20">
+        <div>设置清晰度（清晰度值，可选0：流畅 1：均衡 2：高品质 3：超清）</div>
+        <input type="text" id="videoLevel" value="1">
+        <div>设置音量（0-100）</div>
+        <input type="text" id="soundVolumn" value="100">
+
+
+        <button onclick="startSave()">开始录制</button>
+        <button onclick="stopSave()">结束录制</button>
+        <button onclick="startTalk()" id="talk">开始对讲</button>
+        <button onclick="stopTalk()" id="stoptalk">结束对讲</button>
+        <button onclick="setVideoLevel()" id="videohd">设置清晰度</button>
+        <button onclick="setSoundVolumn()">设置音量</button>
+        <button onclick="capturePicture()">抓图</button>
+        <button onclick="stop()">停止</button>
+
+      </div>
+      <div class="fun-area">
+        <div>请输入布局编号(只支持1-12)：</div>
+        <input type="text" id="layoutValue" value="1">
+        <button onclick="setLayout()" id="layout">设置布局</button>
+      </div>
+
+      <div style="margin-top: 10px;">
+        <span class="input-group-text">事件回调信息</span>
+        <textarea class="form-control input-area" rows="10" cols="20" id="callbackMessage"></textarea>
+      </div>
+    </div>
+    <div id="playWnd" style="width: 900px;height:500px;margin-bottom: 40px;"></div>
+  </div>
+
+  <script>
+    var EZUIKitHDDemo = new window.EZUIKit.EZUIKitHD();
+    const init = () => {
+      EZUIKitHDDemo.init({
+        accessToken: document.getElementById("accessToken").value,
+        appKey: document.getElementById("appKey").value,
+      });
+    }
+
+    const play = () => {
+      EZUIKitHDDemo.play({
+        deviceSerial: document.getElementById("deviceSerial").value,
+        channelNo: document.getElementById("channelNo").value,
+        validateCode: document.getElementById("validateCode").value
+      });
+    }
+    const toPreView = () => {
+      EZUIKitHDDemo.changeModel(0, {
+        deviceSerial: document.getElementById("deviceSerial").value,
+        channelNo: document.getElementById("channelNo").value,
+        validateCode: document.getElementById("validateCode").value
+
+      });
+      document.getElementById('talk').removeAttribute('disabled');
+      document.getElementById('stoptalk').removeAttribute('disabled')
+      document.getElementById('layout').removeAttribute('disabled');
+      document.getElementById('videohd').removeAttribute('disabled')
+
+    }
+    const toRec = () => {
+
+      EZUIKitHDDemo.changeModel(1, {
+        deviceSerial: document.getElementById("deviceSerial").value,
+        channelNo: document.getElementById("channelNo").value,
+        validateCode: document.getElementById("validateCode").value,
+        startTime: document.getElementById("startTime").value,
+        endTime: document.getElementById("endTime").value,
+      });
+      // 回放模式下，无对讲功能
+      document.getElementById('talk').setAttribute('disabled', true);
+      document.getElementById('stoptalk').setAttribute('disabled', true);
+      // 回放情况下，无法设置布局
+      document.getElementById('layout').setAttribute('disabled', true);
+      // 回放模式下，无法设置清晰度
+      document.getElementById('videohd').setAttribute('disabled', true);
+
+    }
+    const startSave = () => {
+      EZUIKitHDDemo.startSave(document.getElementById("wndId").value);
+    }
+    const stopSave = () => {
+      EZUIKitHDDemo.stopSave(document.getElementById("wndId").value);
+    }
+    const startTalk = () => {
+      EZUIKitHDDemo.startTalk(document.getElementById("wndId").value);
+    }
+    const stopTalk = () => {
+      EZUIKitHDDemo.stopTalk(document.getElementById("wndId").value);
+    }
+    const setVideoLevel = () => {
+      EZUIKitHDDemo.setVideoLevel(document.getElementById("wndId").value, document.getElementById("videoLevel").value);
+    }
+    const setSoundVolumn = () => {
+      EZUIKitHDDemo.setSoundVolumn(document.getElementById("wndId").value, document.getElementById("soundVolumn").value);
+    }
+    const setLayout = () => {
+      EZUIKitHDDemo.setLayout(document.getElementById("layoutValue").value);
+    }
+    const capturePicture = () => {
+      EZUIKitHDDemo.capturePicture(document.getElementById("wndId").value);
+    }
+    const stop = () => {
+      EZUIKitHDDemo.stop(document.getElementById("wndId").value);
+    }
+
+  </script>
+</body>
+
+</html>
