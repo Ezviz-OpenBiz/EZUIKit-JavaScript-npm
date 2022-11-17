@@ -33646,7 +33646,7 @@ var EZUIKitHD = /*#__PURE__*/function () {
       var argumentsPram = (_argumentsPram = {
         layout: +self.layout,
         userName: "",
-        waterMark: "test@qq.com"
+        waterMark: ""
       }, _defineProperty(_argumentsPram, "waterMark", "1"), _defineProperty(_argumentsPram, "iWndType", 0), _defineProperty(_argumentsPram, "intelligenceEnable", 1), _defineProperty(_argumentsPram, "isRecord", 1), _defineProperty(_argumentsPram, "isSetPos", 1), _defineProperty(_argumentsPram, "motionDetectEnable", 0), _defineProperty(_argumentsPram, "playBackAlarmOverlyingEnable", 0), _defineProperty(_argumentsPram, "response", {
         code: 0,
         message: null,
@@ -33658,7 +33658,7 @@ var EZUIKitHD = /*#__PURE__*/function () {
           showMainTool: 1,
           showSubTool: 1,
           waterMark: "1",
-          userName: "test@qq.com",
+          userName: "openteam",
           platformId: initParams.platformId
         }
       }), _argumentsPram);

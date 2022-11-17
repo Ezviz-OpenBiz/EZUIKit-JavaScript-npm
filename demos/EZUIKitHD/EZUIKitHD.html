@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EZUIKitHD</title>
   <script src="./js/jsWebControl-1.0.0.min.js"></script>
-  <script src="../ezuikit.js"></script>
+  <script src="../../ezuikit.js"></script>
   <style>
     input {
       width: 100%;
@@ -42,7 +42,7 @@
         <button onclick="init()">初始化</button>
       </div>
       <div class="fun-area">
-        <div>请输入设备序列号('C33368372','J15283664'; ,"","G10820169", "")</div>
+        <div>请输入设备序列号</div>
         <input type="text" id="deviceSerial" value="">
         <div>请输入通道号</div>
         <input type="text" id="channelNo" value="1">
@@ -82,10 +82,7 @@
         <button onclick="setLayout()" id="layout">设置布局</button>
       </div>
 
-      <div style="margin-top: 10px;">
-        <span class="input-group-text">事件回调信息</span>
-        <textarea class="form-control input-area" rows="10" cols="20" id="callbackMessage"></textarea>
-      </div>
+
     </div>
     <div id="playWnd" style="width: 900px;height:500px;margin-bottom: 40px;"></div>
   </div>
