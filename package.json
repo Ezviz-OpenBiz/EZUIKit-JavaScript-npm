@@ -1,7 +1,7 @@
 {
   "name": "ezuikit-js",
   "maintainers": ["jzy"],
-  "version": "7.2",
+  "version": "7.3",
   "description": "ezuikit javascript for npm",
   "main": "ezuikit.js",
   "scripts": {
