@@ -141,7 +141,7 @@
                     let sourceRemain =  Module._GetSourceBufferRemain(g_nPort);
                     if(sourceRemain == 0)
                     {
-                        console.log("C buffer and JS buffer size is both 0");
+                        // console.log("C buffer and JS buffer size is both 0");
                         postMessage({'function': "InputData", 'errorCode':PLAYM4_NEED_MORE_DATA});
                         return;
                     }
