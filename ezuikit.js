@@ -17352,7 +17352,7 @@ var MobileRec = /*#__PURE__*/function () {
         };
         var localRecSeek = function localRecSeek(callback) {
           _this.disabled = true;
-          _this.jSPlugin.pause().then(function () {
+          _this.jSPlugin.pause(date).then(function () {
             console.log("暂停成功");
             _this.jSPlugin.resume(date).then(function (data) {
               console.log("恢复成功");
@@ -28934,6 +28934,7 @@ var Theme = /*#__PURE__*/function () {
     if (typeof jSPlugin.isMobile !== 'undefined') {
       this.isMobile = jSPlugin.isMobile;
     }
+    this.pauseTime = null;
     // 默认主题 - 按钮全部展示
     this.themeData = emptyData.data;
     // 自适应主题数据
@@ -29706,7 +29707,16 @@ var Theme = /*#__PURE__*/function () {
             if (play) {
               if (rec || cloudRec) {
                 //回放时调用暂停，而不是结束播放
-                _this9.jSPlugin.pause();
+                if (_this9.isMobile) {
+                  _this9.jSPlugin.jSPlugin.JS_GetOSDTime(0).then(function (data) {
+                    var pauseDate = new Date(data * 1000);
+                    var pauseTime = "".concat(pauseDate.getFullYear()) + (pauseDate.getMonth() > 8 ? pauseDate.getMonth() + 1 : "0".concat(pauseDate.getMonth() + 1)) + (pauseDate.getDate() > 9 ? pauseDate.getDate() : "0".concat(pauseDate.getDate())) + (pauseDate.getHours() > 9 ? pauseDate.getHours() : "0".concat(pauseDate.getHours())) + (pauseDate.getMinutes() > 9 ? pauseDate.getMinutes() : "0".concat(pauseDate.getMinutes())) + (pauseDate.getSeconds() > 9 ? pauseDate.getSeconds() : "0".concat(pauseDate.getSeconds()));
+                    _this9.pauseTime = pauseTime;
+                    _this9.jSPlugin.pause(pauseTime);
+                  });
+                } else {
+                  _this9.jSPlugin.pause();
+                }
               } else {
                 _this9.jSPlugin.stop();
                 _this9.jSPlugin.Zoom.stopZoom();
@@ -29722,7 +29732,11 @@ var Theme = /*#__PURE__*/function () {
             } else {
               if (rec || cloudRec) {
                 //回放时调用恢复播放状态
-                _this9.jSPlugin.resume();
+                if (_this9.isMobile) {
+                  _this9.jSPlugin.resume(_this9.pauseTime);
+                } else {
+                  _this9.jSPlugin.resume();
+                }
               } else {
                 _this9.jSPlugin.play();
               }
