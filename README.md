@@ -117,7 +117,8 @@ import EZUIKit from 'ezuikit-js';
 
 #### 直播
 ##### 标清
-ezopen://open.ys7.com/${设备序列号}/{通道号}.live<br/>
+ezopen://
+/${设备序列号}/{通道号}.live<br/>
 ##### 高清
 ezopen://open.ys7.com/${设备序列号}/{通道号}.hd.live<br/>
 
@@ -128,7 +129,7 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.rec?begin=yyyyMMddhhmmss
 ##### 云存储回放
 初始化参数 url值为：<br/>
 ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhmmss
-视频ezopen协议播放地址 详见：<a href="http://open.ys7.com/doc/zh/readme/ezopen.html" target="_blank">ezopen协议</a>	</td><td>Y</td></tr>
+视频ezopen协议播放地址 详见：<a href="https://open.ys7.com/help/23" target="_blank">ezopen协议</a>	</td><td>Y</td></tr>
 <tr><td>audio</td><td>boolean</td><td>是否默认开启声音 true：打开（默认） false：关闭	</td><td>N</td></tr>
 <tr><td>width</td><td>int</td><td>视频宽度，默认值为容器容器DOM宽度	</td><td>Y</td></tr>
 <tr><td>height</td><td>int</td><td>视频高度，默认值为容器容器DOM高度</td><td>Y</td></tr>
