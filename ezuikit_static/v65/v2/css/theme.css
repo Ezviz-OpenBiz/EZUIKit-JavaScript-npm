@@ -26,12 +26,6 @@
 .footer-controls.themeEditing .footer-controls-left .theme-icon-item:nth-last-child(1) .icon-move.right{
   display: none;
 }
-.footer-controls.themeEditing .theme-icon-item:first-child .icon-move.left{
-  display: none;
-}
-.footer-controls.themeEditing .theme-icon-item:nth-last-child(1) .icon-move.right{
-  display: none;
-}
 .footer-controls .footer-controls-right {
   margin-right: 12px;
 }

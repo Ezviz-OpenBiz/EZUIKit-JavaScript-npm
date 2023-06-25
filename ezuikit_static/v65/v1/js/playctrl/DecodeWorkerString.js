@@ -1,3 +1,6 @@
+const DecodeWorkerString = (
+  staticPath = "https://open.ys7.com/assets/ezuikit_v3.6"
+) => `
 /**
  * Created by wangweijie5 on 2016/12/5.
  */
@@ -17,7 +20,7 @@
     const PLAYM4_NEED_NEET_LOOP = 35; //丢帧需要下个循环
     const PLAYM4_SYS_NOT_SUPPORT = 16; 	// 不支持
 
-    importScripts('Decoder.js');
+    importScripts('${staticPath}/js/playctrl/Decoder.js');
     Module.addOnPostRun(function () {
         postMessage({ 'function': "loaded" });
     });
@@ -614,3 +617,7 @@
         return re;
     }
 })();
+`;
+
+
+export default DecodeWorkerString;
