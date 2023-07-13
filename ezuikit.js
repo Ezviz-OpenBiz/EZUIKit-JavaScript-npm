@@ -40261,10 +40261,10 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                   msg: "初始化成功"
                 }
               });
-              if (params.url.indexOf('rec') != -1 && params.template && params.template.length < 32 && params.template != 'simple' && _this2.Theme && params.id != 'miniRec') {
-                // 传入rec播放地址时将主题切换至回放
-                _this2.Theme.changeTheme(_this2.isMobile ? "mobileRec" : "pcRec");
-              }
+              // if (params.url.indexOf('rec') != -1 && params.template && params.template.length < 32 && params.template != 'simple' && this.Theme && params.id != 'miniRec') {
+              //   // 传入rec播放地址时将主题切换至回放
+              //   this.Theme.changeTheme(this.isMobile ? "mobileRec" : "pcRec");
+              // }
             }
           }, 50);
         } else {
@@ -40515,12 +40515,13 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               msg: "初始化成功"
             }
           });
-          if (params.url.indexOf('rec') != -1 && params.template && params.template.length < 32 && params.template != 'simple' && _this2.Theme && params.id != 'miniRec') {
-            //传入rec播放地址时将主题切换至回放
-            _this2.Theme.changeTheme(_this2.isMobile ? "mobileRec" : "pcRec");
-          }
+          // if (params.url.indexOf('rec') != -1 && params.template && params.template.length < 32 && params.template != 'simple' && this.Theme && params.id != 'miniRec') {
+          //   //传入rec播放地址时将主题切换至回放
+          //   this.Theme.changeTheme(this.isMobile ? "mobileRec" : "pcRec");
+          // }
         }
       };
+
       var initDecoderPromise = new Promise(initDecoder);
       return initDecoderPromise;
     }
