@@ -38,7 +38,7 @@
   z-index: 2;
   left: 0;
   /* top: 0; */
-  top: calc(100vh - 400px);
+  /* top: calc(100vh - 400px); */
 
   width: 90%;
   margin: auto;
@@ -47,11 +47,11 @@
   padding: 10px 0;
  }
  .hd.speed-select.mobile {
-   height: 90px;
+   /* height: 90px; */
  }
  .speed.speed-select.mobile {
-   height: 180px;
-   top: calc(100vh - 400px);
+   /* height: 180px; */
+   /* top: calc(100vh - 400px); */
  }
  .speed-select.mobile .selectOption.active{
    color: #648FFC;

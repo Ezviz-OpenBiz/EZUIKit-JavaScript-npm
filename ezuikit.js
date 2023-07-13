@@ -28,9 +28,6 @@ function _regeneratorRuntime() {
   var exports = {},
     Op = Object.prototype,
     hasOwn = Op.hasOwnProperty,
-    defineProperty = Object.defineProperty || function (obj, key, desc) {
-      obj[key] = desc.value;
-    },
     $Symbol = "function" == typeof Symbol ? Symbol : {},
     iteratorSymbol = $Symbol.iterator || "@@iterator",
     asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator",
@@ -54,9 +51,40 @@ function _regeneratorRuntime() {
     var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator,
       generator = Object.create(protoGenerator.prototype),
       context = new Context(tryLocsList || []);
-    return defineProperty(generator, "_invoke", {
-      value: makeInvokeMethod(innerFn, self, context)
-    }), generator;
+    return generator._invoke = function (innerFn, self, context) {
+      var state = "suspendedStart";
+      return function (method, arg) {
+        if ("executing" === state) throw new Error("Generator is already running");
+        if ("completed" === state) {
+          if ("throw" === method) throw arg;
+          return doneResult();
+        }
+        for (context.method = method, context.arg = arg;;) {
+          var delegate = context.delegate;
+          if (delegate) {
+            var delegateResult = maybeInvokeDelegate(delegate, context);
+            if (delegateResult) {
+              if (delegateResult === ContinueSentinel) continue;
+              return delegateResult;
+            }
+          }
+          if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) {
+            if ("suspendedStart" === state) throw state = "completed", context.arg;
+            context.dispatchException(context.arg);
+          } else "return" === context.method && context.abrupt("return", context.arg);
+          state = "executing";
+          var record = tryCatch(innerFn, self, context);
+          if ("normal" === record.type) {
+            if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
+            return {
+              value: record.arg,
+              done: context.done
+            };
+          }
+          "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
+        }
+      };
+    }(innerFn, self, context), generator;
   }
   function tryCatch(fn, obj, arg) {
     try {
@@ -110,55 +138,24 @@ function _regeneratorRuntime() {
       reject(record.arg);
     }
     var previousPromise;
-    defineProperty(this, "_invoke", {
-      value: function (method, arg) {
-        function callInvokeWithMethodAndArg() {
-          return new PromiseImpl(function (resolve, reject) {
-            invoke(method, arg, resolve, reject);
-          });
-        }
-        return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
+    this._invoke = function (method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new PromiseImpl(function (resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
       }
-    });
-  }
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = "suspendedStart";
-    return function (method, arg) {
-      if ("executing" === state) throw new Error("Generator is already running");
-      if ("completed" === state) {
-        if ("throw" === method) throw arg;
-        return doneResult();
-      }
-      for (context.method = method, context.arg = arg;;) {
-        var delegate = context.delegate;
-        if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
-          if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
-          }
-        }
-        if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) {
-          if ("suspendedStart" === state) throw state = "completed", context.arg;
-          context.dispatchException(context.arg);
-        } else "return" === context.method && context.abrupt("return", context.arg);
-        state = "executing";
-        var record = tryCatch(innerFn, self, context);
-        if ("normal" === record.type) {
-          if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
-          return {
-            value: record.arg,
-            done: context.done
-          };
-        }
-        "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
-      }
+      return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
     };
   }
   function maybeInvokeDelegate(delegate, context) {
-    var methodName = context.method,
-      method = delegate.iterator[methodName];
-    if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator.return && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel;
+    var method = delegate.iterator[context.method];
+    if (undefined === method) {
+      if (context.delegate = null, "throw" === context.method) {
+        if (delegate.iterator.return && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel;
+        context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method");
+      }
+      return ContinueSentinel;
+    }
     var record = tryCatch(method, delegate.iterator, context.arg);
     if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel;
     var info = record.arg;
@@ -203,13 +200,7 @@ function _regeneratorRuntime() {
       done: !0
     };
   }
-  return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", {
-    value: GeneratorFunctionPrototype,
-    configurable: !0
-  }), defineProperty(GeneratorFunctionPrototype, "constructor", {
-    value: GeneratorFunction,
-    configurable: !0
-  }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) {
+  return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) {
     var ctor = "function" == typeof genFun && genFun.constructor;
     return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name));
   }, exports.mark = function (genFun) {
@@ -230,9 +221,8 @@ function _regeneratorRuntime() {
     return this;
   }), define(Gp, "toString", function () {
     return "[object Generator]";
-  }), exports.keys = function (val) {
-    var object = Object(val),
-      keys = [];
+  }), exports.keys = function (object) {
+    var keys = [];
     for (var key in object) keys.push(key);
     return keys.reverse(), function next() {
       for (; keys.length;) {
@@ -372,7 +362,7 @@ function _defineProperties(target, props) {
     descriptor.enumerable = descriptor.enumerable || false;
     descriptor.configurable = true;
     if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor);
+    Object.defineProperty(target, descriptor.key, descriptor);
   }
 }
 function _createClass$1(Constructor, protoProps, staticProps) {
@@ -384,7 +374,6 @@ function _createClass$1(Constructor, protoProps, staticProps) {
   return Constructor;
 }
 function _defineProperty(obj, key, value) {
-  key = _toPropertyKey(key);
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -460,20 +449,6 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
       }
     }
   };
-}
-function _toPrimitive(input, hint) {
-  if (typeof input !== "object" || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || "default");
-    if (typeof res !== "object") return res;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return (hint === "string" ? String : Number)(input);
-}
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, "string");
-  return typeof key === "symbol" ? key : String(key);
 }
 
 var Core = /*#__PURE__*/function () {
@@ -17142,6 +17117,9 @@ var Rec = /*#__PURE__*/function () {
     key: "recInit",
     value: function recInit() {
       var _this = this;
+      if (!document.getElementById("".concat(this.jSPlugin.id, "-audioControls"))) {
+        return false;
+      }
       // 重置时间轴尺度
       this.currentTimeWidth = 0;
       var canvasItemWidth = parseInt(getComputedStyle(document.getElementById(this.jSPlugin.id)).width, 10) - 100;
@@ -19082,7 +19060,9 @@ var Ptz = /*#__PURE__*/function () {
         }
         return n[i].exports;
       }
-      for (var u = "function" == typeof require && require, i = 0; i < t.length; i++) o(t[i]);
+      for (var u = "function" == typeof require && require, i = 0; i < t.length; i++) {
+        o(t[i]);
+      }
       return o;
     }
     return r;
@@ -25133,9 +25113,11 @@ function Janus$3(gatewayCallbacks) {
       return;
     }
     if (cleanupHandles) {
-      for (var handleId in pluginHandles) destroyHandle(handleId, {
-        noRequest: true
-      });
+      for (var handleId in pluginHandles) {
+        destroyHandle(handleId, {
+          noRequest: true
+        });
+      }
     }
     // No need to destroy all handles first, Janus will do that itself
     var request = {
@@ -31485,6 +31467,10 @@ var Theme = /*#__PURE__*/function () {
                       _this9.setDecoderState({
                         hd: targetType
                       });
+                      var hdIcon = document.getElementById("".concat(_this9.jSPlugin.id, "-hdSelect-icon"));
+                      var sdIcon = document.getElementById("".concat(_this9.jSPlugin.id, "-sdSelect-icon"));
+                      if (hdIcon) hdIcon.style.display = targetType.level === 'hd' ? 'block' : 'none';
+                      if (sdIcon) sdIcon.style.display = targetType.level === 'sd' ? 'block' : 'none';
                     }
                   }
 
@@ -31771,277 +31757,279 @@ var Theme = /*#__PURE__*/function () {
         var _this11 = this;
         var _this$themeData4, header, footer, videoId, headerContainer, headerStyle, _checkTimer2, footerContainer, footerStyle, _iterator, _step, item, _iterator2, _step2, _item, _checkTimer3, isNeedRenderPTZ, fullscreenchange, checkTimer;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
-            case 0:
-              _this$themeData4 = this.themeData, header = _this$themeData4.header, footer = _this$themeData4.footer;
-              videoId = this.jSPlugin.id;
-              this.header = defaultTheme.header;
-              this.footer = defaultTheme.footer;
-              this.isNeedRenderHeader = lodash.findIndex(header.btnList, function (v) {
-                return v.isrender > 0;
-              }) >= 0 && this.jSPlugin.id != 'miniRec';
-              if (this.isMobile) {
-                // 移动端回放，需要判断设备序列号，设备名称
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this$themeData4 = this.themeData, header = _this$themeData4.header, footer = _this$themeData4.footer;
+                videoId = this.jSPlugin.id;
+                this.header = defaultTheme.header;
+                this.footer = defaultTheme.footer;
                 this.isNeedRenderHeader = lodash.findIndex(header.btnList, function (v) {
-                  return v.isrender > 0 && v.iconId === "deviceID" || v.isrender > 0 && v.iconId === "deviceName";
+                  return v.isrender > 0;
                 }) >= 0 && this.jSPlugin.id != 'miniRec';
-              }
-              this.isNeedRenderFooter = lodash.findIndex(footer.btnList, function (v) {
-                return v.isrender > 0;
-              }) >= 0 && this.jSPlugin.id != 'miniRec';
-              console.log('miniRec：' + this.jSPlugin.themeId);
-              this.isNeedRenderTimeLine = lodash.findIndex(header.btnList, function (v) {
-                return v.iconId === 'cloudRec' && v.isrender === 1 || v.iconId === 'rec' && v.isrender === 1;
-              }) >= 0 && !this.jSPlugin.disabledTimeLine && this.jSPlugin.id != 'miniRec';
-              ["date-switch-container-wrap", "rec-type-container-wrap", "mobile-rec-wrap", "mobile-ez-ptz-container"].forEach(function (item, index) {
-                if (document.getElementById(item)) {
-                  document.getElementById(item).parentElement.removeChild(document.getElementById(item));
+                if (this.isMobile) {
+                  // 移动端回放，需要判断设备序列号，设备名称
+                  this.isNeedRenderHeader = lodash.findIndex(header.btnList, function (v) {
+                    return v.isrender > 0 && v.iconId === "deviceID" || v.isrender > 0 && v.iconId === "deviceName";
+                  }) >= 0 && this.jSPlugin.id != 'miniRec';
                 }
-              });
-              if (this.isNeedRenderHeader) {
-                if (!document.getElementById("".concat(this.jSPlugin.id, "-headControl"))) {
-                  headerContainer = document.createElement('div');
-                  headerContainer.setAttribute('id', "".concat(this.jSPlugin.id, "-headControl"));
-                  headerContainer.setAttribute('class', 'header-controls');
-                  headerContainer.innerHTML = "<div id='".concat(this.jSPlugin.id, "-headControl-left' class=\"header-controls-left\" style='display:flex;width:calc(100% - 100px);overflow:hidden;'></div><div id='").concat(this.jSPlugin.id, "-headControl-right' class=\"header-controls-right\" style='display:flex;'></div>");
-                  headerStyle = {
-                    height: this.jSPlugin.width > MEDIAWIDTH ? "48px" : "32px",
-                    "line-height": this.jSPlugin.width > MEDIAWIDTH ? "48px" : "32px",
-                    display: "flex",
-                    "justify-content": "space-between",
-                    top: 0,
-                    "z-index": 1,
-                    background: "#000000",
-                    color: "#FFFFFF",
-                    width: "100%"
-                  };
-                  headerContainer.style = styleToString$2(headerStyle);
-                  document.getElementById("".concat(videoId, "-wrap")).insertBefore(headerContainer, document.getElementById(videoId));
-                  // 头部预留x像素空间
-                  _checkTimer2 = setInterval(function () {
-                    if (window.EZUIKit[_this11.jSPlugin.id].state.EZUIKitPlayer.init) {
-                      clearInterval(_checkTimer2);
-                      // 检测到渲染头部，执行一次reSize
-                      // this.jSPlugin.reSize(this.jSPlugin.params.width,this.jSPlugin.params.height);
-                    }
-                  }, 50);
+                this.isNeedRenderFooter = lodash.findIndex(footer.btnList, function (v) {
+                  return v.isrender > 0;
+                }) >= 0 && this.jSPlugin.id != 'miniRec';
+                console.log('miniRec：' + this.jSPlugin.themeId);
+                this.isNeedRenderTimeLine = lodash.findIndex(header.btnList, function (v) {
+                  return v.iconId === 'cloudRec' && v.isrender === 1 || v.iconId === 'rec' && v.isrender === 1;
+                }) >= 0 && !this.jSPlugin.disabledTimeLine && this.jSPlugin.id != 'miniRec';
+                ["date-switch-container-wrap", "rec-type-container-wrap", "mobile-rec-wrap", "mobile-ez-ptz-container"].forEach(function (item, index) {
+                  if (document.getElementById(item)) {
+                    document.getElementById(item).parentElement.removeChild(document.getElementById(item));
+                  }
+                });
+                if (this.isNeedRenderHeader) {
+                  if (!document.getElementById("".concat(this.jSPlugin.id, "-headControl"))) {
+                    headerContainer = document.createElement('div');
+                    headerContainer.setAttribute('id', "".concat(this.jSPlugin.id, "-headControl"));
+                    headerContainer.setAttribute('class', 'header-controls');
+                    headerContainer.innerHTML = "<div id='".concat(this.jSPlugin.id, "-headControl-left' class=\"header-controls-left\" style='display:flex;width:calc(100% - 100px);overflow:hidden;'></div><div id='").concat(this.jSPlugin.id, "-headControl-right' class=\"header-controls-right\" style='display:flex;'></div>");
+                    headerStyle = {
+                      height: this.jSPlugin.width > MEDIAWIDTH ? "48px" : "32px",
+                      "line-height": this.jSPlugin.width > MEDIAWIDTH ? "48px" : "32px",
+                      display: "flex",
+                      "justify-content": "space-between",
+                      top: 0,
+                      "z-index": 1,
+                      background: "#000000",
+                      color: "#FFFFFF",
+                      width: "100%"
+                    };
+                    headerContainer.style = styleToString$2(headerStyle);
+                    document.getElementById("".concat(videoId, "-wrap")).insertBefore(headerContainer, document.getElementById(videoId));
+                    // 头部预留x像素空间
+                    _checkTimer2 = setInterval(function () {
+                      if (window.EZUIKit[_this11.jSPlugin.id].state.EZUIKitPlayer.init) {
+                        clearInterval(_checkTimer2);
+                        // 检测到渲染头部，执行一次reSize
+                        // this.jSPlugin.reSize(this.jSPlugin.params.width,this.jSPlugin.params.height);
+                      }
+                    }, 50);
+                  } else {
+                    document.getElementById("".concat(this.jSPlugin.id, "-headControl")).innerHTML = "<div id='".concat(this.jSPlugin.id, "-headControl-left' style='display:flex;width: calc(100% - 100px);'></div><div id='").concat(this.jSPlugin.id, "-headControl-right' style='display:flex'></div>");
+                  }
                 } else {
-                  document.getElementById("".concat(this.jSPlugin.id, "-headControl")).innerHTML = "<div id='".concat(this.jSPlugin.id, "-headControl-left' style='display:flex;width: calc(100% - 100px);'></div><div id='").concat(this.jSPlugin.id, "-headControl-right' style='display:flex'></div>");
+                  if (document.getElementById("".concat(this.jSPlugin.id, "-headControl"))) {
+                    document.getElementById("".concat(this.jSPlugin.id, "-headControl")).parentElement.removeChild(document.getElementById("".concat(this.jSPlugin.id, "-headControl")));
+                  }
+                  // this.jSPlugin.reSize(this.jSPlugin.params.width,this.jSPlugin.params.height);
                 }
-              } else {
-                if (document.getElementById("".concat(this.jSPlugin.id, "-headControl"))) {
-                  document.getElementById("".concat(this.jSPlugin.id, "-headControl")).parentElement.removeChild(document.getElementById("".concat(this.jSPlugin.id, "-headControl")));
-                }
-                // this.jSPlugin.reSize(this.jSPlugin.params.width,this.jSPlugin.params.height);
-              }
 
-              if (this.isNeedRenderFooter) {
-                if (!document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container"))) {
-                  footerContainer = document.createElement('div');
-                  footerContainer.setAttribute('id', "".concat(this.jSPlugin.id, "-ez-iframe-footer-container"));
-                  footerContainer.setAttribute('class', 'ez-iframe-footer-container');
-                  footerStyle = {
-                    "min-height": this.jSPlugin.width > MEDIAWIDTH ? "48px" : "32px",
-                    "max-height": this.jSPlugin.width > MEDIAWIDTH ? "96px" : "80px",
-                    "position": "relative",
-                    "margin-top": this.jSPlugin.width > MEDIAWIDTH ? "-48px" : "-32px",
-                    display: "flex",
-                    "flex-wrap": "wrap",
-                    "justify-content": "space-between",
-                    "z-index": 999,
-                    top: 0,
-                    color: "#FFFFFF",
-                    width: "100%"
-                  };
-                  footerContainer.style = styleToString$2(footerStyle);
-                  footerContainer.innerHTML = "<div id=\"".concat(this.jSPlugin.id, "-audioControls\" class=\"footer-controls\" style='display:flex;height:").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px;justify-content: space-between;width:100%;z-index:999;position: relative;'><div id='").concat(this.jSPlugin.id, "-audioControls-left' class=\"footer-controls-left\" style='display:flex;margin-lefacti'></div><div id='").concat(this.jSPlugin.id, "-audioControls-right' class=\"footer-controls-right\" style='display:flex'></div></div>");
-                  insertAfter(footerContainer, document.getElementById(videoId));
+                if (this.isNeedRenderFooter) {
+                  if (!document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container"))) {
+                    footerContainer = document.createElement('div');
+                    footerContainer.setAttribute('id', "".concat(this.jSPlugin.id, "-ez-iframe-footer-container"));
+                    footerContainer.setAttribute('class', 'ez-iframe-footer-container');
+                    footerStyle = {
+                      "min-height": this.jSPlugin.width > MEDIAWIDTH ? "48px" : "32px",
+                      "max-height": this.jSPlugin.width > MEDIAWIDTH ? "96px" : "80px",
+                      "position": "relative",
+                      "margin-top": this.jSPlugin.width > MEDIAWIDTH ? "-48px" : "-32px",
+                      display: "flex",
+                      "flex-wrap": "wrap",
+                      "justify-content": "space-between",
+                      "z-index": 999,
+                      top: 0,
+                      color: "#FFFFFF",
+                      width: "100%"
+                    };
+                    footerContainer.style = styleToString$2(footerStyle);
+                    footerContainer.innerHTML = "<div id=\"".concat(this.jSPlugin.id, "-audioControls\" class=\"footer-controls\" style='display:flex;height:").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px;justify-content: space-between;width:100%;z-index:999;position: relative;'><div id='").concat(this.jSPlugin.id, "-audioControls-left' class=\"footer-controls-left\" style='display:flex;margin-lefacti'></div><div id='").concat(this.jSPlugin.id, "-audioControls-right' class=\"footer-controls-right\" style='display:flex'></div></div>");
+                    insertAfter(footerContainer, document.getElementById(videoId));
+                  } else {
+                    if (document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container"))) {
+                      document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")).style.marginTop = "-".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px");
+                      document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")).innerHTML = "<div id=\"".concat(this.jSPlugin.id, "-audioControls\"  class=\"footer-controls\" style='display:flex;justify-content: space-between;height: ").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px;width:100%;'><div id='").concat(this.jSPlugin.id, "-audioControls-left' class=\"footer-controls-left\" style='display:flex'></div><div id='").concat(this.jSPlugin.id, "-audioControls-right' class=\"footer-controls-right\" style='display:flex'></div></div>");
+                    }
+                  }
                 } else {
                   if (document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container"))) {
-                    document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")).style.marginTop = "-".concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px");
-                    document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")).innerHTML = "<div id=\"".concat(this.jSPlugin.id, "-audioControls\"  class=\"footer-controls\" style='display:flex;justify-content: space-between;height: ").concat(this.jSPlugin.width > MEDIAWIDTH ? 48 : 32, "px;width:100%;'><div id='").concat(this.jSPlugin.id, "-audioControls-left' class=\"footer-controls-left\" style='display:flex'></div><div id='").concat(this.jSPlugin.id, "-audioControls-right' class=\"footer-controls-right\" style='display:flex'></div></div>");
+                    document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")).parentElement.removeChild(document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")));
                   }
                 }
-              } else {
-                if (document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container"))) {
-                  document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")).parentElement.removeChild(document.getElementById("".concat(this.jSPlugin.id, "-ez-iframe-footer-container")));
+                if (!(this.isNeedRenderHeader && document.getElementById("".concat(this.jSPlugin.id, "-headControl")))) {
+                  _context.next = 38;
+                  break;
                 }
-              }
-              if (!(this.isNeedRenderHeader && document.getElementById("".concat(this.jSPlugin.id, "-headControl")))) {
-                _context.next = 38;
-                break;
-              }
-              document.getElementById("".concat(this.jSPlugin.id, "-headControl")).style.background = header.backgroundColor;
-              document.getElementById("".concat(this.jSPlugin.id, "-headControl")).style.color = header.color;
-              // 为了同步（循序执行）
-              _iterator = _createForOfIteratorHelper(header.btnList);
-              _context.prev = 16;
-              _iterator.s();
-            case 18:
-              if ((_step = _iterator.n()).done) {
-                _context.next = 30;
-                break;
-              }
-              item = _step.value;
-              if (!item.isrender) {
+                document.getElementById("".concat(this.jSPlugin.id, "-headControl")).style.background = header.backgroundColor;
+                document.getElementById("".concat(this.jSPlugin.id, "-headControl")).style.color = header.color;
+                // 为了同步（循序执行）
+                _iterator = _createForOfIteratorHelper(header.btnList);
+                _context.prev = 16;
+                _iterator.s();
+              case 18:
+                if ((_step = _iterator.n()).done) {
+                  _context.next = 30;
+                  break;
+                }
+                item = _step.value;
+                if (!item.isrender) {
+                  _context.next = 28;
+                  break;
+                }
+                _context.prev = 21;
+                _context.next = 24;
+                return this.renderHeader(item.iconId, item.part);
+              case 24:
                 _context.next = 28;
                 break;
-              }
-              _context.prev = 21;
-              _context.next = 24;
-              return this.renderHeader(item.iconId, item.part);
-            case 24:
-              _context.next = 28;
-              break;
-            case 26:
-              _context.prev = 26;
-              _context.t0 = _context["catch"](21);
-            case 28:
-              _context.next = 18;
-              break;
-            case 30:
-              _context.next = 35;
-              break;
-            case 32:
-              _context.prev = 32;
-              _context.t1 = _context["catch"](16);
-              _iterator.e(_context.t1);
-            case 35:
-              _context.prev = 35;
-              _iterator.f();
-              return _context.finish(35);
-            case 38:
-              if (!(this.isNeedRenderFooter && document.getElementById("".concat(this.jSPlugin.id, "-audioControls")))) {
-                _context.next = 64;
+              case 26:
+                _context.prev = 26;
+                _context.t0 = _context["catch"](21);
+              case 28:
+                _context.next = 18;
                 break;
-              }
-              document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).style.background = footer.backgroundColor;
-              document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).style.color = footer.color;
-              // 为了同步（循序执行）
-              _iterator2 = _createForOfIteratorHelper(footer.btnList);
-              _context.prev = 42;
-              _iterator2.s();
-            case 44:
-              if ((_step2 = _iterator2.n()).done) {
-                _context.next = 56;
+              case 30:
+                _context.next = 35;
                 break;
-              }
-              _item = _step2.value;
-              if (!_item.isrender) {
+              case 32:
+                _context.prev = 32;
+                _context.t1 = _context["catch"](16);
+                _iterator.e(_context.t1);
+              case 35:
+                _context.prev = 35;
+                _iterator.f();
+                return _context.finish(35);
+              case 38:
+                if (!(this.isNeedRenderFooter && document.getElementById("".concat(this.jSPlugin.id, "-audioControls")))) {
+                  _context.next = 64;
+                  break;
+                }
+                document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).style.background = footer.backgroundColor;
+                document.getElementById("".concat(this.jSPlugin.id, "-audioControls")).style.color = footer.color;
+                // 为了同步（循序执行）
+                _iterator2 = _createForOfIteratorHelper(footer.btnList);
+                _context.prev = 42;
+                _iterator2.s();
+              case 44:
+                if ((_step2 = _iterator2.n()).done) {
+                  _context.next = 56;
+                  break;
+                }
+                _item = _step2.value;
+                if (!_item.isrender) {
+                  _context.next = 54;
+                  break;
+                }
+                _context.prev = 47;
+                _context.next = 50;
+                return this.renderFooter(_item.iconId, _item.part);
+              case 50:
                 _context.next = 54;
                 break;
-              }
-              _context.prev = 47;
-              _context.next = 50;
-              return this.renderFooter(_item.iconId, _item.part);
-            case 50:
-              _context.next = 54;
-              break;
-            case 52:
-              _context.prev = 52;
-              _context.t2 = _context["catch"](47);
-            case 54:
-              _context.next = 44;
-              break;
-            case 56:
-              _context.next = 61;
-              break;
-            case 58:
-              _context.prev = 58;
-              _context.t3 = _context["catch"](42);
-              _iterator2.e(_context.t3);
-            case 61:
-              _context.prev = 61;
-              _iterator2.f();
-              return _context.finish(61);
-            case 64:
-              console.log('this.isNeedRenderTimeLine:' + this.isNeedRenderTimeLine);
-              if (this.isNeedRenderTimeLine) {
-                if (this.isMobile) {
-                  if (document.getElementById("".concat(this.jSPlugin.id, "-headControl-right"))) {
-                    document.getElementById("".concat(this.jSPlugin.id, "-headControl-right")).style.display = "none";
-                  }
-                  //xuehb changeRecSpeed传入，用来重置播放速度  resetMobileZoomStatus 重置手机放大状态方法
-                  this.Rec = new MobileRec(this.jSPlugin, this.changeRecSpeed, this.resetMobileZoomStatus);
-                } else {
-                  if (this.Rec) {
-                    // 如果回放已经定义，只需要初始化渲染
-                    this.Rec.unSyncTimeLine();
-                    this.Rec.recInit();
+              case 52:
+                _context.prev = 52;
+                _context.t2 = _context["catch"](47);
+              case 54:
+                _context.next = 44;
+                break;
+              case 56:
+                _context.next = 61;
+                break;
+              case 58:
+                _context.prev = 58;
+                _context.t3 = _context["catch"](42);
+                _iterator2.e(_context.t3);
+              case 61:
+                _context.prev = 61;
+                _iterator2.f();
+                return _context.finish(61);
+              case 64:
+                console.log('this.isNeedRenderTimeLine:' + this.isNeedRenderTimeLine);
+                if (this.isNeedRenderTimeLine) {
+                  if (this.isMobile) {
+                    if (document.getElementById("".concat(this.jSPlugin.id, "-headControl-right"))) {
+                      document.getElementById("".concat(this.jSPlugin.id, "-headControl-right")).style.display = "none";
+                    }
+                    //xuehb changeRecSpeed传入，用来重置播放速度  resetMobileZoomStatus 重置手机放大状态方法
+                    this.Rec = new MobileRec(this.jSPlugin, this.changeRecSpeed, this.resetMobileZoomStatus);
                   } else {
-                    this.jSPlugin.decoderState = this.decoderState;
-                    this.jSPlugin.setDecoderState = this.setDecoderState;
-                    this.Rec = new Rec(this.jSPlugin);
-                  }
+                    if (this.Rec) {
+                      // 如果回放已经定义，只需要初始化渲染
+                      this.Rec.unSyncTimeLine();
+                      this.Rec.recInit();
+                    } else {
+                      this.jSPlugin.decoderState = this.decoderState;
+                      this.jSPlugin.setDecoderState = this.setDecoderState;
+                      this.Rec = new Rec(this.jSPlugin);
+                    }
 
-                  // 回放时间轴预留48像素空间
-                  _checkTimer3 = setInterval(function () {
+                    // 回放时间轴预留48像素空间
+                    _checkTimer3 = setInterval(function () {
+                      if (window.EZUIKit[_this11.jSPlugin.id].state.EZUIKitPlayer.init) {
+                        clearInterval(_checkTimer3);
+                        // 检测到渲染回放时间轴，执行一次reSize
+                        // this.jSPlugin.reSize(this.jSPlugin.params.width, this.jSPlugin.params.height);
+                      }
+                    }, 50);
+                  }
+                }
+                isNeedRenderPTZ = lodash.findIndex(this.themeData.footer.btnList, function (v) {
+                  return v.iconId === 'pantile' && v.isrender === 1;
+                }) >= 0 && !this.jSPlugin.disabledPTZ;
+                if (isNeedRenderPTZ) {
+                  if (this.isMobile) {
+                    this.MobilePtz = new MobilePtz(this.jSPlugin);
+                  }
+                  this.Ptz = new Ptz(this.jSPlugin);
+                }
+                //  监听全屏事件触发
+                fullscreenchange = function fullscreenchange() {
+                  var _this11$decoderState$ = _this11.decoderState.state,
+                    expend = _this11$decoderState$.expend,
+                    webExpend = _this11$decoderState$.webExpend,
+                    zoom = _this11$decoderState$.zoom;
+                  var isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
+                  if (!isFullScreen) {
+                    _this11.jSPlugin.jSPlugin.JS_Resize(_this11.jSPlugin.width, _this11.jSPlugin.height);
+                    if (expend) {
+                      _this11.setDecoderState({
+                        expend: false
+                      });
+                      if (zoom && _this11.jSPlugin.use3DZoom) {
+                        _this11.jSPlugin.enable3DZoom();
+                      }
+                    }
+                    if (webExpend) {
+                      _this11.setDecoderState({
+                        webExpend: false
+                      });
+                    }
+                  }
+                  if (_this11.jSPlugin.Theme.Rec) {
+                    _this11.jSPlugin.Theme.Rec.recAutoSize();
+                  }
+                };
+                ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange'].forEach(function (item) {
+                  window.addEventListener(item, function (data) {
+                    return fullscreenchange("fullscreenchange", data);
+                  });
+                });
+                // // 判断是否配置封面
+                if (this.themeData.poster) {
+                  this.jSPlugin.poster = this.themeData.poster;
+                  checkTimer = setInterval(function () {
                     if (window.EZUIKit[_this11.jSPlugin.id].state.EZUIKitPlayer.init) {
-                      clearInterval(_checkTimer3);
-                      // 检测到渲染回放时间轴，执行一次reSize
-                      // this.jSPlugin.reSize(this.jSPlugin.params.width, this.jSPlugin.params.height);
+                      clearInterval(checkTimer);
+                      _this11.jSPlugin.setPoster(_this11.themeData.poster);
                     }
                   }, 50);
                 }
-              }
-              isNeedRenderPTZ = lodash.findIndex(this.themeData.footer.btnList, function (v) {
-                return v.iconId === 'pantile' && v.isrender === 1;
-              }) >= 0 && !this.jSPlugin.disabledPTZ;
-              if (isNeedRenderPTZ) {
-                if (this.isMobile) {
-                  this.MobilePtz = new MobilePtz(this.jSPlugin);
-                }
-                this.Ptz = new Ptz(this.jSPlugin);
-              }
-              //  监听全屏事件触发
-              fullscreenchange = function fullscreenchange() {
-                var _this11$decoderState$ = _this11.decoderState.state,
-                  expend = _this11$decoderState$.expend,
-                  webExpend = _this11$decoderState$.webExpend,
-                  zoom = _this11$decoderState$.zoom;
-                var isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
-                if (!isFullScreen) {
-                  _this11.jSPlugin.jSPlugin.JS_Resize(_this11.jSPlugin.width, _this11.jSPlugin.height);
-                  if (expend) {
-                    _this11.setDecoderState({
-                      expend: false
-                    });
-                    if (zoom && _this11.jSPlugin.use3DZoom) {
-                      _this11.jSPlugin.enable3DZoom();
-                    }
-                  }
-                  if (webExpend) {
-                    _this11.setDecoderState({
-                      webExpend: false
-                    });
-                  }
-                }
-                if (_this11.jSPlugin.Theme.Rec) {
-                  _this11.jSPlugin.Theme.Rec.recAutoSize();
-                }
-              };
-              ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange'].forEach(function (item) {
-                window.addEventListener(item, function (data) {
-                  return fullscreenchange("fullscreenchange", data);
-                });
-              });
-              // // 判断是否配置封面
-              if (this.themeData.poster) {
-                this.jSPlugin.poster = this.themeData.poster;
-                checkTimer = setInterval(function () {
-                  if (window.EZUIKit[_this11.jSPlugin.id].state.EZUIKitPlayer.init) {
-                    clearInterval(checkTimer);
-                    _this11.jSPlugin.setPoster(_this11.themeData.poster);
-                  }
-                }, 50);
-              }
-              this.inited = true;
-              //设备信息
-              this.getDeviceInfo();
-              this.renderThemeData();
-            case 74:
-            case "end":
-              return _context.stop();
+                this.inited = true;
+                //设备信息
+                this.getDeviceInfo();
+                this.renderThemeData();
+              case 74:
+              case "end":
+                return _context.stop();
+            }
           }
         }, _callee, this, [[16, 32, 35, 38], [21, 26], [42, 58, 61, 64], [47, 52]]);
       }));
@@ -32966,7 +32954,6 @@ var Call = /*#__PURE__*/function () {
   function Call(jSPlugin, themeData, setDecoderState, decoderState) {
     var _this = this;
     _classCallCheck$1(this, Call);
-    // 自动播放监听回调（pc端无法自动播放解决方案）
     _defineProperty(this, "autoPlayRing", function () {
       console.log('autoPlayRing');
       var bellringAudio = document.getElementById('bellring-audio');
@@ -32979,7 +32966,6 @@ var Call = /*#__PURE__*/function () {
       }
       window.removeEventListener('click', _this.autoPlayRing);
     });
-    // 静音方法
     _defineProperty(this, "muteCommon", function (btnData) {
       var _this$decoderState$st = _this.decoderState.state,
         talk = _this$decoderState$st.talk,
@@ -33010,7 +32996,6 @@ var Call = /*#__PURE__*/function () {
         });
       }
     });
-    //接听响铃切换方法（给控制台用）
     _defineProperty(this, "switchCallStatus", function (value) {
       var editStatus = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       var _this$themeData = _this.themeData,
@@ -33520,6 +33505,7 @@ var Call = /*#__PURE__*/function () {
         type: 2
       });
     }
+    // 自动播放监听回调（pc端无法自动播放解决方案）
   }, {
     key: "userNoDevice",
     value:
@@ -33676,6 +33662,8 @@ var Call = /*#__PURE__*/function () {
         }
       }
     }
+
+    // 静音方法
   }, {
     key: "switchFooter",
     value:
@@ -34928,7 +34916,6 @@ var MobileCall = /*#__PURE__*/function () {
   function MobileCall(jSPlugin, themeData, setDecoderState, decoderState) {
     var _this = this;
     _classCallCheck$1(this, MobileCall);
-    //接听响铃切换方法（给控制台用）
     _defineProperty(this, "switchCallStatus", function (value) {
       var editStatus = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       var _this$themeData = _this.themeData,
@@ -34982,7 +34969,6 @@ var MobileCall = /*#__PURE__*/function () {
         _this.jSPlugin.Theme.changeTheme(_this.themeData, editStatus);
       }
     });
-    // 静音方法
     _defineProperty(this, "muteCommon", function (btnData) {
       var _this$decoderState$st = _this.decoderState.state,
         talk = _this$decoderState$st.talk,
@@ -35013,7 +34999,6 @@ var MobileCall = /*#__PURE__*/function () {
         });
       }
     });
-    // 自动播放监听回调（手机端无法自动播放解决方案）
     _defineProperty(this, "autoPlayRing", function () {
       console.log('autoPlayRing');
       var bellringAudio = document.getElementById('bellring-audio');
@@ -35947,6 +35932,8 @@ var MobileCall = /*#__PURE__*/function () {
           break;
       }
     }
+
+    //接听响铃切换方法（给控制台用）
   }, {
     key: "initThemeData",
     value:
@@ -36941,7 +36928,9 @@ Date.prototype.Format = function (fmt) {
   };
 
   if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-  for (var k in o) if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+  for (var k in o) {
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+  }
   return fmt;
 };
 var Monitor = /*#__PURE__*/function () {
@@ -37579,8 +37568,7 @@ var Monitor = /*#__PURE__*/function () {
             }, '', apiSuccess);
           }
           if (matchFooterOpt().footerContainer) {
-            /* 时间计数 */
-            var countTime = function countTime(type, start) {
+            /* 时间计数 */var countTime = function countTime(type, start) {
               clearInterval(EZUIKit.state.countTimer);
               if (type === 'add') {
                 var i = start;
@@ -37635,7 +37623,7 @@ var Monitor = /*#__PURE__*/function () {
                   return '00:' + secondV;
                 }
               }
-            };
+            }; /* 将秒数转换为时分秒格式 */
             // 底部容器
             var footerContainer = document.createElement('div');
             footerContainer.setAttribute("class", 'audio-controls');
@@ -39648,13 +39636,6 @@ var matchTemplate = function matchTemplate(templateName, params) {
         templateId: templateName
       };
     } else if (LOCALTEMPLATE.indexOf(templateName) !== -1) {
-      // 特殊处理回放的模板
-      if (params.url.indexOf('rec') != -1 && params.template != 'simple' && params.id != 'miniRec') {
-        return {
-          templateType: 'local',
-          templateId: isMobile() ? 'mobileRec' : 'pcRec'
-        };
-      }
       return {
         templateType: 'local',
         templateId: templateName
@@ -39686,7 +39667,8 @@ var isVersion2Available = function isVersion2Available() {
     ff: /gecko/.test(ua) && !/webkit/.test(ua) // 匹配Firefox浏览器
   };
 
-  if (isMobile()) {
+  var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if (isMobile) {
     return false;
   } else if (info.ch) {
     var getChromeVersion = function getChromeVersion() {
@@ -39705,7 +39687,6 @@ var isVersion2Available = function isVersion2Available() {
   }
   return false;
 };
-
 /**
  * @description EZUIKit播放器
  * @class EZUIKitPlayer
@@ -39722,9 +39703,9 @@ var isVersion2Available = function isVersion2Available() {
  */
 var EZUIKitPlayer = /*#__PURE__*/function () {
   /**
-   * @constructor
-   * @param {EZUIKitPlayerParams} params  EZUIKitPlayer Params
-   */
+    * @constructor
+    * @param {EZUIKitPlayerParams} params  EZUIKitPlayer Params
+    */
   function EZUIKitPlayer(params) {
     var _this = this;
     _classCallCheck$1(this, EZUIKitPlayer);
@@ -39766,7 +39747,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       this.accessToken = params.accessToken;
       this.deviceSerial = matchEzopenUrl(params.url).deviceSerial;
       this.channelNo = matchEzopenUrl(params.url).channelNo;
-      this.themeId = matchTemplate(params.template, params).templateId;
+      this.themeId = matchTemplate(params.template, params).templateId; //当前主题
+      this.sourceThemeId = matchTemplate(params.template, params).templateId; //初始化时传入的主题
       this.id = params.id;
       this.audio = true;
       this.poster = params.poster;
@@ -39779,7 +39761,8 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       this.env = {
         domain: "https://open.ys7.com"
       };
-      this.isMobile = isMobile();
+      var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      this.isMobile = isMobile;
       this.support3DZoom = false; // 是否支持3D定位功能
       this.use3DZoom = false; // 是否开启3D定位功能
       this.is3DZooming = false; // 是否正在使用3D定位功能
@@ -40002,11 +39985,11 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }
 
   /**
-  * @description 初始化 EZUIKitPlayer
-  * @private
-  * @param {EZUIKitPlayerParams} params 
-  * @returns {Promise<any>}
-  */
+   * @description 初始化 EZUIKitPlayer
+   * @private
+   * @param {EZUIKitPlayerParams} params 
+   * @returns {Promise<any>}
+   */
   _createClass$1(EZUIKitPlayer, [{
     key: "initEZUIKitPlayer",
     value: function initEZUIKitPlayer(params) {
@@ -40090,7 +40073,159 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               text: '初始化播放器完成'
             });
           }
-          jSPlugin.EventCallback = _this2._jsPluginEventCallback('v2');
+          jSPlugin.EventCallback = {
+            pluginErrorHandler: function pluginErrorHandler(iWndIndex, iErrorCode, oError) {
+              // 插件错误回调
+              console.log(iWndIndex, iErrorCode, oError);
+              // 呼叫模板挂断/拒绝状态
+              if (_this2.isCall && _this2.Theme && _this2.Theme.decoderState && _this2.Theme.decoderState.state.rejection) {
+                return;
+              }
+              if (iErrorCode === 1003) {
+                console.log("断流");
+                if (_this2.Theme) {
+                  _this2.Theme.setDecoderState({
+                    play: false
+                  });
+                }
+                _this2.pluginStatus.setPlayStatus({
+                  play: false
+                });
+                if (!jSPlugin.bPlay) {
+                  _this2.pluginStatus.loadingClear();
+                  if (_this2.isCall) {
+                    _this2.pluginStatus.loadingSetTextWithBtn({
+                      text: "连接断开，请重试",
+                      color: 'white',
+                      btnName: _this2.isMobile ? '重试' : '重新加载',
+                      isMobile: _this2.isMobile,
+                      type: 1
+                    });
+                  } else {
+                    _this2.pluginStatus.loadingSetText({
+                      text: "连接断开，请重试",
+                      color: 'red'
+                    });
+                  }
+                }
+                if (typeof _this2.params.handleError === 'function') {
+                  _this2.params.handleError({
+                    msg: "连接断开，请重试",
+                    retcode: 1003,
+                    id: _this2.params.id,
+                    type: "handleError"
+                  });
+                }
+              } else {
+                // 推流异常时展示响应提示
+                if (oError.errorCode != 1) {
+                  var errorInfo = _this2.errorHander.matchErrorInfo(oError.errorCode);
+                  var msg = '连接断开，请重试';
+                  if (errorInfo && errorInfo.msg) {
+                    msg = errorInfo.msg;
+                  } else if (errorInfo && errorInfo.description) {
+                    msg = errorInfo.description;
+                  }
+                  if (_this2.Theme) {
+                    _this2.Theme.setDecoderState({
+                      play: false
+                    });
+                  }
+                  _this2.pluginStatus.setPlayStatus({
+                    play: false
+                  });
+                  _this2.pluginStatus.loadingClear();
+                  if (_this2.isCall) {
+                    _this2.pluginStatus.loadingSetTextWithBtn({
+                      text: msg,
+                      color: 'white',
+                      btnName: _this2.isMobile ? '重试' : '重新加载',
+                      isMobile: _this2.isMobile
+                    });
+                  } else {
+                    _this2.pluginStatus.loadingSetText({
+                      text: msg,
+                      color: 'red'
+                    });
+                  }
+                  if (typeof _this2.params.handleError === 'function') {
+                    _this2.params.handleError({
+                      msg: msg,
+                      retcode: oError.errorCode,
+                      id: _this2.params.id,
+                      type: "handleError"
+                    });
+                  }
+                } else {
+                  _this2.pluginStatus.loadingClear();
+                  if (_this2.Theme) {
+                    _this2.Theme.setDisabled(false);
+                  }
+                }
+              }
+            },
+            // xuehb 开启取流 4
+            openStreamCallback: function openStreamCallback() {
+              // 开启取流回调 4
+              console.log("开启取流");
+              _this2.openStreamTime = new Date().getTime();
+              _this2.Monitor.dclog({
+                url: _this2.url,
+                action: 224,
+                d: _this2.openStreamTime - _this2.gotWsUrlTime,
+                text: 'openStream',
+                isVersion2Available: isVersion2Available() ? 1 : 0
+              });
+            },
+            // xuehb 完成取流返回流头  5
+            getStreamHeaderCallback: function getStreamHeaderCallback() {
+              console.log("完成取流返回流头");
+              _this2.getStreamHeaderTime = new Date().getTime();
+              _this2.Monitor.dclog({
+                url: _this2.url,
+                action: 225,
+                d: _this2.getStreamHeaderTime - _this2.openStreamTime,
+                text: 'getStreamHeader',
+                isVersion2Available: isVersion2Available() ? 1 : 0
+              });
+            },
+            // xuehb 返回视频流  6
+            getVideoStreamCallback: function getVideoStreamCallback() {
+              console.log("返回视频流(首次)");
+              _this2.getVideoStreamTime = new Date().getTime();
+              _this2.Monitor.dclog({
+                url: _this2.url,
+                action: 226,
+                d: _this2.getVideoStreamTime - _this2.getStreamHeaderTime,
+                text: 'getVideoStream',
+                isVersion2Available: isVersion2Available() ? 1 : 0
+              });
+            },
+            // xuehb 出现首帧画面（播放成功）  7
+            appearFirstFrameCallback: function appearFirstFrameCallback() {
+              console.log("出现首帧画面（播放成功）");
+              _this2.appearFirstFrameTime = new Date().getTime();
+              _this2.Monitor.dclog({
+                url: _this2.url,
+                action: 227,
+                d: _this2.appearFirstFrameTime - _this2.getStreamHeaderTime,
+                text: 'appearFirstFrame',
+                isVersion2Available: isVersion2Available() ? 1 : 0
+              });
+            },
+            // xuehb 平均成功取流的出流耗时  8
+            averageStreamSuccessCallback: function averageStreamSuccessCallback() {
+              console.log("平均成功取流的出流耗时");
+              _this2.averageStreamSuccessTime = _this2.initSuccessTime - _this2.initTime + (_this2.gotWsUrlTime - _this2.startGetWsUrlTime) + (_this2.appearFirstFrameTime - _this2.openStreamTime);
+              _this2.Monitor.dclog({
+                url: _this2.url,
+                action: 228,
+                d: _this2.averageStreamSuccessTime,
+                text: 'averageStreamSuccess',
+                isVersion2Available: isVersion2Available() ? 1 : 0
+              });
+            }
+          };
           _this2.env = {
             domain: "https://open.ys7.com"
           };
@@ -40126,11 +40261,10 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                   msg: "初始化成功"
                 }
               });
-
-              // if (params.url.indexOf('rec') != -1 && params.template && params.template.length < 32 && params.template != 'simple' && this.Theme && params.id != 'miniRec') {
-              //   // 传入rec播放地址时将主题切换至回放
-              //   this.Theme.changeTheme(this.isMobile ? "mobileRec" : "pcRec");
-              // }
+              if (params.url.indexOf('rec') != -1 && params.template && params.template.length < 32 && params.template != 'simple' && _this2.Theme && params.id != 'miniRec') {
+                // 传入rec播放地址时将主题切换至回放
+                _this2.Theme.changeTheme(_this2.isMobile ? "mobileRec" : "pcRec");
+              }
             }
           }, 50);
         } else {
@@ -40164,8 +40298,191 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               text: '初始化播放器完成'
             });
           }
-          // 插件事件回调
-          jSPlugin.EventCallback = _this2._jsPluginEventCallback('v1');
+          jSPlugin.EventCallback = {
+            // xuehb 开启取流  4
+            openStreamCallback: function openStreamCallback() {
+              console.log("开启取流---v1");
+              _this2.openStreamTime = new Date().getTime();
+              _this2.Monitor.dclog({
+                url: _this2.url,
+                action: 224,
+                d: _this2.openStreamTime - _this2.gotWsUrlTime,
+                text: 'openStream',
+                isVersion2Available: isVersion2Available() ? 1 : 0
+              });
+            },
+            // xuehb 完成取流返回流头  5
+            getStreamHeaderCallback: function getStreamHeaderCallback() {
+              console.log("完成取流返回流头");
+              _this2.getStreamHeaderTime = new Date().getTime();
+              _this2.Monitor.dclog({
+                url: _this2.url,
+                action: 225,
+                d: _this2.getStreamHeaderTime - _this2.openStreamTime,
+                text: 'getStreamHeader',
+                isVersion2Available: isVersion2Available() ? 1 : 0
+              });
+            },
+            // xuehb 返回视频流  6
+            getVideoStreamCallback: function getVideoStreamCallback() {
+              console.log("返回视频流(首次)");
+              _this2.getVideoStreamTime = new Date().getTime();
+              _this2.Monitor.dclog({
+                url: _this2.url,
+                action: 226,
+                d: _this2.getVideoStreamTime - _this2.getStreamHeaderTime,
+                text: 'getVideoStream',
+                isVersion2Available: isVersion2Available() ? 1 : 0
+              });
+              // 呼叫模板挂断/拒绝状态
+              if (_this2.isCall && _this2.Theme && _this2.Theme.decoderState && _this2.Theme.decoderState.state.rejection) {
+                console.log("挂断/拒绝状态------------stop");
+                _this2.stop(function () {
+                  _this2.pluginStatus.loadingClear();
+                  _this2.pluginStatus.loadingSetTextWithBtn({
+                    text: '通话已结束',
+                    color: 'white',
+                    isMobile: _this2.isMobile,
+                    type: 2
+                  });
+                });
+              }
+            },
+            // xuehb 出现首帧画面（播放成功）  7
+            appearFirstFrameCallback: function appearFirstFrameCallback() {
+              console.log("出现首帧画面（播放成功）");
+              _this2.appearFirstFrameTime = new Date().getTime();
+              _this2.Monitor.dclog({
+                url: _this2.url,
+                action: 227,
+                d: _this2.appearFirstFrameTime - _this2.getStreamHeaderTime,
+                text: 'appearFirstFrame',
+                isVersion2Available: isVersion2Available() ? 1 : 0
+              });
+            },
+            // xuehb 平均成功取流的出流耗时  8
+            averageStreamSuccessCallback: function averageStreamSuccessCallback() {
+              console.log("平均成功取流的出流耗时");
+              _this2.averageStreamSuccessTime = _this2.initSuccessTime - _this2.initTime + (_this2.gotWsUrlTime - _this2.startGetWsUrlTime) + (_this2.appearFirstFrameTime - _this2.openStreamTime);
+              _this2.Monitor.dclog({
+                url: _this2.url,
+                action: 228,
+                d: _this2.averageStreamSuccessTime,
+                text: 'averageStreamSuccess',
+                isVersion2Available: isVersion2Available() ? 1 : 0
+              });
+            },
+            loadEventHandler: function loadEventHandler() {},
+            zoomEventResponse: function /*iMode, aPoint*/
+            zoomEventResponse() {// 电子放大回调
+            },
+            windowEventSelect: function windowEventSelect(iWndIndex) {// 插件选中窗口回调
+            },
+            pluginErrorHandler: function pluginErrorHandler(iWndIndex, iErrorCode, oError) {
+              // 插件错误回调
+              console.log(iWndIndex, iErrorCode, oError);
+              console.log('---------------------pluginErrorHandler');
+              // 呼叫模板挂断/拒绝状态
+              if (_this2.isCall && _this2.Theme && _this2.Theme.decoderState && _this2.Theme.decoderState.state.rejection) {
+                return;
+              }
+              if (iErrorCode === 1003) {
+                console.log("断流");
+                if (_this2.Theme) {
+                  _this2.Theme.setDecoderState({
+                    play: false
+                  });
+                }
+                _this2.pluginStatus.setPlayStatus({
+                  play: false
+                });
+                if (!jSPlugin.bPlay) {
+                  _this2.pluginStatus.loadingClear();
+                  if (_this2.isCall) {
+                    _this2.pluginStatus.loadingSetTextWithBtn({
+                      text: "连接断开，请重试",
+                      color: 'white',
+                      btnName: _this2.isMobile ? '重试' : '重新加载',
+                      isMobile: _this2.isMobile,
+                      type: 1
+                    });
+                  } else {
+                    _this2.pluginStatus.loadingSetText({
+                      text: "连接断开，请重试",
+                      color: 'red'
+                    });
+                  }
+                }
+                if (typeof _this2.params.handleError === 'function') {
+                  _this2.params.handleError({
+                    msg: "连接断开，请重试",
+                    retcode: 1003,
+                    id: _this2.params.id,
+                    type: "handleError"
+                  });
+                }
+              } else {
+                // 推流异常时展示响应提示
+                if (oError.errorCode != 1) {
+                  console.log('errorCode----------', oError.errorCode);
+                  var errorInfo = _this2.errorHander.matchErrorInfo(oError.errorCode);
+                  var msg = '连接断开，请重试';
+                  if (errorInfo && errorInfo.msg) {
+                    msg = errorInfo.msg;
+                  } else if (errorInfo && errorInfo.description) {
+                    msg = errorInfo.description;
+                  }
+                  if (_this2.Theme) {
+                    _this2.Theme.setDecoderState({
+                      play: false
+                    });
+                  }
+                  _this2.pluginStatus.setPlayStatus({
+                    play: false
+                  });
+                  _this2.pluginStatus.loadingClear();
+                  if (_this2.isCall) {
+                    _this2.pluginStatus.loadingSetTextWithBtn({
+                      text: msg,
+                      color: 'white',
+                      btnName: _this2.isMobile ? '重试' : '重新加载',
+                      isMobile: _this2.isMobile
+                    });
+                  } else {
+                    _this2.pluginStatus.loadingSetText({
+                      text: msg,
+                      color: 'red'
+                    });
+                  }
+                  if (typeof _this2.params.handleError === 'function') {
+                    _this2.params.handleError({
+                      msg: msg,
+                      retcode: oError.errorCode,
+                      id: _this2.params.id,
+                      type: "handleError"
+                    });
+                  }
+                } else {
+                  _this2.pluginStatus.loadingClear();
+                  if (_this2.Theme) {
+                    _this2.Theme.setDisabled(false);
+                  }
+                }
+              }
+            },
+            windowEventOver: function windowEventOver(iWndIndex) {},
+            windowEventOut: function windowEventOut(iWndIndex) {},
+            windowEventUp: function windowEventUp(iWndIndex) {},
+            windowFullCcreenChange: function windowFullCcreenChange(bFull) {},
+            firstFrameDisplay: function firstFrameDisplay(iWndIndex, iWidth, iHeight) {
+              console.log(iWidth, iHeight);
+              jSPlugin.JS_SetCanFullScreen(false);
+              // this.pluginStatus.loadingClear();
+            },
+
+            performanceLack: function performanceLack() {},
+            mouseEvent: function mouseEvent(iMouseEventType, iMouseX, iMouseY) {}
+          };
           _this2.env = {
             domain: "https://open.ys7.com"
           };
@@ -40198,221 +40515,14 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               msg: "初始化成功"
             }
           });
-
-          // if (params.url.indexOf('rec') != -1 && params.template && params.template.length < 32 && params.template != 'simple' && this.Theme && params.id != 'miniRec') {
-          //   //传入rec播放地址时将主题切换至回放
-          //   this.Theme.changeTheme(this.isMobile ? "mobileRec" : "pcRec");
-          // }
+          if (params.url.indexOf('rec') != -1 && params.template && params.template.length < 32 && params.template != 'simple' && _this2.Theme && params.id != 'miniRec') {
+            //传入rec播放地址时将主题切换至回放
+            _this2.Theme.changeTheme(_this2.isMobile ? "mobileRec" : "pcRec");
+          }
         }
       };
-
       var initDecoderPromise = new Promise(initDecoder);
       return initDecoderPromise;
-    }
-
-    /**
-     * @description 插件事件回调
-     * @private
-     * 
-     * @param {string} pluginVersion 插件版本
-     * @returns {object}
-     */
-  }, {
-    key: "_jsPluginEventCallback",
-    value: function _jsPluginEventCallback(pluginVersion) {
-      var _this3 = this;
-      var isVersion2 = isVersion2Available() ? 1 : 0;
-      var that = this;
-      return {
-        // xuehb 开启取流  4
-        openStreamCallback: function openStreamCallback() {
-          console.log("开启取流---");
-          _this3.openStreamTime = new Date().getTime();
-          _this3.Monitor.dclog({
-            url: _this3.url,
-            action: 224,
-            d: _this3.openStreamTime - _this3.gotWsUrlTime,
-            text: 'openStream',
-            isVersion2Available: isVersion2
-          });
-        },
-        // xuehb 完成取流返回流头  5
-        getStreamHeaderCallback: function getStreamHeaderCallback() {
-          console.log("完成取流返回流头");
-          _this3.getStreamHeaderTime = new Date().getTime();
-          _this3.Monitor.dclog({
-            url: _this3.url,
-            action: 225,
-            d: _this3.getStreamHeaderTime - _this3.openStreamTime,
-            text: 'getStreamHeader',
-            isVersion2Available: isVersion2
-          });
-        },
-        // xuehb 返回视频流  6
-        getVideoStreamCallback: function getVideoStreamCallback() {
-          console.log("返回视频流(首次)");
-          _this3.getVideoStreamTime = new Date().getTime();
-          _this3.Monitor.dclog({
-            url: _this3.url,
-            action: 226,
-            d: _this3.getVideoStreamTime - _this3.getStreamHeaderTime,
-            text: 'getVideoStream',
-            isVersion2Available: isVersion2
-          });
-
-          // 呼叫模板挂断/拒绝状态
-          if (pluginVersion === 'v1' && _this3.isCall && _this3.Theme && _this3.Theme.decoderState && _this3.Theme.decoderState.state.rejection) {
-            console.log("挂断/拒绝状态------------stop");
-            _this3.stop(function () {
-              _this3.pluginStatus.loadingClear();
-              _this3.pluginStatus.loadingSetTextWithBtn({
-                text: '通话已结束',
-                color: 'white',
-                isMobile: _this3.isMobile,
-                type: 2
-              });
-            });
-          }
-        },
-        // xuehb 出现首帧画面（播放成功）  7
-        appearFirstFrameCallback: function appearFirstFrameCallback() {
-          console.log("出现首帧画面（播放成功）");
-          _this3.appearFirstFrameTime = new Date().getTime();
-          _this3.Monitor.dclog({
-            url: _this3.url,
-            action: 227,
-            d: _this3.appearFirstFrameTime - _this3.getStreamHeaderTime,
-            text: 'appearFirstFrame',
-            isVersion2Available: isVersion2
-          });
-        },
-        // xuehb 平均成功取流的出流耗时  8
-        averageStreamSuccessCallback: function averageStreamSuccessCallback() {
-          console.log("平均成功取流的出流耗时");
-          _this3.averageStreamSuccessTime = _this3.initSuccessTime - _this3.initTime + (_this3.gotWsUrlTime - _this3.startGetWsUrlTime) + (_this3.appearFirstFrameTime - _this3.openStreamTime);
-          _this3.Monitor.dclog({
-            url: _this3.url,
-            action: 228,
-            d: _this3.averageStreamSuccessTime,
-            text: 'averageStreamSuccess',
-            isVersion2Available: isVersion2
-          });
-        },
-        // 2023-05-22 实时信息
-        // setRunTimeInfoCallback: (oRunTimeInfo) => {
-        //   console.log("setRunTimeInfoCallback", oRunTimeInfo)
-        // },
-        loadEventHandler: function loadEventHandler() {},
-        zoomEventResponse: function zoomEventResponse( /*iMode, aPoint*/
-        ) {// 电子放大回调
-        },
-        windowEventSelect: function windowEventSelect(iWndIndex) {// 插件选中窗口回调
-        },
-        pluginErrorHandler: function pluginErrorHandler(iWndIndex, iErrorCode, oError) {
-          // 插件错误回调
-          console.log(iWndIndex, iErrorCode, oError);
-          console.log("---------------------pluginErrorHandler ".concat(pluginVersion, " --------------------"));
-          // 呼叫模板挂断/拒绝状态
-          if (_this3.isCall && _this3.Theme && _this3.Theme.decoderState && _this3.Theme.decoderState.state.rejection) {
-            return;
-          }
-          if (iErrorCode === 1003) {
-            console.log("断流");
-            if (_this3.Theme) {
-              _this3.Theme.setDecoderState({
-                play: false
-              });
-            }
-            _this3.pluginStatus.setPlayStatus({
-              play: false
-            });
-            if (!that.jSPlugin.bPlay) {
-              _this3.pluginStatus.loadingClear();
-              if (_this3.isCall) {
-                _this3.pluginStatus.loadingSetTextWithBtn({
-                  text: "连接断开，请重试",
-                  color: 'white',
-                  btnName: _this3.isMobile ? '重试' : '重新加载',
-                  isMobile: _this3.isMobile,
-                  type: 1
-                });
-              } else {
-                _this3.pluginStatus.loadingSetText({
-                  text: "连接断开，请重试",
-                  color: 'red'
-                });
-              }
-            }
-            if (typeof _this3.params.handleError === 'function') {
-              _this3.params.handleError({
-                msg: "连接断开，请重试",
-                retcode: 1003,
-                id: _this3.params.id,
-                type: "handleError"
-              });
-            }
-          } else {
-            // 推流异常时展示响应提示
-            if (oError.errorCode != 1) {
-              // console.log('errorCode----------', oError.errorCode)
-              var errorInfo = _this3.errorHander.matchErrorInfo(oError.errorCode);
-              var msg = '连接断开，请重试';
-              if (errorInfo && errorInfo.msg) {
-                msg = errorInfo.msg;
-              } else if (errorInfo && errorInfo.description) {
-                msg = errorInfo.description;
-              }
-              if (_this3.Theme) {
-                _this3.Theme.setDecoderState({
-                  play: false
-                });
-              }
-              _this3.pluginStatus.setPlayStatus({
-                play: false
-              });
-              _this3.pluginStatus.loadingClear();
-              if (_this3.isCall) {
-                _this3.pluginStatus.loadingSetTextWithBtn({
-                  text: msg,
-                  color: 'white',
-                  btnName: _this3.isMobile ? '重试' : '重新加载',
-                  isMobile: _this3.isMobile
-                });
-              } else {
-                _this3.pluginStatus.loadingSetText({
-                  text: msg,
-                  color: 'red'
-                });
-              }
-              if (typeof _this3.params.handleError === 'function') {
-                _this3.params.handleError({
-                  msg: msg,
-                  retcode: oError.errorCode,
-                  id: _this3.params.id,
-                  type: "handleError"
-                });
-              }
-            } else {
-              _this3.pluginStatus.loadingClear();
-              if (_this3.Theme) {
-                _this3.Theme.setDisabled(false);
-              }
-            }
-          }
-        },
-        windowEventOver: function windowEventOver(iWndIndex) {},
-        windowEventOut: function windowEventOut(iWndIndex) {},
-        windowEventUp: function windowEventUp(iWndIndex) {},
-        windowFullCcreenChange: function windowFullCcreenChange(bFull) {},
-        firstFrameDisplay: isVersion2 ? function (iWndIndex, iWidth, iHeight) {
-          //TODO: v2
-          console.log(iWidth, iHeight);
-          that.jSPlugin.JS_SetCanFullScreen(false);
-          // this.pluginStatus.loadingClear();
-        } : function () {},
-        performanceLack: function performanceLack() {},
-        mouseEvent: function mouseEvent(iMouseEventType, iMouseX, iMouseY) {}
-      };
     }
 
     /**
@@ -40425,7 +40535,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "_getRealUrlPromise",
     value: function _getRealUrlPromise(accessToken, url) {
-      var _this4 = this;
+      var _this3 = this;
       console.log("\u83B7\u53D6\u64AD\u653E\u5730\u5740 url => ".concat(url, " ").concat(this.accessToken));
       console.log('开始获取wsurl');
       //xuehb 开始获取wsurl
@@ -40480,12 +40590,12 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             // 设置秘钥 - 如果地址中包含秘钥参数，播放前配置到JSPlugin对应实例中
             var validateCode = getQueryString('checkCode', realUrl);
             if (validateCode) {
-              if (typeof _this4.jSPlugin.decoderVersion !== 'undefined' && _this4.jSPlugin.decoderVersion === '2.0') {
-                _this4.validateCode = validateCode;
+              if (typeof _this3.jSPlugin.decoderVersion !== 'undefined' && _this3.jSPlugin.decoderVersion === '2.0') {
+                _this3.validateCode = validateCode;
               } else {
                 console.log("设置密钥", validateCode);
-                _this4.validateCode = validateCode;
-                _this4.jSPlugin.JS_SetSecretKey(0, validateCode);
+                _this3.validateCode = validateCode;
+                _this3.jSPlugin.JS_SetSecretKey(0, validateCode);
               }
             }
             // 回放处理
@@ -40602,7 +40712,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                 var channelNo = getQueryString('chn', realUrl);
                 var recSliceUrl = apiDomain + "/api/lapp/video/by/time";
                 var recSliceParams = {
-                  accessToken: _this4.accessToken,
+                  accessToken: _this3.accessToken,
                   recType: 1,
                   deviceSerial: deviceSerial,
                   channelNo: channelNo,
@@ -40663,7 +40773,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
                   var channelNo = getQueryString('chn', realUrl);
                   var recSliceUrl = apiDomain + "/api/lapp/video/by/id";
                   var recSliceParams = {
-                    accessToken: _this4.accessToken,
+                    accessToken: _this3.accessToken,
                     // recType: 1,
                     deviceSerial: deviceSerial,
                     channelNo: channelNo,
@@ -40683,25 +40793,25 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
               resolve(realUrl);
             }
           } else {
-            if (_this4.Theme) {
-              _this4.Theme.setDisabled(true);
-              _this4.Theme.setDecoderState({
+            if (_this3.Theme) {
+              _this3.Theme.setDisabled(true);
+              _this3.Theme.setDecoderState({
                 play: false
               });
             }
-            _this4.pluginStatus.setPlayStatus({
+            _this3.pluginStatus.setPlayStatus({
               play: false
             });
-            _this4.pluginStatus.loadingClear();
-            _this4.pluginStatus.loadingSetText({
+            _this3.pluginStatus.loadingClear();
+            _this3.pluginStatus.loadingSetText({
               text: data.msg,
               color: 'red'
             });
-            if (typeof _this4.params.handleError === 'function') {
-              _this4.params.handleError({
+            if (typeof _this3.params.handleError === 'function') {
+              _this3.params.handleError({
                 retcode: data.code,
                 msg: data.msg,
-                id: _this4.params.id,
+                id: _this3.params.id,
                 type: "handleError"
               });
             }
@@ -40776,7 +40886,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "_pluginPlay",
     value: function _pluginPlay(data, successCallback, errorCallback) {
-      var _this5 = this;
+      var _this4 = this;
       console.log("执行播放 _pluginPlay", data);
       if (!data) {
         return false;
@@ -40816,73 +40926,73 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       this.jSPlugin.JS_Play(wsUrl, wsParams, 0).then(function () {
         console.log("执行播放 ... this.jSPlugin.JS_Play 播放成功", wsUrl, wsParams);
         console.log("执行播放耗时 ", Date.now() - now);
-        if (_this5.isStoping) {
+        if (_this4.isStoping) {
           console.log('现在在播放前 stop 阶段，此次应为无效播放成功触发。不执行后续回调， 此次耗时无效');
           return;
         }
-        if (_this5.validateCode && typeof _this5.jSPlugin.decoderVersion !== 'undefined' && _this5.jSPlugin.decoderVersion === '2.0') {
-          _this5.jSPlugin.JS_SetSecretKey(0, _this5.validateCode);
+        if (_this4.validateCode && typeof _this4.jSPlugin.decoderVersion !== 'undefined' && _this4.jSPlugin.decoderVersion === '2.0') {
+          _this4.jSPlugin.JS_SetSecretKey(0, _this4.validateCode);
         }
-        _this5.pluginStatus.loadingClear();
-        _this5.pluginStatus.setPlayStatus({
+        _this4.pluginStatus.loadingClear();
+        _this4.pluginStatus.setPlayStatus({
           play: true,
           loading: false
         });
-        if (_this5.Theme) {
-          _this5.Theme.setDecoderState({
+        if (_this4.Theme) {
+          _this4.Theme.setDecoderState({
             play: true
           });
-          if (!_this5.isCall) {
-            var isOpenSound = lodash.findIndex(_this5.Theme.themeData.footer.btnList, function (v) {
+          if (!_this4.isCall) {
+            var isOpenSound = lodash.findIndex(_this4.Theme.themeData.footer.btnList, function (v) {
               return v.iconId === 'sound' && v.isrender === 1 && v.defaultActive === 1;
             }) > -1;
           }
-          _this5.audio = isOpenSound;
+          _this4.audio = isOpenSound;
         }
-        if (_this5.audio) {
+        if (_this4.audio) {
           setTimeout(function () {
-            _this5.openSound();
+            _this4.openSound();
           }, 500);
         }
-        if (typeof _this5.params.handleSuccess === 'function') {
-          _this5.params.handleSuccess({
+        if (typeof _this4.params.handleSuccess === 'function') {
+          _this4.params.handleSuccess({
             retcode: 0,
-            id: _this5.params.id,
+            id: _this4.params.id,
             type: "handleSuccess"
           });
         }
         successCallback(wsParams);
-        _this5.Monitor.dclog({
-          url: _this5.url,
+        _this4.Monitor.dclog({
+          url: _this4.url,
           action: 211,
-          d: new Date().getTime() - _this5.playStartTime,
+          d: new Date().getTime() - _this4.playStartTime,
           text: 'startPlaySuccess'
         });
-        _this5.Monitor.playLog({
-          Enc: _this5.url.indexOf("@") === -1 ? 0 : 1,
+        _this4.Monitor.playLog({
+          Enc: _this4.url.indexOf("@") === -1 ? 0 : 1,
           // 0 不加密 1 加密
-          PlTp: _this5.url.indexOf("back") === -1 ? 1 : 2,
+          PlTp: _this4.url.indexOf("back") === -1 ? 1 : 2,
           // 1 直播 2 回放
           Via: 2,
           // 2 服务端取流
           ErrCd: 0,
-          Cost: new Date().getTime() - _this5.playStartTime,
+          Cost: new Date().getTime() - _this4.playStartTime,
           // 毫秒数
-          Serial: matchEzopenUrl(_this5.url).deviceSerial,
-          Channel: matchEzopenUrl(_this5.url).channelNo,
+          Serial: matchEzopenUrl(_this4.url).deviceSerial,
+          Channel: matchEzopenUrl(_this4.url).channelNo,
           Ver: isVersion2Available() ? "v7.0.0" : "v6.0.0"
         });
       }, function (err) {
         console.log("err", err);
         var msg = '播放失败，请检查设备及客户端网络';
         var retcode = -1;
-        if (_this5.jSPlugin.bPlay) {
+        if (_this4.jSPlugin.bPlay) {
           return false;
         }
         if (err && err.errorCode) {
-          var errorInfo = _this5.errorHander.matchErrorInfo(err.errorCode);
-          if (_this5.Theme) {
-            _this5.Theme.setDisabled(true);
+          var errorInfo = _this4.errorHander.matchErrorInfo(err.errorCode);
+          if (_this4.Theme) {
+            _this4.Theme.setDisabled(true);
           }
           if (errorInfo && errorInfo.msg) {
             msg = errorInfo.msg;
@@ -40893,51 +41003,51 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           }
           retcode = err.errorCode;
         }
-        if (_this5.isCall) {
+        if (_this4.isCall) {
           // 呼叫模板挂断/拒绝状态
-          if (_this5.Theme && _this5.Theme.decoderState && _this5.Theme.decoderState.state.rejection) ; else {
-            _this5.pluginStatus.loadingClear();
-            _this5.pluginStatus.loadingSetTextWithBtn({
+          if (_this4.Theme && _this4.Theme.decoderState && _this4.Theme.decoderState.state.rejection) ; else {
+            _this4.pluginStatus.loadingClear();
+            _this4.pluginStatus.loadingSetTextWithBtn({
               text: msg,
               color: 'white',
-              btnName: _this5.isMobile ? '重试' : '重新加载',
-              isMobile: _this5.isMobile
+              btnName: _this4.isMobile ? '重试' : '重新加载',
+              isMobile: _this4.isMobile
             });
           }
         } else {
-          _this5.pluginStatus.loadingClear();
-          _this5.pluginStatus.loadingSetText({
+          _this4.pluginStatus.loadingClear();
+          _this4.pluginStatus.loadingSetText({
             text: msg,
             color: 'red'
           });
         }
-        if (typeof _this5.params.handleError === 'function') {
-          _this5.params.handleError({
+        if (typeof _this4.params.handleError === 'function') {
+          _this4.params.handleError({
             retcode: retcode,
             msg: msg,
-            id: _this5.params.id,
+            id: _this4.params.id,
             type: "handleError"
           });
         }
         errorCallback();
-        _this5.Monitor.dclog({
-          url: _this5.url,
+        _this4.Monitor.dclog({
+          url: _this4.url,
           action: 411,
-          d: new Date().getTime() - _this5.playStartTime,
+          d: new Date().getTime() - _this4.playStartTime,
           text: 'startPlayError'
         });
-        _this5.Monitor.playLog({
-          Enc: _this5.url.indexOf("@") === -1 ? 0 : 1,
+        _this4.Monitor.playLog({
+          Enc: _this4.url.indexOf("@") === -1 ? 0 : 1,
           // 0 不加密 1 加密
-          PlTp: _this5.url.indexOf("back") === -1 ? 1 : 2,
+          PlTp: _this4.url.indexOf("back") === -1 ? 1 : 2,
           // 1 直播 2 回放
           Via: 2,
           // 2 服务端取流
           ErrCd: retcode,
           Cost: -1,
           // 毫秒数
-          Serial: matchEzopenUrl(_this5.url).deviceSerial,
-          Channel: matchEzopenUrl(_this5.url).channelNo,
+          Serial: matchEzopenUrl(_this4.url).deviceSerial,
+          Channel: matchEzopenUrl(_this4.url).channelNo,
           Ver: isVersion2Available() ? "v7.0.0" : "v6.0.0"
         });
       });
@@ -40952,7 +41062,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "_play",
     value: function _play(options) {
-      var _this6 = this;
+      var _this5 = this;
       console.log("\u6267\u884C\u64AD\u653E play options.url =>", options);
       this.pluginStatus.setPlayStatus({
         play: false,
@@ -40983,10 +41093,10 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         }
         if (this.Theme && (typeof options.url === 'string' || typeof options.accessToken === 'string')) {
           this.Theme.getDeviceInfo(function (data) {
-            if (data.data.isEncrypt) {
+            if (data.data.isEncrypt && _this5.url.indexOf('@') === -1) {
               setTimeout(function () {
-                _this6.pluginStatus.loadingClear();
-                _this6.pluginStatus.loadingSetText({
+                _this5.pluginStatus.loadingClear();
+                _this5.pluginStatus.loadingSetText({
                   text: "设备已加密",
                   color: 'red'
                 });
@@ -40997,27 +41107,27 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       }
       var promise = new Promise(function (resolve, reject) {
         console.log('执行 播放前 stop');
-        _this6.isStoping = true;
-        _this6.jSPlugin.JS_Stop(0).then(function () {
-          console.log("\u64AD\u653E\u524D stop \u6267\u884C\u6210\u529F this.url => ".concat(_this6.url, " ").concat(_this6.accessToken));
-          _this6._getRealUrlPromise(_this6.accessToken, _this6.url).then(function (data) {
-            _this6._pluginPlay(data, function (params) {
+        _this5.isStoping = true;
+        _this5.jSPlugin.JS_Stop(0).then(function () {
+          console.log("\u64AD\u653E\u524D stop \u6267\u884C\u6210\u529F this.url => ".concat(_this5.url, " ").concat(_this5.accessToken));
+          _this5._getRealUrlPromise(_this5.accessToken, _this5.url).then(function (data) {
+            _this5._pluginPlay(data, function (params) {
               // if (params.playURL.indexOf('playback') != -1) {
               //   //传入rec播放地址时将主题切换至回放
               //   this.Theme.changeTheme(this.isMobile ? "mobileRec" :"pcRec");
               // }
               console.log('---------------------播放成功回调');
               setTimeout(function () {
-                _this6.pluginStatus.loadingClear();
+                _this5.pluginStatus.loadingClear();
                 // 呼叫模板挂断/拒绝状态
-                if (_this6.isCall && _this6.Theme && _this6.Theme.decoderState && _this6.Theme.decoderState.state.rejection) {
+                if (_this5.isCall && _this5.Theme && _this5.Theme.decoderState && _this5.Theme.decoderState.state.rejection) {
                   console.log("挂断/拒绝状态------------stop");
-                  _this6.stop(function () {
-                    _this6.pluginStatus.loadingClear();
-                    _this6.pluginStatus.loadingSetTextWithBtn({
+                  _this5.stop(function () {
+                    _this5.pluginStatus.loadingClear();
+                    _this5.pluginStatus.loadingSetTextWithBtn({
                       text: '通话已结束',
                       color: 'white',
-                      isMobile: _this6.isMobile,
+                      isMobile: _this5.isMobile,
                       type: 2
                     });
                   });
@@ -41029,67 +41139,67 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             });
           })["catch"](function (err) {
             var msg = err.msg ? err.msg : '播放失败，请检查设备及客户端网络';
-            if (_this6.Theme) {
-              _this6.Theme.setDisabled(true);
+            if (_this5.Theme) {
+              _this5.Theme.setDisabled(true);
             }
-            if (_this6.isCall) {
+            if (_this5.isCall) {
               // 呼叫模板挂断/拒绝状态
-              if (_this6.Theme && _this6.Theme.decoderState && _this6.Theme.decoderState.state.rejection) {
+              if (_this5.Theme && _this5.Theme.decoderState && _this5.Theme.decoderState.state.rejection) {
                 if (err && err.code == 20018) {
                   // 该用户不拥有该设备
-                  _this6.pluginStatus.loadingSetTextWithBtn({
+                  _this5.pluginStatus.loadingSetTextWithBtn({
                     text: '该用户不拥有该设备',
                     color: 'white',
-                    isMobile: _this6.isMobile,
+                    isMobile: _this5.isMobile,
                     type: 2
                   });
                 } else {
-                  _this6.pluginStatus.loadingSetTextWithBtn({
+                  _this5.pluginStatus.loadingSetTextWithBtn({
                     text: '通话已结束',
                     color: 'white',
-                    isMobile: _this6.isMobile,
+                    isMobile: _this5.isMobile,
                     type: 2
                   });
                 }
               } else {
                 if (err && err.code == 20018) {
                   // 该用户不拥有该设备
-                  _this6.pluginStatus.loadingSetTextWithBtn({
+                  _this5.pluginStatus.loadingSetTextWithBtn({
                     text: '该用户不拥有该设备',
                     color: 'white',
-                    isMobile: _this6.isMobile,
+                    isMobile: _this5.isMobile,
                     type: 2
                   });
-                  if (!_this6.isWebConsole && _this6.Theme && !!_this6.Theme.call) {
-                    _this6.Theme.call.userNoDevice();
+                  if (!_this5.isWebConsole && _this5.Theme && !!_this5.Theme.call) {
+                    _this5.Theme.call.userNoDevice();
                   }
                 } else {
-                  _this6.pluginStatus.loadingSetTextWithBtn({
+                  _this5.pluginStatus.loadingSetTextWithBtn({
                     text: msg,
                     color: 'white',
-                    btnName: _this6.isMobile ? '重试' : '重新加载',
-                    isMobile: _this6.isMobile
+                    btnName: _this5.isMobile ? '重试' : '重新加载',
+                    isMobile: _this5.isMobile
                   });
                 }
               }
             } else {
-              _this6.pluginStatus.loadingSetText({
+              _this5.pluginStatus.loadingSetText({
                 text: msg,
                 color: 'red'
               });
             }
-            if (typeof _this6.params.handleError === 'function') {
-              _this6.params.handleError({
+            if (typeof _this5.params.handleError === 'function') {
+              _this5.params.handleError({
                 retcode: err.oError ? err.oError.errorCode : -1,
                 msg: msg,
-                id: _this6.params.id,
+                id: _this5.params.id,
                 type: "handleError"
               });
             }
             reject({
               retcode: err.oError ? err.oError.errorCode : -1,
               msg: msg,
-              id: _this6.params.id,
+              id: _this5.params.id,
               type: "handleError"
             });
           });
@@ -41106,7 +41216,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "stop",
     value: function stop() {
-      var _this7 = this;
+      var _this6 = this;
       var callBack = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
       this.pluginStatus.setPlayStatus({
         loading: true
@@ -41114,12 +41224,12 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       this.reSetTheme();
       return this.jSPlugin.JS_Stop(0).then(function () {
         console.log("停止成功");
-        _this7.pluginStatus.setPlayStatus({
+        _this6.pluginStatus.setPlayStatus({
           play: false,
           loading: false
         });
-        if (_this7.Theme) {
-          _this7.Theme.setDecoderState({
+        if (_this6.Theme) {
+          _this6.Theme.setDecoderState({
             play: false
           });
         }
@@ -41144,16 +41254,13 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       var initUrl = this.url;
       var url = initUrl;
 
-      // TODO: 主子码流的切换实际上是url的切换，当url中带有hd,则由`/api/lapp/live/url/ezopen`接口返回的wss播放地址带有 stream=1,反之则带有stream=2
-
       // 兼容旧版本
       if (typeof definition === 'number') {
         url = definition === 1 ? initUrl.replace(".live", ".hd.live") : initUrl.replace(".hd.live", ".live");
         this.jSPlugin.playURL = definition ? this.jSPlugin.playURL.replace("stream=2", "stream=1") : this.jSPlugin.playURL.replace("stream=1", "stream=2");
         // console.log("changeVideoLevel", url, this.jSPlugin.playURL);
-        // console.warn("changeVideoLevel", "该方法将不在支持传入number类型的参数，建议使用对象类型的参数");
+        console.warn("changeVideoLevel", "该方法将不在支持传入number类型的参数，建议使用对象类型的参数");
       }
-
       if (_typeof(definition) === 'object') {
         if (typeof definition.streamType === "number" && ['sd', 'hd'].includes(definition.level)) {
           url = definition.level === 'hd' ? initUrl.replace(".live", ".hd.live") : initUrl.replace(".hd.live", ".live");
@@ -41165,7 +41272,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       this.url = url;
       var changeRT = this.changePlayUrl({
         url: url
-      });
+      }, function () {}, false);
       if (isPromise(changeRT)) {
         return changeRT;
       }
@@ -41265,8 +41372,9 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "_changePlayUrl",
     value: function _changePlayUrl(options) {
-      var _this8 = this;
+      var _this7 = this;
       var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      var reSetTheme = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
       console.log('_changePlayUrl');
       console.log(options);
       this.reSetTheme(['zoom']);
@@ -41296,54 +41404,58 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           changePlayUrlParams["accessToken"] = options.accessToken;
         }
         console.log("切换播放地址 参数 ", changePlayUrlParams);
-        return _this8.play(changePlayUrlParams).then(function () {
-          console.log("切换播放地址 play 执行成功 ", _this8.url, _this8.accessToken);
-          // 当前处于网页全屏状态
-          if (_this8.Theme && _this8.Theme.decoderState.state.webExpend) {
-            _this8.Theme.webExpend();
-          }
-          // 当前处于全屏状态
-          if (_this8.Theme && _this8.Theme.decoderState.state.expend) {
-            _this8.Theme.expend();
-          }
-          if (options.type) {
-            if (_this8.Theme) {
-              if (options.type == 'rec' || options.type == 'cloud.rec') {
-                _this8.Theme.changeTheme(_this8.isMobile ? "mobileRec" : "pcRec");
-              } else if (options.type == 'miniRec') {
-                _this8.Theme.changeTheme('miniRec');
-              } else {
-                _this8.Theme.changeTheme(_this8.isMobile ? "mobileLive" : "pcLive");
-              }
+        return _this7.play(changePlayUrlParams).then(function () {
+          console.log("切换播放地址 play 执行成功 ", _this7.url, _this7.accessToken);
+          setTimeout(function () {
+            // 当前处于网页全屏状态
+            if (_this7.Theme && _this7.Theme.decoderState.state.webExpend) {
+              _this7.Theme.webExpend();
             }
-          } else {
-            if (_this8.Theme) {
-              if (_this8.url.indexOf('.rec') > -1) {
-                _this8.Theme.changeTheme(_this8.isMobile ? "mobileRec" : "pcRec");
-              } else {
-                if (_this8.isCall) {
-                  _this8.Theme.changeTheme(_this8.isMobile ? "mobileCall" : "webCall");
+            // 当前处于全屏状态
+            if (_this7.Theme && _this7.Theme.decoderState.state.expend) {
+              _this7.Theme.expend();
+            }
+          }, 500);
+          if (reSetTheme) {
+            if (options.type) {
+              if (_this7.Theme) {
+                if (options.type == 'rec' || options.type == 'cloud.rec') {
+                  _this7.Theme.changeTheme(_this7.isMobile ? "mobileRec" : "pcRec");
+                } else if (options.type == 'miniRec') {
+                  _this7.Theme.changeTheme('miniRec');
                 } else {
-                  _this8.Theme.changeTheme(_this8.isMobile ? "mobileLive" : "pcLive");
+                  _this7.Theme.changeTheme(_this7.isMobile ? "mobileLive" : "pcLive");
+                }
+              }
+            } else {
+              if (_this7.Theme) {
+                if (_this7.url.indexOf('.rec') > -1) {
+                  _this7.Theme.changeTheme(_this7.isMobile ? "mobileRec" : "pcRec");
+                } else {
+                  if (_this7.isCall) {
+                    _this7.Theme.changeTheme(_this7.isMobile ? "mobileCall" : "webCall");
+                  } else {
+                    _this7.Theme.changeTheme(_this7.themeId);
+                  }
                 }
               }
             }
           }
-          if (options && options.begin && options.deviceSerial && _this8.Theme) {
-            _this8.Theme.Rec.setDatepickerDate(options.begin);
+          if (options && options.begin && options.deviceSerial && _this7.Theme) {
+            _this7.Theme.Rec.setDatepickerDate(options.begin);
           }
-          if (_this8.Theme) {
-            _this8.Theme.setDisabled(false);
+          if (_this7.Theme) {
+            _this7.Theme.setDisabled(false);
           }
           resolve(url);
         })["catch"](function (err) {
           reject(url);
           if (err && err.msg) {
-            if (_this8.Theme) {
-              _this8.Theme.setDisabled(true);
+            if (_this7.Theme) {
+              _this7.Theme.setDisabled(true);
             }
-            _this8.pluginStatus.loadingClear();
-            _this8.pluginStatus.loadingSetText({
+            _this7.pluginStatus.loadingClear();
+            _this7.pluginStatus.loadingSetText({
               text: err.msg,
               color: 'red'
             });
@@ -41423,18 +41535,18 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "getOSDTime",
     value: function getOSDTime() {
-      var _this9 = this;
+      var _this8 = this;
       var promise = new Promise(function (resolve, reject) {
-        _this9.jSPlugin.JS_GetOSDTime(0).then(function (data) {
+        _this8.jSPlugin.JS_GetOSDTime(0).then(function (data) {
           resolve({
             code: 0,
             retcode: 0,
             data: data
           });
           // 兼容旧版本callback
-          if (typeof _this9.params.getOSDTimeCallBack === 'function') {
-            _this9.params.getOSDTimeCallBack({
-              id: _this9.id,
+          if (typeof _this8.params.getOSDTimeCallBack === 'function') {
+            _this8.params.getOSDTimeCallBack({
+              id: _this8.id,
               type: 'getOSDTime',
               code: 0,
               data: data
@@ -41447,9 +41559,9 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             data: err
           });
           // 兼容旧版本callback
-          if (typeof _this9.params.getOSDTimeCallBack === 'function') {
-            _this9.params.getOSDTimeCallBack({
-              id: _this9.id,
+          if (typeof _this8.params.getOSDTimeCallBack === 'function') {
+            _this8.params.getOSDTimeCallBack({
+              id: _this8.id,
               type: 'getOSDTime',
               code: -1,
               data: -1
@@ -41469,7 +41581,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "capturePicture",
     value: function capturePicture(name) {
-      var _this10 = this;
+      var _this9 = this;
       var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       /** @type {Promise<{code: 1, data: CapturePictureResult}>} */
       var capturePictureRT = this.jSPlugin.JS_CapturePicture(0, name, "JPEG", callback, !!callback);
@@ -41477,40 +41589,40 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         return new Promise(function (resolve, reject) {
           capturePictureRT.then(function (res) {
             // 兼容旧版本callback
-            if (typeof _this10.params.capturePictureCallBack === 'function') {
-              _this10.params.capturePictureCallBack({
-                id: _this10.id,
+            if (typeof _this9.params.capturePictureCallBack === 'function') {
+              _this9.params.capturePictureCallBack({
+                id: _this9.id,
                 type: 'capturePicture',
                 code: 0
               });
             }
             var result = {
-              id: _this10.id,
+              id: _this9.id,
               code: 0,
               data: res.data,
               type: 'handleCapturePicture'
             };
             // 抓图事件回调
             // http://nvwa.hikvision.com.cn/pages/viewpage.action?pageId=661310692
-            if (typeof _this10.params.handleCapturePicture === 'function') _this10.params.handleCapturePicture(result);
+            if (typeof _this9.params.handleCapturePicture === 'function') _this9.params.handleCapturePicture(result);
             resolve(result);
           }, function (err) {
             // 兼容旧版本callback
-            if (typeof _this10.params.capturePictureCallBack === 'function') {
-              _this10.params.capturePictureCallBack({
-                id: _this10.id,
+            if (typeof _this9.params.capturePictureCallBack === 'function') {
+              _this9.params.capturePictureCallBack({
+                id: _this9.id,
                 type: 'capturePicture',
                 code: -1
               });
             }
             var result = Object.assign({
-              id: _this10.id,
+              id: _this9.id,
               type: 'handleCapturePicture',
               code: -1
             }, err);
             // 抓图事件回调
             // http://nvwa.hikvision.com.cn/pages/viewpage.action?pageId=661310692
-            if (typeof _this10.params.handleCapturePicture === 'function') _this10.params.handleCapturePicture(result);
+            if (typeof _this9.params.handleCapturePicture === 'function') _this9.params.handleCapturePicture(result);
             reject(result);
           });
         });
@@ -41527,20 +41639,20 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "startSave",
     value: function startSave(name) {
-      var _this11 = this;
+      var _this10 = this;
       var startSaveRT = this.jSPlugin.JS_StartSave(0, name);
       if (isPromise(startSaveRT)) {
         // 兼容旧版本callback
         if (typeof this.params.startSaveCallBack === 'function') {
           startSaveRT.then(function () {
-            _this11.params.startSaveCallBack({
-              id: _this11.id,
+            _this10.params.startSaveCallBack({
+              id: _this10.id,
               type: 'startSave',
               code: 0
             });
           })["catch"](function () {
-            _this11.params.startSaveCallBack({
-              id: _this11.id,
+            _this10.params.startSaveCallBack({
+              id: _this10.id,
               type: 'startSave',
               code: -1
             });
@@ -41567,20 +41679,20 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "stopSave",
     value: function stopSave() {
-      var _this12 = this;
+      var _this11 = this;
       var stopSaveRT = this.jSPlugin.JS_StopSave(0);
       if (isPromise(stopSaveRT)) {
         // 兼容旧版本callback
         if (typeof this.params.startSaveCallBack === 'function') {
           stopSaveRT.then(function () {
-            _this12.params.stopSaveCallBack({
-              id: _this12.id,
+            _this11.params.stopSaveCallBack({
+              id: _this11.id,
               type: 'stopSave',
               code: 0
             });
           })["catch"](function () {
-            _this12.params.stopSaveCallBack({
-              id: _this12.id,
+            _this11.params.stopSaveCallBack({
+              id: _this11.id,
               type: 'stopSave',
               code: -1
             });
@@ -41707,7 +41819,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "enable3DZoom",
     value: function enable3DZoom() {
-      var _this13 = this;
+      var _this12 = this;
       if (!this.use3DZoom) {
         return new Promise(function (resolve, reject) {
           reject({
@@ -41824,34 +41936,34 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             document.getElementById("".concat(this.id, "-zoom-content")).title = '3D定位';
           }
           var enable3DZoomRT = this.jSPlugin.JS_Enable3DZoom(0, function (r) {
-            var screenWidth = _this13.Theme && _this13.Theme.decoderState.state.expend && _this13.isMobile ? _this13.fullScreenWidth : _this13.width;
-            var screenHeight = _this13.Theme && _this13.Theme.decoderState.state.expend && _this13.isMobile ? _this13.fullScreenHeight : _this13.height;
-            var zoomDirection = getZoomDirection(r, _this13.Theme && _this13.Theme.decoderState.state.expend);
+            var screenWidth = _this12.Theme && _this12.Theme.decoderState.state.expend && _this12.isMobile ? _this12.fullScreenWidth : _this12.width;
+            var screenHeight = _this12.Theme && _this12.Theme.decoderState.state.expend && _this12.isMobile ? _this12.fullScreenHeight : _this12.height;
+            var zoomDirection = getZoomDirection(r, _this12.Theme && _this12.Theme.decoderState.state.expend);
             if (zoomDirection > -1) {
               try {
-                var param = getZoomMultiple(screenWidth, screenHeight, r, _this13.capacity && _this13.capacity.support_zoomOut_maxTime ? _this13.capacity.support_zoomOut_maxTime : 5);
-                var apiUrl = _this13.env.domain + "/api/v3/das/device/3d/zoom?accessToken=".concat(_this13.accessToken, "&deviceSerial=").concat(matchEzopenUrl(_this13.url).deviceSerial, "&channelNo=").concat(matchEzopenUrl(_this13.url).channelNo, "&command=").concat(zoomDirection == 0 ? 9 : 8, "&zoomTimes=").concat(param.zoomRate, "&startPointX=").concat(param.startPointX, "&startPointY=").concat(param.startPointY, "&endPointX=").concat(param.endPointX, "&endPointY=").concat(param.endPointY, "&length=").concat(parseInt(screenHeight), "&width=").concat(parseInt(screenWidth), "&midPointX=").concat(param.targetCenterX, "&midPointY=").concat(param.targetCenterY, "&lengthX=").concat(param.targetWidth, "&lengthY=").concat(param.targetHeight);
+                var param = getZoomMultiple(screenWidth, screenHeight, r, _this12.capacity && _this12.capacity.support_zoomOut_maxTime ? _this12.capacity.support_zoomOut_maxTime : 5);
+                var apiUrl = _this12.env.domain + "/api/v3/das/device/3d/zoom?accessToken=".concat(_this12.accessToken, "&deviceSerial=").concat(matchEzopenUrl(_this12.url).deviceSerial, "&channelNo=").concat(matchEzopenUrl(_this12.url).channelNo, "&command=").concat(zoomDirection == 0 ? 9 : 8, "&zoomTimes=").concat(param.zoomRate, "&startPointX=").concat(param.startPointX, "&startPointY=").concat(param.startPointY, "&endPointX=").concat(param.endPointX, "&endPointY=").concat(param.endPointY, "&length=").concat(parseInt(screenHeight), "&width=").concat(parseInt(screenWidth), "&midPointX=").concat(param.targetCenterX, "&midPointY=").concat(param.targetCenterY, "&lengthX=").concat(param.targetWidth, "&lengthY=").concat(param.targetHeight);
                 fetch(apiUrl, {
                   method: "POST"
                 }).then(function (response) {
                   return response.json();
                 }).then(function (res) {
                   if (res.code != 200) {
-                    _this13.pluginStatus.loadingSetText({
+                    _this12.pluginStatus.loadingSetText({
                       text: res.msg,
                       color: 'red',
                       delayClear: 2000
                     });
                   }
                 })["catch"](function (error) {
-                  _this13.pluginStatus.loadingSetText({
+                  _this12.pluginStatus.loadingSetText({
                     text: '3D定位失败，请重试',
                     color: 'red',
                     delayClear: 2000
                   });
                 });
               } catch (error) {
-                _this13.pluginStatus.loadingSetText({
+                _this12.pluginStatus.loadingSetText({
                   text: '3D定位失败，请重试',
                   color: 'red',
                   delayClear: 2000
@@ -41944,7 +42056,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "changeZoomType",
     value: function changeZoomType(flag) {
-      var _this14 = this;
+      var _this13 = this;
       if (flag && this.capacity && !this.support3DZoom) {
         return {
           code: -1,
@@ -41970,17 +42082,17 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       }
       setTimeout(function () {
         if (flag) {
-          if (document.getElementById("".concat(_this14.id, "-zoom-content"))) {
-            document.getElementById("".concat(_this14.id, "-zoom-content")).title = '3D定位';
+          if (document.getElementById("".concat(_this13.id, "-zoom-content"))) {
+            document.getElementById("".concat(_this13.id, "-zoom-content")).title = '3D定位';
           }
         } else {
-          if (document.getElementById("".concat(_this14.id, "-zoom-content"))) {
-            document.getElementById("".concat(_this14.id, "-zoom-content")).title = '电子放大';
+          if (document.getElementById("".concat(_this13.id, "-zoom-content"))) {
+            document.getElementById("".concat(_this13.id, "-zoom-content")).title = '电子放大';
           }
         }
         //移动端切换缩放模式后自动开启对应缩放功能
-        if (_this14.isMobile && flag) {
-          _this14.enable3DZoom();
+        if (_this13.isMobile && flag) {
+          _this13.enable3DZoom();
         }
       }, 500);
     }
@@ -42086,7 +42198,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "fast",
     value: function fast(next) {
-      var _this15 = this;
+      var _this14 = this;
       var speed = this.speed;
       if (next) {
         var fastRT = this.jSPlugin.JS_Speed(next);
@@ -42110,7 +42222,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
             });
           }
           return new Promise(function (resolve, reject) {
-            _this15.speed = speed;
+            _this14.speed = speed;
             reject({
               code: -1,
               data: {
@@ -42127,7 +42239,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
         }
       }
       return new Promise(function (resolve) {
-        _this15.speed = speed;
+        _this14.speed = speed;
         resolve({
           code: 0,
           data: {
@@ -42145,7 +42257,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "slow",
     value: function slow() {
-      var _this16 = this;
+      var _this15 = this;
       var speed = this.speed;
       if (speed === 4) {
         speed = 2;
@@ -42162,7 +42274,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
           });
         }
         return new Promise(function (resolve, reject) {
-          _this16.speed = speed;
+          _this15.speed = speed;
           reject({
             code: -1,
             data: {
@@ -42174,7 +42286,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       }
       var slowRT = this.jSPlugin.JS_Speed(speed);
       return new Promise(function (resolve) {
-        _this16.speed = speed;
+        _this15.speed = speed;
         resolve({
           code: 0,
           data: {
@@ -42269,15 +42381,15 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "fullScreen",
     value: function fullScreen() {
-      var _this17 = this;
+      var _this16 = this;
       var promise = requestFullScreenPromise(document.getElementById("".concat(this.id)));
       promise.then(function (data) {
         console.log("全屏promise", window.screen.availWidth);
-        _this17.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight);
+        _this16.jSPlugin.JS_Resize(window.screen.availWidth, window.screen.availHeight);
         // 兼容旧版本callback
-        if (typeof _this17.params.fullScreenCallBack === 'function') {
-          _this17.params.fullScreenCallBack({
-            id: _this17.id,
+        if (typeof _this16.params.fullScreenCallBack === 'function') {
+          _this16.params.fullScreenCallBack({
+            id: _this16.id,
             type: 'fullScreen',
             code: 0
           });
@@ -42287,12 +42399,12 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       var fullscreenchange = function fullscreenchange() {
         var isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
         if (!isFullScreen) {
-          _this17.jSPlugin.JS_Resize(_this17.width, _this17.height);
+          _this16.jSPlugin.JS_Resize(_this16.width, _this16.height);
         }
         // 兼容旧版本callback
-        if (typeof _this17.params.fullScreenChangeCallBack === 'function') {
-          _this17.params.fullScreenChangeCallBack({
-            id: _this17.id,
+        if (typeof _this16.params.fullScreenChangeCallBack === 'function') {
+          _this16.params.fullScreenChangeCallBack({
+            id: _this16.id,
             type: 'fullScreen',
             code: isFullScreen
           });
@@ -42313,11 +42425,11 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "cancelFullScreen",
     value: function cancelFullScreen() {
-      var _this18 = this;
+      var _this17 = this;
       var cancelPromise = cancelFullScreenPromise();
       cancelPromise.then(function (data) {
-        console.log("取消全屏", data, _this18.jSPlugin);
-        _this18.jSPlugin.JS_Resize(_this18.width, _this18.height);
+        console.log("取消全屏", data, _this17.jSPlugin);
+        _this17.jSPlugin.JS_Resize(_this17.width, _this17.height);
       });
     }
 
@@ -42373,7 +42485,7 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "getDeviceCapacity",
     value: function getDeviceCapacity(params) {
-      var _this19 = this;
+      var _this18 = this;
       var apiDomain = this.env.domain;
       this.capacity = null;
       if (this.env) {
@@ -42381,35 +42493,35 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       }
       var capacityUrl = apiDomain + "/api/lapp/device/capacity";
       var capacitySuccess = function capacitySuccess(data) {
-        _this19.support3DZoom = false;
-        if (document.getElementById("".concat(_this19.id, "-zoom-content"))) {
-          document.getElementById("".concat(_this19.id, "-zoom-content")).title = '电子放大';
+        _this18.support3DZoom = false;
+        if (document.getElementById("".concat(_this18.id, "-zoom-content"))) {
+          document.getElementById("".concat(_this18.id, "-zoom-content")).title = '电子放大';
         }
         if (data.code == 200 && data.data) {
-          _this19.capacity = data.data;
-          if (_this19.isMobile && _this19.isCall) {
-            if (!_this19.capacity['support_doorcall_playback'] || _this19.capacity['support_doorcall_playback'] != 1) {
+          _this18.capacity = data.data;
+          if (_this18.isMobile && _this18.isCall) {
+            if (!_this18.capacity['support_doorcall_playback'] || _this18.capacity['support_doorcall_playback'] != 1) {
               console.log('小窗口initMiniRec-------------设备能力集失败');
-              if (!!_this19.isWebConsole) {
+              if (!!_this18.isWebConsole) {
                 //控制台不执行
                 return;
               }
               setTimeout(function () {
-                if (document.getElementById("".concat(_this19.jSPlugin.id, "-wrap")) && document.getElementById("miniRecbox")) {
-                  document.getElementById("".concat(_this19.jSPlugin.id, "-wrap")).removeChild(document.getElementById("miniClose"));
-                  document.getElementById("".concat(_this19.jSPlugin.id, "-wrap")).removeChild(document.getElementById("miniRecbox"));
+                if (document.getElementById("".concat(_this18.jSPlugin.id, "-wrap")) && document.getElementById("miniRecbox")) {
+                  document.getElementById("".concat(_this18.jSPlugin.id, "-wrap")).removeChild(document.getElementById("miniClose"));
+                  document.getElementById("".concat(_this18.jSPlugin.id, "-wrap")).removeChild(document.getElementById("miniRecbox"));
                   // document.getElementById(`${this.jSPlugin.id}-wrap`).removeChild(document.getElementById(`miniSwitch`))
                 }
               }, 1500);
             }
           }
-          if (_this19.capacity && _this19.capacity.support_3d_position == '1' && _this19.url.indexOf('.live') > -1) {
+          if (_this18.capacity && _this18.capacity.support_3d_position == '1' && _this18.url.indexOf('.live') > -1) {
             //判断是否支持3D定位
-            _this19.support3DZoom = true;
-            if (_this19.params.use3DZoom) {
-              _this19.use3DZoom = true;
-              if (document.getElementById("".concat(_this19.id, "-zoom-content"))) {
-                document.getElementById("".concat(_this19.id, "-zoom-content")).title = '3D定位';
+            _this18.support3DZoom = true;
+            if (_this18.params.use3DZoom) {
+              _this18.use3DZoom = true;
+              if (document.getElementById("".concat(_this18.id, "-zoom-content"))) {
+                document.getElementById("".concat(_this18.id, "-zoom-content")).title = '3D定位';
               }
             }
           }
@@ -42421,7 +42533,6 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
       };
       request(capacityUrl, 'POST', capacityParams, '', capacitySuccess);
     }
-
     // pause() {
     //   return this.jSPlugin.JS_Pause(0);
     // }
@@ -42437,16 +42548,16 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "pause",
     value: function pause(date) {
-      var _this20 = this;
+      var _this19 = this;
       // return this.jSPlugin.JS_Pause(0);
       // this.reSetTheme();
       return new Promise(function (resolve, reject) {
         // 兼容单线程未关闭声音无法再次开启声音问题
-        _this20.jSPlugin.JS_CloseSound(0);
-        _this20.jSPlugin.JS_Pause(0, date).then(function (data) {
+        _this19.jSPlugin.JS_CloseSound(0);
+        _this19.jSPlugin.JS_Pause(0, date).then(function (data) {
           // 暂停成功
-          if (_this20.Theme) {
-            _this20.Theme.setDecoderState({
+          if (_this19.Theme) {
+            _this19.Theme.setDecoderState({
               play: false
             });
           }
@@ -42469,32 +42580,32 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "_resume",
     value: function _resume(time) {
-      var _this21 = this;
+      var _this20 = this;
       return new Promise(function (resolve, reject) {
-        _this21.pluginStatus.setPlayStatus({
+        _this20.pluginStatus.setPlayStatus({
           play: false,
           loading: true
         });
-        if (_this21.validateCode && _this21.validateCode != '') {
-          _this21.jSPlugin.JS_SetSecretKey(0, _this21.validateCode);
+        if (_this20.validateCode && _this20.validateCode != '') {
+          _this20.jSPlugin.JS_SetSecretKey(0, _this20.validateCode);
         }
-        _this21.jSPlugin.JS_Resume(time).then(function (data) {
+        _this20.jSPlugin.JS_Resume(time).then(function (data) {
           setTimeout(function () {
             // 暂停恢复后，保持倍速
-            if (_this21.url.indexOf(".rec") !== -1 && _this21.speed != 1) {
-              _this21.jSPlugin.JS_Speed(_this21.speed);
+            if (_this20.url.indexOf(".rec") !== -1 && _this20.speed != 1) {
+              _this20.jSPlugin.JS_Speed(_this20.speed);
             }
           }, 500);
           // 主题播放状态及声音状态
-          if (_this21.Theme) {
-            _this21.Theme.setDecoderState({
+          if (_this20.Theme) {
+            _this20.Theme.setDecoderState({
               play: true
             });
-            _this21.fast(_this21.speed);
-            var isOpenSound = _this21.Theme.decoderState.state.sound;
+            _this20.fast(_this20.speed);
+            var isOpenSound = _this20.Theme.decoderState.state.sound;
             if (isOpenSound) {
               setTimeout(function () {
-                _this21.openSound();
+                _this20.openSound();
               }, 500);
             }
           }
@@ -42622,10 +42733,10 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
     }
 
     /**
-    * @description 关闭云台
-    * @version 7.5.0
-    * @returns {ReturnResult=}
-    */
+     * @description 关闭云台
+     * @version 7.5.0
+     * @returns {ReturnResult=}
+     */
   }, {
     key: "closePtz",
     value: function closePtz() {
@@ -42689,15 +42800,15 @@ var EZUIKitPlayer = /*#__PURE__*/function () {
   }, {
     key: "exitBrowserFullscreen",
     value: function exitBrowserFullscreen(width, height) {
-      var _this22 = this;
+      var _this21 = this;
       var cancelPromise = cancelFullScreenPromise();
       cancelPromise.then(function (data) {
-        _this22.jSPlugin.JS_Resize(width ? width : _this22.width, height ? height : _this22.height);
-        if (_this22.Theme) {
-          if (_this22.Theme.Rec) {
-            _this22.Theme.Rec.recAutoSize();
+        _this21.jSPlugin.JS_Resize(width ? width : _this21.width, height ? height : _this21.height);
+        if (_this21.Theme) {
+          if (_this21.Theme.Rec) {
+            _this21.Theme.Rec.recAutoSize();
           }
-          _this22.Theme.setDecoderState({
+          _this21.Theme.setDecoderState({
             webExpend: false
           });
         }
@@ -42861,10 +42972,6 @@ var EZUIKitHD = /*#__PURE__*/function () {
   function EZUIKitHD(params) {
     var _this = this;
     _classCallCheck$1(this, EZUIKitHD);
-    /**
-     * 切换模式
-     * @param {*} num  0： 预览 1：回放
-     */
     _defineProperty(this, "changeModel", function (num, playParams) {
       var self = _this;
       _this.switchVideo = parseInt(num);
@@ -42902,9 +43009,6 @@ var EZUIKitHD = /*#__PURE__*/function () {
         });
       }
     });
-    /**
-     * 设置视频初始化参数
-     */
     _defineProperty(this, "init", function (initParams) {
       var _argumentsPram;
       var self = _this;
@@ -42957,9 +43061,6 @@ var EZUIKitHD = /*#__PURE__*/function () {
         self.showTips(true, '视频初始化成功！');
       });
     });
-    /**
-     * 播放门店视频
-     */
     _defineProperty(this, "play", function (playParams) {
       var self = _this;
       if (!playParams.deviceSerial || !playParams.channelNo) {
@@ -43034,9 +43135,6 @@ var EZUIKitHD = /*#__PURE__*/function () {
         console.log('开始播放：', res);
       });
     });
-    /**
-     * 设置事件回调信息
-     */
     _defineProperty(this, "showCBInfo", function (message) {
       _this.callbackMessage = _this.callbackMessage + JSON.stringify(message) + '\n\n';
       console.log(_this.callbackMessage);
@@ -43050,21 +43148,12 @@ var EZUIKitHD = /*#__PURE__*/function () {
       //   self.tipsShow = false;
       // }, 1000);
     });
-    /**
-     * 隐藏视频
-     */
     _defineProperty(this, "hideVideo", function () {
       oWebControl.JS_HideWnd();
     });
-    /**
-     * 显示视频
-     */
     _defineProperty(this, "showVideo", function () {
       oWebControl.JS_ShowWnd();
     });
-    /**
-     * 获取窗口数
-     */
     _defineProperty(this, "GetLayout", function () {
       var data = null;
       oWebControl.JS_RequestInterface({
@@ -43081,9 +43170,6 @@ var EZUIKitHD = /*#__PURE__*/function () {
         console.log(oData.responseMsg);
       });
     });
-    /**
-     * 抓图
-     */
     _defineProperty(this, "capturePicture", function (wndId) {
       var data = null;
       oWebControl.JS_RequestInterface({
@@ -43297,6 +43383,11 @@ var EZUIKitHD = /*#__PURE__*/function () {
     this.tipsShow = false;
     oWebControl = WebControlInit('playWnd', cbConnectSuccess, cbConnectError, cbConnectClose);
   }
+
+  /**
+   * 切换模式
+   * @param {*} num  0： 预览 1：回放
+   */
   _createClass$1(EZUIKitHD, [{
     key: "alarmMsg",
     value: function alarmMsg() {
@@ -45923,9 +46014,11 @@ function Janus$1(gatewayCallbacks, requestOpt) {
       return;
     }
     if (cleanupHandles) {
-      for (var handleId in pluginHandles) destroyHandle(handleId, {
-        noRequest: true
-      });
+      for (var handleId in pluginHandles) {
+        destroyHandle(handleId, {
+          noRequest: true
+        });
+      }
     }
     // No need to destroy all handles first, Janus will do that itself
     var request = {
@@ -48664,7 +48757,6 @@ function deffer() {
 var EZWebRtc = /*#__PURE__*/function () {
   function EZWebRtc(_params) {
     _classCallCheck$1(this, EZWebRtc);
-    //订阅
     _defineProperty(this, "subscribe", function (params) {
       // 构建 deffer 实例
       var _deffer = deffer();
@@ -48795,7 +48887,6 @@ var EZWebRtc = /*#__PURE__*/function () {
       });
       return _deffer.promise;
     });
-    //订阅
     _defineProperty(this, "subscribeStream", function (params) {
       // 构建 deffer 实例
       var _deffer = deffer();
@@ -48818,7 +48909,6 @@ var EZWebRtc = /*#__PURE__*/function () {
       }
       return _deffer.promise;
     });
-    //取消订阅用户
     _defineProperty(this, "unsubscribe", function (params) {
       // 构建 deffer 实例
       var _deffer = deffer();
@@ -48865,7 +48955,6 @@ var EZWebRtc = /*#__PURE__*/function () {
       }
       return _deffer.promise;
     });
-    //取消音频或视频订阅
     _defineProperty(this, "unsubscribeStream", function (params) {
       // 构建 deffer 实例
       var _deffer = deffer();
@@ -48886,7 +48975,6 @@ var EZWebRtc = /*#__PURE__*/function () {
       });
       return _deffer.promise;
     });
-    //监听事件
     _defineProperty(this, "listen", function () {
       return listen.apply(void 0, arguments);
     });
@@ -49841,6 +49929,7 @@ var EZWebRtc = /*#__PURE__*/function () {
       }
       return _deffer.promise;
     }
+    //订阅
   }, {
     key: "ezwebTrigger",
     value:
@@ -49850,6 +49939,7 @@ var EZWebRtc = /*#__PURE__*/function () {
     //         fn(event)
     //     })
     // }
+
     function ezwebTrigger(params) {
       var localStream = window['ezuikit-webrtc'].opt.cln.local.stream;
       var event = {
