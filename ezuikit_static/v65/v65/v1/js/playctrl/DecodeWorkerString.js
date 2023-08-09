@@ -1,9 +1,4 @@
-const DecodeWorkerString = (
-  staticPath = "https://open.ys7.com/assets/ezuikit_v3.6"
-) => `
-/**
- * Created by wangweijie5 on 2016/12/5.
- */
+const DecodeWorkerString = (staticPath = 'https://open.ys7.com/assets/ezuikit_v3.6') => `
 (function (event) {
     const AUDIO_TYPE = 0;	// 音频
     const VIDEO_TYPE = 1;   // 视频
@@ -618,6 +613,4 @@ const DecodeWorkerString = (
     }
 })();
 `;
-
-
 export default DecodeWorkerString;

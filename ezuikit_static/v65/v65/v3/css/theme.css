@@ -104,6 +104,19 @@
   margin: 0 4px 1px 4px;
 }
 
+/* .BMap_cpyCtrl{
+  display:none;  
+}  */
+
+
+.BMap_noprint button[title="倾斜"] {
+  display: none;
+}
+
+/* .BMap_noprint  {
+  width: 26px !important;
+  height: 26px !important;
+} */
 
 /* .footer-controls.themeEditing .theme-icon-item {
   position: relative;
