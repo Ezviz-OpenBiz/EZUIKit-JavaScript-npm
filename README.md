@@ -34,17 +34,22 @@ import EZUIKit from 'ezuikit-js';
 
 ## 播放器初始化
 ### 直播
-```
+```js
     var player = new EZUIKit.EZUIKitPlayer({
       id: 'video-container', // 视频容器ID
       accessToken: 'at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz',
       url: 'ezopen://open.ys7.com/G39444019/1.live',
       width: 600,
       height: 400,
+      handleError: (err) => {
+        if (err.type === "handleRunTimeInfoError" && err.data.nErrorCode === 5) {
+          // 加密设备密码错误
+        }
+      },
     })
 ```
 ### 回放
-```
+```js
     var player = new EZUIKit.EZUIKitPlayer({
       id: 'video-container', // 视频容器ID
       width: 600,
@@ -282,6 +287,7 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 </td><td>N</td></tr>
 <tr><td>plugin</td><td>String</td><td>按需加载插件，可选值： talk：对讲，示例：plugin:["talk"] </td><td>N</td></tr>
 <tr><td>handleSuccess</td><td>function</td><td>自动播放成功回调</td><td>N</td></tr>
+<tr><td>handleError</td><td>function</td><td>错误回调</td><td>N</td></tr>
 <tr><td>seekFrequency </td><td>function</td><td>为避免频繁拖动播放异常，可设置模板回放时间轴拖动防抖间隔，默认值为2000（2秒），可取2000（2秒），3000（3秒），4000（4秒），5000（5秒）</td><td>N</td></tr>
 </table>
 
