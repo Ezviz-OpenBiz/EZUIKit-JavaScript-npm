@@ -466,6 +466,21 @@ template参数说明
   player.reSize(width, height);
 ```
 
+#### 鱼眼矫正（软解）
+
+```js
+// {1, 0}  壁装鱼眼 不矫正
+// {1, 1}  壁装360°全景
+// {1, 2}  壁装4分屏
+// {1, 4}  壁装广角
+// {3, 0}  顶装鱼眼 不矫正
+// {3, 1}  顶装360°全景
+// {3, 4}  顶装4分屏
+// {3, 5}  顶装柱状
+// 顶装4分屏
+player.setFECCorrectType({place: 3 , type：4}, "cavnas1,canvas2,canvas3") // cavnas1,canvas2,canvas3 是分屏是需要的
+```
+
 ### 使用示例
 
 > 如果使用原生js，可参考demos => base-demo
