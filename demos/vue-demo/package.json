@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
-    "ezuikit-js": "^7.6.7",
+    "ezuikit-js": "7.7.3",
     "vue": "^2.6.11"
   },
   "devDependencies": {
