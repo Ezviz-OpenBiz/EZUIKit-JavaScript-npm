@@ -934,22 +934,22 @@ textarea.ezuikit-input:focus {
 .ezuikit-popover-placement-top,
 .ezuikit-popover-placement-topLeft,
 .ezuikit-popover-placement-topRight {
-  padding-bottom: 10px;
+  padding-bottom: 8.48528137px;
 }
 .ezuikit-popover-placement-right,
 .ezuikit-popover-placement-rightTop,
 .ezuikit-popover-placement-rightBottom {
-  padding-left: 10px;
+  padding-left: 8.48528137px;
 }
 .ezuikit-popover-placement-bottom,
 .ezuikit-popover-placement-bottomLeft,
 .ezuikit-popover-placement-bottomRight {
-  padding-top: 10px;
+  padding-top: 8.48528137px;
 }
 .ezuikit-popover-placement-left,
 .ezuikit-popover-placement-leftTop,
 .ezuikit-popover-placement-leftBottom {
-  padding-right: 10px;
+  padding-right: 8.48528137px;
 }
 .ezuikit-popover-inner {
   background-color: #fff;

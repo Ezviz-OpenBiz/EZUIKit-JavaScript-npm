@@ -1,7 +1,13 @@
+/* eslint-disable indent */
+/* eslint-disable valid-jsdoc */
 /**
  * Created by wangweijie5 on 2016/12/2.
  */
-import DecodeWorkerString from './DecodeWorkerString';
+import DecodeWorkerString from "./DecodeWorkerString";
+/**
+ * Created by wangweijie5 on 2016/12/2.
+ */
+
 // 错误码
 const PLAYM4_PARA_OVER = 0; 	// 参数错误
 const PLAYM4_OK = 1;             //正确
@@ -114,8 +120,9 @@ export class JSPlayCtrl {
         } else {
             return PLAYM4_PARA_OVER;
         }
+
         if (typeof staticPath === 'string') {
-            this.staticPath = staticPath;
+          this.staticPath = staticPath
         }
 
         // 解码 Worker
@@ -425,9 +432,10 @@ export class JSPlayCtrl {
                 if (this.decodeWorker == null) {
                     // 创建解码 Worker
                     // this.decodeWorker = new Worker(that.szBasePath + "DecodeWorker.js");
-                    var workBlob = new Blob([DecodeWorkerString(this.staticPath)]);
+                    const workBlob = new Blob([DecodeWorkerString(this.staticPath)]);
                     const url = URL.createObjectURL(workBlob);
                     this.decodeWorker = new Worker(url);
+
                     if (self.bJSPrintLog) {
                         console.log(">>>JSPlayV1.1 createWorker success!");
                     }
@@ -1317,7 +1325,6 @@ export class JSPlayCtrl {
         // else {
         //     this.oSuperRender.SR_DisplayFrameData(this.nWidth, this.nHeight, null, this.nWidth, this.nHeight);
         // }
-        
         // let oldCanvas = document.getElementById(this.sCanvasId);
         // if (oldCanvas) {
         //     this.clonedCanvas = oldCanvas.cloneNode(true); // 克隆节点

@@ -17,7 +17,7 @@
     const PLAYM4_NEED_NEET_LOOP = 35; //丢帧需要下个循环
     const PLAYM4_SYS_NOT_SUPPORT = 16; 	// 不支持
 
-    importScripts('Decoder.js');
+    importScripts(`${staticPath}/js/playctrl/Decoder.js`);
     Module.addOnPostRun(function () {
         postMessage({ 'function': "loaded" });
     });
@@ -140,7 +140,7 @@
                 } else {
                     let sourceRemain = Module._GetSourceBufferRemain(g_nPort);
                     if (sourceRemain == 0) {
-                        console.log("C buffer and JS buffer size is both 0");
+                        // console.log("C buffer and JS buffer size is both 0");
                         postMessage({ 'function': "InputData", 'errorCode': PLAYM4_NEED_MORE_DATA });
                         return;
                     }
