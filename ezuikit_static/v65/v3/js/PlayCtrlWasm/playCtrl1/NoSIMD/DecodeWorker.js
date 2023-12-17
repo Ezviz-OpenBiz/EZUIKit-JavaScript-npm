@@ -1,4 +1,6 @@
-const DecodeWorkerString = (staticPath = 'https://open.ys7.com/assets/ezuikit_v3.6') => `
+/**
+ * Created by wangweijie5 on 2016/12/5.
+ */
 (function (event) {
     const AUDIO_TYPE = 0;	// 音频
     const VIDEO_TYPE = 1;   // 视频
@@ -15,7 +17,7 @@ const DecodeWorkerString = (staticPath = 'https://open.ys7.com/assets/ezuikit_v3
     const PLAYM4_NEED_NEET_LOOP = 35; //丢帧需要下个循环
     const PLAYM4_SYS_NOT_SUPPORT = 16; 	// 不支持
 
-    importScripts('${staticPath}/js/playctrl/Decoder.js');
+    importScripts('Decoder.js');
     Module.addOnPostRun(function () {
         postMessage({ 'function': "loaded" });
     });
@@ -31,6 +33,8 @@ const DecodeWorkerString = (staticPath = 'https://open.ys7.com/assets/ezuikit_v3
     var bWorkerPrintLog = false;//worker层log开关
 
     var g_nPort = -1;
+    var pInputData = null;
+    var inputBufferSize = 40960;
 
     self.JSPlayM4_RunTimeInfoCallBack = function (nPort, pstRunTimeInfo, pUser) {
         let port = nPort;
@@ -97,7 +101,7 @@ const DecodeWorkerString = (staticPath = 'https://open.ys7.com/assets/ezuikit_v3
                     return;
                 }
                 var aHead = Module.HEAPU8.subarray(pHead, pHead + iHeadLen);
-                aHead.set(eventData.data);
+                aHead.set(new Uint8Array(eventData.data));
                 res = Module._OpenStream(g_nPort, pHead, iHeadLen, eventData.bufPoolSize);
                 postMessage({ 'function': "OpenStream", 'errorCode': res });
                 if (res !== PLAYM4_OK) {
@@ -118,10 +122,21 @@ const DecodeWorkerString = (staticPath = 'https://open.ys7.com/assets/ezuikit_v3
                 // 接收到的数据
                 var iLen = eventData.dataSize;
                 if (iLen > 0) {
-                    var pInputData = Module._malloc(iLen);
-                    if (pInputData === null) {
-                        return;
+                    if (pInputData == null || iLen > inputBufferSize) {
+                        if (pInputData != null) {
+                            Module._free(pInputData);
+                            pInputData = null;
+                        }
+                        if (iLen > inputBufferSize) {
+                            inputBufferSize = iLen;
+                        }
+
+                        pInputData = Module._malloc(inputBufferSize);
+                        if (pInputData === null) {
+                            return;
+                        }
                     }
+
                     var inputData = new Uint8Array(eventData.data);
                     // var aInputData = Module.HEAPU8.subarray(pInputData, pInputData + iLen);
                     // aInputData.set(inputData);
@@ -133,27 +148,26 @@ const DecodeWorkerString = (staticPath = 'https://open.ys7.com/assets/ezuikit_v3
                         let sourceRemain = Module._GetSourceBufferRemain(g_nPort);
                         postMessage({ 'function': "InputData", 'errorCode': errorCode, "sourceRemain": sourceRemain });
                     }
-                    Module._free(pInputData);
-                    pInputData = null;
+                    //Module._free(pInputData);
+                    //pInputData = null;
                 } else {
                     let sourceRemain = Module._GetSourceBufferRemain(g_nPort);
                     if (sourceRemain == 0) {
-                        console.log("C buffer and JS buffer size is both 0");
                         postMessage({ 'function': "InputData", 'errorCode': PLAYM4_NEED_MORE_DATA });
                         return;
                     }
                 }
 
                 /////////////////////
-                if (funGetFrameData === null) {
-                    funGetFrameData = Module.cwrap('GetFrameData', 'number');
-                }
+                // if (funGetFrameData === null) {
+                //     funGetFrameData = Module.cwrap('GetFrameData', 'number');
+                // }
 
                 while (bOpenMode && bOpenStream) {
 
-                    var ret = getFrameData(funGetFrameData);
+                    var ret = getFrameData();
                     // 直到获取视频帧或数据不足为止
-                    if (PLAYM4_VIDEO_FRAME === ret || PLAYM4_NEED_MORE_DATA === ret || PLAYM4_ORDER_ERROR === ret || PLAYM4_NEED_NEET_LOOP === ret)//PLAYM4_VIDEO_FRAME === ret ||
+                    if (PLAYM4_VIDEO_FRAME === ret || PLAYM4_NEED_MORE_DATA === ret || PLAYM4_ORDER_ERROR === ret)//PLAYM4_VIDEO_FRAME === ret ||  || PLAYM4_NEED_NEET_LOOP === ret
                     {
                         break;
                     }
@@ -370,6 +384,10 @@ const DecodeWorkerString = (staticPath = 'https://open.ys7.com/assets/ezuikit_v3
                     postMessage({ 'function': "FreePort", 'errorCode': res });
                     return;
                 }
+                if (pInputData != null) {
+                    Module._free(pInputData);
+                    pInputData = null;
+                }
                 break;
             case "PlaySound":
                 let resPS = Module._PlaySound(g_nPort);
@@ -422,7 +440,7 @@ const DecodeWorkerString = (staticPath = 'https://open.ys7.com/assets/ezuikit_v3
                 Module._SetIFrameDecInterval(g_nPort, eventData.data);
                 break;
             case "SetLostFrameMode":
-                Module._SetLostFrameMode(g_nPort, eventData.data);
+                Module._SetLostFrameMode(g_nPort, eventData.data, 0);
                 break;
             case "SetDemuxModel":
                 Module._SetDemuxModel(g_nPort, eventData.nIdemuxType, eventData.bTrue);
@@ -481,11 +499,11 @@ const DecodeWorkerString = (staticPath = 'https://open.ys7.com/assets/ezuikit_v3
         return iYear + "-" + iMonth + "-" + iDay + " " + iHour + ":" + iMinute + ":" + iSecond;
     }
     // 获取帧数据
-    function getFrameData(fun) {
+    function getFrameData() {
         // function getFrameData() {
         // 获取帧数据
-        // var res = Module._GetFrameData();
-        var res = fun();
+        var res = Module._GetFrameData();
+        //var res = fun();
         if (res === PLAYM4_OK) {
             var oFrameInfo = Module._GetFrameInfo();
             switch (oFrameInfo.frameType) {
@@ -612,5 +630,3 @@ const DecodeWorkerString = (staticPath = 'https://open.ys7.com/assets/ezuikit_v3
         return re;
     }
 })();
-`;
-export default DecodeWorkerString;
