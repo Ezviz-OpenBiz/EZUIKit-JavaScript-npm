@@ -1,12 +1,10 @@
 {
   "name": "ezuikit-js",
   "maintainers": ["jzy"],
-  "version": "7.7.2",
+  "version": "7.7.8",
   "description": "ezuikit javascript for npm",
   "main": "ezuikit.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Hikvision-Ezviz/EZUIKit-JavaScript-npm.git"
@@ -15,7 +13,6 @@
     "video",
     "ezuikit"
   ],
-  "author": "yujianbo",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Hikvision-Ezviz/EZUIKit-JavaScript-npm/issues"
