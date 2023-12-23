@@ -1,7 +1,7 @@
 /**
  * Created by wangweijie5 on 2016/12/2.
  */
-
+import DecodeWorkerString from './DecodeWorkerString';
 // 错误码
 const PLAYM4_PARA_OVER = 0; 	// 参数错误
 const PLAYM4_OK = 1;             //正确
@@ -50,7 +50,7 @@ const YUV_SKIP_NUM = 2;   // YUV跳帧间隔
 // const BUFFER_MAX_SIZE = 800*1024;   // 最大缓存
 const BUFFER_MAX_SIZE = 5 * 1024 * 1024;   // 最大缓存
 const BUFFER_MIN_SIZE = 100;//最小缓存
-const BUFFER_INPUT_SIZE = 1024*20;   // 一次送入数据大小
+const BUFFER_INPUT_SIZE = 1024 * 20;   // 一次送入数据大小
 // const BUFFER_FAST_INPUT_SIZE = 10000; // 快放一次送入数据大小
 
 const WRITE_AUD_ENCODE_NUM = 200; //一次写编码音频帧总帧数
@@ -58,7 +58,7 @@ const WRITE_AUD_PCM_NUM = 100; //一次写PCM数据
 const WRITE_VID_YUV_NUM = 20; //一次写YUV数据
 const WRITE_VID_RAW_NUM = 100;//一次写裸数据
 // 电子放大区域
-const WRITE_RTP_NUM =200;    //写RTP数据
+const WRITE_RTP_NUM = 200;    //写RTP数据
 
 //解码回调帧信息
 var DECODE_INFO_YUV = {
@@ -99,7 +99,7 @@ var CALLBACK_PARAMETER = {
 
 //定义类 JSPlayCtrl
 export class JSPlayCtrl {
-    constructor(path, callBack, winId) {
+    constructor(path, callBack, winId, staticPath) {
 
         // 路径
         if (path != null && path !== undefined && typeof (path) === "string") {
@@ -114,6 +114,9 @@ export class JSPlayCtrl {
         } else {
             return PLAYM4_PARA_OVER;
         }
+        if (typeof staticPath === 'string') {
+            this.staticPath = staticPath;
+        }
 
         // 解码 Worker
         this.decodeWorker = null;
@@ -127,7 +130,7 @@ export class JSPlayCtrl {
         this.audioRenderer = null;
         this.aAudioBuffer = [];
         this.iAudioBufferSize = 0;
-		this.Volume = 0;
+        this.Volume = 0;
 
         // 视频渲染库
         this.oSuperRender = null;
@@ -158,8 +161,8 @@ export class JSPlayCtrl {
         this.bWriteRTPData = true;
         this.iRTPDataSize = 0;
         this.aRTPDataBuffer = [];
-        this.downloadRTP =false;
-        this.rtpNum=0;
+        this.downloadRTP = false;
+        this.rtpNum = 0;
 
         // 播放音视频标识
         this.bPlaySound = false;
@@ -167,7 +170,7 @@ export class JSPlayCtrl {
         this.bPause = false;
         this.bOnebyOne = false;
         this.bPlayRateChange = false;
-       // this.bAudioTypeSupport = true;
+        // this.bAudioTypeSupport = true;
         this.audioNum = 0;
         this.videoNum = 0;
 
@@ -176,6 +179,9 @@ export class JSPlayCtrl {
 
         //纯音频播放标识
         this.bOnlyPlaySound = false;
+
+        //是否使用裁剪宽高标识
+        this.bVideoCropInfo = false;
 
         // 回调函数
         this.dataCallBackFun = null;  // 截图回调函数
@@ -193,10 +199,10 @@ export class JSPlayCtrl {
         this.nHeight = 0;
 
         //图像的裁剪信息
-        this.nSPSCropLeft=0;
-        this.nSPSCropRight=0;
-        this.nSPSCropTop=0;
-        this.nSPSCropBottom=0;
+        this.nSPSCropLeft = 0;
+        this.nSPSCropRight = 0;
+        this.nSPSCropTop = 0;
+        this.nSPSCropBottom = 0;
 
         // 画布ID
         this.sCanvasId = null;
@@ -209,6 +215,9 @@ export class JSPlayCtrl {
 
         // 解码类型
         this.nDecFrameType = DECODE_ALL;
+
+        //实时信息回调
+        this.runtimeInfoCBFun = null;
 
         // 电子放大
         this.iCanvasWidth = 0;  // canvas宽
@@ -262,35 +271,35 @@ export class JSPlayCtrl {
         // 加载音频渲染js文件
         if (!bAudioRenderLoad) {
             bAudioRenderLoad = true;
-            var script_audio = document.createElement("script");
-            script_audio.type = "text/javascript";
-            script_audio.src = that.szBasePath + "AudioRenderer.js";
-            var head_audio = document.getElementsByTagName('head')[0];
-            head_audio.appendChild(script_audio);
-            script_audio.onload = script_audio.onreadystatechange = function () {
-                if (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete') {
-                    if (this.bJSPrintLog) {
-                        console.log(">>>JS AudioRenderer.js load finish!");
-                    }
-                }
-            };
+            // var script_audio = document.createElement("script");
+            // script_audio.type = "text/javascript";
+            // script_audio.src = that.szBasePath + "AudioRenderer.js";
+            // var head_audio = document.getElementsByTagName('head')[0];
+            // head_audio.appendChild(script_audio);
+            // script_audio.onload = script_audio.onreadystatechange = function () {
+            //     if (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete') {
+            //         if (this.bJSPrintLog) {
+            //             console.log(">>>JS AudioRenderer.js load finish!");
+            //         }
+            //     }
+            // };
         }
 
         // 加载视频渲染js文件
         if (!bSuperRenderLoad) {
             bSuperRenderLoad = true;
-            var script_vedio = document.createElement("script");
-            script_vedio.type = "text/javascript";
-            script_vedio.src = that.szBasePath + "SuperRender_10.js";
-            var head_vedio = document.getElementsByTagName('head')[0];
-            head_vedio.appendChild(script_vedio);
-            script_vedio.onload = script_vedio.onreadystatechange = function () {
-                if (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete') {
-                    if (this.bJSPrintLog) {
-                        console.log(">>>JS SuperRender_10.js load finish!");
-                    }
-                }
-            };
+            // var script_vedio = document.createElement("script");
+            // script_vedio.type = "text/javascript";
+            // script_vedio.src = that.szBasePath + "SuperRender_10.js";
+            // var head_vedio = document.getElementsByTagName('head')[0];
+            // head_vedio.appendChild(script_vedio);
+            // script_vedio.onload = script_vedio.onreadystatechange = function () {
+            //     if (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete') {
+            //         if (this.bJSPrintLog) {
+            //             console.log(">>>JS SuperRender_10.js load finish!");
+            //         }
+            //     }
+            // };
 
         }
 
@@ -331,7 +340,7 @@ export class JSPlayCtrl {
             if (that.bIsInputBufOver || that.bIsInputBufWillOver) {
                 aReadBuf = new Uint8Array(1);
                 aSendBuf = new Uint8Array(aReadBuf);
-                var message = {'command': "InputData", 'data': aSendBuf.buffer, 'dataSize': 0};
+                var message = { 'command': "InputData", 'data': aSendBuf.buffer, 'dataSize': 0 };
                 that.decodeWorker.postMessage(message, [message.data]);
             } else {
                 if ((that.bPlay && (!that.bPause || that.bOnebyOne)) || this.bOnlyPlaySound) {
@@ -343,8 +352,8 @@ export class JSPlayCtrl {
                         }
                     }
                     aReadBuf = that.aInputDataBuffer.splice(0, iSize);
-                    aSendBuf = new Uint8Array(aReadBuf); 
-                    var message = {'command': "InputData", 'data': aSendBuf.buffer, 'dataSize': iSize};
+                    aSendBuf = new Uint8Array(aReadBuf);
+                    var message = { 'command': "InputData", 'data': aSendBuf.buffer, 'dataSize': iSize };
                     that.decodeWorker.postMessage(message, [message.data]);
                 }
             }
@@ -415,9 +424,11 @@ export class JSPlayCtrl {
             if (window.Worker) { // 判断浏览器是否支持 Worker
                 if (this.decodeWorker == null) {
                     // 创建解码 Worker
-                    this.decodeWorker = new Worker(that.szBasePath + "DecodeWorker.js");
-                    if (self.bJSPrintLog)
-                    {
+                    // this.decodeWorker = new Worker(that.szBasePath + "DecodeWorker.js");
+                    var workBlob = new Blob([DecodeWorkerString(this.staticPath)]);
+                    const url = URL.createObjectURL(workBlob);
+                    this.decodeWorker = new Worker(url);
+                    if (self.bJSPrintLog) {
                         console.log(">>>JSPlayV1.1 createWorker success!");
                     }
                     if (this.decodeWorker == null) {
@@ -459,16 +470,15 @@ export class JSPlayCtrl {
                             if (eventData.errorCode === PLAYM4_BUF_OVER) {
                                 that.bIsInputBufOver = true;
                                 console.log("yff inputBuffer over set key frame \n");
-                                if(that.nDecFrameType!= DECODE_VIDEO_KEYFRAME)
-                                {
-                                   that.PlayM4_SetDecodeFrameType(DECODE_VIDEO_KEYFRAME);//本地流功能测试，很容易送流过快，导致触发解I帧
+                                if (that.nDecFrameType != DECODE_VIDEO_KEYFRAME) {
+                                    that.PlayM4_SetDecodeFrameType(DECODE_VIDEO_KEYFRAME);//本地流功能测试，很容易送流过快，导致触发解I帧
                                 }
                                 //that.inputDataFun();
                             }
                             if (eventData.errorCode === PLAYM4_BUF_WILL_OVER) {
                                 that.bIsInputBufWillOver = true;
-                                console.log("C buffer will over, C sourceRemain:"+eventData.sourceRemain);
-                                
+                                //console.log("C buffer will over, C sourceRemain:"+eventData.sourceRemain);
+
                                 //that.inputDataFun();
                             }
 
@@ -489,7 +499,7 @@ export class JSPlayCtrl {
 
                         case "GetFrameData":
                             typeName = "GetFrameData";
-                            
+
                             if (!that.bOnlyPlaySound) {
                                 if (eventData.data != null && eventData.frameInfo != null) {
                                     // 获取图像宽高
@@ -503,24 +513,22 @@ export class JSPlayCtrl {
                                 that.errorCode = eventData.errorCode;
                                 //送数据策略，连续送5次后中断
                                 if (!that.bIsFirstFrame && (eventData.errorCode === PLAYM4_NEED_MORE_DATA || eventData.errorCode === PLAYM4_NEED_NEET_LOOP)) {
-                                    if(eventData.errorCode === PLAYM4_NEED_MORE_DATA)
-                                    {
+                                    if (eventData.errorCode === PLAYM4_NEED_MORE_DATA) {
                                         that.bIsInputBufOver = false;
                                         that.bIsInputBufWillOver = false;
                                     }
                                     //送数据策略
-                                    if(that.loopNum > 5)
-                                    {
+                                    if (that.loopNum > 5) {
                                         that.bIsGetYUV = true;
-                                        that.loopNum =0;
-                                    }else{
+                                        that.loopNum = 0;
+                                    } else {
                                         //setTimeout(that.inputDataFun(), 5);
                                         that.inputDataFun();
                                         that.loopNum++;//连续送数据计数
                                     }
                                     //console.log("loopNum:"+that.loopNum);
-                                   break;
-                                }else if (that.bIsInputBufOver || that.bIsInputBufWillOver) {
+                                    break;
+                                } else if (that.bIsInputBufOver || that.bIsInputBufWillOver) {
                                     // 解析缓存溢出
                                     that.inputDataFun();
                                 } else {
@@ -559,10 +567,10 @@ export class JSPlayCtrl {
                                             //处理视频数据
                                             self.nWidth = eventData.frameInfo.width;
                                             self.nHeight = eventData.frameInfo.height;
-                                            self.nSPSCropLeft=eventData.frameInfo.cropLeft;
-                                            self.nSPSCropRight=eventData.frameInfo.cropRight;
-                                            self.nSPSCropTop=eventData.frameInfo.cropTop;
-                                            self.nSPSCropBottom=eventData.frameInfo.cropBottom;
+                                            self.nSPSCropLeft = eventData.frameInfo.cropLeft;
+                                            self.nSPSCropRight = eventData.frameInfo.cropRight;
+                                            self.nSPSCropTop = eventData.frameInfo.cropTop;
+                                            self.nSPSCropBottom = eventData.frameInfo.cropBottom;
 
                                             var oVideoFrameInfo = new Object();
                                             oVideoFrameInfo.data = eventData.data;
@@ -644,7 +652,7 @@ export class JSPlayCtrl {
                                                     for (var i = 0, iLen = bufferPackage.length; i < iLen; i++) {
                                                         self.aAudioPCMBuffer[iIndexBuffer + i] = bufferPackage[i];
                                                     }
-                                                    console.log("audio_type num:"+self.iAudioBuffer500Size+", len:"+bufferPackage.length);
+                                                    console.log("audio_type num:" + self.iAudioBuffer500Size + ", len:" + bufferPackage.length);
                                                     self.iAudioBuffer500Size++;
                                                     bufferPackage = null;
                                                 }
@@ -711,7 +719,7 @@ export class JSPlayCtrl {
                         case "GetJPEG":
                             typeName = "GetJPEG";
 
-                             if (eventData.errorCode !== PLAYM4_OK) {
+                            if (eventData.errorCode !== PLAYM4_OK) {
                                 console.log("GetJPEG ErrorParam");
                                 return;
                             }
@@ -732,17 +740,27 @@ export class JSPlayCtrl {
                             var pBmpData = eventData.data;
 
                             self.dataCallBackFun(pBmpData);
-                            break;     
+                            break;
+                        case "RunTimeInfoCallBack":
+                            typeName = "RunTimeInfoCallBack";
+                            let runTimeModule = eventData.nRunTimeModule;
+                            let strVersion = eventData.nStrVersion;
+                            let frameTimeStamp = eventData.nFrameTimeStamp;
+                            let frameNum = eventData.nFrameNum;
+                            let errorCode = eventData.nErrorCode;
+                            if (self.runtimeInfoCBFun != null) {
+                                self.runtimeInfoCBFun(runTimeModule, strVersion, frameTimeStamp, frameNum, errorCode);
+                            }
                         default:
                             break;
                     }
                     //如果返回错误码该如何处理
 
                     // 回调方式返回错误码
-                    if ("GetFrameData" !== typeName) {
+                    if ("GetFrameData" !== typeName && "loaded" != typeName) {
                         self.setCallBack(self, typeName, 0, self.convertErrorCode(eventData.errorCode), true);
                     } else {
-                        
+
                         if (PLAYM4_SYS_NOT_SUPPORT === eventData.errorCode || PLAYM4_FIRST_FRAME_NOT_ICURRENT === eventData.errorCode || PLAYM4_ITYPE_DECODE_ERROR === eventData.errorCode || PLAYM4_NOT_KEYFRAME === eventData.errorCode) {
                             self.setCallBack(self, typeName, 0, self.convertErrorCode(eventData.errorCode), true);
                         }
@@ -787,7 +805,12 @@ export class JSPlayCtrl {
 
                         that.aDisplayBuf = oVideoFrameInfo.data;
                         var displayBuf = new Uint8Array(that.aDisplayBuf);
-                        that.oSuperRender.SR_DisplayFrameData(oVideoFrameInfo.nWidth, oVideoFrameInfo.nHeight, displayBuf,oVideoFrameInfo.nWidth- that.nSPSCropLeft - that.nSPSCropRight,oVideoFrameInfo.nHeight- that.nSPSCropTop - that.nSPSCropBottom);
+                        if (that.bVideoCropInfo) {
+                            that.oSuperRender.SR_DisplayFrameData(oVideoFrameInfo.nWidth, oVideoFrameInfo.nHeight, displayBuf, oVideoFrameInfo.nWidth - that.nSPSCropLeft - that.nSPSCropRight, oVideoFrameInfo.nHeight - that.nSPSCropTop - that.nSPSCropBottom);
+                        }
+                        else {
+                            that.oSuperRender.SR_DisplayFrameData(oVideoFrameInfo.nWidth, oVideoFrameInfo.nHeight, displayBuf, oVideoFrameInfo.nWidth, oVideoFrameInfo.nHeight);
+                        }
                         if (that.DisplayCallBackFun != null) {
                             that.DisplayInfoYUV.height = oVideoFrameInfo.nHeight;
                             that.DisplayInfoYUV.width = oVideoFrameInfo.nWidth;
@@ -814,15 +837,15 @@ export class JSPlayCtrl {
         };
     }
 
- /**
-     * @synopsis 根据帧号进行精确定位
-     * @param nFrameNum [IN] 定位帧号
-     * @param playType [IN] 定位后是否继续播放。true为继续播放，false为暂停播放
-     */
+    /**
+        * @synopsis 根据帧号进行精确定位
+        * @param nFrameNum [IN] 定位帧号
+        * @param playType [IN] 定位后是否继续播放。true为继续播放，false为暂停播放
+        */
     PlayM4_SetCurrentFrameNum(nFrameNum, playType) {
         return PLAYM4_SYS_NOT_SUPPORT;
     }
-  
+
     /**
      * @synopsis 播放库打印日志开关
      * @param downloadFlag [IN] true为打开日志，false为关闭日志
@@ -831,10 +854,10 @@ export class JSPlayCtrl {
     PlayM4_OpenPlayerSDKPrintLog(downloadFlag) {
         if (downloadFlag === true) {
             this.bJSPrintLog = true;
-            this.decodeWorker.postMessage({'command': "printLog", 'data': downloadFlag});
+            this.decodeWorker.postMessage({ 'command': "printLog", 'data': downloadFlag });
         } else {
             this.bJSPrintLog = false;
-            this.decodeWorker.postMessage({'command': "printLog", 'data': downloadFlag});
+            this.decodeWorker.postMessage({ 'command': "printLog", 'data': downloadFlag });
         }
         return PLAYM4_OK;
 
@@ -918,9 +941,22 @@ export class JSPlayCtrl {
 
         return PLAYM4_OK;
     }
-    PlayM4_DownloadRTPData(downloadFlag)
-    {
-        this.downloadRTP=downloadFlag;
+    PlayM4_DownloadRTPData(downloadFlag) {
+        this.downloadRTP = downloadFlag;
+    }
+
+    PlayM4_SetVideoCropInfo(nFlag) {
+        if (nFlag == null || nFlag === undefined) {
+            return PLAYM4_PARA_OVER;
+        }
+
+        if (typeof (nFlag) !== "boolean") {
+            return PLAYM4_PARA_OVER;
+        }
+
+        this.bVideoCropInfo = nFlag;
+
+        return PLAYM4_OK;
     }
     /**
      * @synopsis 实时流、回放流时字节头开流
@@ -939,8 +975,7 @@ export class JSPlayCtrl {
             return PLAYM4_ORDER_ERROR;
         }
 
-        if(this.downloadRTP)
-        {
+        if (this.downloadRTP) {
             var apRTPHeadData = new Uint8Array(pFileHeadBuf.buffer);
             this.DownloadRTPData(apRTPHeadData);
             console.log("write 40 hik head");
@@ -959,7 +994,7 @@ export class JSPlayCtrl {
         this.bIsInput = false;
 
         // 往 Worker 送数据
-        this.decodeWorker.postMessage({'command': "SetStreamOpenMode", 'data': this.streamOpenMode});
+        this.decodeWorker.postMessage({ 'command': "SetStreamOpenMode", 'data': this.streamOpenMode });
         // 往 Worker 送数据
         this.decodeWorker.postMessage({
             'command': "OpenStream",
@@ -971,7 +1006,7 @@ export class JSPlayCtrl {
         this.bOpenStream = true;
         return PLAYM4_OK;
     }
-	
+
 
     /**
      * @synopsis 关闭流
@@ -988,7 +1023,7 @@ export class JSPlayCtrl {
         this.PlayM4_Stop();
 
         // 往 Worker 送数据
-        this.decodeWorker.postMessage({'command': "CloseStream"});
+        this.decodeWorker.postMessage({ 'command': "CloseStream" });
 
         if (this.oSuperRender !== null) {
             // 释放渲染资源
@@ -1047,7 +1082,7 @@ export class JSPlayCtrl {
     PlayM4_InputData(dataBuf, nSize) {
         //if (this.decodeWorker === null || this.bOpenStream === false) {
         //    return PLAYM4_ORDER_ERROR;
-       // }
+        // }
         //console.log(">>>JSPlaySDKInterface.js PlayM4_InputData nSize:"+nSize+",bIsGetYUV:"+this.bIsGetYUV+",bIsInput:"+this.bIsInput);
         var iInputBufLen = this.aInputDataBuffer.length;
 
@@ -1072,7 +1107,7 @@ export class JSPlayCtrl {
         }
         // 超出设置的缓存阈值，返回错误码（缓存溢出）
         if (iInputBufLen + nSize > this.iInputMaxBufSize) {
-           console.log("input over");
+            console.log("input over");
             //this.inputDataFun();
             if (this.bIsGetYUV) {
                 this.inputDataFun();
@@ -1088,11 +1123,10 @@ export class JSPlayCtrl {
         switch (this.streamOpenMode) {
             case STREAM_FILE:
                 tempBuf = new Uint8Array(dataBuf.buffer);
-                if(this.downloadRTP)
-                {
+                if (this.downloadRTP) {
                     this.DownloadRTPData(tempBuf);
                     this.rtpNum++;
-                    console.log("STREAM_FILE psNUm:"+this.rtpNum);
+                    console.log("STREAM_FILE psNUm:" + this.rtpNum);
                 }
                 this.aInputDataLens.push(nSize);
                 break;
@@ -1105,11 +1139,10 @@ export class JSPlayCtrl {
                 tempBuf = new Uint8Array(iDataLen);
                 tempBuf.set(a8, 0);
                 tempBuf.set(dataBuf, 4);
-                if(this.downloadRTP)
-                {
+                if (this.downloadRTP) {
                     this.DownloadRTPData(tempBuf);
                     this.rtpNum++;
-                    console.log("STREAM_REALTIME rtpNUm:"+this.rtpNum);
+                    console.log("STREAM_REALTIME rtpNUm:" + this.rtpNum);
                 }
                 a32 = null;
                 a8 = null;
@@ -1124,8 +1157,7 @@ export class JSPlayCtrl {
         for (var i = 0; i < iDataLen; i++) {
             this.aInputDataBuffer[iInputBufLen + i] = tempBuf[i];
         }
-        if((!this.bPlay&&!this.bOnlyPlaySound) || this.decodeWorker === null || this.bOpenStream === false)
-        {
+        if ((!this.bPlay && !this.bOnlyPlaySound) || this.decodeWorker === null || this.bOpenStream === false) {
             return PLAYM4_OK;
         }
         tempBuf = null;
@@ -1148,8 +1180,7 @@ export class JSPlayCtrl {
         return PLAYM4_OK;
     }
 
-    DownloadRTPData(rtpData)
-    {
+    DownloadRTPData(rtpData) {
         if (this.bWriteRTPData) {
 
             var bufferPackage = new Uint8Array(rtpData);
@@ -1161,14 +1192,14 @@ export class JSPlayCtrl {
             bufferPackage = null;
         }
         if (this.bWriteRTPData && this.iRTPDataSize >= WRITE_RTP_NUM) {
-            console.log("download"+WRITE_RTP_NUM+"RTPdata");
+            console.log("download" + WRITE_RTP_NUM + "RTPdata");
             var RTPbuffer = new Uint8Array(this.aRTPDataBuffer);
             this.downloadFile(RTPbuffer, "RTP.data");
             this.aRTPDataBuffer.splice(0, this.aRTPDataBuffer.length);//清空YUV缓存
             //this.bWriteRTPData = false; 应注释，修复再次调用无法下载数据的问题
             this.iRTPDataSize = 0;
-            this.rtpNum=0;
-            this.downloadRTP=false;
+            this.rtpNum = 0;
+            this.downloadRTP = false;
             RTPbuffer = null;
         }
     }
@@ -1195,7 +1226,7 @@ export class JSPlayCtrl {
             // 往 Worker 送数据
             this.decodeWorker.postMessage({
                 'command': "OnlyPlaySound"
-            }); 
+            });
             this.sCanvasId = null;
         } else {
             if (typeof (canvasID) !== "string") {
@@ -1208,7 +1239,7 @@ export class JSPlayCtrl {
                 this.bPause = false;
                 this.draw();
             }
-            
+
             if (this.bPlay) {
                 return PLAYM4_OK;
             }
@@ -1229,7 +1260,7 @@ export class JSPlayCtrl {
             this.bOnebyOne = false;
 
             // 关闭声音
-           // this.bPlaySound = false;
+            // this.bPlaySound = false;
             this.bPlayRateChange = false;
             this.bOnlyPlaySound = false;
             this.draw();
@@ -1243,7 +1274,7 @@ export class JSPlayCtrl {
                 return PLAYM4_CREATE_RENDERER_ERROR;
             }
         }
-	    this.decodeWorker.postMessage({
+        this.decodeWorker.postMessage({
             'command': "Play"
         });
         //console.log(">>>>>>>>> PlayM4_Play 3 nSysTime:" + (new Date().getMonth()+1) + "-" + new Date().getDate() + " " + new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds() + "." + new Date().getMilliseconds());
@@ -1280,7 +1311,13 @@ export class JSPlayCtrl {
         this.bDisRect = false;
 
         // 画布置黑
-        this.oSuperRender.SR_DisplayFrameData(this.nWidth, this.nHeight, null);
+        // if (this.bVideoCropInfo) {
+        //     this.oSuperRender.SR_DisplayFrameData(this.nWidth, this.nHeight, null, this.nWidth - this.nSPSCropLeft - this.nSPSCropRight, this.nHeight - this.nSPSCropTop - this.nSPSCropBottom);
+        // }
+        // else {
+        //     this.oSuperRender.SR_DisplayFrameData(this.nWidth, this.nHeight, null, this.nWidth, this.nHeight);
+        // }
+        
         // let oldCanvas = document.getElementById(this.sCanvasId);
         // if (oldCanvas) {
         //     this.clonedCanvas = oldCanvas.cloneNode(true); // 克隆节点
@@ -1315,7 +1352,7 @@ export class JSPlayCtrl {
         this.iInputDataLen = nPlayRate * BUFFER_INPUT_SIZE;
         this.decodeWorker.postMessage({
             'command': "PlayRate",
-            'playRate':nPlayRate
+            'playRate': nPlayRate
         });
 
         return PLAYM4_OK;
@@ -1340,8 +1377,8 @@ export class JSPlayCtrl {
         if (this.bOnebyOne) {
             return PLAYM4_ORDER_ERROR;
         }
-		
-		if (this.bPause == pause) {
+
+        if (this.bPause == pause) {
             return PLAYM4_ORDER_ERROR;
         }
 
@@ -1433,10 +1470,9 @@ export class JSPlayCtrl {
         });
         // 设置当前窗口号
         this.audioRenderer.SetWndNum(iWndNum);
-		if(this.Volume !== 0)
-		{
-			this.audioRenderer.SetVolume(this.Volume);
-		}
+        if (this.Volume !== 0) {
+            this.audioRenderer.SetVolume(this.Volume);
+        }
         this.audioRenderer.oAudioContext.resume();
         this.bPlaySound = true;
         return PLAYM4_OK;
@@ -1532,7 +1568,7 @@ export class JSPlayCtrl {
      * @returns 状态码
      */
     PlayM4_SetDecodeFrameType(nFrameType) {
-        console.log("PlayM4_SetDecodeFrameType nFrameType:"+nFrameType);
+        console.log("PlayM4_SetDecodeFrameType nFrameType:" + nFrameType);
         if (this.decodeWorker == null || this.oSuperRender == null) {
             return PLAYM4_ORDER_ERROR;
         }
@@ -1542,12 +1578,12 @@ export class JSPlayCtrl {
         }
 
         if (this.bJSPrintLog) {
-            console.log(">>>JS PlayM4_SetDecodeFrameType :"+nFrameType);
+            console.log(">>>JS PlayM4_SetDecodeFrameType :" + nFrameType);
         }
 
         this.nDecFrameType = nFrameType;
-            // 往 Worker 送数据
-        this.decodeWorker.postMessage({'command': "SetDecodeFrameType", 'data': nFrameType});
+        // 往 Worker 送数据
+        this.decodeWorker.postMessage({ 'command': "SetDecodeFrameType", 'data': nFrameType });
 
         return PLAYM4_OK;
     }
@@ -1569,7 +1605,7 @@ export class JSPlayCtrl {
         }
 
         // 往 Worker 送数据
-        this.decodeWorker.postMessage({'command': "SetIFrameDecInterval", 'data': nInterval});
+        this.decodeWorker.postMessage({ 'command': "SetIFrameDecInterval", 'data': nInterval });
 
         return PLAYM4_OK;
     }
@@ -1587,7 +1623,7 @@ export class JSPlayCtrl {
         }
 
         // 往 Worker 送数据
-        this.decodeWorker.postMessage({'command': "SetLostFrameMode", 'data': nLostMode});
+        this.decodeWorker.postMessage({ 'command': "SetLostFrameMode", 'data': nLostMode });
 
         return PLAYM4_OK;
     }
@@ -1626,7 +1662,7 @@ export class JSPlayCtrl {
                     diplayRect.bottom < 0) {
                     return PLAYM4_PARA_OVER;
                 }
-				
+
                 var iLeft = diplayRect.left;
                 var iRight = diplayRect.right;
                 var iTop = diplayRect.top;
@@ -1676,7 +1712,7 @@ export class JSPlayCtrl {
                 this.iRatio_x = this.iCanvasWidth / nCropWidth;
                 this.iRatio_y = this.iCanvasHeight / nCropHeight;
 
-              //  this.iZoomNum++;
+                //  this.iZoomNum++;
             } else {
                 return PLAYM4_PARA_OVER;
             }
@@ -1689,8 +1725,13 @@ export class JSPlayCtrl {
 
         // 如果暂停、单帧、快慢放情况，电子放大后需要刷新一帧
         if (this.bPause || this.bOnebyOne || this.bPlayRateChange) {
-            this.oSuperRender.SR_DisplayFrameData(this.nWidth, this.nHeight,
-                (new Uint8Array(this.aDisplayBuf)));
+            if (this.bVideoCropInfo) {
+                this.oSuperRender.SR_DisplayFrameData(this.nWidth, this.nHeight,
+                    (new Uint8Array(this.aDisplayBuf)), this.nWidth - this.nSPSCropLeft - this.nSPSCropRight, this.nHeight - this.nSPSCropTop - this.nSPSCropBottom);
+            }
+            else {
+                this.oSuperRender.SR_DisplayFrameData(this.nWidth, this.nHeight, (new Uint8Array(this.aDisplayBuf)), this.nWidth, this.nHeight);
+            }
         }
 
         return PLAYM4_OK;
@@ -1734,13 +1775,13 @@ export class JSPlayCtrl {
             return PLAYM4_ORDER_ERROR;
         }
 
-		//增加volume === ""兼容框内容什么都不填的情况
+        //增加volume === ""兼容框内容什么都不填的情况
         if (volume < 0 || volume > 100 || volume === "") {
             return PLAYM4_PARA_OVER;
         }
-		//保存音量
-		this.Volume = volume;
-		
+        //保存音量
+        this.Volume = volume;
+
         this.audioRenderer.SetVolume(volume);
 
         return PLAYM4_OK;
@@ -1767,7 +1808,7 @@ export class JSPlayCtrl {
             if (volume === null) {
                 return PLAYM4_GET_VOLUME_ERROR;
             } else {
-				//修改逻辑解决设置获取音量不一致的问题
+                //修改逻辑解决设置获取音量不一致的问题
                 callBack(volume);
 
                 return PLAYM4_OK;
@@ -1821,7 +1862,7 @@ export class JSPlayCtrl {
      * @returns 状态码
      */
     PlayM4_GetSdkVersion() {
-        return "07040001";
+        return "07040005";
     }
 
     /**
@@ -1830,7 +1871,7 @@ export class JSPlayCtrl {
      * @returns 状态码
      */
     PlayM4_GetBuildDate() {
-        return "20220624";
+        return "20230303";
     }
 
     /**
@@ -1850,7 +1891,7 @@ export class JSPlayCtrl {
     PlayM4_SetInputBufSize(iInputBufSize) {
         if (iInputBufSize > 0) {
             this.iInputMaxBufSize = iInputBufSize;
-            console.log(">>JSBufferSize SetInputBufSize:"+this.iInputMaxBufSize);
+            console.log(">>JSBufferSize SetInputBufSize:" + this.iInputMaxBufSize);
             return PLAYM4_OK;
         } else {
             return PLAYM4_PARA_OVER;
@@ -1926,7 +1967,12 @@ export class JSPlayCtrl {
         }
 
         // 画布置黑
-        this.oSuperRender.SR_DisplayFrameData(this.nWidth, this.nHeight, null);
+        if (this.bVideoCropInfo) {
+            this.oSuperRender.SR_DisplayFrameData(this.nWidth, this.nHeight, null, this.nWidth - this.nSPSCropLeft - this.nSPSCropRight, this.nHeight - this.nSPSCropTop - this.nSPSCropBottom);
+        }
+        else {
+            this.oSuperRender.SR_DisplayFrameData(this.nWidth, this.nHeight, null, this.nWidth, this.nHeight);
+        }
 
         return PLAYM4_OK;
     }
@@ -1958,13 +2004,28 @@ export class JSPlayCtrl {
     }
 
     /**
+     * @synopsis 设置实时信息回调
+     *
+     * @returns 状态码
+     */
+    PlayM4_SetRunTimeInfoCallBackEx(moduleType, callBack) {
+        this.runtimeInfoCBFun = callBack;
+        // 往 Worker 送数据
+        this.decodeWorker.postMessage({
+            'command': "SetRunTimeInfoCB",
+            'nModuleType': moduleType,
+        });
+        return PLAYM4_OK;
+    }
+
+    /**
      * @synopsis 设置编码层断帧
      *
      * @returns 错误码
      */
-    PlayM4_SetDemuxModel(nIdemuxType,bTrue) {
-         // 往 Worker 送数据
-         this.decodeWorker.postMessage({
+    PlayM4_SetDemuxModel(nIdemuxType, bTrue) {
+        // 往 Worker 送数据
+        this.decodeWorker.postMessage({
             'command': "SetDemuxModel",
             'nIdemuxType': nIdemuxType,
             'bTrue': bTrue
@@ -1980,11 +2041,11 @@ export class JSPlayCtrl {
     PlayM4_SkipErrorData(bSkip) {
         // 往 Worker 送数据
         this.decodeWorker.postMessage({
-           'command': "SkipErrorData",
-           'bSkip': bSkip
-       });
-       return PLAYM4_OK;
-   }
+            'command': "SkipErrorData",
+            'bSkip': bSkip
+        });
+        return PLAYM4_OK;
+    }
 
     /**
      * @synopsis 设置解码差错隐藏等级
@@ -1994,40 +2055,66 @@ export class JSPlayCtrl {
     PlayM4_SetDecodeERC(nLevel) {
         // 往 Worker 送数据
         this.decodeWorker.postMessage({
-           'command': "SetDecodeERC",
-           'nLevel': nLevel
-       });
-       return PLAYM4_OK;
-   }
+            'command': "SetDecodeERC",
+            'nLevel': nLevel
+        });
+        return PLAYM4_OK;
+    }
 
     /**
      * @synopsis 设置降噪等级
      *
      * @returns 错误码
      */
-    PlayM4_SetANRParam(nEnable,nANRLevel) {
+    PlayM4_SetANRParam(nEnable, nANRLevel) {
         // 往 Worker 送数据
         this.decodeWorker.postMessage({
-           'command': "SetANRParam",
-           'nEnable': nEnable,
-           'nANRLevel':nANRLevel,
-       });
-       return PLAYM4_OK;
-   }
-     /**
-     * @synopsis 设置重采样
-     *
-     * @returns 错误码
-     */
-    PlayM4_SetResampleValue(nEnable,resampleValue) {
+            'command': "SetANRParam",
+            'nEnable': nEnable,
+            'nANRLevel': nANRLevel,
+        });
+        return PLAYM4_OK;
+    }
+    /**
+    * @synopsis 设置重采样
+    *
+    * @returns 错误码
+    */
+    PlayM4_SetResampleValue(nEnable, resampleValue) {
         // 往 Worker 送数据
         this.decodeWorker.postMessage({
-           'command': "SetResampleValue",
-           'nEnable': nEnable,
-           'resampleValue':resampleValue,
-       });
-       return PLAYM4_OK;
-   }
+            'command': "SetResampleValue",
+            'nEnable': nEnable,
+            'resampleValue': resampleValue,
+        });
+        return PLAYM4_OK;
+    }
+    PlayM4_SetGlobalBaseTime(year, month, day, hour, min, sec, ms) {
+        // 往 Worker 送数据
+        if (year < 2000 || year > 3000) {
+            return PLAYM4_SYS_NOT_SUPPORT;
+        }
+
+        if (month < 1 || month > 12) {
+            return PLAYM4_SYS_NOT_SUPPORT;
+        }
+
+        if (year < 0 || month < 0 || day < 0 || hour < 0 || min < 0 || sec < 0 || ms < 0) {
+            return PLAYM4_SYS_NOT_SUPPORT;
+        }
+
+        this.decodeWorker.postMessage({
+            'command': "SetGlobalBaseTime",
+            'year': year,
+            'month': month,
+            'day': day,
+            'hour': hour,
+            'min': min,
+            'sec': sec,
+            'ms': ms,
+        });
+        return PLAYM4_OK;
+    }
     /**
      * @synopsis 下载文件
      *

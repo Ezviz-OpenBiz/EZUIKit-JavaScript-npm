@@ -30,7 +30,7 @@ var AudioRenderer = function () {
         AudioRenderer.unique = this;
 
         this.oAudioContext = null;
-        this.currentVolume = 0.8; // 初始音量
+        this.currentVolume = 80; // 初始音量
         this.bSetVolume = false;
         this.gainNode = null;
         this.iWndNum = -1; // 窗口号
@@ -125,7 +125,7 @@ var AudioRenderer = function () {
                     self.bSetVolume = false;
                 }
 
-                self.gainNode.gain.value = self.currentVolume;
+                self.gainNode.gain.value = self.currentVolume/100;
                 // self.currentVolume = self.gainNode.gain.value;
                 self.gainNode.connect(self.oAudioContext.destination);
 
@@ -174,7 +174,7 @@ var AudioRenderer = function () {
             this.currentVolume = iVolume;
 
             // 储存当前窗口设置音量值
-            this.mVolumes.set(this.iWndNum, iVolume);
+            this.mVolumes.set(this.iWndNum, this.currentVolume);
             return true;
         }
 
@@ -194,7 +194,7 @@ var AudioRenderer = function () {
             // 获取当前窗口设置音量值
             var iVolume = this.mVolumes.get(iWndNum);
             if (iVolume == undefined) {
-                iVolume = 0.8; // 默认音量
+                iVolume = 80; // 默认音量
             }
             this.currentVolume = iVolume;
 
@@ -213,13 +213,13 @@ var AudioRenderer = function () {
             // 获取当前窗口设置音量值
             var iVolume = this.mVolumes.get(this.iWndNum);
             if (iVolume == undefined) {
-                iVolume = 0.8; // 默认音量
+                iVolume = 80; // 默认音量
             }
 
             return iVolume;
         }
     }]);
-window.AudioRenderer = AudioRenderer;
+    window.AudioRenderer = AudioRenderer;
     return AudioRenderer;
 }();
 //# sourceMappingURL=AudioRenderer.js.map

@@ -219,7 +219,7 @@ var AudioRenderer = function () {
             return iVolume;
         }
     }]);
-
+    window.AudioRenderer = AudioRenderer;
     return AudioRenderer;
 }();
 //# sourceMappingURL=AudioRenderer.js.map

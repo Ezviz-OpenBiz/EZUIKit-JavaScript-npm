@@ -38,7 +38,8 @@ var fragmentYUVShader = [
     ].join('\n');
 
 (function (root, factory) {
-    root.SuperRender = factory();
+    // root.SuperRender = factory();
+    window.SuperRender = factory();
 }(this, function () {
     
     function RenderManager(canvas) {
@@ -270,14 +271,14 @@ var fragmentYUVShader = [
 			
 			var cbDataLength = width/2 * height/2;
 			var cbData = i420Data.subarray(width*height, width*height + cbDataLength);
-			gl.activeTexture(gl.TEXTURE1);
-			gl.bindTexture(gl.TEXTURE_2D, uTextureRef);
+			gl.activeTexture(gl.TEXTURE2);
+			gl.bindTexture(gl.TEXTURE_2D, vTextureRef);
 			gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, width/2, height/2, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, cbData);
 			
 			var crDataLength = cbDataLength;
 			var crData = i420Data.subarray(width*height + width*height/4, width*height + width*height/4 + crDataLength);
-			gl.activeTexture(gl.TEXTURE2);
-			gl.bindTexture(gl.TEXTURE_2D, vTextureRef);
+			gl.activeTexture(gl.TEXTURE1);
+			gl.bindTexture(gl.TEXTURE_2D, uTextureRef);
 			gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, width/2, height/2, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, crData);
 			
 		}
@@ -310,8 +311,8 @@ var fragmentYUVShader = [
 					cbData[i*dWidth/2 + j] = cbSonData[j];
 				}
 			}
-			gl.activeTexture(gl.TEXTURE1);
-			gl.bindTexture(gl.TEXTURE_2D, uTextureRef);
+			gl.activeTexture(gl.TEXTURE2);
+			gl.bindTexture(gl.TEXTURE_2D, vTextureRef);
 			gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, dWidth/2, dHeight/2, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, cbData);
 			cbData=null;
 			cbSonData=null;
@@ -325,8 +326,8 @@ var fragmentYUVShader = [
 					crData[i*dWidth/2 + j] = crSonData[j];
 				}
 			}
-			gl.activeTexture(gl.TEXTURE2);
-			gl.bindTexture(gl.TEXTURE_2D, vTextureRef);
+			gl.activeTexture(gl.TEXTURE1);
+			gl.bindTexture(gl.TEXTURE_2D, uTextureRef);
 			gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, dWidth/2, dHeight/2, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, crData);
 			crData=null;
 			crSonData=null;
@@ -388,6 +389,7 @@ var fragmentYUVShader = [
         gl.deleteTexture(yTextureRef);
         gl.deleteTexture(uTextureRef);
         gl.deleteTexture(vTextureRef);
+		//gl.getExtension('WEBGL_lose_context').loseContext();
     };
 
     return RenderManager;

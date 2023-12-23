@@ -38,7 +38,8 @@ var fragmentYUVShader = [
     ].join('\n');
 
 (function (root, factory) {
-    root.SuperRender = factory();
+    // root.SuperRender = factory();
+    window.SuperRender = factory();
 }(this, function () {
     
     function RenderManager(canvas) {

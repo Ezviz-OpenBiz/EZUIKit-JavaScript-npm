@@ -79,10 +79,11 @@
   position: fixed;
   width: 100%;
   background: rgba(0,0,0,0.40);
-  height: 100vh;
+  /* height: 100vh; */
   top: 0;
   z-index: 1;
   left: 0;
+  bottom: 0;
 }
 
 .speed-select.mobile.expend {

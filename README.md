@@ -34,17 +34,22 @@ import EZUIKit from 'ezuikit-js';
 
 ## 播放器初始化
 ### 直播
-```
+```js
     var player = new EZUIKit.EZUIKitPlayer({
       id: 'video-container', // 视频容器ID
       accessToken: 'at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz',
       url: 'ezopen://open.ys7.com/G39444019/1.live',
       width: 600,
       height: 400,
+      handleError: (err) => {
+        if (err.type === "handleRunTimeInfoError" && err.data.nErrorCode === 5) {
+          // 加密设备密码错误
+        }
+      },
     })
 ```
 ### 回放
-```
+```js
     var player = new EZUIKit.EZUIKitPlayer({
       id: 'video-container', // 视频容器ID
       width: 600,
@@ -117,7 +122,8 @@ import EZUIKit from 'ezuikit-js';
 
 #### 直播
 ##### 标清
-ezopen://open.ys7.com/${设备序列号}/{通道号}.live<br/>
+ezopen://
+/${设备序列号}/{通道号}.live<br/>
 ##### 高清
 ezopen://open.ys7.com/${设备序列号}/{通道号}.hd.live<br/>
 
@@ -128,7 +134,7 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.rec?begin=yyyyMMddhhmmss
 ##### 云存储回放
 初始化参数 url值为：<br/>
 ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhmmss
-视频ezopen协议播放地址 详见：<a href="http://open.ys7.com/doc/zh/readme/ezopen.html" target="_blank">ezopen协议</a>	</td><td>Y</td></tr>
+视频ezopen协议播放地址 详见：<a href="https://open.ys7.com/help/23" target="_blank">ezopen协议</a>	</td><td>Y</td></tr>
 <tr><td>audio</td><td>boolean</td><td>是否默认开启声音 true：打开（默认） false：关闭	</td><td>N</td></tr>
 <tr><td>width</td><td>int</td><td>视频宽度，默认值为容器容器DOM宽度	</td><td>Y</td></tr>
 <tr><td>height</td><td>int</td><td>视频高度，默认值为容器容器DOM高度</td><td>Y</td></tr>
@@ -281,6 +287,7 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 </td><td>N</td></tr>
 <tr><td>plugin</td><td>String</td><td>按需加载插件，可选值： talk：对讲，示例：plugin:["talk"] </td><td>N</td></tr>
 <tr><td>handleSuccess</td><td>function</td><td>自动播放成功回调</td><td>N</td></tr>
+<tr><td>handleError</td><td>function</td><td>错误回调</td><td>N</td></tr>
 <tr><td>seekFrequency </td><td>function</td><td>为避免频繁拖动播放异常，可设置模板回放时间轴拖动防抖间隔，默认值为2000（2秒），可取2000（2秒），3000（3秒），4000（4秒），5000（5秒）</td><td>N</td></tr>
 </table>
 
@@ -463,6 +470,21 @@ template参数说明
 
 ```
   player.reSize(width, height);
+```
+
+#### 鱼眼矫正（软解）
+
+```js
+// {1, 0}  壁装鱼眼 不矫正
+// {1, 1}  壁装360°全景
+// {1, 2}  壁装4分屏
+// {1, 4}  壁装广角
+// {3, 0}  顶装鱼眼 不矫正
+// {3, 1}  顶装360°全景
+// {3, 4}  顶装4分屏
+// {3, 5}  顶装柱状
+// 顶装4分屏
+player.setFECCorrectType({place: 3 , type：4}, "cavnas1,canvas2,canvas3") // cavnas1,canvas2,canvas3 是分屏是需要的
 ```
 
 ### 使用示例

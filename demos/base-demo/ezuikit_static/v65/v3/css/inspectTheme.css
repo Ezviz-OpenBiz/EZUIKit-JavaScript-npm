@@ -1,0 +1,354 @@
+.BMap_noprint button[title="倾斜"] {
+  display: none;
+}
+.BMap_noprint button[title="恢复"] {
+  display: none;
+}
+/* .anchorBL{
+  display:none;  
+}  */
+.BMap_cpyCtrl {
+  display: none;
+}
+
+.inspect-event-item {
+  padding-left: 12.5px;
+  position: relative;
+  border-left: 1px solid #d9d9d9;
+  margin-left: 20.5px;
+  padding-bottom: 16px;
+  color: #595959;
+}
+
+.inspect-event-item:last-child {
+  border-left: 1px solid transparent;
+}
+
+.inspect-event-item-header-wrap {
+  margin-top: -4px;
+}
+.inspect-event-item:first-child .inspect-event-item-header-wrap{
+  padding-top: 0;
+}
+
+.inspect-event-item-header {
+  width: 240px;
+  height: 32px;
+  background: #F5F5F5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.inspect-event-item-header-left {
+  display: flex;
+  align-items: center;
+  padding-left: 9px;
+}
+
+.inspect-event-item-header-right, .inspect-event-item-body-info-opr {
+  padding-right: 8px;
+}
+.inspect-event-item-body-info-opr-icon{
+  color: #595959;
+  cursor: pointer;
+}
+.inspect-event-item-body-info-opr-icon:hover{
+  color: #407AFF;
+}
+.inspect-event-item-header-toggle {
+  width: 16px;
+  height: 32px;
+  cursor: pointer;
+  display: block;
+  padding: 8px 0;
+  box-sizing: border-box;
+}
+
+.inspect-event-item-time {
+  padding-left: 9px;
+}
+
+.inspect-event-item-status-wrap {
+  position: absolute;
+  height: 28px;
+  background: #fff;
+  top: 4px;
+  left: -5.5px;
+}
+.inspect-event-item:first-child .inspect-event-item-status-wrap {
+  top: 0;
+  padding-top: 5px;
+}
+
+.inspect-event-item-status {
+  width: 10px;
+  height: 10px;
+  background: #407AFF;
+  border-radius: 100%;
+  display: inline-block;
+}
+
+.storage .inspect-event-item-status {
+  background: #FAAD14;
+}
+
+.storage-error .inspect-event-item-status{
+  background: #FF4D4F;
+}
+.storage-error .inspect-event-item-header-left,
+.storage-error .inspect-event-item-time {
+  color: #FF4D4F;
+}
+
+.inspect-event-item-time {
+  font-size: 12px;
+  color: #262626;
+}
+
+.inspect-event-item-body {
+  width: 240px;
+  background: #FAFAFA;
+  padding-top:  8px;
+ 
+}
+.inspect-event-item-img {
+  width: 224px;
+  height: 126px;
+  margin: 0 8px;
+  display: block;
+  cursor: pointer;
+}
+
+.inspect-event-item-body-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inspect-event-item-body-info-tag {
+  max-width: 140px;
+  background: #FFF1F0;
+  border-radius: 2px;
+  text-align: center;
+  margin: 8px;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inspect-event-item-body-info-tag-label{
+  font-size: 12px;
+  color: #FF4D4F;
+}
+
+
+.inspect-event-detail-wrap {
+  width: 0;
+  overflow: auto;
+  padding: 0;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 9;
+  background: #ffffff;
+  transition: width 0.15s ease 0s;
+}
+
+.inspect-event-detail-wrap.show {
+  width: 290px;
+}
+
+.inspectEventDetail-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 16px;
+}
+
+.inspectEventDetail-back {
+  fill: #595959;
+  cursor: pointer;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.inspectEventDetail-type {
+  height: 22px;
+  font-size: 14px;
+  color: #262626;
+  line-height: 22px;
+  font-weight: bold;
+}
+.inspectEventDetail-content {
+  padding: 0 16px 24px;
+  box-sizing: border-box;
+}
+
+.inspectEventDetail-content-info {
+  font-size: 14px;
+  color: #262626;
+  line-height: 22px;
+  overflow: hidden;
+}
+
+.inspectEventDetail-content-info-item-title {
+  margin: 24px 0 4px;
+}
+
+.inspectEventDetail-content-info-item-value {
+  color: #595959;
+}
+
+.inspectEventDetail-content-info-item-title-required:before {
+  display: inline-block;
+  margin-right: 4px;
+  color: #ff4d4f;
+  font-size: 14px;
+  font-family: SimSun,sans-serif;
+  line-height: 1;
+  content: "*";
+}
+
+.inspectEventDetail-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #fff;
+  padding: 16px 0;
+  right: 0;
+  text-align: center;
+}
+
+.inspectEventDetail-footer-btn {
+  margin: 0 4px;
+}
+
+.inspectEventDetail-content-img-tips,
+.inspectEventDetail-content-video-tips {
+  font-size: 14px;
+  color: #407AFF;
+  line-height: 22px;
+  margin: 0 0 8px;
+}
+
+.inspectEventDetail-content-img-detail,
+.inspectEventDetail-content-video-detail {
+  display: block;
+  width: 224px;
+  height: 126px;
+  cursor: pointer;
+}
+
+.video-stroage-exceptional-status-tips-wrap {
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  text-align: center;
+  cursor: default;
+}
+
+.video-stroage-exceptional-status-icon {
+  font-size: 16px;
+  padding: 40px 0 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.video-stroage-exceptional-status-tips-error .video-stroage-exceptional-status-icon{
+  padding: 40px 0 8px;
+}
+
+.video-stroage-exceptional-status-tips {
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.inspectEventDetail-content-video-timer {
+  display: flex;
+  align-items: center;
+}
+
+.video-recording-time-wrap {
+  height: 24px;
+  background: #FF5C5C;
+  border-radius: 12px;
+  padding: 0 24px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+.video-recording-time {
+  font-size: 14px;
+  color: #FFFFFF;
+  letter-spacing: 0;
+  font-weight: 400;
+  margin-left: 8px;
+}
+
+.inspectEventDetail-stop-btn {
+  margin-left: 12px;
+}
+
+.inspectEventDetail-delete-confirm,
+.inspectEventDetail-back-confirm {
+  width: 288px;
+  padding: 12px 8px;
+  box-sizing: border-box;
+}
+.inspectEventDetail-delete-confirm-title,
+.inspectEventDetail-back-confirm-title {
+  display: flex;
+}
+
+.inspectEventDetail-delete-confirm-title-label,
+.inspectEventDetail-back-confirm-title-label {
+  font-size: 16px;
+  color: #262626;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+.inspectEventDetail-delete-confirm-title svg,
+.inspectEventDetail-back-confirm-title svg {
+  color: #FAAD14 ;
+  margin-right: 16px;
+}
+.inspectEventDetail-delete-confirm-btns,
+.inspectEventDetail-back-confirm-btns {
+  margin: 24px 0 0;
+  text-align: right;
+}
+
+.inspectEventDetail-delete-confirm-btns .ezuikit-btn,
+.inspectEventDetail-back-confirm-btns .ezuikit-btn {
+  margin:  0 4px;
+}
+
+/* .inspect-event-box及其子元素滚动条效果设置 */
+
+
+.inspect-event-box::-webkit-scrollbar,
+.inspect-event-box *::-webkit-scrollbar {
+  width: 10px
+}
+
+.inspect-event-box::-webkit-scrollbar-thumb,
+.inspect-event-box *::-webkit-scrollbar-thumb {
+  border-radius: 10px!important;
+  -webkit-box-shadow: inset 0 0 5px #8C8C8C!important;
+  background: #8C8C8C!important;
+  border: 3px solid #fff!important
+}
+
+.inspect-event-box::-webkit-scrollbar-track,
+.inspect-event-box *::-webkit-scrollbar-track {
+  border-radius: 0
+}
