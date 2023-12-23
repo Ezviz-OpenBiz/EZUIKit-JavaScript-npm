@@ -144,8 +144,7 @@ import EZUIKit from 'ezuikit-js';
 
 #### 直播
 ##### 标清
-ezopen://
-/${设备序列号}/{通道号}.live<br/>
+ezopen://open.ys7.com/${设备序列号}/{通道号}.live<br/>
 ##### 高清
 ezopen://open.ys7.com/${设备序列号}/{通道号}.hd.live<br/>
 
