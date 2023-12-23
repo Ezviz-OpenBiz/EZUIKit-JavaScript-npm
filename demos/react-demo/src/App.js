@@ -22,7 +22,7 @@ class App extends React.Component {
       id: "video-container", // 视频容器ID
       accessToken:
         "at.cp9wsiqc70deya3kdqfxo0ce8ti17a4q-1ov3pgv8fz-19skivn-slzpkwzpb",
-      url: "ezopen://open.ys7.com/AA2615287/1.hd.live",
+      url: "ezopen://open.ys7.com/XX2615287/1.hd.live",
       // simple - 极简版; pcLive-pc直播；pcRec-pc回放；mobileLive-移动端直播；mobileRec-移动端回放;security - 安防版;voice-语音版;
       //template: 'simple',
       plugin: ["talk"], // 加载插件，talk-对讲
@@ -30,7 +30,7 @@ class App extends React.Component {
       height: 400
     });
     // });
-    // window.player = this.player;
+    window.player = this.player;
   }
   play = () => {
     var playPromise = this.player.play();
