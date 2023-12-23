@@ -1,5 +1,6 @@
 /demos/react-demo/node_modules
 /demos/vue-demo/node_modules
+/demos/vue3-demo/node_modules
 demos/react-demo/build.zip
 demos/react-demo/build/asset-manifest.json
 demos/react-demo/build/favicon.ico
