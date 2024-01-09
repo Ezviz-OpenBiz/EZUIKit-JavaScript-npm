@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "ezuikit-js": "^7.7.10-alpha.1",
+    "ezuikit-js": "^7.7.10",
     "vue": "^3.2.41"
   },
   "devDependencies": {
