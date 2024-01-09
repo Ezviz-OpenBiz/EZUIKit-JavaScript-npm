@@ -11,7 +11,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      # - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       # # 设置 pnpm
       # - name: Setup PNPM
       #   uses: pnpm/action-setup@v2
