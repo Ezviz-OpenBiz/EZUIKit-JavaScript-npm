@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "7.7.10",
+  "version": "7.7.10-alpha.2",
   "description": "ezuikit javascript for npm",
   "main": "ezuikit.js",
   "scripts": {},
@@ -11,6 +11,10 @@
   "keywords": [
     "video",
     "ezuikit"
+  ],
+  "files": [
+    "ezuikit.js",
+    "CHANGELOG.md"
   ],
   "license": "ISC",
   "bugs": {

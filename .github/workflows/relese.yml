@@ -1,0 +1,39 @@
+# 整个流程的名字
+name: Release
+# 触发时机，在 tag 被 push 操作触发
+on:
+  push:
+    tags:
+      - 'v*'
+# 任务，定义个changelog 的任务
+jobs:
+  changelog:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # 设置 pnpm
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: ^8.0
+      # 设置 Node
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      # 安装依赖
+      - name: Install dependencies
+        run: pnpm install
+      # # 打包
+      # - name: Build Packages
+      #   run: pnpm run build
+      # 发布npm 发布前执行了prepublishOnly
+      - name: Publish npm
+        run: npm publish
+        env:
+          # 这里需要几个 Token 变量
+          # NPM_TOKEN 需要在 npm 网站生成
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
