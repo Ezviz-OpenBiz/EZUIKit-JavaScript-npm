@@ -4572,10 +4572,10 @@ express@^4.17.3:
     utils-merge "1.0.1"
     vary "~1.1.2"
 
-ezuikit-js@^7.7.8:
-  version "7.7.8"
-  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-7.7.8.tgz#a864f007501acc320a213315c58e726675cd444f"
-  integrity sha512-DfcPxUhLgchkQU5+0WllD3QghAJYG9mCybCCs0znLoSnMupup6WB1+wjrxPtpt49praQDuMrGoBVe0Mtl1z9/w==
+ezuikit-js@^7.7.10-alpha.2:
+  version "7.7.10-alpha.2"
+  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-7.7.10-alpha.2.tgz#f58fee14f82d2e1e02be8e9030505e1a2b83cd3d"
+  integrity sha512-qQBW1TaLWo3zdIsYLxIvoj7jMBt9Izg5+k8TNf5+1TzZxF7sSm/AntMESbOYvw0G4M8MrH0BH5gS/XNkE6CWgQ==
 
 fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"
