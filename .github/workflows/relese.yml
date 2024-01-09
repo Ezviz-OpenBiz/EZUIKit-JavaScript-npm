@@ -18,15 +18,15 @@ jobs:
         with:
           version: 8
       # 设置 Node
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: pnpm
-          registry-url: https://registry.npmjs.org
+      # - name: Setup Node
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 18
+      #     cache: pnpm
+      #     registry-url: https://registry.npmjs.org
       # 安装依赖
-      - name: Install dependencies
-        run: pnpm install
+      # - name: Install dependencies
+      #   run: pnpm install
       # # 打包
       # - name: Build Packages
       #   run: pnpm run build
