@@ -94,9 +94,13 @@ const destroy = () => {
   destroyPromise.then((data: any) => {
     console.log("promise 获取 数据", data);
   });
+  player = null;
 };
 
-onMounted(() => {
+const init = () => {
+  if (player) {
+    destroy();
+  }
   console.group("mounted 组件挂载完毕状态===============》");
   fetch("https://open.ys7.com/jssdk/ezopen/demo/token")
     .then((response) => response.json())
@@ -106,14 +110,18 @@ onMounted(() => {
         id: "video-container", // 视频容器ID
         accessToken: accessToken,
         url: "ezopen://open.ys7.com/G39444019/1.live",
-        // simple - 极简版; pcLive-pc直播；pcRec-pc回放；mobileLive-移动端直播；mobileRec-移动端回放;security - 安防版;voice-语音版;
-        //template: 'simple',
+        // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
+        // template: "simple",
         plugin: ["talk"], // 加载插件，talk-对讲
         width: 600,
-        height: 400,
+        height: 400
       });
       window.player = player;
     });
+};
+
+onMounted(() => {
+  init();
 });
 </script>
 
@@ -121,6 +129,7 @@ onMounted(() => {
   <div class="hello-ezuikit-js">
     <div id="video-container" style="width: 600px; height: 400px"></div>
     <div>
+      <button @click="init">init</button>
       <button @click="stop">stop</button>
       <button @click="play">play</button>
       <button @click="openSound">openSound</button>

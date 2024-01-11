@@ -308,10 +308,10 @@ estree-walker@^2.0.2:
   resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-2.0.2.tgz#52f010178c2a4c117a7757cfe942adb7d2da4cac"
   integrity sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==
 
-ezuikit-js@^7.7.10-alpha.1:
-  version "7.7.10-alpha.1"
-  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-7.7.10-alpha.1.tgz#04f9f108b141cbd33525453749385478e890b54c"
-  integrity sha512-7KEq4t54vlwQXihM/cCSocFXQ+fsT8M2Xx/lhHPh4VUp9NlLTWBt0TMgteWNLaxtinbFAnCbI+8ma7h2Srr+LA==
+ezuikit-js@^8.0.0-beta.0:
+  version "8.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.0.0-beta.0.tgz#3285091f3dbf5f29a422db6a66810056105e5ee0"
+  integrity sha512-VH3d8xO/HJhEyyiLF91/cSzmFND6SuCtrBVX2Sr8AyY9sxwy5ZSVu75/gITt9HJIAXh6qsGb4Vu9Fb7lD8wBVw==
 
 fsevents@~2.3.2:
   version "2.3.3"
