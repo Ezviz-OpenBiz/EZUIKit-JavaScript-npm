@@ -17,7 +17,6 @@
       <button onClick="play()">play</button>
       <button onClick="stop()">stop</button>
       <button onClick="getOSDTime()">getOSDTime</button>
-      <button onClick="getOSDTime2()">getOSDTime2</button>
       <button onClick="capturePicture()">capturePicture</button>
       <button onClick="openSound()">openSound</button>
       <button onClick="closeSound()">closeSound</button>
@@ -30,12 +29,12 @@
     <p style="font-style: italic;">播放多个视频，可初始化多个实例，参考：/demos/base-demo/multi-demo</p>
   </div>
   <script>
-    var playr;
+    var player;
     fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
       .then(response => response.json())
       .then(res => {
         var accessToken = res.data.accessToken;
-        playr = new EZUIKit.EZUIKitPlayer({
+        player = new EZUIKit.EZUIKitPlayer({
           id: 'video-container', // 视频容器ID
           accessToken: accessToken,
           url: 'ezopen://open.ys7.com/G39444019/1.rec',
@@ -45,70 +44,65 @@
         });
       });
     function fullScreen() {
-      var playPromise = playr.fullScreen();
+      var playPromise = player.fullScreen();
       playPromise.then((data) => {
         console.log("promise 获取 数据", data)
       })
     }
     function play() {
-      var playPromise = playr.play();
+      var playPromise = player.play();
       playPromise.then((data) => {
         console.log("promise 获取 数据", data)
       })
     }
     function stop() {
-      var stopPromise = playr.stop();
+      var stopPromise = player.stop();
       stopPromise.then((data) => {
         console.log("promise 获取 数据", data)
       })
     }
     function getOSDTime() {
-      var getOSDTimePromise = playr.getOSDTime();
+      var getOSDTimePromise = player.getOSDTime();
       getOSDTimePromise.then((data) => {
         console.log("promise 获取 数据", data)
       })
     }
-    function getOSDTime2() {
-      var getOSDTimePromise = playr2.getOSDTime();
-      getOSDTimePromise.then((data) => {
-        console.log("promise 获取 数据", data)
-      })
-    }
+
     function capturePicture() {
-      var capturePicturePromise = playr.capturePicture();
+      var capturePicturePromise = player.capturePicture();
       capturePicturePromise.then((data) => {
         console.log("promise 获取 数据", data)
       })
     }
     function openSound() {
-      var openSoundPromise = playr.openSound();
+      var openSoundPromise = player.openSound();
       openSoundPromise.then((data) => {
         console.log("promise 获取 数据", data)
       })
     }
     function closeSound() {
-      var closeSoundPromise = playr.closeSound();
+      var closeSoundPromise = player.closeSound();
       closeSoundPromise.then((data) => {
         console.log("promise 获取 数据", data)
       })
     }
     function startSave() {
-      var startSavePromise = playr.startSave();
+      var startSavePromise = player.startSave();
       startSavePromise.then((data) => {
         console.log("promise 获取 数据", data)
       })
     }
     function stopSave() {
-      var stopSavePromise = playr.stopSave();
+      var stopSavePromise = player.stopSave();
       stopSavePromise.then((data) => {
         console.log("promise 获取 数据", data)
       })
     }
     function ezopenStartTalk() {
-      playr.startTalk();
+      player.startTalk();
     }
     function ezopenStopTalk() {
-      playr.stopTalk();
+      player.stopTalk();
     }
   </script>
 </body>
