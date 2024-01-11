@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "7.7.10",
+  "version": "8.0.0-beta.0",
   "description": "ezuikit javascript for npm",
   "main": "ezuikit.js",
   "scripts": {},
@@ -14,7 +14,8 @@
   ],
   "files": [
     "ezuikit.js",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "ezuikit_static"
   ],
   "license": "ISC",
   "bugs": {

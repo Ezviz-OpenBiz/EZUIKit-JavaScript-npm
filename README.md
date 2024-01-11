@@ -159,6 +159,7 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhm
 <tr><td>audio</td><td>boolean</td><td>是否默认开启声音 true：打开（默认） false：关闭	</td><td>N</td></tr>
 <tr><td>width</td><td>int</td><td>视频宽度，默认值为容器容器DOM宽度	</td><td>Y</td></tr>
 <tr><td>height</td><td>int</td><td>视频高度，默认值为容器容器DOM高度</td><td>Y</td></tr>
+<tr><td>staticPath</td><td>string</td><td>设置静态资源地址, 自定义可以自行下载 `ezuikit_static`放置在自己的服务器下， 设置 {staticPath: "/ezuikit_static"} </td><td>N</td></tr>
 <tr><td>template</td><td>String</td><td>  
 
 
@@ -506,7 +507,7 @@ template参数说明
   player.reSize(width, height);
 ```
 
-#### 鱼眼矫正（软解）
+#### 鱼眼矫正（软解 开启`SharedArrayBuffer`）
 
 ```js
 // {1, 0}  壁装鱼眼 不矫正
