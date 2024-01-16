@@ -87,7 +87,8 @@ import EZUIKit from 'ezuikit-js';
 
 <b>测试播放地址：</b> ezopen://open.ys7.com/G39444019/1.live  
 
-你可以通过以下地址获取到测试accessToken <a href="https://open.ys7.com/jssdk/ezopen/demo/token" target="_blank">获取测试accessToken</a> 用来播放上述测试播放地址。 
+你可以通过以下地址获取到测试accessToken <a href="https://open.ys7.com/jssdk/ezopen/demo/token" target="_blank">获取测试accessToken</a> 用来播放上述测试播放地址。
+当前设备有可能下线或被移除了， 如果自己有设备优先使用自己的设备进行测试。
 
 #### 最佳实践tips
 
@@ -99,12 +100,12 @@ import EZUIKit from 'ezuikit-js';
 
 2. 视频解码库默认从开放平台远程拉取，你可以将解码库放到本地或者你的服务内，可以提升加载解码库速度。 
 
- > <b>使用本地解码库提升加载速度</b>  <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/localDecoder.html" target="_blank">本地解码库示例</a> 
+ > <b>使用本地解码库提升加载速度</b>  开发者需要自己设置静态资源文件地址， 参考 `staticPath`的配置
 
 ### 使用示例
 > 1. 快速创建视频播放页面  
 
-&emsp;&emsp;&emsp;&emsp;<b>基本使用：</b>  <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/base.html" target="_blank">基本使用示例</a>  
+&emsp;&emsp;&emsp;&emsp;<b>基本使用：</b>  <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/index.html" target="_blank">基本使用示例</a>  
 
 > 2. 前往[开放平台轻应用模板管理页](https://open.ys7.com/console/ezuikit/template.html)创建一个主题，可以动态配置你的播放主题，控件，示例展示了获取一个主题后使用示例。  
 
@@ -507,7 +508,7 @@ template参数说明
   player.reSize(width, height);
 ```
 
-#### 鱼眼矫正（软解 开启`SharedArrayBuffer`）
+#### 鱼眼矫正（软解 开启 [SharedArrayBuffer](https://open.ys7.com/help/1772?h=SharedArrayBuffer)）
 
 ```js
 // {1, 0}  壁装鱼眼 不矫正
