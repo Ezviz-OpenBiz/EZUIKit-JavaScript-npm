@@ -529,6 +529,9 @@ player.setFECCorrectType({place: 3 , type：4}, "cavnas1,canvas2,canvas3") // ca
 
 > 如果使用react，可参考demos => [react-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/react-demo)
 
+> 如果使用react + vite，可参考demos => [with-react-vite](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-react-vite)
+
+
 > 如果使用vue2，可参考demos => [vue-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/vue-demo)
 
 > 如果使用vue3，可参考demos => [vue3-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/vue3-demo)
