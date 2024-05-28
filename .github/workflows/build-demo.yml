@@ -24,7 +24,6 @@ jobs:
         with:
           version: 8
 
-      #   - uses: actions/checkout@v4
       - name: Build react-demo
         working-directory: ./demos/react-demo
         run: |
@@ -37,14 +36,14 @@ jobs:
           pnpm install
           pnpm run build
 
-    #   - run: cd demos/vue-demo
-    #   - run: pnpm install
-    #   - run: pnpm run build
+      - name: Build vue3-demo
+        working-directory: ./demos/vue3-demo
+        run: |
+          pnpm install
+          pnpm run build
 
-    #   - run: cd demos/vue3-demo
-    #   - run: pnpm install
-    #   - run: pnpm run build
-
-    #   - run: cd demos/with-react-vite
-    #   - run: pnpm install
-    #   - run: pnpm run build
+      - name: Build with-react-vite
+        working-directory: ./demos/with-react-vite
+        run: |
+          pnpm install
+          pnpm run build
