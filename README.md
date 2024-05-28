@@ -3,7 +3,6 @@
 ![Download](https://img.shields.io/npm/dm/ezuikit-js.svg)
 ![Version](https://img.shields.io/npm/v/ezuikit-js.svg)
 ![License](https://img.shields.io/npm/l/ezuikit-js.svg)
-
 ![Build Demos](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/workflows/build-demos/badge.svg)
 
 
