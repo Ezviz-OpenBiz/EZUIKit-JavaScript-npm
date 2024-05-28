@@ -255,8 +255,6 @@ Janus.init = function(options) {
 				}
 			}
 		}
-		Janus.log("Initializing library");
-
 		var usedDependencies = options.dependencies || Janus.useDefaultDependencies();
 		Janus.isArray = usedDependencies.isArray;
 		Janus.webRTCAdapter = usedDependencies.webRTCAdapter;
@@ -824,9 +822,9 @@ function Janus(gatewayCallbacks) {
 		var request = { 
 			"rtcgw": "create",
 			"transaction": transaction,
-			"token":window.EZUIWebRTC.opt.stream,
-			"device": window.EZUIWebRTC.opt.deviceSerial,
-			"channel": window.EZUIWebRTC.opt.channelNo,
+			"token":window.EZUIKit.opt.stream,
+			"device": window.EZUIKit.opt.deviceSerial,
+			"channel": window.EZUIKit.opt.channelNo,
 		};
 		if(callbacks["reconnect"]) {
 			// We're reconnecting, claim the session
