@@ -4,6 +4,8 @@
 ![Version](https://img.shields.io/npm/v/ezuikit-js.svg)
 ![License](https://img.shields.io/npm/l/ezuikit-js.svg)
 
+![Build Demos](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/workflows/build-demos/badge.svg)
+
 
 > 轻应用npm版本，降低接入难度，适配自定义UI，适配主流框架
 
