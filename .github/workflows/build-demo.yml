@@ -23,9 +23,19 @@ jobs:
       - uses: pnpm/action-setup@v3
         with:
           version: 8
-      - run: cd ./demos/react-demo
-      - run: pnpm install
-      - run: pnpm run build
+
+      #   - uses: actions/checkout@v4
+      - name: Build react-demo
+        working-directory: ./demos/react-demo
+        run: |
+          pnpm install
+          pnpm run build
+
+      - name: Build vue-demo
+        working-directory: ./demos/vue-demo
+        run: |
+          pnpm install
+          pnpm run build
 
     #   - run: cd demos/vue-demo
     #   - run: pnpm install
