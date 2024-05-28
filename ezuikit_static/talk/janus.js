@@ -255,8 +255,6 @@ Janus.init = function(options) {
 				}
 			}
 		}
-		Janus.log("Initializing library");
-
 		var usedDependencies = options.dependencies || Janus.useDefaultDependencies();
 		Janus.isArray = usedDependencies.isArray;
 		Janus.webRTCAdapter = usedDependencies.webRTCAdapter;

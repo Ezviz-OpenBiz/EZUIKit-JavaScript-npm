@@ -94,7 +94,7 @@ const destroy = () => {
   destroyPromise.then((data: any) => {
     console.log("promise 获取 数据", data);
   });
-  player = null;
+  player = null!;
 };
 
 const init = () => {
