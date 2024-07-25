@@ -37,23 +37,24 @@ export default {
         this.destroy();
       }
 
-      fetch("https://open.ys7.com/jssdk/ezopen/demo/token")
-        .then((response) => response.json())
-        .then((res) => {
-          var accessToken = res.data.accessToken;
-          player = new EZUIKit.EZUIKitPlayer({
+      // fetch("https://open.ys7.com/jssdk/ezopen/demo/token")
+      //   .then((response) => response.json())
+      //   .then((res) => {
+      //     var accessToken = res.data.accessToken;
+          
+      //   });
+      player = new EZUIKit.EZUIKitPlayer({
             id: "video-container", // 视频容器ID
             accessToken:
-              "at.dynmds5wcjnjbtls3lf7tuwu13aobjm2-490yt3xp77-0gl3ntq-44scndtqf",
-            url: "ezopen://open.ys7.com/G39444019/1.live",
+              "at.9czpiybj9kzvgofmcku3b6e854l2qk64-3d4m05s90z-1jtqvi2-vwa2kgzep",
+            url: "ezopen://open.ys7.com/G04778411/1.hd.live",
             // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
             template: "pcLive",
-            plugin: ["talk"], // 加载插件，talk-对讲
+            // plugin: ["talk"], // 加载插件，talk-对讲
             width: 600,
             height: 400
           });
           window.player = player;
-        });
     },
     play() {
       var playPromise = player.play();
