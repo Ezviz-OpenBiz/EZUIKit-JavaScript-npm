@@ -3,6 +3,7 @@
 ![Download](https://img.shields.io/npm/dm/ezuikit-js.svg)
 ![Version](https://img.shields.io/npm/v/ezuikit-js.svg)
 ![License](https://img.shields.io/npm/l/ezuikit-js.svg)
+![Build Demos](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/workflows/build-demos/badge.svg)
 
 
 > 轻应用npm版本，降低接入难度，适配自定义UI，适配主流框架
@@ -354,6 +355,13 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
   .then(()=>{
     console.log("执行开启声音成功后其他动作");
   });
+```
+
+#### 关闭声音
+
+```js
+  // 方式1
+  player.closeSound();
 ```
 
 #### 开始录制

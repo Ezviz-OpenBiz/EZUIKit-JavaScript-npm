@@ -1,0 +1,49 @@
+name: build-demos
+
+on:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 20.x, 21.x, 22.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Build react-demo
+        working-directory: ./demos/react-demo
+        run: |
+          pnpm install
+          pnpm run build
+
+      - name: Build vue-demo
+        working-directory: ./demos/vue-demo
+        run: |
+          pnpm install
+          pnpm run build
+
+      - name: Build vue3-demo
+        working-directory: ./demos/vue3-demo
+        run: |
+          pnpm install
+          pnpm run build
+
+      - name: Build with-react-vite
+        working-directory: ./demos/with-react-vite
+        run: |
+          pnpm install
+          pnpm run build
