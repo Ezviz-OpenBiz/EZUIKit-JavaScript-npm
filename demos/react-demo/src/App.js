@@ -21,13 +21,13 @@ class App extends React.Component {
     this.player = new EZUIKit.EZUIKitPlayer({
       id: "video-container", // 视频容器ID
       accessToken:
-        "at.cp9wsiqc70deya3kdqfxo0ce8ti17a4q-1ov3pgv8fz-19skivn-slzpkwzpb",
-      url: "ezopen://open.ys7.com/XX2615287/1.hd.live",
+        "at.2dqv292iacg11no6ay1o8m09694ouixm-1ovc8k078d-1cduu0o-en9uobyaz",
+      url: "ezopen://open.ys7.com/BC7900686/1.hd.live",
       // simple:极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放; security: 安防版; voice: 语音版;
-      //template: 'simple',
+      template: "pcLive",
       plugin: ["talk"], // 加载插件，talk-对讲
       width: 600,
-      height: 400,
+      height: 400
     });
     // });
     window.player = this.player;
@@ -52,7 +52,7 @@ class App extends React.Component {
   };
   capturePicture = () => {
     var capturePicturePromise = this.player.capturePicture(
-      `${new Date().getTime()}`,
+      `${new Date().getTime()}`
     );
     capturePicturePromise.then((data) => {
       console.log("promise 获取 数据", data);
