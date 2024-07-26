@@ -15,8 +15,8 @@ dependencies:
     specifier: ^13.2.1
     version: 13.5.0(@testing-library/dom@10.0.0)
   ezuikit-js:
-    specifier: ^8.0.6
-    version: 8.0.6
+    specifier: ^8.0.8
+    version: 8.0.8
   react:
     specifier: ^17
     version: 17.0.2
@@ -5244,8 +5244,8 @@ packages:
       - supports-color
     dev: false
 
-  /ezuikit-js@8.0.6:
-    resolution: {integrity: sha512-Kvk7Od7JZV1nhK0h+LW3TgADEoPXrol5DaW36dnlbRpvNdrnDetwDiWqxL9Z/b64yd4vIfBj75rm74LeHYZSXA==}
+  /ezuikit-js@8.0.8:
+    resolution: {integrity: sha512-lLqwKmOTLpZF5UJPJNXmho61671CYoZX4zuK0OsE+Xkv0wrEz9agii7Ykyb6FBZ7gz4prvoCoTBbKjnfPW7q8Q==}
     dev: false
 
   /fast-deep-equal@3.1.3:

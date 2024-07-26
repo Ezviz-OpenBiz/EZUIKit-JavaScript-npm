@@ -181,7 +181,7 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhm
 <tr><td>自定义themeId</td><td>自定义主题，<a href="https://open.ys7.com/console/ezuikit/template.html" target="_blank">前往开放平台控制台配置页面获取</a><br />（v0.6.2版本及以上支持，建议使用 自定义themeId，或者使用themeData本地<br />配置）;</td></tr>
 </table>
 
-</td></tr>
+</td><td>N</td></tr>
 <tr><td>themeData</td><td>Object</td><td>
 themeData将主题数据本地化，设置本地数据，需要删除template参数 <br /> 
 你可以通过themeData修改按钮位置，颜色，头部底部颜色等配置。  
@@ -313,6 +313,7 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 <tr><td>handleSuccess</td><td>function</td><td>自动播放成功回调</td><td>N</td></tr>
 <tr><td>handleError</td><td>function</td><td>错误回调</td><td>N</td></tr>
 <tr><td>seekFrequency </td><td>function</td><td>为避免频繁拖动播放异常，可设置模板回放时间轴拖动防抖间隔，默认值为2000（2秒），可取2000（2秒），3000（3秒），4000（4秒），5000（5秒）</td><td>N</td></tr>
+<tr><td>language</td><td>String</td><td>多语言 （zh | en）, 默认zh (v8.0.8版本及以上支持)</td><td>N</td></tr>
 </table>
 
 
@@ -530,6 +531,12 @@ template参数说明
 // 顶装4分屏
 player.setFECCorrectType({place: 3 , type：4}, "cavnas1,canvas2,canvas3") // cavnas1,canvas2,canvas3 是分屏是需要的
 ```
+
+
+
+### 非正式版说明
+
+非正式版需要配置  `staticPath`
 
 ### 使用示例
 

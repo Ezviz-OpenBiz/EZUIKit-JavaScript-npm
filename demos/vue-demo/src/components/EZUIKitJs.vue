@@ -45,14 +45,15 @@ export default {
       //   });
       player = new EZUIKit.EZUIKitPlayer({
             id: "video-container", // 视频容器ID
-            accessToken:
-              "at.9czpiybj9kzvgofmcku3b6e854l2qk64-3d4m05s90z-1jtqvi2-vwa2kgzep",
-            url: "ezopen://open.ys7.com/G04778411/1.hd.live",
+            accessToken:"at.chdscatw3a7bajs09ofnby660tfir9qi-54xo1w9ju4-1mchauw-gi8fqhmc",
+            url: "ezopen://open.ys7.com/C11633138/1.hd.live",
             // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
             template: "pcLive",
             // plugin: ["talk"], // 加载插件，talk-对讲
             width: 600,
-            height: 400
+            height: 400,
+            // language: "en", // zh | en
+            // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
           });
           window.player = player;
     },
