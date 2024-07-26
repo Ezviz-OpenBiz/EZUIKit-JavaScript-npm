@@ -181,7 +181,7 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhm
 <tr><td>自定义themeId</td><td>自定义主题，<a href="https://open.ys7.com/console/ezuikit/template.html" target="_blank">前往开放平台控制台配置页面获取</a><br />（v0.6.2版本及以上支持，建议使用 自定义themeId，或者使用themeData本地<br />配置）;</td></tr>
 </table>
 
-</td></tr>
+</td><td>N</td></tr>
 <tr><td>themeData</td><td>Object</td><td>
 themeData将主题数据本地化，设置本地数据，需要删除template参数 <br /> 
 你可以通过themeData修改按钮位置，颜色，头部底部颜色等配置。  
