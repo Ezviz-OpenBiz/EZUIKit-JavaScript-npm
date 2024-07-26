@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "8.0.8-bate.1",
+  "version": "8.0.8-beta.1",
   "description": "ezuikit javascript for npm",
   "main": "ezuikit.js",
   "scripts": {},
