@@ -10,9 +10,10 @@
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('jquery')) :
-  typeof define === 'function' && define.amd ? define(['jquery'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.jQuery));
-}(this, (function ($) { 'use strict';
+    typeof define === 'function' && define.amd ? define(['jquery'], factory) :
+      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.jQuery));
+}(this, (function ($) {
+  'use strict';
 
   $ = $ && $.hasOwnProperty('default') ? $['default'] : $;
 
@@ -79,7 +80,7 @@
     // Shortest days' name
     daysMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
     // Months' name
-    months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     // Shorter months' name
     monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     // A element tag for each item of years, months and days
@@ -588,9 +589,9 @@
     click: function click(e) {
       var $target = $(e.target);
       var options = this.options,
-          date = this.date,
-          viewDate = this.viewDate,
-          format = this.format;
+        date = this.date,
+        viewDate = this.viewDate,
+        format = this.format;
       e.stopPropagation();
       e.preventDefault();
 
@@ -751,7 +752,7 @@
     globalClick: function globalClick(_ref) {
       var target = _ref.target;
       var element = this.element,
-          $trigger = this.$trigger;
+        $trigger = this.$trigger;
       var trigger = $trigger[0];
       var hidden = true;
 
@@ -773,8 +774,8 @@
     },
     globalKeyup: function globalKeyup(_ref2) {
       var target = _ref2.target,
-          key = _ref2.key,
-          keyCode = _ref2.keyCode;
+        key = _ref2.key,
+        keyCode = _ref2.keyCode;
 
       if (this.isInput && target !== this.element && this.shown && (key === 'Tab' || keyCode === 9)) {
         this.hide();
@@ -802,8 +803,8 @@
 
       var items = [];
       var _this$options = this.options,
-          weekStart = _this$options.weekStart,
-          daysMin = _this$options.daysMin;
+        weekStart = _this$options.weekStart,
+        daysMin = _this$options.daysMin;
       weekStart = parseInt(weekStart, 10) % 7;
       daysMin = daysMin.slice(weekStart).concat(daysMin.slice(0, weekStart));
       $.each(daysMin, function (i, day) {
@@ -815,11 +816,11 @@
     },
     renderYears: function renderYears() {
       var options = this.options,
-          startDate = this.startDate,
-          endDate = this.endDate;
+        startDate = this.startDate,
+        endDate = this.endDate;
       var disabledClass = options.disabledClass,
-          filter = options.filter,
-          yearSuffix = options.yearSuffix;
+        filter = options.filter,
+        yearSuffix = options.yearSuffix;
       var viewYear = this.viewDate.getFullYear();
       var now = new Date();
       var thisYear = now.getFullYear();
@@ -873,9 +874,9 @@
     },
     renderMonths: function renderMonths() {
       var options = this.options,
-          startDate = this.startDate,
-          endDate = this.endDate,
-          viewDate = this.viewDate;
+        startDate = this.startDate,
+        endDate = this.endDate,
+        viewDate = this.viewDate;
       var disabledClass = options.disabledClass || '';
       var months = options.monthsShort;
       var filter = $.isFunction(options.filter) && options.filter;
@@ -927,16 +928,16 @@
     },
     renderDays: function renderDays() {
       var $element = this.$element,
-          options = this.options,
-          startDate = this.startDate,
-          endDate = this.endDate,
-          viewDate = this.viewDate,
-          currentDate = this.date;
+        options = this.options,
+        startDate = this.startDate,
+        endDate = this.endDate,
+        viewDate = this.viewDate,
+        currentDate = this.date;
       var disabledClass = options.disabledClass,
-          filter = options.filter,
-          months = options.months,
-          weekStart = options.weekStart,
-          yearSuffix = options.yearSuffix;
+        filter = options.filter,
+        months = options.months,
+        weekStart = options.weekStart,
+        yearSuffix = options.yearSuffix;
       var viewYear = viewDate.getFullYear();
       var viewMonth = viewDate.getMonth();
       var now = new Date();
@@ -1122,10 +1123,10 @@
       key: "init",
       value: function init() {
         var $this = this.$element,
-            options = this.options;
+          options = this.options;
         var startDate = options.startDate,
-            endDate = options.endDate,
-            date = options.date;
+          endDate = options.endDate,
+          date = options.date;
         this.$trigger = $(options.trigger);
         this.isInput = $this.is('input') || $this.is('textarea');
         this.inline = options.inline && (options.container || !this.isInput);
@@ -1181,7 +1182,7 @@
 
         this.built = true;
         var $this = this.$element,
-            options = this.options;
+          options = this.options;
         var $picker = $(options.template);
         this.$picker = $picker;
         this.$week = $picker.find(selectorOf('week')); // Years view
@@ -1229,7 +1230,7 @@
       key: "bind",
       value: function bind() {
         var options = this.options,
-            $this = this.$element;
+          $this = this.$element;
 
         if ($.isFunction(options.show)) {
           $this.on(EVENT_SHOW, options.show);
@@ -1261,7 +1262,7 @@
       key: "unbind",
       value: function unbind() {
         var $this = this.$element,
-            options = this.options;
+          options = this.options;
 
         if ($.isFunction(options.show)) {
           $this.off(EVENT_SHOW, options.show);
@@ -1293,9 +1294,9 @@
       key: "showView",
       value: function showView(view) {
         var $yearsPicker = this.$yearsPicker,
-            $monthsPicker = this.$monthsPicker,
-            $daysPicker = this.$daysPicker,
-            format = this.format;
+          $monthsPicker = this.$monthsPicker,
+          $daysPicker = this.$daysPicker,
+          format = this.format;
 
         if (format.hasYear || format.hasMonth || format.hasDay) {
           switch (Number(view)) {
@@ -1358,8 +1359,8 @@
         }
 
         var $this = this.$element,
-            options = this.options,
-            $picker = this.$picker;
+          options = this.options,
+          $picker = this.$picker;
         var containerWidth = $(document).outerWidth();
         var containerHeight = $(document).outerHeight();
         var elementWidth = $this.outerWidth();
@@ -1368,8 +1369,8 @@
         var height = $picker.height();
 
         var _$this$offset = $this.offset(),
-            left = _$this$offset.left,
-            top = _$this$offset.top;
+          left = _$this$offset.left,
+          top = _$this$offset.top;
 
         var offset = parseFloat(options.offset);
         var placement = CLASS_TOP_LEFT;
