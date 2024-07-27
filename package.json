@@ -10,7 +10,11 @@
   },
   "keywords": [
     "video",
-    "ezuikit"
+    "ezuikit",
+    "player",
+    "ezopen",
+    "ezviz",
+    "ys7"
   ],
   "files": [
     "ezuikit.js",
