@@ -7,8 +7,9 @@
 
 ### Fixed
 
-- 修复 PC 浏览器模拟移动端页面全屏问题
+- 修复 Mac PC 浏览器模拟移动端页面全屏问题 [#227](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/227), [#208](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/208), [#177](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/177)
 - 修复播放暂停后倍速重置问题
+- 修复fetch被劫持的bug [#212](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/212), [#184](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/184), [#139](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/139)
 
 ### Optimized
 
