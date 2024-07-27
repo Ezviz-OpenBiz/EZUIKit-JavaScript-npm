@@ -6,7 +6,7 @@
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Hikvision-Ezviz/EZUIKit-JavaScript-npm.git"
+    "url": "git+https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm.git"
   },
   "keywords": [
     "video",
@@ -23,7 +23,7 @@
   ],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Hikvision-Ezviz/EZUIKit-JavaScript-npm/issues"
+    "url": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues"
   },
-  "homepage": "https://github.com/Hikvision-Ezviz/EZUIKit-JavaScript-npm#readme"
+  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm#readme"
 }
