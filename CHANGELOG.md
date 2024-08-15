@@ -1,4 +1,16 @@
 
+## v8.0.9 (2024-08-15)
+
+### Feat
+
+- 对讲新增API：
+  - setVolumeGain（麦克风增强）
+  - getMicrophonePermission（获取麦克风权限）
+  - getMicrophonesList（获取麦克风列表）
+  - setProfile（切换麦克风）
+- 对讲新增事件监听：
+ - volumeChange（音量变化通知）
+
 ## v8.0.8 (2024-07-26)
 
 ### Feat
