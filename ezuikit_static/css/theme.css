@@ -47,6 +47,10 @@
   display: none;
 }
 
+.footer-controls .theme-icon-item-icon {
+  position: relative;
+}
+
 .header-controls .theme-icon-item {
   margin: 0 1%;
 }

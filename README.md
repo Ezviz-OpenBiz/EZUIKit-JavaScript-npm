@@ -419,6 +419,49 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
   player.fullScreen();
 ```
 
+#### 对讲设置麦克风增益
+
+```
+  // 设置音频增益系数 0 ~ 10
+  player.setVolumeGain(volume);
+```
+
+#### 获取麦克风权限
+
+```
+  player.getMicrophonePermission().then(data => {
+    if (data.code === 0) {
+      // 成功....
+    }
+  })
+```
+
+#### 获取麦克风列表
+
+```
+  // 需要在麦克风已授权的情况下调用，才能获取到麦克风列表，可以和getMicrophonePermission配合使用，或在初始化后先调用getMicrophonePermission获取授权
+  player.getMicrophonesList().then(data => {
+    if (data.code === 0) {
+      // 成功....
+    }
+  })
+```
+
+#### 切换麦克风
+
+```
+  // microphoneId 为获取到的麦克风列表中的deviceId，如果当前处于对讲中，调用setProfile会先关闭，重新发起对讲
+  player.setProfile({ microphoneId })
+```
+
+#### 监听麦克风音量变化
+```
+  player.eventEmitter.on('volumeChange', ({ data }) => {
+    // 动态显示音柱,100ms触发一次
+    console.log(`${data * 100}%`)
+  })
+```
+
 #### 取消全屏
 
 ```js
