@@ -413,12 +413,6 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
   player.stopTalk();
 ```
 
-#### 全屏
-
-```js
-  player.fullScreen();
-```
-
 #### 对讲设置麦克风增益
 
 ```
@@ -460,6 +454,12 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
     // 动态显示音柱,100ms触发一次
     console.log(`${data * 100}%`)
   })
+```
+
+#### 全屏
+
+```js
+  player.fullScreen();
 ```
 
 #### 取消全屏
