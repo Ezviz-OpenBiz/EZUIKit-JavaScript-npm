@@ -9,14 +9,18 @@ const App = () => {
   const init = () => {
     const url = urlRef.current?.value;
     const accessToken = accessTokenRef.current?.value;
-    if (url && accessToken && !playerRef.current) {
+    if (!playerRef.current) {
       playerRef.current = new EZUIKit.EZUIKitPlayer({
         id: "video-container", // 视频容器ID
         template: "pcLive",
-        accessToken,
-        url,
+        accessToken:
+          "at.0siysnsad14jkcgmbnp2pbop427gcbx6-8l00xx7oa9-193qkwi-ryfn1m0j",
+        url: "ezopen://open.ys7.com/BC7900686/1.hd.live",
         width: 600,
         height: 400,
+        handleError: (error: any) => {
+          console.log("handleError", error);
+        },
         // language: "zh", // zh | en
         // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
       });
