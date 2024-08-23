@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   ezuikit-js:
-    specifier: ^8.0.11-alpha.1
-    version: 8.0.11-alpha.1
+    specifier: ^8.0.11
+    version: 8.0.11
   vue:
     specifier: ^3.2.41
     version: 3.4.34(typescript@4.9.5)
@@ -425,8 +425,8 @@ packages:
   /estree-walker@2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
 
-  /ezuikit-js@8.0.11-alpha.1:
-    resolution: {integrity: sha512-dvRgdjSWtjOuBdYkyIwtFStg5PdbIgdPb/+KOIZU1l+vDAjcd6Vhbth3JFCTXovnSbbofE54rvafy7Vlqn6DHg==}
+  /ezuikit-js@8.0.11:
+    resolution: {integrity: sha512-gAwZ/5HFxcbXAwsot8ngE2EtoUX25pJtmQk0XpuDHPTxmGRS7Vwlg/ECxG1TAKJReVRXlI8x4SOlyrH+115uDw==}
     dev: false
 
   /fsevents@2.3.3:
