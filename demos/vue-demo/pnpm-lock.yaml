@@ -9,8 +9,8 @@ dependencies:
     specifier: ^3.6.5
     version: 3.37.1
   ezuikit-js:
-    specifier: ^8.0.8
-    version: 8.0.8
+    specifier: ^8.0.11
+    version: 8.0.11
   vue:
     specifier: ^2.7
     version: 2.7.16
@@ -3645,8 +3645,8 @@ packages:
       - supports-color
     dev: true
 
-  /ezuikit-js@8.0.8:
-    resolution: {integrity: sha512-lLqwKmOTLpZF5UJPJNXmho61671CYoZX4zuK0OsE+Xkv0wrEz9agii7Ykyb6FBZ7gz4prvoCoTBbKjnfPW7q8Q==}
+  /ezuikit-js@8.0.11:
+    resolution: {integrity: sha512-gAwZ/5HFxcbXAwsot8ngE2EtoUX25pJtmQk0XpuDHPTxmGRS7Vwlg/ECxG1TAKJReVRXlI8x4SOlyrH+115uDw==}
     dev: false
 
   /fast-deep-equal@3.1.3:
