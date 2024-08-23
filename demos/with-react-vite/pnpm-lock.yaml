@@ -9,8 +9,8 @@ dependencies:
     specifier: ^2.5.1
     version: 2.5.1
   ezuikit-js:
-    specifier: ^8.0.11-alpha.1
-    version: 8.0.11-alpha.1
+    specifier: ^8.0.11
+    version: 8.0.11
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -2007,8 +2007,8 @@ packages:
       strip-final-newline: 2.0.0
     dev: true
 
-  /ezuikit-js@8.0.11-alpha.1:
-    resolution: {integrity: sha512-dvRgdjSWtjOuBdYkyIwtFStg5PdbIgdPb/+KOIZU1l+vDAjcd6Vhbth3JFCTXovnSbbofE54rvafy7Vlqn6DHg==}
+  /ezuikit-js@8.0.11:
+    resolution: {integrity: sha512-gAwZ/5HFxcbXAwsot8ngE2EtoUX25pJtmQk0XpuDHPTxmGRS7Vwlg/ECxG1TAKJReVRXlI8x4SOlyrH+115uDw==}
     dev: false
 
   /find-up@5.0.0:
