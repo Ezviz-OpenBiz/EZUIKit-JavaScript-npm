@@ -39,7 +39,7 @@ class App extends React.Component {
       handleError: (error) => {
         console.log("handleError", error);
       },
-      language: "en", // zh | en
+      // language: "en", // zh | en
       // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
     });
     // });
