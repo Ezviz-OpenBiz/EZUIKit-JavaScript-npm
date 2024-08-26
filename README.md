@@ -11,9 +11,9 @@
 
 > 功能 API 丰富，如：播放控制，音频控制，视频截图，实时获取视频 OSDTime，视频录制，设备对讲，电子放大，全屏等
 
-<p style="color: yellow;">hls和flv 不在维护更新， flv 可以使用 <a href="https://www.npmjs.com/package/ezuikit-flv" block="_target">ezuikit-flv</a>, hls 可以使用 <a href="https://www.npmjs.com/package/@ezuikit/player-hls" block="_target">@ezuikit/player-hls</a></p>
-<p style="color: yellow;">hls和flv 不在维护更新， flv 可以使用 <a href="https://www.npmjs.com/package/ezuikit-flv" block="_target">ezuikit-flv</a>, hls 可以使用 <a href="https://www.npmjs.com/package/@ezuikit/player-hls" block="_target">@ezuikit/player-hls</a></p>
-<p style="color: yellow;">hls和flv 不在维护更新， flv 可以使用 <a href="https://www.npmjs.com/package/ezuikit-flv" block="_target">ezuikit-flv</a>, hls 可以使用 <a href="https://www.npmjs.com/package/@ezuikit/player-hls" block="_target">@ezuikit/player-hls</a></p>
+<p style="color: yellow;">hls和flv 不在维护更新，后续版本中会被移除， flv 可以使用 <a href="https://www.npmjs.com/package/ezuikit-flv" block="_target">ezuikit-flv</a>, hls 可以使用 <a href="https://www.npmjs.com/package/@ezuikit/player-hls" block="_target">@ezuikit/player-hls</a></p>
+<p style="color: yellow;">hls和flv 不在维护更新，后续版本中会被移除， flv 可以使用 <a href="https://www.npmjs.com/package/ezuikit-flv" block="_target">ezuikit-flv</a>, hls 可以使用 <a href="https://www.npmjs.com/package/@ezuikit/player-hls" block="_target">@ezuikit/player-hls</a></p>
+<p style="color: yellow;">hls和flv 不在维护更新，后续版本中会被移除， flv 可以使用 <a href="https://www.npmjs.com/package/ezuikit-flv" block="_target">ezuikit-flv</a>, hls 可以使用 <a href="https://www.npmjs.com/package/@ezuikit/player-hls" block="_target">@ezuikit/player-hls</a></p>
 
 ### 获取 ezuikit-js
 
