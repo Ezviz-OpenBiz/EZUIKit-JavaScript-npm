@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920px" height="1080px" viewBox="0 0 1920 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>视频背景图</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="1920" height="1080"></rect>
+        <filter x="0.0%" y="0.0%" width="100.0%" height="100.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feGaussianBlur stdDeviation="0" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <linearGradient x1="6.42733681%" y1="61.4046072%" x2="84.9937231%" y2="19.1492851%" id="linearGradient-4">
+            <stop stop-color="#9DC2FE" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#648FFC" stop-opacity="0.129889642" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="91.8908498%" y1="82.8715916%" x2="45.1536245%" y2="-4.31442764%" id="linearGradient-5">
+            <stop stop-color="#9DC2FE" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#648FFC" stop-opacity="0.129889642" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="94.5535203%" y1="72.2238976%" x2="-8.96417241%" y2="9.01768502%" id="linearGradient-6">
+            <stop stop-color="#9DC2FE" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#648FFC" stop-opacity="0.129889642" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Cam-Thumbnail">
+            <mask id="mask-3" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Cam-Mask" fill="#18191C" filter="url(#filter-2)" xlink:href="#path-1"></use>
+            <circle id="椭圆形" fill="url(#linearGradient-4)" mask="url(#mask-3)" cx="1868.8" cy="870.4" r="394.24"></circle>
+            <circle id="椭圆形备份-2" fill="url(#linearGradient-5)" mask="url(#mask-3)" cx="0" cy="143.36" r="394.24"></circle>
+            <ellipse id="椭圆形备份-3" fill-opacity="0.45" fill="url(#linearGradient-6)" mask="url(#mask-3)" cx="427.52" cy="350.72" rx="161.28" ry="158.72"></ellipse>
+        </g>
+    </g>
+</svg>

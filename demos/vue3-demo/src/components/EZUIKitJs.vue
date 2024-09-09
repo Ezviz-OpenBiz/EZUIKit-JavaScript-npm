@@ -109,18 +109,18 @@ const init = () => {
   player = new EZUIKit.EZUIKitPlayer({
     id: "video-container", // 视频容器ID
     accessToken:
-      "at.0siysnsad14jkcgmbnp2pbop427gcbx6-8l00xx7oa9-193qkwi-ryfn1m0j",
+      "at.a9vba5iia6ixphqu8db7y16174p6neje-6f0n0ahcu8-1uvhxp7-rxswkykaa",
     url: "ezopen://open.ys7.com/BC7900686/1.hd.live",
     // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
     template: "pcLive",
     plugin: ["talk"], // 加载插件，talk-对讲
     width: 600,
     height: 400,
-    language: "en", // zh | en
+    // language: "en", // zh | en
     handleError: (err: any) => {
       console.error("handleError", err);
     },
-    // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+    staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
   });
   window.player = player;
   // });
