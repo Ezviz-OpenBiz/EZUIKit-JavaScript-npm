@@ -308,10 +308,10 @@ estree-walker@^2.0.2:
   resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-2.0.2.tgz#52f010178c2a4c117a7757cfe942adb7d2da4cac"
   integrity sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==
 
-ezuikit-js@^8.0.5-beta.5:
-  version "8.0.5-beta.5"
-  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.0.5-beta.5.tgz#6b17a8424992e62a22843b30314ec61154be070e"
-  integrity sha512-TRmGzNspBromi8YrZWJTKaQMvZjInFTzs0Rve3Bi6dTa6u3f1JfoIJ9rmoeYMuNsY1cZd1QSdriB1JMVb026Mw==
+ezuikit-js@^8.0.11:
+  version "8.0.11"
+  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.0.11.tgz#84166823a49adc1a73c4c13171654835b137eab2"
+  integrity sha512-gAwZ/5HFxcbXAwsot8ngE2EtoUX25pJtmQk0XpuDHPTxmGRS7Vwlg/ECxG1TAKJReVRXlI8x4SOlyrH+115uDw==
 
 fsevents@~2.3.2:
   version "2.3.3"
@@ -407,9 +407,9 @@ resolve@^1.22.1:
     supports-preserve-symlinks-flag "^1.0.0"
 
 rollup@^2.79.1:
-  version "2.79.1"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.79.1.tgz#bedee8faef7c9f93a2647ac0108748f497f081c7"
-  integrity sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==
+  version "2.79.2"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.79.2.tgz#f150e4a5db4b121a21a747d762f701e5e9f49090"
+  integrity sha512-fS6iqSPZDs3dr/y7Od6y5nha8dW1YnbgtsyotCVvoFGKbERG++CVRFv1meyGDE1SNItQA8BrnCw7ScdAhRJ3XQ==
   optionalDependencies:
     fsevents "~2.3.2"
 
