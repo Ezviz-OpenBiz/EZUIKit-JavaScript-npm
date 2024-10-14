@@ -1,29 +1,29 @@
 {
   "name": "ezuikit-js",
-  "version": "8.0.11",
+  "version": "8.0.12",
   "description": "ezuikit javascript for npm",
   "main": "ezuikit.js",
-  "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm.git"
+    "url": "git+https://github.com/Hikvision-Ezviz/EZUIKit-JavaScript-npm.git"
   },
+  "author": "Ezviz-OpenBiz",
+  "files": [
+    "ezuikit.js",
+    "README.md",
+    "ezuikit_static"
+  ],
   "keywords": [
     "video",
     "ezuikit",
-    "player",
-    "ezopen",
-    "ezviz",
-    "ys7"
+    "ezopen"
   ],
-  "files": [
-    "ezuikit.js",
-    "CHANGELOG.md",
-    "ezuikit_static"
-  ],
+  "resolutions": {
+    "es5-ext": "0.10.53"
+  },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues"
+    "url": "https://github.com/Hikvision-Ezviz/EZUIKit-JavaScript-npm/issues"
   },
-  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm#readme"
+  "homepage": "https://github.com/Hikvision-Ezviz/EZUIKit-JavaScript-npm#readme"
 }
