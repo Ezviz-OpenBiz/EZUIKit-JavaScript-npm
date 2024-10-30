@@ -1,107 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-    />
-    <title>Document</title>
-    <script src="./ezuikit.js"></script>
-  </head>
 
-  <body>
-    <div className="demo">
-      <h2>视频模式使用示例：</h2>
-      <div id="video-container" style="width: 600px"></div>
-      <div>
-        <button onClick="play()">play</button>
-        <button onClick="stop()">stop</button>
-        <button onClick="getOSDTime()">getOSDTime</button>
-        <button onClick="capturePicture()">截图</button>
-        <button onClick="openSound()">打开声音</button>
-        <button onClick="closeSound()">关闭声音</button>
-        <button onClick="startSave()">开始录制</button>
-        <button onClick="stopSave()">结束录制</button>
-        <button onClick="fullScreen()">全屏</button>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <title>Document</title>
+  <script src="../ezuikit.js"></script>
+</head>
+
+<body>
+  <div className="demo">
+    <h2>视频模式使用示例：</h2>
+    <div id="video-container" style="width: 600px"></div>
+    <div>
+      <button onClick="play()">play</button>
+      <button onClick="stop()">stop</button>
+      <button onClick="getOSDTime()">getOSDTime</button>
+      <button onClick="capturePicture()">截图</button>
+      <button onClick="openSound()">打开声音</button>
+      <button onClick="closeSound()">关闭声音</button>
+      <button onClick="startSave()">开始录制</button>
+      <button onClick="stopSave()">结束录制</button>
+      <button onClick="fullScreen()">全屏</button>
     </div>
-    <script>
-      var player;
-      // fetch("https://open.ys7.com/jssdk/ezopen/demo/token")
-      //   .then((response) => response.json())
-      //   .then((res) => {
-      //     var accessToken = res.data.accessToken;
-      player = new EZUIKit.EZUIKitPlayer({
-        id: "video-container", // 视频容器ID
-        accessToken: "设备的accessToken",
-        url: "设备的播放地址",
-        template: "pcRec",
-        width: 600,
-        height: 400,
-        // 云录制
-        isCloudRecord: true,
+  </div>
+  <script>
+    var player;
+    // fetch("https://open.ys7.com/jssdk/ezopen/demo/token")
+    //   .then((response) => response.json())
+    //   .then((res) => {
+    //     var accessToken = res.data.accessToken;
+    player = new EZUIKit.EZUIKitPlayer({
+      id: "video-container", // 视频容器ID
+      accessToken: "设备的accessToken",
+      url: "设备的播放地址",
+      template: "pcRec",
+      width: 600,
+      height: 400,
+      // 云录制必须要传的
+      isCloudRecord: true,
+      env: {
+        // https://open.ys7.com/help/1772?h=domain
+        // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
+        // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
+        domain: "https://open.ys7.com"
+      }
+    });
+    // });
+
+    function fullScreen() {
+      var playPromise = player.fullScreen();
+      playPromise.then((data) => {
+        console.log("promise 获取 数据", data);
       });
-      // });
+    }
 
-      function fullScreen() {
-        var playPromise = player.fullScreen();
-        playPromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
+    function play() {
+      var playPromise = player.play();
+      playPromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
 
-      function play() {
-        var playPromise = player.play();
-        playPromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
+    function stop() {
+      var stopPromise = player.stop();
+      stopPromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
 
-      function stop() {
-        var stopPromise = player.stop();
-        stopPromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
+    function getOSDTime() {
+      var getOSDTimePromise = player.getOSDTime();
+      getOSDTimePromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
 
-      function getOSDTime() {
-        var getOSDTimePromise = player.getOSDTime();
-        getOSDTimePromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
+    function capturePicture() {
+      var capturePicturePromise = player.capturePicture();
+      capturePicturePromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
+    function openSound() {
+      var openSoundPromise = player.openSound();
+      openSoundPromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
+    function closeSound() {
+      var closeSoundPromise = player.closeSound();
+      closeSoundPromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
+    function startSave() {
+      var startSavePromise = player.startSave();
+      startSavePromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
+    function stopSave() {
+      var stopSavePromise = player.stopSave();
+      stopSavePromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
+  </script>
+</body>
 
-      function capturePicture() {
-        var capturePicturePromise = player.capturePicture();
-        capturePicturePromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
-      function openSound() {
-        var openSoundPromise = player.openSound();
-        openSoundPromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
-      function closeSound() {
-        var closeSoundPromise = player.closeSound();
-        closeSoundPromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
-      function startSave() {
-        var startSavePromise = player.startSave();
-        startSavePromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
-      function stopSave() {
-        var stopSavePromise = player.stopSave();
-        stopSavePromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
-    </script>
-  </body>
 </html>

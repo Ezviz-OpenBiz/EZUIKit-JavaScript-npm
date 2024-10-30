@@ -42,6 +42,12 @@
           plugin: ['talk'],                       // 加载插件，talk-对讲
           width: 600,
           height: 400,
+          env: {
+            // https://open.ys7.com/help/1772?h=domain
+            // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
+            // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
+            domain: "https://open.ys7.com"
+          }
         });
       });
     function fullScreen() {

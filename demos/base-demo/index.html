@@ -1,133 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-    />
-    <title>Document</title>
-    <script src="./ezuikit.js"></script>
-  </head>
 
-  <body>
-    <div className="demo">
-      <h2>视频模式使用示例：</h2>
-      <div id="video-container" style="width: 600px"></div>
-      <div>
-        <button onClick="init()">init</button>
-        <button onClick="play()">play</button>
-        <button onClick="stop()">stop</button>
-        <button onClick="getOSDTime()">getOSDTime</button>
-        <button onClick="capturePicture()">capturePicture</button>
-        <button onClick="openSound()">openSound</button>
-        <button onClick="closeSound()">closeSound</button>
-        <button onClick="startSave()">startSave</button>
-        <button onClick="stopSave()">stopSave</button>
-        <button onClick="ezopenStartTalk()">开始对讲</button>
-        <button onClick="ezopenStopTalk()">结束对讲</button>
-        <button onClick="fullScreen()">全屏</button>
-        <button onClick="destroy()">销毁</button>
-      </div>
-      <p style="font-style: italic">
-        播放多个视频，可初始化多个实例，参考：/demos/base-demo/multi-demo
-      </p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <title>Document</title>
+  <script src="./ezuikit.js"></script>
+</head>
+
+<body>
+  <div className="demo">
+    <h2>视频模式使用示例：</h2>
+    <div id="video-container" style="width: 600px"></div>
+    <div>
+      <button onClick="init()">init</button>
+      <button onClick="play()">play</button>
+      <button onClick="stop()">stop</button>
+      <button onClick="getOSDTime()">getOSDTime</button>
+      <button onClick="capturePicture()">capturePicture</button>
+      <button onClick="openSound()">openSound</button>
+      <button onClick="closeSound()">closeSound</button>
+      <button onClick="startSave()">startSave</button>
+      <button onClick="stopSave()">stopSave</button>
+      <button onClick="ezopenStartTalk()">开始对讲</button>
+      <button onClick="ezopenStopTalk()">结束对讲</button>
+      <button onClick="fullScreen()">全屏</button>
+      <button onClick="destroy()">销毁</button>
     </div>
-    <script>
-      var player;
+    <p style="font-style: italic">
+      播放多个视频，可初始化多个实例，参考：/demos/base-demo/multi-demo
+    </p>
+  </div>
+  <script>
+    var player;
 
-      function init() {
-        if (player) {
-          destroy();
+    function init() {
+      if (player) {
+        destroy();
+      }
+
+      // fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
+      //   .then(response => response.json())
+      //   .then(res => {
+      //     var accessToken = res.data.accessToken;
+      player = new EZUIKit.EZUIKitPlayer({
+        id: "video-container", // 视频容器ID
+        accessToken:
+          "at.2ec3m7dga2v59cps6rv0d1haa2vqsjka-1lbu5f5hyi-1j9rleq-npvuluse",
+        url: "ezopen://open.ys7.com/BB9480953/1.hd.live",
+        template: "pcLive", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
+        plugin: ["talk"], // 加载插件，talk-对讲
+        width: 600,
+        height: 400,
+        language: "en", // zh | en
+        handleError: (error) => {
+          console.error("handleError", error);
+        },
+        env: {
+          // https://open.ys7.com/help/1772?h=domain
+          // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
+          // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
+          domain: "https://open.ys7.com"
         }
+        // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+      });
+      // });
+    }
 
-        // fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
-        //   .then(response => response.json())
-        //   .then(res => {
-        //     var accessToken = res.data.accessToken;
-        player = new EZUIKit.EZUIKitPlayer({
-          id: "video-container", // 视频容器ID
-          accessToken:
-            "at.0siysnsad14jkcgmbnp2pbop427gcbx6-8l00xx7oa9-193qkwi-ryfn1m0j",
-          url: "ezopen://open.ys7.com/BC7900686/1.hd.live",
-          template: "pcLive", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
-          plugin: ["talk"], // 加载插件，talk-对讲
-          width: 600,
-          height: 400,
-          language: "en", // zh | en
-          handleError: (error) => {
-            console.error("handleError", error);
-          },
-          // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
-        });
-        // });
-      }
+    function fullScreen() {
+      var playPromise = player.fullScreen();
+    }
+    function play() {
+      var playPromise = player.play();
+      playPromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
+    function stop() {
+      var stopPromise = player.stop();
+      stopPromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
+    function getOSDTime() {
+      var getOSDTimePromise = player.getOSDTime();
+      getOSDTimePromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
 
-      function fullScreen() {
-        var playPromise = player.fullScreen();
-      }
-      function play() {
-        var playPromise = player.play();
-        playPromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
-      function stop() {
-        var stopPromise = player.stop();
-        stopPromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
-      function getOSDTime() {
-        var getOSDTimePromise = player.getOSDTime();
-        getOSDTimePromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
+    function capturePicture() {
+      var capturePicturePromise = player.capturePicture();
+      capturePicturePromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
+    function openSound() {
+      var openSoundPromise = player.openSound();
+      openSoundPromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
+    function closeSound() {
+      var closeSoundPromise = player.closeSound();
+      closeSoundPromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
+    function startSave() {
+      var startSavePromise = player.startSave(`${new Date().getTime()}`);
+      startSavePromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
+    function stopSave() {
+      var stopSavePromise = player.stopSave();
+      stopSavePromise.then((data) => {
+        console.log("promise 获取 数据", data);
+      });
+    }
+    function ezopenStartTalk() {
+      player.startTalk();
+    }
+    function ezopenStopTalk() {
+      player.stopTalk();
+    }
 
-      function capturePicture() {
-        var capturePicturePromise = player.capturePicture();
-        capturePicturePromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
+    function destroy() {
+      if (player) {
+        player.destroy();
       }
-      function openSound() {
-        var openSoundPromise = player.openSound();
-        openSoundPromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
-      function closeSound() {
-        var closeSoundPromise = player.closeSound();
-        closeSoundPromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
-      function startSave() {
-        var startSavePromise = player.startSave(`${new Date().getTime()}`);
-        startSavePromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
-      function stopSave() {
-        var stopSavePromise = player.stopSave();
-        stopSavePromise.then((data) => {
-          console.log("promise 获取 数据", data);
-        });
-      }
-      function ezopenStartTalk() {
-        player.startTalk();
-      }
-      function ezopenStopTalk() {
-        player.stopTalk();
-      }
+      player = null;
+    }
+  </script>
+</body>
 
-      function destroy() {
-        if (player) {
-          player.destroy();
-        }
-        player = null;
-      }
-    </script>
-  </body>
 </html>
