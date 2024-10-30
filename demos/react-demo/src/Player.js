@@ -24,7 +24,7 @@ const Player = () => {
         id: "player-container",
         url: "ezopen://open.ys7.com/BB9480953/1.hd.live",
         accessToken:
-          "at.2ec3m7dga2v59cps6rv0d1haa2vqsjka-1lbu5f5hyi-1j9rleq-npvulusoe",
+          "at.2ec3m7dga2v59cps6rv0d1haa2vqsjka-1lbu5f5hyi-1j9rleq-npvuluse",
         width,
         height,
         template: "pcLive",
