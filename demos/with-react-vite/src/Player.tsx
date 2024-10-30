@@ -3,7 +3,7 @@ import EZUIKit from "ezuikit-js";
 import { isMobile } from "./utils";
 
 const Player = () => {
-  const player = useRef();
+  const player = useRef<any>();
 
   const initPlayer = useCallback(() => {
     if (document.getElementById("player-container")) {

@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import Player from "./Player";
+// import PlayerClass from "./PlayerClass";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Player />
   </React.StrictMode>,
   document.getElementById("root")
 );
