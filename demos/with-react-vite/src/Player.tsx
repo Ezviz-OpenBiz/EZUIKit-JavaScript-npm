@@ -159,7 +159,7 @@ const Player = () => {
         <div className="form-item">
           <label>accessToken</label>
           {/* prettier-ignore */}
-          <input ref={accessTokenRef} placeholder="ezopen accessToken" defaultValue="at.2ec3m7dga2v59cps6rv0d1haa2vqsjka-1lbu5f5hyi-1j9rleq-npvulusoe" />
+          <input ref={accessTokenRef} placeholder="ezopen accessToken" defaultValue="at.2ec3m7dga2v59cps6rv0d1haa2vqsjka-1lbu5f5hyi-1j9rleq-npvuluse" />
         </div>
         <div className="form-item">
           <label>staticPath</label>
