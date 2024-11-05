@@ -61,7 +61,7 @@ var player = new EZUIKit.EZUIKitPlayer({
   id: "video-container", // 视频容器ID
   accessToken:
     "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
-  url: "ezopen://open.ys7.com/G39444019/1.live",
+  url: "ezopen://open.ys7.com/AA2615287/1.live",
   width: 600,
   height: 400,
   handleError: (err) => {
@@ -81,7 +81,7 @@ var player = new EZUIKit.EZUIKitPlayer({
   height: 400,
   accessToken:
     "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
-  url: "ezopen://open.ys7.com/G39444019/1.rec",
+  url: "ezopen://open.ys7.com/AA2615287/1.rec",
 });
 ```
 
@@ -91,7 +91,7 @@ var player = new EZUIKit.EZUIKitPlayer({
 
 我们提供了测试 accessToken,测试播放地址，并提供了几种常用场景使用示例。你可以通过使用示例，使用测试播放地址，测试 accessToken，在你的应用快速接入。
 
-<b>测试播放地址：</b> ezopen://open.ys7.com/G39444019/1.live
+<b>测试播放地址：</b> ezopen://open.ys7.com/AA2615287/1.live
 
 你可以通过以下地址获取到测试 accessToken <a href="https://open.ys7.com/jssdk/ezopen/demo/token" target="_blank">获取测试 accessToken</a> 用来播放上述测试播放地址。
 当前设备有可能下线或被移除了， 如果自己有设备优先使用自己的设备进行测试。
@@ -172,8 +172,8 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.rec?begin=yyyyMMddhhmmss
 ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhmmss
 视频 ezopen 协议播放地址 详见：<a href="https://open.ys7.com/help/23" target="_blank">ezopen 协议</a> </td><td>Y</td></tr>
 
-<tr><td>audio</td><td>boolean</td><td>是否默认开启声音 true：打开（默认） false：关闭	</td><td>N</td></tr>
-<tr><td>width</td><td>int</td><td>视频宽度，默认值为容器容器DOM宽度	</td><td>Y</td></tr>
+<tr><td>audio</td><td>boolean</td><td>是否默认开启声音 true：打开（默认） false：关闭    </td><td>N</td></tr>
+<tr><td>width</td><td>int</td><td>视频宽度，默认值为容器容器DOM宽度    </td><td>Y</td></tr>
 <tr><td>height</td><td>int</td><td>视频高度，默认值为容器容器DOM高度</td><td>Y</td></tr>
 <tr><td>staticPath</td><td>string</td><td>设置静态资源地址, 自定义可以自行下载 `ezuikit_static`放置在自己的服务器下， 设置 {staticPath: "/ezuikit_static"} </td><td>N</td></tr>
 <tr><td>template</td><td>String</td><td>
@@ -187,9 +187,9 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhm
 
 <tr><td>security</td><td>安防版(预览回放);  *固定模板 包含视频窗口，叠加了录制，全屏控件，<br />标清/高清切换，预览录制切换控件*</td></tr>
 <tr><td>voice</td><td>语音版;  *固定模板 包含视频窗口，叠加了录制，全屏控件，语音播报，语音<br />对讲控件*</td></tr>
-<tr><td>pcLive</td><td>	*固定模板 按钮列表，颜色，底部头部背景色固定，可用于pc端预览，如需<br />修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用<br />themeData本地配置*</td></tr>
-<tr><td>pcRec</td><td>	*固定模板 按钮列表，颜色，底部头部背景色固定， 可用于pc端回放，如需<br />修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData<br />本地配置*</td></tr>
-<tr><td>mobileLive</td><td>	*固定模板  按钮列表，颜色，底部头部背景色固定，可用于移动端预<br />览，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData<br />本地配置*</td></tr>
+<tr><td>pcLive</td><td>    *固定模板 按钮列表，颜色，底部头部背景色固定，可用于pc端预览，如需<br />修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用<br />themeData本地配置*</td></tr>
+<tr><td>pcRec</td><td>    *固定模板 按钮列表，颜色，底部头部背景色固定， 可用于pc端回放，如需<br />修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData<br />本地配置*</td></tr>
+<tr><td>mobileLive</td><td>    *固定模板  按钮列表，颜色，底部头部背景色固定，可用于移动端预<br />览，如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData<br />本地配置*</td></tr>
 <tr><td>mobileRec</td><td>*固定模板 按钮列表，颜色，底部头部背景色固定， 可用于移动端回放，<br />如需修改按钮配置，头部底部背景色，可参考 {{自定义themeId}}，或者使用themeData<br />本地配置*</td></tr>
 <tr><td>自定义themeId</td><td>自定义主题，<a href="https://open.ys7.com/console/ezuikit/template.html" target="_blank">前往开放平台控制台配置页面获取</a><br />（v0.6.2版本及以上支持，建议使用 自定义themeId，或者使用themeData本地<br />配置）;</td></tr>
 </table>
@@ -499,17 +499,17 @@ player.changePlayUrl(options).then(() => {
 
 options 参数说明
 
-| 参数名       | 类型    | 是否必选 | 默认值       | 描述                                                            |
-| :----------- | :------ | :------- | :----------- | :-------------------------------------------------------------- |
-| type         | String  | Y        | 无           | 播放地址类型，"live":预览，"rec"：回放；“cloud.rec”：云存储回放 |
-| deviceSerial | String  | Y        | 无           | 设备序列号,存在英文字母的设备序列号，字母需为大写               |
-| channelNo    | int     | Y        | 无           | 通道号                                                          |
-| accessToken  | String  | N        | 初始化时获取 | 授权过程获取的 access_token                                     |
-| hd           | boolean | N        | 初始化时获取 | 是否为高清 true-主码流（高清） false-子码流(标清)               |
-| validCode    | String  | N        | 初始化时获取 | 设备验证码（加密设备播放需要输入验证码）                        |
-| validCode    | String  | N        | 初始化时获取 | 设备验证码（加密设备播放需要输入验证码）                        |
-| begin        | String  | N        | 初始化时获取 | type 类型为回放有效，开始时间 格式为“YYYYMMDDHHmmss”            |
-| end          | String  | N        | 初始化时获取 | type 类型为回放有效，结束时间 格式为 “YYYYMMDDHHmmss”           |
+| 参数名          | 类型      | 是否必选 | 默认值    | 描述                                          |
+|:------------ |:------- |:---- |:------ |:------------------------------------------- |
+| type         | String  | Y    | 无      | 播放地址类型，"live":预览，"rec"：回放；“cloud.rec”：云存储回放 |
+| deviceSerial | String  | Y    | 无      | 设备序列号,存在英文字母的设备序列号，字母需为大写                   |
+| channelNo    | int     | Y    | 无      | 通道号                                         |
+| accessToken  | String  | N    | 初始化时获取 | 授权过程获取的 access_token                        |
+| hd           | boolean | N    | 初始化时获取 | 是否为高清 true-主码流（高清） false-子码流(标清)            |
+| validCode    | String  | N    | 初始化时获取 | 设备验证码（加密设备播放需要输入验证码）                        |
+| validCode    | String  | N    | 初始化时获取 | 设备验证码（加密设备播放需要输入验证码）                        |
+| begin        | String  | N    | 初始化时获取 | type 类型为回放有效，开始时间 格式为“YYYYMMDDHHmmss”       |
+| end          | String  | N    | 初始化时获取 | type 类型为回放有效，结束时间 格式为 “YYYYMMDDHHmmss”      |
 
 #### 切换模板主题
 
@@ -524,15 +524,13 @@ options 参数说明
     console.log("地址切换成功，开始切换模板主题");
     player.Theme.changeTheme("pcRec");
   });
-
-
 ```
 
 template 参数说明
 
-| 参数名 | 类型   | 描述                              | 是否必选 |
-| :----- | :----- | :-------------------------------- | :------- |
-| type   | String | 模板名称，详见初始化参数 template | Y        |
+| 参数名  | 类型     | 描述                    | 是否必选 |
+|:---- |:------ |:--------------------- |:---- |
+| type | String | 模板名称，详见初始化参数 template | Y    |
 
 #### 开启电子放大
 
