@@ -32,6 +32,11 @@ httpServer.on('request', (req, res) => {
 
   const urlJson = url.parse(req.url)
   let { pathname } = urlJson
+  if (pathname.includes('..')) {
+    res.writeHead(403);
+    res.end();
+    return;
+  }
   let ext = pathname.split('.').pop()
   // all
   // res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp')
