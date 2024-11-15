@@ -110,7 +110,7 @@ const init = () => {
     id: "video-container", // 视频容器ID
     accessToken:
       "at.a9vba5iia6ixphqu8db7y16174p6neje-6f0n0ahcu8-1uvhxp7-rxswkykaa",
-    url: "ezopen://open.ys7.com/BC7900686/1.hd.live",
+    url: "ezopen://open.ys7.com/BD3957004/1.hd.live",
     // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
     template: "pcLive",
     plugin: ["talk"], // 加载插件，talk-对讲

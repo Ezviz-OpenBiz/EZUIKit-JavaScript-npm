@@ -61,7 +61,7 @@ var player = new EZUIKit.EZUIKitPlayer({
   id: "video-container", // 视频容器ID
   accessToken:
     "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
-  url: "ezopen://open.ys7.com/AA2615287/1.live",
+  url: "ezopen://open.ys7.com/BD3957004/1.live",
   width: 600,
   height: 400,
   handleError: (err) => {
@@ -81,7 +81,7 @@ var player = new EZUIKit.EZUIKitPlayer({
   height: 400,
   accessToken:
     "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
-  url: "ezopen://open.ys7.com/AA2615287/1.rec",
+  url: "ezopen://open.ys7.com/BD3957004/1.rec",
 });
 ```
 
@@ -91,7 +91,7 @@ var player = new EZUIKit.EZUIKitPlayer({
 
 我们提供了测试 accessToken,测试播放地址，并提供了几种常用场景使用示例。你可以通过使用示例，使用测试播放地址，测试 accessToken，在你的应用快速接入。
 
-<b>测试播放地址：</b> ezopen://open.ys7.com/AA2615287/1.live
+<b>测试播放地址：</b> ezopen://open.ys7.com/BD3957004/1.live
 
 你可以通过以下地址获取到测试 accessToken <a href="https://open.ys7.com/jssdk/ezopen/demo/token" target="_blank">获取测试 accessToken</a> 用来播放上述测试播放地址。
 当前设备有可能下线或被移除了， 如果自己有设备优先使用自己的设备进行测试。
