@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   ezuikit-js:
-    specifier: ^8.1.1-alpha.1
-    version: 8.1.1-alpha.1
+    specifier: ^8.1.1
+    version: 8.1.1
   react:
     specifier: ^17
     version: 17.0.2
@@ -5021,8 +5021,8 @@ packages:
       - supports-color
     dev: false
 
-  /ezuikit-js@8.1.1-alpha.1:
-    resolution: {integrity: sha512-cJT4ChP435EsxYK4DlNc2IZ3BGGM+8cv80L4VQVK5ZxIWTOhLvhGLF/SKhA+gGHr3kIrvRzMZ6Wk4/Qb4dgS0g==}
+  /ezuikit-js@8.1.1:
+    resolution: {integrity: sha512-+6scTSedCLEtIXlFDQS8Cv2zy8FEJy2XbbUpugiW3Zs5pcql03Ke9xHAaSK3jB9Mn0MNIihWdSAGhpzEbzUyCg==}
     dev: false
 
   /fast-deep-equal@3.1.3:
