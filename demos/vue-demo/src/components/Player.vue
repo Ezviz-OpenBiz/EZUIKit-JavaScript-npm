@@ -66,6 +66,7 @@ export default {
         }
       });
       window.player = player;
+
     },
     play() {
       var playPromise = player.play();
