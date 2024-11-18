@@ -1,3 +1,15 @@
+## v8.1.1 (2024-11-18)
+
+#### Feat
+
+- 支持多实例
+
+### Fixed
+
+- 优化全屏的逻辑， 修复已知的bug, [issues #240](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/240)
+- 优化resize的逻辑， 修复已知的bug [issues #120](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/120)
+- 修复初始化窗口抖动的bug
+- 修复一些已知bug [issues #269](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/269)
 
 ## v8.1.0 (2024-11-04)
 #### Feat
