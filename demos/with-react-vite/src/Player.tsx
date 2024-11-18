@@ -20,7 +20,7 @@ const Player = () => {
       const url = urlRef.current?.value.trim();
       const accessToken = accessTokenRef.current?.value.trim();
       const staticPath = staticPathRef.current?.value.trim() || undefined;
-      const domain = domainRef.current?.value.trim() || undefined;
+      const domain = domainRef.current?.value.trim() || "https://open.ys7.com";
       const language = languageRef.current?.value.trim();
       const template = templateRef.current?.value.trim();
 
