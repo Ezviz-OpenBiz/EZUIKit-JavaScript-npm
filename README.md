@@ -85,6 +85,24 @@ var player = new EZUIKit.EZUIKitPlayer({
 });
 ```
 
+#### 非正式版说明
+
+alpha（功能测试）、beta（集成测试）为我们的非正式版本，可能存在功能或使用上的问题，若您遇到了任何问题，欢迎向我们反馈。
+
+非正式版本没有CDN资源，使用时需要配置 `staticPath`，引用本地的解码库资源。
+
+### 使用示例
+
+> 如果使用原生 js，可参考 demos => [base-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/base-demo)
+
+> 如果使用 react，可参考 demos => [react-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/react-demo)
+
+> 如果使用 react + vite，可参考 demos => [with-react-vite](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-react-vite)
+
+> 如果使用 vue2，可参考 demos => [vue-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/vue-demo)
+
+> 如果使用 vue3，可参考 demos => [vue3-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/vue3-demo)
+
 #### tips
 
 为方便开发者快速接入
@@ -95,6 +113,36 @@ var player = new EZUIKit.EZUIKitPlayer({
 
 你可以通过以下地址获取到测试 accessToken <a href="https://open.ys7.com/jssdk/ezopen/demo/token" target="_blank">获取测试 accessToken</a> 用来播放上述测试播放地址。
 当前设备有可能下线或被移除了， 如果自己有设备优先使用自己的设备进行测试。
+
+### 轻应用 - 海外版本
+
+> 轻应用支持向接入萤石云海外环境的设备发起取流播放，需要在初始化时配置海外服务域名，示例：
+
+```js
+EZOPENDemo = new EZUIKit.EZUIKitPlayer({
+  id: 'playWind',
+  width: 600,
+  height: 400,
+  template:"pcLive",
+  url: '',
+  accessToken: '',
+  env:{
+    domain: "https://iusopen.ezvizlife.com" // 北美地区
+  }
+});
+```
+
+各地区的域名分别为：
+
+| 区域  | 域名                               |
+| --- | -------------------------------- |
+| 北美  | https://iusopen.ezvizlife.com    |
+| 南美  | https://isaopen.ezvizlife.com    |
+| 欧洲  | https://ieuopen.ezvizlife.com    |
+| 新加坡 | https://isgpopen.ezvizlife.com   |
+| 印度  | https://iindiaopen.ezvizlife.com |
+
+
 
 #### 最佳实践 tips
 
@@ -576,19 +624,3 @@ player.reSize(width, height);
 // 顶装4分屏
 player.setFECCorrectType({place: 3 , type：4}, "cavnas1,canvas2,canvas3") // cavnas1,canvas2,canvas3 是分屏是需要的
 ```
-
-### 非正式版说明
-
-非正式版需要配置 `staticPath`
-
-### 使用示例
-
-> 如果使用原生 js，可参考 demos => [base-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/base-demo)
-
-> 如果使用 react，可参考 demos => [react-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/react-demo)
-
-> 如果使用 react + vite，可参考 demos => [with-react-vite](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-react-vite)
-
-> 如果使用 vue2，可参考 demos => [vue-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/vue-demo)
-
-> 如果使用 vue3，可参考 demos => [vue3-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/vue3-demo)
