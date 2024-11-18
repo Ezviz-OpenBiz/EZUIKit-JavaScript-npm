@@ -6,6 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>Document</title>
   <script src="./ezuikit.js"></script>
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+  </style>
 </head>
 
 <body>
@@ -30,20 +37,30 @@
   </div>
   <script>
     var player;
-    fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
-      .then(response => response.json())
-      .then(res => {
-        var accessToken = res.data.accessToken;
-        player = new EZUIKit.EZUIKitPlayer({
-          id: 'video-container', // 视频容器ID
-          accessToken: accessToken,
-          url: 'ezopen://open.ys7.com/G39444019/1.live',
-          template: 'mobileLive', // simple - 极简版;standard-标准版;security - 安防版(预览回放);voice-语音版; theme-可配置主题；
-          plugin: ['talk'],                       // 加载插件，talk-对讲
-          width: 375,
-          height: 210,
-        });
-      });
+    const width = document.body.clientWidth || 375
+
+    // fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
+    //   .then(response => response.json())
+    //   .then(res => {
+    //     var accessToken = res.data.accessToken;
+    player = new EZUIKit.EZUIKitPlayer({
+      id: 'video-container', // 视频容器ID
+      accessToken:
+        "at.5eust80k24rnxeao5ubhg3we8xg3fe2y-2obk7hy2h9-0c9z5t2-6gjyxouc",
+      url: "ezopen://open.ys7.com/L16120197/1.hd.live",
+      template: 'mobileLive', // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
+      plugin: ['talk'], // 加载插件，talk-对讲
+      width: width,
+      height: width * 9 / 16,
+      language: "en", // zh | en
+      env: {
+        // https://open.ys7.com/help/1772?h=domain
+        // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
+        // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
+        domain: "https://open.ys7.com"
+      }
+    });
+    // });
     function fullScreen() {
       var playPromise = player.fullScreen();
       playPromise.then((data) => {

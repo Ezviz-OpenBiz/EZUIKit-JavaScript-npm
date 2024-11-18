@@ -37,27 +37,36 @@ export default {
         this.destroy();
       }
 
-      fetch("https://open.ys7.com/jssdk/ezopen/demo/token")
-        .then((response) => response.json())
-        .then((res) => {
-          var accessToken = res.data.accessToken;
-          player = new EZUIKit.EZUIKitPlayer({
-            id: "video-container", // 视频容器ID
-            accessToken: accessToken,
-            url: "ezopen://open.ys7.com/BD3957004/1.hd.live",
-            // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
-            template: "pcLive",
-            // plugin: ["talk"], // 加载插件，talk-对讲
-            width: 600,
-            height: 400,
-            handleError: (error) => {
-              console.error("handleError", error);
-            },
-            // language: "en", // zh | en
-            // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
-          });
-          window.player = player;
-        });
+      // fetch("https://open.ys7.com/jssdk/ezopen/demo/token")
+      //   .then((response) => response.json())
+      //   .then((res) => {
+      //     var accessToken = res.data.accessToken;
+
+      //   });
+      player = new EZUIKit.EZUIKitPlayer({
+        id: "video-container", // 视频容器ID
+        accessToken:
+          "at.0siysnsad14jkcgmbnp2pbop427gcbx6-8l00xx7oa9-193qkwi-ryfn1m0j",
+        url: "ezopen://open.ys7.com/BC7900686/1.hd.live",
+        // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
+        template: "pcLive",
+        // plugin: ["talk"], // 加载插件，talk-对讲
+        width: 600,
+        height: 400,
+        handleError: (error) => {
+          console.error("handleError", error);
+        },
+        // language: "en", // zh | en
+        // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+        env: {
+          // https://open.ys7.com/help/1772?h=domain
+          // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
+          // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
+          domain: "https://open.ys7.com"
+        }
+      });
+      window.player = player;
+
     },
     play() {
       var playPromise = player.play();

@@ -37,7 +37,7 @@ export default defineConfig(((env: ConfigEnv) => {
         compress: {
           // drop_console 暂时不能用，会报错
           // https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/138
-          // drop_console: true,
+          drop_console: true,
           drop_debugger: true
         }
       }

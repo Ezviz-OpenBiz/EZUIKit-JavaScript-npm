@@ -40,10 +40,17 @@
           accessToken: accessToken,
           url: 'ezopen://open.ys7.com/G39444019/1.live',
           template: 'simple', // simple:极简版; pcLive: pc直播； pcRec : pc回放； mobileLive: 移动端直播； mobileRec: 移动端回放; security: 安防版; voice: 语音版;
-          plugin: ['talk'],                       // 加载插件，talk-对讲
+          plugin: ['talk'],  // 加载插件，talk-对讲
           width: 600,
           height: 400,
-          staticPath: "/ezuikit_static"
+          staticPath: "/ezuikit_static",
+          language: "en", // zh | en
+          env: {
+            // https://open.ys7.com/help/1772?h=domain
+            // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
+            // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
+            domain: "https://open.ys7.com"
+          }
         });
       });
     function fullScreen() {
