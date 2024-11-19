@@ -30,6 +30,8 @@
       <button onClick="ezopenStartTalk()">开始对讲</button>
       <button onClick="ezopenStopTalk()">结束对讲</button>
       <button onClick="fullScreen()">全屏</button>
+      <button onClick="destroy()">destroy</button>
+
     </div>
     <p style="font-style: italic;">播放多个视频，可初始化多个实例，参考：/demos/base-demo/multi-demo</p>
   </div>
@@ -47,8 +49,8 @@
     player = new EZUIKit.EZUIKitPlayer({
       id: 'video-container', // 视频容器ID
       accessToken:
-        "at.5eust80k24rnxeao5ubhg3we8xg3fe2y-2obk7hy2h9-0c9z5t2-6gjyxouc",
-      url: "ezopen://open.ys7.com/L16120197/1.rec",
+        "at.1gskp9sk9b8pol288qw4f0ladj6ow00a-2obk8zrvgd-0icd73x-",
+      url: "ezopen://open.ys7.com/BA7248908/1.rec",
       template: 'mobileRec', // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
       width: width,
       height: width * 9 / 16,
@@ -116,11 +118,20 @@
         console.log("promise 获取 数据", data)
       })
     }
+
     function ezopenStartTalk() {
       player.startTalk();
     }
+
     function ezopenStopTalk() {
       player.stopTalk();
+    }
+
+    function destroy() {
+      if (player) {
+        player.destroy();
+      }
+      player = null;
     }
   </script>
 </body>
