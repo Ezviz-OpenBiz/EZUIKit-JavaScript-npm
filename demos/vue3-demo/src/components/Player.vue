@@ -151,9 +151,9 @@ onMounted(() => {
       <button @click="capturePicture">capturePicture</button>
       <button @click="fullScreen">fullScreen</button>
       <button @click="getOSDTime">getOSDTime</button>
-      <button @click="ezopenStartTalk">开始对讲</button>
-      <button @click="ezopenStopTalk">结束对讲</button>
-      <button @click="destroy">销毁</button>
+      <button @click="ezopenStartTalk">startTalk</button>
+      <button @click="ezopenStopTalk">stopTalk</button>
+      <button @click="destroy">destroy</button>
     </div>
   </div>
 </template>

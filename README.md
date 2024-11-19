@@ -17,7 +17,8 @@
 
 ### 获取 ezuikit-js
 
-```
+```bash
+# npm
 npm install ezuikit-js
 
 # yarn
@@ -31,13 +32,13 @@ pnpm add ezuikit-js
 
 ### 引入 ezuikit-js
 
-```
+```js
 import EZUIKit from 'ezuikit-js';
 ```
 
 #### 如果你使用原生方法,可以通过标签引用
 
-```
+```html
   <!-- umd -->
   <script src="./ezuikit.js"></script>
 ```
@@ -48,7 +49,7 @@ import EZUIKit from 'ezuikit-js';
 
 创建 DOM
 
-```
+```html
   <div id="video-container"></div>
 ```
 
@@ -57,7 +58,7 @@ import EZUIKit from 'ezuikit-js';
 ### 直播
 
 ```js
-var player = new EZUIKit.EZUIKitPlayer({
+const player = new EZUIKit.EZUIKitPlayer({
   id: "video-container", // 视频容器ID
   accessToken:
     "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
@@ -75,7 +76,7 @@ var player = new EZUIKit.EZUIKitPlayer({
 ### 回放
 
 ```js
-var player = new EZUIKit.EZUIKitPlayer({
+const player = new EZUIKit.EZUIKitPlayer({
   id: "video-container", // 视频容器ID
   width: 600,
   height: 400,
@@ -119,7 +120,7 @@ alpha（功能测试）、beta（集成测试）为我们的非正式版本，�
 > 轻应用支持向接入萤石云海外环境的设备发起取流播放，需要在初始化时配置海外服务域名，示例：
 
 ```js
-EZOPENDemo = new EZUIKit.EZUIKitPlayer({
+const player = new EZUIKit.EZUIKitPlayer({
   id: "playWind",
   width: 600,
   height: 400,
@@ -473,46 +474,46 @@ player.stopTalk();
 
 #### 对讲设置麦克风增益
 
-```
-  // 设置音频增益系数 0 ~ 10
-  player.setVolumeGain(volume);
+```js
+// 设置音频增益系数 0 ~ 10
+player.setVolumeGain(volume);
 ```
 
 #### 获取麦克风权限
 
-```
-  player.getMicrophonePermission().then(data => {
-    if (data.code === 0) {
-      // 成功....
-    }
-  })
+```js
+player.getMicrophonePermission().then(data => {
+  if (data.code === 0) {
+    // 成功....
+  }
+})
 ```
 
 #### 获取麦克风列表
 
-```
-  // 需要在麦克风已授权的情况下调用，才能获取到麦克风列表，可以和getMicrophonePermission配合使用，或在初始化后先调用getMicrophonePermission获取授权
-  player.getMicrophonesList().then(data => {
-    if (data.code === 0) {
-      // 成功....
-    }
-  })
+```js
+// 需要在麦克风已授权的情况下调用，才能获取到麦克风列表，可以和getMicrophonePermission配合使用，或在初始化后先调用getMicrophonePermission获取授权
+player.getMicrophonesList().then(data => {
+  if (data.code === 0) {
+    // 成功....
+  }
+})
 ```
 
 #### 切换麦克风
 
-```
-  // microphoneId 为获取到的麦克风列表中的deviceId，如果当前处于对讲中，调用setProfile会先关闭，重新发起对讲
-  player.setProfile({ microphoneId })
+```js
+// microphoneId 为获取到的麦克风列表中的deviceId，如果当前处于对讲中，调用setProfile会先关闭，重新发起对讲
+player.setProfile({ microphoneId })
 ```
 
 #### 监听麦克风音量变化
 
-```
-  player.eventEmitter.on('volumeChange', ({ data }) => {
-    // 动态显示音柱,100ms触发一次
-    console.log(`${data * 100}%`)
-  })
+```js
+player.eventEmitter.on('volumeChange', ({ data }) => {
+  // 动态显示音柱,100ms触发一次
+  console.log(`${data * 100}%`)
+})
 ```
 
 #### 全屏
@@ -555,7 +556,6 @@ options 参数说明
 | accessToken  | String  | N        | 初始化时获取 | 授权过程获取的 access_token                                     |
 | hd           | boolean | N        | 初始化时获取 | 是否为高清 true-主码流（高清） false-子码流(标清)               |
 | validCode    | String  | N        | 初始化时获取 | 设备验证码（加密设备播放需要输入验证码）                        |
-| validCode    | String  | N        | 初始化时获取 | 设备验证码（加密设备播放需要输入验证码）                        |
 | begin        | String  | N        | 初始化时获取 | type 类型为回放有效，开始时间 格式为“YYYYMMDDHHmmss”            |
 | end          | String  | N        | 初始化时获取 | type 类型为回放有效，结束时间 格式为 “YYYYMMDDHHmmss”           |
 
@@ -564,14 +564,13 @@ options 参数说明
 > 可用于在播放中切换模板主题，请切换播放地址成功后调用
 
 ```js
-  player.Theme.changeTheme(template)
+player.Theme.changeTheme(template)
 
-  // 预览切回放场景示例
-  player.changePlayUrl({type:"rec"});
-  .then(()=>{
-    console.log("地址切换成功，开始切换模板主题");
-    player.Theme.changeTheme("pcRec");
-  });
+// 预览切回放场景示例
+player.changePlayUrl({type:"rec"}).then(()=>{
+  console.log("地址切换成功，开始切换模板主题");
+  player.Theme.changeTheme("pcRec");
+});
 ```
 
 template 参数说明

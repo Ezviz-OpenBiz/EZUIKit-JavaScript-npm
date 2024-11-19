@@ -12,9 +12,9 @@
       <button v-on:click="capturePicture">capturePicture</button>
       <button v-on:click="fullScreen">fullScreen</button>
       <button v-on:click="getOSDTime">getOSDTime</button>
-      <button v-on:click="ezopenStartTalk">开始对讲</button>
-      <button v-on:click="ezopenStopTalk">结束对讲</button>
-      <button v-on:click="destroy">销毁</button>
+      <button v-on:click="ezopenStartTalk">startTalk</button>
+      <button v-on:click="ezopenStopTalk">stopTalk</button>
+      <button v-on:click="destroy">destroy</button>
     </div>
   </div>
 </template>
@@ -46,8 +46,8 @@ export default {
       player = new EZUIKit.EZUIKitPlayer({
         id: "video-container", // 视频容器ID
         accessToken:
-          "at.0siysnsad14jkcgmbnp2pbop427gcbx6-8l00xx7oa9-193qkwi-ryfn1m0j",
-        url: "ezopen://open.ys7.com/BC7900686/1.hd.live",
+          "at.1gskp9sk9b8pol288qw4f0ladj6ow00a-2obk8zrvgd-0icd73x",
+        url: "ezopen://open.ys7.com/BA7248908/1.hd.live",
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
         template: "pcLive",
         // plugin: ["talk"], // 加载插件，talk-对讲
