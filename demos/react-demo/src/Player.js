@@ -5,6 +5,11 @@ import { isMobile } from "./utils";
 const Player = () => {
   const player = useRef();
 
+  /** @type {React.MutableRefObject<HTMLInputElement>} */
+  const urlRef = useRef();
+  /** @type {React.MutableRefObject<HTMLInputElement>} */
+  const accessTokenRef = useRef();
+
   const initPlayer = useCallback(() => {
     if (document.getElementById("player-container")) {
       let width = 600;
@@ -22,9 +27,8 @@ const Player = () => {
 
       player.current = new EZUIKit.EZUIKitPlayer({
         id: "player-container",
-        url: "ezopen://open.ys7.com/BB9480953/1.hd.live",
-        accessToken:
-          "at.2ec3m7dga2v59cps6rv0d1haa2vqsjka-1lbu5f5hyi-1j9rleq-npvuluse",
+        url: urlRef.current.value, // "ezopen://open.ys7.com/BB9480953/1.hd.live",
+        accessToken: accessTokenRef.current.value, // "at.2ec3m7dga2v59cps6rv0d1haa2vqsjka-1lbu5f5hyi-1j9rleq-npvuluse",
         width,
         height,
         template: "pcLive",
@@ -96,7 +100,7 @@ const Player = () => {
   /** 获取OSD时间 */
   const handleGetOSDTime = useCallback(() => {
     if (player.current) {
-      player.current.getOSDTime();
+      console.log("OSDTime", player.current.getOSDTime());
     }
   }, []);
 
@@ -130,7 +134,14 @@ const Player = () => {
       <h2>视频模式使用示例：</h2>
       <div id="player-container"></div>
       <div>
-        <button onClick={initPlayer}>初始化</button>
+        url: <input type="text" ref={urlRef} style={{ width: 500 }} />
+      </div>
+      <div>
+        accessToken:
+        <input type="text" ref={accessTokenRef} style={{ width: 500 }} />
+      </div>
+      <div>
+        <button onClick={initPlayer}>init</button>
         <button onClick={handleStop}>stop</button>
         <button onClick={handlePlay}>play</button>
         <button onClick={handleOpenSound}>openSound</button>
@@ -140,8 +151,8 @@ const Player = () => {
         <button onClick={handleCapturePicture}>capturePicture</button>
         <button onClick={handleFullscreen}>fullScreen</button>
         <button onClick={handleGetOSDTime}>getOSDTime</button>
-        <button onClick={handleStartTalk}>开始对讲</button>
-        <button onClick={handleStopTalk}>结束对讲</button>
+        <button onClick={handleStartTalk}>startTalk</button>
+        <button onClick={handleStopTalk}>stopTalk</button>
         <button onClick={handleDestroy}>destroy</button>
       </div>
     </div>
