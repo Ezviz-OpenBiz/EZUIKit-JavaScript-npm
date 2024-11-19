@@ -89,7 +89,7 @@ var player = new EZUIKit.EZUIKitPlayer({
 
 alpha（功能测试）、beta（集成测试）为我们的非正式版本，可能存在功能或使用上的问题，若您遇到了任何问题，欢迎向我们反馈。
 
-非正式版本没有CDN资源，使用时需要配置 `staticPath`，引用本地的解码库资源。
+非正式版本没有 CDN 资源，使用时需要配置 `staticPath`，引用本地的解码库资源。
 
 ### 使用示例
 
@@ -120,29 +120,27 @@ alpha（功能测试）、beta（集成测试）为我们的非正式版本，�
 
 ```js
 EZOPENDemo = new EZUIKit.EZUIKitPlayer({
-  id: 'playWind',
+  id: "playWind",
   width: 600,
   height: 400,
-  template:"pcLive",
-  url: '',
-  accessToken: '',
-  env:{
-    domain: "https://iusopen.ezvizlife.com" // 北美地区
-  }
+  template: "pcLive",
+  url: "",
+  accessToken: "",
+  env: {
+    domain: "https://iusopen.ezvizlife.com", // 北美地区
+  },
 });
 ```
 
 各地区的域名分别为：
 
-| 区域  | 域名                               |
-| --- | -------------------------------- |
-| 北美  | https://iusopen.ezvizlife.com    |
-| 南美  | https://isaopen.ezvizlife.com    |
-| 欧洲  | https://ieuopen.ezvizlife.com    |
+| 区域   | 域名                             |
+| ------ | -------------------------------- |
+| 北美   | https://iusopen.ezvizlife.com    |
+| 南美   | https://isaopen.ezvizlife.com    |
+| 欧洲   | https://ieuopen.ezvizlife.com    |
 | 新加坡 | https://isgpopen.ezvizlife.com   |
-| 印度  | https://iindiaopen.ezvizlife.com |
-
-
+| 印度   | https://iindiaopen.ezvizlife.com |
 
 #### 最佳实践 tips
 
@@ -375,6 +373,8 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 <tr><td>handleError</td><td>function</td><td>错误回调</td><td>N</td></tr>
 <tr><td>seekFrequency </td><td>function</td><td>为避免频繁拖动播放异常，可设置模板回放时间轴拖动防抖间隔，默认值为2000（2秒），可取2000（2秒），3000（3秒），4000（4秒），5000（5秒）</td><td>N</td></tr>
 <tr><td>language</td><td>String</td><td>多语言 （zh | en）, 默认zh (v8.0.8版本及以上支持)</td><td>N</td></tr>
+<tr><td>debugDownloadData</td><td>boolean</td><td>下载原始码流， 调试码流使用, 默认 false (v8.1.1版本及以上支持)</td><td>N</td></tr>
+<tr><td>disableRenderPrivateData</td><td>boolean</td><td>禁止渲染私有数据(如智能分析， 移动侦测， 火点信息等), 默认 false (v8.1.1版本及以上支持)</td><td>N</td></tr>
 </table>
 
 ### 方法调用
@@ -547,17 +547,17 @@ player.changePlayUrl(options).then(() => {
 
 options 参数说明
 
-| 参数名          | 类型      | 是否必选 | 默认值    | 描述                                          |
-|:------------ |:------- |:---- |:------ |:------------------------------------------- |
-| type         | String  | Y    | 无      | 播放地址类型，"live":预览，"rec"：回放；“cloud.rec”：云存储回放 |
-| deviceSerial | String  | Y    | 无      | 设备序列号,存在英文字母的设备序列号，字母需为大写                   |
-| channelNo    | int     | Y    | 无      | 通道号                                         |
-| accessToken  | String  | N    | 初始化时获取 | 授权过程获取的 access_token                        |
-| hd           | boolean | N    | 初始化时获取 | 是否为高清 true-主码流（高清） false-子码流(标清)            |
-| validCode    | String  | N    | 初始化时获取 | 设备验证码（加密设备播放需要输入验证码）                        |
-| validCode    | String  | N    | 初始化时获取 | 设备验证码（加密设备播放需要输入验证码）                        |
-| begin        | String  | N    | 初始化时获取 | type 类型为回放有效，开始时间 格式为“YYYYMMDDHHmmss”       |
-| end          | String  | N    | 初始化时获取 | type 类型为回放有效，结束时间 格式为 “YYYYMMDDHHmmss”      |
+| 参数名       | 类型    | 是否必选 | 默认值       | 描述                                                            |
+| :----------- | :------ | :------- | :----------- | :-------------------------------------------------------------- |
+| type         | String  | Y        | 无           | 播放地址类型，"live":预览，"rec"：回放；“cloud.rec”：云存储回放 |
+| deviceSerial | String  | Y        | 无           | 设备序列号,存在英文字母的设备序列号，字母需为大写               |
+| channelNo    | int     | Y        | 无           | 通道号                                                          |
+| accessToken  | String  | N        | 初始化时获取 | 授权过程获取的 access_token                                     |
+| hd           | boolean | N        | 初始化时获取 | 是否为高清 true-主码流（高清） false-子码流(标清)               |
+| validCode    | String  | N        | 初始化时获取 | 设备验证码（加密设备播放需要输入验证码）                        |
+| validCode    | String  | N        | 初始化时获取 | 设备验证码（加密设备播放需要输入验证码）                        |
+| begin        | String  | N        | 初始化时获取 | type 类型为回放有效，开始时间 格式为“YYYYMMDDHHmmss”            |
+| end          | String  | N        | 初始化时获取 | type 类型为回放有效，结束时间 格式为 “YYYYMMDDHHmmss”           |
 
 #### 切换模板主题
 
@@ -576,9 +576,9 @@ options 参数说明
 
 template 参数说明
 
-| 参数名  | 类型     | 描述                    | 是否必选 |
-|:---- |:------ |:--------------------- |:---- |
-| type | String | 模板名称，详见初始化参数 template | Y    |
+| 参数名 | 类型   | 描述                              | 是否必选 |
+| :----- | :----- | :-------------------------------- | :------- |
+| type   | String | 模板名称，详见初始化参数 template | Y        |
 
 #### 开启电子放大
 

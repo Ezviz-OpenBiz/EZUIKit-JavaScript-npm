@@ -3,21 +3,25 @@
 #### Feat
 
 - 支持多实例
+- 新增入参 debugDownloadData, 下载原始码流， 调试码流使用
+- 新增入参 disableRenderPrivateData, 禁止渲染私有数据 (如智能分析， 移动侦测， 火点信息等)
 
 ### Fixed
 
-- 优化全屏的逻辑， 修复已知的bug, [issues #240](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/240)
-- 优化resize的逻辑， 修复已知的bug [issues #120](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/120)
-- 修复初始化窗口抖动的bug
-- 修复一些已知bug [issues #269](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/269)
+- 优化全屏的逻辑， 修复已知的 bug, [issues #240](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/240)
+- 优化 resize 的逻辑， 修复已知的 bug [issues #120](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/120)
+- 修复初始化窗口抖动的 bug
+- 修复一些已知 bug [issues #269](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/269)
 
 ## v8.1.0 (2024-11-04)
+
 #### Feat
+
 - 完善取流埋点上报内容，错误上报
 
 #### Fixed
-- 修复偶现初始化成功后无法播放的问题
 
+- 修复偶现初始化成功后无法播放的问题
 
 ## v8.0.13-alpha.1 (2024-10-17)
 
