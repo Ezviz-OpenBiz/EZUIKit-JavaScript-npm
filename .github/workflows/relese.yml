@@ -28,16 +28,18 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 获取 tag 的版本类型（alpha 或 beta）
+      # 获取 tag 的版本类型（仅支持 正式版和beta版）
       - name: Determine release tag
         id: determine_tag
         run: |
           TAG=$(echo "${GITHUB_REF}" | sed 's/refs\/tags\/\(.*\)/\1/')
-          PRERELEASE=$(echo $TAG | sed -n 's/.*-\(alpha\|beta\|rc\).*/\1/p')
-          if [ -n "$PRERELEASE" ]; then
-            echo "::set-output name=tag::$PRERELEASE"
-          else
+          if [[ "$TAG" =~ -beta ]]; then
+            echo "::set-output name=tag::beta"
+          elif [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "::set-output name=tag::latest"
+          else
+            echo "Unsupported version detected. Terminating."
+            exit 1
           fi
       # # 打包
       # - name: Build Packages
