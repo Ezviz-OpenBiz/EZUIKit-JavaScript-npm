@@ -1,29 +1,47 @@
 {
   "name": "ezuikit-js",
-  "version": "8.1.2-beta.1",
+  "version": "8.1.2",
   "description": "ezuikit javascript for npm",
-  "main": "ezuikit.js",
+  "main": "index.js",
+  "module": "index.esm.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm.git"
+    "url": "git+https://github.com/Hikvision-Ezviz/EZUIKit-JavaScript-npm.git"
   },
   "author": "Ezviz-OpenBiz",
   "files": [
     "ezuikit.js",
+    "index.js",
+    "index.esm.js",
+    "ezuikit_static",
     "README.md",
-    "ezuikit_static"
+    "CHANGELOG.md"
   ],
   "keywords": [
     "video",
     "ezuikit",
-    "ezopen"
+    "ezopen",
+    "ezviz",
+    "ys7",
+    "open"
   ],
-  "resolutions": {
-    "es5-ext": "0.10.53"
+  "dependencies": {
+    "@ezuikit/player-ezopen": "8.1.1-beta.8",
+    "@ezuikit/utils-collect": "0.1.0",
+    "@ezuikit/utils-tools": "^1.0.4",
+    "@juggle/resize-observer": "^3.4.0",
+    "abortcontroller-polyfill": "^1.7.5",
+    "debounce-promise": "^3.1.2",
+    "deepmerge": "^4.3.1",
+    "formdata-polyfill": "^4.0.10",
+    "jquery": "^3.3.1",
+    "lodash-es": "^4.17.21",
+    "screenfull": "^5.2.0",
+    "uuid": "^8.3.0"
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues"
+    "url": "https://github.com/Hikvision-Ezviz/EZUIKit-JavaScript-npm/issues"
   },
-  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm#readme"
+  "homepage": "https://github.com/Hikvision-Ezviz/EZUIKit-JavaScript-npm#readme"
 }

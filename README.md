@@ -33,14 +33,14 @@ pnpm add ezuikit-js
 ### 引入 ezuikit-js
 
 ```js
-import EZUIKit from 'ezuikit-js';
+import EZUIKit from "ezuikit-js";
 ```
 
 #### 如果你使用原生方法,可以通过标签引用
 
 ```html
-  <!-- umd -->
-  <script src="./ezuikit.js"></script>
+<!-- umd -->
+<script src="./ezuikit.js"></script>
 ```
 
 ### 开始使用 - 初始化
@@ -50,7 +50,7 @@ import EZUIKit from 'ezuikit-js';
 创建 DOM
 
 ```html
-  <div id="video-container"></div>
+<div id="video-container"></div>
 ```
 
 ## 播放器初始化
@@ -482,38 +482,38 @@ player.setVolumeGain(volume);
 #### 获取麦克风权限
 
 ```js
-player.getMicrophonePermission().then(data => {
+player.getMicrophonePermission().then((data) => {
   if (data.code === 0) {
     // 成功....
   }
-})
+});
 ```
 
 #### 获取麦克风列表
 
 ```js
 // 需要在麦克风已授权的情况下调用，才能获取到麦克风列表，可以和getMicrophonePermission配合使用，或在初始化后先调用getMicrophonePermission获取授权
-player.getMicrophonesList().then(data => {
+player.getMicrophonesList().then((data) => {
   if (data.code === 0) {
     // 成功....
   }
-})
+});
 ```
 
 #### 切换麦克风
 
 ```js
 // microphoneId 为获取到的麦克风列表中的deviceId，如果当前处于对讲中，调用setProfile会先关闭，重新发起对讲
-player.setProfile({ microphoneId })
+player.setProfile({ microphoneId });
 ```
 
 #### 监听麦克风音量变化
 
 ```js
-player.eventEmitter.on('volumeChange', ({ data }) => {
+player.eventEmitter.on("volumeChange", ({ data }) => {
   // 动态显示音柱,100ms触发一次
-  console.log(`${data * 100}%`)
-})
+  console.log(`${data * 100}%`);
+});
 ```
 
 #### 全屏
@@ -564,10 +564,10 @@ options 参数说明
 > 可用于在播放中切换模板主题，请切换播放地址成功后调用
 
 ```js
-player.Theme.changeTheme(template)
+player.Theme.changeTheme(template);
 
 // 预览切回放场景示例
-player.changePlayUrl({type:"rec"}).then(()=>{
+player.changePlayUrl({ type: "rec" }).then(() => {
   console.log("地址切换成功，开始切换模板主题");
   player.Theme.changeTheme("pcRec");
 });
