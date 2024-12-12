@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "ezuikit-js": "^8.1.2",
+    "ezuikit-js": "^8.1.1",
     "vue": "^2.7"
   },
   "devDependencies": {
