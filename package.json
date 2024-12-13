@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "8.1.2-beta.2",
+  "version": "8.1.2-beta.3",
   "description": "ezuikit javascript for npm",
   "main": "index.js",
   "module": "index.esm.js",
