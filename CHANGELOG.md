@@ -3,17 +3,18 @@
 #### Feat
 
 - 新增静态多语言变量 `LOCALES`, 可以使用 `EZUIKitPlayer.LOCALES` 访问
-- 更新 header 的 默认样式和交互， 和 footer 保持一致
+- 更新 header 的默认样式和交互和 footer 保持一致
 - 弃用 hls，请使用 [ezuikti-flv](https://www.npmjs.com/package/ezuikit-flv) 代替
 - 弃用 flv，请使用 [@ezuikit/player-hls] https://www.npmjs.com/package/@ezuikit/player-hls 代替
 - 弃用 EZWebRtc, 请使用 [ertc-web](https://www.npmjs.com/package/ertc-web)
-- H5模板支持云录制2.0
+- H5 模板支持云录制 2.0
+- 支持 commonjs 和 esm
 
 #### Fixed
 
 - 修复移动端回放主题退出全屏后，日历的位置不对的问题
 - 修复多实例播放时，小概率出现绿屏、花屏的问题
-- 修复实例销毁后，dom节点和样式文件残留的问题
+- 修复实例销毁后，dom 节点和样式文件残留的问题
 
 ## v8.1.1 (2024-11-18)
 
