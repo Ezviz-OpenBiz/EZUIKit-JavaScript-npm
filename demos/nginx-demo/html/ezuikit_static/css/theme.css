@@ -27,11 +27,17 @@
   display: block;
 }
 
-.footer-controls.themeEditing .footer-controls-left .theme-icon-item:first-child .icon-move.left {
+.footer-controls.themeEditing
+  .footer-controls-left
+  .theme-icon-item:first-child
+  .icon-move.left {
   display: none;
 }
 
-.footer-controls.themeEditing .footer-controls-left .theme-icon-item:nth-last-child(1) .icon-move.right {
+.footer-controls.themeEditing
+  .footer-controls-left
+  .theme-icon-item:nth-last-child(1)
+  .icon-move.right {
   display: none;
 }
 
@@ -39,11 +45,17 @@
   margin-right: 12px;
 }
 
-.footer-controls.themeEditing .footer-controls-right .theme-icon-item:first-child .icon-move.left {
+.footer-controls.themeEditing
+  .footer-controls-right
+  .theme-icon-item:first-child
+  .icon-move.left {
   display: none;
 }
 
-.footer-controls.themeEditing .footer-controls-right .theme-icon-item:nth-last-child(1) .icon-move.right {
+.footer-controls.themeEditing
+  .footer-controls-right
+  .theme-icon-item:nth-last-child(1)
+  .icon-move.right {
   display: none;
 }
 
@@ -76,26 +88,37 @@
   display: block;
 }
 
-.header-controls.themeEditing .header-controls-left .theme-icon-item:first-child .icon-move.left {
+.header-controls.themeEditing
+  .header-controls-left
+  .theme-icon-item:first-child
+  .icon-move.left {
   display: none;
 }
 
-.header-controls.themeEditing .header-controls-left .theme-icon-item:nth-last-child(1) .icon-move.right {
+.header-controls.themeEditing
+  .header-controls-left
+  .theme-icon-item:nth-last-child(1)
+  .icon-move.right {
   display: none;
 }
 
-.header-controls.themeEditing .header-controls-right .theme-icon-item:first-child .icon-move.left {
+.header-controls.themeEditing
+  .header-controls-right
+  .theme-icon-item:first-child
+  .icon-move.left {
   display: none;
 }
 
-.header-controls.themeEditing .header-controls-right .theme-icon-item:nth-last-child(1) .icon-move.right {
+.header-controls.themeEditing
+  .header-controls-right
+  .theme-icon-item:nth-last-child(1)
+  .icon-move.right {
   display: none;
 }
-
 
 .time-area {
   position: absolute;
-  color: #FFFFFF;
+  color: #ffffff;
   width: 68px;
   height: 24px;
   line-height: 24px;
@@ -108,8 +131,9 @@
   align-items: center;
   justify-content: space-around;
   padding-left: 4px;
+  padding-right: 6px;
   z-index: 9999999;
-
+  user-select: none;
 }
 
 .time-area .dot {
@@ -120,7 +144,6 @@
   border-radius: 100%;
   margin: 0 4px 1px 4px;
 }
-
 
 /* .footer-controls.themeEditing .theme-icon-item {
   position: relative;

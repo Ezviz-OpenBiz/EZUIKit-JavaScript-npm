@@ -231,7 +231,7 @@ var spinner = null;
 									// 	$('#audios').removeClass('hide').show();
 									// 	$('#audioleft').append('<audio id="myaudio" autoplay controls muted>Your browser does not support audio tag</audio>');
 									// }
-									Janus.attachMediaStream(document.getElementById("myaudio"), stream);
+									// Janus.attachMediaStream(document.getElementById("myaudio"), stream);
 									//$("#myaudio").get(0).muted = "muted";
 									if(tts.webrtcStuff.pc.iceConnectionState !== "completed" &&
 											tts.webrtcStuff.pc.iceConnectionState !== "connected") {
