@@ -38,9 +38,9 @@ export default defineConfig(((env: ConfigEnv) => {
           // drop_console 暂时不能用，会报错
           // https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/138
           drop_console: true,
-          drop_debugger: true
-        }
-      }
+          drop_debugger: true,
+        },
+      },
     },
     plugins: [
       react(),
@@ -49,10 +49,10 @@ export default defineConfig(((env: ConfigEnv) => {
       // 低版本浏览器兼容
       legacy({
         targets: ["chrome 52", "Android >= 39", "iOS >= 10.3", "IE >= 11"], // 需要兼容的目标列表，可以设置多个
-        modernPolyfills: true
+        modernPolyfills: true,
         // additionalLegacyPolyfills: ['regenerator-runtime/runtime'], // 面向IE11时需要此插件
         // polyfills: ['es.promise', 'es.array.iterator']
-      })
-    ].filter(Boolean)
+      }),
+    ].filter(Boolean),
   };
 }) as UserConfig);

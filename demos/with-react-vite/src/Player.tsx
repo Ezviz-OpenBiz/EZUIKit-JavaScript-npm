@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from "react";
-import EZUIKit from "ezuikit-js";
+import { EZUIKitPlayer } from "ezuikit-js";
 import { isMobile } from "./utils";
 import "./index.css";
 
@@ -39,7 +39,7 @@ const Player = () => {
         player.current = null;
       }
 
-      player.current = new EZUIKit.EZUIKitPlayer({
+      player.current = new EZUIKitPlayer({
         id: "player-container",
         url,
         accessToken,
