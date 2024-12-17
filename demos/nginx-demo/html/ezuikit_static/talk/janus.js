@@ -1801,7 +1801,7 @@ function Janus(gatewayCallbacks) {
 				};
 				event.track.onmute = event.track.onended;
 				event.track.onunmute = function(ev) {
-					Janus.log("Remote track flowing again:", ev);
+					// Janus.log("Remote track flowing again:", ev);
 					try {
 						config.remoteStream.addTrack(ev.target);
 						pluginHandle.onremotestream(config.remoteStream);
@@ -1815,7 +1815,7 @@ function Janus(gatewayCallbacks) {
 			Janus.log('Adding local stream');
 			var simulcast2 = callbacks.simulcast2 === true ? true : false;
 			stream.getTracks().forEach(function(track) {
-				Janus.log('Adding local track:', track);
+				// Janus.log('Adding local track:', track);
 				if(!simulcast2) {
 					config.pc.addTrack(track, stream);
 				} else {

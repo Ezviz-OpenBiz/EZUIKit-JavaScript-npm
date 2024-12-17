@@ -10,19 +10,20 @@
   bottom: 48px;
   left: -30px;
   color: rgba(0, 0, 0, 0.85);
+  user-select: none;
 }
 
 .speed-select li:hover {
-  background: #1890FF1a;
+  background: #1890ff1a;
 }
 
 .speed-select ::after {
   position: absolute;
   bottom: -16px;
   left: 40%;
-  content: ' ';
+  content: " ";
   border: 8px solid transparent;
-  border-top: 8px solid #FFFFFF;
+  border-top: 8px solid #ffffff;
 }
 
 /*避免触发onmouseleave事件*/
@@ -30,7 +31,7 @@
   position: absolute;
   bottom: -16px;
   left: 0;
-  content: ' ';
+  content: " ";
   border: 8px solid transparent;
   border-top: 8px solid transparent;
   width: 100%;
@@ -58,16 +59,16 @@
 }
 
 .speed-select.mobile .selectOption.active {
-  color: #648FFC;
+  color: #648ffc;
 }
 
 .speed-select .selectOption.active {
-  color: #648FFC;
+  color: #648ffc;
 }
 
 .speed-select.mobile .selectOption.cancel {
   position: absolute;
-  background: #FFFF;
+  background: #ffff;
   width: 100%;
   margin-top: 30px;
   height: 45px;
@@ -76,7 +77,7 @@
   list-style: none;
   cursor: pointer;
   font-size: 16px;
-  color: rgba(0, 0, 0, .85);
+  color: rgba(0, 0, 0, 0.85);
   border-radius: 10px;
 }
 
@@ -87,7 +88,7 @@
 .speed-select-mask {
   position: fixed;
   width: 100%;
-  background: rgba(0, 0, 0, 0.40);
+  background: rgba(0, 0, 0, 0.4);
   /* height: 100vh; */
   top: 0;
   z-index: 1;
@@ -104,7 +105,7 @@
   height: 100vw;
   margin: 0;
   background: rgba(0, 0, 0, 0.75);
-  color: #FFFFFF;
+  color: #ffffff;
 
   display: flex;
   justify-content: center;
@@ -115,7 +116,7 @@
 }
 
 .speed-select.mobile.expend li {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .speed-select.mobile.expend li:first-child {
@@ -136,7 +137,7 @@
   display: block;
   width: 16px;
   height: 1px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: none;
   position: absolute;
   top: 50%;
@@ -149,7 +150,7 @@
   display: block;
   width: 1px;
   height: 16px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: none;
   position: absolute;
   top: 50%;

@@ -11,6 +11,8 @@
 
 > 功能 API 丰富，如：播放控制，音频控制，视频截图，实时获取视频 OSDTime，视频录制，设备对讲，电子放大，全屏等
 
+> 从 v8.1.2 开始支持 ESM, 支持按需加载
+
 <p style="color: yellow;">hls和flv 不在维护更新，后续版本中会被移除， flv 可以使用 <a href="https://www.npmjs.com/package/ezuikit-flv" block="_target">ezuikit-flv</a>, hls 可以使用 <a href="https://www.npmjs.com/package/@ezuikit/player-hls" block="_target">@ezuikit/player-hls</a></p>
 <p style="color: yellow;">hls和flv 不在维护更新，后续版本中会被移除， flv 可以使用 <a href="https://www.npmjs.com/package/ezuikit-flv" block="_target">ezuikit-flv</a>, hls 可以使用 <a href="https://www.npmjs.com/package/@ezuikit/player-hls" block="_target">@ezuikit/player-hls</a></p>
 <p style="color: yellow;">hls和flv 不在维护更新，后续版本中会被移除， flv 可以使用 <a href="https://www.npmjs.com/package/ezuikit-flv" block="_target">ezuikit-flv</a>, hls 可以使用 <a href="https://www.npmjs.com/package/@ezuikit/player-hls" block="_target">@ezuikit/player-hls</a></p>
@@ -33,6 +35,10 @@ pnpm add ezuikit-js
 ### 引入 ezuikit-js
 
 ```js
+// >= v8.1.2  ESM
+import { EZUIKitPlayer } from "ezuikit-js";
+
+// < v8.1.2
 import EZUIKit from "ezuikit-js";
 ```
 
@@ -58,7 +64,9 @@ import EZUIKit from "ezuikit-js";
 ### 直播
 
 ```js
-const player = new EZUIKit.EZUIKitPlayer({
+import { EZUIKitPlayer } from "ezuikit-js";
+
+const player = new EZUIKitPlayer({
   id: "video-container", // 视频容器ID
   accessToken:
     "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
@@ -76,7 +84,9 @@ const player = new EZUIKit.EZUIKitPlayer({
 ### 回放
 
 ```js
-const player = new EZUIKit.EZUIKitPlayer({
+import { EZUIKitPlayer } from "ezuikit-js";
+
+const player = new EZUIKitPlayer({
   id: "video-container", // 视频容器ID
   width: 600,
   height: 400,
@@ -120,7 +130,9 @@ alpha（功能测试）、beta（集成测试）为我们的非正式版本，�
 > 轻应用支持向接入萤石云海外环境的设备发起取流播放，需要在初始化时配置海外服务域名，示例：
 
 ```js
-const player = new EZUIKit.EZUIKitPlayer({
+import { EZUIKitPlayer } from "ezuikit-js";
+
+const player = new EZUIKitPlayer({
   id: "playWind",
   width: 600,
   height: 400,

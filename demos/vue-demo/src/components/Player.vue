@@ -1,6 +1,8 @@
 <template>
   <div class="hello-ezuikit-js">
-    <div id="video-container" style="width: 600px; height: 400px"></div>
+    <div>
+      <div id="video-container" style="width: 600px; height: 400px"></div>
+    </div>
     <div>
       <button v-on:click="init">init</button>
       <button v-on:click="stop">stop</button>
@@ -45,9 +47,8 @@ export default {
       //   });
       player = new EZUIKit.EZUIKitPlayer({
         id: "video-container", // 视频容器ID
-        accessToken:
-          "at.1gskp9sk9b8pol288qw4f0ladj6ow00a-2obk8zrvgd-0icd73x",
-        url: "ezopen://open.ys7.com/BA7248908/1.hd.live",
+        accessToken: "at.1gskp9sk9b8pol288qw4f0ladj6ow00a-2obk8zrvgd-0icd73x",
+        url: "ezopen://open.ys7.com/BC7900686/1.hd.live",
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
         template: "pcLive",
         // plugin: ["talk"], // 加载插件，talk-对讲
@@ -62,11 +63,10 @@ export default {
           // https://open.ys7.com/help/1772?h=domain
           // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
           // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
-          domain: "https://open.ys7.com"
-        }
+          domain: "https://open.ys7.com",
+        },
       });
       window.player = player;
-
     },
     play() {
       var playPromise = player.play();

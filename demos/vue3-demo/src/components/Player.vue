@@ -125,8 +125,8 @@ const init = () => {
       // https://open.ys7.com/help/1772?h=domain
       // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
       // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
-      domain: "https://open.ys7.com"
-    }
+      domain: "https://open.ys7.com",
+    },
   });
   window.player = player;
   // });
@@ -139,7 +139,9 @@ onMounted(() => {
 
 <template>
   <div class="hello-ezuikit-js">
-    <div id="video-container" style="width: 600px; height: 400px"></div>
+    <div>
+      <div id="video-container" style="width: 600px; height: 400px"></div>
+    </div>
     <div>
       <button @click="init">init</button>
       <button @click="stop">stop</button>

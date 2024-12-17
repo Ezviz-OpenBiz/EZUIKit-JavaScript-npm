@@ -6,7 +6,7 @@
   "module": "index.esm.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Hikvision-Ezviz/EZUIKit-JavaScript-npm.git"
+    "url": "git+https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm.git"
   },
   "author": "Ezviz-OpenBiz",
   "files": [
@@ -26,7 +26,7 @@
     "open"
   ],
   "dependencies": {
-    "@ezuikit/player-ezopen": "8.1.1-beta.8",
+    "@ezuikit/player-ezopen": "8.1.3-beta.2",
     "@ezuikit/utils-collect": "0.1.0",
     "@ezuikit/utils-tools": "^1.0.4",
     "@juggle/resize-observer": "^3.4.0",
@@ -41,7 +41,7 @@
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Hikvision-Ezviz/EZUIKit-JavaScript-npm/issues"
+    "url": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues"
   },
-  "homepage": "https://github.com/Hikvision-Ezviz/EZUIKit-JavaScript-npm#readme"
+  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm#readme"
 }

@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from "react";
-import EZUIKit from "ezuikit-js";
+import { EZUIKitPlayer } from "ezuikit-js";
 import { isMobile } from "./utils";
 import "./index.css";
 
@@ -39,7 +39,7 @@ const Player = () => {
         player.current = null;
       }
 
-      player.current = new EZUIKit.EZUIKitPlayer({
+      player.current = new EZUIKitPlayer({
         id: "player-container",
         url,
         accessToken,
@@ -53,9 +53,9 @@ const Player = () => {
           // https://open.ys7.com/help/1772?h=domain
           // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
           // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
-          domain // "https://open.ys7.com"
+          domain, // "https://open.ys7.com"
         },
-        plugin: ["talk"] // 加载插件，talk-对讲
+        plugin: ["talk"], // 加载插件，talk-对讲
       });
     }
   }, []);
@@ -149,7 +149,9 @@ const Player = () => {
   return (
     <div className="player-wrapper">
       <h2>ezopen使用示例 (Example of using ezopen)：</h2>
-      <div id="player-container"></div>
+      <div>
+        <div id="player-container"></div>
+      </div>
       <div className="form">
         <div className="form-item">
           <label>url</label>

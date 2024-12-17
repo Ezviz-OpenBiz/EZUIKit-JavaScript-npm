@@ -46,8 +46,8 @@ class App extends React.Component {
           // https://open.ys7.com/help/1772?h=domain
           // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
           // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
-          domain: "https://open.ys7.com"
-        }
+          domain: "https://open.ys7.com",
+        },
       });
     }
     // });
@@ -77,7 +77,7 @@ class App extends React.Component {
 
   capturePicture = () => {
     var capturePicturePromise = player.capturePicture(
-      `${new Date().getTime()}`
+      `${new Date().getTime()}`,
     );
     capturePicturePromise.then((data) => {
       console.log("promise 获取 数据", data);
@@ -135,7 +135,9 @@ class App extends React.Component {
     return (
       <div className="demo">
         <h2>视频模式使用示例：</h2>
-        <div id="player-container" style={{ width: 600, height: 600 }}></div>
+        <div>
+          <div id="player-container" style={{ width: 600, height: 600 }}></div>
+        </div>
         <div>
           <button onClick={this.init}>init</button>
           <button onClick={this.stop}>stop</button>

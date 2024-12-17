@@ -3,17 +3,35 @@
 #### Feat
 
 - 新增静态多语言变量 `LOCALES`, 可以使用 `EZUIKitPlayer.LOCALES` 访问
-- 更新 header 的 默认样式和交互， 和 footer 保持一致
+- 更新 header 的默认样式和交互和 footer 保持一致
 - 弃用 hls，请使用 [ezuikti-flv](https://www.npmjs.com/package/ezuikit-flv) 代替
 - 弃用 flv，请使用 [@ezuikit/player-hls] https://www.npmjs.com/package/@ezuikit/player-hls 代替
 - 弃用 EZWebRtc, 请使用 [ertc-web](https://www.npmjs.com/package/ertc-web)
-- H5模板支持云录制2.0
+- H5 模板支持云录制 2.0
+- 支持 commonjs 和 esm [issues #268](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/268), [issues #223](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/223)
+  ```ts
+  import { EZUIKitPlayer } from "ezuikit-js";
+  const player = new EZUIKitPlayer({
+    id: "video-container", // 视频容器ID
+    accessToken:
+      "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
+    url: "ezopen://open.ys7.com/BD3957004/1.live",
+    width: 600,
+    height: 400,
+    handleError: (err) => {
+      if (err.type === "handleRunTimeInfoError" && err.data.nErrorCode === 5) {
+        // 加密设备密码错误
+      }
+    },
+  });
+  ```
 
 #### Fixed
 
 - 修复移动端回放主题退出全屏后，日历的位置不对的问题
 - 修复多实例播放时，小概率出现绿屏、花屏的问题
-- 修复实例销毁后，dom节点和样式文件残留的问题
+- 修复实例销毁后，dom 节点和样式文件残留的问题
+-
 
 ## v8.1.1 (2024-11-18)
 
@@ -28,7 +46,7 @@
 - 优化全屏的逻辑， 修复已知的 bug, [issues #240](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/240)
 - 优化 resize 的逻辑， 修复已知的 bug [issues #120](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/120)
 - 修复初始化窗口抖动的 bug
-- 修复一些已知 bug [issues #269](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/269)
+- 修复一些已知 bug [issues #269](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/269), [issues #223](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/223)
 
 ## v8.1.0 (2024-11-04)
 

@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "ezuikit-js": "^8.1.2",
-    "vue": "^3.2.41"
+    "vue": "^3.2.41",
+    "terser": "^5.36.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.2.0",
