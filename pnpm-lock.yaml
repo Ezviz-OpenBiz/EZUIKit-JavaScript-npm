@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@ezuikit/player-ezopen':
-    specifier: 8.1.3-beta.2
-    version: 8.1.3-beta.2
+    specifier: 8.1.3-beta.3
+    version: 8.1.3-beta.3
   '@ezuikit/utils-collect':
     specifier: 0.1.0
     version: 0.1.0
@@ -44,8 +44,8 @@ dependencies:
 
 packages:
 
-  /@ezuikit/player-ezopen@8.1.3-beta.2:
-    resolution: {integrity: sha512-K73ndlbcDMxPzuitZ55ZdHyRah5mYnvmNHupyoB1zeOLmetaigP4VSrO0AgTUT/nm1NoG418xK7LG4coN8822Q==}
+  /@ezuikit/player-ezopen@8.1.3-beta.3:
+    resolution: {integrity: sha512-yAUdoAonIOav2/jZsUESSSCZ/X0Z+hEFxjVA/ALxv27ifEHKrVadc0DUHohsPql+A+l7HxNDXTHmTBcKAk078w==}
     dependencies:
       '@ezuikit/player-plugin-record': 8.1.1-beta.1
       '@ezuikit/utils-i18n': 1.0.1
