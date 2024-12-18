@@ -47,6 +47,22 @@ import EZUIKit from "ezuikit-js";
 ```html
 <!-- umd -->
 <script src="./ezuikit.js"></script>
+
+<script>
+const player = new EZUIKit.EZUIKitPlayer({
+  id: "video-container", // 视频容器ID
+  accessToken:
+    "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
+  url: "ezopen://open.ys7.com/BD3957004/1.live",
+  width: 600,
+  height: 400,
+  handleError: (err) => {
+    if (err.type === "handleRunTimeInfoError" && err.data.nErrorCode === 5) {
+      // 加密设备密码错误
+    }
+  },
+});
+<script>
 ```
 
 ### 开始使用 - 初始化
