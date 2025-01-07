@@ -1,10 +1,23 @@
-node_modules/
-dist/
-build/
-.cache
-# misc
-.DS_Store
 
+node_modules
+coverage
+.nyc_output
+.DS_Store
+*.log
+.vscode
+.idea
+dist
+compiled
+.awcache
+.rpt2_cache
+docs
+stats.html
+.DS_Store
+.idea
+.vscode
+.setting
+build/
 npm-debug.log*
+npm-error.log*
 yarn-debug.log*
-yarn-error.log*
+            
