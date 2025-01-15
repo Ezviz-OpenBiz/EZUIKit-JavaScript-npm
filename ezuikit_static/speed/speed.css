@@ -1,14 +1,15 @@
 .speed-select {
   text-align: center;
   display: block;
-  width: 120px;
   background: rgb(255, 255, 255);
   box-shadow: rgb(0 0 0 / 10%) 0px 3px 20px 0px;
   border-radius: 2px;
   padding: 0px;
+  width: 100px;
   position: absolute;
   bottom: 48px;
-  left: -30px;
+  left: 50%;
+  transform: translateX(-50%);
   color: rgba(0, 0, 0, 0.85);
   user-select: none;
 }
@@ -42,7 +43,7 @@
   position: fixed;
   z-index: 2;
   left: 0;
-
+  transform: translateX(0);
   width: 90%;
   margin: auto;
   margin: 0px 5% 50px;

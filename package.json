@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "8.1.4",
+  "version": "8.1.5",
   "description": "ezuikit javascript for npm",
   "main": "index.js",
   "module": "index.esm.js",
@@ -26,8 +26,9 @@
     "open"
   ],
   "dependencies": {
-    "@ezuikit/player-ezopen": "8.1.4-beta.3",
+    "@ezuikit/player-ezopen": "8.1.5-beta.3",
     "@ezuikit/utils-collect": "0.1.0",
+    "@ezuikit/utils-i18n": "^1.0.1",
     "@ezuikit/utils-tools": "^1.0.4",
     "@juggle/resize-observer": "^3.4.0",
     "abortcontroller-polyfill": "^1.7.5",
