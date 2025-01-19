@@ -2,7 +2,9 @@
 
 1. 复制项目根目录下的 `ezuikit.js` 和 `ezuikit_static`到 当前目录的`html` 下
 
-2. window 下启动当前目录下的`nginx.exe`
+2. nginx 新增 `application/wasm` 支持，当前项目 `conf/mine.types` 中已更新
+
+3. window 下启动当前目录下的`nginx.exe`
 
 ```bash
 
@@ -20,7 +22,7 @@
 
 备注： 同源仅支持 https
 
-## 同源说明 
+## 同源说明
 
 https://open.ys7.com/help/1772?h=Cross-Origin-Embedder-Policy
 
