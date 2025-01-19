@@ -35,8 +35,9 @@ export default defineConfig(((env: ConfigEnv) => {
       terserOptions: {
         // 清除console和debugger
         compress: {
-          // drop_console 暂时不能用，会报错
+          // drop_console 问题， terser 已修复
           // https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/138
+          // 使用 esbuild 移出 console， 注意会出问题。官方还未修复
           drop_console: true,
           drop_debugger: true,
         },

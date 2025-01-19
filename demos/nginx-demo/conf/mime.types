@@ -67,6 +67,7 @@ types {
     application/xhtml+xml                            xhtml;
     application/xspf+xml                             xspf;
     application/zip                                  zip;
+    application/wasm                                 wasm;
 
     application/octet-stream                         bin exe dll;
     application/octet-stream                         deb;
