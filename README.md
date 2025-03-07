@@ -638,6 +638,12 @@ player.closeZoom().then(() => {
 player.reSize(width, height);
 ```
 
+#### 销毁实例
+
+```js
+player.destroy()
+```
+
 #### 鱼眼矫正（软解 开启 [SharedArrayBuffer](https://open.ys7.com/help/1772?h=SharedArrayBuffer)）
 
 ```js
