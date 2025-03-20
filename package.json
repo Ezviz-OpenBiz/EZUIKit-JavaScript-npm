@@ -3,7 +3,7 @@
   "version": "8.1.8",
   "description": "ezuikit javascript for npm",
   "main": "index.js",
-  "module": "index.esm.js",
+  "module": "index.mjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Hikvision-Ezviz/EZUIKit-JavaScript-npm.git"
@@ -12,7 +12,7 @@
   "files": [
     "ezuikit.js",
     "index.js",
-    "index.esm.js",
+    "index.mjs",
     "ezuikit_static",
     "README.md",
     "CHANGELOG.md"
@@ -26,7 +26,7 @@
     "open"
   ],
   "dependencies": {
-    "@ezuikit/player-ezopen": "8.1.8-beta.7",
+    "@ezuikit/player-ezopen": "8.1.8-beta.8",
     "@ezuikit/utils-collect": "0.1.0",
     "@ezuikit/utils-i18n": "^1.0.1",
     "@ezuikit/utils-tools": "^1.0.4",
@@ -34,6 +34,7 @@
     "abortcontroller-polyfill": "^1.7.5",
     "debounce-promise": "^3.1.2",
     "deepmerge": "^4.3.1",
+    "delegate": "3.2.0",
     "formdata-polyfill": "^4.0.10",
     "jquery": "^3.3.1",
     "lodash-es": "^4.17.21",
