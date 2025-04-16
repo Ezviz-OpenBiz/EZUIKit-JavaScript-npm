@@ -7,15 +7,6 @@ Author: Ezviz-OpenBiz
 
 ---
 
-Name: @ezuikit/utils-logger
-Version: 1.0.1
-License: MIT
-Private: false
-Description: logger utils
-Author: Ezviz-OpenBiz
-
----
-
 Name: dayjs
 Version: 1.11.13
 License: MIT
@@ -253,7 +244,7 @@ SOFTWARE.
 ---
 
 Name: @ezuikit/player-plugin-record
-Version: 8.1.8-beta.4
+Version: 8.1.8-beta.3
 License: MIT
 Private: false
 Description: 萤石ezopne协议播放器录制插件
@@ -262,7 +253,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/player-ezopen
-Version: 8.1.8-beta.8
+Version: 8.1.9-beta.3
 License: MIT
 Private: false
 Description: 萤石ezopne协议播放器

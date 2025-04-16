@@ -1,17 +1,12 @@
 # [EZUIKit-JavaScript-npm][ezuikit-js]
 
-![Download](https://img.shields.io/npm/dm/ezuikit-js.svg)
-![Version](https://img.shields.io/npm/v/ezuikit-js.svg)
-![License](https://img.shields.io/npm/l/ezuikit-js.svg)
-![Build Demos](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/workflows/build-demos/badge.svg)
+![Download](https://img.shields.io/npm/dm/ezuikit-js.svg) ![Version](https://img.shields.io/npm/v/ezuikit-js.svg) ![License](https://img.shields.io/npm/l/ezuikit-js.svg) ![Build Demos](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/workflows/build-demos/badge.svg)
 
 > 轻应用 npm 版本，降低接入难度，适配自定义 UI，适配主流框架
 
 > 低延时预览，云存储回放，SD 卡回放
 
 > 功能 API 丰富，如：播放控制，音频控制，视频截图，实时获取视频 OSDTime，视频录制，设备对讲，电子放大，全屏等
-
-> 从 v8.1.2 开始支持 ESM, 支持按需加载
 
 <p style="color: yellow;">hls和flv 不在维护更新，后续版本中会被移除， flv 可以使用 <a href="https://www.npmjs.com/package/ezuikit-flv" block="_target">ezuikit-flv</a>, hls 可以使用 <a href="https://www.npmjs.com/package/@ezuikit/player-hls" block="_target">@ezuikit/player-hls</a></p>
 <p style="color: yellow;">hls和flv 不在维护更新，后续版本中会被移除， flv 可以使用 <a href="https://www.npmjs.com/package/ezuikit-flv" block="_target">ezuikit-flv</a>, hls 可以使用 <a href="https://www.npmjs.com/package/@ezuikit/player-hls" block="_target">@ezuikit/player-hls</a></p>
@@ -35,11 +30,7 @@ pnpm add ezuikit-js
 ### 引入 ezuikit-js
 
 ```js
-// >= v8.1.2  ESM
-import { EZUIKitPlayer } from "ezuikit-js";
-
-// < v8.1.2
-import EZUIKit from "ezuikit-js";
+import EZUIKit from 'ezuikit-js';
 ```
 
 #### 如果你使用原生方法,可以通过标签引用
@@ -47,22 +38,6 @@ import EZUIKit from "ezuikit-js";
 ```html
 <!-- umd -->
 <script src="./ezuikit.js"></script>
-
-<script>
-const player = new EZUIKit.EZUIKitPlayer({
-  id: "video-container", // 视频容器ID
-  accessToken:
-    "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
-  url: "ezopen://open.ys7.com/BD3957004/1.live",
-  width: 600,
-  height: 400,
-  handleError: (err) => {
-    if (err.type === "handleRunTimeInfoError" && err.data.nErrorCode === 5) {
-      // 加密设备密码错误
-    }
-  },
-});
-<script>
 ```
 
 ### 开始使用 - 初始化
@@ -80,17 +55,14 @@ const player = new EZUIKit.EZUIKitPlayer({
 ### 直播
 
 ```js
-import { EZUIKitPlayer } from "ezuikit-js";
-
-const player = new EZUIKitPlayer({
-  id: "video-container", // 视频容器ID
-  accessToken:
-    "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
-  url: "ezopen://open.ys7.com/BD3957004/1.live",
+const player = new EZUIKit.EZUIKitPlayer({
+  id: 'video-container', // 视频容器ID
+  accessToken: 'at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz',
+  url: 'ezopen://open.ys7.com/BD3957004/1.live',
   width: 600,
   height: 400,
   handleError: (err) => {
-    if (err.type === "handleRunTimeInfoError" && err.data.nErrorCode === 5) {
+    if (err.type === 'handleRunTimeInfoError' && err.data.nErrorCode === 5) {
       // 加密设备密码错误
     }
   },
@@ -100,15 +72,12 @@ const player = new EZUIKitPlayer({
 ### 回放
 
 ```js
-import { EZUIKitPlayer } from "ezuikit-js";
-
-const player = new EZUIKitPlayer({
-  id: "video-container", // 视频容器ID
+const player = new EZUIKit.EZUIKitPlayer({
+  id: 'video-container', // 视频容器ID
   width: 600,
   height: 400,
-  accessToken:
-    "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
-  url: "ezopen://open.ys7.com/BD3957004/1.rec",
+  accessToken: 'at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz',
+  url: 'ezopen://open.ys7.com/BD3957004/1.rec',
 });
 ```
 
@@ -138,25 +107,22 @@ alpha（功能测试）、beta（集成测试）为我们的非正式版本，�
 
 <b>测试播放地址：</b> ezopen://open.ys7.com/BD3957004/1.live
 
-你可以通过以下地址获取到测试 accessToken <a href="https://open.ys7.com/jssdk/ezopen/demo/token" target="_blank">获取测试 accessToken</a> 用来播放上述测试播放地址。
-当前设备有可能下线或被移除了， 如果自己有设备优先使用自己的设备进行测试。
+你可以通过以下地址获取到测试 accessToken <a href="https://open.ys7.com/jssdk/ezopen/demo/token" target="_blank">获取测试 accessToken</a> 用来播放上述测试播放地址。当前设备有可能下线或被移除了， 如果自己有设备优先使用自己的设备进行测试。
 
 ### 轻应用 - 海外版本
 
 > 轻应用支持向接入萤石云海外环境的设备发起取流播放，需要在初始化时配置海外服务域名，示例：
 
 ```js
-import { EZUIKitPlayer } from "ezuikit-js";
-
-const player = new EZUIKitPlayer({
-  id: "playWind",
+const player = new EZUIKit.EZUIKitPlayer({
+  id: 'playWind',
   width: 600,
   height: 400,
-  template: "pcLive",
-  url: "",
-  accessToken: "",
+  template: 'pcLive',
+  url: '',
+  accessToken: '',
   env: {
-    domain: "https://iusopen.ezvizlife.com", // 北美地区
+    domain: 'https://iusopen.ezvizlife.com', // 北美地区
   },
 });
 ```
@@ -199,22 +165,17 @@ const player = new EZUIKitPlayer({
 
 > 4. 我们提供了一些通用场景的主题，PC 端预览，PC 端回放，移动端预览，移动端回放，你也可以直接使用。
 
-&emsp;&emsp;&emsp;&emsp;<b>PC 端预览-固定主题：</b>
-<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/pcLive.html" target="_blank">PC 端预览-固定主题示例</a>
+&emsp;&emsp;&emsp;&emsp;<b>PC 端预览-固定主题：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/pcLive.html" target="_blank">PC 端预览-固定主题示例</a>
 
-&emsp;&emsp;&emsp;&emsp;<b>PC 端回放-固定主题：</b>
-<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/pcRec.html" target="_blank">PC 端回放-固定主题示例</a>
+&emsp;&emsp;&emsp;&emsp;<b>PC 端回放-固定主题：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/pcRec.html" target="_blank">PC 端回放-固定主题示例</a>
 
-&emsp;&emsp;&emsp;&emsp;<b>移动端预览-固定主题：</b>
-<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/mobileLive.html" target="_blank">移动端预览-固定主题示例</a>
+&emsp;&emsp;&emsp;&emsp;<b>移动端预览-固定主题：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/mobileLive.html" target="_blank">移动端预览-固定主题示例</a>
 
-&emsp;&emsp;&emsp;&emsp;<b>移动端回放-固定主题：</b>
-<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/mobileRec.html" target="_blank">移动端回放-固定主题示例</a>
+&emsp;&emsp;&emsp;&emsp;<b>移动端回放-固定主题：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/mobileRec.html" target="_blank">移动端回放-固定主题示例</a>
 
 > 同一个页面播放多个视频，可以参考：
 
-&emsp;&emsp;&emsp;&emsp;<b>单页面多实例(视频多窗口)：</b>
-<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/multi.html" target="_blank">单页面多实例(视频多窗口)示例</a>
+&emsp;&emsp;&emsp;&emsp;<b>单页面多实例(视频多窗口)：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/multi.html" target="_blank">单页面多实例(视频多窗口)示例</a>
 
 #### 附录： 初始化参数说明
 
@@ -238,14 +199,11 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.hd.live<br/>
 
 ##### sd 卡回放
 
-初始化参数 url 值为：<br/>
-ezopen://open.ys7.com/${设备序列号}/{通道号}.rec?begin=yyyyMMddhhmmss
+初始化参数 url 值为：<br/> ezopen://open.ys7.com/${设备序列号}/{通道号}.rec?begin=yyyyMMddhhmmss
 
 ##### 云存储回放
 
-初始化参数 url 值为：<br/>
-ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhmmss
-视频 ezopen 协议播放地址 详见：<a href="https://open.ys7.com/help/23" target="_blank">ezopen 协议</a> </td><td>Y</td></tr>
+初始化参数 url 值为：<br/> ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhmmss视频 ezopen 协议播放地址 详见：<a href="https://open.ys7.com/help/23" target="_blank">ezopen 协议</a> </td><td>Y</td></tr>
 
 <tr><td>audio</td><td>boolean</td><td>是否默认开启声音 true：打开（默认） false：关闭    </td><td>N</td></tr>
 <tr><td>width</td><td>int</td><td>视频宽度，默认值为容器容器DOM宽度    </td><td>Y</td></tr>
@@ -271,7 +229,7 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhm
 
 </td><td>N</td></tr>
 <tr><td>themeData</td><td>Object</td><td>
-themeData将主题数据本地化，设置本地数据，需要删除template参数 <br /> 
+themeData将主题数据本地化，设置本地数据，需要删除template参数 <br />
 你可以通过themeData修改按钮位置，颜色，头部底部颜色等配置。
 
 配置示例：
@@ -404,13 +362,14 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 <tr><td>language</td><td>String</td><td>多语言 （zh | en）, 默认zh (v8.0.8版本及以上支持)</td><td>N</td></tr>
 <tr><td>debugDownloadData</td><td>boolean</td><td>下载原始码流， 调试码流使用, 默认 false (v8.1.1版本及以上支持)</td><td>N</td></tr>
 <tr><td>disableRenderPrivateData</td><td>boolean</td><td>禁止渲染私有数据(如智能分析， 移动侦测， 火点信息等), 默认 false (v8.1.1版本及以上支持)</td><td>N</td></tr>
-<tr><td>quality</td><td> 0 | 1 | 2 | 3 | 4 | 5 | 6 | pp | qp</td><td>预览初始化支持指定清晰度进行播放, 默认 undefined (v8.1.5版本及以上支持)， 0: 流畅； 1: 标清;  2: 高清; 3: 超清; 4: 极清; 5: 3K; 6: 4K ; "pp"： "性能优先 (Performance Priority)"; "qp": "画质优先(Quality Priority)"。 </td><td>N</td></tr>
+<tr><td>quality</td><td>0 | 1 | 2 | 3 | 4 | 5 | 6 | pp | qp</td><td>预览初始化支持指定清晰度进行播放, 默认 undefined (v8.1.5版本及以上支持)， 0: 流畅； 1: 标清; 2: 高清; 3: 超清; 4: 极清; 5: 3K; 6: 4K ; "pp"： "性能优先 (Performance Priority)"; "qp": "画质优先(Quality Priority)"。</td><td>N</td></tr>
+<tr><td>loggerOptions</td><td> {name: string, level: "INFO" | "LOG" | "WARN" | "ERROR" , showTime: boolean}</td><td>本地日志设置， 默认值 {name: "ezuikit", level: "INFO", showTime: true}, 支持动态设置请参考 <a href="#日志设置">setLoggerOptions(options)</a> (v8.1.9版本及以上支持)</td><td>N</td></tr>
+<tr><td>streamInfoCBType</td><td>  0 | 1 </td><td>  流信息回调类型，监听 streamInfoCB 事件, 0 : 每次都回调（会影响性能）, 1 : 只回调一次, 默认值 1 (v8.1.9版本及以上支持)</td><td>N</td></tr>
 </table>
 
 ### 方法调用
 
-> 同步方法（方式 1）
-> 方法支持通过 promise 回调，可通过回调方式执行下一步动作（方式 2）。
+> 同步方法（方式 1）方法支持通过 promise 回调，可通过回调方式执行下一步动作（方式 2）。
 
 #### 开始播放
 
@@ -419,7 +378,7 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 player.play();
 // 方式2
 player.play().then(() => {
-  console.log("执行播放成功后其他动作");
+  console.log('执行播放成功后其他动作');
 });
 ```
 
@@ -430,7 +389,7 @@ player.play().then(() => {
 player.stop();
 // 方式2
 player.stop().then(() => {
-  console.log("执行停止成功后其他动作");
+  console.log('执行停止成功后其他动作');
 });
 ```
 
@@ -441,7 +400,7 @@ player.stop().then(() => {
 player.openSound();
 // 方式2
 player.openSound().then(() => {
-  console.log("执行开启声音成功后其他动作");
+  console.log('执行开启声音成功后其他动作');
 });
 ```
 
@@ -454,15 +413,14 @@ player.closeSound();
 
 #### 开始录制
 
-> 因录制解码库加载限制，录制库加载需要 3S 秒左右，请保证录制时长需要大于 5 秒。
-> 录制文件需要使用播放器，播放器下载地址 <a href="https://service.ys7.com/downloadInfoSite/admin">播放器下载</a>
+> 因录制解码库加载限制，录制库加载需要 3S 秒左右，请保证录制时长需要大于 5 秒。录制文件需要使用播放器，播放器下载地址 <a href="https://service.ys7.com/downloadInfoSite/admin">播放器下载</a>
 
 ```js
 // 方式1
-player.startSave("唯一文件名");
+player.startSave('唯一文件名');
 // 方式2
-player.startSave("唯一文件名").then(() => {
-  console.log("执行开始录制成功后其他动作");
+player.startSave('唯一文件名').then(() => {
+  console.log('执行开始录制成功后其他动作');
 });
 ```
 
@@ -473,7 +431,7 @@ player.startSave("唯一文件名").then(() => {
 player.stopSave();
 // 方式2
 player.stopSave().then(() => {
-  console.log("执行停止录制成功后其他动作");
+  console.log('执行停止录制成功后其他动作');
 });
 ```
 
@@ -481,12 +439,12 @@ player.stopSave().then(() => {
 
 ```js
 // 方式1 - 下载到本地
-player.capturePicture("文件名");
+player.capturePicture('文件名');
 // 方式2 - 返回base64格式
 const capCallback = (data) => {
-  console.log("data", data);
+  console.log('data', data);
 };
-player.capturePicture("default", capCallback);
+player.capturePicture('default', capCallback);
 ```
 
 #### 开始对讲
@@ -539,7 +497,7 @@ player.setProfile({ microphoneId });
 #### 监听麦克风音量变化
 
 ```js
-player.eventEmitter.on("volumeChange", ({ data }) => {
+player.eventEmitter.on('volumeChange', ({ data }) => {
   // 动态显示音柱,100ms触发一次
   console.log(`${data * 100}%`);
 });
@@ -561,7 +519,7 @@ player.cancelFullScreen();
 
 ```js
 player.getOSDTime().then((time) => {
-  console.log("获取到的当前播放时间", time);
+  console.log('获取到的当前播放时间', time);
 });
 ```
 
@@ -571,7 +529,7 @@ player.getOSDTime().then((time) => {
 
 ```js
 player.changePlayUrl(options).then(() => {
-  console.log("切换成功");
+  console.log('切换成功');
 });
 ```
 
@@ -596,9 +554,9 @@ options 参数说明
 player.Theme.changeTheme(template);
 
 // 预览切回放场景示例
-player.changePlayUrl({ type: "rec" }).then(() => {
-  console.log("地址切换成功，开始切换模板主题");
-  player.Theme.changeTheme("pcRec");
+player.changePlayUrl({ type: 'rec' }).then(() => {
+  console.log('地址切换成功，开始切换模板主题');
+  player.Theme.changeTheme('pcRec');
 });
 ```
 
@@ -617,7 +575,7 @@ template 参数说明
 player.enableZoom();
 // 方式2
 player.enableZoom().then(() => {
-  console.log("开启电子放大成功");
+  console.log('开启电子放大成功');
 });
 ```
 
@@ -628,20 +586,14 @@ player.enableZoom().then(() => {
 player.closeZoom();
 // 方式2
 player.closeZoom().then(() => {
-  console.log("关闭电子放大成功");
+  console.log('关闭电子放大成功');
 });
 ```
 
 #### 重置画面宽高
 
 ```js
-player.reSize(width, height);
-```
-
-#### 销毁实例
-
-```js
-player.destroy()
+player.resize(width, height);
 ```
 
 #### 鱼眼矫正（软解 开启 [SharedArrayBuffer](https://open.ys7.com/help/1772?h=SharedArrayBuffer)）
@@ -658,3 +610,634 @@ player.destroy()
 // 顶装4分屏
 player.setFECCorrectType({place: 3 , type：4}, "cavnas1,canvas2,canvas3") // cavnas1,canvas2,canvas3 是分屏是需要的
 ```
+
+#### 日志设置
+
+```ts
+//  interface LoggerOptions {
+//   name?: string
+//   level?: 'INFO' | 'LOG' | 'WARN' | 'ERROR',
+//   showTime?: boolean
+//  }
+player.setLoggerOptions(options);
+```
+
+options 参数说明
+
+| 参数名   | 类型    | 是否必选 | 默认值 | 描述                                                      |
+| :------- | :------ | :------- | :----- | :-------------------------------------------------------- |
+| name     | string  | N        | 无     | 日志名称标签                                              |
+| level    | string  | N        | 无     | 日志等级， 支持 'INFO', 'LOG' , 'WARN' , 'ERROR' 四个等级 |
+| showTime | boolean | N        | 无     | 是否展示时间                                              |
+
+## 事件
+
+所有事件名 `EZUIKitPlayer.EVENTS`, 事件监听player.eventEmitter.on() 和事件取消 player.eventEmitter.off()
+
+#### 流信息事件
+
+流信息事件 `EZUIKitPlayer.EVENTS.streamInfoCB`， 当初始化 streamInfoCBType = 1 时， 流信息事件只在获取到流时触发两次， 当初始化 streamInfoCBType = 0 时，会不停触发返回流信息（会影响性能）
+
+```js
+// 监听流信息事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.streamInfoCB, (info) => {
+  // 包括 视频信息 音频信息
+  console.log('streamInfoCB', info);
+});
+```
+
+#### 音频信息事件
+
+音频信息事件 `EZUIKitPlayer.EVENTS.audioInfo`
+
+```js
+// interface AudioInfo {
+//   audioFormatName：string // 音频格式名称
+//   audioChannels：number // 音频通道数
+//   audioBitsPerSample: number  // 音频采样位数
+//   audioSamplesRate：number // 音频采样率
+//   audioBitRate: number // 音频码率
+// }
+// 监听音频信息变化
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.audioInfo, (info) => {
+  // {"audioFormat":8193,"audioFormatName":"AAC","audioChannels":1,"audioBitsPerSample":16,"audioSamplesRate":16000,"audioBitRate":32000}
+  console.log('audioInfo', info);
+});
+```
+
+备注：如果想一直获取音频信息是否变化，在初始化时这是 streamInfoCBType = 0
+
+#### 视频信息事件
+
+音频信息事件 `EZUIKitPlayer.EVENTS.videoInfo`
+
+```js
+// interface VideoInfo {
+//   videoFormatName：string // 视频格式名称
+//   width：number // 视频宽
+//   height: number  // 视频高
+//   frameRate：number // 帧率
+//   intervalOfIFrame: number // IFrame间隔 （统计最近 5 个 GOP 的平均大小）
+// }
+// 监听视频信息变化
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.videoInfo, (info) => {
+  // {"videoFormat":5,"videoFormatName":"H265","width":3840,"height":2160,"frameRate":15,"intervalOfIFrame":0}
+  console.log('videoInfo', info);
+});
+```
+
+备注：如果想一直获取视频信息是否变化，在初始化时这是 streamInfoCBType = 0
+
+#### 截图事件
+
+截图事件 `EZUIKitPlayer.EVENTS.capturePicture`
+
+```js
+// interface CapturePictureInfoDate {
+//   fileName: string // 图片文件名称
+//   base64： string // base64图片字符串
+// }
+
+// 监听截图事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.capturePicture, (info) => {
+  // {data: CapturePictureInfoDate}
+  console.log('capturePictureInfo', info);
+});
+```
+
+#### 截图事件
+
+截图事件 `EZUIKitPlayer.EVENTS.capturePicture`
+
+```js
+// interface CapturePictureInfoData {
+//   fileName: string // 图片文件名称
+//   base64： string // base64图片字符串
+// }
+
+// 监听截图事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.capturePicture, (info) => {
+  // {data: CapturePictureInfoData}
+  console.log('capturePictureInfo', info);
+});
+```
+
+#### 清晰度切换事件
+
+截图事件 `EZUIKitPlayer.EVENTS.changeVideoLevel`
+
+```js
+// interface VideoLevelData {
+//   "name": string, // 清晰度名称
+//   "level":2,   // 清晰度级别  0 | 1 | 2 | 3 | 4 | 5 | 6
+//   "streamTypeIn":2  // 主子码流  1：主码流 2：子码流
+// }
+// 监听截图事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.changeVideoLevel, (info) => {
+  // {data: VideoLevelData}
+  console.log('changeVideoLevel', info);
+});
+```
+
+#### 打开关闭声音事件
+
+打开声音事件 `EZUIKitPlayer.EVENTS.openSound`
+
+```js
+// 监听打开声音事件, 默认音量是 0.8  暂时不支持更改
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.openSound, () => {
+  // ...
+});
+```
+
+关闭声音事件 `EZUIKitPlayer.EVENTS.closeSound`
+
+```js
+// 监听关闭声音事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.closeSound, () => {
+  // ...
+});
+```
+
+#### 解码资源加载事件
+
+解码资源开始加载事件 `EZUIKitPlayer.EVENTS.decoderLoad`和解码资源加载完成事件 `EZUIKitPlayer.EVENTS.decoderLoaded`
+
+```js
+// 监听解码资源开始加载事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.decoderLoad, () => {
+  // ...
+});
+// 监听解码资源加载完成事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.decoderLoaded, () => {
+  // ...
+});
+```
+
+#### 销毁事件
+
+销毁事件 `EZUIKitPlayer.EVENTS.destroy`
+
+```js
+// 监听销毁事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.destroy, () => {
+  // ...
+});
+```
+
+### 全屏相关事件
+
+全屏事件 `EZUIKitPlayer.EVENTS.fullscreen`
+
+```js
+// 监听全屏事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.fullscreen, () => {
+  // ...
+});
+```
+
+退出全屏事件 `EZUIKitPlayer.EVENTS.exitFullscreen`
+
+```js
+// 监听退出全屏事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.exitFullscreen, () => {
+  // ...
+});
+```
+
+全屏变化事件 `EZUIKitPlayer.EVENTS.fullscreenChange`
+
+```js
+// interface FullscreenChangeData {
+//   "isCurrentFullscreen": boolean, // 全局全屏
+//   "isCurrentBrowserFullscreen":boolean // 全局全屏和web 全屏
+// }
+// 监听全屏变化事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.fullscreenChange, (data) => {
+  // {data: FullscreenChangeData}
+  console.log('fullscreenChange', data);
+});
+```
+
+#### 首帧渲染事件
+
+首帧渲染事件 `EZUIKitPlayer.EVENTS.firstFrameDisplay`
+
+```js
+// 监听首帧渲染事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.firstFrameDisplay, () => {
+  // ...
+});
+```
+
+#### 初始化事件
+
+初始化事件 `EZUIKitPlayer.EVENTS.init`
+
+```js
+// 监听初始化事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.init, () => {
+  // ...
+});
+```
+
+#### resize事件
+
+resize事件事件 `EZUIKitPlayer.EVENTS.resize`
+
+```js
+// 监听resize事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.resize, () => {
+  // {data: {"width": number,"height":number}}
+  console.log('resize', data);
+});
+```
+
+#### 暂停事件
+
+暂停事件 `EZUIKitPlayer.EVENTS.pause`
+
+```js
+// 监听暂停事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.pause, () => {
+  // ...
+});
+```
+
+#### 播放事件
+
+播放事件 `EZUIKitPlayer.EVENTS.play`
+
+```js
+// 监听播放事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.play, () => {
+  // ...
+});
+```
+
+#### 恢复播放事件
+
+恢复播放事件 `EZUIKitPlayer.EVENTS.resume`， 仅支持回放
+
+```js
+// 监听恢复播放事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.resume, () => {
+  // ...
+});
+```
+
+#### seek事件
+
+seek事件 `EZUIKitPlayer.EVENTS.seek`， 仅支持回放
+
+```js
+// 监听seek事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.seek, () => {
+  // ...
+});
+```
+
+#### 停止播放事件
+
+停止播放事件 `EZUIKitPlayer.EVENTS.stop`
+
+```js
+// 监听停止播放事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.stop, () => {
+  // ...
+});
+```
+
+#### 设置封面事件
+
+设置封面事件 `EZUIKitPlayer.EVENTS.setPoster`
+
+```js
+// 监听设置封面事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.setPoster, () => {
+  // ...
+});
+```
+
+#### 设置镜像反转事件
+
+设置镜像反转事件 `EZUIKitPlayer.EVENTS.setMirrorFlip`
+
+```js
+// 监听设置镜像反转事件, 不判断是否成功
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.setMirrorFlip, (data) => {
+  // ...
+});
+```
+
+#### 主题重置事件
+
+主题重置事件 `EZUIKitPlayer.EVENTS.reSetTheme`
+
+```js
+// 监听主题重置事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.reSetTheme, () => {
+  // ...
+});
+```
+
+#### 回放时间变化事件
+
+回放时间变化事件 `EZUIKitPlayer.EVENTS.recTimeChange`
+
+```js
+// 监听回放时间变化事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.recTimeChange, () => {
+  // ...
+});
+```
+
+#### http 接口相关事件
+
+获取云存储回片段事件 `EZUIKitPlayer.EVENTS.http.getCloudRecTimes`
+
+```js
+// 监听获取云存储回片段事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.http.getCloudRecTimes, (list) => {
+  // {data: {"width": number,"height":number}}
+  console.log('list', list);
+});
+```
+
+获取云录制回片段事件 `EZUIKitPlayer.EVENTS.http.getCloudRecordTimes`
+
+```js
+// 监听获取云录制回片段事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.http.getCloudRecordTimes, (list) => {
+  // {data: {"width": number,"height":number}}
+  console.log('list', list);
+});
+```
+
+获取本地录制回片段事件 `EZUIKitPlayer.EVENTS.http.getLocalRecTimes`
+
+```js
+// 监听获取本地录制回片段事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.http.getLocalRecTimes, (list) => {
+  // {data: {"width": number,"height":number}}
+  console.log('list', list);
+});
+```
+
+获取设备信息事件 `EZUIKitPlayer.EVENTS.http.getDeviceInfo`
+
+```js
+// 监听获取设备信息事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.http.getDeviceInfo, (info) => {
+  // {"deviceSerial":"BC7799091","deviceName":"前端设备勿动 C6Wi(BC7799091)","localName":"C6Wi(BC7799091)","model":"CS-C6Wi-8D8W2DF","status":1,"defence":0,"isEncrypt":0,"alarmSoundMode":2,"offlineNotify":0,"category":"C6Wi","parentCategory":"IPC","updateTime":1741763026000,"netType":"wireless","signal":"0%","riskLevel":0,"netAddress":"125.121.197.61"}
+  console.log('info', info);
+});
+```
+
+获取设备通道信息事件 `EZUIKitPlayer.EVENTS.http.getDeviceList`
+
+```js
+// 监听获取设备信息事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.http.getDeviceList, (info) => {
+  // {"deviceSerial":"BC7799091","deviceName":"前端设备勿动 C6Wi(BC7799091)","localName":"C6Wi(BC7799091)","model":"CS-C6Wi-8D8W2DF","status":1,"defence":0,"isEncrypt":0,"alarmSoundMode":2,"offlineNotify":0,"category":"C6Wi","parentCategory":"IPC","updateTime":1741763026000,"netType":"wireless","signal":"0%","riskLevel":0,"netAddress":"125.121.197.61"}
+  console.log('info', info);
+});
+```
+
+设置清晰度事件 `EZUIKitPlayer.EVENTS.http.setVideoLevel`
+
+```js
+// 监听设置清晰度事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.http.setVideoLevel, () => {
+  // ....
+});
+```
+
+#### 倍速相关事件
+
+倍速增加事件 `EZUIKitPlayer.EVENTS.fast`
+
+```js
+// 监听倍速增加事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.fast, ({ data }) => {
+  console.log(data);
+});
+```
+
+倍速下降事件 `EZUIKitPlayer.EVENTS.fast`
+
+```js
+// 监听倍速下降事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.slow, ({ data }) => {
+  console.log(data);
+});
+```
+
+倍速变化事件 `EZUIKitPlayer.EVENTS.speedChange`
+
+```js
+// 监听倍速变化事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.speedChange, (speed) => {
+  console.log(speed);
+});
+```
+
+#### 对讲相关事件
+
+开启对讲事件 `EZUIKitPlayer.EVENTS.startTalk`
+
+```js
+// 监听开启对讲事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.startTalk, () => {
+  // ...
+});
+```
+
+关闭对讲事件 `EZUIKitPlayer.EVENTS.stopTalk`
+
+```js
+// 监听关闭对讲事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.stopTalk, () => {
+  // ...
+});
+```
+
+对讲音量变化事件 `EZUIKitPlayer.EVENTS.volumeChange`
+
+```js
+// 监听对讲音量变化事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.volumeChange, () => {
+  // ...
+});
+```
+
+对讲开启成功事件 `EZUIKitPlayer.EVENTS.talkSuccess`
+
+```js
+// 监听对讲开启成功事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.talkSuccess, () => {
+  // ...
+});
+```
+
+对讲开启失败事件 `EZUIKitPlayer.EVENTS.talkError`
+
+```js
+// 监听对讲开启失败事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.talkError, (error) => {
+  // ...
+  console.error('talkError', error);
+});
+```
+
+#### 录制相关事件
+
+开启录制事件 `EZUIKitPlayer.EVENTS.startSave`
+
+```js
+// 监听开启录制事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.startSave, () => {
+  // ...
+});
+```
+
+结束录制事件 `EZUIKitPlayer.EVENTS.stopSave`
+
+```js
+// 监听结束录制事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.stopSave, ({ data }) => {
+  // {"url":"blob:https://test12openstatic.ezv-test.com/80401d8c-3b5b-45d9-ba47-a79153fabbe9","file":{}}
+  console.log(data);
+});
+```
+
+#### 电子放大相关事件
+
+打开电子放大事件 `EZUIKitPlayer.EVENTS.zoom.openZoom`
+
+```js
+// 监听打开电子放大事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.zoom.openZoom, () => {
+  // ....
+});
+```
+
+关闭电子放大事件 `EZUIKitPlayer.EVENTS.zoom.closeZoom`
+
+```js
+// 监听关闭电子放大事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.zoom.closeZoom, () => {
+  // ....
+});
+```
+
+电子放大变化事件 `EZUIKitPlayer.EVENTS.zoom.onZoomChange`
+
+```js
+// 监听电子放大变化事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.zoom.onZoomChange, (info) => {
+  // {"zoom": string,"reset"?:boolean}
+  console.log('onZoomChange', info);
+});
+```
+
+#### 云台控制相关事件
+
+打开云台控制控件事件 `EZUIKitPlayer.EVENTS.ptz.openPtz`
+
+```js
+// 监听开云台控制控件事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.ptz.openPtz, () => {
+  // ...
+});
+```
+
+关闭云台控制控件事件 `EZUIKitPlayer.EVENTS.ptz.openPtz`
+
+```js
+// 监听关闭云台控制控件事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.ptz.closePtz, () => {
+  // ...
+});
+```
+
+云台控制速度变化事件 `EZUIKitPlayer.EVENTS.ptz.ptzSpeedChange`
+
+```js
+// 监听关闭云台控制控件事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.ptz.ptzSpeedChange, () => {
+  // ...
+});
+```
+
+点击云台控制控件按钮事件 `EZUIKitPlayer.EVENTS.ptz.ptzBtnClick`
+
+```js
+// 监听点击云台控制控件按钮事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.ptz.ptzBtnClick, () => {
+  // ...
+});
+```
+
+点击云台控制控件方向事件 `EZUIKitPlayer.EVENTS.ptz.ptzDirection`
+
+```js
+// 监听点击云台控制控件方向事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.ptz.ptzDirection, () => {
+  // ...
+});
+```
+
+#### 时间轴
+
+时间轴控件宽度变化事件 `EZUIKitPlayer.EVENTS.timeLine.timeWidthChange`
+
+```js
+// 监听点击云台控制控件方向事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.timeLine.timeWidthChange, (widthType) => {
+  // ...
+  console.log('timeWidthChange', widthType); // 0 | 1 | 2 | 3
+});
+```
+
+#### 日期选择器相关事件
+
+日期选择器打开事件 `EZUIKitPlayer.EVENTS.date.openDatePanel`
+
+```js
+// 监听日期选择器打开事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.date.openDatePanel, () => {
+  // ...
+});
+```
+
+日期选择器关闭事件 `EZUIKitPlayer.EVENTS.date.closeDatePanel`
+
+```js
+// 监听日期选择器关闭事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.date.closeDatePanel, () => {
+  // ...
+});
+```
+
+日期选择器日期切换事件 `EZUIKitPlayer.EVENTS.date.recStartTimeChange`
+
+```js
+// 监听日期选择器日期切换事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.date.recStartTimeChange, () => {
+  // ...
+});
+```
+
+<!-- | 事件名 （Event）    | 返回值                                                                                                    | 描述 Description         |
+| :------------------ | :-------------------------------------------------------------------------------------------------------- | :----------------------- | -->
+<!-- | changePlayUrl       | boolean                                                                                                   | N 示时间                 | -->
+<!-- | changeZoomType      | boolean                                                                                                   | N 示时间                 | -->
+<!-- | close3DZoom         | boolean                                                                                                   | N 示时间                 | -->
+<!-- | enable3DZoom        | boolean                                                                                                   | N 示时间                 | -->
+<!-- | getDeviceCapacity   | boolean                                                                                                   | N 示时间                 | -->
+<!-- | getOSDTime          | boolean                                                                                                   | N 示时间                 | -->
+<!-- | getPlayRate         | boolean                                                                                                   | N 示时间                 | -->
+<!-- | getPtzStatus        | boolean                                                                                                   | N 示时间                 | -->
+<!-- | getVideoLevel       | boolean                                                                                                   | N 示时间                 | -->
+<!-- | getVideoLevelList   | boolean                                                                                                   | N 示时间                 | -->

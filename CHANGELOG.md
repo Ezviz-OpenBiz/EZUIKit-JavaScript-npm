@@ -1,3 +1,18 @@
+
+### v8.1.9 (2025-04-16)
+
+#### Feat
+
+- 新增日志打印配置项 `loggerOptions` 和 `setLoggerOptions` api, 具体请参考[参数说明](./README.md), [issues #202](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/202), [issues #176](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/176), [issues #205](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/205), [issues #81](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/81)
+
+- 新增一些事件， 如 `videoInfo` 、`audioInfo` 和 `firstFrameDisplay`等， 具体请参考[事件](./README.md)
+
+#### Fixed
+
+- 修复调用录制api, ui 没有同步问题
+- 修复调用对讲api, ui 没有同步问题
+- 修复了一些小bug [issues #178](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/178), [issues #199](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/199), [issues #206](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/206),
+
 ## v8.1.8（2025-03-19）
 
 #### Feat

@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "8.1.8-beta.1",
+  "version": "8.1.9-beta.1",
   "description": "ezuikit javascript for npm",
   "main": "index.js",
   "module": "index.mjs",
@@ -26,20 +26,21 @@
     "open"
   ],
   "dependencies": {
-    "@ezuikit/player-ezopen": "8.1.8-beta.8",
-    "@ezuikit/utils-collect": "0.1.0",
+    "@ezuikit/player-ezopen": "8.1.9-beta.3",
+    "@ezuikit/utils-collect": "0.1.1",
     "@ezuikit/utils-i18n": "^1.0.1",
+    "@ezuikit/utils-logger": "^1.0.1",
     "@ezuikit/utils-tools": "^1.0.4",
     "@juggle/resize-observer": "^3.4.0",
     "abortcontroller-polyfill": "^1.7.5",
     "debounce-promise": "^3.1.2",
     "deepmerge": "^4.3.1",
-    "delegate": "3.2.0",
     "formdata-polyfill": "^4.0.10",
     "jquery": "^3.3.1",
     "lodash-es": "^4.17.21",
     "screenfull": "^5.2.0",
-    "uuid": "^8.3.0"
+    "uuid": "^8.3.0",
+    "delegate": "3.2.0"
   },
   "license": "ISC",
   "bugs": {
