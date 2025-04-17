@@ -847,12 +847,12 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
-"@ezuikit/player-ezopen@8.1.5-beta.3":
-  version "8.1.5-beta.3"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.1.5-beta.3.tgz#b33b7ab5934f64fcc6dd7f1170f295d6f75b69a4"
-  integrity sha512-CiQ0vDic7Qc+TpJwkJppp12KZO+Z2IsVJqFb4Se2/tRhpXoHztLfXR8Oi+352ZSDwDeLrfehH2s9/3zbqRdvcw==
+"@ezuikit/player-ezopen@8.1.9-beta.3":
+  version "8.1.9-beta.3"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.1.9-beta.3.tgz#0a24288acbd91543d34676581e1a227e7787042a"
+  integrity sha512-4YEA/Otp/lW8iiCOhgajhpkrbdFePUN3oMnSumrvYvDfiIMAKJLAiAmCCiXieoJ8hIzrCeXKjYUPgY5/HALHdg==
   dependencies:
-    "@ezuikit/player-plugin-record" "8.1.1-beta.1"
+    "@ezuikit/player-plugin-record" "8.1.8-beta.3"
     "@ezuikit/utils-i18n" "^1.0.1"
     "@ezuikit/utils-logger" "^1.0.1"
     "@ezuikit/utils-service" "1.0.1"
@@ -865,15 +865,15 @@
     screenfull "^5.2.0"
     ua-parser-js "1.0.37"
 
-"@ezuikit/player-plugin-record@8.1.1-beta.1":
-  version "8.1.1-beta.1"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-plugin-record/-/player-plugin-record-8.1.1-beta.1.tgz#34c18de504f10258d44a0944f25f85e59ce7f968"
-  integrity sha512-GjPzd9b0vxdA9oQPvaEOujlL1QBxWPT504T6j4LUPJC1Jl/kUmz05+v9UwwDXdxJWQX/dfxyNFNDC6UGSPLfvA==
+"@ezuikit/player-plugin-record@8.1.8-beta.3":
+  version "8.1.8-beta.3"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-plugin-record/-/player-plugin-record-8.1.8-beta.3.tgz#a9f4a7c05ccb3e6c3c73c04e2b9603f8fd55a428"
+  integrity sha512-YcQ5MR8zyg8b+o/ktr6r+YCXkiEX43HVmzVkfJsERgaokaHzoNIpOomEl51j/13gcemjSXuN6i1apCRC2v32pg==
 
-"@ezuikit/utils-collect@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@ezuikit/utils-collect/-/utils-collect-0.1.0.tgz#3954839a67ab8e8a0ecba4b4a9d7779fd79185cf"
-  integrity sha512-85lWlB/VCaooPPkCK3nEB4F3UKgO+HbmoPEq4U1tH/ObVP7IJ7eURrFUmQT1CKsqjH5xz5g4DgZzHWgYrwGcCQ==
+"@ezuikit/utils-collect@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@ezuikit/utils-collect/-/utils-collect-0.1.1.tgz#b9b49b1a2ef762c1d33b8a154bdd571e9cd965da"
+  integrity sha512-BgEOnTtAq8rQRBAKv5rLXbQLGOnfOZ6NS0QTmiviey80JbMJlxrLiqmjL5lxvkm4JtCcXCtSgPA4tskQKN4eDA==
 
 "@ezuikit/utils-i18n@^1.0.1":
   version "1.0.1"
@@ -2575,6 +2575,11 @@ define-properties@^1.2.1:
     has-property-descriptors "^1.0.0"
     object-keys "^1.1.1"
 
+delegate@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/delegate/-/delegate-3.2.0.tgz#b66b71c3158522e8ab5744f720d8ca0c2af59166"
+  integrity sha512-IofjkYBZaZivn0V8nnsMJGBr4jVLxHDheKSW88PyxS5QC4Vo9ZbZVvhzlSxY87fVq3STR6r+4cGepyHkcWOQSw==
+
 depd@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/depd/-/depd-2.0.0.tgz#b696163cc757560d09cf22cc8fad1571b79e76df"
@@ -2919,19 +2924,21 @@ express@^4.17.3:
     utils-merge "1.0.1"
     vary "~1.1.2"
 
-ezuikit-js@^8.1.5:
-  version "8.1.5"
-  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.1.5.tgz#4c2e50b05122763c252c273e6157dab54e6d5a24"
-  integrity sha512-LpZx3QOlUhCFOv7CgE8DgLOVI4W46Q0eNcmmxkO2mEXl4IIYVkm6FgYHq+j+FCan2sY30dYLgfi73qo6rDZI4g==
+ezuikit-js@^8.1.9-beta.1:
+  version "8.1.9-beta.1"
+  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.1.9-beta.1.tgz#9a58b6526492c221618e668bfa1d59d7c7ad4a1d"
+  integrity sha512-WHEkLAReIoCCwaNTwh1reozAK2aCvkLTPAvAQokqBB5F3yoFqnVvUynZrSGe6a7l97eliodMxfVa5LmDu905Yw==
   dependencies:
-    "@ezuikit/player-ezopen" "8.1.5-beta.3"
-    "@ezuikit/utils-collect" "0.1.0"
+    "@ezuikit/player-ezopen" "8.1.9-beta.3"
+    "@ezuikit/utils-collect" "0.1.1"
     "@ezuikit/utils-i18n" "^1.0.1"
+    "@ezuikit/utils-logger" "^1.0.1"
     "@ezuikit/utils-tools" "^1.0.4"
     "@juggle/resize-observer" "^3.4.0"
     abortcontroller-polyfill "^1.7.5"
     debounce-promise "^3.1.2"
     deepmerge "^4.3.1"
+    delegate "3.2.0"
     formdata-polyfill "^4.0.10"
     jquery "^3.3.1"
     lodash-es "^4.17.21"

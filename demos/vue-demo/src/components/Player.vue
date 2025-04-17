@@ -47,8 +47,9 @@ export default {
       //   });
       player = new EZUIKit.EZUIKitPlayer({
         id: "video-container", // 视频容器ID
-        accessToken: "at.1gskp9sk9b8pol288qw4f0ladj6ow00a-2obk8zrvgd-0icd73x",
-        url: "ezopen://open.ys7.com/BC7900686/1.hd.live",
+        accessToken:
+          "at.1gskp9sk9h5t0qzkb9njljgec9szaqkq-4qrit4qict-0r92aaq-ef8rzzvhg",
+        url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
         template: "pcLive",
         // plugin: ["talk"], // 加载插件，talk-对讲
@@ -65,7 +66,49 @@ export default {
           // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
           domain: "https://open.ys7.com",
         },
+        staticPath:
+          "https://openstatic.ys7.com/ezuikit_js/v8.1.9/ezuikit_static",
+        // 日志打印设置
+        loggerOptions: {
+          // player.setLoggerOptions(options)
+          level: "INFO", // INFO LOG  WARN  ERROR
+          name: "ezuikit",
+          showTime: true,
+        },
+        // 视频流的信息回调类型
+        /**
+         * 打开流信息回调，监听 streamInfoCB 事件
+         * 0 : 每次都回调
+         * 1 : 只回调一次
+         * 注意：会影响性能
+         * 默认值 1
+         */
+        streamInfoCBType: 1,
       });
+
+      player.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.videoInfo, (info) => {
+        console.log("videoinfo", info);
+      });
+
+      player.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.audioInfo, (info) => {
+        console.log("audioInfo", info);
+      });
+
+      // 首帧渲染成功
+      // first frame display
+      player.eventEmitter.on(
+        EZUIKit.EZUIKitPlayer.EVENTS.firstFrameDisplay,
+        () => {
+          console.log("firstFrameDisplay ");
+        }
+      );
+      player.eventEmitter.on(
+        EZUIKit.EZUIKitPlayer.EVENTS.streamInfoCB,
+        (info) => {
+          console.log("streamInfoCB ", info);
+        }
+      );
+
       window.player = player;
     },
     play() {
