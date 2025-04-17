@@ -2924,10 +2924,10 @@ express@^4.17.3:
     utils-merge "1.0.1"
     vary "~1.1.2"
 
-ezuikit-js@^8.1.9-beta.1:
-  version "8.1.9-beta.1"
-  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.1.9-beta.1.tgz#9a58b6526492c221618e668bfa1d59d7c7ad4a1d"
-  integrity sha512-WHEkLAReIoCCwaNTwh1reozAK2aCvkLTPAvAQokqBB5F3yoFqnVvUynZrSGe6a7l97eliodMxfVa5LmDu905Yw==
+ezuikit-js@^8.1.9-beta.3:
+  version "8.1.9-beta.3"
+  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.1.9-beta.3.tgz#7f84872eed0eba4f4af1ae314a77bb1c4c42db72"
+  integrity sha512-BtpkKOafxRmZroVcol5yOpASVHi1ddUy7DGzFb/TLkoh3VER7xEOzJepiK0O7dOsXAMmxXwooMLO+DIfMXFXnw==
   dependencies:
     "@ezuikit/player-ezopen" "8.1.9-beta.3"
     "@ezuikit/utils-collect" "0.1.1"
