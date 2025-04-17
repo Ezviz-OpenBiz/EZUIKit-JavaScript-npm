@@ -178,7 +178,7 @@ const Player = () => {
           type="text"
           ref={staticPathRef}
           style={{ width: 500 }}
-          defaultValue=""
+          defaultValue="https://openstatic.ys7.com/ezuikit_js/v8.1.9/ezuikit_static"
         />
       </div>
       <div>

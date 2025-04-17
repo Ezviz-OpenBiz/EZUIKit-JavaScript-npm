@@ -74,6 +74,8 @@ const Player = () => {
         streamInfoCBType: 1,
       });
 
+      (window as any).player = player.current;
+
       player.current.eventEmitter.on(
         EZUIKitPlayer.EVENTS.videoInfo,
         (info: any) => {
@@ -201,17 +203,17 @@ const Player = () => {
         <div className="form-item">
           <label>url</label>
           {/* prettier-ignore */}
-          <input ref={urlRef} placeholder="ezopen url" defaultValue="ezopen://open.ys7.com/BB9480953/1.hd.live" />
+          <input ref={urlRef} placeholder="ezopen url" defaultValue="ezopen://open.ys7.com/BC7799091/1.hd.live" />
         </div>
         <div className="form-item">
           <label>accessToken</label>
           {/* prettier-ignore */}
-          <input ref={accessTokenRef} placeholder="ezopen accessToken" defaultValue="at.2ec3m7dga2v59cps6rv0d1haa2vqsjka-1lbu5f5hyi-1j9rleq-npvuluse" />
+          <input ref={accessTokenRef} placeholder="ezopen accessToken" defaultValue="at.1gskp9sk9h5t0qzkb9njljgec9szaqkq-4qrit4qict-0r92aaq-ef8rzzvhg" />
         </div>
         <div className="form-item">
           <label>staticPath</label>
           {/* prettier-ignore */}
-          <input ref={staticPathRef} placeholder="ezopen staticPath" defaultValue="" />
+          <input ref={staticPathRef} placeholder="ezopen staticPath" defaultValue="https://openstatic.ys7.com/ezuikit_js/v8.1.9/ezuikit_static" />
         </div>
         <div className="form-item">
           <label>domain</label>
