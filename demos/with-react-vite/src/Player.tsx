@@ -208,12 +208,17 @@ const Player = () => {
         <div className="form-item">
           <label>accessToken</label>
           {/* prettier-ignore */}
-          <input ref={accessTokenRef} placeholder="ezopen accessToken" defaultValue="at.1gskp9sk9h5t0qzkb9njljgec9szaqkq-4qrit4qict-0r92aaq-ef8rzzvhg" />
+          <input ref={accessTokenRef} placeholder="ezopen accessToken" defaultValue="at.1gskp9sk9h5t0qzkb9njljgec9szaqkq-4qrit4qict-0r92aaq-ef8rzzvh" />
         </div>
         <div className="form-item">
           <label>staticPath</label>
           {/* prettier-ignore */}
-          <input ref={staticPathRef} placeholder="ezopen staticPath" defaultValue="https://openstatic.ys7.com/ezuikit_js/v8.1.9/ezuikit_static" />
+          {/* https://openstatic.ys7.com/ezuikit_js/v8.1.9/ezuikit_static */}
+          <input
+            ref={staticPathRef}
+            placeholder="ezopen staticPath"
+            defaultValue=""
+          />
         </div>
         <div className="form-item">
           <label>domain</label>

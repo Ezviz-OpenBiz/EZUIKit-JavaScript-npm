@@ -9,8 +9,8 @@ dependencies:
     specifier: ^2.5.1
     version: 2.5.1
   ezuikit-js:
-    specifier: ^8.1.9-beta.1
-    version: 8.1.9-beta.1
+    specifier: ^8.1.9-beta.3
+    version: 8.1.9-beta.3
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -2023,8 +2023,8 @@ packages:
       strip-final-newline: 2.0.0
     dev: true
 
-  /ezuikit-js@8.1.9-beta.1:
-    resolution: {integrity: sha512-WHEkLAReIoCCwaNTwh1reozAK2aCvkLTPAvAQokqBB5F3yoFqnVvUynZrSGe6a7l97eliodMxfVa5LmDu905Yw==}
+  /ezuikit-js@8.1.9-beta.3:
+    resolution: {integrity: sha512-BtpkKOafxRmZroVcol5yOpASVHi1ddUy7DGzFb/TLkoh3VER7xEOzJepiK0O7dOsXAMmxXwooMLO+DIfMXFXnw==}
     dependencies:
       '@ezuikit/player-ezopen': 8.1.9-beta.3
       '@ezuikit/utils-collect': 0.1.1
