@@ -46,7 +46,7 @@ jobs:
       #   run: pnpm run build
       # 发布npm 发布前执行了prepublishOnly
       - name: Publish npm
-        run: npm publish --tag ${{ steps.determine_tag.outputs.tag }}
+        run: npm publish
         env:
           # 这里需要几个 Token 变量
           # NPM_TOKEN 需要在 npm 网站生成
