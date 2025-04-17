@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "8.1.9",
+  "version": "8.1.9-beta.2",
   "description": "ezuikit javascript for npm",
   "title": "ezuikit-js",
   "main": "index.js",
@@ -16,7 +16,7 @@
   "files": [
     "ezuikit.js",
     "index.js",
-    "index.esm.js",
+    "index.mjs",
     "ezuikit_static",
     "README.md",
     "CHANGELOG.md"
