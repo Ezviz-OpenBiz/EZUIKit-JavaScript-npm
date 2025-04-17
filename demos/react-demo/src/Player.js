@@ -169,7 +169,7 @@ const Player = () => {
           type="text"
           ref={accessTokenRef}
           style={{ width: 500 }}
-          defaultValue="at.1gskp9sk9h5t0qzkb9njljgec9szaqkq-4qrit4qict-0r92aaq-ef8rzzvhg"
+          defaultValue="at.1gskp9sk9h5t0qzkb9njljgec9szaqkq-4qrit4qict-0r92aaq-ef8rzzvh"
         />
       </div>
       <div>
@@ -178,7 +178,7 @@ const Player = () => {
           type="text"
           ref={staticPathRef}
           style={{ width: 500 }}
-          defaultValue="https://openstatic.ys7.com/ezuikit_js/v8.1.9/ezuikit_static"
+          defaultValue=""
         />
       </div>
       <div>
