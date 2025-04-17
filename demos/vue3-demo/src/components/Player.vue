@@ -110,7 +110,7 @@ const init = () => {
     player = new EZUIKit.EZUIKitPlayer({
         id: "video-container", // 视频容器ID
         accessToken:
-            "at.1gskp9sk9h5t0qzkb9njljgec9szaqkq-4qrit4qict-0r92aaq-ef8rzzvhg",
+            "at.1gskp9sk9h5t0qzkb9njljgec9szaqkq-4qrit4qict-0r92aaq-ef8rzzvh",
         url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
         template: "pcLive",
@@ -128,8 +128,7 @@ const init = () => {
             // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
             domain: "https://open.ys7.com",
         },
-        staticPath:
-            "https://openstatic.ys7.com/ezuikit_js/v8.1.9/ezuikit_static",
+        // staticPath: "https://openstatic.ys7.com/ezuikit_js/v8.1.9/ezuikit_static",
         // 日志打印设置
         loggerOptions: {
             // player.setLoggerOptions(options)
