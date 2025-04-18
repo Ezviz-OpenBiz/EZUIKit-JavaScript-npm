@@ -46,7 +46,7 @@ const Player = () => {
         width,
         height,
         template,
-        staticPath,
+        staticPath, // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
         language, // zh | en
         // isCloudRecord: true, // 如果是云录制的播放 需要这个值，是必须的
         env: {
@@ -56,7 +56,54 @@ const Player = () => {
           domain, // "https://open.ys7.com"
         },
         plugin: ["talk"], // 加载插件，talk-对讲
+        // 日志打印设置
+        loggerOptions: {
+          // player.setLoggerOptions(options)
+          level: "INFO", // INFO LOG  WARN  ERROR
+          name: "ezuikit",
+          showTime: true,
+        },
+        // 视频流的信息回调类型
+        /**
+         * 打开流信息回调，监听 streamInfoCB 事件
+         * 0 : 每次都回调
+         * 1 : 只回调一次
+         * 注意：会影响性能
+         * 默认值 1
+         */
+        streamInfoCBType: 1,
       });
+
+      (window as any).player = player.current;
+
+      player.current.eventEmitter.on(
+        EZUIKitPlayer.EVENTS.videoInfo,
+        (info: any) => {
+          console.log("videoinfo", info);
+        },
+      );
+
+      player.current.eventEmitter.on(
+        EZUIKitPlayer.EVENTS.audioInfo,
+        (info: any) => {
+          console.log("audioInfo", info);
+        },
+      );
+
+      // 首帧渲染成功
+      // first frame display
+      player.current.eventEmitter.on(
+        EZUIKitPlayer.EVENTS.firstFrameDisplay,
+        () => {
+          console.log("firstFrameDisplay ");
+        },
+      );
+      player.current.eventEmitter.on(
+        EZUIKitPlayer.EVENTS.streamInfoCB,
+        (info: any) => {
+          console.log("streamInfoCB ", info);
+        },
+      );
     }
   }, []);
 
@@ -156,17 +203,22 @@ const Player = () => {
         <div className="form-item">
           <label>url</label>
           {/* prettier-ignore */}
-          <input ref={urlRef} placeholder="ezopen url" defaultValue="ezopen://open.ys7.com/BB9480953/1.hd.live" />
+          <input ref={urlRef} placeholder="ezopen url" defaultValue="ezopen://open.ys7.com/BC7799091/1.hd.live" />
         </div>
         <div className="form-item">
           <label>accessToken</label>
           {/* prettier-ignore */}
-          <input ref={accessTokenRef} placeholder="ezopen accessToken" defaultValue="at.2ec3m7dga2v59cps6rv0d1haa2vqsjka-1lbu5f5hyi-1j9rleq-npvuluse" />
+          <input ref={accessTokenRef} placeholder="ezopen accessToken" defaultValue="at.1gskp9sk9h5t0qzkb9njljgec9szaqkq-4qrit4qict-0r92aaq-ef8rzzvh" />
         </div>
         <div className="form-item">
           <label>staticPath</label>
           {/* prettier-ignore */}
-          <input ref={staticPathRef} placeholder="ezopen staticPath" defaultValue="" />
+          {/* https://openstatic.ys7.com/ezuikit_js/v8.1.9/ezuikit_static */}
+          <input
+            ref={staticPathRef}
+            placeholder="ezopen staticPath"
+            defaultValue=""
+          />
         </div>
         <div className="form-item">
           <label>domain</label>
