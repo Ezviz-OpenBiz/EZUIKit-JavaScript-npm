@@ -1,3 +1,52 @@
+
+### v8.1.9 (2025-04-16)
+
+#### Feat
+
+- 新增日志打印配置项 `loggerOptions` 和 `setLoggerOptions` api, 具体请参考[参数说明](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm?tab=readme-ov-file#%E9%99%84%E5%BD%95-%E5%88%9D%E5%A7%8B%E5%8C%96%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E), [issues #202](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/202), [issues #176](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/176), [issues #205](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/205), [issues #81](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/81)
+
+- 新增一些事件， 如 `videoInfo` 、`audioInfo` 和 `firstFrameDisplay`等， 具体请参考[事件](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm?tab=readme-ov-file#%E4%BA%8B%E4%BB%B6)
+
+#### Fixed
+
+- 修复调用录制api, ui 没有同步问题
+- 修复调用对讲api, ui 没有同步问题
+- 修复了一些小bug [issues #178](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/178), [issues #199](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/199), [issues #206](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/206),
+
+## v8.1.8（2025-03-19）
+
+#### Feat
+
+- 支持巡检模板
+
+- 兼容音频采样率异常设备录制
+
+#### Fixed
+
+- 修复部分AR设备获取标签信息报错
+
+## v8.1.7（2025-03-05）
+
+#### Feat
+
+- 电子放大模块重构，操作更丝滑~
+
+- 移动端支持双指操作电子放大功能
+
+## v8.1.6（2025-02-10）
+
+#### Feat
+
+- 初始化支持配置关闭结束录制的默认下载行为【downloadRecord: false】
+
+- 支持初始化设置【stopSaveCallBack】回调事件，在结束录制后通过该回调获取下载地址及文件数据
+
+#### Fixed
+
+- 修复了token为空时本地缓存地址依然可以播放的问题
+
+- 修复了一些小bug
+
 ## v8.1.5（2025-01-15）
 
 #### Feat
