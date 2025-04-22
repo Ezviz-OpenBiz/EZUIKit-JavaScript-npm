@@ -17,6 +17,7 @@ stats.html
 .vscode
 .setting
 build/
+.next/
 npm-debug.log*
 npm-error.log*
 yarn-debug.log*

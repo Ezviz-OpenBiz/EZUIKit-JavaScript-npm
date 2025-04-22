@@ -1,0 +1,33 @@
+
+.player-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 600px;
+}
+
+#player-container {
+    width: 600px;
+    height: 400px;
+    background-color: #000;
+}
+
+
+.form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
+
+.form input:not([type="checkbox"]) {
+    width: 490px;
+    max-width: 100%;
+}
+
+.form-item {
+    margin-bottom: 5px;
+    label {
+        width: 100px;
+        display: inline-flex;
+    }
+}
