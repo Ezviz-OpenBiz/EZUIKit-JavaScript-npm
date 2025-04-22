@@ -30,6 +30,10 @@ pnpm add ezuikit-js
 ### 引入 ezuikit-js
 
 ```js
+// >= v8.1.2  ESM
+import { EZUIKitPlayer } from "ezuikit-js";
+
+// < v8.1.2
 import EZUIKit from "ezuikit-js";
 ```
 
@@ -55,7 +59,8 @@ import EZUIKit from "ezuikit-js";
 ### 直播
 
 ```js
-const player = new EZUIKit.EZUIKitPlayer({
+import { EZUIKitPlayer } from "ezuikit-js";
+const player = new EZUIKitPlayer({
   id: "video-container", // 视频容器ID
   accessToken:
     "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
@@ -73,7 +78,8 @@ const player = new EZUIKit.EZUIKitPlayer({
 ### 回放
 
 ```js
-const player = new EZUIKit.EZUIKitPlayer({
+import { EZUIKitPlayer } from "ezuikit-js";
+const player = new EZUIKitPlayer({
   id: "video-container", // 视频容器ID
   width: 600,
   height: 400,
@@ -116,7 +122,8 @@ alpha（功能测试）、beta（集成测试）为我们的非正式版本，�
 > 轻应用支持向接入萤石云海外环境的设备发起取流播放，需要在初始化时配置海外服务域名，示例：
 
 ```js
-const player = new EZUIKit.EZUIKitPlayer({
+import { EZUIKitPlayer } from "ezuikit-js";
+const player = new EZUIKitPlayer({
   id: "playWind",
   width: 600,
   height: 400,
