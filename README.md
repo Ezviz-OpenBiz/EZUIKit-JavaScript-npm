@@ -37,6 +37,16 @@ import { EZUIKitPlayer } from "ezuikit-js";
 import EZUIKit from "ezuikit-js";
 ```
 
+#### 不支持 ESM (not support ESM)
+
+```js
+// >= v8.1.2  CommonJS
+import { EZUIKitPlayer } from 'ezuikit-js/index.js';
+
+// < v8.1.2 CommonJS
+import EZUIKit from 'ezuikit-js/index.js';
+```
+
 #### 如果你使用原生方法,可以通过标签引用
 
 ```html
