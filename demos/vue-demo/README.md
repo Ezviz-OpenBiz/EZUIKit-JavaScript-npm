@@ -39,6 +39,7 @@ npm run lint
 
   1. 升级 `vue-cli-service` 到最新版
   2. 配置`vue.config.js` 支持 .mjs， 如下图
+
      ![image](https://github.com/user-attachments/assets/b461a400-2a29-4814-b70e-f3b3cbef8ff6)
 
 
