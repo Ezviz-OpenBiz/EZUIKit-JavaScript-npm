@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import Player from "./Player";
-// import PlayerClass from "./PlayerClass";
+// import Player from "./PlayerClass";
 
 ReactDOM.render(
   <React.StrictMode>

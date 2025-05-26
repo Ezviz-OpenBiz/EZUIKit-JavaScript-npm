@@ -25,9 +25,9 @@ class App extends React.Component {
     if (document.getElementById("player-container")) {
       player = new EZUIKit.EZUIKitPlayer({
         id: "player-container", // 视频容器ID
-        url: "ezopen://open.ys7.com/BB9480953/1.hd.live",
+        url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
         accessToken:
-          "at.2ec3m7dga2v59cps6rv0d1haa2vqsjka-1lbu5f5hyi-1j9rleq-npvulusoe",
+          "at.d525oyj8d7bwohb40ssn3266cfq2mwi2-8hgpypehn9-1fafaty-ea2fxbc1",
         // simple:极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放; security: 安防版; voice: 语音版;
         template: "pcLive",
         plugin: ["talk"], // 加载插件，talk-对讲
@@ -48,6 +48,12 @@ class App extends React.Component {
           // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
           domain: "https://open.ys7.com",
         },
+        // v8.1.10
+        // 自定义清晰度 默认 null, 如果有值 sdk 内部不在进行获取, null 默认使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取
+        videoLevelList: [
+          { level: 0, name: "流畅", streamTypeIn: 2 },
+          { level: 1, name: "标清", streamTypeIn: 1 },
+        ],
       });
     }
     // });
