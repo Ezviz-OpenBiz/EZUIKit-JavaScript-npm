@@ -847,10 +847,10 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
-"@ezuikit/player-ezopen@8.1.9-beta.3":
-  version "8.1.9-beta.3"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.1.9-beta.3.tgz#0a24288acbd91543d34676581e1a227e7787042a"
-  integrity sha512-4YEA/Otp/lW8iiCOhgajhpkrbdFePUN3oMnSumrvYvDfiIMAKJLAiAmCCiXieoJ8hIzrCeXKjYUPgY5/HALHdg==
+"@ezuikit/player-ezopen@8.1.10-beta.4":
+  version "8.1.10-beta.4"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.1.10-beta.4.tgz#1eaa448b679b9f90ffb7c35a81ae62f433082a25"
+  integrity sha512-mgSLavIOvZhMCjl17YuSrxtxjGsOEprTT0OPfJBcjA5TdBYIbtFPom0joypiJY/epxJf371AyVbNa30svQ49ng==
   dependencies:
     "@ezuikit/player-plugin-record" "8.1.8-beta.3"
     "@ezuikit/utils-i18n" "^1.0.1"
@@ -2924,12 +2924,12 @@ express@^4.17.3:
     utils-merge "1.0.1"
     vary "~1.1.2"
 
-ezuikit-js@^8.1.9-beta.3:
-  version "8.1.9-beta.3"
-  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.1.9-beta.3.tgz#7f84872eed0eba4f4af1ae314a77bb1c4c42db72"
-  integrity sha512-BtpkKOafxRmZroVcol5yOpASVHi1ddUy7DGzFb/TLkoh3VER7xEOzJepiK0O7dOsXAMmxXwooMLO+DIfMXFXnw==
+ezuikit-js@^8.1.10-beta.1:
+  version "8.1.10-beta.1"
+  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.1.10-beta.1.tgz#8bd96cfc42826fc2a197327b6d6fe91e01a4f143"
+  integrity sha512-p4cWCd89Ur+J9LgEuSukOG+GOHx5zQogswjbQMHTADJBCV0pGl9cs/yDYgMwjvWGp5HHwsMf7RX2+VIVfj3rjg==
   dependencies:
-    "@ezuikit/player-ezopen" "8.1.9-beta.3"
+    "@ezuikit/player-ezopen" "8.1.10-beta.4"
     "@ezuikit/utils-collect" "0.1.1"
     "@ezuikit/utils-i18n" "^1.0.1"
     "@ezuikit/utils-logger" "^1.0.1"
