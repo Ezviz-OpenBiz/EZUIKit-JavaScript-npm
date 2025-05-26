@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import EZUIKit from "ezuikit-js";
+import { EZUIKitPlayer } from "ezuikit-js";
 var player = null;
 
 export default {
@@ -45,7 +45,7 @@ export default {
       //     var accessToken = res.data.accessToken;
 
       //   });
-      player = new EZUIKit.EZUIKitPlayer({
+      player = new EZUIKitPlayer({
         id: "video-container", // 视频容器ID
         accessToken:
           "at.d525oyj8d7bwohb40ssn3266cfq2mwi2-8hgpypehn9-1fafaty-ea2fxbc1",
@@ -91,24 +91,24 @@ export default {
         // ],
       });
 
-      player.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.videoInfo, (info) => {
+      player.eventEmitter.on(EZUIKitPlayer.EVENTS.videoInfo, (info) => {
         console.log("videoinfo", info);
       });
 
-      player.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.audioInfo, (info) => {
+      player.eventEmitter.on(EZUIKitPlayer.EVENTS.audioInfo, (info) => {
         console.log("audioInfo", info);
       });
 
       // 首帧渲染成功
       // first frame display
       player.eventEmitter.on(
-        EZUIKit.EZUIKitPlayer.EVENTS.firstFrameDisplay,
+        EZUIKitPlayer.EVENTS.firstFrameDisplay,
         () => {
           console.log("firstFrameDisplay ");
         }
       );
       player.eventEmitter.on(
-        EZUIKit.EZUIKitPlayer.EVENTS.streamInfoCB,
+        EZUIKitPlayer.EVENTS.streamInfoCB,
         (info) => {
           console.log("streamInfoCB ", info);
         }

@@ -1,5 +1,7 @@
 <template>
-  <div id="app"></div>
+    <div id="app">
+        <Player />
+    </div>
 </template>
 <script>
 import Player from "./components/Player.vue";
