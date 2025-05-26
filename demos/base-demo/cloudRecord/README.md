@@ -8,6 +8,5 @@
 
 ## 备注
 
-如果使用[npm](https://www.npmjs.com/package/ezuikit-js) 包， 请安装 `8.0.6` 版本，
+如果使用[npm](https://www.npmjs.com/package/ezuikit-js) 包，
 
-8.0.6 之后的版本有点小问题， 后续会尽快恢复
