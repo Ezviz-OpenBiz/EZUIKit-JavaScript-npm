@@ -1,4 +1,4 @@
-name: build-demos
+name: build-nextjs
 
 on:
   push:
