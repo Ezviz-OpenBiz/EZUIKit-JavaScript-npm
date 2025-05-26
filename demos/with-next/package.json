@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "ezuikit-js": "8.1.9-beta.3",
+    "ezuikit-js": "8.1.10-beta.1",
     "next": "15",
     "react": "^18",
     "react-dom": "^18"
