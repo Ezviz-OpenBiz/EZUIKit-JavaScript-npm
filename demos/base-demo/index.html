@@ -24,7 +24,7 @@
                 <div id="video-container" style="width: 600px"></div>
             </div>
             <div>
-                <button onClick="init()">init</button>
+                <button onClick="init()">出初始化(init)</button>
                 <button onClick="play()">play</button>
                 <button onClick="stop()">stop</button>
                 <button onClick="getOSDTime()">getOSDTime</button>
@@ -33,8 +33,8 @@
                 <button onClick="closeSound()">closeSound</button>
                 <button onClick="startSave()">startSave</button>
                 <button onClick="stopSave()">stopSave</button>
-                <button onClick="ezopenStartTalk()">开始对讲</button>
-                <button onClick="ezopenStopTalk()">结束对讲</button>
+                <button onClick="startTalk()">开始对讲</button>
+                <button onClick="stopTalk()">结束对讲</button>
                 <button onClick="fullScreen()">全屏</button>
                 <button onClick="destroy()">销毁</button>
             </div>
@@ -57,7 +57,7 @@
                 player = new EZUIKit.EZUIKitPlayer({
                     id: "video-container", // 视频容器ID
                     accessToken:
-                        "ra.2zhsfvhv5n36uqiu5skq9a458d9g28o0-361rtyke9p-1r80x45-iteypfxmq",
+                        "at.d525oyj8d7bwohb40ssn3266cfq2mwi2-8hgpypehn9-1fafaty-ea2fxbc1k",
                     url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
                     template: "pcLive", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
                     plugin: ["talk"], // 加载插件，talk-对讲
@@ -91,6 +91,12 @@
                      */
                     streamInfoCBType: 1,
                     staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+                    // v8.1.10
+                    // 自定义清晰度 默认 null, 如果有值 sdk 内部不在进行获取, null 默认使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取
+                    // videoLevelList: [
+                    //   { level: 0, name: "流畅", streamTypeIn: 1 },
+                    //   { level: 1, name: "标清", streamTypeIn: 1 },
+                    // ],
                 });
 
                 player.eventEmitter.on(
@@ -180,10 +186,10 @@
                     console.log("promise 获取 数据", data);
                 });
             }
-            function ezopenStartTalk() {
+            function startTalk() {
                 player.startTalk();
             }
-            function ezopenStopTalk() {
+            function stopTalk() {
                 player.stopTalk();
             }
 
