@@ -1,0 +1,21 @@
+{
+  "name": "with-vue2.6",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "ezuikit-js": "^8.1.9-beta.3",
+    "core-js": "^3.18.1",
+    "vue": "2.6.14"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "4.5.13",
+    "@vue/cli-service": "4.5.13",
+    "vue-template-compiler": "2.6.14"
+  }
+}
