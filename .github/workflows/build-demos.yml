@@ -48,12 +48,6 @@ jobs:
           pnpm install --no-frozen-lockfile
           pnpm run build
 
-      - name: Build with-next
-        working-directory: ./demos/with-next
-        run: |
-          pnpm install --no-frozen-lockfile
-          pnpm run build
-
       - name: Build with-vue2.6
         working-directory: ./demos/with-vue2.6
         run: |
