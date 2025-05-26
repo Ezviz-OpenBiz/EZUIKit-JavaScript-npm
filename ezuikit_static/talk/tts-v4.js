@@ -103,7 +103,7 @@ var spinner = null;
 									Janus.log("Plugin attached! (" + tts.getPlugin() + ", id=" + tts.getId() + ")");
 									// Negotiate WebRTC
 									//var url = "tts://61.130.6.23:8664/talk://D13781761:0:1:cas.ys7.com:6500?97fbd2a75fa94b7682c994d3d1fac8ca:ut.5porslgu79e9r7ca48z32k8abgl3rp58-77bhb6i7xr-1kmumtg-jkhy7pvfr:0:3"
-									
+
 
 									//var url = "tts://10.86.15.209:8664/talk://D13781761:0:1:cas.ys7.com:6500?32db2578ba7c4a84be22ecc0bcd0f8db:ut.5lqpkhim5m7cdk2y5w60g7hm9vd7i3v0-3d2pwhxe2t-11wx2ge-sh4yazbll:0:3"
 									//var url = "tts://10.86.15.209:8664/talk://D13781761:0:1:cas.ys7.com:6500"
@@ -136,8 +136,8 @@ var spinner = null;
 											error: function(error) {
 												Janus.error("WebRTC error:", error);
 											//	bootbox.alert("WebRTC error... " + JSON.stringify(error));
-											if(typeof window.EZUIKit.handleTalkError !== 'undefined'){
-												window.EZUIKit.handleTalkError(error);
+											if(typeof window.EZUIKit['handleTalkError']?.[window.__CURRENT_PLAYER_TALK_ID] !== 'undefined'){
+												window.EZUIKit['handleTalkError']?.[window.__CURRENT_PLAYER_TALK_ID](error);
 											}
 											}
 										});
@@ -150,8 +150,8 @@ var spinner = null;
 								error: function(error) {
 									console.error("  -- Error attaching plugin...", error);
 									bootbox.alert("Error attaching plugin... " + error);
-									if(window.EZUIKit.handleTalkError !== 'undefined'){
-										window.EZUIKit.handleTalkError(error);
+									if(window.EZUIKit['handleTalkError']?.[window.__CURRENT_PLAYER_TALK_ID] !== 'undefined'){
+										window.EZUIKit['handleTalkError']?.[window.__CURRENT_PLAYER_TALK_ID](error);
 									}
 								},
 								consentDialog: function(on) {
@@ -311,8 +311,8 @@ var spinner = null;
 					},
 					error: function(error) {
 						Janus.error(error);
-						if(window.EZUIKit.handleTalkError !== 'undefined'){
-							window.EZUIKit.handleTalkError(error);
+						if(window.EZUIKit['handleTalkError']?.[window.__CURRENT_PLAYER_TALK_ID] !== 'undefined'){
+							window.EZUIKit['handleTalkError']?.[window.__CURRENT_PLAYER_TALK_ID](error);
 						}
 					},
 					destroyed: function() {
