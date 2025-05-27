@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@ezuikit/player-ezopen@8.1.9-beta.3":
-  version "8.1.9-beta.3"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.1.9-beta.3.tgz#0a24288acbd91543d34676581e1a227e7787042a"
-  integrity sha512-4YEA/Otp/lW8iiCOhgajhpkrbdFePUN3oMnSumrvYvDfiIMAKJLAiAmCCiXieoJ8hIzrCeXKjYUPgY5/HALHdg==
+"@ezuikit/player-ezopen@8.1.10-beta.4":
+  version "8.1.10-beta.4"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.1.10-beta.4.tgz#1eaa448b679b9f90ffb7c35a81ae62f433082a25"
+  integrity sha512-mgSLavIOvZhMCjl17YuSrxtxjGsOEprTT0OPfJBcjA5TdBYIbtFPom0joypiJY/epxJf371AyVbNa30svQ49ng==
   dependencies:
     "@ezuikit/player-plugin-record" "8.1.8-beta.3"
     "@ezuikit/utils-i18n" "^1.0.1"

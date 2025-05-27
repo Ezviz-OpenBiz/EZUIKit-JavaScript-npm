@@ -1,5 +1,5 @@
 {
-  "name": "my-project",
+  "name": "vue-demo",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "ezuikit-js": "^8.1.9-beta.3",
+    "ezuikit-js": "^8.1.10",
     "vue": "^2.7"
   },
   "devDependencies": {

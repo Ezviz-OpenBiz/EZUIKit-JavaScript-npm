@@ -1,0 +1,33 @@
+name: build-nextjs
+
+on:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 21.x, 22.x, 23.x, 24.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Build with-next
+        working-directory: ./demos/with-next
+        run: |
+          pnpm install --no-frozen-lockfile
+          pnpm run build
+
+

@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   ezuikit-js:
-    specifier: 8.1.9-beta.3
-    version: 8.1.9-beta.3
+    specifier: 8.1.10
+    version: 8.1.10
   next:
     specifier: '15'
     version: 15.3.1(react-dom@18.3.1)(react@18.3.1)
@@ -115,8 +115,8 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@ezuikit/player-ezopen@8.1.9-beta.3:
-    resolution: {integrity: sha512-4YEA/Otp/lW8iiCOhgajhpkrbdFePUN3oMnSumrvYvDfiIMAKJLAiAmCCiXieoJ8hIzrCeXKjYUPgY5/HALHdg==}
+  /@ezuikit/player-ezopen@8.1.10-beta.4:
+    resolution: {integrity: sha512-mgSLavIOvZhMCjl17YuSrxtxjGsOEprTT0OPfJBcjA5TdBYIbtFPom0joypiJY/epxJf371AyVbNa30svQ49ng==}
     dependencies:
       '@ezuikit/player-plugin-record': 8.1.8-beta.3
       '@ezuikit/utils-i18n': 1.0.1
@@ -1751,10 +1751,10 @@ packages:
     resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
     dev: false
 
-  /ezuikit-js@8.1.9-beta.3:
-    resolution: {integrity: sha512-BtpkKOafxRmZroVcol5yOpASVHi1ddUy7DGzFb/TLkoh3VER7xEOzJepiK0O7dOsXAMmxXwooMLO+DIfMXFXnw==}
+  /ezuikit-js@8.1.10:
+    resolution: {integrity: sha512-kanEC/z7vR6nOcwNeZetMgsnRgNlSGZo4ByLoh2Q4AFs/jytsTIWaVeYL/cH54lC8/UgEhCSVUUKWgk7BPR15w==}
     dependencies:
-      '@ezuikit/player-ezopen': 8.1.9-beta.3
+      '@ezuikit/player-ezopen': 8.1.10-beta.4
       '@ezuikit/utils-collect': 0.1.1
       '@ezuikit/utils-i18n': 1.0.1
       '@ezuikit/utils-logger': 1.0.1

@@ -42,6 +42,7 @@ npm run lint
 
      ![image](https://github.com/user-attachments/assets/b461a400-2a29-4814-b70e-f3b3cbef8ff6)
 
+  [with-vue2.6](../with-vue2.6)
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

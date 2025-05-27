@@ -59,6 +59,12 @@ const Player = () => {
          */
         streamInfoCBType: 1,
         staticPath: staticPathRef.current?.value.trim() || undefined, // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+        // v8.1.10
+        // 自定义清晰度 默认 null, 如果有值 sdk 内部不在进行获取, null 默认使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取
+        // videoLevelList: [
+        //   { level: 0, name: "流畅", streamTypeIn: 1 },
+        //   { level: 1, name: "标清", streamTypeIn: 1 },
+        // ],
       });
     }
   }, []);
@@ -169,7 +175,7 @@ const Player = () => {
           type="text"
           ref={accessTokenRef}
           style={{ width: 500 }}
-          defaultValue="at.1gskp9sk9h5t0qzkb9njljgec9szaqkq-4qrit4qict-0r92aaq-ef8rzzvh"
+          defaultValue="at.d525oyj8d7bwohb40ssn3266cfq2mwi2-8hgpypehn9-1fafaty-ea2fxbc1"
         />
       </div>
       <div>

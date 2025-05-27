@@ -14,6 +14,16 @@
   user-select: none;
 }
 
+
+.speed-select > li {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
+  white-space: nowrap;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
 .speed-select li:hover {
   background: #1890ff1a;
 }

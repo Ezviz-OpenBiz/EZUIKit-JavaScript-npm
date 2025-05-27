@@ -1,5 +1,5 @@
 <template>
-  <div class="hello-ezuikit-js">
+  <div class="ezuikit-js">
     <div>
       <div id="video-container" style="width: 600px; height: 400px"></div>
     </div>
@@ -48,11 +48,11 @@ export default {
       player = new EZUIKitPlayer({
         id: "video-container", // 视频容器ID
         accessToken:
-          "at.d525oyj8d7bwohb40ssn3266cfq2mwi2-8hgpypehn9-1fafaty-ea2fxbc1k",
+          "at.d525oyj8d7bwohb40ssn3266cfq2mwi2-8hgpypehn9-1fafaty-ea2fxbc1",
         url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
         template: "pcLive",
-        plugin: ["talk"], // 加载插件，talk-对讲
+        // plugin: ["talk"], // 加载插件，talk-对讲
         width: 600,
         height: 400,
         handleError: (error) => {
@@ -83,12 +83,6 @@ export default {
          * 默认值 1
          */
         streamInfoCBType: 1,
-        // v8.1.10
-        // 自定义清晰度 默认 null, 如果有值 sdk 内部不在进行获取, null 默认使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取
-        // videoLevelList: [
-        //   { level: 0, name: "流畅", streamTypeIn: 1 },
-        //   { level: 1, name: "标清", streamTypeIn: 1 },
-        // ],
       });
 
       player.eventEmitter.on(EZUIKitPlayer.EVENTS.videoInfo, (info) => {
