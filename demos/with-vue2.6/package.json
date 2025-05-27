@@ -9,7 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "ezuikit-js": "^8.1.10-beta.1",
+    "ezuikit-js": "^8.1.10",
     "core-js": "^3.18.1",
     "vue": "2.6.14"
   },

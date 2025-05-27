@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   ezuikit-js:
-    specifier: 8.1.10-beta.1
-    version: 8.1.10-beta.1
+    specifier: 8.1.10
+    version: 8.1.10
   next:
     specifier: '15'
     version: 15.3.1(react-dom@18.3.1)(react@18.3.1)
@@ -1751,8 +1751,8 @@ packages:
     resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
     dev: false
 
-  /ezuikit-js@8.1.10-beta.1:
-    resolution: {integrity: sha512-p4cWCd89Ur+J9LgEuSukOG+GOHx5zQogswjbQMHTADJBCV0pGl9cs/yDYgMwjvWGp5HHwsMf7RX2+VIVfj3rjg==}
+  /ezuikit-js@8.1.10:
+    resolution: {integrity: sha512-kanEC/z7vR6nOcwNeZetMgsnRgNlSGZo4ByLoh2Q4AFs/jytsTIWaVeYL/cH54lC8/UgEhCSVUUKWgk7BPR15w==}
     dependencies:
       '@ezuikit/player-ezopen': 8.1.10-beta.4
       '@ezuikit/utils-collect': 0.1.1

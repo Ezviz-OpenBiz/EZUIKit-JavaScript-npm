@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import EZUIKit from "ezuikit-js";
+import { EZUIKitPlayer } from "ezuikit-js";
 import { onMounted } from "vue";
 
 interface IPlayer {
@@ -107,7 +107,7 @@ const init = () => {
   //   .then((response) => response.json())
   //   .then((res) => {
   //     var accessToken = res.data.accessToken;
-  player = new EZUIKit.EZUIKitPlayer({
+  player = new EZUIKitPlayer({
     id: "video-container", // 视频容器ID
     accessToken:
       "at.d525oyj8d7bwohb40ssn3266cfq2mwi2-8hgpypehn9-1fafaty-ea2fxbc1",
@@ -159,14 +159,14 @@ const init = () => {
   });
 
   player.eventEmitter.on(
-    EZUIKit.EZUIKitPlayer.EVENTS.videoInfo,
+    EZUIKitPlayer.EVENTS.videoInfo,
     (info: any) => {
       console.log("videoinfo", info);
     }
   );
 
   player.eventEmitter.on(
-    EZUIKit.EZUIKitPlayer.EVENTS.audioInfo,
+    EZUIKitPlayer.EVENTS.audioInfo,
     (info: any) => {
       console.log("audioInfo", info);
     }
@@ -174,11 +174,11 @@ const init = () => {
 
   // 首帧渲染成功
   // first frame display
-  player.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.firstFrameDisplay, () => {
+  player.eventEmitter.on(EZUIKitPlayer.EVENTS.firstFrameDisplay, () => {
     console.log("firstFrameDisplay ");
   });
   player.eventEmitter.on(
-    EZUIKit.EZUIKitPlayer.EVENTS.streamInfoCB,
+    EZUIKitPlayer.EVENTS.streamInfoCB,
     (info: any) => {
       console.log("streamInfoCB ", info);
     }
