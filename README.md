@@ -41,10 +41,10 @@ import EZUIKit from "ezuikit-js";
 
 ```js
 // >= v8.1.2  CommonJS
-import { EZUIKitPlayer } from 'ezuikit-js/index.js';
+import { EZUIKitPlayer } from "ezuikit-js/index.js";
 
 // < v8.1.2 CommonJS
-import EZUIKit from 'ezuikit-js/index.js';
+import EZUIKit from "ezuikit-js/index.js";
 ```
 
 #### 如果你使用原生方法,可以通过标签引用
@@ -113,9 +113,13 @@ alpha（功能测试）、beta（集成测试）为我们的非正式版本，�
 
 > 如果使用 react + vite，可参考 demos => [with-react-vite](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-react-vite)
 
-> 如果使用 vue2，可参考 demos => [vue-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/vue-demo)
+> 如果使用 next.js，可参考 demos => [with-next](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-next)
 
 > 如果使用 vue3，可参考 demos => [vue3-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/vue3-demo)
+
+> 如果使用 vue2.7，可参考 demos => [vue-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/vue-demo)
+
+> 如果使用 vue2.6，可参考 demos => [with-vue2.6](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-vue2.6)
 
 #### tips
 
