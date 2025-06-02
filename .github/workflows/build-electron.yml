@@ -1,4 +1,4 @@
-name: build-nextjs
+name: build-electron
 
 on:
   push:
