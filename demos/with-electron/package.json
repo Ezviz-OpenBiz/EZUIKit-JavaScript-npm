@@ -5,9 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "dev": "npx electron .",
-    "build:mac": "electron-builder --mac",
-    "build:win32": "electron-builder --win --ia32",
-    "build:win64": "electron-builder --win --x64" 
+    "build": "electron-builder"
   },
   "keywords": [],
   "author": "",
@@ -17,15 +15,5 @@
   "devDependencies": {
     "electron": "^36.3.2",
     "electron-builder": "^26.0.12"
-  },
-  "build": {
-    "appId": "com.ezuikit.app",
-    "productName": "Ezuikit",
-    "win": {
-      "target": "nsis"
-    },
-    "mac": {
-      "target": "dmg"
-    }
   }
 }
