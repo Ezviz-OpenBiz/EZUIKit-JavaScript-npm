@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-import Player from "./components/Player.vue";
+import Player from "./components/Multi.vue";
 
 export default {
   name: "App",
