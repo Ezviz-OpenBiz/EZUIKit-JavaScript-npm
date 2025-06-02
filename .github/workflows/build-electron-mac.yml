@@ -28,4 +28,4 @@ jobs:
         working-directory: ./demos/with-electron
         run: |
           pnpm install --no-frozen-lockfile
-          pnpm run build:mac
+          pnpm run build

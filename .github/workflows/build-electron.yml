@@ -27,8 +27,8 @@ jobs:
         with:
           version: 8
 
-      - name: Install Dependencies
-        run: pnpm install
-
-      - name: Build Release Files
-        run: pnpm run build
+      - name: Build with-electron
+        working-directory: ./demos/with-electron
+        run: |
+          pnpm install --no-frozen-lockfile
+          pnpm run build
