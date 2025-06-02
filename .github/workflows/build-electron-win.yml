@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [22.x] # 同时多个 node 环境构建会报错 ERR_ELECTRON_BUILDER_CANNOT_EXECUTE 
+        node-version: [18.x, 20.x, 21.x, 22.x, 23.x, 24.x]
 
     steps:
       - uses: actions/checkout@v4
@@ -20,13 +20,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
 
+      # Yarn
       - name: Build with-electron
         working-directory: ./demos/with-electron
         run: |
-          pnpm install --no-frozen-lockfile
-          pnpm run build:win32
-        # pnpm run build:win64
+          yarn install --no-frozen-lockfile
+          yarn run build:win32
+          yarn run build:win64
