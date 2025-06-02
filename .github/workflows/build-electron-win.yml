@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 21.x, 22.x]
+        node-version: [22.x] # 同时多个 node 环境构建会报错 ERR_ELECTRON_BUILDER_CANNOT_EXECUTE 
 
     steps:
       - uses: actions/checkout@v4
