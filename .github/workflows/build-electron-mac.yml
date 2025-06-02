@@ -1,4 +1,4 @@
-name: build-electron
+name: build-electron-mac
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: macos-latest
 
     strategy:
       matrix:
@@ -28,5 +28,4 @@ jobs:
         working-directory: ./demos/with-electron
         run: |
           pnpm install --no-frozen-lockfile
-          pnpm run build:win32
-          pnpm run build:win64
+          pnpm run build:mac
