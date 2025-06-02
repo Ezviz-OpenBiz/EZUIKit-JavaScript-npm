@@ -1,18 +1,10 @@
-name: Build
+name: build-electron
 
 on:
   push:
-    branches: [main, develop]
-    paths-ignore:
-      - '**.md'
-      - '**.spec.js'
-      - '.idea'
-      - '.vscode'
-      - '.dockerignore'
-      - 'Dockerfile'
-      - '.gitignore'
-      - '.github/**'
-      - '!.github/workflows/build.yml'
+    branches: ["main", "develop"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
   build:
