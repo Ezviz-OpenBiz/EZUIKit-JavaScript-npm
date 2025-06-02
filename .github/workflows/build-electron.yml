@@ -28,4 +28,5 @@ jobs:
         working-directory: ./demos/with-electron
         run: |
           pnpm install --no-frozen-lockfile
-          pnpm run build
+          pnpm run build:win32
+          pnpm run build:win64
