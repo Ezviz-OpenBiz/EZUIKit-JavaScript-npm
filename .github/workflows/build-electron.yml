@@ -40,10 +40,3 @@ jobs:
 
       - name: Build Release Files
         run: pnpm run build
-
-      # - name: Upload Artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: release_on_${{ matrix. os }}
-      #     path: release/
-      #     retention-days: 5
