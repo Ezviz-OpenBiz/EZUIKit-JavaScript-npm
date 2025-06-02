@@ -1,0 +1,33 @@
+
+/**
+ * @see https://www.electron.build/configuration/configuration
+ */
+{
+  appId: 'com.ezuikit.app',
+  asar: true,
+  directories: {
+    output: 'release/${version}',
+  },
+  files: ['src'],
+  mac: {
+    artifactName: '${productName}_${version}.${ext}',
+    target: ['dmg', 'zip'],
+  },
+  win: {
+    target: [
+      {
+        target: 'nsis',
+        arch: ['x64'],
+      },
+    ],
+    artifactName: '${productName}_${version}.${ext}',
+  },
+  nsis: {
+    oneClick: false,
+    perMachine: false,
+    allowToChangeInstallationDirectory: true,
+    deleteAppDataOnUninstall: true,
+    installerIcon: 'resource/icon.ico',
+    installerHeaderIcon: 'resource/icon.ico',
+  }
+}

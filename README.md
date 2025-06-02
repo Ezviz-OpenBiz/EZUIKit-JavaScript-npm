@@ -115,6 +115,8 @@ alpha（功能测试）、beta（集成测试）为我们的非正式版本，�
 
 > 如果使用 next.js，可参考 demos => [with-next](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-next)
 
+> 如果使用 electron，可参考 demos => [with-electron](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-electron)
+
 > 如果使用 vue3，可参考 demos => [vue3-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/vue3-demo)
 
 > 如果使用 vue2.7，可参考 demos => [vue-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/vue-demo)
