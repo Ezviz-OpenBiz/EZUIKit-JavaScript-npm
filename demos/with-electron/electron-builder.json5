@@ -3,7 +3,7 @@
  * @see https://www.electron.build/configuration/configuration
  */
 {
-  appId: 'YourAppID',
+  appId: 'com.ezuikit.app',
   asar: true,
   directories: {
     output: 'release/${version}',
@@ -27,7 +27,7 @@
     perMachine: false,
     allowToChangeInstallationDirectory: true,
     deleteAppDataOnUninstall: true,
-    installerIcon: 'build/icon.ico',
-    installerHeaderIcon: 'build/icon.ico',
+    installerIcon: 'resource/icon.ico',
+    installerHeaderIcon: 'resource/icon.ico',
   }
 }
