@@ -23,12 +23,8 @@ jobs:
         with:
           node-version: 18
 
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
-
       - name: Build with-electron
         working-directory: ./demos/with-electron
         run: |
-          pnpm install --no-frozen-lockfile
-          pnpm run build
+          yarn install --no-frozen-lockfile
+          yarn run build
