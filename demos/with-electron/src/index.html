@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <title>Document</title>
+    <style>
+      #video-container {
+        width: 600px;
+        height: 400px;
+        background-color: #000;
+      }
+    </style>
+    <script src="./ezuikit.js"></script>
+  </head>
+
+  <body>
+    <div className="demo">
+      <h2>视频模式使用示例：</h2>
+      <div>
+        <div id="video-container" style="width: 600px"></div>
+      </div>
+      <div>
+        <button class="init">出初始化(init)</button>
+        <button class="play">play</button>
+        <button class="stop">stop</button>
+        <button class="getOSDTime">getOSDTime</button>
+        <button class="capturePicture">capturePicture</button>
+        <button class="openSound">openSound</button>
+        <button class="closeSound">closeSound</button>
+        <button class="startSave">startSave</button>
+        <button class="stopSave">stopSave</button>
+        <button class="startTalk">开始对讲</button>
+        <button class="stopTalk">结束对讲</button>
+        <button class="fullScreen">全屏</button>
+        <button class="destroy">销毁</button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var player = null;
+
+        function destroy() {
+          if (player) {
+            player.destroy();
+          }
+          player = null;
+        }
+
+        document.querySelector(".init").addEventListener("click", () => {
+          if (player) {
+            destroy();
+          }
+
+          // fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
+          //   .then(response => response.json())
+          //   .then(res => {
+          //     var accessToken = res.data.accessToken;
+          player = new EZUIKit.EZUIKitPlayer({
+            id: "video-container", // 视频容器ID
+            accessToken:
+              "at.d525oyj8d7bwohb40ssn3266cfq2mwi2-8hgpypehn9-1fafaty-ea2fxbc1k",
+            url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
+            template: "pcLive", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
+            //   plugin: ["talk"], // 加载插件，talk-对讲
+            width: 600,
+            height: 400,
+            language: "en", // zh | en
+            // debugDownloadData: true,
+            handleError: (error) => {
+              console.error("handleError", error);
+            },
+            env: {
+              // https://open.ys7.com/help/1772?h=domain
+              // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
+              // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
+              domain: "https://open.ys7.com",
+            },
+            // 日志打印设置
+            loggerOptions: {
+              // player.setLoggerOptions(options)
+              level: "INFO", // INFO LOG  WARN  ERROR
+              name: "ezuikit",
+              showTime: true,
+            },
+            // 视频流的信息回调类型
+            /**
+             * 打开流信息回调，监听 streamInfoCB 事件
+             * 0 : 每次都回调
+             * 1 : 只回调一次
+             * 注意：会影响性能
+             * 默认值 1
+             */
+            streamInfoCBType: 1,
+            // 推荐本地配置 staticPath
+            staticPath: "./ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+            // v8.1.10
+            // 自定义清晰度 默认 null, 如果有值 sdk 内部不在进行获取, null 默认使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取
+            // videoLevelList: [
+            //   { level: 0, name: "流畅", streamTypeIn: 1 },
+            //   { level: 1, name: "标清", streamTypeIn: 1 },
+            // ],
+          });
+
+          player.eventEmitter.on(
+            EZUIKit.EZUIKitPlayer.EVENTS.videoInfo,
+            (info) => {
+              console.log("videoinfo", info);
+            }
+          );
+
+          player.eventEmitter.on(
+            EZUIKit.EZUIKitPlayer.EVENTS.audioInfo,
+            (info) => {
+              console.log("audioInfo", info);
+            }
+          );
+
+          // 首帧渲染成功
+          // first frame display
+          player.eventEmitter.on(
+            EZUIKit.EZUIKitPlayer.EVENTS.firstFrameDisplay,
+            () => {
+              console.log("firstFrameDisplay ");
+            }
+          );
+          player.eventEmitter.on(
+            EZUIKit.EZUIKitPlayer.EVENTS.streamInfoCB,
+            (info) => {
+              console.log("streamInfoCB ", info);
+            }
+          );
+        });
+
+        document.querySelector(".fullScreen").addEventListener("click", () => {
+          player.fullScreen();
+        });
+
+        document.querySelector(".play").addEventListener("click", () => {
+          var playPromise = player.play();
+          playPromise.then((data) => {
+            console.log("play", data);
+          });
+        });
+
+        document.querySelector(".stop").addEventListener("click", () => {
+          var stopPromise = player.stop();
+          stopPromise.then((data) => {
+            console.log("stop", data);
+          });
+        });
+
+        document.querySelector(".getOSDTime").addEventListener("click", () => {
+          var getOSDTimePromise = player.getOSDTime();
+          getOSDTimePromise.then((data) => {
+            console.log("getOSDTime: ", data);
+          });
+        });
+        document
+          .querySelector(".capturePicture")
+          .addEventListener("click", () => {
+            var capturePicturePromise = player.capturePicture();
+            capturePicturePromise.then((data) => {
+              console.log("promise 获取 数据", data);
+            });
+          });
+
+        document.querySelector(".openSound").addEventListener("click", () => {
+          var openSoundPromise = player.openSound();
+          openSoundPromise.then((data) => {
+            console.log("promise 获取 数据", data);
+          });
+        });
+
+        document.querySelector(".closeSound").addEventListener("click", () => {
+          var closeSoundPromise = player.closeSound();
+          closeSoundPromise.then((data) => {
+            console.log("promise 获取 数据", data);
+          });
+        });
+        document.querySelector(".startSave").addEventListener("click", () => {
+          var startSavePromise = player.startSave(`${new Date().getTime()}`);
+          startSavePromise.then((data) => {
+            console.log("promise 获取 数据", data);
+          });
+        });
+        document.querySelector(".stopSave").addEventListener("click", () => {
+          var stopSavePromise = player.stopSave();
+          stopSavePromise.then((data) => {
+            console.log("promise 获取 数据", data);
+          });
+        });
+        document.querySelector(".startTalk").addEventListener("click", () => {
+          player.startTalk();
+        });
+        document.querySelector(".stopTalk").addEventListener("click", () => {
+          player.stopTalk();
+        });
+        document.querySelector(".destroy").addEventListener("click", destroy);
+      })();
+    </script>
+  </body>
+</html>
