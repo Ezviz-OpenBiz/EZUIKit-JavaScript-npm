@@ -9,11 +9,14 @@ dependencies:
     specifier: ^3.18.1
     version: 3.42.0
   ezuikit-js:
-    specifier: ^8.1.10
-    version: 8.1.10
+    specifier: 8.1.10-beta.5
+    version: 8.1.10-beta.5
   vue:
     specifier: 2.6.14
     version: 2.6.14
+  vue-router:
+    specifier: '3'
+    version: 3.6.5(vue@2.6.14)
 
 devDependencies:
   '@vue/cli-plugin-babel':
@@ -4428,8 +4431,8 @@ packages:
     engines: {'0': node >=0.6.0}
     dev: true
 
-  /ezuikit-js@8.1.10:
-    resolution: {integrity: sha512-kanEC/z7vR6nOcwNeZetMgsnRgNlSGZo4ByLoh2Q4AFs/jytsTIWaVeYL/cH54lC8/UgEhCSVUUKWgk7BPR15w==}
+  /ezuikit-js@8.1.10-beta.5:
+    resolution: {integrity: sha512-G7J7AwTptfDv7kYpe/CW2RSO1072oimnnBJYjc59mjqNXJSEhWJeH0/Akujw+7QOpToNAv6VAaYDn8lZJIXHcw==}
     dependencies:
       '@ezuikit/player-ezopen': 8.1.10-beta.4
       '@ezuikit/utils-collect': 0.1.1
@@ -8949,6 +8952,14 @@ packages:
       webpack: 4.47.0
     dev: true
     optional: true
+
+  /vue-router@3.6.5(vue@2.6.14):
+    resolution: {integrity: sha512-VYXZQLtjuvKxxcshuRAwjHnciqZVoXAjTjcqBTz4rKc8qih9g9pI3hbDjmqXaHdgL3v8pV6P8Z335XvHzESxLQ==}
+    peerDependencies:
+      vue: ^2
+    dependencies:
+      vue: 2.6.14
+    dev: false
 
   /vue-style-loader@4.1.3:
     resolution: {integrity: sha512-sFuh0xfbtpRlKfm39ss/ikqs9AbKCoXZBpHeVZ8Tx650o0k0q/YCM7FRvigtxpACezfq6af+a7JeqVTWvncqDg==}
