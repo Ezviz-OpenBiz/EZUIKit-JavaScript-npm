@@ -1,19 +1,15 @@
 <template>
-    <div id="app">
-        <Player />
-    </div>
+  <div id="app">
+    <router-view></router-view>
+  </div>
 </template>
-<script>
-import Player from "./components/Multi.vue";
-
-export default {
-  name: "App",
-  components: {
-    Player,
-  },
-};
-</script>
 <style>
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

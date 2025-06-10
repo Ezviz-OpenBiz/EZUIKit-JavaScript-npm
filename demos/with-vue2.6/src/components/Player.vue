@@ -95,18 +95,12 @@ export default {
 
       // 首帧渲染成功
       // first frame display
-      player.eventEmitter.on(
-        EZUIKitPlayer.EVENTS.firstFrameDisplay,
-        () => {
-          console.log("firstFrameDisplay ");
-        }
-      );
-      player.eventEmitter.on(
-        EZUIKitPlayer.EVENTS.streamInfoCB,
-        (info) => {
-          console.log("streamInfoCB ", info);
-        }
-      );
+      player.eventEmitter.on(EZUIKitPlayer.EVENTS.firstFrameDisplay, () => {
+        console.log("firstFrameDisplay ");
+      });
+      player.eventEmitter.on(EZUIKitPlayer.EVENTS.streamInfoCB, (info) => {
+        console.log("streamInfoCB ", info);
+      });
 
       window.player = player;
     },
