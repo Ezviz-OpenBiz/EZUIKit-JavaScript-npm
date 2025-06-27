@@ -1,6 +1,6 @@
 /*
 *
-* ezuikit.js v8.1.3-beta.1
+* ezuikit.js v8.1.3-beta.2
 * Copyright (c) 2025-6-27 Ezviz-OpenBiz
 * Released under ISC the License.
 *
