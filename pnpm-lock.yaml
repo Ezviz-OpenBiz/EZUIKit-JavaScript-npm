@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@ezuikit/player-ezopen':
-    specifier: 8.1.10-beta.9
-    version: 8.1.10-beta.9
+    specifier: 8.1.12-beta.4
+    version: 8.1.12-beta.4
   '@ezuikit/utils-collect':
     specifier: 0.1.1
     version: 0.1.1
@@ -51,10 +51,15 @@ dependencies:
     specifier: ^8.3.0
     version: 8.3.2
 
+devDependencies:
+  husky:
+    specifier: ^9.1.7
+    version: 9.1.7
+
 packages:
 
-  /@ezuikit/player-ezopen@8.1.10-beta.9:
-    resolution: {integrity: sha512-Imm/xtaiuiXrFlQrXBCd7BWWjaPQ2riaaIrenN/G1xHtgHaRKV0UFyfB4y/j+w2kLHq1P4fvNEEs1JoJ7xrznQ==}
+  /@ezuikit/player-ezopen@8.1.12-beta.4:
+    resolution: {integrity: sha512-qp3d7s8t2OlHwt/+qofxsk68bWbLOj1qbK3VdxUJQ8D37KGn7aKRc6EtdyP2yDMe8LCSyytJzbyORDCkaKu9VA==}
     dependencies:
       '@ezuikit/player-plugin-record': 8.1.8-beta.3
       '@ezuikit/utils-i18n': 1.0.1
@@ -146,6 +151,12 @@ packages:
     dependencies:
       fetch-blob: 3.2.0
     dev: false
+
+  /husky@9.1.7:
+    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
+    engines: {node: '>=18'}
+    hasBin: true
+    dev: true
 
   /i18n-js@4.5.0:
     resolution: {integrity: sha512-eiT3ZzK+k1VUR/oDz0Nne3dWU6DE+4P3FxtHXgHMZyzW1lKAHsjEYaOPZClU4QA9rI+uoeE71zq1QzLnZ6LDJQ==}

@@ -40,6 +40,9 @@ import EZUIKit from "ezuikit-js";
 #### 不支持 ESM (not support ESM)
 
 ```js
+// UMD
+import EZUIKit from "ezuikit-js/ezuikit.js";
+
 // >= v8.1.2  CommonJS
 import { EZUIKitPlayer } from "ezuikit-js/index.js";
 

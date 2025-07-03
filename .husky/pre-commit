@@ -1,0 +1,35 @@
+# 需要检查的文件列表（可按需修改文件名和路径）
+files="ezuikit.js index.js index.mjs"
+
+version=""
+inconsistent=false
+
+for file in $files; do
+  if [ ! -f "$file" ]; then
+    echo "缺少文件: $file"
+    inconsistent=true
+    continue
+  fi
+  # 提取头部前2行（防止文件太大），你可以根据实际格式修改正则
+  v=$(head -2 "$file" | grep -Eo 'v([0-9]+\.[0-9]+\.[0-9]+)+(-[a-z]+\.[0-9]+)?')
+  if [ -z "$v" ]; then
+    echo "文件 $file 未检测到版本号"
+    inconsistent=true
+    continue
+  fi
+  if [ -z "$version" ]; then
+    version="$v"
+  else
+    if [ "$version" != "$v" ]; then
+      echo "文件 $file 的版本号 $v 与其它文件版本号 $version 不一致"
+      inconsistent=true
+    fi
+  fi
+done
+
+if [ "$inconsistent" = true ]; then
+  echo "版本号不一致，禁止推送！"
+  exit 1
+fi
+
+echo "所有文件版本号一致: $version"
