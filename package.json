@@ -50,5 +50,8 @@
   "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm#readme",
   "devDependencies": {
     "husky": "^9.1.7"
+  },
+  "scripts": {
+    "prepare": "husky"
   }
 }

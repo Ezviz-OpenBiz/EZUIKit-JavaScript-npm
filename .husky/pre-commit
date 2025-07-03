@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname "$0")/_/husky.sh"
-
 # 需要检查的文件列表（可按需修改文件名和路径）
 files="ezuikit.js index.js index.mjs"
 
