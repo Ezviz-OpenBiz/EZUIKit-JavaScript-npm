@@ -32,14 +32,13 @@
     "abortcontroller-polyfill": "^1.7.5",
     "debounce-promise": "^3.1.2",
     "deepmerge": "^4.3.1",
+    "delegate": "3.2.0",
     "formdata-polyfill": "^4.0.10",
     "jquery": "^3.3.1",
     "lodash-es": "^4.17.21",
     "screenfull": "^5.2.0",
-    "uuid": "^8.3.0",
-    "delegate": "3.2.0"
+    "uuid": "^8.3.0"
   },
-  "peerDependencies": {},
   "license": "ISC",
   "repository": {
     "type": "git",
@@ -48,5 +47,8 @@
   "bugs": {
     "url": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues"
   },
-  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm#readme"
+  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm#readme",
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
 }
