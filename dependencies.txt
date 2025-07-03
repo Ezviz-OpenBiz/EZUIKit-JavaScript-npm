@@ -7,6 +7,15 @@ Author: Ezviz-OpenBiz
 
 ---
 
+Name: @ezuikit/control-talk
+Version: 0.0.1
+License: null
+Private: false
+Description: talk
+Author: Ezviz-OpenBiz
+
+---
+
 Name: dayjs
 Version: 1.11.13
 License: MIT
@@ -253,7 +262,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/player-ezopen
-Version: 8.1.9-beta.3
+Version: 8.1.12-beta.4
 License: MIT
 Private: false
 Description: 萤石ezopne协议播放器
