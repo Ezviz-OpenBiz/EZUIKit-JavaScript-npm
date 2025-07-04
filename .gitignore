@@ -22,5 +22,5 @@ npm-debug.log*
 npm-error.log*
 yarn-debug.log*
 demos/with-electron/release
-
-            
+demos/with-electron/dist
+           
