@@ -200,3 +200,7 @@ interface ThemeData {
     }
 }
 ```
+
+### 配置示例
+
+<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/themeData.html" target="_blank">本地主题配置示例</a>
