@@ -47,11 +47,5 @@
   "bugs": {
     "url": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues"
   },
-  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm#readme",
-  "devDependencies": {
-    "husky": "^9.1.7"
-  },
-  "scripts": {
-    "prepare": "husky"
-  }
+  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm#readme"
 }
