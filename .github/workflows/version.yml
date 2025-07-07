@@ -16,7 +16,7 @@ jobs:
 
       - name: Check file versions
         run: |
-          files="ezuikit.js index.js index.mjs"
+          files="ezuikit.js index.js index.mjs package.json"
 
           version=""
           inconsistent=false
@@ -27,7 +27,7 @@ jobs:
               inconsistent=true
               continue
             fi
-            v=$(head -2 "$file" | grep -Eo 'v([0-9]+\.[0-9]+\.[0-9]+)+(-[a-z]+\.[0-9]+)?')
+            v=$(head -3 "$file" | grep -Eo '([0-9]+\.[0-9]+\.[0-9]+)+(-[a-z]+\.[0-9]+)?')
             if [ -z "$v" ]; then
               echo "文件 $file 未检测到版本号"
               inconsistent=true
