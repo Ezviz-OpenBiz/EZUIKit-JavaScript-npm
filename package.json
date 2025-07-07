@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "8.1.12",
+  "version": "8.1.12-beta.1",
   "description": "ezuikit javascript for npm",
   "title": "ezuikit-js",
   "main": "index.js",
@@ -47,11 +47,5 @@
   "bugs": {
     "url": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues"
   },
-  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm#readme",
-  "devDependencies": {
-    "husky": "^9.1.7"
-  },
-  "scripts": {
-    "prepare": "husky"
-  }
+  "homepage": "https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm#readme"
 }
