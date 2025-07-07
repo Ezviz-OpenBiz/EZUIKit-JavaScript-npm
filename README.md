@@ -179,19 +179,19 @@ const player = new EZUIKitPlayer({
 
 ### 使用示例
 
-> 1. 快速创建视频播放页面
+#### 快速创建视频播放页面
 
 &emsp;&emsp;&emsp;&emsp;<b>基本使用：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/index.html" target="_blank">基本使用示例</a>
 
-> 2. 前往[开放平台轻应用模板管理页](https://open.ys7.com/console/ezuikit/template.html)创建一个主题，可以动态配置你的播放主题，控件，示例展示了获取一个主题后使用示例。
+#### 前往[开放平台轻应用模板管理页](https://open.ys7.com/console/ezuikit/template.html)创建一个主题，可以动态配置你的播放主题，控件，示例展示了获取一个主题后使用示例。
 
 &emsp;&emsp;&emsp;&emsp;<b>自定义主题：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/template.html" target="_blank">自定义主题示例</a>
 
-> 3. 你可以本地创建一个主题配置，可以本地配置你的播放主题，控件，示例展示了本地配置项使用示例。
+#### 你可以本地创建一个主题配置，可以本地配置你的播放主题，控件，示例展示了本地配置项使用示例。
 
 &emsp;&emsp;&emsp;&emsp;<b>本地主题配置：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/themeData.html" target="_blank">本地主题配置示例</a>
 
-> 4. 我们提供了一些通用场景的主题，PC 端预览，PC 端回放，移动端预览，移动端回放，你也可以直接使用。
+#### 我们提供了一些通用场景的主题，PC 端预览，PC 端回放，移动端预览，移动端回放，你也可以直接使用。
 
 &emsp;&emsp;&emsp;&emsp;<b>PC 端预览-固定主题：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/pcLive.html" target="_blank">PC 端预览-固定主题示例</a>
 
@@ -201,7 +201,7 @@ const player = new EZUIKitPlayer({
 
 &emsp;&emsp;&emsp;&emsp;<b>移动端回放-固定主题：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/mobileRec.html" target="_blank">移动端回放-固定主题示例</a>
 
-> 同一个页面播放多个视频，可以参考：
+#### 同一个页面播放多个视频，可以参考：
 
 &emsp;&emsp;&emsp;&emsp;<b>单页面多实例(视频多窗口)：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/multi.html" target="_blank">单页面多实例(视频多窗口)示例</a>
 
@@ -256,7 +256,7 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.hd.live<br/>
 </table>
 
 </td><td>N</td></tr>
-<tr><td>themeData</td><td>Object</td><td>
+<tr><td>themeData</td><td><a href="./themeData.md" target="_blank">ThemeData</a></td><td>
 themeData将主题数据本地化，设置本地数据，需要删除template参数 <br />
 你可以通过themeData修改按钮位置，颜色，头部底部颜色等配置。
 
