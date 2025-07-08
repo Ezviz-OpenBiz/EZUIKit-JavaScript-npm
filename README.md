@@ -256,7 +256,7 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.hd.live<br/>
 </table>
 
 </td><td>N</td></tr>
-<tr><td>themeData</td><td><a href="./themeData.md" target="_blank">ThemeData</a></td><td>
+<tr><td><a href="./themeData.md" target="_blank">themeData</a></td><td><a href="./themeData.md" target="_blank">ThemeData</a></td><td>
 themeData将主题数据本地化，设置本地数据，需要删除template参数 <br />
 你可以通过themeData修改按钮位置，颜色，头部底部颜色等配置。
 
@@ -274,7 +274,7 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 <tr><td>loggerOptions</td><td> {name: string, level: "INFO" | "LOG" | "WARN" | "ERROR" , showTime: boolean}</td><td>本地日志设置， 默认值 {name: "ezuikit", level: "INFO", showTime: true}, 支持动态设置请参考 <a href="#日志设置">setLoggerOptions(options)</a> (v8.1.9版本及以上支持)</td><td>N</td></tr>
 <tr><td>streamInfoCBType</td><td>  0 | 1 </td><td>  流信息回调类型，监听 streamInfoCB 事件, 0 : 每次都回调（会影响性能）, 1 : 只回调一次, 默认值 1 (v8.1.9版本及以上支持)</td><td>N</td></tr>
 
-<tr><td>videoLevelList</td><td> <span>Array<{ </br>/** 清晰度 */</br>level: number, </br>/** 名称 */ </br>name: string, </br> /**1: 主码流,2: 子码流*/</br>streamTypeIn: 1 | 2 }> <span>| null </td><td>  自定义清晰度列表，默认null, 如果有值 sdk 内部不在进行获取, 为 null 使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取 (v8.1.10版本及以上支持)</td><td>N</td></tr>
+<tr><td><a href="./videoLevelList.md" target="_blank">videoLevelList</a></td><td> <span>Array<{ </br>/** 清晰度 */</br>level: number, </br>/** 名称 */ </br>name: string, </br> /**1: 主码流,2: 子码流*/</br>streamTypeIn: 1 | 2 }> <span>| null </td><td>  自定义清晰度列表，默认null, 如果有值 sdk 内部不在进行获取, 为 null 使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取 (v8.1.10版本及以上支持)</td><td>N</td></tr>
 </table>
 
 ### 方法调用
