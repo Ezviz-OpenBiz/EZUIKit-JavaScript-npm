@@ -9,8 +9,8 @@ dependencies:
     specifier: ^3.18.1
     version: 3.42.0
   ezuikit-js:
-    specifier: 8.1.10-beta.5
-    version: 8.1.10-beta.5
+    specifier: 8.1.12
+    version: 8.1.12
   vue:
     specifier: 2.6.14
     version: 2.6.14
@@ -1156,8 +1156,8 @@ packages:
       '@babel/helper-validator-identifier': 7.27.1
     dev: true
 
-  /@ezuikit/player-ezopen@8.1.10-beta.4:
-    resolution: {integrity: sha512-mgSLavIOvZhMCjl17YuSrxtxjGsOEprTT0OPfJBcjA5TdBYIbtFPom0joypiJY/epxJf371AyVbNa30svQ49ng==}
+  /@ezuikit/player-ezopen@8.1.12-beta.4:
+    resolution: {integrity: sha512-qp3d7s8t2OlHwt/+qofxsk68bWbLOj1qbK3VdxUJQ8D37KGn7aKRc6EtdyP2yDMe8LCSyytJzbyORDCkaKu9VA==}
     dependencies:
       '@ezuikit/player-plugin-record': 8.1.8-beta.3
       '@ezuikit/utils-i18n': 1.0.1
@@ -4431,10 +4431,10 @@ packages:
     engines: {'0': node >=0.6.0}
     dev: true
 
-  /ezuikit-js@8.1.10-beta.5:
-    resolution: {integrity: sha512-G7J7AwTptfDv7kYpe/CW2RSO1072oimnnBJYjc59mjqNXJSEhWJeH0/Akujw+7QOpToNAv6VAaYDn8lZJIXHcw==}
+  /ezuikit-js@8.1.12:
+    resolution: {integrity: sha512-Ht7FwULxGW3ZFyqFMS5/fRKi5539vryZsJsCboPxKryXpstHih+jjjzLB7qxcVgKb4g/gk03KgAyXqFyWpldVg==}
     dependencies:
-      '@ezuikit/player-ezopen': 8.1.10-beta.4
+      '@ezuikit/player-ezopen': 8.1.12-beta.4
       '@ezuikit/utils-collect': 0.1.1
       '@ezuikit/utils-i18n': 1.0.1
       '@ezuikit/utils-logger': 1.0.1
