@@ -64,8 +64,8 @@ const Player = () => {
         // v8.1.10
         // 自定义清晰度 默认 null, 如果有值 sdk 内部不在进行获取, null 默认使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取
         // videoLevelList: [
-        //   { level: 2, name: "流畅", streamTypeIn: 1 },
-        //   { level: 1, name: "标清", streamTypeIn: 1 },
+        //   { level: 1, name: "标清", streamTypeIn: 2 }, // 需要保证支持子码流 (streamTypeIn=2)
+        //   { level: 2, name: "高清", streamTypeIn: 1 },
         // ],
       });
 
