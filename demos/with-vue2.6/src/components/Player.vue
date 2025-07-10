@@ -48,7 +48,7 @@ export default {
       player = new EZUIKitPlayer({
         id: "video-container", // 视频容器ID
         accessToken:
-          "at.d525oyj8d7bwohb40ssn3266cfq2mwi2-8hgpypehn9-1fafaty-ea2fxbc1",
+          "at.2s5bel782emtho68ae31snumc1wuuioa-3d531vj77f-0gtnx7g-fddkee44e",
         url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
         template: "pcLive",
@@ -58,6 +58,7 @@ export default {
         handleError: (error) => {
           console.error("handleError", error);
         },
+        // quality: 6, // 
         // language: "en", // zh | en
         // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
         env: {
@@ -83,6 +84,12 @@ export default {
          * 默认值 1
          */
         streamInfoCBType: 1,
+        // v8.1.10
+        // 自定义清晰度 默认 null, 如果有值 sdk 内部不在进行获取, null 默认使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取
+        // videoLevelList: [
+        //   { level: 1, name: "标清", streamTypeIn: 2 }, // 需要保证支持子码流 (streamTypeIn=2)
+        //   { level: 2, name: "高清", streamTypeIn: 1 },
+        // ],
       });
 
       player.eventEmitter.on(EZUIKitPlayer.EVENTS.videoInfo, (info) => {

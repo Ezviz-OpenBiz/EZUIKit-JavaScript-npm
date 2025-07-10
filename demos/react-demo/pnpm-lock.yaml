@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   ezuikit-js:
-    specifier: 8.1.12-beta.1
-    version: 8.1.12-beta.1
+    specifier: 8.1.12-beta.2
+    version: 8.1.12-beta.2
   react:
     specifier: ^17
     version: 17.0.2
@@ -5151,8 +5151,8 @@ packages:
       - supports-color
     dev: false
 
-  /ezuikit-js@8.1.12-beta.1:
-    resolution: {integrity: sha512-eHGLxyv1f6/Vj6SU705PXv9KDCAiDoxbUStDbJvq7WvsMHeAc2/fplvc4MBOsP8bXQUOhj74oUJ0vDagZRXYjg==}
+  /ezuikit-js@8.1.12-beta.2:
+    resolution: {integrity: sha512-jj9lx78lldxiJNhAtZx9pMKQevRD8GiI2OIApu46bEOyjmidJGZXYrXuoKpENNLC8q7BhRZSnaNzbFPCU3Kn9w==}
     dependencies:
       '@ezuikit/player-ezopen': 8.1.12-beta.4
       '@ezuikit/utils-collect': 0.1.1

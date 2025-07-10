@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from "react";
-import EZUIKit from "ezuikit-js";
+import { EZUIKitPlayer } from "ezuikit-js";
 import { isMobile } from "./utils";
 
 const Player = () => {
@@ -27,7 +27,8 @@ const Player = () => {
         player.current = null;
       }
 
-      player.current = new EZUIKit.EZUIKitPlayer({
+      // https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm?tab=readme-ov-file#%E9%99%84%E5%BD%95-%E5%88%9D%E5%A7%8B%E5%8C%96%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E
+      player.current = new EZUIKitPlayer({
         id: "player-container",
         url: urlRef.current.value, // "ezopen://open.ys7.com/BB9480953/1.hd.live",
         accessToken: accessTokenRef.current.value, // "at.2ec3m7dga2v59cps6rv0d1haa2vqsjka-1lbu5f5hyi-1j9rleq-npvuluse",
@@ -35,6 +36,7 @@ const Player = () => {
         height,
         template: "pcLive",
         language: "en", // zh | en
+        // quality: 1, // 
         // isCloudRecord: true, // 如果是云录制的播放 需要这个值，是必须的
         env: {
           // https://open.ys7.com/help/1772?h=domain
@@ -62,10 +64,12 @@ const Player = () => {
         // v8.1.10
         // 自定义清晰度 默认 null, 如果有值 sdk 内部不在进行获取, null 默认使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取
         // videoLevelList: [
-        //   { level: 0, name: "流畅", streamTypeIn: 1 },
-        //   { level: 1, name: "标清", streamTypeIn: 1 },
+        //   { level: 1, name: "标清", streamTypeIn: 2 }, // 需要保证支持子码流 (streamTypeIn=2)
+        //   { level: 2, name: "高清", streamTypeIn: 1 },
         // ],
       });
+
+      window.player = player.current;
     }
   }, []);
 
