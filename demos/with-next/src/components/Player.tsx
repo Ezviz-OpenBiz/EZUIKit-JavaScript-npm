@@ -50,6 +50,7 @@ const Player = () => {
           template,
           staticPath, // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
           language, // zh | en
+          // quality: 4, // 
           // isCloudRecord: true, // 如果是云录制的播放 需要这个值，是必须的
           env: {
             // https://open.ys7.com/help/1772?h=domain
