@@ -58,10 +58,10 @@ jobs:
         working-directory: ./demos/with-uniapp-vue3
         run: |
           pnpm install --no-frozen-lockfile
-          pnpm run build
+          pnpm run build:h5
 
       - name: Build with-uniapp-vue2
         working-directory: ./demos/with-uniapp-vue2
         run: |
           pnpm install --no-frozen-lockfile
-          pnpm run build
+          pnpm run build:h5
