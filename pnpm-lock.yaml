@@ -51,11 +51,6 @@ dependencies:
     specifier: ^8.3.0
     version: 8.3.2
 
-devDependencies:
-  husky:
-    specifier: ^9.1.7
-    version: 9.1.7
-
 packages:
 
   /@ezuikit/player-ezopen@8.1.12-beta.4:
@@ -151,12 +146,6 @@ packages:
     dependencies:
       fetch-blob: 3.2.0
     dev: false
-
-  /husky@9.1.7:
-    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
-    engines: {node: '>=18'}
-    hasBin: true
-    dev: true
 
   /i18n-js@4.5.0:
     resolution: {integrity: sha512-eiT3ZzK+k1VUR/oDz0Nne3dWU6DE+4P3FxtHXgHMZyzW1lKAHsjEYaOPZClU4QA9rI+uoeE71zq1QzLnZ6LDJQ==}
