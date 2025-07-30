@@ -1,5 +1,5 @@
 <template>
-  <div class="hello-ezuikit-js">
+  <div class="player-box">
     <div>
       <div id="video-container" style="width: 600px; height: 400px"></div>
     </div>
