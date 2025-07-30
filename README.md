@@ -127,6 +127,8 @@ alpha（功能测试）、beta（集成测试）为我们的非正式版本，�
 > 如果使用 vue2.6，可参考 demos => [with-vue2.6](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-vue2.6)
 > 
 > 如果使用 uniapp + vue3 ，可参考 demos => [with-uniapp-vue3](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-uniapp-vue3)
+> 
+> 如果使用 uniapp + vue2 ，可参考 demos => [with-uniapp-vue2](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-uniapp-vue2)
 
 #### tips
 
