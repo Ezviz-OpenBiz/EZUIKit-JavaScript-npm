@@ -4,13 +4,20 @@
 		<view>
             <text class="title">{{title}}</text>
         </view>
+		<view>
+        	<Player />
+		</view>
 	</view>
 </template>
 
 <script lang="ts">
   import Vue from 'vue';
+  import Player from "../../components/Player.vue";
 
 	export default Vue.extend({
+		components: {
+			Player,
+		},
 		data() {
 			return {
 				title: 'Hello'
