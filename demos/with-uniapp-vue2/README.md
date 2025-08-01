@@ -1,4 +1,4 @@
-# with-uniapp-vue2_1
+# with-uniapp-vue2
 
 ## Project setup
 ```
@@ -7,13 +7,24 @@ yarn install
 
 ### Compiles and hot-reloads for development
 ```
-yarn serve
+yarn run dev:h5
 ```
 
 ### Compiles and minifies for production
 ```
-yarn build
+yarn run build:h5
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 接入
+
+[./src/components/Player.vue](./src/components/Player.vue)
+
+## 源码地址
+
+https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-uniapp-vue2
+
+
+## uniapp 插件
+
+https://github.com/Ezviz-OpenBiz/UniEzOpenSDK
+
