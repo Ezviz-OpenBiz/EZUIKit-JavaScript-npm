@@ -25,3 +25,4 @@ if (webpack.version[0] > 4) {
   delete config.parser
 }
 module.exports = config
+
