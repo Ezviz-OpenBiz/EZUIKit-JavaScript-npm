@@ -1,7 +1,7 @@
 <template>
-  <div class="player-box">
+  <div class="hello-ezuikit-js">
     <div>
-      <div id="video-container" style="width: 600px; height: 400px"></div>
+      <div id="video-container" style="width: 100%;height: 300px"></div>
     </div>
     <div>
       <button v-on:click="init">init</button>
@@ -14,8 +14,8 @@
       <button v-on:click="capturePicture">capturePicture</button>
       <button v-on:click="fullScreen">fullScreen</button>
       <button v-on:click="getOSDTime">getOSDTime</button>
-      <button v-on:click="ezopenStartTalk">startTalk</button>
-      <button v-on:click="ezopenStopTalk">stopTalk</button>
+      <button v-on:click="startTalk">startTalk</button>
+      <button v-on:click="stopTalk">stopTalk</button>
       <button v-on:click="destroy">destroy</button>
     </div>
   </div>
@@ -39,22 +39,19 @@ export default {
         this.destroy();
       }
 
-      // fetch("https://open.ys7.com/jssdk/ezopen/demo/token")
-      //   .then((response) => response.json())
-      //   .then((res) => {
-      //     var accessToken = res.data.accessToken;
+      const systemInfo = uni.getSystemInfoSync();
+      const windowWidth = systemInfo.windowWidth;
 
-      //   });
       player = new EZUIKitPlayer({
         id: "video-container", // 视频容器ID
         accessToken:
-          "at.2s5bel782emtho68ae31snumc1wuuioa-3d531vj77f-0gtnx7g-fddkee44",
-        url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
+          "at.4dd7o6hgdb9ywl9c283g0hj27e789uru-2a5ejk6tkf-19b1cb1-azyfqm3a",
+        url: "ezopen://open.ys7.com/C69625501/1.hd.live",
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
-        template: "pcLive",
+        template: "mobileLive",
         plugin: ["talk"], // 加载插件，talk-对讲
-        width: 600,
-        height: 400,
+        width: windowWidth || 375,
+        height: 300,
         handleError: (error) => {
           console.error("handleError", error);
         },
@@ -167,10 +164,10 @@ export default {
         console.log("promise 获取 数据", data);
       });
     },
-    ezopenStartTalk() {
+    startTalk() {
       player.startTalk();
     },
-    ezopenStopTalk() {
+    stopTalk() {
       player.stopTalk();
     },
     fullScreen() {
