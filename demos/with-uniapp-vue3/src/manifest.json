@@ -37,11 +37,19 @@
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
                     "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
                     "<uses-feature android:name=\"android.hardware.camera\"/>",
-                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+                    "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>"
                 ]
             },
             /* ios打包配置 */
-            "ios" : {},
+            "ios" : {
+                "permissions": {
+                    "microphone": {
+                        "desc": "需要访问麦克风以实现语音功能"
+                    }
+                }
+            },
             /* SDK配置 */
             "sdkConfigs" : {}
         }
@@ -68,5 +76,11 @@
     "uniStatistics": {  
         "enable": false
     },
-    "vueVersion" : "3"
+    "vueVersion" : "3",
+    // "h5" : {
+    //     "router": {
+    //         "mode": "hash",
+    //         "base": "/"
+    //     }
+    // }
 }

@@ -114,8 +114,8 @@ const init = () => {
   player = new EZUIKitPlayer({
     id: "video-container", // 视频容器ID
     accessToken:
-      "at.4dd7o6hgdb9ywl9c283g0hj27e789uru-2a5ejk6tkf-19b1cb1-azyfqm3a",
-    url: "ezopen://open.ys7.com/C69625501/1.hd.live",
+      "at.740rax9011b1oasg264ewfjy6ojtt53e-4ub963f7w6-1nwtus1-ivo3rfn",
+    url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
     // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
     template: "mobileLive",
     plugin: ["talk"], // 加载插件，talk-对讲
