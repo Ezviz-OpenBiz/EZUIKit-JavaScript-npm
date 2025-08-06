@@ -2,7 +2,7 @@
   <view class="content">
     <image class="logo" src="/static/logo.png" />
     <view class="text-area">
-      <text class="title">{{ title }}</text>
+      <button class="title" @click="gotoWebview">webview</button>
     </view>
     <Player />
   </view>
@@ -11,7 +11,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Player from "../../components/Player.vue";
-const title = ref('Hello')
+
+const gotoWebview = () => {
+  uni.navigateTo({
+    url: '/pages/webview/index'
+  });
+};
+
 </script>
 
 <style>
