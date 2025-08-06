@@ -1,0 +1,28 @@
+name: build-uniapp-vue2
+
+on:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 20.x, 21.x, 22.x] # not support node >= 23.x and node<=16.x
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Build with-uniapp-vue2
+        working-directory: ./demos/with-uniapp-vue2
+        run: |
+          yarn install
+          yarn run build:h5

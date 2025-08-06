@@ -40,6 +40,9 @@ import EZUIKit from "ezuikit-js";
 #### 不支持 ESM (not support ESM)
 
 ```js
+// UMD
+import EZUIKit from "ezuikit-js/ezuikit.js";
+
 // >= v8.1.2  CommonJS
 import { EZUIKitPlayer } from "ezuikit-js/index.js";
 
@@ -122,6 +125,10 @@ alpha（功能测试）、beta（集成测试）为我们的非正式版本，�
 > 如果使用 vue2.7，可参考 demos => [vue-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/vue-demo)
 
 > 如果使用 vue2.6，可参考 demos => [with-vue2.6](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-vue2.6)
+> 
+> 如果使用 uniapp + vue3 ，可参考 demos => [with-uniapp-vue3](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-uniapp-vue3)
+> 
+> 如果使用 uniapp + vue2 ，可参考 demos => [with-uniapp-vue2](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-uniapp-vue2)
 
 #### tips
 
@@ -176,19 +183,19 @@ const player = new EZUIKitPlayer({
 
 ### 使用示例
 
-> 1. 快速创建视频播放页面
+#### 快速创建视频播放页面
 
 &emsp;&emsp;&emsp;&emsp;<b>基本使用：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/index.html" target="_blank">基本使用示例</a>
 
-> 2. 前往[开放平台轻应用模板管理页](https://open.ys7.com/console/ezuikit/template.html)创建一个主题，可以动态配置你的播放主题，控件，示例展示了获取一个主题后使用示例。
+#### 前往[开放平台轻应用模板管理页](https://open.ys7.com/console/ezuikit/template.html)创建一个主题，可以动态配置你的播放主题，控件，示例展示了获取一个主题后使用示例。
 
 &emsp;&emsp;&emsp;&emsp;<b>自定义主题：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/template.html" target="_blank">自定义主题示例</a>
 
-> 3. 你可以本地创建一个主题配置，可以本地配置你的播放主题，控件，示例展示了本地配置项使用示例。
+#### 你可以本地创建一个主题配置，可以本地配置你的播放主题，控件，示例展示了本地配置项使用示例。
 
 &emsp;&emsp;&emsp;&emsp;<b>本地主题配置：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/themeData.html" target="_blank">本地主题配置示例</a>
 
-> 4. 我们提供了一些通用场景的主题，PC 端预览，PC 端回放，移动端预览，移动端回放，你也可以直接使用。
+#### 我们提供了一些通用场景的主题，PC 端预览，PC 端回放，移动端预览，移动端回放，你也可以直接使用。
 
 &emsp;&emsp;&emsp;&emsp;<b>PC 端预览-固定主题：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/pcLive.html" target="_blank">PC 端预览-固定主题示例</a>
 
@@ -198,7 +205,7 @@ const player = new EZUIKitPlayer({
 
 &emsp;&emsp;&emsp;&emsp;<b>移动端回放-固定主题：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/mobileRec.html" target="_blank">移动端回放-固定主题示例</a>
 
-> 同一个页面播放多个视频，可以参考：
+#### 同一个页面播放多个视频，可以参考：
 
 &emsp;&emsp;&emsp;&emsp;<b>单页面多实例(视频多窗口)：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/multi.html" target="_blank">单页面多实例(视频多窗口)示例</a>
 
@@ -253,131 +260,11 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.hd.live<br/>
 </table>
 
 </td><td>N</td></tr>
-<tr><td>themeData</td><td>Object</td><td>
+<tr><td><a href="./themeData.md" target="_blank">themeData</a></td><td><a href="./themeData.md" target="_blank">ThemeData</a></td><td>
 themeData将主题数据本地化，设置本地数据，需要删除template参数 <br />
 你可以通过themeData修改按钮位置，颜色，头部底部颜色等配置。
 
-配置示例：
-
-<pre><code>
-
-{
-    "autoFocus": 5,
-    "poster":"https://resource.eziot.com/group1/M00/00/89/CtwQEmLl8r-AZU7wAAETKlvgerU237.png",
-    "header": {
-        "color": "#1890ff",
-        "activeColor": "#FFFFFF",
-        "backgroundColor": "#000000",
-        "btnList": [
-            {
-                "iconId": "deviceID",
-                "part": "left",
-                "defaultActive": 0,
-                "memo": "顶部设备名称",
-                "isrender": 1
-            },
-            {
-                "iconId": "deviceName",
-                "part": "left",
-                "defaultActive": 0,
-                "memo": "顶部设备ID",
-                "isrender": 1
-            },
-            {
-                "iconId": "cloudRec",
-                "part": "right",
-                "defaultActive": 0,
-                "memo": "头部云存储回放",
-                "isrender": 0
-            },
-            {
-                "iconId": "rec",
-                "part": "right",
-                "defaultActive": 0,
-                "memo": "头部本地回放",
-                "isrender": 0
-            }
-        ]
-    },
-    "footer": {
-        "color": "#FFFFFF",
-        "activeColor": "#1890FF",
-        "backgroundColor": "#00000021",
-        "btnList": [
-            {
-                "iconId": "play",
-                "part": "left",
-                "defaultActive": 1,
-                "memo": "播放",
-                "isrender": 1
-            },
-            {
-                "iconId": "capturePicture",
-                "part": "left",
-                "defaultActive": 0,
-                "memo": "截屏按钮",
-                "isrender": 1
-            },
-            {
-                "iconId": "sound",
-                "part": "left",
-                "defaultActive": 0,
-                "memo": "声音按钮",
-                "isrender": 1
-            },
-            {
-                "iconId": "pantile",
-                "part": "left",
-                "defaultActive": 0,
-                "memo": "云台控制按钮",
-                "isrender": 1
-            },
-            {
-                "iconId": "recordvideo",
-                "part": "left",
-                "defaultActive": 0,
-                "memo": "录制按钮",
-                "isrender": 1
-            },
-            {
-                "iconId": "talk",
-                "part": "left",
-                "defaultActive": 0,
-                "memo": "对讲按钮",
-                "isrender": 1
-            },
-            {
-                "iconId": "zoom",
-                "part": "left",
-                "defaultActive": 0,
-                "memo": "电子放大",
-                "isrender": 1
-            },
-            {
-                "iconId": "hd",
-                "part": "right",
-                "defaultActive": 0,
-                "memo": "清晰度切换按钮",
-                "isrender": 1
-            },
-            {
-                "iconId": "webExpend",
-                "part": "right",
-                "defaultActive": 0,
-                "memo": "网页全屏按钮",
-                "isrender": 1
-            },
-            {
-                "iconId": "expend",
-                "part": "right",
-                "defaultActive": 0,
-                "memo": "全局全屏按钮",
-                "isrender": 1
-            }
-        ]
-    }
-}
-</code></pre>
+配置示例：<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/themeData.html" target="_blank">本地主题配置示例</a>
 
 </td><td>N</td></tr>
 <tr><td>plugin</td><td>String</td><td>按需加载插件，可选值： talk：对讲，示例：plugin:["talk"] </td><td>N</td></tr>
@@ -387,11 +274,11 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 <tr><td>language</td><td>String</td><td>多语言 （zh | en）, 默认zh (v8.0.8版本及以上支持)</td><td>N</td></tr>
 <tr><td>debugDownloadData</td><td>boolean</td><td>下载原始码流， 调试码流使用, 默认 false (v8.1.1版本及以上支持)</td><td>N</td></tr>
 <tr><td>disableRenderPrivateData</td><td>boolean</td><td>禁止渲染私有数据(如智能分析， 移动侦测， 火点信息等), 默认 false (v8.1.1版本及以上支持)</td><td>N</td></tr>
-<tr><td>quality</td><td>0 | 1 | 2 | 3 | 4 | 5 | 6 | pp | qp</td><td>预览初始化支持指定清晰度进行播放, 默认 undefined (v8.1.5版本及以上支持)， 0: 流畅； 1: 标清; 2: 高清; 3: 超清; 4: 极清; 5: 3K; 6: 4K ; "pp"： "性能优先 (Performance Priority)"; "qp": "画质优先(Quality Priority)"。</td><td>N</td></tr>
+<tr><td>quality</td><td>0 | 1 | 2 | 3 | 4 | 5 | 6 | pp | qp</td><td>预览初始化支持指定清晰度进行播放, 默认 undefined (v8.1.5版本及以上支持)， 0: 流畅； 1: 标清; 2: 高清; 3: 超清; 4: 极清; 5: 3K; 6: 4K ; "pp"： "性能优先 (Performance Priority)"; "qp": "画质优先(Quality Priority)"。 如果没有命中，默认取上次的设置</td><td>N</td></tr>
 <tr><td>loggerOptions</td><td> {name: string, level: "INFO" | "LOG" | "WARN" | "ERROR" , showTime: boolean}</td><td>本地日志设置， 默认值 {name: "ezuikit", level: "INFO", showTime: true}, 支持动态设置请参考 <a href="#日志设置">setLoggerOptions(options)</a> (v8.1.9版本及以上支持)</td><td>N</td></tr>
 <tr><td>streamInfoCBType</td><td>  0 | 1 </td><td>  流信息回调类型，监听 streamInfoCB 事件, 0 : 每次都回调（会影响性能）, 1 : 只回调一次, 默认值 1 (v8.1.9版本及以上支持)</td><td>N</td></tr>
 
-<tr><td>videoLevelList</td><td> <span>Array<{ </br>/** 清晰度 */</br>level: number, </br>/** 名称 */ </br>name: string, </br> /**1: 主码流,2: 子码流*/</br>streamTypeIn: 1 | 2 }> <span>| null </td><td>  自定义清晰度列表，默认null, 如果有值 sdk 内部不在进行获取, 为 null 使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取 (v8.1.10版本及以上支持)</td><td>N</td></tr>
+<tr><td><a href="./videoLevelList.md" target="_blank">videoLevelList</a></td><td> <span>Array<{ </br>/** 清晰度 */</br>level: number, </br>/** 名称 */ </br>name: string, </br> /**1: 主码流,2: 子码流*/</br>streamTypeIn: 1 | 2 }> <span>| null </td><td>  自定义清晰度列表，默认null, 如果有值 sdk 内部不在进行获取, 为 null 使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取 (v8.1.10版本及以上支持)</td><td>N</td></tr>
 </table>
 
 ### 方法调用
