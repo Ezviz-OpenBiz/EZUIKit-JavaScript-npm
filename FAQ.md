@@ -27,3 +27,7 @@
 <iframe src="..." allow="microphone;"></iframe>
 ```
 
+## vue3 响应式及Proxy
+
+由于vue3 响应式原理（Proxy），使用响应式存储实例可能导致SDK异常。请开发者使用 [vue markRaw](https://cn.vuejs.org/api/reactivity-advanced#markraw) 或 非响应式的变量进行存储实例
+ 
