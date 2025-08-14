@@ -4,10 +4,9 @@
 
 在 iframe 中使用需要配置 `allow="microphone"`
 
-
 ## [iframe](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Elements/iframe)
 
-在iframe中，需要设置[同源策略](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Reference/Headers/Permissions-Policy#iframe)。
+在 iframe 中，需要设置[同源策略](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Reference/Headers/Permissions-Policy#iframe)。
 
 - [iframe 当全屏请求失败时](https://developer.mozilla.org/zh-CN/docs/Web/API/Fullscreen_API/Guide#%E5%BD%93%E5%85%A8%E5%B1%8F%E8%AF%B7%E6%B1%82%E5%A4%B1%E8%B4%A5%E6%97%B6)
 
@@ -15,7 +14,7 @@
 
 ```html
 <!-- 允许 iframe 激活全屏 -->
-<iframe src="..." allowfullscreen="tuue"></iframe>
+<iframe src="..." allowfullscreen="true"></iframe>
 ```
 
 - [iframe 麦克风使用](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Elements/iframe#allow)
@@ -27,7 +26,6 @@
 <iframe src="..." allow="microphone;"></iframe>
 ```
 
-## vue3 响应式及Proxy
+## vue3 响应式及 Proxy
 
-由于vue3 响应式原理（Proxy），使用响应式存储实例可能导致SDK异常。请开发者使用 [vue markRaw](https://cn.vuejs.org/api/reactivity-advanced#markraw) 或 非响应式的变量进行存储实例
- 
+由于 vue3 响应式原理（Proxy），使用响应式存储实例可能导致 SDK 异常。请开发者使用 [vue markRaw](https://cn.vuejs.org/api/reactivity-advanced#markraw) 或 非响应式的变量进行存储实例
