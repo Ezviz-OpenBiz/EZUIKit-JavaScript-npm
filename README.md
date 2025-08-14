@@ -125,9 +125,9 @@ alpha（功能测试）、beta（集成测试）为我们的非正式版本，�
 > 如果使用 vue2.7，可参考 demos => [vue-demo](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/vue-demo)
 
 > 如果使用 vue2.6，可参考 demos => [with-vue2.6](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-vue2.6)
-> 
+>
 > 如果使用 uniapp + vue3 ，可参考 demos => [with-uniapp-vue3](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-uniapp-vue3)
-> 
+>
 > 如果使用 uniapp + vue2 ，可参考 demos => [with-uniapp-vue2](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-uniapp-vue2)
 
 #### tips
@@ -1107,10 +1107,10 @@ player.eventEmitter.on(EZUIKitPlayer.EVENTS.ptz.ptzDirection, () => {
 
 #### 时间轴
 
-时间轴控件宽度变化事件 `EZUIKitPlayer.EVENTS.timeLine.timeWidthChange`
+时间轴控件刻度宽度变化事件 `EZUIKitPlayer.EVENTS.timeLine.timeWidthChange`
 
 ```js
-// 监听点击云台控制控件方向事件
+// 监听时间轴刻度宽度变化事件
 player.eventEmitter.on(
   EZUIKitPlayer.EVENTS.timeLine.timeWidthChange,
   (widthType) => {
