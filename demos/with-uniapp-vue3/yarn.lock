@@ -2892,10 +2892,10 @@ exsolve@^1.0.7:
   resolved "https://registry.yarnpkg.com/exsolve/-/exsolve-1.0.7.tgz#3b74e4c7ca5c5f9a19c3626ca857309fa99f9e9e"
   integrity sha512-VO5fQUzZtI6C+vx4w/4BWJpg3s/5l+6pRQEHzFRM8WFi4XffSP1Z+4qi7GbjWbvRQEbdIco5mIMq+zX4rPuLrw==
 
-ezuikit-js@8.1.12-beta.2:
-  version "8.1.12-beta.2"
-  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.1.12-beta.2.tgz#eb4c46fd42439f95c6d41aaba37066f14e958264"
-  integrity sha512-jj9lx78lldxiJNhAtZx9pMKQevRD8GiI2OIApu46bEOyjmidJGZXYrXuoKpENNLC8q7BhRZSnaNzbFPCU3Kn9w==
+ezuikit-js@8.1.13-beta.1:
+  version "8.1.13-beta.1"
+  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.1.13-beta.1.tgz#9c2b60b3e5a6c3580d9c86e9299e54791278337d"
+  integrity sha512-1tBhWEXwXZk7+uwJR2QBayTFYuGbffo4YjdyrjY4XPTjMyQtzlEx76fYdfqQOjc6C5c6r+YqCPLzSuNaTssZEQ==
   dependencies:
     "@ezuikit/player-ezopen" "8.1.12-beta.4"
     "@ezuikit/utils-collect" "0.1.1"
@@ -3565,6 +3565,13 @@ onetime@^5.1.2:
   integrity sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==
   dependencies:
     mimic-fn "^2.1.0"
+
+only-allow@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/only-allow/-/only-allow-1.2.1.tgz#8f18abd72bf531bc0e59fcfcfca590c425a5ad29"
+  integrity sha512-M7CJbmv7UCopc0neRKdzfoGWaVZC+xC1925GitKH9EAqYFzX9//25Q7oX4+jw0tiCCj+t5l6VZh8UPH23NZkMA==
+  dependencies:
+    which-pm-runs "^1.1.0"
 
 os-locale-s-fix@^1.0.8-fix-1:
   version "1.0.8-fix-1"
@@ -4380,6 +4387,11 @@ webpack-virtual-modules@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/webpack-virtual-modules/-/webpack-virtual-modules-0.6.2.tgz#057faa9065c8acf48f24cb57ac0e77739ab9a7e8"
   integrity sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ==
+
+which-pm-runs@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/which-pm-runs/-/which-pm-runs-1.1.0.tgz#35ccf7b1a0fce87bd8b92a478c9d045785d3bf35"
+  integrity sha512-n1brCuqClxfFfq/Rb0ICg9giSZqCS+pLtccdag6C2HyufBrh3fBOiy9nb6ggRMvWOVH5GrdJskj5iGTZNxd7SA==
 
 which@^2.0.1:
   version "2.0.2"
