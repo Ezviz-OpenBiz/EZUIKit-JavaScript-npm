@@ -47,7 +47,8 @@
     "test:h5": "cross-env UNI_PLATFORM=h5 jest -i",
     "test:ios": "cross-env UNI_PLATFORM=app-plus UNI_OS_NAME=ios jest -i",
     "test:mp-baidu": "cross-env UNI_PLATFORM=mp-baidu jest -i",
-    "test:mp-weixin": "cross-env UNI_PLATFORM=mp-weixin jest -i"
+    "test:mp-weixin": "cross-env UNI_PLATFORM=mp-weixin jest -i",
+    "preinstall": "npx only-allow yarn"
   },
   "dependencies": {
     "@dcloudio/uni-app": "^2.0.2-4070520250711001",
@@ -99,6 +100,7 @@
     "babel-plugin-import": "^1.11.0",
     "cross-env": "^7.0.2",
     "jest": "^25.4.0",
+    "only-allow": "^1.2.1",
     "postcss-comment": "^2.0.0",
     "typescript": "~4.5.5",
     "vue-template-compiler": ">= 2.6.14 < 2.7"
