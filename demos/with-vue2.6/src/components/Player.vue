@@ -32,6 +32,7 @@ export default {
   },
   mounted: () => {
     console.group("mounted 组件挂载完毕状态===============》");
+    this.init();
   },
   methods: {
     init() {
