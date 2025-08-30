@@ -32,6 +32,7 @@ assignees: ''
 - Framework: [e.g. iOS]
 - Build Tools [e.g. vite]
 - Version [e.g. 18]
+- Node Version [e.g. 18.0.0]
 
 **PC 请填写以下信息 (please complete the following information):**
 
