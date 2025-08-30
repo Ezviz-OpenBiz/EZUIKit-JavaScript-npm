@@ -26,6 +26,11 @@
 <iframe src="..." allow="microphone;"></iframe>
 ```
 
+## Chrome 超过16个摄像头不播放
+
+Chrome 浏览器单页面 WebGL 上下文数量有限（一般为 16 个），超过后无法再创建新上下文。开发时应注意合理复用和管理，避免超过限制。
+
+
 ## vue3 响应式及 Proxy
 
 由于 vue3 响应式原理（Proxy），使用响应式存储实例可能导致 SDK 异常。请开发者使用 [vue markRaw](https://cn.vuejs.org/api/reactivity-advanced#markraw) 或 非响应式的变量进行存储实例
