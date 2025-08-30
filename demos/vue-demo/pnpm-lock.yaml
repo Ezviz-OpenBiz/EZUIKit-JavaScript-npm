@@ -9,8 +9,8 @@ dependencies:
     specifier: ^3.6.5
     version: 3.42.0
   ezuikit-js:
-    specifier: 8.1.12-beta.2
-    version: 8.1.12-beta.2
+    specifier: 8.1.14
+    version: 8.1.14
   vue:
     specifier: ^2.7
     version: 2.7.16
@@ -3536,8 +3536,8 @@ packages:
       - supports-color
     dev: true
 
-  /ezuikit-js@8.1.12-beta.2:
-    resolution: {integrity: sha512-jj9lx78lldxiJNhAtZx9pMKQevRD8GiI2OIApu46bEOyjmidJGZXYrXuoKpENNLC8q7BhRZSnaNzbFPCU3Kn9w==}
+  /ezuikit-js@8.1.14:
+    resolution: {integrity: sha512-200lgVtAxxqtmrwX/z17TnQsD7i+3HgPzh3TBhZTsuE3NFt0NHi2wAMvJidhm8TX731HGn9jSrfKQpOvaruK+g==}
     dependencies:
       '@ezuikit/player-ezopen': 8.1.12-beta.4
       '@ezuikit/utils-collect': 0.1.1

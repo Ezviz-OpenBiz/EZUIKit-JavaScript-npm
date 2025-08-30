@@ -1,5 +1,6 @@
 ## Project setup
 ```
+## 强制使用 yarn 安装依赖
 yarn install
 ```
 
