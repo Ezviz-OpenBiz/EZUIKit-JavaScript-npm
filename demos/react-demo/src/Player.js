@@ -35,7 +35,7 @@ const Player = () => {
         width,
         height,
         template: "pcLive",
-        language: "en", // zh | en
+        language: "zh", // zh | en
         // quality: 1, // 
         // isCloudRecord: true, // 如果是云录制的播放 需要这个值，是必须的
         env: {
