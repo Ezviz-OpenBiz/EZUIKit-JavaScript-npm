@@ -30,8 +30,7 @@ export default {
   props: {
     msg: String,
   },
-  mounted: () => {
-    console.group("mounted 组件挂载完毕状态===============》");
+  mounted() {
     this.init();
   },
   methods: {
@@ -49,7 +48,7 @@ export default {
       player = new EZUIKitPlayer({
         id: "video-container", // 视频容器ID
         accessToken:
-          "at.2s5bel782emtho68ae31snumc1wuuioa-3d531vj77f-0gtnx7g-fddkee44e",
+          "at.aw5w2pjo5qzpd0o07blbhl8e4tgrz9xm-58hpuns9dj-1csffwn-oelzubkb",
         url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
         template: "pcLive",
@@ -60,7 +59,7 @@ export default {
           console.error("handleError", error);
         },
         // quality: 6, // 
-        // language: "en", // zh | en
+        language: "en", // zh | en
         // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
         env: {
           // https://open.ys7.com/help/1772?h=domain
