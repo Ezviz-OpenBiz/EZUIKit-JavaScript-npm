@@ -262,7 +262,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/player-ezopen
-Version: 8.1.12-beta.4
+Version: 8.1.15-beta.4
 License: MIT
 Private: false
 Description: 萤石ezopne协议播放器
