@@ -17,7 +17,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: dayjs
-Version: 1.11.13
+Version: 1.11.18
 License: MIT
 Private: false
 Description: 2KB immutable date time library alternative to Moment.js with the same modern API 
@@ -262,7 +262,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/player-ezopen
-Version: 8.1.15-beta.4
+Version: 8.1.16-beta.3
 License: MIT
 Private: false
 Description: 萤石ezopne协议播放器
