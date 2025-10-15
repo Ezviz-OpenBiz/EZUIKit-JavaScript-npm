@@ -1,8 +1,6 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('jquery')) :
-  typeof define === 'function' && define.amd ? define(['jquery'], factory) :
-  (factory(global.jQuery));
-}(this, (function ($) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('jquery')) : typeof define === 'function' && define.amd ? define(['jquery'], factory) : factory(global.jQuery);
+})(this, function ($) {
   'use strict';
 
   $.fn.datepicker.languages['zh-CN'] = {
@@ -14,6 +12,6 @@
     monthsShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
     weekStart: 1,
     yearFirst: true,
-    yearSuffix: '年'
+    yearSuffix: '年',
   };
-})));
+});

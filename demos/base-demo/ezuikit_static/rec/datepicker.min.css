@@ -21,12 +21,18 @@
 .datepicker-inline {
   position: absolute;
   z-index: 999999;
-  bottom: 48px;
-  right: 24px;
-  height: 250px;
-  top: auto;
+  /* bottom: 0px; */
+  right: 0px;
+  max-height: 250px;
+  /* top: auto; */
   left: auto;
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
  }
+
+ .datepicker-mobile-inline {
+
+ }
+
 .datepicker-panel>ul>li.picked {
   background: #1890ff;
   color: #fff;
