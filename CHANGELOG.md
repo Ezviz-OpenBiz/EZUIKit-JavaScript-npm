@@ -25,6 +25,8 @@
 
 - 移除 `Theme` 实例, 切换主题请使用 `player.changeTheme`
 
+- 移除 `Zoom` 实例
+
 - 更新消息提示 UI 交互
 
 #### Fixed
