@@ -1,8 +1,6 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('jquery')) :
-    typeof define === 'function' && define.amd ? define(['jquery'], factory) :
-      (factory(global.jQuery));
-}(this, (function ($) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('jquery')) : typeof define === 'function' && define.amd ? define(['jquery'], factory) : factory(global.jQuery);
+})(this, function ($) {
   'use strict';
 
   $.fn.datepicker.languages['en-US'] = {
@@ -14,6 +12,6 @@
     monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     weekStart: 1,
     yearFirst: true,
-    yearSuffix: ''
+    yearSuffix: '',
   };
-})));
+});

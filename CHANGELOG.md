@@ -1,19 +1,23 @@
+### v8.2.0 (2025-10-15)
+
+- 新的 UI 交互优化
+
 ### v8.1.16(2025-09-22)
 
 - 支持显示码流信息
-  
+
   - 分辨率
-  
+
   - 丢包率
-  
+
   - 码率
-  
+
   - 帧率
-  
+
   - 编码信息
-  
+
   - 码流封装
-  
+
   - 卡顿比
 
 - 发起对讲回调结果优化
@@ -22,7 +26,7 @@
 
 - 部分设备支持“自动”清晰度
 
-- 修复了一些小bug
+- 修复了一些小 bug
 
 ### v8.1.14(2025-08-22)
 
@@ -32,7 +36,7 @@
 
 #### Fixed
 
-- 修复NVR设备指定通道对讲没声音的问题
+- 修复 NVR 设备指定通道对讲没声音的问题
 
 ### v8.1.13(2025-07-29)
 
@@ -44,7 +48,7 @@
 
 - 修复云台在某些情况下一直转动的问题
 
-- 优化部分场景下UI换行的问题
+- 优化部分场景下 UI 换行的问题
 
 ### v8.1.12 (2025-07-02)
 
@@ -80,9 +84,9 @@
 
 #### Fixed
 
-- 修复调用录制api, ui 没有同步问题
-- 修复调用对讲api, ui 没有同步问题
-- 修复了一些小bug [issues #178](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/178), [issues #199](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/199), [issues #206](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/206),
+- 修复调用录制 api, ui 没有同步问题
+- 修复调用对讲 api, ui 没有同步问题
+- 修复了一些小 bug [issues #178](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/178), [issues #199](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/199), [issues #206](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/206),
 
 ## v8.1.8（2025-03-19）
 
@@ -94,7 +98,7 @@
 
 #### Fixed
 
-- 修复部分AR设备获取标签信息报错
+- 修复部分 AR 设备获取标签信息报错
 
 ## v8.1.7（2025-03-05）
 
@@ -114,9 +118,9 @@
 
 #### Fixed
 
-- 修复了token为空时本地缓存地址依然可以播放的问题
+- 修复了 token 为空时本地缓存地址依然可以播放的问题
 
-- 修复了一些小bug
+- 修复了一些小 bug
 
 ## v8.1.5（2025-01-15）
 
@@ -130,15 +134,15 @@
 
 - 修复了多实例场景下，画面之间声音状态互相干扰的问题
 
-- 修复了一些其他小bug
+- 修复了一些其他小 bug
 
 ## v8.1.4（2025-01-07）
 
 #### Feat
 
-- 支持获取AR设备私有标签信息
+- 支持获取 AR 设备私有标签信息
 
-- 修复了一些回放时间轴的小bug
+- 修复了一些回放时间轴的小 bug
 
 ## v8.1.3 (2024-12-31)
 
@@ -149,8 +153,8 @@
 
 #### Fixed
 
-- 修复destroy销毁实例后，部分dom、样式残留的问题
-- 修复了一些小bug
+- 修复 destroy 销毁实例后，部分 dom、样式残留的问题
+- 修复了一些小 bug
 
 ## v8.1.2 (2024-12-13)
 
