@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
   <title>Document</title>
+  <!-- 适用 8.1.x -->
   <script src="../ezuikit.js"></script>
 </head>
 
@@ -40,7 +41,7 @@
       width: 600,
       height: 400,
       // 云录制必须要传的
-      isCloudRecord: true,
+      isCloudRecord: true, // 适用 8.1.x 云录制, 8.2.0 开始默认支持云录制
       env: {
         // https://open.ys7.com/help/1772?h=domain
         // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
