@@ -1,8 +1,39 @@
 ### v8.2.0 (2025-10-15)
 
+#### Feat
+
 - 新的 UI 交互优化
 
+- 初始化 `width` 支持 style 的[width](https://developer.mozilla.org/zh-CN/docs/Web/CSS/width)属性值和 `height` 支持 style 的
+  [height](https://developer.mozilla.org/zh-CN/docs/Web/CSS/height)属性值
+
+- 更新 `resize` 逻辑，宽高支持 style 相同属性值
+
+- 移除 `browserFullscreen` 和 `exitBrowserFullscreen` api, 统一使用`fullscreen` 和 `exitFullscreen`
+
+- 支持移动端（手机浏览器，pad 浏览器）全屏后旋转后保持全屏状态
+
+- 支持双击全屏，可以初始化时使用`dblClickFullscreen: false` 禁用双击全屏
+
+- 支持自定义回放倍速
+
+- 更新监听方式, `player.eventEmitter.on` -> `player.on`
+
+- 新增主题控件的交互变化事件
+
+- 更新 `changePlayUrl` api, 不再提供切换主题参数, 请使用 `player.changeTheme("themeId")`
+
+- 移除 `Theme` 实例, 切换主题请使用 `player.changeTheme`
+
+- 更新消息提示 UI 交互
+
+#### Fixed
+
+- 修复移动端浏览器调用 api 全屏样式问题。
+
 ### v8.1.16(2025-09-22)
+
+#### Feat
 
 - 支持显示码流信息
 
