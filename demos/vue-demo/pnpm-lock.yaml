@@ -9,8 +9,8 @@ dependencies:
     specifier: ^3.6.5
     version: 3.42.0
   ezuikit-js:
-    specifier: 8.1.14
-    version: 8.1.14
+    specifier: 8.2.0-beta.1
+    version: 8.2.0-beta.1
   vue:
     specifier: ^2.7
     version: 2.7.16
@@ -1154,50 +1154,49 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: true
 
-  /@ezuikit/player-ezopen@8.1.12-beta.4:
-    resolution: {integrity: sha512-qp3d7s8t2OlHwt/+qofxsk68bWbLOj1qbK3VdxUJQ8D37KGn7aKRc6EtdyP2yDMe8LCSyytJzbyORDCkaKu9VA==}
+  /@ezuikit/player-ezopen@8.2.0-beta.1:
+    resolution: {integrity: sha512-VMBtDeJUqL0XW4QuWlYVG5yrYpkqYFF7bl08TrH2MzOuTLAU9pYlqlG+8CV3TwtOPqzu0Gk1BDM9VZDE0z3R6g==}
     dependencies:
-      '@ezuikit/player-plugin-record': 8.1.8-beta.3
-      '@ezuikit/utils-i18n': 1.0.1
-      '@ezuikit/utils-logger': 1.0.1
+      '@ezuikit/player-plugin-record': 8.2.0-beta.1
+      '@ezuikit/utils-i18n': 1.1.1
+      '@ezuikit/utils-logger': 1.1.0
       '@ezuikit/utils-service': 1.0.1
-      '@ezuikit/utils-tools': 1.0.4
+      '@ezuikit/utils-tools': 1.1.0
       '@juggle/resize-observer': 3.4.0
       dayjs: 1.11.13
       deepmerge: 4.3.1
       eventemitter3: 5.0.1
-      jquery: 3.7.1
       screenfull: 5.2.0
       ua-parser-js: 1.0.37
     dev: false
 
-  /@ezuikit/player-plugin-record@8.1.8-beta.3:
-    resolution: {integrity: sha512-YcQ5MR8zyg8b+o/ktr6r+YCXkiEX43HVmzVkfJsERgaokaHzoNIpOomEl51j/13gcemjSXuN6i1apCRC2v32pg==}
+  /@ezuikit/player-plugin-record@8.2.0-beta.1:
+    resolution: {integrity: sha512-ECOWyH0DL3L26dqKPDdy4GPHBSoQKEifWlZo6C45WeyhnhxzgELsbVPBm5vizFQrZFmgvkBrCsOwUO8e7TfMuQ==}
     dev: false
 
   /@ezuikit/utils-collect@0.1.1:
     resolution: {integrity: sha512-BgEOnTtAq8rQRBAKv5rLXbQLGOnfOZ6NS0QTmiviey80JbMJlxrLiqmjL5lxvkm4JtCcXCtSgPA4tskQKN4eDA==}
     dev: false
 
-  /@ezuikit/utils-i18n@1.0.1:
-    resolution: {integrity: sha512-uUjN3ADHV2ZG4QznuA7FB89/ck8AGV4qS8hm/sqeSA6/ie4ryYw8MS4wIv71WgPBIgIVDfASuEapyLOwq7R2aQ==}
+  /@ezuikit/utils-i18n@1.1.1:
+    resolution: {integrity: sha512-PZe37fHfjUbhArXaoWMxbGOnU1R6k8XV7NroB3n2uL+z06SajozxO5TQARrk7Z72USQPvUsyaKIBcwVNjWK6/w==}
     dependencies:
-      i18n-js: 4.5.1
+      deepmerge: 4.3.1
     dev: false
 
-  /@ezuikit/utils-logger@1.0.1:
-    resolution: {integrity: sha512-qak0MXh4vWZCji3aSCfHdWR3EbZCaqS0iMT8/QWuWPRr0vDmTRMP3kFOAw1MuMraR0ocjPBE2PaTEmUuwVqaAw==}
+  /@ezuikit/utils-logger@1.1.0:
+    resolution: {integrity: sha512-l/PiFZIC/VtW2l1oEjZEXfeYKFkPvX1kAlljXc1nRImNOI9t71/2oyTTkqkZvMLP/EG5regD9wuQplcvtfubUg==}
     dev: false
 
   /@ezuikit/utils-service@1.0.1:
     resolution: {integrity: sha512-iNjYuU7AScBJxvKBM9PjiGI2y64QJNPT/H1Fy/Y7ZIAlw4DO//TP+x50qCho+i+EOUpWLtOqBQvtRb7a0O4X4Q==}
     dependencies:
-      '@ezuikit/utils-tools': 1.0.4
+      '@ezuikit/utils-tools': 1.1.0
       dayjs: 1.11.13
     dev: false
 
-  /@ezuikit/utils-tools@1.0.4:
-    resolution: {integrity: sha512-w+LZ03qowSqrSqDnuONKPpmEn0cuCaF2pkgHL1YicR0of/ZelCho5X8cy5TXQe7UsrQkIM2M7vVennv5KnAdpQ==}
+  /@ezuikit/utils-tools@1.1.0:
+    resolution: {integrity: sha512-mujPtXIhZnuJrJySu1/Z6X90sMJQStZydurZcfetMCH6pqIYN4P+1w6+P8PCTR6k4LJp5nY9+eNnKa7AZ8OBKA==}
     dev: false
 
   /@hapi/hoek@9.3.0:
@@ -2361,10 +2360,6 @@ packages:
   /big.js@5.2.2:
     resolution: {integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==}
     dev: true
-
-  /bignumber.js@9.3.0:
-    resolution: {integrity: sha512-EM7aMFTXbptt/wZdMlBv2t8IViwQL+h6SLHosp8Yf0dqJMTnY6iL32opnAB6kAdL0SZPuvcAzFr31o0c/R3/RA==}
-    dev: false
 
   /binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -3536,14 +3531,14 @@ packages:
       - supports-color
     dev: true
 
-  /ezuikit-js@8.1.14:
-    resolution: {integrity: sha512-200lgVtAxxqtmrwX/z17TnQsD7i+3HgPzh3TBhZTsuE3NFt0NHi2wAMvJidhm8TX731HGn9jSrfKQpOvaruK+g==}
+  /ezuikit-js@8.2.0-beta.1:
+    resolution: {integrity: sha512-0jlXwWkUlTDVXq8bbfIV0ZIUv1AUADS5XkgI97GMXFkGi5T57UluVs7G9DLqrnF8ECHkOLbSbpRMc4bk2gpFaQ==}
     dependencies:
-      '@ezuikit/player-ezopen': 8.1.12-beta.4
+      '@ezuikit/player-ezopen': 8.2.0-beta.1
       '@ezuikit/utils-collect': 0.1.1
-      '@ezuikit/utils-i18n': 1.0.1
-      '@ezuikit/utils-logger': 1.0.1
-      '@ezuikit/utils-tools': 1.0.4
+      '@ezuikit/utils-i18n': 1.1.1
+      '@ezuikit/utils-logger': 1.1.0
+      '@ezuikit/utils-tools': 1.1.0
       '@juggle/resize-observer': 3.4.0
       abortcontroller-polyfill: 1.7.8
       debounce-promise: 3.1.2
@@ -3553,7 +3548,6 @@ packages:
       jquery: 3.7.1
       lodash-es: 4.17.21
       screenfull: 5.2.0
-      uuid: 8.3.2
     dev: false
 
   /fast-deep-equal@3.1.3:
@@ -4005,14 +3999,6 @@ packages:
     engines: {node: '>=10.17.0'}
     dev: true
 
-  /i18n-js@4.5.1:
-    resolution: {integrity: sha512-n7jojFj1WC0tztgr0I8jqTXuIlY1xNzXnC3mjKX/YjJhimdM+jXM8vOmn9d3xQFNC6qDHJ4ovhdrGXrRXLIGkA==}
-    dependencies:
-      bignumber.js: 9.3.0
-      lodash: 4.17.21
-      make-plural: 7.4.0
-    dev: false
-
   /iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
     engines: {node: '>=0.10.0'}
@@ -4358,6 +4344,7 @@ packages:
 
   /lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+    dev: true
 
   /log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
@@ -4414,10 +4401,6 @@ packages:
     dependencies:
       semver: 6.3.1
     dev: true
-
-  /make-plural@7.4.0:
-    resolution: {integrity: sha512-4/gC9KVNTV6pvYg2gFeQYTW3mWaoJt7WZE5vrp1KnQDgW92JtYZnzmZT81oj/dUTqAIu0ufI2x3dkgu3bB1tYg==}
-    dev: false
 
   /math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -6165,6 +6148,7 @@ packages:
   /uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
+    dev: true
 
   /validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}

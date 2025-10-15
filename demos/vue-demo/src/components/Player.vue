@@ -1,7 +1,16 @@
 <template>
   <div class="player-box">
     <div>
-      <div id="video-container" style="width: 600px; height: 400px"></div>
+      <div id="video-container" style="height: 400px"></div>
+      <div style="display: flex; justify-content: center;">
+        <div style="width: 500px; display: flex; flex-direction: column;">
+          <div style="display: flex;">url: <input placeholder="url" :value="url" style="width: 450px;" @input="event => url = event.target.value"/></div>
+          <div style="display: flex;">accessToken: <input placeholder="accessToken" :value="accessToken" style="width: 450px;" @input="event => accessToken = event.target.value"/></div>
+          <div style="display: flex;">template: <input placeholder="template" :value="template" style="width: 450px;" @input="event => template = event.target.value"/></div>
+          <div style="display: flex;">width: <input placeholder="width" :value="width" style="width: 450px;" @input="event => width = event.target.value"/></div>
+          <div style="display: flex;">height: <input placeholder="height" :value="height" style="width: 450px;" @input="event => height = event.target.value"/></div>
+        </div>
+      </div>
     </div>
     <div>
       <button v-on:click="init">init</button>
@@ -12,10 +21,10 @@
       <button v-on:click="startSave">startSave</button>
       <button v-on:click="stopSave">stopSave</button>
       <button v-on:click="capturePicture">capturePicture</button>
-      <button v-on:click="fullScreen">fullScreen</button>
+      <button v-on:click="fullscreen">fullscreen</button>
       <button v-on:click="getOSDTime">getOSDTime</button>
-      <button v-on:click="ezopenStartTalk">startTalk</button>
-      <button v-on:click="ezopenStopTalk">stopTalk</button>
+      <button v-on:click="startTalk">startTalk</button>
+      <button v-on:click="stopTalk">stopTalk</button>
       <button v-on:click="destroy">destroy</button>
     </div>
   </div>
@@ -30,6 +39,15 @@ export default {
   props: {
     msg: String,
   },
+  data() {
+    return {
+      url: "ezopen://open.ys7.com/BC7900686/1.live",
+      accessToken: "ra.c6wqy0gzcm1f6ryr5sh2vdqr7zo7zu26-1ovtzabpog-1rbv9vr-urpfpktwb",
+      template: "pcLive",
+      width: "100%",
+      height: 400,
+    };
+  },
   mounted: () => {
     console.group("mounted 组件挂载完毕状态===============》");
   },
@@ -43,24 +61,21 @@ export default {
       //   .then((response) => response.json())
       //   .then((res) => {
       //     var accessToken = res.data.accessToken;
-
       //   });
       player = new EZUIKitPlayer({
         id: "video-container", // 视频容器ID
-        accessToken:
-          "at.2s5bel782emtho68ae31snumc1wuuioa-3d531vj77f-0gtnx7g-fddkee44",
-        url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
-        // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
-        template: "pcLive",
-        plugin: ["talk"], // 加载插件，talk-对讲
-        width: 600,
-        height: 400,
+        accessToken: this.accessToken,
+        url: this.url,
+        // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放; security: 安防版; voice: 语音版;
+        template: this.template, // 视频模板
+        width: this.width,
+        height: this.height,
         handleError: (error) => {
           console.error("handleError", error);
         },
         // quality: 1, // 
         // language: "en", // zh | en
-        // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+        staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
         env: {
           // https://open.ys7.com/help/1772?h=domain
           // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
@@ -92,96 +107,122 @@ export default {
         // ],
       });
 
-      player.eventEmitter.on(EZUIKitPlayer.EVENTS.videoInfo, (info) => {
-        console.log("videoinfo", info);
+      // 8.1.x 事件监听
+      // player.eventEmitter.on(EZUIKitPlayer.EVENTS.videoInfo, (info) => {
+      //   console.warn("eventEmitter videoInfo", info);
+      // });
+      // 8.2.x 事件监听
+      player.on(EZUIKitPlayer.EVENTS.videoInfo, (info) => {
+        console.warn("videoInfo", info);
       });
 
-      player.eventEmitter.on(EZUIKitPlayer.EVENTS.audioInfo, (info) => {
-        console.log("audioInfo", info);
+      // 8.1.x 事件监听
+      // player.eventEmitter.on(EZUIKitPlayer.EVENTS.audioInfo, (info) => {
+      //   console.warn("eventEmitter audioInfo", info);
+      // });
+      // 8.2.x 事件监听
+      player.on(EZUIKitPlayer.EVENTS.audioInfo, (info) => {
+        console.warn("audioInfo", info);
       });
 
       // 首帧渲染成功
       // first frame display
-      player.eventEmitter.on(
-        EZUIKitPlayer.EVENTS.firstFrameDisplay,
-        () => {
-          console.log("firstFrameDisplay ");
-        }
-      );
-      player.eventEmitter.on(
-        EZUIKitPlayer.EVENTS.streamInfoCB,
-        (info) => {
-          console.log("streamInfoCB ", info);
-        }
-      );
+      // 8.1.x 事件监听
+      // player.eventEmitter.on(EZUIKitPlayer.EVENTS.firstFrameDisplay, () => {
+      //     console.warn("eventEmitter firstFrameDisplay ");
+      // });
+      // 8.2.x 事件监听
+      player.on(EZUIKitPlayer.EVENTS.firstFrameDisplay, () => {
+        console.warn("firstFrameDisplay ");
+      });
+
+      // 8.1.x 事件监听
+      // player.eventEmitter.on(EZUIKitPlayer.EVENTS.streamInfoCB, (info) => {
+      //   console.warn("eventEmitter streamInfoCB ", info);
+      // });
+      // 8.2.x 事件监听
+      player.on(EZUIKitPlayer.EVENTS.streamInfoCB, (info) => {
+        console.warn("streamInfoCB ", info);
+      });
 
       window.player = player;
     },
     play() {
-      var playPromise = player.play();
-      playPromise.then((data) => {
-        console.log("promise 获取 数据", data);
-      });
+      if (player) {
+        player.play().then((data) => {
+          console.log("play 获取 数据", data);
+        });
+      }
     },
     stop() {
-      var stopPromise = player.stop();
-      stopPromise.then((data) => {
-        console.log("promise 获取 数据", data);
-      });
+      if (player) {
+        player.stop().then((data) => {
+          console.log("stop 获取 数据", data);
+        });
+      }
     },
     getOSDTime() {
-      var getOSDTimePromise = player.getOSDTime();
-      getOSDTimePromise.then((data) => {
-        console.log("promise 获取 数据", data);
+      if (player) 
+       player.getOSDTime().then((data) => {
+        console.log("getOSDTime 获取 数据", data);
       });
     },
     capturePicture() {
-      var capturePicturePromise = player.capturePicture(
-        `${new Date().getTime()}`
-      );
-      capturePicturePromise.then((data) => {
-        console.log("promise 获取 数据", data);
-      });
+      if (player) {
+        player.capturePicture(`${new Date().getTime()}`).then((data) => {
+          console.log("capturePicture 获取 数据", data);
+        });
+      }
     },
     openSound() {
-      var openSoundPromise = player.openSound();
-      openSoundPromise.then((data) => {
-        console.log("promise 获取 数据", data);
-      });
+      if (player) {
+        player.openSound().then((data) => {
+          console.log("openSound 获取 数据", data);
+        });
+      }
     },
     closeSound() {
-      var openSoundPromise = player.closeSound();
-      openSoundPromise.then((data) => {
-        console.log("promise 获取 数据", data);
-      });
+      if (player) {
+        player.closeSound().then((data) => {
+          console.log("closeSound 获取 数据", data);
+        });
+      }
     },
     startSave() {
-      var startSavePromise = player.startSave(`${new Date().getTime()}`);
-      startSavePromise.then((data) => {
-        console.log("promise 获取 数据", data);
-      });
+      if (player) {
+        player.startSave(`${new Date().getTime()}`).then((data) => {
+          console.log("startSave 获取 数据", data);
+        });
+      }
     },
     stopSave() {
-      var stopSavePromise = player.stopSave();
-      stopSavePromise.then((data) => {
-        console.log("promise 获取 数据", data);
-      });
+      if (player) {
+        player.stopSave().then((data) => {
+          console.log("promise 获取 数据", data);
+        });
+      }
     },
-    ezopenStartTalk() {
-      player.startTalk();
+    startTalk() {
+      // 一个页面中只可以有一个对讲
+      if (player) {
+        player.startTalk();
+      }
     },
-    ezopenStopTalk() {
-      player.stopTalk();
+    stopTalk() {
+      if (player) {
+        player.stopTalk();
+      }
     },
-    fullScreen() {
-      player.fullScreen();
+    fullscreen() {
+      if (player) player.fullscreen();
     },
     destroy() {
-      var destroyPromise = player.destroy();
-      destroyPromise.then((data) => {
-        console.log("promise 获取 数据", data);
-      });
-      player = null;
+      if (player)  {
+        player.destroy().then((data) => {
+          console.log("promise 获取 数据", data);
+        });
+        player = null;
+      }
     },
   },
 };
