@@ -6,10 +6,9 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
     />
-    <title>Document</title>
+    <title>With Electron</title>
     <style>
       #video-container {
-        width: 600px;
         height: 400px;
         background-color: #000;
       }
@@ -21,7 +20,7 @@
     <div className="demo">
       <h2>视频模式使用示例：</h2>
       <div>
-        <div id="video-container" style="width: 600px"></div>
+        <div id="video-container"></div>
       </div>
       <div>
         <button class="init">出初始化(init)</button>
@@ -35,7 +34,7 @@
         <button class="stopSave">stopSave</button>
         <button class="startTalk">开始对讲</button>
         <button class="stopTalk">结束对讲</button>
-        <button class="fullScreen">全屏</button>
+        <button class="fullscreen">全屏</button>
         <button class="destroy">销毁</button>
       </div>
     </div>
@@ -62,11 +61,11 @@
           player = new EZUIKit.EZUIKitPlayer({
             id: "video-container", // 视频容器ID
             accessToken:
-              "at.2s5bel782emtho68ae31snumc1wuuioa-3d531vj77f-0gtnx7g-fddkee44",
-            url: "ezopen://open.ys7.com/GBSUB:ELRHKIQI7O5C/1.hd.live",
+              "ra.c6wqy0gzcm1f6ryr5sh2vdqr7zo7zu26-1ovtzabpog-1rbv9vr-urpfpktwb",
+            url: "ezopen://open.ys7.com/BC7900686/1.live",
             template: "pcLive", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
             //   plugin: ["talk"], // 加载插件，talk-对讲
-            width: 600,
+            // width: 600,
             height: 400,
             // quality: 1, // 
             language: "en", // zh | en
@@ -106,99 +105,116 @@
             // ],
           });
 
-          player.eventEmitter.on(
-            EZUIKit.EZUIKitPlayer.EVENTS.videoInfo,
-            (info) => {
-              console.log("videoinfo", info);
-            }
-          );
+          // 8.1.x 事件监听
+          // player.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.videoInfo, (info) => {
+          //     console.log("eventEmitter videoInfo", info);
+          // });
+          // 8.2.x 事件监听
+          player.on(EZUIKit.EZUIKitPlayer.EVENTS.videoInfo, (info) => {
+              console.log("videoInfo", info);
+          });
 
-          player.eventEmitter.on(
-            EZUIKit.EZUIKitPlayer.EVENTS.audioInfo,
-            (info) => {
-              console.log("audioInfo", info);
-            }
-          );
+          // 8.1.x 事件监听
+          // player.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.audioInfo,(info) => {
+          //   console.log("eventEmitter audioInfo", info);
+          // });
+          // 8.2.x 事件监听
+          player.on(EZUIKit.EZUIKitPlayer.EVENTS.audioInfo,(info) => {
+            console.log("audioInfo", info);
+          });
 
           // 首帧渲染成功
           // first frame display
-          player.eventEmitter.on(
-            EZUIKit.EZUIKitPlayer.EVENTS.firstFrameDisplay,
-            () => {
-              console.log("firstFrameDisplay ");
-            }
-          );
-          player.eventEmitter.on(
-            EZUIKit.EZUIKitPlayer.EVENTS.streamInfoCB,
-            (info) => {
+          // 8.1.x 事件监听
+          // player.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.firstFrameDisplay,() => {
+          //   console.log("firstFrameDisplay ");
+          // });
+          // 8.2.x 事件监听
+          player.on(EZUIKit.EZUIKitPlayer.EVENTS.firstFrameDisplay,() => {
+            console.log("firstFrameDisplay ");
+          });
+
+          // 8.1.x 事件监听
+          // player.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.streamInfoCB, (info) => {
+          //     console.log("eventEmitter streamInfoCB ", info);
+          // });
+          // 8.2.x 事件监听
+          player.on(EZUIKit.EZUIKitPlayer.EVENTS.streamInfoCB, (info) => {
               console.log("streamInfoCB ", info);
-            }
-          );
+          });
         });
 
-        document.querySelector(".fullScreen").addEventListener("click", () => {
-          player.fullScreen();
+        document.querySelector(".fullscreen").addEventListener("click", () => {
+          if (player) player.fullscreen();
         });
 
         document.querySelector(".play").addEventListener("click", () => {
-          var playPromise = player.play();
-          playPromise.then((data) => {
-            console.log("play", data);
-          });
+          if (player) {
+            player.play().then((data) => {
+              console.log("play", data);
+            });
+          }
         });
 
         document.querySelector(".stop").addEventListener("click", () => {
-          var stopPromise = player.stop();
-          stopPromise.then((data) => {
-            console.log("stop", data);
-          });
+          if (player) {
+            player.stop().then((data) => {
+              console.log("stop", data);
+            });
+          }
         });
 
         document.querySelector(".getOSDTime").addEventListener("click", () => {
-          var getOSDTimePromise = player.getOSDTime();
-          getOSDTimePromise.then((data) => {
-            console.log("getOSDTime: ", data);
-          });
+          if (player) {
+            player.getOSDTime().then((data) => {
+              console.log("getOSDTime: ", data);
+            });
+          }
         });
         document
           .querySelector(".capturePicture")
           .addEventListener("click", () => {
-            var capturePicturePromise = player.capturePicture();
-            capturePicturePromise.then((data) => {
-              console.log("promise 获取 数据", data);
-            });
+            if (player) {
+              player.capturePicture().then((data) => {
+                console.log("capturePicture 获取 数据", data);
+              });
+            }
           });
 
         document.querySelector(".openSound").addEventListener("click", () => {
-          var openSoundPromise = player.openSound();
-          openSoundPromise.then((data) => {
-            console.log("promise 获取 数据", data);
-          });
+          if (player) {
+            player.openSound().then((data) => {
+              console.log("openSound 获取 数据", data);
+            });
+          }
         });
 
         document.querySelector(".closeSound").addEventListener("click", () => {
-          var closeSoundPromise = player.closeSound();
-          closeSoundPromise.then((data) => {
-            console.log("promise 获取 数据", data);
-          });
+          if (player) {
+            player.closeSound().then((data) => {
+              console.log("closeSound 获取 数据", data);
+            });
+          }
         });
         document.querySelector(".startSave").addEventListener("click", () => {
-          var startSavePromise = player.startSave(`${new Date().getTime()}`);
-          startSavePromise.then((data) => {
-            console.log("promise 获取 数据", data);
-          });
+          if (player) {
+            player.startSave(`${new Date().getTime()}`).then((data) => {
+              console.log("startSave 获取 数据", data);
+            });
+          }
         });
         document.querySelector(".stopSave").addEventListener("click", () => {
-          var stopSavePromise = player.stopSave();
-          stopSavePromise.then((data) => {
-            console.log("promise 获取 数据", data);
-          });
+          if (player) {
+            player.stopSave().then((data) => {
+              console.log("stopSave 获取 数据", data);
+            });
+          }
         });
         document.querySelector(".startTalk").addEventListener("click", () => {
-          player.startTalk();
+          if (player) player.startTalk();
         });
         document.querySelector(".stopTalk").addEventListener("click", () => {
-          player.stopTalk();
+          if (player) player.stopTalk();
         });
         document.querySelector(".destroy").addEventListener("click", destroy);
       })();
