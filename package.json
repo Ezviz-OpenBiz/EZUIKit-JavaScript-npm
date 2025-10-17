@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "8.2.0-beta.1",
+  "version": "8.2.0-beta.2",
   "description": "ezuikit javascript for npm",
   "title": "ezuikit-js",
   "main": "index.js",
@@ -34,7 +34,6 @@
     "deepmerge": "^4.3.1",
     "delegate": "3.2.0",
     "formdata-polyfill": "^4.0.10",
-    "jquery": "^3.3.1",
     "lodash-es": "^4.17.21",
     "screenfull": "^5.2.0"
   },
