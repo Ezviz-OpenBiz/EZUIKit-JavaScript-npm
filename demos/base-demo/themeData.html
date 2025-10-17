@@ -24,7 +24,7 @@
       <button onClick="stopSave()">stopSave</button>
       <button onClick="ezopenStartTalk()">开始对讲</button>
       <button onClick="ezopenStopTalk()">结束对讲</button>
-      <button onClick="fullScreen()">全屏</button>
+      <button onClick="fullscreen()">全屏</button>
     </div>
     <p style="font-style: italic;">播放多个视频，可初始化多个实例，参考：/demos/base-demo/multi-demo</p>
   </div>
@@ -165,8 +165,8 @@
           }
         });
       });
-    function fullScreen() {
-      var playPromise = player.fullScreen();
+    function fullscreen() {
+      var playPromise = player.fullscreen();
       playPromise.then((data) => {
         console.log("promise 获取 数据", data)
       })

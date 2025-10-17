@@ -4,14 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <title>Document</title>
+  <title>pcLive</title>
   <script src="./ezuikit.js"></script>
 </head>
 
 <body>
   <div className="demo">
     <h2>视频模式使用示例：</h2>
-    <div id="video-container" style="width:600px;">
+    <div id="video-container" style="height:400px;">
     </div>
     <div>
       <button onClick="play()">play</button>
@@ -24,34 +24,35 @@
       <button onClick="stopSave()">stopSave</button>
       <button onClick="ezopenStartTalk()">开始对讲</button>
       <button onClick="ezopenStopTalk()">结束对讲</button>
-      <button onClick="fullScreen()">全屏</button>
+      <button onClick="fullscreen()">全屏</button>
     </div>
     <p style="font-style: italic;">播放多个视频，可初始化多个实例，参考：/demos/base-demo/multi-demo</p>
   </div>
   <script>
     var player;
-    fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
-      .then(response => response.json())
-      .then(res => {
-        var accessToken = res.data.accessToken;
+    // fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
+    //   .then(response => response.json())
+    //   .then(res => {
+    //     var accessToken = res.data.accessToken;
+        var accessToken = "ra.annvsh5v2d2n4ikzai5qk3mbdwrk5re6-9kgkz8sblt-11o92e1-ffwp96liy";
         player = new EZUIKit.EZUIKitPlayer({
           id: 'video-container', // 视频容器ID
           accessToken: accessToken,
-          url: 'ezopen://open.ys7.com/G39444019/1.live',
+          url: 'ezopen://open.ys7.com/BC7900686/1.live',
           template: 'pcLive', //  simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版; 
-          plugin: ['talk'],                       // 加载插件，talk-对讲
-          width: 600,
-          height: 400,
+          // width: 600,
+          // height: 400,
           env: {
             // https://open.ys7.com/help/1772?h=domain
             // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
             // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
             domain: "https://open.ys7.com"
-          }
+          },
+          staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
         });
-      });
-    function fullScreen() {
-      var playPromise = player.fullScreen();
+      // });
+    function fullscreen() {
+      var playPromise = player.fullscreen();
       playPromise.then((data) => {
         console.log("promise 获取 数据", data)
       })
