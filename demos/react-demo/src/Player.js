@@ -118,7 +118,7 @@ const Player = () => {
   /** 全屏 */
   const handleFullscreen = useCallback(() => {
     if (player.current) {
-      player.current.fullScreen();
+      player.current.fullscreen(); // 8.2.0 取代 fullScreen, 退出使用 exitFullscreen
     }
   }, []);
 
@@ -196,7 +196,7 @@ const Player = () => {
         <button onClick={handleStartSave}>startSave</button>
         <button onClick={handleStopSave}>stopSave</button>
         <button onClick={handleCapturePicture}>capturePicture</button>
-        <button onClick={handleFullscreen}>fullScreen</button>
+        <button onClick={handleFullscreen}>fullscreen</button>
         <button onClick={handleGetOSDTime}>getOSDTime</button>
         <button onClick={handleStartTalk}>startTalk</button>
         <button onClick={handleStopTalk}>stopTalk</button>

@@ -31,7 +31,6 @@ class App extends React.Component {
           "at.2s5bel782emtho68ae31snumc1wuuioa-3d531vj77f-0gtnx7g-fddkee44",
         // simple:极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放; security: 安防版; voice: 语音版;
         template: "pcLive",
-        plugin: ["talk"], // 加载插件，talk-对讲
         width: 600,
         height: 400,
         quality: 1, // 
@@ -128,8 +127,8 @@ class App extends React.Component {
     player.stopTalk();
   };
 
-  fullScreen = () => {
-    player.fullScreen();
+  fullscreen = () => {
+    player.fullscreen();
   };
 
   destroy = () => {
@@ -155,7 +154,7 @@ class App extends React.Component {
           <button onClick={this.startSave}>startSave</button>
           <button onClick={this.stopSave}>stopSave</button>
           <button onClick={this.capturePicture}>capturePicture</button>
-          <button onClick={this.fullScreen}>fullScreen</button>
+          <button onClick={this.fullscreen}>fullscreen</button>
           <button onClick={this.getOSDTime}>getOSDTime</button>
           <button onClick={this.ezopenStartTalk}>开始对讲</button>
           <button onClick={this.ezopenStopTalk}>结束对讲</button>
