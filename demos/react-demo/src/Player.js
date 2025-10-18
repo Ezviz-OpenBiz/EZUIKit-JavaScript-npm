@@ -14,12 +14,9 @@ const Player = () => {
 
   const initPlayer = useCallback(() => {
     if (document.getElementById("player-container")) {
-      let width = 600;
       let height = 400;
-
       if (isMobile()) {
-        width = document.documentElement.clientWidth;
-        height = (width * 9) / 16;
+        height = (document.documentElement.clientWidth * 9) / 16;
       }
 
       if (player.current) {
@@ -32,12 +29,11 @@ const Player = () => {
         id: "player-container",
         url: urlRef.current.value, // "ezopen://open.ys7.com/BB9480953/1.hd.live",
         accessToken: accessTokenRef.current.value, // "at.2ec3m7dga2v59cps6rv0d1haa2vqsjka-1lbu5f5hyi-1j9rleq-npvuluse",
-        width,
         height,
         template: "pcLive",
         language: "zh", // zh | en
         // quality: 1, // 
-        // isCloudRecord: true, // 如果是云录制的播放 需要这个值，是必须的
+        // isCloudRecord: true, // 如果是云录制的播放 需要这个值，是必须的. 8.2.0 开始默认支持云录制，不需要此参数
         env: {
           // https://open.ys7.com/help/1772?h=domain
           // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
