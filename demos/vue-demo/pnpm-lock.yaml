@@ -9,8 +9,8 @@ dependencies:
     specifier: ^3.6.5
     version: 3.42.0
   ezuikit-js:
-    specifier: 8.2.0-beta.1
-    version: 8.2.0-beta.1
+    specifier: 8.2.0-beta.2
+    version: 8.2.0-beta.2
   vue:
     specifier: ^2.7
     version: 2.7.16
@@ -3531,8 +3531,8 @@ packages:
       - supports-color
     dev: true
 
-  /ezuikit-js@8.2.0-beta.1:
-    resolution: {integrity: sha512-0jlXwWkUlTDVXq8bbfIV0ZIUv1AUADS5XkgI97GMXFkGi5T57UluVs7G9DLqrnF8ECHkOLbSbpRMc4bk2gpFaQ==}
+  /ezuikit-js@8.2.0-beta.2:
+    resolution: {integrity: sha512-SJjOX2CdS0FaJDLcqOlCrOIA65T28+IPLH9Zd7e0AmJ8x+h+q9q1qyT9Jh0CaHinZKdQt38PNTzx9Jx0QDD5lw==}
     dependencies:
       '@ezuikit/player-ezopen': 8.2.0-beta.1
       '@ezuikit/utils-collect': 0.1.1
@@ -3545,7 +3545,6 @@ packages:
       deepmerge: 4.3.1
       delegate: 3.2.0
       formdata-polyfill: 4.0.10
-      jquery: 3.7.1
       lodash-es: 4.17.21
       screenfull: 5.2.0
     dev: false
@@ -4189,10 +4188,6 @@ packages:
       '@sideway/formula': 3.0.1
       '@sideway/pinpoint': 2.0.0
     dev: true
-
-  /jquery@3.7.1:
-    resolution: {integrity: sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==}
-    dev: false
 
   /js-message@1.0.7:
     resolution: {integrity: sha512-efJLHhLjIyKRewNS9EGZ4UpI8NguuL6fKkhRxVuMmrGV2xN/0APGdQYwLFky5w9naebSZ0OwAGp0G6/2Cg90rA==}

@@ -9,6 +9,7 @@
           <div style="display: flex;">template: <input placeholder="template" :value="template" style="width: 450px;" @input="event => template = event.target.value"/></div>
           <div style="display: flex;">width: <input placeholder="width" :value="width" style="width: 450px;" @input="event => width = event.target.value"/></div>
           <div style="display: flex;">height: <input placeholder="height" :value="height" style="width: 450px;" @input="event => height = event.target.value"/></div>
+          <div style="display: flex;">staticPath: <input placeholder="staticPath" :value="staticPath" style="width: 450px;" @input="event => staticPath = event.target.value"/></div>
         </div>
       </div>
     </div>
@@ -46,6 +47,7 @@ export default {
       template: "pcLive",
       width: "100%",
       height: 400,
+      staticPath: "./ezuikit_static",
     };
   },
   mounted: () => {
@@ -75,7 +77,7 @@ export default {
         },
         // quality: 1, // 
         // language: "en", // zh | en
-        staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+        staticPath: this.staticPath, // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
         env: {
           // https://open.ys7.com/help/1772?h=domain
           // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
