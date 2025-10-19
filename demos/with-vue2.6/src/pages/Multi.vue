@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { EZUIKitPlayer } from "ezuikit-js";
+import { EZUIKitPlayer } from "ezuikit-js/ezuikit.js";
 
 export default {
   name: "Multi",
