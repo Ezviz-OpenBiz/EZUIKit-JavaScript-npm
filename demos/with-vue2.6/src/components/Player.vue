@@ -22,8 +22,7 @@
 </template>
 
 <script>
-// import { EZUIKitPlayer } from "ezuikit-js/index.js";
-import * as EZUIKit from 'ezuikit-js';
+import { EZUIKitPlayer } from "ezuikit-js";
 var player = null;
 
 export default {
@@ -46,7 +45,7 @@ export default {
       //     var accessToken = res.data.accessToken;
 
       //   });
-      player = new EZUIKit.EZUIKitPlayer({
+      player = new EZUIKitPlayer({
         id: "video-container", // 视频容器ID
         accessToken:
           "at.aw5w2pjo5qzpd0o07blbhl8e4tgrz9xm-58hpuns9dj-1csffwn-oelzubkb",
