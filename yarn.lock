@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@ezuikit/player-ezopen@8.2.0-beta.1":
-  version "8.2.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.2.0-beta.1.tgz#66c5b15d9ddb264c87e26fe98f461bc514cf1858"
-  integrity sha512-VMBtDeJUqL0XW4QuWlYVG5yrYpkqYFF7bl08TrH2MzOuTLAU9pYlqlG+8CV3TwtOPqzu0Gk1BDM9VZDE0z3R6g==
+"@ezuikit/player-ezopen@8.2.0-beta.3":
+  version "8.2.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.2.0-beta.3.tgz#889a62dbca3a57c00cb6f4baea7476fe15c52364"
+  integrity sha512-KtvJNdkbrLX6Z7LAOAnzqASkysy3U0strqjebnWFEMvdLLAD/rtVXQLnkC10URpC6K6I6ptULfcjVX/ZkzDmTw==
   dependencies:
     "@ezuikit/player-plugin-record" "8.2.0-beta.1"
     "@ezuikit/utils-i18n" "^1.1.1"
@@ -108,11 +108,6 @@ formdata-polyfill@^4.0.10:
   integrity sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g==
   dependencies:
     fetch-blob "^3.1.2"
-
-jquery@^3.3.1:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.7.1.tgz#083ef98927c9a6a74d05a6af02806566d16274de"
-  integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==
 
 lodash-es@^4.17.21:
   version "4.17.21"
