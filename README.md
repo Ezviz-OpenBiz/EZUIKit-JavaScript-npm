@@ -77,7 +77,7 @@ const player = new EZUIKitPlayer({
   id: "video-container", // 视频容器ID
   accessToken:
     "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
-  url: "ezopen://open.ys7.com/BD3957004/1.live",
+  url: "ezopen://open.ys7.com/BC7900686/1.live",
   width: 600,
   height: 400,
   handleError: (err) => {
@@ -98,7 +98,7 @@ const player = new EZUIKitPlayer({
   height: 400,
   accessToken:
     "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
-  url: "ezopen://open.ys7.com/BD3957004/1.rec",
+  url: "ezopen://open.ys7.com/BC7900686/1.rec",
 });
 ```
 
@@ -136,7 +136,7 @@ alpha（功能测试）、beta（集成测试）为我们的非正式版本，�
 
 我们提供了测试 accessToken,测试播放地址，并提供了几种常用场景使用示例。你可以通过使用示例，使用测试播放地址，测试 accessToken，在你的应用快速接入。
 
-<b>测试播放地址：</b> ezopen://open.ys7.com/BD3957004/1.live
+<b>测试播放地址：</b> ezopen://open.ys7.com/BC7900686/1.live
 
 你可以通过以下地址获取到测试 accessToken <a href="https://open.ys7.com/jssdk/ezopen/demo/token" target="_blank">获取测试 accessToken</a> 用来播放上述测试播放地址。当前设备有可能下线或被移除了， 如果自己有设备优先使用自己的设备进行测试。
 
@@ -151,8 +151,8 @@ const player = new EZUIKitPlayer({
   width: 600,
   height: 400,
   template: "pcLive",
-  url: "",
-  accessToken: "",
+  url: "...",
+  accessToken: "...",
   env: {
     domain: "https://iusopen.ezvizlife.com", // 北美地区
   },
@@ -248,7 +248,6 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.hd.live<br/>
 
 <tr><td>simple</td><td>极简版 *固定模板 仅包含视频播放窗口，创建实例后通过方法集控制视频播<br />放相关功能</td></tr>
 
-<tr><td>standard</td><td>标准版;   *固定模板 包含视频窗口，叠加了停止，录制，全屏控件（通过<br />控件快捷调用方法集合控制视频播放相关功能，但你仍然可以通过方法集直接控制视频播放相关功<br />能。下同）</td></tr>
 
 <tr><td>security</td><td>安防版(预览回放);  *固定模板 包含视频窗口，叠加了录制，全屏控件，<br />标清/高清切换，预览录制切换控件*</td></tr>
 <tr><td>voice</td><td>语音版;  *固定模板 包含视频窗口，叠加了录制，全屏控件，语音播报，语音<br />对讲控件*</td></tr>
@@ -267,10 +266,10 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 配置示例：<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/themeData.html" target="_blank">本地主题配置示例</a>
 
 </td><td>N</td></tr>
-<tr><td>plugin</td><td>String</td><td>按需加载插件，可选值： talk：对讲，示例：plugin:["talk"] </td><td>N</td></tr>
+
 <tr><td>handleSuccess</td><td>function</td><td>自动播放成功回调</td><td>N</td></tr>
 <tr><td>handleError</td><td>function</td><td>错误回调</td><td>N</td></tr>
-<tr><td>seekFrequency </td><td>function</td><td>为避免频繁拖动播放异常，可设置模板回放时间轴拖动防抖间隔，默认值为2000（2秒），可取2000（2秒），3000（3秒），4000（4秒），5000（5秒）</td><td>N</td></tr>
+<!-- <tr><td>seekFrequency </td><td>function</td><td>为避免频繁拖动播放异常，可设置模板回放时间轴拖动防抖间隔，默认值为2000（2秒），可取2000（2秒），3000（3秒），4000（4秒），5000（5秒）</td><td>N</td></tr> -->
 <tr><td>language</td><td>String</td><td>多语言 （zh | en）, 默认zh (v8.0.8版本及以上支持)</td><td>N</td></tr>
 <tr><td>debugDownloadData</td><td>boolean</td><td>下载原始码流， 调试码流使用, 默认 false (v8.1.1版本及以上支持)</td><td>N</td></tr>
 <tr><td>disableRenderPrivateData</td><td>boolean</td><td>禁止渲染私有数据(如智能分析， 移动侦测， 火点信息等), 默认 false (v8.1.1版本及以上支持)</td><td>N</td></tr>
