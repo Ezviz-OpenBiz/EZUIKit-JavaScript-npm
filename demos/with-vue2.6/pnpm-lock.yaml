@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@skax/picker':
+    specifier: 0.1.1
+    version: 0.1.1
   core-js:
     specifier: ^3.18.1
     version: 3.42.0
@@ -1297,6 +1300,17 @@ packages:
     resolution: {integrity: sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==}
     engines: {node: '>= 6'}
     dev: true
+
+  /@skax/delegate@3.2.0:
+    resolution: {integrity: sha512-PoNDaMyAWyp8eoVQIJZUth/6KnMIFerjrvju3ETVRavjsdlI3HNPf1CGQq+smXWN3LhcrFCPQZiMlvfe2Yq3vw==}
+    requiresBuild: true
+    dev: false
+
+  /@skax/picker@0.1.1:
+    resolution: {integrity: sha512-CiOfIgoAv11bGU+5h/IXkxd2A+D09IlEPmn17NslGXoy6C6fA7b+OH7JXAQCaTovK689jrB+sfCu5Xn4p3zSBw==}
+    dependencies:
+      '@skax/delegate': 3.2.0
+    dev: false
 
   /@soda/friendly-errors-webpack-plugin@1.8.1(webpack@4.47.0):
     resolution: {integrity: sha512-h2ooWqP8XuFqTXT+NyAFbrArzfQA7R6HTezADrvD9Re8fxMLTPPniLdqVTdDaO0eIoLaAwKT+d6w+5GeTk7Vbg==}
