@@ -7,7 +7,7 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```bash
-## 复制静态文件 node_modules/ezuikit-js/ezuikit_static 到 public/ezuikit_static
+## 默认是CDN 的资源 或 复制静态文件 node_modules/ezuikit-js/ezuikit_static 到 public/ezuikit_static并设置 staticPath: "./ezuikit_static"
 npm run dev
 ```
 
