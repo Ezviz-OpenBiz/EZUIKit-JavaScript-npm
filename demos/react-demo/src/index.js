@@ -5,9 +5,7 @@ import Player from "./Player";
 // import Player from "./PlayerClass";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Player />
-  </React.StrictMode>,
+    <Player />,
   document.getElementById("root")
 );
 

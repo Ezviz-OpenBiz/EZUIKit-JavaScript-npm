@@ -134,6 +134,7 @@ const Player = () => {
    */
   const handleStartTalk = useCallback(() => {
     if (player.current) {
+      // 请确保已经开启麦克风权限和已有麦克风可以使用
       player.current.startTalk();
     }
   }, []);
