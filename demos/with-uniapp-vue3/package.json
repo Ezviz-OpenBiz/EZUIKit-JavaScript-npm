@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "uni",
     "build": "uni build",
+    "build:h5": "uni build",
     "type-check": "vue-tsc --noEmit",
     "preinstall": "npx only-allow yarn"
   },
