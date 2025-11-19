@@ -62,7 +62,7 @@
           player = new EZUIKit.EZUIKitPlayer({
             id: "video-container", // 视频容器ID
             accessToken:
-              "at.d525oyj8d7bwohb40ssn3266cfq2mwi2-8hgpypehn9-1fafaty-ea2fxbc1k",
+              "at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3",
             url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
             template: "pcLive", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
             //   plugin: ["talk"], // 加载插件，talk-对讲
@@ -95,13 +95,17 @@
              * 默认值 1
              */
             streamInfoCBType: 1,
-            staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+            // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
             // v8.1.10
             // 自定义清晰度 默认 null, 如果有值 sdk 内部不在进行获取, null 默认使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取
             // videoLevelList: [ // 
-            //   { level: 0, name: "流畅", streamTypeIn: 1 }, // 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
-            //   { level: 1, name: "标清", streamTypeIn: 1 }, // 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+            //   { level: 0, name: "流畅", streamTypeIn: 1 }, 
+            //   { level: 1, name: "标清", streamTypeIn: 1 }, 
             // ],
+            // videoLevelList: [
+            //   { level: -1, name: "标清", streamTypeIn: 2 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+            //   { level: -2, name: "高清", streamTypeIn: 1 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+            // ]
           });
 
           player.eventEmitter.on(
