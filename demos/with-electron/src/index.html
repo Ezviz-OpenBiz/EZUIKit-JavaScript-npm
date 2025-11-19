@@ -62,8 +62,8 @@
           player = new EZUIKit.EZUIKitPlayer({
             id: "video-container", // 视频容器ID
             accessToken:
-              "at.2s5bel782emtho68ae31snumc1wuuioa-3d531vj77f-0gtnx7g-fddkee44",
-            url: "ezopen://open.ys7.com/GBSUB:ELRHKIQI7O5C/1.hd.live",
+              "at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3",
+            url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
             template: "pcLive", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
             //   plugin: ["talk"], // 加载插件，talk-对讲
             width: 600,
@@ -104,6 +104,10 @@
             //   { level: 1, name: "标清", streamTypeIn: 2 }, // 需要保证支持子码流 (streamTypeIn=2)
             //   { level: 2, name: "高清", streamTypeIn: 1 },
             // ],
+            // videoLevelList: [
+            //   { level: -1, name: "标清", streamTypeIn: 2 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+            //   { level: -2, name: "高清", streamTypeIn: 1 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+            // ]
           });
 
           player.eventEmitter.on(
