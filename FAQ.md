@@ -1,3 +1,18 @@
+## wasm streaming compile failed
+
+解码资源加载错误提示
+```
+wasm streaming compile failed: TypeError: Failed to execute 'compile' on 'WebAssembly': Incorrect response MIME type. Expected 'application/wasm'.
+falling back to ArrayBuffer instantiation
+```
+
+原因：响应服务不支持 `application/wasm` 响应类型
+
+https://stackoverflow.com/questions/50589083/typeerror-failed-to-execute-compile-on-webassembly-incorrect-response-mime
+
+解决方案：
+1. 配置响应服务支持 `application/wasm` 响应类型。
+
 ## 对讲(talk)
 
 在浏览器中使用麦克风是需要允许的，所以需要用户允许。 [获取麦克风权限](https://developer.mozilla.org/zh-CN/docs/Web/API/WebRTC_API/Build_a_phone_with_peerjs/Connect_peers/Get_microphone_permission)
