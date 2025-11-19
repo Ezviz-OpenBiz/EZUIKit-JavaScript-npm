@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "8.1.16",
+  "version": "8.1.17-beta.2",
   "description": "ezuikit javascript for npm",
   "title": "ezuikit-js",
   "main": "index.js",
@@ -25,9 +25,9 @@
   "dependencies": {
     "@ezuikit/player-ezopen": "8.1.16-beta.3",
     "@ezuikit/utils-collect": "0.1.1",
-    "@ezuikit/utils-i18n": "^1.0.1",
-    "@ezuikit/utils-logger": "^1.0.1",
-    "@ezuikit/utils-tools": "^1.0.4",
+    "@ezuikit/utils-i18n": "^1.1.1",
+    "@ezuikit/utils-logger": "^1.1.0",
+    "@ezuikit/utils-tools": "^1.1.0",
     "@juggle/resize-observer": "^3.4.0",
     "abortcontroller-polyfill": "^1.7.5",
     "debounce-promise": "^3.1.2",
