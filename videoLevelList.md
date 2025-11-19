@@ -6,13 +6,16 @@
 
 ```ts
 interface VideoLevel{
-    /** 清晰度 0 ｜ 1 ｜ 2 ｜ 3｜ 4 ｜ 5 ｜ 6 */
+    /** 
+     * 清晰度 0 ｜ 1 ｜ 2 ｜ 3｜ 4 ｜ 5 ｜ 6  | number 
+     * 当 level 的值小于 0时， 不在向设备发送指令（setVideoLevel 接口），仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+     */
     level: number,
     /** 名称 */
     name: string,
-    /** 1: 主码流, 2: 子码流 （仅支持这两种）*/
-    streamTypeIn: 1 | 2 
-    /** 如果 type === 'compatible' 代表兼容模式，兼容模式下 streamTypeIn 默认为 1， 因为 */
+    /** 1: 主码流, 2: 子码流  3：复合码流）*/
+    streamTypeIn: 1 | 2 | 3
+    /** 如果 type === 'compatible' 代表兼容模式，兼容模式下 streamTypeIn 默认为 1*/
     type?: 'compatible' | undefined,
 }
 ```
