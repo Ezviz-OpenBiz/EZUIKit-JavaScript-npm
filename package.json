@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "8.2.0-beta.4",
+  "version": "8.2.0-beta.5",
   "description": "ezuikit javascript for npm",
   "title": "ezuikit-js",
   "main": "index.js",
@@ -23,11 +23,11 @@
   ],
   "author": "Ezviz-OpenBiz",
   "dependencies": {
-    "@ezuikit/player-ezopen": "8.2.0-beta.3",
+    "@ezuikit/player-ezopen": "8.2.2-beta.3",
     "@ezuikit/utils-collect": "0.1.1",
-    "@ezuikit/utils-i18n": "^1.1.1",
-    "@ezuikit/utils-logger": "^1.1.0",
-    "@ezuikit/utils-tools": "^1.1.0",
+    "@ezuikit/utils-i18n": "2.0.0",
+    "@ezuikit/utils-logger": "2.0.0",
+    "@ezuikit/utils-tools": "2.0.1-beta.1",
     "@juggle/resize-observer": "^3.4.0",
     "abortcontroller-polyfill": "^1.7.5",
     "debounce-promise": "^3.1.2",

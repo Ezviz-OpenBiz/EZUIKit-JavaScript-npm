@@ -15,19 +15,21 @@
 
 - 支持双击全屏，可以初始化时使用`dblClickFullscreen: false` 禁用双击全屏
 
-- 支持自定义回放倍速
+- 支持自定义回放倍速 
 
 - 更新监听方式, `player.eventEmitter.on` -> `player.on`
 
 - 新增主题控件的交互变化事件
 
-- 更新 `changePlayUrl` api, 不再提供切换主题参数, 请使用 `player.changeTheme("themeId")`
+- 更新 `changePlayUrl` api, 不再提供切换主题参数, 切换主题请使用 `player.changeTheme("themeId")`
 
 - 移除 `Theme` 实例, 切换主题请使用 `player.changeTheme`
 
 - 移除 `Zoom` 实例
 
 - 更新消息提示 UI 交互
+
+- 移动端时间轴支持展示片段封面和支持调节时间宽度
 
 #### Fixed
 
