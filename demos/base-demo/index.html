@@ -65,8 +65,8 @@
           player = new EZUIKit.EZUIKitPlayer({
             id: "video-container", // 视频容器ID
             accessToken:
-              "ra.annvsh5v2d2n4ikzai5qk3mbdwrk5re6-9kgkz8sblt-11o92e1-ffwp96liy",
-            url: "ezopen://open.ys7.com/BC7900686/1.hd.live",
+              "at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3",
+            url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
             template: "pcLive", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
             // width: 600, // 8.2.0 版本开始支持 style 里面宽的值(如 "100%" 或 '100vw' 或 "600px" 或 600 或 "1em" 等等)
             height: 400,
@@ -75,6 +75,7 @@
             handleError: (error) => {
               console.error("handleError", error);
             },
+            scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏
             env: {
               // https://open.ys7.com/help/1772?h=domain
               // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
@@ -97,7 +98,7 @@
              * 默认值 1
              */
             streamInfoCBType: 1,
-            staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+            // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
             // v8.1.10
             // 自定义清晰度 默认 null, 如果有值 sdk 内部不在进行获取, null 默认使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取
             // videoLevelList: [

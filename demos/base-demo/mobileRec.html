@@ -51,12 +51,13 @@
             player = new EZUIKit.EZUIKitPlayer({
                 id: "video-container", // 视频容器ID
                 accessToken:
-                    "ra.annvsh5v2d2n4ikzai5qk3mbdwrk5re6-9kgkz8sblt-11o92e1-ffwp96liy",
-                url: "ezopen://open.ys7.com/BC7900686/1.rec",
+                "at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3",
+                url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
                 template: "mobileRec", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
                 width: width,
                 height: (width * 9) / 16,
                 language: "en", // zh | en
+                scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏
                 env: {
                     // https://open.ys7.com/help/1772?h=domain
                     // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
