@@ -118,14 +118,16 @@ const Player = () => {
   /** 全屏 */
   const handleFullscreen = useCallback(() => {
     if (player.current) {
-      player.current.fullscreen(); // 8.2.0 取代 fullScreen, 退出使用 exitFullscreen
+      player.current.fullscreen(); // 8.2.0 完全取代 fullScreen, 退出使用 exitFullscreen
     }
   }, []);
 
   /** 获取OSD时间 */
   const handleGetOSDTime = useCallback(() => {
     if (player.current) {
-      console.log("OSDTime", player.current.getOSDTime());
+      player.current.getOSDTime().then((data) => {
+        console.log("getOSDTime 获取 数据", data);
+      });
     }
   }, []);
 
@@ -176,7 +178,7 @@ const Player = () => {
           type="text"
           ref={accessTokenRef}
           style={{ width: 500 }}
-          defaultValue="at.d525oyj8d7bwohb40ssn3266cfq2mwi2-8hgpypehn9-1fafaty-ea2fxbc1"
+          defaultValue="at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3"
         />
       </div>
       <div>
