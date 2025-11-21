@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { EZUIKitPlayer } from "ezuikit-js";
+import { EZUIKitPlayer } from "ezuikit-js/ezuikit.js";
 var player = null;
 
 export default {
@@ -43,12 +43,11 @@ export default {
       //   .then((response) => response.json())
       //   .then((res) => {
       //     var accessToken = res.data.accessToken;
-
       //   });
       player = new EZUIKitPlayer({
         id: "video-container", // 视频容器ID
         accessToken:
-          "at.aw5w2pjo5qzpd0o07blbhl8e4tgrz9xm-58hpuns9dj-1csffwn-oelzubkb",
+          "at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3",
         url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
         template: "pcLive",
@@ -59,6 +58,7 @@ export default {
         // quality: 6, // 
         language: "en", // zh | en
         // staticPath: "./ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+        decoderType: "v1",
         env: {
           // https://open.ys7.com/help/1772?h=domain
           // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
@@ -88,8 +88,13 @@ export default {
         //   { level: 1, name: "标清", streamTypeIn: 2 }, // 需要保证支持子码流 (streamTypeIn=2)
         //   { level: 2, name: "高清", streamTypeIn: 1 },
         // ],
+        // videoLevelList: [
+        //   { level: -1, name: "标清", streamTypeIn: 2 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+        //   { level: -2, name: "高清", streamTypeIn: 1 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+        // ]
       });
 
+      console.warn("init player", player);
 
       // 8.1.x 事件监听
       // player.eventEmitter.on(EZUIKitPlayer.EVENTS.videoInfo, (info) => {

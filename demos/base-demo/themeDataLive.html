@@ -166,6 +166,7 @@
       player = new EZUIKit.EZUIKitPlayer({
         id: 'video-container', // 视频容器ID
         autoplay: false,
+        scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
         ...opt,
         env: {
           // https://open.ys7.com/help/1772?h=domain

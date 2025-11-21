@@ -33,7 +33,8 @@ const Player = () => {
         template: "pcLive",
         language: "zh", // zh | en
         // quality: 1, // 
-        // isCloudRecord: true, // 如果是云录制的播放 需要这个值，是必须的. 8.2.0 开始默认支持云录制，不需要此参数
+        // isCloudRecord: true, // 如果是云录制的播放需要这个值(8.1.x)是必须的. 8.2.0 开始默认支持云录制，不需要此参数
+        scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
         env: {
           // https://open.ys7.com/help/1772?h=domain
           // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
@@ -63,6 +64,10 @@ const Player = () => {
         //   { level: 1, name: "标清", streamTypeIn: 2 }, // 需要保证支持子码流 (streamTypeIn=2)
         //   { level: 2, name: "高清", streamTypeIn: 1 },
         // ],
+        // videoLevelList: [
+        //   { level: -1, name: "标清", streamTypeIn: 2 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+        //   { level: -2, name: "高清", streamTypeIn: 1 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+        // ]
       });
 
       window.player = player.current;
