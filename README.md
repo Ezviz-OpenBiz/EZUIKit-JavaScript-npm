@@ -286,6 +286,8 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 </td><td>N</td></tr>
 
 <tr><td>scaleMode</td><td> 0 | 1 | 2</td><td> 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0 </td><td>N</td></tr>
+
+<tr><td>spaceId</td><td> number</td><td> 云录制空间 ID (仅云录制生效) @sine 8.2.0 </td><td>N</td></tr>
 </table>
 
 ### 方法调用
