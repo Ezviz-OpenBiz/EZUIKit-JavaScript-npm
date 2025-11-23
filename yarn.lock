@@ -2,62 +2,58 @@
 # yarn lockfile v1
 
 
-"@ezuikit/player-ezopen@8.2.0-beta.3":
-  version "8.2.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.2.0-beta.3.tgz#889a62dbca3a57c00cb6f4baea7476fe15c52364"
-  integrity sha512-KtvJNdkbrLX6Z7LAOAnzqASkysy3U0strqjebnWFEMvdLLAD/rtVXQLnkC10URpC6K6I6ptULfcjVX/ZkzDmTw==
+"@ezuikit/player-ezopen@8.2.2-beta.5":
+  version "8.2.2-beta.5"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.2.2-beta.5.tgz#901205ade18c4821ace1af652064c6a12fb672e6"
+  integrity sha512-ohA86UGWWizx+X4pw9h9qh5sVuPt9QHxS38E76IqOlsQFszYtT8Q/KuJ3ONhulX2KZRpxkEDkyjyFzpT/6T/Cw==
   dependencies:
-    "@ezuikit/player-plugin-record" "8.2.0-beta.1"
-    "@ezuikit/utils-i18n" "^1.1.1"
-    "@ezuikit/utils-logger" "^1.1.0"
-    "@ezuikit/utils-service" "1.0.1"
-    "@ezuikit/utils-tools" "^1.1.0"
-    "@juggle/resize-observer" "^3.4.0"
+    "@ezuikit/player-plugin-record" "8.2.1"
+    "@ezuikit/utils-i18n" "2.0.0"
+    "@ezuikit/utils-logger" "2.0.0"
+    "@ezuikit/utils-service" "2.0.0-beta.2"
+    "@ezuikit/utils-tools" "2.0.1-beta.1"
     dayjs "^1.11.10"
     deepmerge "^4.3.1"
     eventemitter3 "^5.0.1"
     screenfull "^5.2.0"
     ua-parser-js "1.0.37"
 
-"@ezuikit/player-plugin-record@8.2.0-beta.1":
-  version "8.2.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-plugin-record/-/player-plugin-record-8.2.0-beta.1.tgz#188ba48772c2f092facc466a45c9defd8441e2ff"
-  integrity sha512-ECOWyH0DL3L26dqKPDdy4GPHBSoQKEifWlZo6C45WeyhnhxzgELsbVPBm5vizFQrZFmgvkBrCsOwUO8e7TfMuQ==
+"@ezuikit/player-plugin-record@8.2.1":
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-plugin-record/-/player-plugin-record-8.2.1.tgz#13e6a4b4f9200972d03d01eb02689ae4e91d2cd4"
+  integrity sha512-HlWQbd6SOWya5xo0EplsEIGPt52EQrVqNm/jHQMZKqslkiEzCDVUUvUYoFbl3fa5xf7Lh1a+YIATm/4L4iZKng==
+  dependencies:
+    uuid "8.3.0"
 
 "@ezuikit/utils-collect@0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@ezuikit/utils-collect/-/utils-collect-0.1.1.tgz#b9b49b1a2ef762c1d33b8a154bdd571e9cd965da"
   integrity sha512-BgEOnTtAq8rQRBAKv5rLXbQLGOnfOZ6NS0QTmiviey80JbMJlxrLiqmjL5lxvkm4JtCcXCtSgPA4tskQKN4eDA==
 
-"@ezuikit/utils-i18n@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@ezuikit/utils-i18n/-/utils-i18n-1.1.1.tgz#a9d05d1ab96341450e07477d5ab04f494c390332"
-  integrity sha512-PZe37fHfjUbhArXaoWMxbGOnU1R6k8XV7NroB3n2uL+z06SajozxO5TQARrk7Z72USQPvUsyaKIBcwVNjWK6/w==
+"@ezuikit/utils-i18n@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@ezuikit/utils-i18n/-/utils-i18n-2.0.0.tgz#41dceba7b09043e1a5baffce36ca0e0de36c7cc4"
+  integrity sha512-gMkfdwFTRk3bAkUVWRGPyEsQl4aIImBpQp732aSSHA75LFPi1MmdaB2Xf34OeC+4v+Anpbt75vviCpUrKPMKlQ==
   dependencies:
     deepmerge "^4.3.1"
 
-"@ezuikit/utils-logger@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@ezuikit/utils-logger/-/utils-logger-1.1.0.tgz#5730becccd35f7704592b4fbe2bdcae0fd9e8c8b"
-  integrity sha512-l/PiFZIC/VtW2l1oEjZEXfeYKFkPvX1kAlljXc1nRImNOI9t71/2oyTTkqkZvMLP/EG5regD9wuQplcvtfubUg==
+"@ezuikit/utils-logger@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@ezuikit/utils-logger/-/utils-logger-2.0.0.tgz#f3ffeb0a5d485e6a83710b2a924695f2a66786c3"
+  integrity sha512-xtq7Vwle75pfA1UfmcsO2cAdqu9n04fxXDu32fpta7A99ENgyk8saK1NRxeiLnqQHdibaIAmrIbfehgLAH6ecQ==
 
-"@ezuikit/utils-service@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@ezuikit/utils-service/-/utils-service-1.0.1.tgz#0465539cd6e4b9a15e60f6a67f29f7310bad8ca2"
-  integrity sha512-iNjYuU7AScBJxvKBM9PjiGI2y64QJNPT/H1Fy/Y7ZIAlw4DO//TP+x50qCho+i+EOUpWLtOqBQvtRb7a0O4X4Q==
+"@ezuikit/utils-service@2.0.0-beta.2":
+  version "2.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@ezuikit/utils-service/-/utils-service-2.0.0-beta.2.tgz#ae7f104b6ddb0afc6a3fe80d694154b2bceed3a4"
+  integrity sha512-Ta27VRDZK1LRRQ9YznYxCqMIeCnO4hnhzQNir3R6ieMy0MnV1pjblVJo2f/f/DRhncNqEHW8IUEcOTKBiIbX8Q==
   dependencies:
-    "@ezuikit/utils-tools" "^1.0.1"
+    "@ezuikit/utils-tools" "^2.0.1-beta.1"
     dayjs "^1.11.10"
 
-"@ezuikit/utils-tools@^1.0.1":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@ezuikit/utils-tools/-/utils-tools-1.0.4.tgz#018f0ac5b870ca8c6d4dd5d6c8ae381533e7d772"
-  integrity sha512-w+LZ03qowSqrSqDnuONKPpmEn0cuCaF2pkgHL1YicR0of/ZelCho5X8cy5TXQe7UsrQkIM2M7vVennv5KnAdpQ==
-
-"@ezuikit/utils-tools@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@ezuikit/utils-tools/-/utils-tools-1.1.0.tgz#2986443242e4e20c4aa1250030a5cbe5a43c58b5"
-  integrity sha512-mujPtXIhZnuJrJySu1/Z6X90sMJQStZydurZcfetMCH6pqIYN4P+1w6+P8PCTR6k4LJp5nY9+eNnKa7AZ8OBKA==
+"@ezuikit/utils-tools@2.0.1-beta.1", "@ezuikit/utils-tools@^2.0.1-beta.1":
+  version "2.0.1-beta.1"
+  resolved "https://registry.yarnpkg.com/@ezuikit/utils-tools/-/utils-tools-2.0.1-beta.1.tgz#dbfebed524e66e58812d3d57b825eb4791138f8c"
+  integrity sha512-TDH7G6NXG55d7gRDAcAhMoC4ZyjsJ8tEGiXGnZ0Bzf+jxy1y6el9gm0jCBz9pwCuJSWFttH3l1nd6P9+57+oVg==
 
 "@juggle/resize-observer@^3.4.0":
   version "3.4.0"
@@ -128,6 +124,11 @@ ua-parser-js@1.0.37:
   version "1.0.37"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-1.0.37.tgz#b5dc7b163a5c1f0c510b08446aed4da92c46373f"
   integrity sha512-bhTyI94tZofjo+Dn8SN6Zv8nBDvyXTymAdM3LDI/0IboIUwTu1rEhW7v2TfiVsoYWgkQ4kOVqnI8APUFbIQIFQ==
+
+uuid@8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.0.tgz#ab738085ca22dc9a8c92725e459b1d507df5d6ea"
+  integrity sha512-fX6Z5o4m6XsXBdli9g7DtWgAx+osMsRRZFKma1mIUsLCz6vRvv+pz5VNbyu9UEDzpMWulZfvpgb/cmDXVulYFQ==
 
 web-streams-polyfill@^3.0.3:
   version "3.3.3"
