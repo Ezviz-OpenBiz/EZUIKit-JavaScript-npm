@@ -28,12 +28,12 @@ class Player extends React.Component {
         id: "player-container", // 视频容器ID
         url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
         accessToken:
-          "at.2s5bel782emtho68ae31snumc1wuuioa-3d531vj77f-0gtnx7g-fddkee44",
+          "at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3",
         // simple:极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放; security: 安防版; voice: 语音版;
         template: "pcLive",
-        width: 600,
+        // width: 600,
         height: 400,
-        quality: 1, // 
+        // quality: 1, // 
         handleFirstFrameDisplay: (res) => {
           // 首帧
         },
@@ -43,6 +43,7 @@ class Player extends React.Component {
         // language: "en", // zh | en
         // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
         // isCloudRecord: true, // 如果是云录制的播放 需要这个值，是必须的
+        scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
         env: {
           // https://open.ys7.com/help/1772?h=domain
           // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
@@ -131,7 +132,7 @@ class Player extends React.Component {
       <div className="demo">
         <h2>视频模式使用示例：</h2>
         <div>
-          <div id="player-container" style={{ width: 600, height: 600 }}></div>
+          <div id="player-container" style={{ width: '100%', height: 600 }}></div>
         </div>
         <div>
           <button onClick={this.init}>init</button>
