@@ -80,6 +80,7 @@ const player = new EZUIKitPlayer({
   url: "ezopen://open.ys7.com/BC7900686/1.live",
   width: 600,
   height: 400,
+  scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
   handleError: (err) => {
     if (err.type === "handleRunTimeInfoError" && err.data.nErrorCode === 5) {
       // 加密设备密码错误
@@ -96,6 +97,7 @@ const player = new EZUIKitPlayer({
   id: "video-container", // 视频容器ID
   width: 600,
   height: 400,
+  scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
   accessToken:
     "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
   url: "ezopen://open.ys7.com/BC7900686/1.rec",
@@ -423,13 +425,15 @@ player.eventEmitter.on("volumeChange", ({ data }) => {
 #### 全屏
 
 ```js
-player.fullScreen();
+player.fullScreen(); // 8.2.0 开始移除 
+player.fullscreen(); // 8.2.0 新增
 ```
 
 #### 取消全屏
 
 ```js
-player.cancelFullScreen();
+player.cancelFullScreen(); // 8.2.0 开始移除 
+player.exitFullscreen(); // 8.2.0 新增
 ```
 
 #### 获取 OSD 时间
@@ -468,12 +472,15 @@ options 参数说明
 > 可用于在播放中切换模板主题，请切换播放地址成功后调用
 
 ```js
-player.Theme.changeTheme(template);
+player.Theme.changeTheme(template); // 8.2.0 开始移除 
+
+player.changeTheme(template); // 8.2.0 新增
 
 // 预览切回放场景示例
 player.changePlayUrl({ type: "rec" }).then(() => {
   console.log("地址切换成功，开始切换模板主题");
-  player.Theme.changeTheme("pcRec");
+  // player.Theme.changeTheme("pcRec"); // 8.2.0 开始移除
+  player.changeTheme("pcRec"); // 8.2.0 新增
 });
 ```
 
@@ -510,7 +517,7 @@ player.closeZoom().then(() => {
 #### 重置画面宽高
 
 ```js
-player.resize(width, height);
+player.resize(width, height); // 8.2.0 开始支持宽高参数为字符串（如 100% , 100vw , 100vh 10em, 10rem 等）
 ```
 
 #### 鱼眼矫正（软解 开启 [SharedArrayBuffer](https://open.ys7.com/help/1772?h=SharedArrayBuffer)）
@@ -725,16 +732,34 @@ player.eventEmitter.on(EZUIKitPlayer.EVENTS.exitFullscreen, () => {
 全屏变化事件 `EZUIKitPlayer.EVENTS.fullscreenChange`
 
 ```js
+// 8.2.0 移除
 // interface FullscreenChangeData {
 //   "isCurrentFullscreen": boolean, // 全局全屏
 //   "isCurrentBrowserFullscreen":boolean // 全局全屏和web 全屏
 // }
 // 监听全屏变化事件
-player.eventEmitter.on(EZUIKitPlayer.EVENTS.fullscreenChange, (data) => {
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.fullscreenChange, (info) => {
   // {data: FullscreenChangeData}
-  console.log("fullscreenChange", data);
+  console.log("fullscreenChange", info);
 });
 ```
+
+```js
+// 8.2.0 新增
+// interface FullscreenChangeData {
+//    "isCurrentFullscreen":true, // 当前窗口是否全屏
+//    "isFullscreen":true, // 页面是否有全屏
+//    "isMobile":false,  // 是否是移动端
+//    "orientationAngle":0 // 屏幕旋转角度（适用移动端和pad ）
+// }
+// 监听全屏变化事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.fullscreenChange, (info) => {
+  // {data: FullscreenChangeData}
+  console.log("fullscreenChange", info);
+});
+```
+
+
 
 #### 首帧渲染事件
 
@@ -764,8 +789,9 @@ resize 事件事件 `EZUIKitPlayer.EVENTS.resize`
 
 ```js
 // 监听resize事件
-player.eventEmitter.on(EZUIKitPlayer.EVENTS.resize, () => {
-  // {data: {"width": number,"height":number}}
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.resize, (data) => {
+  // {data: {"width": number,"height":number}} // 8.2.0 开始移除
+  // {"width":number,"height":number,"isCurrentFullscreen":true,"orientationAngle":0} // 8.2.0 开始添加
   console.log("resize", data);
 });
 ```
@@ -858,6 +884,8 @@ player.eventEmitter.on(EZUIKitPlayer.EVENTS.reSetTheme, () => {
 });
 ```
 
+8.2.0 开始不在支持
+
 #### 回放时间变化事件
 
 回放时间变化事件 `EZUIKitPlayer.EVENTS.recTimeChange`
@@ -944,7 +972,7 @@ player.eventEmitter.on(EZUIKitPlayer.EVENTS.fast, ({ data }) => {
 });
 ```
 
-倍速下降事件 `EZUIKitPlayer.EVENTS.fast`
+倍速下降事件 `EZUIKitPlayer.EVENTS.slow`
 
 ```js
 // 监听倍速下降事件
