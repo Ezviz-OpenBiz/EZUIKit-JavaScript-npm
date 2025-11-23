@@ -22,8 +22,9 @@
 </template>
 
 <script>
-import { EZUIKitPlayer } from "ezuikit-js/ezuikit.js";
+import { EZUIKitPlayer } from "ezuikit-js";
 var player = null;
+
 
 export default {
   name: "Player",
@@ -58,7 +59,8 @@ export default {
         // quality: 6, // 
         language: "en", // zh | en
         // staticPath: "./ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
-        decoderType: "v1",
+        decoderType: "auto",
+        scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
         env: {
           // https://open.ys7.com/help/1772?h=domain
           // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain

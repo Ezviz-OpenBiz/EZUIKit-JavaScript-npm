@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.18.1",
-    "ezuikit-js": "8.2.0-beta.6",
+    "ezuikit-js": "8.2.0-beta.8",
     "vue": "2.6.14",
     "vue-router": "3"
   },
@@ -17,5 +17,11 @@
     "@vue/cli-plugin-babel": "4.5.13",
     "@vue/cli-service": "4.5.13",
     "vue-template-compiler": "2.6.14"
+  },
+  "resolutions": {
+    "minimatch": "3"
+  },
+  "overrides": {
+    "minimatch": "3"
   }
 }
