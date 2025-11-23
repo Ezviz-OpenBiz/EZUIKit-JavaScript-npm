@@ -6,7 +6,13 @@
 
 ```ts
 interface VideoLevel{
-    /** 清晰度 0 ｜ 1 ｜ 2 ｜ 3｜ 4 ｜ 5 ｜ 6 */
+    /** 
+     * 清晰度 0 ｜ 1 ｜ 2 ｜ 3｜ 4 ｜ 5 ｜ 6  | number 
+     * 
+     * level 需要是唯一的
+     * 
+     * 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+     */
     level: number,
     /** 名称 */
     name: string,
