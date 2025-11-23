@@ -1,0 +1,23 @@
+version: '3'
+services:
+  # 服务名称
+  nginx:
+    # 镜像:版本
+    image: nginx:latest
+
+    # 指定容器名称
+    container_name: ezuikit-nginx
+
+    # 映射容器8000端口到本地8000端口
+    ports:
+      - '8000:8000'
+
+    # 数据卷 映射本地文件到容器
+    volumes:
+      # 映射nginx.conf文件到容器的/etc/nginx/conf.d目录并覆盖default.conf文件
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      # 映射dist文件夹到容器的/usr/share/nginx/html文件夹
+      - ./html:/usr/share/nginx/html
+    # 覆盖容器启动后默认执行的命令。
+
+    command: /bin/bash -c "nginx -g 'daemon off;'"
