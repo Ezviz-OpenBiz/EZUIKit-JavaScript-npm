@@ -22,4 +22,6 @@ npm-error.log*
 yarn-debug.log*
 demos/with-electron/release
 demos/with-electron/dist
+demos/vue-demo/public/ezuikit_static
+demos/vue3-demo/public/ezuikit_static
            

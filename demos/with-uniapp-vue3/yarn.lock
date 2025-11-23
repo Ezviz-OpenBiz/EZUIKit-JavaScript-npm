@@ -1420,10 +1420,10 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.20.2.tgz#9c907b21e30a52db959ba4f80bb01a0cc403d5cc"
   integrity sha512-N49X4lJX27+l9jbLKSqZ6bKNjzQvHaT8IIFUy+YIqmXQdjYCToGWwOItDrfby14c78aDd5NHQl29xingXfCdLQ==
 
-"@ezuikit/player-ezopen@8.1.12-beta.4":
-  version "8.1.12-beta.4"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.1.12-beta.4.tgz#45d55ab564ebce9805e7a4287b07c5f4ed866258"
-  integrity sha512-qp3d7s8t2OlHwt/+qofxsk68bWbLOj1qbK3VdxUJQ8D37KGn7aKRc6EtdyP2yDMe8LCSyytJzbyORDCkaKu9VA==
+"@ezuikit/player-ezopen@8.1.16-beta.3":
+  version "8.1.16-beta.3"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.1.16-beta.3.tgz#db8a9e6b9bd88d6514d985933445a927ac5c6dc3"
+  integrity sha512-SSpqlJLZzcdX1eMD15xFGTAbQqLsUhFZ5BgMBl+7aGZJHfZ8K7c1sBY1nID8WCGL2U4uOXVBGSbTTG+Q6PfV5g==
   dependencies:
     "@ezuikit/player-plugin-record" "8.1.8-beta.3"
     "@ezuikit/utils-i18n" "^1.0.1"
@@ -2887,12 +2887,12 @@ exsolve@^1.0.7:
   resolved "https://registry.yarnpkg.com/exsolve/-/exsolve-1.0.7.tgz#3b74e4c7ca5c5f9a19c3626ca857309fa99f9e9e"
   integrity sha512-VO5fQUzZtI6C+vx4w/4BWJpg3s/5l+6pRQEHzFRM8WFi4XffSP1Z+4qi7GbjWbvRQEbdIco5mIMq+zX4rPuLrw==
 
-ezuikit-js@8.1.14:
-  version "8.1.14"
-  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.1.14.tgz#c219a6418fcfad8bf4e99b67a9234d0379f4ac88"
-  integrity sha512-200lgVtAxxqtmrwX/z17TnQsD7i+3HgPzh3TBhZTsuE3NFt0NHi2wAMvJidhm8TX731HGn9jSrfKQpOvaruK+g==
+ezuikit-js@8.1.16:
+  version "8.1.16"
+  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.1.16.tgz#00eab6e0f84914da8c2df48af7655f2c815f9902"
+  integrity sha512-0fIhg2N8biOj4lBHVQOXcFD1cCRpCuSAe+69qq9nWZx38sxwGZkOv1SWJoMOoi5vycuFGrolU7w/tMKV1oDiCg==
   dependencies:
-    "@ezuikit/player-ezopen" "8.1.12-beta.4"
+    "@ezuikit/player-ezopen" "8.1.16-beta.3"
     "@ezuikit/utils-collect" "0.1.1"
     "@ezuikit/utils-i18n" "^1.0.1"
     "@ezuikit/utils-logger" "^1.0.1"

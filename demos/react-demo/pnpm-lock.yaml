@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   ezuikit-js:
-    specifier: 8.1.14
-    version: 8.1.14
+    specifier: 8.2.0-beta.6
+    version: 8.2.0-beta.6
   react:
     specifier: ^17
     version: 17.0.2
@@ -1721,50 +1721,52 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: false
 
-  /@ezuikit/player-ezopen@8.1.12-beta.4:
-    resolution: {integrity: sha512-qp3d7s8t2OlHwt/+qofxsk68bWbLOj1qbK3VdxUJQ8D37KGn7aKRc6EtdyP2yDMe8LCSyytJzbyORDCkaKu9VA==}
+  /@ezuikit/player-ezopen@8.2.2-beta.3:
+    resolution: {integrity: sha512-8VekrlF9BM5IO3oruckJB9tkiBjywNPdUDdIc50koTiwboCQkjw5BhPr8W4d6DCveBunr/CRMKUHvxPIYzpsyw==}
     dependencies:
-      '@ezuikit/player-plugin-record': 8.1.8-beta.3
-      '@ezuikit/utils-i18n': 1.0.1
-      '@ezuikit/utils-logger': 1.0.1
+      '@ezuikit/player-plugin-record': 8.2.0
+      '@ezuikit/utils-i18n': 2.0.0
+      '@ezuikit/utils-logger': 2.0.0
       '@ezuikit/utils-service': 1.0.1
-      '@ezuikit/utils-tools': 1.0.4
-      '@juggle/resize-observer': 3.4.0
+      '@ezuikit/utils-tools': 2.0.1-beta.1
       dayjs: 1.11.13
       deepmerge: 4.3.1
       eventemitter3: 5.0.1
-      jquery: 3.7.1
       screenfull: 5.2.0
       ua-parser-js: 1.0.37
     dev: false
 
-  /@ezuikit/player-plugin-record@8.1.8-beta.3:
-    resolution: {integrity: sha512-YcQ5MR8zyg8b+o/ktr6r+YCXkiEX43HVmzVkfJsERgaokaHzoNIpOomEl51j/13gcemjSXuN6i1apCRC2v32pg==}
+  /@ezuikit/player-plugin-record@8.2.0:
+    resolution: {integrity: sha512-5T+1pSw83FmZDrpcNrDRQOf0vv3a3flnwWWZ8N42ZZENtATeMUAXXu2LkmnrLpsRmSVBELIX13adEqnAk1k39A==}
     dev: false
 
   /@ezuikit/utils-collect@0.1.1:
     resolution: {integrity: sha512-BgEOnTtAq8rQRBAKv5rLXbQLGOnfOZ6NS0QTmiviey80JbMJlxrLiqmjL5lxvkm4JtCcXCtSgPA4tskQKN4eDA==}
     dev: false
 
-  /@ezuikit/utils-i18n@1.0.1:
-    resolution: {integrity: sha512-uUjN3ADHV2ZG4QznuA7FB89/ck8AGV4qS8hm/sqeSA6/ie4ryYw8MS4wIv71WgPBIgIVDfASuEapyLOwq7R2aQ==}
+  /@ezuikit/utils-i18n@2.0.0:
+    resolution: {integrity: sha512-gMkfdwFTRk3bAkUVWRGPyEsQl4aIImBpQp732aSSHA75LFPi1MmdaB2Xf34OeC+4v+Anpbt75vviCpUrKPMKlQ==}
     dependencies:
-      i18n-js: 4.5.1
+      deepmerge: 4.3.1
     dev: false
 
-  /@ezuikit/utils-logger@1.0.1:
-    resolution: {integrity: sha512-qak0MXh4vWZCji3aSCfHdWR3EbZCaqS0iMT8/QWuWPRr0vDmTRMP3kFOAw1MuMraR0ocjPBE2PaTEmUuwVqaAw==}
+  /@ezuikit/utils-logger@2.0.0:
+    resolution: {integrity: sha512-xtq7Vwle75pfA1UfmcsO2cAdqu9n04fxXDu32fpta7A99ENgyk8saK1NRxeiLnqQHdibaIAmrIbfehgLAH6ecQ==}
     dev: false
 
   /@ezuikit/utils-service@1.0.1:
     resolution: {integrity: sha512-iNjYuU7AScBJxvKBM9PjiGI2y64QJNPT/H1Fy/Y7ZIAlw4DO//TP+x50qCho+i+EOUpWLtOqBQvtRb7a0O4X4Q==}
     dependencies:
-      '@ezuikit/utils-tools': 1.0.4
+      '@ezuikit/utils-tools': 1.1.0
       dayjs: 1.11.13
     dev: false
 
-  /@ezuikit/utils-tools@1.0.4:
-    resolution: {integrity: sha512-w+LZ03qowSqrSqDnuONKPpmEn0cuCaF2pkgHL1YicR0of/ZelCho5X8cy5TXQe7UsrQkIM2M7vVennv5KnAdpQ==}
+  /@ezuikit/utils-tools@1.1.0:
+    resolution: {integrity: sha512-mujPtXIhZnuJrJySu1/Z6X90sMJQStZydurZcfetMCH6pqIYN4P+1w6+P8PCTR6k4LJp5nY9+eNnKa7AZ8OBKA==}
+    dev: false
+
+  /@ezuikit/utils-tools@2.0.1-beta.1:
+    resolution: {integrity: sha512-TDH7G6NXG55d7gRDAcAhMoC4ZyjsJ8tEGiXGnZ0Bzf+jxy1y6el9gm0jCBz9pwCuJSWFttH3l1nd6P9+57+oVg==}
     dev: false
 
   /@humanwhocodes/config-array@0.13.0:
@@ -3459,10 +3461,6 @@ packages:
     resolution: {integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==}
     dev: false
 
-  /bignumber.js@9.3.0:
-    resolution: {integrity: sha512-EM7aMFTXbptt/wZdMlBv2t8IViwQL+h6SLHosp8Yf0dqJMTnY6iL32opnAB6kAdL0SZPuvcAzFr31o0c/R3/RA==}
-    dev: false
-
   /binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
@@ -5151,24 +5149,22 @@ packages:
       - supports-color
     dev: false
 
-  /ezuikit-js@8.1.14:
-    resolution: {integrity: sha512-200lgVtAxxqtmrwX/z17TnQsD7i+3HgPzh3TBhZTsuE3NFt0NHi2wAMvJidhm8TX731HGn9jSrfKQpOvaruK+g==}
+  /ezuikit-js@8.2.0-beta.6:
+    resolution: {integrity: sha512-DfAJoAh5ADS+QGwkTEMDqRSClDvP84YOIwQU62RTQM6vBs4AncpeG++DK4D2PxBj6SzwkuFisDeGDLjRCz+7+w==}
     dependencies:
-      '@ezuikit/player-ezopen': 8.1.12-beta.4
+      '@ezuikit/player-ezopen': 8.2.2-beta.3
       '@ezuikit/utils-collect': 0.1.1
-      '@ezuikit/utils-i18n': 1.0.1
-      '@ezuikit/utils-logger': 1.0.1
-      '@ezuikit/utils-tools': 1.0.4
+      '@ezuikit/utils-i18n': 2.0.0
+      '@ezuikit/utils-logger': 2.0.0
+      '@ezuikit/utils-tools': 2.0.1-beta.1
       '@juggle/resize-observer': 3.4.0
       abortcontroller-polyfill: 1.7.8
       debounce-promise: 3.1.2
       deepmerge: 4.3.1
       delegate: 3.2.0
       formdata-polyfill: 4.0.10
-      jquery: 3.7.1
       lodash-es: 4.17.21
       screenfull: 5.2.0
-      uuid: 8.3.2
     dev: false
 
   /fast-deep-equal@3.1.3:
@@ -5841,14 +5837,6 @@ packages:
   /human-signals@2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
-    dev: false
-
-  /i18n-js@4.5.1:
-    resolution: {integrity: sha512-n7jojFj1WC0tztgr0I8jqTXuIlY1xNzXnC3mjKX/YjJhimdM+jXM8vOmn9d3xQFNC6qDHJ4ovhdrGXrRXLIGkA==}
-    dependencies:
-      bignumber.js: 9.3.0
-      lodash: 4.17.21
-      make-plural: 7.4.0
     dev: false
 
   /iconv-lite@0.4.24:
@@ -6853,10 +6841,6 @@ packages:
     hasBin: true
     dev: false
 
-  /jquery@3.7.1:
-    resolution: {integrity: sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==}
-    dev: false
-
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
     dev: false
@@ -7182,10 +7166,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       semver: 7.7.2
-    dev: false
-
-  /make-plural@7.4.0:
-    resolution: {integrity: sha512-4/gC9KVNTV6pvYg2gFeQYTW3mWaoJt7WZE5vrp1KnQDgW92JtYZnzmZT81oj/dUTqAIu0ufI2x3dkgu3bB1tYg==}
     dev: false
 
   /makeerror@1.0.12:

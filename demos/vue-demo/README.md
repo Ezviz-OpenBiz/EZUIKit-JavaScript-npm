@@ -1,23 +1,19 @@
 # vue-demo
 
 ## Project setup
-```
+```bash
 npm install
 ```
 
 ### Compiles and hot-reloads for development
-```
-npm run serve
+```bash
+## 默认是CDN 的资源 或 复制静态文件 node_modules/ezuikit-js/ezuikit_static 到 public/ezuikit_static并设置 staticPath: "./ezuikit_static"
+npm run dev
 ```
 
 ### Compiles and minifies for production
-```
+```bash
 npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
 ```
 
 ## QA 

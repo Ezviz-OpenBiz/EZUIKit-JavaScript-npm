@@ -30,17 +30,14 @@
                 <button onClick="closeSound()">closeSound</button>
                 <button onClick="startSave()">startSave</button>
                 <button onClick="stopSave()">stopSave</button>
-                <button onClick="ezopenStartTalk()">开始对讲</button>
-                <button onClick="ezopenStopTalk()">结束对讲</button>
-                <button onClick="fullScreen()">全屏</button>
+                <button onClick="startTalk()">开始对讲</button>
+                <button onClick="stopTalk()">结束对讲</button>
+                <button onClick="fullscreen()">全屏</button>
                 <button onClick="destroy()">destroy</button>
             </div>
-            <p style="font-style: italic">
-                播放多个视频，可初始化多个实例，参考：/demos/base-demo/multi-demo
-            </p>
         </div>
         <script>
-            var player;
+            let player;
             const width = document.body.clientWidth || 375;
 
             // fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
@@ -50,13 +47,13 @@
             player = new EZUIKit.EZUIKitPlayer({
                 id: "video-container", // 视频容器ID
                 accessToken:
-                    "at.0bcxc4b84rh5c1405waik5vi9uzmcbnu-9gwrqfivpn-1hif4xu-vrgxwvuq",
-                url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
+                    "ra.annvsh5v2d2n4ikzai5qk3mbdwrk5re6-9kgkz8sblt-11o92e1-ffwp96liy",
+                url: "ezopen://open.ys7.com/BC7900686/1.hd.live",
                 template: "mobileLive", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
-                plugin: ["talk"], // 加载插件，talk-对讲
                 width: width,
                 height: (width * 9) / 16,
                 language: "en", // zh | en
+                scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
                 env: {
                     // https://open.ys7.com/help/1772?h=domain
                     // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
@@ -80,39 +77,56 @@
                  */
                 streamInfoCBType: 1,
                 staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+                // videoLevelList: [
+                //   { level: -1, name: "标清", streamTypeIn: 2 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+                //   { level: -2, name: "高清", streamTypeIn: 1 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+                // ]
             });
 
-            player.eventEmitter.on(
-                EZUIKit.EZUIKitPlayer.EVENTS.videoInfo,
-                (info) => {
-                    console.log("videoinfo", info);
-                },
-            );
+            // 8.1.x 版本, 9.x.x 移除了 eventEmitter
+            // player.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.videoInfo, (info) => {
+            //   console.log("eventEmitter videoInfo", info);
+            // });
+            // 8.2.0 开始 推荐使用 player.on
+            // prettier-ignore
+            player.on(EZUIKit.EZUIKitPlayer.EVENTS.videoInfo,(info) => {
+                console.log("videoInfo", info);
+            });
 
-            player.eventEmitter.on(
-                EZUIKit.EZUIKitPlayer.EVENTS.audioInfo,
-                (info) => {
-                    console.log("audioInfo", info);
-                },
-            );
+            // 8.1.x 版本, 9.x.x 移除了 eventEmitter
+            // player.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.audioInfo, (info) => {
+            //   console.log("eventEmitter audioInfo", info);
+            // });
+            // 8.2.0 开始 推荐使用 player.on
+            // prettier-ignore
+            player.on(EZUIKit.EZUIKitPlayer.EVENTS.audioInfo, (info) => {
+                console.log("audioInfo", info);
+            });
+
             // 首帧渲染成功
             // first frame display
-            player.eventEmitter.on(
-                EZUIKit.EZUIKitPlayer.EVENTS.firstFrameDisplay,
-                () => {
-                    console.log("firstFrameDisplay ");
-                },
-            );
-            player.eventEmitter.on(
-                EZUIKit.EZUIKitPlayer.EVENTS.streamInfoCB,
-                (info) => {
-                    console.log("streamInfoCB ", info);
-                },
-            );
-
+            // 8.1.x 版本, 9.x.x 移除了 eventEmitter
+            // player.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.firstFrameDisplay, () => {
+            //   console.log("eventEmitter firstFrameDisplay ");
             // });
-            function fullScreen() {
-                var playPromise = player.fullScreen();
+            // 8.2.0 开始 推荐使用 player.on
+            // prettier-ignore
+            player.on(EZUIKit.EZUIKitPlayer.EVENTS.firstFrameDisplay, () => {
+                console.log("firstFrameDisplay ");
+            });
+
+            // 8.1.x 版本, 9.x.x 移除了 eventEmitter
+            // player.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.streamInfoCB, (info) => {
+            //   console.log("eventEmitter streamInfoCB ", info);
+            // });
+            // 8.2.0 开始 推荐使用 player.on
+            // prettier-ignore
+            player.on(EZUIKit.EZUIKitPlayer.EVENTS.streamInfoCB, (info) => {
+              console.log("streamInfoCB ", info);
+            });
+
+            function fullscreen() {
+                var playPromise = player.fullscreen();
                 playPromise.then((data) => {
                     console.log("promise 获取 数据", data);
                 });
@@ -166,10 +180,10 @@
                     console.log("promise 获取 数据", data);
                 });
             }
-            function ezopenStartTalk() {
+            function startTalk() {
                 player.startTalk();
             }
-            function ezopenStopTalk() {
+            function stopTalk() {
                 player.stopTalk();
             }
 

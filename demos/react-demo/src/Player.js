@@ -14,12 +14,9 @@ const Player = () => {
 
   const initPlayer = useCallback(() => {
     if (document.getElementById("player-container")) {
-      let width = 600;
       let height = 400;
-
       if (isMobile()) {
-        width = document.documentElement.clientWidth;
-        height = (width * 9) / 16;
+        height = (document.documentElement.clientWidth * 9) / 16;
       }
 
       if (player.current) {
@@ -32,12 +29,12 @@ const Player = () => {
         id: "player-container",
         url: urlRef.current.value, // "ezopen://open.ys7.com/BB9480953/1.hd.live",
         accessToken: accessTokenRef.current.value, // "at.2ec3m7dga2v59cps6rv0d1haa2vqsjka-1lbu5f5hyi-1j9rleq-npvuluse",
-        width,
         height,
         template: "pcLive",
         language: "zh", // zh | en
         // quality: 1, // 
-        // isCloudRecord: true, // 如果是云录制的播放 需要这个值，是必须的
+        // isCloudRecord: true, // 如果是云录制的播放需要这个值(8.1.x)是必须的. 8.2.0 开始默认支持云录制，不需要此参数
+        scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
         env: {
           // https://open.ys7.com/help/1772?h=domain
           // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
@@ -67,6 +64,10 @@ const Player = () => {
         //   { level: 1, name: "标清", streamTypeIn: 2 }, // 需要保证支持子码流 (streamTypeIn=2)
         //   { level: 2, name: "高清", streamTypeIn: 1 },
         // ],
+        // videoLevelList: [
+        //   { level: -1, name: "标清", streamTypeIn: 2 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+        //   { level: -2, name: "高清", streamTypeIn: 1 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+        // ]
       });
 
       window.player = player.current;
@@ -122,14 +123,16 @@ const Player = () => {
   /** 全屏 */
   const handleFullscreen = useCallback(() => {
     if (player.current) {
-      player.current.fullScreen();
+      player.current.fullscreen(); // 8.2.0 完全取代 fullScreen, 退出使用 exitFullscreen
     }
   }, []);
 
   /** 获取OSD时间 */
   const handleGetOSDTime = useCallback(() => {
     if (player.current) {
-      console.log("OSDTime", player.current.getOSDTime());
+      player.current.getOSDTime().then((data) => {
+        console.log("getOSDTime 获取 数据", data);
+      });
     }
   }, []);
 
@@ -138,6 +141,7 @@ const Player = () => {
    */
   const handleStartTalk = useCallback(() => {
     if (player.current) {
+      // 请确保已经开启麦克风权限和已有麦克风可以使用
       player.current.startTalk();
     }
   }, []);
@@ -179,7 +183,7 @@ const Player = () => {
           type="text"
           ref={accessTokenRef}
           style={{ width: 500 }}
-          defaultValue="at.d525oyj8d7bwohb40ssn3266cfq2mwi2-8hgpypehn9-1fafaty-ea2fxbc1"
+          defaultValue="at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3"
         />
       </div>
       <div>
@@ -200,7 +204,7 @@ const Player = () => {
         <button onClick={handleStartSave}>startSave</button>
         <button onClick={handleStopSave}>stopSave</button>
         <button onClick={handleCapturePicture}>capturePicture</button>
-        <button onClick={handleFullscreen}>fullScreen</button>
+        <button onClick={handleFullscreen}>fullscreen</button>
         <button onClick={handleGetOSDTime}>getOSDTime</button>
         <button onClick={handleStartTalk}>startTalk</button>
         <button onClick={handleStopTalk}>stopTalk</button>

@@ -1,5 +1,5 @@
 <template>
-  <div class="hello-ezuikit-js">
+  <div class="ezuikit-js">
     <div>
       <div id="video-container" style="width: 100%;height: 300px"></div>
     </div>
@@ -45,13 +45,17 @@ export default {
       player = new EZUIKitPlayer({
         id: "video-container", // 视频容器ID
         accessToken:
-          "at.4dd7o6hgdb9ywl9c283g0hj27e789uru-2a5ejk6tkf-19b1cb1-azyfqm3a",
-        url: "ezopen://open.ys7.com/C69625501/1.hd.live",
+          "at.a2kfdvx06shai2749ofnby6607q6io0a-1apef6y5tr-1p1z09q-tp5zvd5kj",
+        url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
         template: "mobileLive",
         plugin: ["talk"], // 加载插件，talk-对讲
         width: windowWidth || 375,
         height: 300,
+        audio: false,
+        enableSharedArrayBufferGuide: false,
+        talkChannelNo: 0,
+        useHardDev: true,
         handleError: (error) => {
           console.error("handleError", error);
         },
@@ -72,6 +76,7 @@ export default {
           name: "ezuikit",
           showTime: true,
         },
+        showStreamInfo: false,
         // 视频流的信息回调类型
         /**
          * 打开流信息回调，监听 streamInfoCB 事件

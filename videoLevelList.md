@@ -6,7 +6,13 @@
 
 ```ts
 interface VideoLevel{
-    /** 清晰度 0 ｜ 1 ｜ 2 ｜ 3｜ 4 ｜ 5 ｜ 6 */
+    /** 
+     * 清晰度 0 ｜ 1 ｜ 2 ｜ 3｜ 4 ｜ 5 ｜ 6  | number 
+     * 
+     * level 需要是唯一的
+     * 
+     * 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+     */
     level: number,
     /** 名称 */
     name: string,
@@ -27,6 +33,25 @@ interface VideoLevel{
 
 请求 http 接口查询：[/api/service/device/capacity/video/quality]
 <!-- https://open.ys7.com/api/service/device/capacity/video/quality?accessToken=ra.dngskvuq8fyiv7vy8v34vq391ime66zn-1lc2iw4l7p-05oxx55-unjdfvpas&deviceSerial=FU4877853&channelNo=1 -->
+
+```bash
+curl 'https://open.ys7.com/api/service/device/capacity/video/quality?accessToken=at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3&deviceSerial=BC7799091&channelNo=1' \
+  -H 'Accept: */*' \
+  -H 'Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Connection: keep-alive' \
+  -H 'Origin: http://127.0.0.1:8081' \
+  -H 'Pragma: no-cache' \
+  -H 'Referer: http://127.0.0.1:8081/' \
+  -H 'Sec-Fetch-Dest: empty' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Site: cross-site' \
+  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36' \
+  -H 'sec-ch-ua: "Chromium";v="142", "Google Chrome";v="142", "Not_A Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"'
+```
+
 
 #### 清晰度接口相应结果示例
 
@@ -127,12 +152,12 @@ interface VideoLevel{
  */
 export const VIDEO_LEVEL = [
   {
-    level: 1, // 标清
+    level: 1, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
     streamTypeIn: 1, //  1-主码流，2-子码流
     type: 'compatible',
   },
   {
-    level: 2, // 高清
+    level: 2, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
     streamTypeIn: 1, //  1-主码流，2-子码流
     type: 'compatible',
   },
@@ -140,6 +165,7 @@ export const VIDEO_LEVEL = [
 ```
 
 ⚠️ 注意： 清晰度列表需要设备端开发上报能力集，可以联系供应商或硬件开发进行上报。
+
 
 
 ### 示例

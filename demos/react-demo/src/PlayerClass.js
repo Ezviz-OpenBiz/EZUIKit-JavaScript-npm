@@ -4,7 +4,7 @@ import { EZUIKitPlayer } from "ezuikit-js";
 
 let player = null;
 
-class App extends React.Component {
+class Player extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -31,7 +31,6 @@ class App extends React.Component {
           "at.2s5bel782emtho68ae31snumc1wuuioa-3d531vj77f-0gtnx7g-fddkee44",
         // simple:极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放; security: 安防版; voice: 语音版;
         template: "pcLive",
-        plugin: ["talk"], // 加载插件，talk-对讲
         width: 600,
         height: 400,
         quality: 1, // 
@@ -62,74 +61,62 @@ class App extends React.Component {
   };
 
   play = () => {
-    console.log(player);
-    var playPromise = player.play();
-    playPromise.then((data) => {
-      console.log("promise 获取 数据", data);
-    });
+   if (player) player.play();
   };
 
   stop = () => {
-    var stopPromise = player.stop();
-    stopPromise.then((data) => {
-      console.log("promise 获取 数据", data);
-    });
+    if (player) player.stop()
   };
 
   getOSDTime = () => {
-    var getOSDTimePromise = player.getOSDTime();
-    getOSDTimePromise.then((data) => {
-      console.log("promise 获取 数据", data);
-    });
+    if (player)
+      player.getOSDTime().then((data) => {
+        console.log("getOSDTime 获取 数据", data);
+      });
   };
 
   capturePicture = () => {
-    var capturePicturePromise = player.capturePicture(
-      `${new Date().getTime()}`,
-    );
-    capturePicturePromise.then((data) => {
-      console.log("promise 获取 数据", data);
-    });
+    if (player)
+      player.capturePicture(
+        `${new Date().getTime()}`,
+      ).then((data) => {
+        console.log("capturePicture 获取 数据", data);
+      });
   };
 
   openSound = () => {
-    var openSoundPromise = player.openSound();
-    openSoundPromise.then((data) => {
-      console.log("promise 获取 数据", data);
-    });
+    if (player) player.openSound()
   };
 
   closeSound = () => {
-    var openSoundPromise = player.closeSound();
-    openSoundPromise.then((data) => {
-      console.log("promise 获取 数据", data);
-    });
+    if (player) player.closeSound()
   };
 
   startSave = () => {
-    var startSavePromise = player.startSave(`${new Date().getTime()}`);
-    startSavePromise.then((data) => {
-      console.log("promise 获取 数据", data);
-    });
+    if (player)
+      player.startSave(`${new Date().getTime()}`).then((data) => {
+        console.log("startSave 获取 数据", data);
+      });
   };
 
   stopSave = () => {
-    var stopSavePromise = player.stopSave();
-    stopSavePromise.then((data) => {
-      console.log("promise 获取 数据", data);
-    });
+    if (player)
+      player.stopSave().then((data) => {
+        console.log("startSave 获取 数据", data);
+      });
+  };
+ 
+  startTalk = () => {
+    // 请确保已经开启麦克风权限和已有麦克风可以使用
+    if (player) player.startTalk();
   };
 
-  ezopenStartTalk = () => {
-    player.startTalk();
+  stopTalk = () => {
+    if (player) player.stopTalk();
   };
 
-  ezopenStopTalk = () => {
-    player.stopTalk();
-  };
-
-  fullScreen = () => {
-    player.fullScreen();
+  fullscreen = () => {
+    if (player) player.fullscreen();
   };
 
   destroy = () => {
@@ -155,10 +142,10 @@ class App extends React.Component {
           <button onClick={this.startSave}>startSave</button>
           <button onClick={this.stopSave}>stopSave</button>
           <button onClick={this.capturePicture}>capturePicture</button>
-          <button onClick={this.fullScreen}>fullScreen</button>
+          <button onClick={this.fullscreen}>fullscreen</button>
           <button onClick={this.getOSDTime}>getOSDTime</button>
-          <button onClick={this.ezopenStartTalk}>开始对讲</button>
-          <button onClick={this.ezopenStopTalk}>结束对讲</button>
+          <button onClick={this.startTalk}>开始对讲</button>
+          <button onClick={this.stopTalk}>结束对讲</button>
           <button onClick={this.destroy}>destroy</button>
         </div>
       </div>
@@ -166,4 +153,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Player;

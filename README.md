@@ -77,9 +77,10 @@ const player = new EZUIKitPlayer({
   id: "video-container", // 视频容器ID
   accessToken:
     "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
-  url: "ezopen://open.ys7.com/BD3957004/1.live",
+  url: "ezopen://open.ys7.com/BC7900686/1.live",
   width: 600,
   height: 400,
+  scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
   handleError: (err) => {
     if (err.type === "handleRunTimeInfoError" && err.data.nErrorCode === 5) {
       // 加密设备密码错误
@@ -96,9 +97,10 @@ const player = new EZUIKitPlayer({
   id: "video-container", // 视频容器ID
   width: 600,
   height: 400,
+  scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
   accessToken:
     "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
-  url: "ezopen://open.ys7.com/BD3957004/1.rec",
+  url: "ezopen://open.ys7.com/BC7900686/1.rec",
 });
 ```
 
@@ -136,7 +138,7 @@ alpha（功能测试）、beta（集成测试）为我们的非正式版本，�
 
 我们提供了测试 accessToken,测试播放地址，并提供了几种常用场景使用示例。你可以通过使用示例，使用测试播放地址，测试 accessToken，在你的应用快速接入。
 
-<b>测试播放地址：</b> ezopen://open.ys7.com/BD3957004/1.live
+<b>测试播放地址：</b> ezopen://open.ys7.com/BC7900686/1.live
 
 你可以通过以下地址获取到测试 accessToken <a href="https://open.ys7.com/jssdk/ezopen/demo/token" target="_blank">获取测试 accessToken</a> 用来播放上述测试播放地址。当前设备有可能下线或被移除了， 如果自己有设备优先使用自己的设备进行测试。
 
@@ -151,8 +153,8 @@ const player = new EZUIKitPlayer({
   width: 600,
   height: 400,
   template: "pcLive",
-  url: "",
-  accessToken: "",
+  url: "...",
+  accessToken: "...",
   env: {
     domain: "https://iusopen.ezvizlife.com", // 北美地区
   },
@@ -248,7 +250,6 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.hd.live<br/>
 
 <tr><td>simple</td><td>极简版 *固定模板 仅包含视频播放窗口，创建实例后通过方法集控制视频播<br />放相关功能</td></tr>
 
-<tr><td>standard</td><td>标准版;   *固定模板 包含视频窗口，叠加了停止，录制，全屏控件（通过<br />控件快捷调用方法集合控制视频播放相关功能，但你仍然可以通过方法集直接控制视频播放相关功<br />能。下同）</td></tr>
 
 <tr><td>security</td><td>安防版(预览回放);  *固定模板 包含视频窗口，叠加了录制，全屏控件，<br />标清/高清切换，预览录制切换控件*</td></tr>
 <tr><td>voice</td><td>语音版;  *固定模板 包含视频窗口，叠加了录制，全屏控件，语音播报，语音<br />对讲控件*</td></tr>
@@ -267,18 +268,22 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 配置示例：<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/themeData.html" target="_blank">本地主题配置示例</a>
 
 </td><td>N</td></tr>
-<tr><td>plugin</td><td>String</td><td>按需加载插件，可选值： talk：对讲，示例：plugin:["talk"] </td><td>N</td></tr>
+
 <tr><td>handleSuccess</td><td>function</td><td>自动播放成功回调</td><td>N</td></tr>
 <tr><td>handleError</td><td>function</td><td>错误回调</td><td>N</td></tr>
-<tr><td>seekFrequency </td><td>function</td><td>为避免频繁拖动播放异常，可设置模板回放时间轴拖动防抖间隔，默认值为2000（2秒），可取2000（2秒），3000（3秒），4000（4秒），5000（5秒）</td><td>N</td></tr>
+<!-- <tr><td>seekFrequency </td><td>function</td><td>为避免频繁拖动播放异常，可设置模板回放时间轴拖动防抖间隔，默认值为2000（2秒），可取2000（2秒），3000（3秒），4000（4秒），5000（5秒）</td><td>N</td></tr> -->
 <tr><td>language</td><td>String</td><td>多语言 （zh | en）, 默认zh (v8.0.8版本及以上支持)</td><td>N</td></tr>
 <tr><td>debugDownloadData</td><td>boolean</td><td>下载原始码流， 调试码流使用, 默认 false (v8.1.1版本及以上支持)</td><td>N</td></tr>
 <tr><td>disableRenderPrivateData</td><td>boolean</td><td>禁止渲染私有数据(如智能分析， 移动侦测， 火点信息等), 默认 false (v8.1.1 - v.8.1.3 版本及以上支持)v.8.1.4 开始 默认 true</td><td>N</td></tr>
-<tr><td>quality</td><td>0 | 1 | 2 | 3 | 4 | 5 | 6 | pp | qp</td><td>预览初始化支持指定清晰度进行播放, 默认 undefined (v8.1.5版本及以上支持)， 0: 流畅； 1: 标清; 2: 高清; 3: 超清; 4: 极清; 5: 3K; 6: 4K ; "pp"： "性能优先 (Performance Priority)"; "qp": "画质优先(Quality Priority)"。 如果没有命中，默认取上次的设置</td><td>N</td></tr>
+<tr><td>quality</td><td>0 | 1 | 2 | 3 | 4 | 5 | 6 | pp | qp</td><td>预览初始化支持指定清晰度进行播放, 默认 undefined (v8.1.5版本及以上支持)， 0: 流畅； 1: 标清; 2: 高清; 3: 超清; 4: 极清; 5: 3K; 6: 4K ; "pp"： "性能优先 (Performance Priority)"; "qp": "画质优先(Quality Priority)"。 如果没有命中，默认取数组的第一个值</td><td>N</td></tr>
 <tr><td>loggerOptions</td><td> {name: string, level: "INFO" | "LOG" | "WARN" | "ERROR" , showTime: boolean}</td><td>本地日志设置， 默认值 {name: "ezuikit", level: "INFO", showTime: true}, 支持动态设置请参考 <a href="#日志设置">setLoggerOptions(options)</a> (v8.1.9版本及以上支持)</td><td>N</td></tr>
 <tr><td>streamInfoCBType</td><td>  0 | 1 </td><td>  流信息回调类型，监听 streamInfoCB 事件, 0 : 每次都回调（会影响性能）, 1 : 只回调一次, 默认值 1 (v8.1.9版本及以上支持)</td><td>N</td></tr>
 
-<tr><td><a href="./videoLevelList.md" target="_blank">videoLevelList</a></td><td> <span>Array<{ </br>/** 清晰度 */</br>level: number, </br>/** 名称 */ </br>name: string, </br> /**1: 主码流,2: 子码流*/</br>streamTypeIn: 1 | 2 }> <span>| null </td><td>  自定义清晰度列表，默认null, 如果有值 sdk 内部不在进行获取, 为 null 使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取 (v8.1.10版本及以上支持)</td><td>N</td></tr>
+<tr><td><a href="./videoLevelList.md" target="_blank">videoLevelList</a></td><td> <span>Array<{ </br>/** 清晰度 */</br>level: number, </br>/** 名称 */ </br>name: string, </br> /**1: 主码流,2: 子码流*/</br>streamTypeIn: 1 | 2 }> <span>| null </td><td>  自定义清晰度列表，默认null, 如果有值 sdk 内部不在进行获取, 为 null 使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取 (v8.1.10版本及以上支持);
+8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+</td><td>N</td></tr>
+
+<tr><td>scaleMode</td><td> 0 | 1 | 2</td><td> 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0 </td><td>N</td></tr>
 </table>
 
 ### 方法调用
@@ -420,13 +425,15 @@ player.eventEmitter.on("volumeChange", ({ data }) => {
 #### 全屏
 
 ```js
-player.fullScreen();
+player.fullScreen(); // 8.2.0 开始移除 
+player.fullscreen(); // 8.2.0 新增
 ```
 
 #### 取消全屏
 
 ```js
-player.cancelFullScreen();
+player.cancelFullScreen(); // 8.2.0 开始移除 
+player.exitFullscreen(); // 8.2.0 新增
 ```
 
 #### 获取 OSD 时间
@@ -465,12 +472,15 @@ options 参数说明
 > 可用于在播放中切换模板主题，请切换播放地址成功后调用
 
 ```js
-player.Theme.changeTheme(template);
+player.Theme.changeTheme(template); // 8.2.0 开始移除 
+
+player.changeTheme(template); // 8.2.0 新增
 
 // 预览切回放场景示例
 player.changePlayUrl({ type: "rec" }).then(() => {
   console.log("地址切换成功，开始切换模板主题");
-  player.Theme.changeTheme("pcRec");
+  // player.Theme.changeTheme("pcRec"); // 8.2.0 开始移除
+  player.changeTheme("pcRec"); // 8.2.0 新增
 });
 ```
 
@@ -507,7 +517,7 @@ player.closeZoom().then(() => {
 #### 重置画面宽高
 
 ```js
-player.resize(width, height);
+player.resize(width, height); // 8.2.0 开始支持宽高参数为字符串（如 100% , 100vw , 100vh 10em, 10rem 等）
 ```
 
 #### 鱼眼矫正（软解 开启 [SharedArrayBuffer](https://open.ys7.com/help/1772?h=SharedArrayBuffer)）
@@ -722,16 +732,34 @@ player.eventEmitter.on(EZUIKitPlayer.EVENTS.exitFullscreen, () => {
 全屏变化事件 `EZUIKitPlayer.EVENTS.fullscreenChange`
 
 ```js
+// 8.2.0 移除
 // interface FullscreenChangeData {
 //   "isCurrentFullscreen": boolean, // 全局全屏
 //   "isCurrentBrowserFullscreen":boolean // 全局全屏和web 全屏
 // }
 // 监听全屏变化事件
-player.eventEmitter.on(EZUIKitPlayer.EVENTS.fullscreenChange, (data) => {
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.fullscreenChange, (info) => {
   // {data: FullscreenChangeData}
-  console.log("fullscreenChange", data);
+  console.log("fullscreenChange", info);
 });
 ```
+
+```js
+// 8.2.0 新增
+// interface FullscreenChangeData {
+//    "isCurrentFullscreen":true, // 当前窗口是否全屏
+//    "isFullscreen":true, // 页面是否有全屏
+//    "isMobile":false,  // 是否是移动端
+//    "orientationAngle":0 // 屏幕旋转角度（适用移动端和pad ）
+// }
+// 监听全屏变化事件
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.fullscreenChange, (info) => {
+  // {data: FullscreenChangeData}
+  console.log("fullscreenChange", info);
+});
+```
+
+
 
 #### 首帧渲染事件
 
@@ -761,8 +789,9 @@ resize 事件事件 `EZUIKitPlayer.EVENTS.resize`
 
 ```js
 // 监听resize事件
-player.eventEmitter.on(EZUIKitPlayer.EVENTS.resize, () => {
-  // {data: {"width": number,"height":number}}
+player.eventEmitter.on(EZUIKitPlayer.EVENTS.resize, (data) => {
+  // {data: {"width": number,"height":number}} // 8.2.0 开始移除
+  // {"width":number,"height":number,"isCurrentFullscreen":true,"orientationAngle":0} // 8.2.0 开始添加
   console.log("resize", data);
 });
 ```
@@ -855,6 +884,8 @@ player.eventEmitter.on(EZUIKitPlayer.EVENTS.reSetTheme, () => {
 });
 ```
 
+8.2.0 开始不在支持
+
 #### 回放时间变化事件
 
 回放时间变化事件 `EZUIKitPlayer.EVENTS.recTimeChange`
@@ -941,7 +972,7 @@ player.eventEmitter.on(EZUIKitPlayer.EVENTS.fast, ({ data }) => {
 });
 ```
 
-倍速下降事件 `EZUIKitPlayer.EVENTS.fast`
+倍速下降事件 `EZUIKitPlayer.EVENTS.slow`
 
 ```js
 // 监听倍速下降事件

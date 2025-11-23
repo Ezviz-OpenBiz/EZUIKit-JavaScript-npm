@@ -1,12 +1,6 @@
 <template>
 	<view class="content">
-        <image class="logo" src="../../static/logo.png"></image>
-		<view>
-            <text class="title">{{title}}</text>
-        </view>
-		<view>
-        	<Player />
-		</view>
+        <Player />
 	</view>
 </template>
 
@@ -34,10 +28,7 @@
 
 <style>
 	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
+		width: 100%;
 	}
 
 	.logo {

@@ -13,89 +13,79 @@ interface IPlayer {
   stopSave: Function;
   startTalk: Function;
   stopTalk: Function;
-  fullScreen: Function;
+  fullscreen: Function;
   destroy: Function;
   eventEmitter: any;
+  on: any // eventEmitter
 }
 
 let player: IPlayer;
 
 const play = () => {
-  const playPromise = player.play();
-  playPromise.then((data: any) => {
-    console.log("promise 获取 数据", data);
-  });
+  if (player) player.play()
 };
 
 const stop = () => {
-  const stopPromise = player.stop();
-  stopPromise.then((data: any) => {
-    console.log("promise 获取 数据", data);
-  });
+  if (player) player.stop();
 };
 
 const getOSDTime = () => {
-  const getOSDTimePromise = player.getOSDTime();
-  getOSDTimePromise.then((data: any) => {
-    console.log("promise 获取 数据", data);
+  if (player)
+  player.getOSDTime().then((data: any) => {
+    console.log("getOSDTime 获取 数据", data);
   });
 };
 
 const capturePicture = () => {
-  const capturePicturePromise = player.capturePicture(
-    `${new Date().getTime()}`
-  );
-  capturePicturePromise.then((data: any) => {
-    console.log("promise 获取 数据", data);
-  });
+  if (player)
+    player.capturePicture(
+      `${new Date().getTime()}`
+    ).then((data: any) => {
+      console.log("capturePicture 获取 数据", data);
+    });
 };
 
 const openSound = () => {
-  const openSoundPromise = player.openSound();
-  openSoundPromise.then((data: any) => {
-    console.log("promise 获取 数据", data);
-  });
+    if (player) player.openSound();
 };
 
 const closeSound = () => {
-  const openSoundPromise = player.closeSound();
-  openSoundPromise.then((data: any) => {
-    console.log("promise 获取 数据", data);
-  });
+    if (player) player.closeSound();
 };
 
 const startSave = () => {
-  const startSavePromise = player.startSave(`${new Date().getTime()}`);
-  startSavePromise.then((data: any) => {
-    console.log("promise 获取 数据", data);
-  });
+  if (player)
+    player.startSave(`${new Date().getTime()}`).then((data: any) => {
+      console.log("startSave 获取 数据", data);
+    });
 };
 
 const stopSave = () => {
-  const stopSavePromise = player.stopSave();
-  stopSavePromise.then((data: any) => {
-    console.log("promise 获取 数据", data);
-  });
+  if (player)
+    player.stopSave().then((data: any) => {
+      console.log("stopSave 获取 数据", data);
+    });
 };
 
 const startTalk = () => {
-  player.startTalk();
+  if (player) player.startTalk();
 };
 
 const stopTalk = () => {
-  player.stopTalk();
+  if (player) player.stopTalk();
 };
 
-const fullScreen = () => {
-  player.fullScreen();
+const fullscreen = () => {
+  if (player) player.fullscreen();
 };
 
 const destroy = () => {
-  const destroyPromise = player.destroy();
-  destroyPromise.then((data: any) => {
-    console.log("promise 获取 数据", data);
-  });
-  player = null!;
+  if (player) {
+    player.destroy().then((data: any) => {
+      console.log("promise 获取 数据", data);
+    });
+    player = null!;
+  }
 };
 
 const init = () => {
@@ -110,11 +100,10 @@ const init = () => {
   player = new EZUIKitPlayer({
     id: "video-container", // 视频容器ID
     accessToken:
-      "at.2s5bel782emtho68ae31snumc1wuuioa-3d531vj77f-0gtnx7g-fddkee44",
+      "at.9axzt49g87s3fhk056n43g72d5dh3m6i-8z6xiwgadr-0dxupdf-yljcgeiod",
     url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
     // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
     template: "pcLive",
-    plugin: ["talk"], // 加载插件，talk-对讲
     width: 600,
     height: 400,
     // quality: 1, // 
@@ -127,7 +116,7 @@ const init = () => {
     //   { level: 0, name: "流畅", streamTypeIn: 1 },
     //   { level: 1, name: "标清", streamTypeIn: 1 },
     // ],
-    // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+    // staticPath: "./ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
     env: {
       // https://open.ys7.com/help/1772?h=domain
       // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
@@ -159,23 +148,45 @@ const init = () => {
     // ],
   });
 
-  player.eventEmitter.on(EZUIKitPlayer.EVENTS.videoInfo, (info: any) => {
-    console.log("videoinfo", info);
-  });
+      // 8.1.x 事件监听
+      // player.eventEmitter.on(EZUIKitPlayer.EVENTS.videoInfo, (info) => {
+      //   console.warn("eventEmitter videoInfo", info);
+      // });
+      // 8.2.x 事件监听
+      player.on(EZUIKitPlayer.EVENTS.videoInfo, (info: any) => {
+        console.warn("videoInfo", info);
+      });
 
-  player.eventEmitter.on(EZUIKitPlayer.EVENTS.audioInfo, (info: any) => {
-    console.log("audioInfo", info);
-  });
+      // 8.1.x 事件监听
+      // player.eventEmitter.on(EZUIKitPlayer.EVENTS.audioInfo, (info) => {
+      //   console.warn("eventEmitter audioInfo", info);
+      // });
+      // 8.2.x 事件监听
+      player.on(EZUIKitPlayer.EVENTS.audioInfo, (info: any) => {
+        console.warn("audioInfo", info);
+      });
 
-  // 首帧渲染成功
-  // first frame display
-  player.eventEmitter.on(EZUIKitPlayer.EVENTS.firstFrameDisplay, () => {
-    console.log("firstFrameDisplay ");
-  });
-  player.eventEmitter.on(EZUIKitPlayer.EVENTS.streamInfoCB, (info: any) => {
-    console.log("streamInfoCB ", info);
-  });
-  window.player = player;
+      // 首帧渲染成功
+      // first frame display
+      // 8.1.x 事件监听
+      // player.eventEmitter.on(EZUIKitPlayer.EVENTS.firstFrameDisplay, () => {
+      //     console.warn("eventEmitter firstFrameDisplay ");
+      // });
+      // 8.2.x 事件监听
+      player.on(EZUIKitPlayer.EVENTS.firstFrameDisplay, () => {
+        console.warn("firstFrameDisplay ");
+      });
+
+      // 8.1.x 事件监听
+      // player.eventEmitter.on(EZUIKitPlayer.EVENTS.streamInfoCB, (info) => {
+      //   console.warn("eventEmitter streamInfoCB ", info);
+      // });
+      // 8.2.x 事件监听
+      player.on(EZUIKitPlayer.EVENTS.streamInfoCB, (info: any) => {
+        console.warn("streamInfoCB ", info);
+      });
+
+      window.player = player;
   // });
 };
 
@@ -198,7 +209,7 @@ onMounted(() => {
       <button @click="startSave">startSave</button>
       <button @click="stopSave">stopSave</button>
       <button @click="capturePicture">capturePicture</button>
-      <button @click="fullScreen">fullScreen</button>
+      <button @click="fullscreen">fullscreen</button>
       <button @click="getOSDTime">getOSDTime</button>
       <button @click="startTalk">startTalk</button>
       <button @click="stopTalk">stopTalk</button>

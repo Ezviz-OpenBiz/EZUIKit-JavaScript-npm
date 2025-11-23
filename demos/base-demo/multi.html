@@ -78,19 +78,19 @@
       let cover = document.createElement('img')
       let arr = [
         {
-          url: "ezopen://open.ys7.com/BC7799090/1.hd.live",
+          url: "ezopen://open.ys7.com/BC7900686/1.hd.live",
           id: "right1",
-          accessToken: "at.ao9rmhn824rnxeao5ck7fm4e1j2x7zey-4g4qudp8vd-1vumcfo-t28imym6"
+          accessToken: "ra.annvsh5v2d2n4ikzai5qk3mbdwrk5re6-9kgkz8sblt-11o92e1-ffwp96liy"
         },
         {
-          url: "ezopen://open.ys7.com/BF6985118/1.hd.live",
+          url: "ezopen://open.ys7.com/BC7900686/1.hd.live",
           id: "right2",
-          accessToken: "at.ao9rmhn824rnxeao5ck7fm4e1j2x7zey-4g4qudp8vd-1vumcfo-t28imym6"
+          accessToken: "ra.annvsh5v2d2n4ikzai5qk3mbdwrk5re6-9kgkz8sblt-11o92e1-ffwp96liy"
         },
         {
-          url: "ezopen://open.ys7.com/C69625509/1.hd.live",
+          url: "ezopen://open.ys7.com/BC7900686/1.hd.live",
           id: "right3",
-          accessToken: "at.ao9rmhn824rnxeao5ck7fm4e1j2x7zey-4g4qudp8vd-1vumcfo-t28imym6"
+          accessToken: "ra.annvsh5v2d2n4ikzai5qk3mbdwrk5re6-9kgkz8sblt-11o92e1-ffwp96liy"
         },
       ]
       let selectedIndex = 0
@@ -98,7 +98,7 @@
       function createPlayer(options) {
         return new EZUIKit.EZUIKitPlayer({
             ...options,
-            template: "simple", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
+            // template: "simple", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
             //   plugin: ["talk"], // 加载插件，talk-对讲
             language: "en", // zh | en
             // debugDownloadData: true,
@@ -106,6 +106,7 @@
               console.error("handleError", error);
             },
             download: false,
+            scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
             env: {
               // https://open.ys7.com/help/1772?h=domain
               // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain

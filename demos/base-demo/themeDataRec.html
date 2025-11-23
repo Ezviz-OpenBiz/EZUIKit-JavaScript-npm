@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>themeData</title>
+  <script src="./ezuikit.js"></script>
+</head>
+
+<body>
+  <div className="demo">
+    <h2>视频模式使用示例：</h2>
+    <div id="video-container" style="height:400px;"></div>
+      <div>
+        <form id="form" onsubmit="return handleSubmit(this)">
+          <div><label for="url">url: </label><input name="url" style="width: 500px;" value="ezopen://open.ys7.com/BC7799091/1.cloud.rec" /></div>
+          <div><label for="accessToken">accessToken: </label><input name="accessToken" style="width: 500px;" value="at.1avhd3v86cp1lme835myxf3y81vlmih6-3goswzltfu-1wjopp9-cunywpbba" /></div>
+          <div><label for="staticPath">staticPath: </label><input name="staticPath" style="width: 500px;" placeholder="静态资源路径" value="./ezuikit_static" /></div>
+          <div>
+            <h4>themeData</h4>
+            <div><label for="themeData.poster">themeData.poster: </label><input name="themeData.poster" style="width: 500px;" value="https://resource.eziot.com/group1/M00/00/89/CtwQEmLl8r-AZU7wAAETKlvgerU237.png" /></div>
+            <div><label for="themeData.autoFocus">themeData.autoFocus: </label><input name="themeData.autoFocus" placeholder="控件栏停驻时间单位秒" style="width: 500px;" value="3" /></div>
+            <!--  -->
+            <h4>themeData.header</h4>
+            <div><label for="themeData.header.color">themeData.header.color: </label><input name="themeData.header.color" type="color"  value="#FFFFFF"/></div>
+            <div><label for="themeData.header.activeColor">themeData.header.activeColor: </label><input name="themeData.header.activeColor" type="color" value="#1890ff" /></div>
+            <div><label for="themeData.header.backgroundColor">themeData.header.backgroundColor: </label><input name="themeData.header.backgroundColor" type="color" value="#000000" /></div>
+            <div><label for="themeData.header.btnList[0].deviceID">themeData.header.btnList[0].deviceID: </label><input name="themeData.header.btnList[0].deviceID" type="checkbox" checked /></div>
+            <div><label for="themeData.header.btnList[1].deviceName">themeData.header.btnList[1].deviceName: </label><input name="themeData.header.btnList[1].deviceName" type="checkbox" checked /></div>
+            <div><label for="themeData.header.btnList[2].deviceName">themeData.header.btnList[2].cloudRec: </label><input name="themeData.header.btnList[2].cloudRec" type="checkbox" checked /></div>
+            <div><label for="themeData.header.btnList[3].deviceName">themeData.header.btnList[3].cloudRecord: </label><input name="themeData.header.btnList[3].cloudRecord" type="checkbox" checked /></div>
+            <div><label for="themeData.header.btnList[4].deviceName">themeData.header.btnList[4].rec: </label><input name="themeData.header.btnList[4].rec" type="checkbox" checked /></div>
+            <!-- footer -->
+            <h4>themeData.footer</h4>
+            <div><label for="themeData.footer.color">themeData.footer.color: </label><input name="themeData.footer.color" type="color" value="#FFFFFF" /></div>
+            <div><label for="themeData.footer.activeColor">themeData.footer.activeColor: </label><input name="themeData.footer.activeColor" type="color" value="#1890FF" /></div>
+            <div><label for="themeData.footer.backgroundColor">themeData.footer.backgroundColor: </label><input name="themeData.footer.backgroundColor" type="color" value="#000000" /></div>
+            <div><label for="themeData.footer.btnList[0].play">themeData.footer.btnList[0].play: </label><input name="themeData.footer.btnList[0].play" type="checkbox" checked /></div>
+            <div><label for="themeData.footer.btnList[1].capturePicture">themeData.footer.btnList[1].capturePicture: </label><input name="themeData.footer.btnList[1].capturePicture" type="checkbox" checked /></div>
+            <div><label for="themeData.footer.btnList[2].sound">themeData.footer.btnList[2].sound: </label><input name="themeData.footer.btnList[2].sound" type="checkbox" checked /></div>
+            <div><label for="themeData.footer.btnList[3].recordvideo">themeData.footer.btnList[3].recordvideo: </label><input name="themeData.footer.btnList[3].recordvideo" type="checkbox" checked /></div>
+            <div><label for="themeData.footer.btnList[4].zoom">themeData.footer.btnList[4].zoom: </label><input name="themeData.footer.btnList[4].zoom" type="checkbox" checked /></div>
+            <div><label for="themeData.footer.btnList[5].hd">themeData.footer.btnList[5].hd: </label><input name="themeData.footer.btnList[5].hd" type="checkbox" checked /></div>
+            <div><label for="themeData.footer.btnList[6].webExpend">themeData.footer.btnList[6].webExpend: </label><input name="themeData.footer.btnList[6].fullscreen" type="checkbox" checked /></div>
+          </div>
+          <button type="submit">初始化</button>
+        </form>
+      </div>
+    </div>
+    <div>
+      <button onClick="play()">play()</button>
+      <button onClick="stop()">stop()</button>
+      <button onClick="getOSDTime()">getOSDTime()</button>
+      <button onClick="capturePicture()">capturePicture()</button>
+      <button onClick="openSound()">openSound()</button>
+      <button onClick="closeSound()">closeSound()</button>
+      <button onClick="startSave()">startSave()</button>
+      <button onClick="stopSave()">stopSave()</button>
+      <button onClick="startTalk()">startTalk()</button>
+      <button onClick="stopTalk()">stopTalk()</button>
+      <button onClick="fullscreen()">fullscreen()</button>
+      <button onClick="destroy()">destroy()</button>
+    </div>
+    <p style="font-style: italic;">播放多个视频，可初始化多个实例，参考：<a href="./multi.html">multi.html</a></p>
+  </div>
+  <script>
+
+    const btnList = {
+      // header
+      deviceID: {
+        "iconId": "deviceID",
+        "part": "left",
+      },
+      deviceName: {
+          "iconId": "deviceName",
+          "part": "left",
+      },
+      cloudRecord: {
+          "iconId": "cloudRecord",
+          "part": "right",
+      },
+      cloudRec: {
+          "iconId": "cloudRec",
+          "part": "right",
+      },
+      rec: {
+          "iconId": "rec",
+          "part": "right",
+      },
+      // footer
+      play: {
+        "iconId": "play",
+        "part": "left",
+      },
+      capturePicture: {
+        "iconId": "capturePicture",
+        "part": "left",
+      },
+      sound: {
+        "iconId": "sound",
+        "part": "left",
+      },
+      recordvideo: {
+        "iconId": "recordvideo",
+        "part": "left",
+      },
+      zoom: {
+        "iconId": "zoom",
+        "part": "left",
+      },
+      speed: {
+        "iconId": "speed",
+        "part": "right",
+      },
+      webExpend: {
+        "iconId": "webExpend",
+        "part": "right",
+      },
+      expend: {
+        "iconId": "expend",
+        "part": "right",
+      },
+      fullscreen: {
+        "iconId": "fullscreen", // 8.2.0 开始支持， 用来替换 webExpend
+        "part": "right",
+      },
+    }
+
+
+    var player;
+    // fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
+    //   .then(response => response.json())
+    //   .then(res => {
+    //     var accessToken = res.data.accessToken;
+    //   });
+
+    function handleSubmit(form) {
+      const formData = new FormData(form);
+      let opt = {}
+      for (const [key, value] of formData.entries()) {
+        const obj = flattenToNested(key, value)
+        opt[key] = value
+      }
+      opt = flattenToNested(opt)
+
+      if (opt.themeData.header && opt.themeData.header.btnList && opt.themeData.header.btnList.length > 0) {
+        for (let i = 0; i < opt.themeData.header.btnList.length; i++) {
+          let btn = opt.themeData.header.btnList[i];
+          opt.themeData.header.btnList[i] = {
+            ...btnList[btn.iconId],
+           isrender: 1,
+          }
+        }
+      }
+
+      if (opt.themeData.footer && opt.themeData.footer.btnList && opt.themeData.footer.btnList.length > 0) {
+        for (let i = 0; i < opt.themeData.footer.btnList.length; i++) {
+          let btn = opt.themeData.footer.btnList[i];
+          opt.themeData.footer.btnList[i] = {
+            ...btnList[btn.iconId],
+           isrender: 1,
+          }
+        }
+      }
+
+      destroy()
+
+      console.warn('EZUIKitPlayer options', opt)
+
+      player = new EZUIKit.EZUIKitPlayer({
+        id: 'video-container', // 视频容器ID
+        scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
+        ...opt,
+        env: {
+          // https://open.ys7.com/help/1772?h=domain
+          // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
+          // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
+          domain: "https://open.ys7.com"
+        }
+      });
+
+      return false
+    }
+
+
+    function fullscreen() {
+      if (player) player.fullscreen();
+    }
+
+    function play() {
+      if (player) player.play();
+    }
+
+    function stop() {
+      if (player) player.stop()
+    }
+
+    function getOSDTime() {
+      if (player)
+        player.getOSDTime().then((data) => {
+          console.log("getOSDTime 获取 数据", data)
+        })
+    }
+
+    function capturePicture() {
+      if (player)
+        player.capturePicture().then((data) => {
+          console.log("capturePicture 获取 数据", data)
+        })
+    }
+
+    function openSound() {
+      if (player) player.openSound()
+    }
+
+    function closeSound() {
+      if (player) player.closeSound()
+    }
+
+    function startSave() {
+      if (player)
+        player.startSave().then((data) => {
+          console.log("startSave 获取 数据", data)
+        })
+    }
+
+    function stopSave() {
+      if (player)
+        player.stopSave().then((data) => {
+          console.log("stopSave 获取 数据", data)
+        })
+    }
+
+    function startTalk() {
+      if (player) player.startTalk();
+    }
+
+    function stopTalk() {
+      if (player) player.stopTalk();
+    }
+
+    function destroy() {
+      if (player) player.destroy();
+      player = null
+    }
+
+    function flattenToNested(obj) {
+      const result = {};
+      for (const flatKey in obj) {
+        const value = obj[flatKey];
+        const keys = flatKey.split(".");
+        let curr = result;
+        for (let i = 0; i < keys.length; i++) {
+          const match = keys[i].match(/^([^\[]+)\[(\d+)\]$/);
+          if (match) {
+            // key like activeColor[0]
+            const arrKey = match[1];
+            const idx = parseInt(match[2], 10);
+            if (!Array.isArray(curr[arrKey])) {
+              curr[arrKey] = [];
+            }
+            curr[arrKey].push({
+              iconId: keys[i+1],
+            })
+          } else {
+            if (i === keys.length - 1) {
+              curr[keys[i]] = value;
+            } else {
+              if (!curr[keys[i]]) {
+                curr[keys[i]] = {};
+              }
+              curr = curr[keys[i]];
+            }
+          }
+        }
+      }
+      return result;
+    }
+  </script>
+</body>
+
+</html>

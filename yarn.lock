@@ -2,45 +2,44 @@
 # yarn lockfile v1
 
 
-"@ezuikit/player-ezopen@8.1.12-beta.4":
-  version "8.1.12-beta.4"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.1.12-beta.4.tgz#45d55ab564ebce9805e7a4287b07c5f4ed866258"
-  integrity sha512-qp3d7s8t2OlHwt/+qofxsk68bWbLOj1qbK3VdxUJQ8D37KGn7aKRc6EtdyP2yDMe8LCSyytJzbyORDCkaKu9VA==
+"@ezuikit/player-ezopen@8.2.0-beta.3":
+  version "8.2.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.2.0-beta.3.tgz#889a62dbca3a57c00cb6f4baea7476fe15c52364"
+  integrity sha512-KtvJNdkbrLX6Z7LAOAnzqASkysy3U0strqjebnWFEMvdLLAD/rtVXQLnkC10URpC6K6I6ptULfcjVX/ZkzDmTw==
   dependencies:
-    "@ezuikit/player-plugin-record" "8.1.8-beta.3"
-    "@ezuikit/utils-i18n" "^1.0.1"
-    "@ezuikit/utils-logger" "^1.0.1"
+    "@ezuikit/player-plugin-record" "8.2.0-beta.1"
+    "@ezuikit/utils-i18n" "^1.1.1"
+    "@ezuikit/utils-logger" "^1.1.0"
     "@ezuikit/utils-service" "1.0.1"
-    "@ezuikit/utils-tools" "^1.0.4"
+    "@ezuikit/utils-tools" "^1.1.0"
     "@juggle/resize-observer" "^3.4.0"
     dayjs "^1.11.10"
     deepmerge "^4.3.1"
     eventemitter3 "^5.0.1"
-    jquery "^3.7.1"
     screenfull "^5.2.0"
     ua-parser-js "1.0.37"
 
-"@ezuikit/player-plugin-record@8.1.8-beta.3":
-  version "8.1.8-beta.3"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-plugin-record/-/player-plugin-record-8.1.8-beta.3.tgz#a9f4a7c05ccb3e6c3c73c04e2b9603f8fd55a428"
-  integrity sha512-YcQ5MR8zyg8b+o/ktr6r+YCXkiEX43HVmzVkfJsERgaokaHzoNIpOomEl51j/13gcemjSXuN6i1apCRC2v32pg==
+"@ezuikit/player-plugin-record@8.2.0-beta.1":
+  version "8.2.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-plugin-record/-/player-plugin-record-8.2.0-beta.1.tgz#188ba48772c2f092facc466a45c9defd8441e2ff"
+  integrity sha512-ECOWyH0DL3L26dqKPDdy4GPHBSoQKEifWlZo6C45WeyhnhxzgELsbVPBm5vizFQrZFmgvkBrCsOwUO8e7TfMuQ==
 
 "@ezuikit/utils-collect@0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@ezuikit/utils-collect/-/utils-collect-0.1.1.tgz#b9b49b1a2ef762c1d33b8a154bdd571e9cd965da"
   integrity sha512-BgEOnTtAq8rQRBAKv5rLXbQLGOnfOZ6NS0QTmiviey80JbMJlxrLiqmjL5lxvkm4JtCcXCtSgPA4tskQKN4eDA==
 
-"@ezuikit/utils-i18n@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@ezuikit/utils-i18n/-/utils-i18n-1.0.1.tgz#938b192184482e91a6e8aadde0f602c268da3020"
-  integrity sha512-uUjN3ADHV2ZG4QznuA7FB89/ck8AGV4qS8hm/sqeSA6/ie4ryYw8MS4wIv71WgPBIgIVDfASuEapyLOwq7R2aQ==
+"@ezuikit/utils-i18n@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@ezuikit/utils-i18n/-/utils-i18n-1.1.1.tgz#a9d05d1ab96341450e07477d5ab04f494c390332"
+  integrity sha512-PZe37fHfjUbhArXaoWMxbGOnU1R6k8XV7NroB3n2uL+z06SajozxO5TQARrk7Z72USQPvUsyaKIBcwVNjWK6/w==
   dependencies:
-    i18n-js "^4.3.2"
+    deepmerge "^4.3.1"
 
-"@ezuikit/utils-logger@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@ezuikit/utils-logger/-/utils-logger-1.0.1.tgz#9f157c982acba73514fc7a46829768d5bf61f45e"
-  integrity sha512-qak0MXh4vWZCji3aSCfHdWR3EbZCaqS0iMT8/QWuWPRr0vDmTRMP3kFOAw1MuMraR0ocjPBE2PaTEmUuwVqaAw==
+"@ezuikit/utils-logger@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@ezuikit/utils-logger/-/utils-logger-1.1.0.tgz#5730becccd35f7704592b4fbe2bdcae0fd9e8c8b"
+  integrity sha512-l/PiFZIC/VtW2l1oEjZEXfeYKFkPvX1kAlljXc1nRImNOI9t71/2oyTTkqkZvMLP/EG5regD9wuQplcvtfubUg==
 
 "@ezuikit/utils-service@1.0.1":
   version "1.0.1"
@@ -50,10 +49,15 @@
     "@ezuikit/utils-tools" "^1.0.1"
     dayjs "^1.11.10"
 
-"@ezuikit/utils-tools@^1.0.1", "@ezuikit/utils-tools@^1.0.4":
+"@ezuikit/utils-tools@^1.0.1":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@ezuikit/utils-tools/-/utils-tools-1.0.4.tgz#018f0ac5b870ca8c6d4dd5d6c8ae381533e7d772"
   integrity sha512-w+LZ03qowSqrSqDnuONKPpmEn0cuCaF2pkgHL1YicR0of/ZelCho5X8cy5TXQe7UsrQkIM2M7vVennv5KnAdpQ==
+
+"@ezuikit/utils-tools@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@ezuikit/utils-tools/-/utils-tools-1.1.0.tgz#2986443242e4e20c4aa1250030a5cbe5a43c58b5"
+  integrity sha512-mujPtXIhZnuJrJySu1/Z6X90sMJQStZydurZcfetMCH6pqIYN4P+1w6+P8PCTR6k4LJp5nY9+eNnKa7AZ8OBKA==
 
 "@juggle/resize-observer@^3.4.0":
   version "3.4.0"
@@ -64,11 +68,6 @@ abortcontroller-polyfill@^1.7.5:
   version "1.7.8"
   resolved "https://registry.yarnpkg.com/abortcontroller-polyfill/-/abortcontroller-polyfill-1.7.8.tgz#fe8d4370403f02e2aa37e3d2b0b178bae9d83f49"
   integrity sha512-9f1iZ2uWh92VcrU9Y8x+LdM4DLj75VE0MJB8zuF1iUnroEptStw+DQ8EQPMUdfe5k+PkB1uUfDQfWbhstH8LrQ==
-
-bignumber.js@*:
-  version "9.2.1"
-  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.2.1.tgz#3ad0854ad933560a25bbc7c93bc3b7ea6edcad85"
-  integrity sha512-+NzaKgOUvInq9TIUZ1+DRspzf/HApkCwD4btfuasFTdrfnOxqx853TgDpMolp+uv4RpRp7bPcEU2zKr9+fRmyw==
 
 dayjs@^1.11.10:
   version "1.11.13"
@@ -110,34 +109,10 @@ formdata-polyfill@^4.0.10:
   dependencies:
     fetch-blob "^3.1.2"
 
-i18n-js@^4.3.2:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/i18n-js/-/i18n-js-4.5.1.tgz#12ea3d6333552ff75be0904ea50705f5a263d172"
-  integrity sha512-n7jojFj1WC0tztgr0I8jqTXuIlY1xNzXnC3mjKX/YjJhimdM+jXM8vOmn9d3xQFNC6qDHJ4ovhdrGXrRXLIGkA==
-  dependencies:
-    bignumber.js "*"
-    lodash "*"
-    make-plural "*"
-
-jquery@^3.3.1, jquery@^3.7.1:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.7.1.tgz#083ef98927c9a6a74d05a6af02806566d16274de"
-  integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==
-
 lodash-es@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
   integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
-
-lodash@*:
-  version "4.17.21"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
-  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
-
-make-plural@*:
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/make-plural/-/make-plural-7.4.0.tgz#fa6990dd550dea4de6b20163f74e5ed83d8a8d6d"
-  integrity sha512-4/gC9KVNTV6pvYg2gFeQYTW3mWaoJt7WZE5vrp1KnQDgW92JtYZnzmZT81oj/dUTqAIu0ufI2x3dkgu3bB1tYg==
 
 node-domexception@^1.0.0:
   version "1.0.0"
@@ -153,11 +128,6 @@ ua-parser-js@1.0.37:
   version "1.0.37"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-1.0.37.tgz#b5dc7b163a5c1f0c510b08446aed4da92c46373f"
   integrity sha512-bhTyI94tZofjo+Dn8SN6Zv8nBDvyXTymAdM3LDI/0IboIUwTu1rEhW7v2TfiVsoYWgkQ4kOVqnI8APUFbIQIFQ==
-
-uuid@^8.3.0:
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
-  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
 web-streams-polyfill@^3.0.3:
   version "3.3.3"

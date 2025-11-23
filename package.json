@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "8.1.16",
+  "version": "8.2.0",
   "description": "ezuikit javascript for npm",
   "title": "ezuikit-js",
   "main": "index.js",
@@ -23,21 +23,19 @@
   ],
   "author": "Ezviz-OpenBiz",
   "dependencies": {
-    "@ezuikit/player-ezopen": "8.1.16-beta.3",
+    "@ezuikit/player-ezopen": "8.2.2-beta.5",
     "@ezuikit/utils-collect": "0.1.1",
-    "@ezuikit/utils-i18n": "^1.0.1",
-    "@ezuikit/utils-logger": "^1.0.1",
-    "@ezuikit/utils-tools": "^1.0.4",
+    "@ezuikit/utils-i18n": "2.0.0",
+    "@ezuikit/utils-logger": "2.0.0",
+    "@ezuikit/utils-tools": "2.0.1-beta.1",
     "@juggle/resize-observer": "^3.4.0",
     "abortcontroller-polyfill": "^1.7.5",
     "debounce-promise": "^3.1.2",
     "deepmerge": "^4.3.1",
     "delegate": "3.2.0",
     "formdata-polyfill": "^4.0.10",
-    "jquery": "^3.3.1",
     "lodash-es": "^4.17.21",
-    "screenfull": "^5.2.0",
-    "uuid": "^8.3.0"
+    "screenfull": "^5.2.0"
   },
   "license": "ISC",
   "repository": {

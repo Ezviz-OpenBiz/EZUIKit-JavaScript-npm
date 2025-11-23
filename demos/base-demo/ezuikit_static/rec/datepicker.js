@@ -9,17 +9,19 @@
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('jquery')) :
-    typeof define === 'function' && define.amd ? define(['jquery'], factory) :
-      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.jQuery));
-}(this, (function ($) {
+  typeof exports === 'object' && typeof module !== 'undefined'
+    ? factory(require('jquery'))
+    : typeof define === 'function' && define.amd
+      ? define(['jquery'], factory)
+      : ((global = typeof globalThis !== 'undefined' ? globalThis : global || self), factory(global.jQuery));
+})(this, function ($) {
   'use strict';
 
   $ = $ && $.hasOwnProperty('default') ? $['default'] : $;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
+      throw new TypeError('Cannot call a class as a function');
     }
   }
 
@@ -28,7 +30,7 @@
       var descriptor = props[i];
       descriptor.enumerable = descriptor.enumerable || false;
       descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
+      if ('value' in descriptor) descriptor.writable = true;
       Object.defineProperty(target, descriptor.key, descriptor);
     }
   }
@@ -94,7 +96,34 @@
     // A class (CSS) for highlight date item
     highlightedClass: 'highlighted',
     // The template of the datepicker
-    template: '<div class="datepicker-container">' + '<div class="datepicker-panel" data-view="years picker">' + '<ul>' + '<li data-view="years prev">&lsaquo;</li>' + '<li data-view="years current"></li>' + '<li data-view="years next">&rsaquo;</li>' + '</ul>' + '<ul data-view="years"></ul>' + '</div>' + '<div class="datepicker-panel" data-view="months picker">' + '<ul>' + '<li data-view="year prev">&lsaquo;</li>' + '<li data-view="year current"></li>' + '<li data-view="year next">&rsaquo;</li>' + '</ul>' + '<ul data-view="months"></ul>' + '</div>' + '<div class="datepicker-panel" data-view="days picker">' + '<ul>' + '<li data-view="month prev">&lsaquo;</li>' + '<li data-view="month current"></li>' + '<li data-view="month next">&rsaquo;</li>' + '</ul>' + '<ul data-view="week"></ul>' + '<ul data-view="days"></ul>' + '</div>' + '</div>',
+    template:
+      '<div class="datepicker-container">' +
+      '<div class="datepicker-panel" data-view="years picker">' +
+      '<ul>' +
+      '<li data-view="years prev">&lsaquo;</li>' +
+      '<li data-view="years current"></li>' +
+      '<li data-view="years next">&rsaquo;</li>' +
+      '</ul>' +
+      '<ul data-view="years"></ul>' +
+      '</div>' +
+      '<div class="datepicker-panel" data-view="months picker">' +
+      '<ul>' +
+      '<li data-view="year prev">&lsaquo;</li>' +
+      '<li data-view="year current"></li>' +
+      '<li data-view="year next">&rsaquo;</li>' +
+      '</ul>' +
+      '<ul data-view="months"></ul>' +
+      '</div>' +
+      '<div class="datepicker-panel" data-view="days picker">' +
+      '<ul>' +
+      '<li data-view="month prev">&lsaquo;</li>' +
+      '<li data-view="month current"></li>' +
+      '<li data-view="month next">&rsaquo;</li>' +
+      '</ul>' +
+      '<ul data-view="week"></ul>' +
+      '<ul data-view="days"></ul>' +
+      '</div>' +
+      '</div>',
     // The offset top or bottom of the datepicker from the element
     offset: 10,
     // The `z-index` of the datepicker
@@ -104,28 +133,28 @@
     // Event shortcuts
     show: null,
     hide: null,
-    pick: null
+    pick: null,
   };
 
   var IS_BROWSER = typeof window !== 'undefined';
   var WINDOW = IS_BROWSER ? window : {};
   var IS_TOUCH_DEVICE = IS_BROWSER ? 'ontouchstart' in WINDOW.document.documentElement : false;
   var NAMESPACE = 'datepicker';
-  var EVENT_CLICK = "click.".concat(NAMESPACE);
-  var EVENT_FOCUS = "focus.".concat(NAMESPACE);
-  var EVENT_HIDE = "hide.".concat(NAMESPACE);
-  var EVENT_KEYUP = "keyup.".concat(NAMESPACE);
-  var EVENT_PICK = "pick.".concat(NAMESPACE);
-  var EVENT_RESIZE = "resize.".concat(NAMESPACE);
-  var EVENT_SCROLL = "scroll.".concat(NAMESPACE);
-  var EVENT_SHOW = "show.".concat(NAMESPACE);
-  var EVENT_TOUCH_START = "touchstart.".concat(NAMESPACE);
-  var CLASS_HIDE = "".concat(NAMESPACE, "-hide");
+  var EVENT_CLICK = 'click.'.concat(NAMESPACE);
+  var EVENT_FOCUS = 'focus.'.concat(NAMESPACE);
+  var EVENT_HIDE = 'hide.'.concat(NAMESPACE);
+  var EVENT_KEYUP = 'keyup.'.concat(NAMESPACE);
+  var EVENT_PICK = 'pick.'.concat(NAMESPACE);
+  var EVENT_RESIZE = 'resize.'.concat(NAMESPACE);
+  var EVENT_SCROLL = 'scroll.'.concat(NAMESPACE);
+  var EVENT_SHOW = 'show.'.concat(NAMESPACE);
+  var EVENT_TOUCH_START = 'touchstart.'.concat(NAMESPACE);
+  var CLASS_HIDE = ''.concat(NAMESPACE, '-hide');
   var LANGUAGES = {};
   var VIEWS = {
     DAYS: 0,
     MONTHS: 1,
-    YEARS: 2
+    YEARS: 2,
   };
 
   var toString = Object.prototype.toString;
@@ -159,10 +188,10 @@
     };
   }
   function selectorOf(view) {
-    return "[data-view=\"".concat(view, "\"]");
+    return '[data-view="'.concat(view, '"]');
   }
   function isLeapYear(year) {
-    return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   }
   function getDaysInMonth(year, month) {
     return [31, isLeapYear(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
@@ -181,7 +210,7 @@
 
     format = {
       source: source,
-      parts: parts
+      parts: parts,
     };
     $.each(parts, function (i, part) {
       switch (part) {
@@ -209,15 +238,18 @@
     var position = $element.css('position');
     var excludeStaticParent = position === 'absolute';
     var overflowRegex = includeHidden ? /auto|scroll|hidden/ : /auto|scroll/;
-    var scrollParent = $element.parents().filter(function (index, parent) {
-      var $parent = $(parent);
+    var scrollParent = $element
+      .parents()
+      .filter(function (index, parent) {
+        var $parent = $(parent);
 
-      if (excludeStaticParent && $parent.css('position') === 'static') {
-        return false;
-      }
+        if (excludeStaticParent && $parent.css('position') === 'static') {
+          return false;
+        }
 
-      return overflowRegex.test($parent.css('overflow') + $parent.css('overflow-y') + $parent.css('overflow-x'));
-    }).eq(0);
+        return overflowRegex.test($parent.css('overflow') + $parent.css('overflow-y') + $parent.css('overflow-x'));
+      })
+      .eq(0);
     return position === 'fixed' || !scrollParent.length ? $(element.ownerDocument || document) : scrollParent;
   }
   /**
@@ -267,12 +299,12 @@
 
       if (!this.inline) {
         this.$scrollParent.on(EVENT_SCROLL, $.proxy(this.place, this));
-        $(window).on(EVENT_RESIZE, this.onResize = proxy(this.place, this));
-        $(document).on(EVENT_CLICK, this.onGlobalClick = proxy(this.globalClick, this));
-        $(document).on(EVENT_KEYUP, this.onGlobalKeyup = proxy(this.globalKeyup, this));
+        $(window).on(EVENT_RESIZE, (this.onResize = proxy(this.place, this)));
+        $(document).on(EVENT_CLICK, (this.onGlobalClick = proxy(this.globalClick, this)));
+        $(document).on(EVENT_KEYUP, (this.onGlobalKeyup = proxy(this.globalKeyup, this)));
 
         if (IS_TOUCH_DEVICE) {
-          $(document).on(EVENT_TOUCH_START, this.onTouchStart = proxy(this.touchstart, this));
+          $(document).on(EVENT_TOUCH_START, (this.onTouchStart = proxy(this.touchstart, this)));
         }
 
         this.place();
@@ -330,10 +362,12 @@
       var $this = this.$element;
       var date = this.date;
 
-      if (this.trigger(EVENT_PICK, {
-        view: _view || '',
-        date: date
-      }).isDefaultPrevented()) {
+      if (
+        this.trigger(EVENT_PICK, {
+          view: _view || '',
+          date: date,
+        }).isDefaultPrevented()
+      ) {
         return;
       }
 
@@ -432,7 +466,6 @@
      */
     setDate: function setDate(date, _updated) {
       var filter = this.options.filter;
-
       if (isDate(date) || isString(date)) {
         date = this.parseDate(date);
 
@@ -543,7 +576,6 @@
         }
       } // Ignore hours, minutes, seconds and milliseconds to avoid side effect (#192)
 
-
       return new Date(date.getFullYear(), date.getMonth(), date.getDate());
     },
 
@@ -567,7 +599,7 @@
           m: month + 1,
           mm: addLeadingZero(month + 1, 2),
           yy: String(year).substring(2),
-          yyyy: addLeadingZero(year, 4)
+          yyyy: addLeadingZero(year, 4),
         };
         formatted = format.source;
         $.each(format.parts, function (i, part) {
@@ -582,7 +614,7 @@
       this.unbind();
       this.unbuild();
       this.$element.removeData(NAMESPACE);
-    }
+    },
   };
 
   var handlers = {
@@ -606,14 +638,13 @@
 
       switch (view) {
         case 'years prev':
-        case 'years next':
-          {
-            viewYear = view === 'years prev' ? viewYear - 10 : viewYear + 10;
-            viewDate.setFullYear(viewYear);
-            viewDate.setDate(getMinDay(viewYear, viewMonth, viewDay));
-            this.renderYears();
-            break;
-          }
+        case 'years next': {
+          viewYear = view === 'years prev' ? viewYear - 10 : viewYear + 10;
+          viewDate.setFullYear(viewYear);
+          viewDate.setDate(getMinDay(viewYear, viewMonth, viewDay));
+          this.renderYears();
+          break;
+        }
 
         case 'year prev':
         case 'year next':
@@ -634,7 +665,7 @@
           if (format.hasMonth) {
             this.showView(VIEWS.MONTHS);
           } else {
-            $target.siblings(".".concat(options.pickedClass)).removeClass(options.pickedClass).data('view', 'year');
+            $target.siblings('.'.concat(options.pickedClass)).removeClass(options.pickedClass).data('view', 'year');
             this.hideView();
           }
 
@@ -652,7 +683,7 @@
           if (format.hasMonth) {
             this.showView(VIEWS.MONTHS);
           } else {
-            $target.addClass(options.pickedClass).data('view', 'year picked').siblings(".".concat(options.pickedClass)).removeClass(options.pickedClass).data('view', 'year');
+            $target.addClass(options.pickedClass).data('view', 'year picked').siblings('.'.concat(options.pickedClass)).removeClass(options.pickedClass).data('view', 'year');
             this.hideView();
           }
 
@@ -688,7 +719,7 @@
           if (format.hasDay) {
             this.showView(VIEWS.DAYS);
           } else {
-            $target.siblings(".".concat(options.pickedClass)).removeClass(options.pickedClass).data('view', 'month');
+            $target.siblings('.'.concat(options.pickedClass)).removeClass(options.pickedClass).data('view', 'month');
             this.hideView();
           }
 
@@ -708,7 +739,7 @@
           if (format.hasDay) {
             this.showView(VIEWS.DAYS);
           } else {
-            $target.addClass(options.pickedClass).data('view', 'month picked').siblings(".".concat(options.pickedClass)).removeClass(options.pickedClass).data('view', 'month');
+            $target.addClass(options.pickedClass).data('view', 'month picked').siblings('.'.concat(options.pickedClass)).removeClass(options.pickedClass).data('view', 'month');
             this.hideView();
           }
 
@@ -789,7 +820,7 @@
         this.hide();
         this.element.blur();
       }
-    }
+    },
   };
 
   var render = {
@@ -808,9 +839,11 @@
       weekStart = parseInt(weekStart, 10) % 7;
       daysMin = daysMin.slice(weekStart).concat(daysMin.slice(0, weekStart));
       $.each(daysMin, function (i, day) {
-        items.push(_this.createItem({
-          text: day
-        }));
+        items.push(
+          _this.createItem({
+            text: day,
+          }),
+        );
       });
       this.$week.html(items.join(''));
     },
@@ -858,18 +891,25 @@
 
         var picked = viewYear + i === year;
         var view = picked ? 'year picked' : 'year';
-        items.push(this.createItem({
-          picked: picked,
-          disabled: disabled,
-          text: viewYear + i,
-          view: disabled ? 'year disabled' : view,
-          highlighted: date.getFullYear() === thisYear
-        }));
+        items.push(
+          this.createItem({
+            picked: picked,
+            disabled: disabled,
+            text: viewYear + i,
+            view: disabled ? 'year disabled' : view,
+            highlighted: date.getFullYear() === thisYear,
+          }),
+        );
       }
 
       this.$yearsPrev.toggleClass(disabledClass, prevDisabled);
       this.$yearsNext.toggleClass(disabledClass, nextDisabled);
-      this.$yearsCurrent.toggleClass(disabledClass, true).html("".concat(viewYear + start + yearSuffix, " - ").concat(viewYear + end).concat(yearSuffix));
+      this.$yearsCurrent.toggleClass(disabledClass, true).html(
+        ''
+          .concat(viewYear + start + yearSuffix, ' - ')
+          .concat(viewYear + end)
+          .concat(yearSuffix),
+      );
       this.$years.html(items.join(''));
     },
     renderMonths: function renderMonths() {
@@ -911,14 +951,16 @@
 
         var picked = viewYear === year && i === month;
         var view = picked ? 'month picked' : 'month';
-        items.push(this.createItem({
-          disabled: disabled,
-          picked: picked,
-          highlighted: viewYear === thisYear && date.getMonth() === thisMonth,
-          index: i,
-          text: months[i],
-          view: disabled ? 'month disabled' : view
-        }));
+        items.push(
+          this.createItem({
+            disabled: disabled,
+            picked: picked,
+            highlighted: viewYear === thisYear && date.getMonth() === thisMonth,
+            index: i,
+            text: months[i],
+            view: disabled ? 'month disabled' : view,
+          }),
+        );
       }
 
       this.$yearPrev.toggleClass(disabledClass, prevDisabled);
@@ -964,13 +1006,12 @@
         prevViewMonth -= 1;
       } // The length of the days of prev month
 
-
       length = getDaysInMonth(prevViewYear, prevViewMonth); // The first day of current month
 
       var firstDay = new Date(viewYear, viewMonth, 1); // The visible length of the days of prev month
       // [0,1,2,3,4,5,6] - [0,1,2,3,4,5,6] => [-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6]
 
-      n = firstDay.getDay() - parseInt(weekStart, 10) % 7; // [-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6] => [1,2,3,4,5,6,7]
+      n = firstDay.getDay() - (parseInt(weekStart, 10) % 7); // [-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6] => [1,2,3,4,5,6,7]
 
       if (n <= 0) {
         n += 7;
@@ -992,17 +1033,18 @@
           disabled = filter.call($element, prevViewDate, 'day') === false;
         }
 
-        prevItems.push(this.createItem({
-          disabled: disabled,
-          highlighted: prevViewYear === thisYear && prevViewMonth === thisMonth && prevViewDate.getDate() === thisDay,
-          muted: true,
-          picked: prevViewYear === year && prevViewMonth === month && i === day,
-          text: i,
-          view: 'day prev'
-        }));
+        prevItems.push(
+          this.createItem({
+            disabled: disabled,
+            highlighted: prevViewYear === thisYear && prevViewMonth === thisMonth && prevViewDate.getDate() === thisDay,
+            muted: true,
+            picked: prevViewYear === year && prevViewMonth === month && i === day,
+            text: i,
+            view: 'day prev',
+          }),
+        );
       } // Days of next month
       // -----------------------------------------------------------------------
-
 
       var nextItems = [];
       var nextViewYear = viewYear;
@@ -1015,7 +1057,6 @@
       } else {
         nextViewMonth += 1;
       } // The length of the days of current month
-
 
       length = getDaysInMonth(viewYear, viewMonth); // The visible length of next month (42 means 6 rows and 7 columns)
 
@@ -1040,17 +1081,18 @@
           _disabled = filter.call($element, date, 'day') === false;
         }
 
-        nextItems.push(this.createItem({
-          disabled: _disabled,
-          picked: picked,
-          highlighted: nextViewYear === thisYear && nextViewMonth === thisMonth && date.getDate() === thisDay,
-          muted: true,
-          text: i,
-          view: 'day next'
-        }));
+        nextItems.push(
+          this.createItem({
+            disabled: _disabled,
+            picked: picked,
+            highlighted: nextViewYear === thisYear && nextViewMonth === thisMonth && date.getDate() === thisDay,
+            muted: true,
+            text: i,
+            view: 'day next',
+          }),
+        );
       } // Days of current month
       // -----------------------------------------------------------------------
-
 
       var items = [];
 
@@ -1074,31 +1116,32 @@
         var _picked = viewYear === year && viewMonth === month && i === day;
 
         var view = _picked ? 'day picked' : 'day';
-        items.push(this.createItem({
-          disabled: _disabled2,
-          picked: _picked,
-          highlighted: viewYear === thisYear && viewMonth === thisMonth && _date.getDate() === thisDay,
-          text: i,
-          view: _disabled2 ? 'day disabled' : view
-        }));
+        items.push(
+          this.createItem({
+            disabled: _disabled2,
+            picked: _picked,
+            highlighted: viewYear === thisYear && viewMonth === thisMonth && _date.getDate() === thisDay,
+            text: i,
+            view: _disabled2 ? 'day disabled' : view,
+          }),
+        );
       } // Render days picker
       // -----------------------------------------------------------------------
 
-
       this.$monthPrev.toggleClass(disabledClass, prevDisabled);
       this.$monthNext.toggleClass(disabledClass, nextDisabled);
-      this.$monthCurrent.toggleClass(disabledClass, prevDisabled && nextDisabled).html(options.yearFirst ? "".concat(viewYear + yearSuffix, " ").concat(months[viewMonth]) : "".concat(months[viewMonth], " ").concat(viewYear).concat(yearSuffix));
+      this.$monthCurrent.toggleClass(disabledClass, prevDisabled && nextDisabled).html(options.yearFirst ? ''.concat(viewYear + yearSuffix, ' ').concat(months[viewMonth]) : ''.concat(months[viewMonth], ' ').concat(viewYear).concat(yearSuffix));
       this.$days.html(prevItems.join('') + items.join('') + nextItems.join(''));
-    }
+    },
   };
 
-  var CLASS_TOP_LEFT = "".concat(NAMESPACE, "-top-left");
-  var CLASS_TOP_RIGHT = "".concat(NAMESPACE, "-top-right");
-  var CLASS_BOTTOM_LEFT = "".concat(NAMESPACE, "-bottom-left");
-  var CLASS_BOTTOM_RIGHT = "".concat(NAMESPACE, "-bottom-right");
+  var CLASS_TOP_LEFT = ''.concat(NAMESPACE, '-top-left');
+  var CLASS_TOP_RIGHT = ''.concat(NAMESPACE, '-top-right');
+  var CLASS_BOTTOM_LEFT = ''.concat(NAMESPACE, '-bottom-left');
+  var CLASS_BOTTOM_RIGHT = ''.concat(NAMESPACE, '-bottom-right');
   var CLASS_PLACEMENTS = [CLASS_TOP_LEFT, CLASS_TOP_RIGHT, CLASS_BOTTOM_LEFT, CLASS_BOTTOM_RIGHT].join(' ');
 
-  var Datepicker = /*#__PURE__*/function () {
+  var Datepicker = /*#__PURE__*/ (function () {
     function Datepicker(element) {
       var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
@@ -1119,353 +1162,370 @@
       this.init();
     }
 
-    _createClass(Datepicker, [{
-      key: "init",
-      value: function init() {
-        var $this = this.$element,
-          options = this.options;
-        var startDate = options.startDate,
-          endDate = options.endDate,
-          date = options.date;
-        this.$trigger = $(options.trigger);
-        this.isInput = $this.is('input') || $this.is('textarea');
-        this.inline = options.inline && (options.container || !this.isInput);
-        this.format = parseFormat(options.format);
-        var initialValue = this.getValue();
-        this.initialValue = initialValue;
-        this.oldValue = initialValue;
-        date = this.parseDate(date || initialValue);
+    _createClass(
+      Datepicker,
+      [
+        {
+          key: 'init',
+          value: function init() {
+            var $this = this.$element,
+              options = this.options;
+            var startDate = options.startDate,
+              endDate = options.endDate,
+              date = options.date;
+            this.$trigger = $(options.trigger);
+            this.isInput = $this.is('input') || $this.is('textarea');
+            this.inline = options.inline && (options.container || !this.isInput);
+            this.format = parseFormat(options.format);
+            var initialValue = this.getValue();
+            this.initialValue = initialValue;
+            this.oldValue = initialValue;
+            date = this.parseDate(date || initialValue);
 
-        if (startDate) {
-          startDate = this.parseDate(startDate);
+            if (startDate) {
+              startDate = this.parseDate(startDate);
 
-          if (date.getTime() < startDate.getTime()) {
-            date = new Date(startDate);
-          }
-
-          this.startDate = startDate;
-        }
-
-        if (endDate) {
-          endDate = this.parseDate(endDate);
-
-          if (startDate && endDate.getTime() < startDate.getTime()) {
-            endDate = new Date(startDate);
-          }
-
-          if (date.getTime() > endDate.getTime()) {
-            date = new Date(endDate);
-          }
-
-          this.endDate = endDate;
-        }
-
-        this.date = date;
-        this.viewDate = new Date(date);
-        this.initialDate = new Date(this.date);
-        this.bind();
-
-        if (options.autoShow || this.inline) {
-          this.show();
-        }
-
-        if (options.autoPick) {
-          this.pick();
-        }
-      }
-    }, {
-      key: "build",
-      value: function build() {
-        if (this.built) {
-          return;
-        }
-
-        this.built = true;
-        var $this = this.$element,
-          options = this.options;
-        var $picker = $(options.template);
-        this.$picker = $picker;
-        this.$week = $picker.find(selectorOf('week')); // Years view
-
-        this.$yearsPicker = $picker.find(selectorOf('years picker'));
-        this.$yearsPrev = $picker.find(selectorOf('years prev'));
-        this.$yearsNext = $picker.find(selectorOf('years next'));
-        this.$yearsCurrent = $picker.find(selectorOf('years current'));
-        this.$years = $picker.find(selectorOf('years')); // Months view
-
-        this.$monthsPicker = $picker.find(selectorOf('months picker'));
-        this.$yearPrev = $picker.find(selectorOf('year prev'));
-        this.$yearNext = $picker.find(selectorOf('year next'));
-        this.$yearCurrent = $picker.find(selectorOf('year current'));
-        this.$months = $picker.find(selectorOf('months')); // Days view
-
-        this.$daysPicker = $picker.find(selectorOf('days picker'));
-        this.$monthPrev = $picker.find(selectorOf('month prev'));
-        this.$monthNext = $picker.find(selectorOf('month next'));
-        this.$monthCurrent = $picker.find(selectorOf('month current'));
-        this.$days = $picker.find(selectorOf('days'));
-
-        if (this.inline) {
-          $(options.container || $this).append($picker.addClass("".concat(NAMESPACE, "-inline")));
-        } else {
-          $(document.body).append($picker.addClass("".concat(NAMESPACE, "-dropdown")));
-          $picker.addClass(CLASS_HIDE).css({
-            zIndex: parseInt(options.zIndex, 10)
-          });
-        }
-
-        this.renderWeek();
-      }
-    }, {
-      key: "unbuild",
-      value: function unbuild() {
-        if (!this.built) {
-          return;
-        }
-
-        this.built = false;
-        this.$picker.remove();
-      }
-    }, {
-      key: "bind",
-      value: function bind() {
-        var options = this.options,
-          $this = this.$element;
-
-        if ($.isFunction(options.show)) {
-          $this.on(EVENT_SHOW, options.show);
-        }
-
-        if ($.isFunction(options.hide)) {
-          $this.on(EVENT_HIDE, options.hide);
-        }
-
-        if ($.isFunction(options.pick)) {
-          $this.on(EVENT_PICK, options.pick);
-        }
-
-        if (this.isInput) {
-          $this.on(EVENT_KEYUP, $.proxy(this.keyup, this));
-        }
-
-        if (!this.inline) {
-          if (options.trigger) {
-            this.$trigger.on(EVENT_CLICK, $.proxy(this.toggle, this));
-          } else if (this.isInput) {
-            $this.on(EVENT_FOCUS, $.proxy(this.show, this));
-          } else {
-            $this.on(EVENT_CLICK, $.proxy(this.show, this));
-          }
-        }
-      }
-    }, {
-      key: "unbind",
-      value: function unbind() {
-        var $this = this.$element,
-          options = this.options;
-
-        if ($.isFunction(options.show)) {
-          $this.off(EVENT_SHOW, options.show);
-        }
-
-        if ($.isFunction(options.hide)) {
-          $this.off(EVENT_HIDE, options.hide);
-        }
-
-        if ($.isFunction(options.pick)) {
-          $this.off(EVENT_PICK, options.pick);
-        }
-
-        if (this.isInput) {
-          $this.off(EVENT_KEYUP, this.keyup);
-        }
-
-        if (!this.inline) {
-          if (options.trigger) {
-            this.$trigger.off(EVENT_CLICK, this.toggle);
-          } else if (this.isInput) {
-            $this.off(EVENT_FOCUS, this.show);
-          } else {
-            $this.off(EVENT_CLICK, this.show);
-          }
-        }
-      }
-    }, {
-      key: "showView",
-      value: function showView(view) {
-        var $yearsPicker = this.$yearsPicker,
-          $monthsPicker = this.$monthsPicker,
-          $daysPicker = this.$daysPicker,
-          format = this.format;
-
-        if (format.hasYear || format.hasMonth || format.hasDay) {
-          switch (Number(view)) {
-            case VIEWS.YEARS:
-              $monthsPicker.addClass(CLASS_HIDE);
-              $daysPicker.addClass(CLASS_HIDE);
-
-              if (format.hasYear) {
-                this.renderYears();
-                $yearsPicker.removeClass(CLASS_HIDE);
-                this.place();
-              } else {
-                this.showView(VIEWS.DAYS);
+              if (date.getTime() < startDate.getTime()) {
+                date = new Date(startDate);
               }
 
-              break;
+              this.startDate = startDate;
+            }
 
-            case VIEWS.MONTHS:
-              $yearsPicker.addClass(CLASS_HIDE);
-              $daysPicker.addClass(CLASS_HIDE);
+            if (endDate) {
+              endDate = this.parseDate(endDate);
 
-              if (format.hasMonth) {
-                this.renderMonths();
-                $monthsPicker.removeClass(CLASS_HIDE);
-                this.place();
-              } else {
-                this.showView(VIEWS.YEARS);
+              if (startDate && endDate.getTime() < startDate.getTime()) {
+                endDate = new Date(startDate);
               }
 
-              break;
-            // case VIEWS.DAYS:
-
-            default:
-              $yearsPicker.addClass(CLASS_HIDE);
-              $monthsPicker.addClass(CLASS_HIDE);
-
-              if (format.hasDay) {
-                this.renderDays();
-                $daysPicker.removeClass(CLASS_HIDE);
-                this.place();
-              } else {
-                this.showView(VIEWS.MONTHS);
+              if (date.getTime() > endDate.getTime()) {
+                date = new Date(endDate);
               }
 
-          }
-        }
-      }
-    }, {
-      key: "hideView",
-      value: function hideView() {
-        if (!this.inline && this.options.autoHide) {
-          this.hide();
-        }
-      }
-    }, {
-      key: "place",
-      value: function place() {
-        if (this.inline) {
-          return;
-        }
+              this.endDate = endDate;
+            }
 
-        var $this = this.$element,
-          options = this.options,
-          $picker = this.$picker;
-        var containerWidth = $(document).outerWidth();
-        var containerHeight = $(document).outerHeight();
-        var elementWidth = $this.outerWidth();
-        var elementHeight = $this.outerHeight();
-        var width = $picker.width();
-        var height = $picker.height();
+            this.date = date;
+            this.viewDate = new Date(date);
+            this.initialDate = new Date(this.date);
+            this.bind();
 
-        var _$this$offset = $this.offset(),
-          left = _$this$offset.left,
-          top = _$this$offset.top;
+            if (options.autoShow || this.inline) {
+              this.show();
+            }
 
-        var offset = parseFloat(options.offset);
-        var placement = CLASS_TOP_LEFT;
+            if (options.autoPick) {
+              this.pick();
+            }
+          },
+        },
+        {
+          key: 'build',
+          value: function build() {
+            if (this.built) {
+              return;
+            }
 
-        if (isNaN(offset)) {
-          offset = 10;
-        }
+            this.built = true;
+            var $this = this.$element,
+              options = this.options;
+            var $picker = $(options.template);
+            this.$picker = $picker;
+            this.$week = $picker.find(selectorOf('week')); // Years view
 
-        if (top > height && top + elementHeight + height > containerHeight) {
-          top -= height + offset;
-          placement = CLASS_BOTTOM_LEFT;
-        } else {
-          top += elementHeight + offset;
-        }
+            this.$yearsPicker = $picker.find(selectorOf('years picker'));
+            this.$yearsPrev = $picker.find(selectorOf('years prev'));
+            this.$yearsNext = $picker.find(selectorOf('years next'));
+            this.$yearsCurrent = $picker.find(selectorOf('years current'));
+            this.$years = $picker.find(selectorOf('years')); // Months view
 
-        if (left + width > containerWidth) {
-          left += elementWidth - width;
-          placement = placement.replace('left', 'right');
-        }
+            this.$monthsPicker = $picker.find(selectorOf('months picker'));
+            this.$yearPrev = $picker.find(selectorOf('year prev'));
+            this.$yearNext = $picker.find(selectorOf('year next'));
+            this.$yearCurrent = $picker.find(selectorOf('year current'));
+            this.$months = $picker.find(selectorOf('months')); // Days view
 
-        $picker.removeClass(CLASS_PLACEMENTS).addClass(placement).css({
-          top: top,
-          left: left
-        });
-      } // A shortcut for triggering custom events
+            this.$daysPicker = $picker.find(selectorOf('days picker'));
+            this.$monthPrev = $picker.find(selectorOf('month prev'));
+            this.$monthNext = $picker.find(selectorOf('month next'));
+            this.$monthCurrent = $picker.find(selectorOf('month current'));
+            this.$days = $picker.find(selectorOf('days'));
 
-    }, {
-      key: "trigger",
-      value: function trigger(type, data) {
-        var e = $.Event(type, data);
-        this.$element.trigger(e);
-        return e;
-      }
-    }, {
-      key: "createItem",
-      value: function createItem(data) {
-        var options = this.options;
-        var itemTag = options.itemTag;
-        var item = {
-          text: '',
-          view: '',
-          muted: false,
-          picked: false,
-          disabled: false,
-          highlighted: false
-        };
-        var classes = [];
-        $.extend(item, data);
+            if (this.inline) {
+              $(options.container || $this).append($picker.addClass(''.concat(NAMESPACE, '-inline')));
+            } else {
+              $(document.body).append($picker.addClass(''.concat(NAMESPACE, '-dropdown')));
+              $picker.addClass(CLASS_HIDE).css({
+                zIndex: parseInt(options.zIndex, 10),
+              });
+            }
 
-        if (item.muted) {
-          classes.push(options.mutedClass);
-        }
+            this.renderWeek();
+          },
+        },
+        {
+          key: 'unbuild',
+          value: function unbuild() {
+            if (!this.built) {
+              return;
+            }
 
-        if (item.highlighted) {
-          classes.push(options.highlightedClass);
-        }
+            this.built = false;
+            this.$picker.remove();
+          },
+        },
+        {
+          key: 'bind',
+          value: function bind() {
+            var options = this.options,
+              $this = this.$element;
 
-        if (item.picked) {
-          classes.push(options.pickedClass);
-        }
+            if ($.isFunction(options.show)) {
+              $this.on(EVENT_SHOW, options.show);
+            }
 
-        if (item.disabled) {
-          classes.push(options.disabledClass);
-        }
+            if ($.isFunction(options.hide)) {
+              $this.on(EVENT_HIDE, options.hide);
+            }
 
-        return "<".concat(itemTag, " class=\"").concat(classes.join(' '), "\" data-view=\"").concat(item.view, "\">").concat(item.text, "</").concat(itemTag, ">");
-      }
-    }, {
-      key: "getValue",
-      value: function getValue() {
-        var $this = this.$element;
-        return this.isInput ? $this.val() : $this.text();
-      }
-    }, {
-      key: "setValue",
-      value: function setValue() {
-        var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-        var $this = this.$element;
+            if ($.isFunction(options.pick)) {
+              $this.on(EVENT_PICK, options.pick);
+            }
 
-        if (this.isInput) {
-          $this.val(value);
-        } else if (!this.inline || this.options.container) {
-          $this.text(value);
-        }
-      }
-    }], [{
-      key: "setDefaults",
-      value: function setDefaults() {
-        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-        $.extend(DEFAULTS, LANGUAGES[options.language], $.isPlainObject(options) && options);
-      }
-    }]);
+            if (this.isInput) {
+              $this.on(EVENT_KEYUP, $.proxy(this.keyup, this));
+            }
+
+            if (!this.inline) {
+              if (options.trigger) {
+                this.$trigger.on(EVENT_CLICK, $.proxy(this.toggle, this));
+              } else if (this.isInput) {
+                $this.on(EVENT_FOCUS, $.proxy(this.show, this));
+              } else {
+                $this.on(EVENT_CLICK, $.proxy(this.show, this));
+              }
+            }
+          },
+        },
+        {
+          key: 'unbind',
+          value: function unbind() {
+            var $this = this.$element,
+              options = this.options;
+
+            if ($.isFunction(options.show)) {
+              $this.off(EVENT_SHOW, options.show);
+            }
+
+            if ($.isFunction(options.hide)) {
+              $this.off(EVENT_HIDE, options.hide);
+            }
+
+            if ($.isFunction(options.pick)) {
+              $this.off(EVENT_PICK, options.pick);
+            }
+
+            if (this.isInput) {
+              $this.off(EVENT_KEYUP, this.keyup);
+            }
+
+            if (!this.inline) {
+              if (options.trigger) {
+                this.$trigger.off(EVENT_CLICK, this.toggle);
+              } else if (this.isInput) {
+                $this.off(EVENT_FOCUS, this.show);
+              } else {
+                $this.off(EVENT_CLICK, this.show);
+              }
+            }
+          },
+        },
+        {
+          key: 'showView',
+          value: function showView(view) {
+            var $yearsPicker = this.$yearsPicker,
+              $monthsPicker = this.$monthsPicker,
+              $daysPicker = this.$daysPicker,
+              format = this.format;
+
+            if (format.hasYear || format.hasMonth || format.hasDay) {
+              switch (Number(view)) {
+                case VIEWS.YEARS:
+                  $monthsPicker.addClass(CLASS_HIDE);
+                  $daysPicker.addClass(CLASS_HIDE);
+
+                  if (format.hasYear) {
+                    this.renderYears();
+                    $yearsPicker.removeClass(CLASS_HIDE);
+                    this.place();
+                  } else {
+                    this.showView(VIEWS.DAYS);
+                  }
+
+                  break;
+
+                case VIEWS.MONTHS:
+                  $yearsPicker.addClass(CLASS_HIDE);
+                  $daysPicker.addClass(CLASS_HIDE);
+
+                  if (format.hasMonth) {
+                    this.renderMonths();
+                    $monthsPicker.removeClass(CLASS_HIDE);
+                    this.place();
+                  } else {
+                    this.showView(VIEWS.YEARS);
+                  }
+
+                  break;
+                // case VIEWS.DAYS:
+
+                default:
+                  $yearsPicker.addClass(CLASS_HIDE);
+                  $monthsPicker.addClass(CLASS_HIDE);
+
+                  if (format.hasDay) {
+                    this.renderDays();
+                    $daysPicker.removeClass(CLASS_HIDE);
+                    this.place();
+                  } else {
+                    this.showView(VIEWS.MONTHS);
+                  }
+              }
+            }
+          },
+        },
+        {
+          key: 'hideView',
+          value: function hideView() {
+            if (!this.inline && this.options.autoHide) {
+              this.hide();
+            }
+          },
+        },
+        {
+          key: 'place',
+          value: function place() {
+            if (this.inline) {
+              return;
+            }
+
+            var $this = this.$element,
+              options = this.options,
+              $picker = this.$picker;
+            var containerWidth = $(document).outerWidth();
+            var containerHeight = $(document).outerHeight();
+            var elementWidth = $this.outerWidth();
+            var elementHeight = $this.outerHeight();
+            var width = $picker.width();
+            var height = $picker.height();
+
+            var _$this$offset = $this.offset(),
+              left = _$this$offset.left,
+              top = _$this$offset.top;
+
+            var offset = parseFloat(options.offset);
+            var placement = CLASS_TOP_LEFT;
+
+            if (isNaN(offset)) {
+              offset = 10;
+            }
+
+            if (top > height && top + elementHeight + height > containerHeight) {
+              top -= height + offset;
+              placement = CLASS_BOTTOM_LEFT;
+            } else {
+              top += elementHeight + offset;
+            }
+
+            if (left + width > containerWidth) {
+              left += elementWidth - width;
+              placement = placement.replace('left', 'right');
+            }
+
+            $picker.removeClass(CLASS_PLACEMENTS).addClass(placement).css({
+              top: top,
+              left: left,
+            });
+          }, // A shortcut for triggering custom events
+        },
+        {
+          key: 'trigger',
+          value: function trigger(type, data) {
+            var e = $.Event(type, data);
+            this.$element.trigger(e);
+            return e;
+          },
+        },
+        {
+          key: 'createItem',
+          value: function createItem(data) {
+            var options = this.options;
+            var itemTag = options.itemTag;
+            var item = {
+              text: '',
+              view: '',
+              muted: false,
+              picked: false,
+              disabled: false,
+              highlighted: false,
+            };
+            var classes = [];
+            $.extend(item, data);
+
+            if (item.muted) {
+              classes.push(options.mutedClass);
+            }
+
+            if (item.highlighted) {
+              classes.push(options.highlightedClass);
+            }
+
+            if (item.picked) {
+              classes.push(options.pickedClass);
+            }
+
+            if (item.disabled) {
+              classes.push(options.disabledClass);
+            }
+
+            return '<'.concat(itemTag, ' class="').concat(classes.join(' '), '" data-view="').concat(item.view, '">').concat(item.text, '</').concat(itemTag, '>');
+          },
+        },
+        {
+          key: 'getValue',
+          value: function getValue() {
+            var $this = this.$element;
+            return this.isInput ? $this.val() : $this.text();
+          },
+        },
+        {
+          key: 'setValue',
+          value: function setValue() {
+            var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+            var $this = this.$element;
+
+            if (this.isInput) {
+              $this.val(value);
+            } else if (!this.inline || this.options.container) {
+              $this.text(value);
+            }
+          },
+        },
+      ],
+      [
+        {
+          key: 'setDefaults',
+          value: function setDefaults() {
+            var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+            $.extend(DEFAULTS, LANGUAGES[options.language], $.isPlainObject(options) && options);
+          },
+        },
+      ],
+    );
 
     return Datepicker;
-  }();
+  })();
 
   if ($.extend) {
     $.extend(Datepicker.prototype, render, handlers, methods);
@@ -1519,5 +1579,4 @@
       return this;
     };
   }
-
-})));
+});

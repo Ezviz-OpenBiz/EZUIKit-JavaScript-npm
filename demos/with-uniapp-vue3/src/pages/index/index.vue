@@ -1,10 +1,7 @@
 <template>
   <view class="content">
-    <image class="logo" src="/static/logo.png" />
-    <view class="text-area">
-      <button class="title" @click="gotoWebview">webview</button>
-    </view>
     <Player />
+    <button class="title" @click="gotoWebview">webview</button>
   </view>
 </template>
 
