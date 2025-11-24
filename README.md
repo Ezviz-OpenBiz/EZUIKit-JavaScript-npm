@@ -129,8 +129,10 @@ alpha（功能测试）、beta（集成测试）为我们的非正式版本，�
 > 如果使用 vue2.6，可参考 demos => [with-vue2.6](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-vue2.6)
 >
 > 如果使用 uniapp + vue3 ，可参考 demos => [with-uniapp-vue3](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-uniapp-vue3)
->
+
 > 如果使用 uniapp + vue2 ，可参考 demos => [with-uniapp-vue2](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-uniapp-vue2)
+ 
+> 如果使用 docker + nginx ，可参考 demos => [with-docker-nginx](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-docker-nginx)
 
 #### tips
 
@@ -284,6 +286,8 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 </td><td>N</td></tr>
 
 <tr><td>scaleMode</td><td> 0 | 1 | 2</td><td> 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0 </td><td>N</td></tr>
+
+<tr><td>spaceId</td><td> number</td><td> 云录制空间 ID (仅云录制生效) @sine 8.2.0 </td><td>N</td></tr>
 </table>
 
 ### 方法调用

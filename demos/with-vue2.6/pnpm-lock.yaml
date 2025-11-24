@@ -12,8 +12,8 @@ dependencies:
     specifier: ^3.18.1
     version: 3.47.0
   ezuikit-js:
-    specifier: 8.2.0-beta.8
-    version: 8.2.0-beta.8
+    specifier: 8.2.0
+    version: 8.2.0
   vue:
     specifier: 2.6.14
     version: 2.6.14
@@ -23,11 +23,11 @@ dependencies:
 
 devDependencies:
   '@vue/cli-plugin-babel':
-    specifier: 4.5.13
-    version: 4.5.13(@vue/cli-service@4.5.13)(core-js@3.47.0)(vue@2.6.14)
+    specifier: 4.5.19
+    version: 4.5.19(@vue/cli-service@4.5.19)(core-js@3.47.0)(vue@2.6.14)
   '@vue/cli-service':
-    specifier: 4.5.13
-    version: 4.5.13(vue-template-compiler@2.6.14)(vue@2.6.14)
+    specifier: 4.5.19
+    version: 4.5.19(vue-template-compiler@2.6.14)(vue@2.6.14)
   vue-template-compiler:
     specifier: 2.6.14
     version: 2.6.14
@@ -1690,14 +1690,14 @@ packages:
     resolution: {integrity: sha512-GdxvNSmOw7NHIazCO8gTK+xZbaOmScTtxj6eHVeMbYpDYVPJ+th3VMLWNpw/b6uOjwzzcyKlA5dRQ1DAb+gF/g==}
     dev: true
 
-  /@vue/cli-plugin-babel@4.5.13(@vue/cli-service@4.5.13)(core-js@3.47.0)(vue@2.6.14):
-    resolution: {integrity: sha512-ykvEAfD8PgGs+dGMGqr7l/nRmIS39NRzWLhMluPLTvDV1L+IxcoB73HNLGA/aENDpl8CuWrTE+1VgydcOhp+wg==}
+  /@vue/cli-plugin-babel@4.5.19(@vue/cli-service@4.5.19)(core-js@3.47.0)(vue@2.6.14):
+    resolution: {integrity: sha512-8ebXzaMW9KNTMAN6+DzkhFsjty1ieqT7hIW5Lbk4v30Qhfjkms7lBWyXPGkoq+wAikXFa1Gnam2xmWOBqDDvWg==}
     peerDependencies:
       '@vue/cli-service': ^3.0.0 || ^4.0.0-0
     dependencies:
       '@babel/core': 7.28.5
       '@vue/babel-preset-app': 4.5.19(@babel/core@7.28.5)(core-js@3.47.0)(vue@2.6.14)
-      '@vue/cli-service': 4.5.13(vue-template-compiler@2.6.14)(vue@2.6.14)
+      '@vue/cli-service': 4.5.19(vue-template-compiler@2.6.14)(vue@2.6.14)
       '@vue/cli-shared-utils': 4.5.19
       babel-loader: 8.4.1(@babel/core@7.28.5)(webpack@4.47.0)
       cache-loader: 4.1.0(webpack@4.47.0)
@@ -1711,25 +1711,25 @@ packages:
       - webpack-command
     dev: true
 
-  /@vue/cli-plugin-router@4.5.19(@vue/cli-service@4.5.13):
+  /@vue/cli-plugin-router@4.5.19(@vue/cli-service@4.5.19):
     resolution: {integrity: sha512-3icGzH1IbVYmMMsOwYa0lal/gtvZLebFXdE5hcQJo2mnTwngXGMTyYAzL56EgHBPjbMmRpyj6Iw9k4aVInVX6A==}
     peerDependencies:
       '@vue/cli-service': ^3.0.0 || ^4.0.0-0
     dependencies:
-      '@vue/cli-service': 4.5.13(vue-template-compiler@2.6.14)(vue@2.6.14)
+      '@vue/cli-service': 4.5.19(vue-template-compiler@2.6.14)(vue@2.6.14)
       '@vue/cli-shared-utils': 4.5.19
     dev: true
 
-  /@vue/cli-plugin-vuex@4.5.19(@vue/cli-service@4.5.13):
+  /@vue/cli-plugin-vuex@4.5.19(@vue/cli-service@4.5.19):
     resolution: {integrity: sha512-DUmfdkG3pCdkP7Iznd87RfE9Qm42mgp2hcrNcYQYSru1W1gX2dG/JcW8bxmeGSa06lsxi9LEIc/QD1yPajSCZw==}
     peerDependencies:
       '@vue/cli-service': ^3.0.0 || ^4.0.0-0
     dependencies:
-      '@vue/cli-service': 4.5.13(vue-template-compiler@2.6.14)(vue@2.6.14)
+      '@vue/cli-service': 4.5.19(vue-template-compiler@2.6.14)(vue@2.6.14)
     dev: true
 
-  /@vue/cli-service@4.5.13(vue-template-compiler@2.6.14)(vue@2.6.14):
-    resolution: {integrity: sha512-CKAZN4iokMMsaUyJRU22oUAz3oS/X9sVBSKAF2/shFBV5xh3jqAlKl8OXZYz4cXGFLA6djNuYrniuLAo7Ku97A==}
+  /@vue/cli-service@4.5.19(vue-template-compiler@2.6.14)(vue@2.6.14):
+    resolution: {integrity: sha512-+Wpvj8fMTCt9ZPOLu5YaLkFCQmB4MrZ26aRmhhKiCQ/4PMoL6mLezfqdt6c+m2htM+1WV5RunRo+0WHl2DfwZA==}
     engines: {node: '>=8'}
     hasBin: true
     peerDependencies:
@@ -1763,8 +1763,8 @@ packages:
       '@types/webpack': 4.41.40
       '@types/webpack-dev-server': 3.11.6(debug@4.4.3)
       '@vue/cli-overlay': 4.5.19
-      '@vue/cli-plugin-router': 4.5.19(@vue/cli-service@4.5.13)
-      '@vue/cli-plugin-vuex': 4.5.19(@vue/cli-service@4.5.13)
+      '@vue/cli-plugin-router': 4.5.19(@vue/cli-service@4.5.19)
+      '@vue/cli-plugin-vuex': 4.5.19(@vue/cli-service@4.5.19)
       '@vue/cli-shared-utils': 4.5.19
       '@vue/component-compiler-utils': 3.3.0
       '@vue/preload-webpack-plugin': 1.1.2(html-webpack-plugin@3.2.0)(webpack@4.47.0)
@@ -4472,8 +4472,8 @@ packages:
     engines: {'0': node >=0.6.0}
     dev: true
 
-  /ezuikit-js@8.2.0-beta.8:
-    resolution: {integrity: sha512-NKI3O+8DKro6TrZF8ARzgDlCQwkPkHEEsQpRbF2zb7kn5aEmoEZ74aEPDg6nvvQuwcxlGaIQ8Hgxu+HbRuWHEg==}
+  /ezuikit-js@8.2.0:
+    resolution: {integrity: sha512-Yt+1GWce3vqty50jU1Fi4ac90Kbq25D2AJnIhV0e6uuBXEHLmqoyS1uWaKVUiVbR7MVjwVY8ab0Vk8LButF83g==}
     dependencies:
       '@ezuikit/player-ezopen': 8.2.2-beta.5
       '@ezuikit/utils-collect': 0.1.1
@@ -6067,7 +6067,7 @@ packages:
   /md5.js@1.3.5:
     resolution: {integrity: sha512-xitP+WxNPcTTOgnTJcrhM0xvdPepipPSf3I8EIpGKeFLjt3PlJLIDG3u8EX53ZIubkb+5U2+3rELYpEhHhzdkg==}
     dependencies:
-      hash-base: 3.0.5
+      hash-base: 3.1.2
       inherits: 2.0.4
       safe-buffer: 5.2.1
     dev: true

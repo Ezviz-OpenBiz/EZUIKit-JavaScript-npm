@@ -100,11 +100,11 @@ const init = () => {
   player = new EZUIKitPlayer({
     id: "video-container", // 视频容器ID
     accessToken:
-      "at.9axzt49g87s3fhk056n43g72d5dh3m6i-8z6xiwgadr-0dxupdf-yljcgeiod",
+      "at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3",
     url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
     // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
     template: "pcLive",
-    width: 600,
+    // width: 600,
     height: 400,
     // quality: 1, // 
     // language: "en", // zh | en
@@ -117,6 +117,7 @@ const init = () => {
     //   { level: 1, name: "标清", streamTypeIn: 1 },
     // ],
     // staticPath: "./ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+    scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
     env: {
       // https://open.ys7.com/help/1772?h=domain
       // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
@@ -198,7 +199,7 @@ onMounted(() => {
 <template>
   <div class="hello-ezuikit-js">
     <div>
-      <div id="video-container" style="width: 600px; height: 400px"></div>
+      <div id="video-container" style="height: 400px"></div>
     </div>
     <div>
       <button @click="init">init</button>
