@@ -1,4 +1,4 @@
-name: build-uniapp-vue2
+name: build-vue2.5
 
 on:
   push:
