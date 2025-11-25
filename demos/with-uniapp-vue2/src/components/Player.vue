@@ -12,7 +12,7 @@
       <button v-on:click="startSave">startSave</button>
       <button v-on:click="stopSave">stopSave</button>
       <button v-on:click="capturePicture">capturePicture</button>
-      <button v-on:click="fullScreen">fullScreen</button>
+      <button v-on:click="fullscreen">fullscreen</button>
       <button v-on:click="getOSDTime">getOSDTime</button>
       <button v-on:click="startTalk">startTalk</button>
       <button v-on:click="stopTalk">stopTalk</button>
@@ -181,8 +181,8 @@ export default {
     stopTalk() {
       player.stopTalk();
     },
-    fullScreen() {
-      player.fullScreen();
+    fullscreen() {
+      player.fullscreen();
     },
     destroy() {
       var destroyPromise = player.destroy();

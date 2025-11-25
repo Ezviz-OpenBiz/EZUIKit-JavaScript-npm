@@ -17,7 +17,7 @@
 		stopSave: Function;
 		startTalk: Function;
 		stopTalk: Function;
-		fullScreen: Function;
+		fullscreen: Function;
 		destroy: Function;
 		setWaterMarkFont: Function;
 		eventEmitter: any;
@@ -91,8 +91,8 @@
 		player.stopTalk();
 	};
 
-	const fullScreen = () => {
-		player.fullScreen();
+	const fullscreen = () => {
+		player.fullscreen();
 	};
 
 	const destroy = () => {
@@ -122,7 +122,7 @@
 			},
 			fontRotate: {
 				fRotateAngle: 0, // 旋转角度
-				fFillFullScreen: true, // 平铺整个屏幕
+				fFillFullscreen: true, // 平铺整个屏幕
 			},
 			fontFamily: "Arial", // 字体
 			fontNumber: {
@@ -215,7 +215,7 @@
 					},
 					fontRotate: {
 						fRotateAngle: 0, // 旋转角度
-						fFillFullScreen: true, // 平铺整个屏幕
+						fFillFullscreen: true, // 平铺整个屏幕
 					},
 					fontFamily: "Arial", // 字体
 					fontNumber: {
@@ -267,7 +267,7 @@
 			<button @click="startSave">startSave</button>
 			<button @click="stopSave">stopSave</button>
 			<button @click="capturePicture">capturePicture</button>
-			<button @click="fullScreen">fullScreen</button>
+			<button @click="fullscreen">fullscreen</button>
 			<button @click="getOSDTime">getOSDTime</button>
 			<button @click="startTalk">startTalk</button>
 			<button @click="stopTalk">stopTalk</button>

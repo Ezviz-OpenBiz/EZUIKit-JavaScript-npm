@@ -24,7 +24,7 @@
       <button onClick="closeSound()">关闭声音</button>
       <button onClick="startSave()">开始录制</button>
       <button onClick="stopSave()">结束录制</button>
-      <button onClick="fullScreen()">全屏</button>
+      <button onClick="fullscreen()">全屏</button>
     </div>
   </div>
   <script>
@@ -52,8 +52,8 @@
     });
     // });
 
-    function fullScreen() {
-      var playPromise = player.fullScreen();
+    function fullscreen() {
+      var playPromise = player.fullscreen();
       playPromise.then((data) => {
         console.log("promise 获取 数据", data);
       });
