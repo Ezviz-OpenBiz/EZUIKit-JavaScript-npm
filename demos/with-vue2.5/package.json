@@ -9,7 +9,7 @@
     "preinstall": "npx only-allow yarn"
   },
   "dependencies": {
-    "vue": "^2.5.17",
+    "vue": "^3.0.0",
    "ezuikit-js": "8.2.0"
   },
   "devDependencies": {
