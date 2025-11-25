@@ -1,5 +1,7 @@
 # with-uniapp-vue2
 
+仅支持 H5 (web 环境)
+
 ## Project setup
 ```
 ## 强制使用 yarn 安装依赖
@@ -28,4 +30,6 @@ https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-u
 ## uniapp 插件
 
 https://github.com/Ezviz-OpenBiz/UniEzOpenSDK
+
+
 

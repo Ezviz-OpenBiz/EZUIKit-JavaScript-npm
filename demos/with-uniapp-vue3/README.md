@@ -1,4 +1,7 @@
 ## Project setup
+
+仅支持 H5 (web环境)
+
 ```
 ## 强制使用 yarn 安装依赖
 yarn install

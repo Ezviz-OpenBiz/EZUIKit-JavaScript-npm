@@ -148,7 +148,7 @@
 		//     var accessToken = res.data.accessToken;
 		player = new EZUIKitPlayer({
 			id: "video-container", // 视频容器ID
-			accessToken: "at.a2kfdvx06shai2749ofnby6607q6io0a-1apef6y5tr-1p1z09q-tp5zvd5kj",
+			accessToken: "at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3",
 			url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
 			// simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
 			template: "mobileLive",
@@ -160,12 +160,9 @@
 			handleError: (err: any) => {
 				console.error("handleError", err);
 			},
-			// 自定义清晰度 默认 null, 如果有值 sdk 内部不在进行获取, null 默认使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取
-			// videoLevelList: [
-			//   { level: 0, name: "流畅", streamTypeIn: 1 },
-			//   { level: 1, name: "标清", streamTypeIn: 1 },
-			// ],
 			// staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+			// isCloudRecord: true, // 如果是云录制的播放 需要这个值，是必须的, 8.2.0 开始 默认支持
+        	scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
 			env: {
 				// https://open.ys7.com/help/1772?h=domain
 				// domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
@@ -195,6 +192,10 @@
 			//   { level: 1, name: "标清", streamTypeIn: 2 }, // 需要保证支持子码流 (streamTypeIn=2)
 			//   { level: 2, name: "高清", streamTypeIn: 1 },
 			// ],
+			// videoLevelList: [
+			//   { level: -1, name: "标清", streamTypeIn: 2 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+			//   { level: -2, name: "高清", streamTypeIn: 1 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
+			// ]
 			handleFirstFrameDisplay:()=>{
 				player.setWaterMarkFont({
 					fontString: ["watermark"], // 水印文本内容
