@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@ezuikit/player-ezopen@8.1.12-beta.4":
-  version "8.1.12-beta.4"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.1.12-beta.4.tgz#45d55ab564ebce9805e7a4287b07c5f4ed866258"
-  integrity sha512-qp3d7s8t2OlHwt/+qofxsk68bWbLOj1qbK3VdxUJQ8D37KGn7aKRc6EtdyP2yDMe8LCSyytJzbyORDCkaKu9VA==
+"@ezuikit/player-ezopen@8.1.18-beta.2":
+  version "8.1.18-beta.2"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-8.1.18-beta.2.tgz#6d81d7fbb2172cd4764c1c16b54bcc7f3ac19baf"
+  integrity sha512-8jInHXuzWKb1mggknhtKqrAGcmBYg/3hacIFGLEek+5IP/u+Gqy/lTNMmwPon4mT0l7Ap+YBQH2yMwu+UB/Ycg==
   dependencies:
     "@ezuikit/player-plugin-record" "8.1.8-beta.3"
     "@ezuikit/utils-i18n" "^1.0.1"
@@ -37,10 +37,22 @@
   dependencies:
     i18n-js "^4.3.2"
 
+"@ezuikit/utils-i18n@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@ezuikit/utils-i18n/-/utils-i18n-1.1.1.tgz#a9d05d1ab96341450e07477d5ab04f494c390332"
+  integrity sha512-PZe37fHfjUbhArXaoWMxbGOnU1R6k8XV7NroB3n2uL+z06SajozxO5TQARrk7Z72USQPvUsyaKIBcwVNjWK6/w==
+  dependencies:
+    deepmerge "^4.3.1"
+
 "@ezuikit/utils-logger@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@ezuikit/utils-logger/-/utils-logger-1.0.1.tgz#9f157c982acba73514fc7a46829768d5bf61f45e"
   integrity sha512-qak0MXh4vWZCji3aSCfHdWR3EbZCaqS0iMT8/QWuWPRr0vDmTRMP3kFOAw1MuMraR0ocjPBE2PaTEmUuwVqaAw==
+
+"@ezuikit/utils-logger@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@ezuikit/utils-logger/-/utils-logger-1.1.0.tgz#5730becccd35f7704592b4fbe2bdcae0fd9e8c8b"
+  integrity sha512-l/PiFZIC/VtW2l1oEjZEXfeYKFkPvX1kAlljXc1nRImNOI9t71/2oyTTkqkZvMLP/EG5regD9wuQplcvtfubUg==
 
 "@ezuikit/utils-service@1.0.1":
   version "1.0.1"
@@ -54,6 +66,11 @@
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@ezuikit/utils-tools/-/utils-tools-1.0.4.tgz#018f0ac5b870ca8c6d4dd5d6c8ae381533e7d772"
   integrity sha512-w+LZ03qowSqrSqDnuONKPpmEn0cuCaF2pkgHL1YicR0of/ZelCho5X8cy5TXQe7UsrQkIM2M7vVennv5KnAdpQ==
+
+"@ezuikit/utils-tools@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@ezuikit/utils-tools/-/utils-tools-1.1.0.tgz#2986443242e4e20c4aa1250030a5cbe5a43c58b5"
+  integrity sha512-mujPtXIhZnuJrJySu1/Z6X90sMJQStZydurZcfetMCH6pqIYN4P+1w6+P8PCTR6k4LJp5nY9+eNnKa7AZ8OBKA==
 
 "@juggle/resize-observer@^3.4.0":
   version "3.4.0"
