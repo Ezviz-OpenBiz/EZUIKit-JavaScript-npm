@@ -183,7 +183,7 @@ const Player = () => {
           type="text"
           ref={accessTokenRef}
           style={{ width: 500 }}
-          defaultValue="at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3"
+          defaultValue="at.as7tullg3o0j2xls2jxmotdqcjo4v0ga-3k8grefdc6-1h84p1d-bwffbejmh"
         />
       </div>
       <div>

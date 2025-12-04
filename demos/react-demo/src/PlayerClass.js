@@ -28,7 +28,7 @@ class App extends React.Component {
         id: "player-container", // 视频容器ID
         url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
         accessToken:
-          "at.2s5bel782emtho68ae31snumc1wuuioa-3d531vj77f-0gtnx7g-fddkee44",
+          "at.as7tullg3o0j2xls2jxmotdqcjo4v0ga-3k8grefdc6-1h84p1d-bwffbejmh",
         // simple:极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放; security: 安防版; voice: 语音版;
         template: "pcLive",
         plugin: ["talk"], // 加载插件，talk-对讲
