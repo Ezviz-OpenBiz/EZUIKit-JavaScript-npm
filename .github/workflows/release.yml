@@ -5,6 +5,11 @@ on:
   push:
     tags:
       - "v*"
+
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 # 任务，定义个changelog 的任务
 jobs:
   changelog:
@@ -56,11 +61,12 @@ jobs:
       #     version: 8
       # 设置 Node
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: npm
+          node-version: 20
           registry-url: https://registry.npmjs.org
+
+      - run: npm install -g npm@latest
       # 安装依赖
       - name: Install dependencies
         run: npm install
@@ -83,8 +89,4 @@ jobs:
       #   run: pnpm run build
       # 发布npm 发布前执行了prepublishOnly
       - name: Publish npm
-        run: npm publish --tag ${{ steps.determine_tag.outputs.tag }}
-        env:
-          # 这里需要几个 Token 变量
-          # NPM_TOKEN 需要在 npm 网站生成
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --tag ${{ steps.determine_tag.outputs.tag }} --access public
