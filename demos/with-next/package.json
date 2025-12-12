@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "ezuikit-js": "8.2.0",
-    "next": "15",
+    "next": "14",
     "react": "^18",
     "react-dom": "^18"
   },
