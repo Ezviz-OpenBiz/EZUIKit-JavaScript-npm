@@ -4,9 +4,12 @@
 
 ezopen://open.ys7.com/BC7799091/1.cloud.rec?busType=7&spaceId=${spaceId}
 
-- busType=7 表示云录制
 
-- spaceId 录制空间id 是必须的
+- `cloud.rec` 表示云回放
+
+- `busType=7` 表示云录制(需要结合 `cloud.rec`)
+
+- `spaceId` 云录制空间 id 是必须的
 
 ### 版本说
 
