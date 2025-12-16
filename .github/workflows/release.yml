@@ -68,8 +68,11 @@ jobs:
 
       - run: npm install -g npm@latest
       # 安装依赖
-      - name: Install dependencies
+      - name: npm Install dependencies
         run: npm install
+
+      - name: yarn Install dependencies
+        run: yarn install
 
       # 获取 tag 的版本类型（仅支持 正式版、alpha和beta版）
       - name: Determine release tag
