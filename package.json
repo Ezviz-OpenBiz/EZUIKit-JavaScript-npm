@@ -32,7 +32,7 @@
     "abortcontroller-polyfill": "^1.7.5",
     "debounce-promise": "^3.1.2",
     "deepmerge": "^4.3.1",
-    "@skax/delegate": "4.0.1",
+    "@skax/delegate": "4.0.2",
     "formdata-polyfill": "^4.0.10",
     "screenfull": "^5.2.0"
   },

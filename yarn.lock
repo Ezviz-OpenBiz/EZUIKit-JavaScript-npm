@@ -63,10 +63,10 @@
   resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.4.0.tgz#08d6c5e20cf7e4cc02fd181c4b0c225cd31dbb60"
   integrity sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==
 
-"@skax/delegate@4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@skax/delegate/-/delegate-4.0.1.tgz#e96f8ba60ebeb67e17e909cc0d708c782c6835fb"
-  integrity sha512-8TzM6LJ/oITUOWllEfCb8Wdt0jcla1HGeAbbmriiS1Q7+dv0p7oh0aHZ0bkDH1sPrwtpd+1oBLb/Ut6n7EvIuQ==
+"@skax/delegate@4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@skax/delegate/-/delegate-4.0.2.tgz#c1bdd1e195e414bb56153d697d9e0c431084afcb"
+  integrity sha512-8imP+fGESjlbU4mFhZMEuR3/qmYVtqQjXXzZ/C/imbzKqyaMWYpEDqQXNf6yGHzWHUJhZwn5AWNm645U1GjQsQ==
 
 abortcontroller-polyfill@^1.7.5:
   version "1.7.8"
