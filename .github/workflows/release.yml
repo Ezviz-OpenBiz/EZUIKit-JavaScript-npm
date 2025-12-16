@@ -71,15 +71,17 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 获取 tag 的版本类型（仅支持 正式版和beta版）
+      # 获取 tag 的版本类型（仅支持 正式版、alpha和beta版）
       - name: Determine release tag
         id: determine_tag
         run: |
           TAG=$(echo "${GITHUB_REF}" | sed 's/refs\/tags\/\(.*\)/\1/')
-          if [[ "$TAG" =~ -beta ]]; then
-            echo "::set-output name=tag::beta"
+          if [[ "$TAG" =~ -alpha ]]; then
+            echo "tag=alpha" >> "$GITHUB_OUTPUT"
+          elif [[ "$TAG" =~ -beta ]]; then
+            echo "tag=beta" >> "$GITHUB_OUTPUT"
           elif [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "::set-output name=tag::latest"
+            echo "tag=latest" >> "$GITHUB_OUTPUT"
           else
             echo "Unsupported version detected. Terminating."
             exit 1
