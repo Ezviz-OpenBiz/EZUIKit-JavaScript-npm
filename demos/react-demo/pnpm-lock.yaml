@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   ezuikit-js:
-    specifier: 8.2.1
-    version: 8.2.1
+    specifier: 8.2.3
+    version: 8.2.3
   react:
     specifier: ^17
     version: 17.0.2
@@ -2241,9 +2241,8 @@ packages:
       '@sinonjs/commons': 1.8.6
     dev: false
 
-  /@skax/delegate@4.0.1:
-    resolution: {integrity: sha512-8TzM6LJ/oITUOWllEfCb8Wdt0jcla1HGeAbbmriiS1Q7+dv0p7oh0aHZ0bkDH1sPrwtpd+1oBLb/Ut6n7EvIuQ==}
-    requiresBuild: true
+  /@skax/delegate@4.0.2:
+    resolution: {integrity: sha512-8imP+fGESjlbU4mFhZMEuR3/qmYVtqQjXXzZ/C/imbzKqyaMWYpEDqQXNf6yGHzWHUJhZwn5AWNm645U1GjQsQ==}
     dev: false
 
   /@surma/rollup-plugin-off-main-thread@2.2.3:
@@ -5150,8 +5149,8 @@ packages:
       - supports-color
     dev: false
 
-  /ezuikit-js@8.2.1:
-    resolution: {integrity: sha512-uiAZaJXDte/WwFvWAgAz74ekZ9dfwaKpOxd52aEuF0Km+81sjLLjYP9cfIYELW4Idyfv0gKDIbsdCg1a5AnNhw==}
+  /ezuikit-js@8.2.3:
+    resolution: {integrity: sha512-BjNUMpJPcR8J+bqrRw9/dDdePnUQi2W2ck8hu0uwknuGUSDqGuY2mQnuA+q3gYD36kpucNAIlVZZ0AZK7BGvxA==}
     dependencies:
       '@ezuikit/player-ezopen': 8.2.5-beta.2
       '@ezuikit/utils-collect': 0.1.1
@@ -5159,7 +5158,7 @@ packages:
       '@ezuikit/utils-logger': 2.0.0
       '@ezuikit/utils-tools': 2.0.1
       '@juggle/resize-observer': 3.4.0
-      '@skax/delegate': 4.0.1
+      '@skax/delegate': 4.0.2
       abortcontroller-polyfill: 1.7.8
       debounce-promise: 3.1.2
       deepmerge: 4.3.1
