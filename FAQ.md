@@ -49,3 +49,8 @@ Chrome 浏览器单页面 WebGL 上下文数量有限（一般为 16 个），�
 ## vue3 响应式及 Proxy
 
 由于 vue3 响应式原理（Proxy），使用响应式存储实例可能导致 SDK 异常。请开发者使用 [vue markRaw](https://cn.vuejs.org/api/reactivity-advanced#markraw) 或 非响应式的变量进行存储实例
+
+
+## 云录制
+
+[云录制](./cloudRecord.md)的播放必须有 `spaceId`

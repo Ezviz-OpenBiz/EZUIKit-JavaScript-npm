@@ -1,0 +1,156 @@
+lockfileVersion: '6.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+dependencies:
+  '@ezuikit/player-ezopen':
+    specifier: 8.2.5-beta.3
+    version: 8.2.5-beta.3
+  '@ezuikit/utils-collect':
+    specifier: 0.1.1
+    version: 0.1.1
+  '@ezuikit/utils-i18n':
+    specifier: 2.0.0
+    version: 2.0.0
+  '@ezuikit/utils-logger':
+    specifier: 2.0.0
+    version: 2.0.0
+  '@ezuikit/utils-tools':
+    specifier: 2.0.1
+    version: 2.0.1
+  '@juggle/resize-observer':
+    specifier: ^3.4.0
+    version: 3.4.0
+  '@skax/delegate':
+    specifier: 4.0.2
+    version: 4.0.2
+  abortcontroller-polyfill:
+    specifier: ^1.7.5
+    version: 1.7.8
+  debounce-promise:
+    specifier: ^3.1.2
+    version: 3.1.2
+  deepmerge:
+    specifier: ^4.3.1
+    version: 4.3.1
+  formdata-polyfill:
+    specifier: ^4.0.10
+    version: 4.0.10
+  screenfull:
+    specifier: ^5.2.0
+    version: 5.2.0
+
+packages:
+
+  /@ezuikit/player-ezopen@8.2.5-beta.3:
+    resolution: {integrity: sha512-JyWUFGDduSyMBLGKYVynL9EGRvBRAd33BH6xZG6HEy/IFi+jj5rpxdY731KSc3EIxzZaMRMKMzSmK2gC9SohXA==}
+    dependencies:
+      '@ezuikit/player-plugin-record': 8.2.0
+      '@ezuikit/utils-i18n': 2.0.0
+      '@ezuikit/utils-logger': 2.0.0
+      '@ezuikit/utils-service': 1.0.1
+      '@ezuikit/utils-tools': 2.0.1
+      dayjs: 1.11.13
+      deepmerge: 4.3.1
+      eventemitter3: 5.0.1
+      screenfull: 5.2.0
+      ua-parser-js: 1.0.37
+    dev: false
+
+  /@ezuikit/player-plugin-record@8.2.0:
+    resolution: {integrity: sha512-5T+1pSw83FmZDrpcNrDRQOf0vv3a3flnwWWZ8N42ZZENtATeMUAXXu2LkmnrLpsRmSVBELIX13adEqnAk1k39A==}
+    dev: false
+
+  /@ezuikit/utils-collect@0.1.1:
+    resolution: {integrity: sha512-BgEOnTtAq8rQRBAKv5rLXbQLGOnfOZ6NS0QTmiviey80JbMJlxrLiqmjL5lxvkm4JtCcXCtSgPA4tskQKN4eDA==}
+    dev: false
+
+  /@ezuikit/utils-i18n@2.0.0:
+    resolution: {integrity: sha512-gMkfdwFTRk3bAkUVWRGPyEsQl4aIImBpQp732aSSHA75LFPi1MmdaB2Xf34OeC+4v+Anpbt75vviCpUrKPMKlQ==}
+    dependencies:
+      deepmerge: 4.3.1
+    dev: false
+
+  /@ezuikit/utils-logger@2.0.0:
+    resolution: {integrity: sha512-xtq7Vwle75pfA1UfmcsO2cAdqu9n04fxXDu32fpta7A99ENgyk8saK1NRxeiLnqQHdibaIAmrIbfehgLAH6ecQ==}
+    dev: false
+
+  /@ezuikit/utils-service@1.0.1:
+    resolution: {integrity: sha512-iNjYuU7AScBJxvKBM9PjiGI2y64QJNPT/H1Fy/Y7ZIAlw4DO//TP+x50qCho+i+EOUpWLtOqBQvtRb7a0O4X4Q==}
+    dependencies:
+      '@ezuikit/utils-tools': 1.1.0
+      dayjs: 1.11.13
+    dev: false
+
+  /@ezuikit/utils-tools@1.1.0:
+    resolution: {integrity: sha512-mujPtXIhZnuJrJySu1/Z6X90sMJQStZydurZcfetMCH6pqIYN4P+1w6+P8PCTR6k4LJp5nY9+eNnKa7AZ8OBKA==}
+    dev: false
+
+  /@ezuikit/utils-tools@2.0.1:
+    resolution: {integrity: sha512-zr+fXIiYP3/4Gp3aSASHhOvkymrRxo+G5Owhxzj/jBq4osifgq8kpDCC399VWEpZvwWUuY4AJENkqq2IC+Qfrw==}
+    dev: false
+
+  /@juggle/resize-observer@3.4.0:
+    resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
+    dev: false
+
+  /@skax/delegate@4.0.2:
+    resolution: {integrity: sha512-8imP+fGESjlbU4mFhZMEuR3/qmYVtqQjXXzZ/C/imbzKqyaMWYpEDqQXNf6yGHzWHUJhZwn5AWNm645U1GjQsQ==}
+    dev: false
+
+  /abortcontroller-polyfill@1.7.8:
+    resolution: {integrity: sha512-9f1iZ2uWh92VcrU9Y8x+LdM4DLj75VE0MJB8zuF1iUnroEptStw+DQ8EQPMUdfe5k+PkB1uUfDQfWbhstH8LrQ==}
+    dev: false
+
+  /dayjs@1.11.13:
+    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
+    dev: false
+
+  /debounce-promise@3.1.2:
+    resolution: {integrity: sha512-rZHcgBkbYavBeD9ej6sP56XfG53d51CD4dnaw989YX/nZ/ZJfgRx/9ePKmTNiUiyQvh4mtrMoS3OAWW+yoYtpg==}
+    dev: false
+
+  /deepmerge@4.3.1:
+    resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
+  /eventemitter3@5.0.1:
+    resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
+    dev: false
+
+  /fetch-blob@3.2.0:
+    resolution: {integrity: sha512-7yAQpD2UMJzLi1Dqv7qFYnPbaPx7ZfFK6PiIxQ4PfkGPyNyl2Ugx+a/umUonmKqjhM4DnfbMvdX6otXq83soQQ==}
+    engines: {node: ^12.20 || >= 14.13}
+    dependencies:
+      node-domexception: 1.0.0
+      web-streams-polyfill: 3.3.3
+    dev: false
+
+  /formdata-polyfill@4.0.10:
+    resolution: {integrity: sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g==}
+    engines: {node: '>=12.20.0'}
+    dependencies:
+      fetch-blob: 3.2.0
+    dev: false
+
+  /node-domexception@1.0.0:
+    resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
+    engines: {node: '>=10.5.0'}
+    dev: false
+
+  /screenfull@5.2.0:
+    resolution: {integrity: sha512-9BakfsO2aUQN2K9Fdbj87RJIEZ82Q9IGim7FqM5OsebfoFC6ZHXgDq/KvniuLTPdeM8wY2o6Dj3WQ7KeQCj3cA==}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
+  /ua-parser-js@1.0.37:
+    resolution: {integrity: sha512-bhTyI94tZofjo+Dn8SN6Zv8nBDvyXTymAdM3LDI/0IboIUwTu1rEhW7v2TfiVsoYWgkQ4kOVqnI8APUFbIQIFQ==}
+    dev: false
+
+  /web-streams-polyfill@3.3.3:
+    resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
+    engines: {node: '>= 8'}
+    dev: false

@@ -34,10 +34,12 @@ THE SOFTWARE.
 ---
 
 Name: @ezuikit/player-theme
-Version: 2.0.0-beta.4
+Version: 2.1.0-beta.5
 License: MIT
 Private: false
 Description: player theme
+Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-theme.git
+Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-theme#readme
 Author: Ezviz-OpenBiz
 
 ---
@@ -77,7 +79,7 @@ SOFTWARE.
 ---
 
 Name: @skax/picker
-Version: 1.1.5
+Version: 1.1.7
 License: MIT
 Private: false
 Description: picker component for js framework, support mobile and pc
@@ -111,18 +113,17 @@ SOFTWARE.
 
 ---
 
-Name: @skax/delegate
-Version: 4.0.0
-License: MIT
+Name: @ezuikit/control-date-picker
+Version: 1.0.4
+License: null
 Private: false
-Description: Lightweight event delegation
-Repository: git+https://github.com/freeshineit/delegate.git
-Homepage: https://github.com/freeshineit/delegate#readme
+Description: date picker control for ezviz
+Author: Ezviz-OpenBiz
 
 ---
 
 Name: @ezuikit/control-time-line
-Version: 1.0.2
+Version: 1.0.6
 License: null
 Private: false
 Description: time line control for ezviz
@@ -131,10 +132,10 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @skax/drag-scroll
-Version: 1.1.1
+Version: 1.1.2
 License: MIT
 Private: false
-Description: picker component for js framework, support mobile and pc
+Description: drag scroll component for js framework, support mobile and pc
 Repository: git+https://github.com/freeshineit/drag-scroll.git
 Homepage: https://github.com/freeshineit/drag-scroll#readme
 Author: ShineShao <xiaoshaoqq@gmail.com>
@@ -386,7 +387,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/player-ezopen
-Version: 8.2.3-beta.3
+Version: 8.2.5-beta.3
 License: MIT
 Private: false
 Description: 萤石ezopne协议播放器
