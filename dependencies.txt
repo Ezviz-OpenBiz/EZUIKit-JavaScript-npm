@@ -34,7 +34,7 @@ THE SOFTWARE.
 ---
 
 Name: @ezuikit/player-theme
-Version: 2.1.0-beta.7
+Version: 2.1.0-beta.8
 License: MIT
 Private: false
 Description: player theme
