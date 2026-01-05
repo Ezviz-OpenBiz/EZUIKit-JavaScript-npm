@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "8.2.4",
+  "version": "8.2.5-beta.1",
   "description": "ezuikit javascript for npm",
   "title": "ezuikit-js",
   "main": "index.js",
@@ -27,7 +27,7 @@
     "@ezuikit/utils-collect": "0.1.1",
     "@ezuikit/utils-i18n": "2.0.0",
     "@ezuikit/utils-logger": "2.0.0",
-    "@ezuikit/utils-tools": "2.0.1",
+    "@ezuikit/utils-tools": "2.0.2",
     "@juggle/resize-observer": "^3.4.0",
     "abortcontroller-polyfill": "^1.7.5",
     "debounce-promise": "^3.1.2",
