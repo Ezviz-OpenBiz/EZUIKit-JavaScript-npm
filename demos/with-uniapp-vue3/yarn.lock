@@ -1471,6 +1471,11 @@
   resolved "https://registry.yarnpkg.com/@ezuikit/utils-tools/-/utils-tools-2.0.1.tgz#cd32739890ff25c89ba022726bb2e57211da73fb"
   integrity sha512-zr+fXIiYP3/4Gp3aSASHhOvkymrRxo+G5Owhxzj/jBq4osifgq8kpDCC399VWEpZvwWUuY4AJENkqq2IC+Qfrw==
 
+"@ezuikit/utils-tools@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@ezuikit/utils-tools/-/utils-tools-2.0.2.tgz#6fd4de6777725c5ccd5e134db4ac1a5b0c6f27f0"
+  integrity sha512-Iay08gfn7URRJ0L16TkEYo8QcBENPN7LLs0O3Cv8Dxfm13rQMN4h03TbzARv/dDGAkKa910CIQ2bKG2QKIZ3nw==
+
 "@ezuikit/utils-tools@^1.0.1":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@ezuikit/utils-tools/-/utils-tools-1.1.0.tgz#2986443242e4e20c4aa1250030a5cbe5a43c58b5"
@@ -2890,16 +2895,16 @@ exsolve@^1.0.7:
   resolved "https://registry.yarnpkg.com/exsolve/-/exsolve-1.0.7.tgz#3b74e4c7ca5c5f9a19c3626ca857309fa99f9e9e"
   integrity sha512-VO5fQUzZtI6C+vx4w/4BWJpg3s/5l+6pRQEHzFRM8WFi4XffSP1Z+4qi7GbjWbvRQEbdIco5mIMq+zX4rPuLrw==
 
-ezuikit-js@8.2.4-beta.2:
-  version "8.2.4-beta.2"
-  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.2.4-beta.2.tgz#1f7f5a1302db005bc2d581273d115c84ec28bbb2"
-  integrity sha512-qiODnsBNwGnH3GfsnTdWiE8Dv5JRFdM6Ujq1or3Q8BqLd5yK+ayFMdczmByHU7edxt5CtYEk/DVYG3BaUCr/1w==
+ezuikit-js@8.2.5-beta.3:
+  version "8.2.5-beta.3"
+  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.2.5-beta.3.tgz#86588f0fd6aa8aaf19eb33caa3b857774b68c9f0"
+  integrity sha512-5ZUQ1pxtH5tNhCAL9ZcK1bLlIpVlzOE/R7rUylFfSsyBKMCS5XJIbivYw9k5VZ1J6hhq2XGANfPCRSJk8/N4eA==
   dependencies:
     "@ezuikit/player-ezopen" "8.2.5-beta.3"
     "@ezuikit/utils-collect" "0.1.1"
     "@ezuikit/utils-i18n" "2.0.0"
     "@ezuikit/utils-logger" "2.0.0"
-    "@ezuikit/utils-tools" "2.0.1"
+    "@ezuikit/utils-tools" "2.0.2"
     "@juggle/resize-observer" "^3.4.0"
     "@skax/delegate" "4.0.2"
     abortcontroller-polyfill "^1.7.5"

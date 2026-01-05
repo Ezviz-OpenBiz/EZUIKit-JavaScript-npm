@@ -9,8 +9,8 @@ dependencies:
     specifier: ^2.5.1
     version: 2.5.1
   ezuikit-js:
-    specifier: 8.2.4-beta.2
-    version: 8.2.4-beta.2
+    specifier: 8.2.5-beta.3
+    version: 8.2.5-beta.3
   react:
     specifier: ^18.2.0
     version: 18.3.1
@@ -1372,6 +1372,10 @@ packages:
     resolution: {integrity: sha512-zr+fXIiYP3/4Gp3aSASHhOvkymrRxo+G5Owhxzj/jBq4osifgq8kpDCC399VWEpZvwWUuY4AJENkqq2IC+Qfrw==}
     dev: false
 
+  /@ezuikit/utils-tools@2.0.2:
+    resolution: {integrity: sha512-Iay08gfn7URRJ0L16TkEYo8QcBENPN7LLs0O3Cv8Dxfm13rQMN4h03TbzARv/dDGAkKa910CIQ2bKG2QKIZ3nw==}
+    dev: false
+
   /@jridgewell/gen-mapping@0.3.13:
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
     dependencies:
@@ -1960,14 +1964,14 @@ packages:
     resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
     dev: false
 
-  /ezuikit-js@8.2.4-beta.2:
-    resolution: {integrity: sha512-qiODnsBNwGnH3GfsnTdWiE8Dv5JRFdM6Ujq1or3Q8BqLd5yK+ayFMdczmByHU7edxt5CtYEk/DVYG3BaUCr/1w==}
+  /ezuikit-js@8.2.5-beta.3:
+    resolution: {integrity: sha512-5ZUQ1pxtH5tNhCAL9ZcK1bLlIpVlzOE/R7rUylFfSsyBKMCS5XJIbivYw9k5VZ1J6hhq2XGANfPCRSJk8/N4eA==}
     dependencies:
       '@ezuikit/player-ezopen': 8.2.5-beta.3
       '@ezuikit/utils-collect': 0.1.1
       '@ezuikit/utils-i18n': 2.0.0
       '@ezuikit/utils-logger': 2.0.0
-      '@ezuikit/utils-tools': 2.0.1
+      '@ezuikit/utils-tools': 2.0.2
       '@juggle/resize-observer': 3.4.0
       '@skax/delegate': 4.0.2
       abortcontroller-polyfill: 1.7.8
