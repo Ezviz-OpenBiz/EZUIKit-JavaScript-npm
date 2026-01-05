@@ -18,8 +18,8 @@ dependencies:
     specifier: 2.0.0
     version: 2.0.0
   '@ezuikit/utils-tools':
-    specifier: 2.0.1
-    version: 2.0.1
+    specifier: 2.0.2
+    version: 2.0.2
   '@juggle/resize-observer':
     specifier: ^3.4.0
     version: 3.4.0
@@ -90,6 +90,10 @@ packages:
 
   /@ezuikit/utils-tools@2.0.1:
     resolution: {integrity: sha512-zr+fXIiYP3/4Gp3aSASHhOvkymrRxo+G5Owhxzj/jBq4osifgq8kpDCC399VWEpZvwWUuY4AJENkqq2IC+Qfrw==}
+    dev: false
+
+  /@ezuikit/utils-tools@2.0.2:
+    resolution: {integrity: sha512-Iay08gfn7URRJ0L16TkEYo8QcBENPN7LLs0O3Cv8Dxfm13rQMN4h03TbzARv/dDGAkKa910CIQ2bKG2QKIZ3nw==}
     dev: false
 
   /@juggle/resize-observer@3.4.0:

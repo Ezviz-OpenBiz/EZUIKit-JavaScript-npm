@@ -12,8 +12,8 @@ dependencies:
     specifier: ^3.18.1
     version: 3.47.0
   ezuikit-js:
-    specifier: 8.2.4-beta.2
-    version: 8.2.4-beta.2
+    specifier: 8.2.5-beta.3
+    version: 8.2.5-beta.3
   vue:
     specifier: 2.6.14
     version: 2.6.14
@@ -1222,6 +1222,10 @@ packages:
 
   /@ezuikit/utils-tools@2.0.1:
     resolution: {integrity: sha512-zr+fXIiYP3/4Gp3aSASHhOvkymrRxo+G5Owhxzj/jBq4osifgq8kpDCC399VWEpZvwWUuY4AJENkqq2IC+Qfrw==}
+    dev: false
+
+  /@ezuikit/utils-tools@2.0.2:
+    resolution: {integrity: sha512-Iay08gfn7URRJ0L16TkEYo8QcBENPN7LLs0O3Cv8Dxfm13rQMN4h03TbzARv/dDGAkKa910CIQ2bKG2QKIZ3nw==}
     dev: false
 
   /@hapi/address@2.1.4:
@@ -4474,14 +4478,14 @@ packages:
     engines: {'0': node >=0.6.0}
     dev: true
 
-  /ezuikit-js@8.2.4-beta.2:
-    resolution: {integrity: sha512-qiODnsBNwGnH3GfsnTdWiE8Dv5JRFdM6Ujq1or3Q8BqLd5yK+ayFMdczmByHU7edxt5CtYEk/DVYG3BaUCr/1w==}
+  /ezuikit-js@8.2.5-beta.3:
+    resolution: {integrity: sha512-5ZUQ1pxtH5tNhCAL9ZcK1bLlIpVlzOE/R7rUylFfSsyBKMCS5XJIbivYw9k5VZ1J6hhq2XGANfPCRSJk8/N4eA==}
     dependencies:
       '@ezuikit/player-ezopen': 8.2.5-beta.3
       '@ezuikit/utils-collect': 0.1.1
       '@ezuikit/utils-i18n': 2.0.0
       '@ezuikit/utils-logger': 2.0.0
-      '@ezuikit/utils-tools': 2.0.1
+      '@ezuikit/utils-tools': 2.0.2
       '@juggle/resize-observer': 3.4.0
       '@skax/delegate': 4.0.2
       abortcontroller-polyfill: 1.7.8
