@@ -2895,10 +2895,10 @@ exsolve@^1.0.7:
   resolved "https://registry.yarnpkg.com/exsolve/-/exsolve-1.0.7.tgz#3b74e4c7ca5c5f9a19c3626ca857309fa99f9e9e"
   integrity sha512-VO5fQUzZtI6C+vx4w/4BWJpg3s/5l+6pRQEHzFRM8WFi4XffSP1Z+4qi7GbjWbvRQEbdIco5mIMq+zX4rPuLrw==
 
-ezuikit-js@8.2.5-beta.3:
-  version "8.2.5-beta.3"
-  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.2.5-beta.3.tgz#86588f0fd6aa8aaf19eb33caa3b857774b68c9f0"
-  integrity sha512-5ZUQ1pxtH5tNhCAL9ZcK1bLlIpVlzOE/R7rUylFfSsyBKMCS5XJIbivYw9k5VZ1J6hhq2XGANfPCRSJk8/N4eA==
+ezuikit-js@8.2.5-beta.4:
+  version "8.2.5-beta.4"
+  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-8.2.5-beta.4.tgz#3bfe6165b3e3e472c29233a1ff48a81ad0121fc1"
+  integrity sha512-7lLviGZR6Zoz3PyZ+oLyTNGMwpW+lT2VLC3JuNMAXRv+xU0MXk8Szu6jTVxpyCGtHQQ0HZlS5TIrT3wfa171BQ==
   dependencies:
     "@ezuikit/player-ezopen" "8.2.5-beta.3"
     "@ezuikit/utils-collect" "0.1.1"
