@@ -1,4 +1,4 @@
-# EZUIKitNative 集成文档
+# EZUIKitNative
 
 ## 一、EZUIKitNative 介绍
 
@@ -22,10 +22,12 @@ EZUIKitNative 是一个基于本地插件的多画面视频播放器解决方案
 
 **推荐电脑配置**
 
-操作系统：Windows10（64位）
+操作系统：Windows10（64位）、Windows11（64位）
 
 CPU：处理器i7-12700K或以上
+
 内存：16G
+
 显卡：GTX1060或以上独立显卡，或Graphics 770以上集成显卡
 
 网卡： 25路并发1080P情况下，1000Mbps或以上
@@ -38,7 +40,7 @@ CPU：处理器i7-12700K或以上
 
 ### 2.0 准备工作
 
-- 访问[GitHub - 轻应用EZUIKit](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/EZUIKitNative)，获取本地插件安装包并完成安装
+- 访问[GitHub - 轻应用EZUIKit](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/EZUIKitNative)，获取本地插件安装包【CEFBrowserSetup.exe】并完成安装
 
 - 或直接[下载插件安装包](https://izhstatic.ys7.com/vasp-openweb/1768271430453_CEFBrowserSetup.exe)，并完成安装
 
@@ -241,7 +243,7 @@ native.players[0].changePlayUrl({ url:"ezopen://open.ys7.com/设备序列号/通
 
 **使用说明：** 见下文
 
---- 
+---
 
 ## 四、EZUIKitNative - 插件模式
 
@@ -253,12 +255,12 @@ native.players[0].changePlayUrl({ url:"ezopen://open.ys7.com/设备序列号/通
 
 **参数：**
 
-| 参数        | 含义                              | 类型                    | 示例                  | 是否必填 |
-| --------- | ------------------------------- | --------------------- | ------------------- | ---- |
-| container | 插件跟随锚点                          | HTMLElement \| string | "players-container" | Y    |
-| mode      | 播放模式，0:不使用插件，1:自动，2:强制使用插件，默认为2 | number                | 2                   | N    |
-| autoPlay  | 是否自动播放，默认为true                  | boolean               | true                | N    |
-| layout    | 布局，默认为4x4布局，也可以在后续初始化时修改        | object                | { col: 4, row: 4 }  | N    |
+| 参数        | 含义                              | 类型             | 示例                 | 是否必填                |
+| --------- | ------------------------------- | -------------- | ------------------ | ------------------- |
+| container | 插件跟随锚点                          | HTMLElement \\ | string             | "players-container" |
+| mode      | 播放模式，0:不使用插件，1:自动，2:强制使用插件，默认为2 | number         | 2                  | N                   |
+| autoPlay  | 是否自动播放，默认为false                 | boolean        | false              | N                   |
+| layout    | 布局，默认为4x4布局，也可以在后续初始化时修改        | object         | { col: 4, row: 4 } | N                   |
 
 **返回值：** EZUIKitNative 实例
 
@@ -267,8 +269,7 @@ native.players[0].changePlayUrl({ url:"ezopen://open.ys7.com/设备序列号/通
 ```javascript
 const native = new EZUIKit.EZUIKitNative({
     container: "players-container",
-    mode: 2,
-    autoPlay: true
+    mode: 2
 });
 ```
 
@@ -282,17 +283,17 @@ const native = new EZUIKit.EZUIKitNative({
 
 **参数：**
 
-| 参数         | 含义                | 类型                         | 示例                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 是否必填 |
-| ---------- | ----------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---- |
-| deviceList | 设备列表              | array[EZUIKitPlayerParams] | {<br/>            id: 'player0',<br/>            width: '100%',<br/>            height: '100%',<br/>            template: 'pcLive',<br/>            url: 'ezopen://open.ys7.com/设备序列号/通道号.live',<br/>            accessToken: 'at.xxx',<br/>            handleSuccess: () => {<br/>                console.log('播放成功');<br/>            },<br/>            handleError: (res) => {<br/>                console.error('播放失败', res);<br/>            }<br/>        } | Y    |
-| layout     | 布局，优先级比创建实例时传入的更高 | object                     | { col: 4, row: 4 }                                                                                                                                                                                                                                                                                                                                                                                                                                                 | N    |
+| 参数         | 含义                | 类型                         | 示例                                                                                                                                                                                                                                                                                                              | 是否必填 |
+| ---------- | ----------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---- |
+| deviceList | 设备列表              | array[EZUIKitPlayerParams] | {<br/> id: 'player0',<br/> width: '100%',<br/> height: '100%',<br/> template: 'pcLive',<br/> url: 'ezopen://open.ys7.com/设备序列号/通道号.live',<br/> accessToken: 'at.xxx',<br/> handleSuccess: () => {<br/> console.log('播放成功');<br/> },<br/> handleError: (res) => {<br/> console.error('播放失败', res);<br/> }<br/> } | Y    |
+| layout     | 布局，优先级比创建实例时传入的更高 | object                     | { col: 4, row: 4 }                                                                                                                                                                                                                                                                                              | N    |
 
 *注意：当deviceList数量大于布局总数时，会按下标初始化前col \* row个元素。如deviceList共传入25个设备，layout设置为{ col: 4, row: 4 }，此时只会初始化前16个设备*
 
 **EZUIKitPlayerParams 配置项：**
 
 | 参数名               | 类型       | 必填  | 说明                        |
-| ----------------- | -------- |:--- | ------------------------- |
+| ----------------- | -------- | --- | ------------------------- |
 | id                | string   | 是   | 播放器唯一标识                   |
 | width             | string   | 是   | 播放器宽度                     |
 | height            | string   | 是   | 播放器高度                     |
@@ -345,10 +346,10 @@ native.init({
 
 **参数：**
 
-| 参数名    | 类型               | 必填  | 说明                 |
-| ------ | ---------------- | --- | ------------------ |
-| id     | string \| number | 否   | 播放器 ID 或下标，不传则播放所有 |
-| params | any              | 否   | 播放参数               |
+| 参数名    | 类型        | 必填     | 说明   |
+| ------ | --------- | ------ | ---- |
+| id     | string \\ | number | 否    |
+| params | any       | 否      | 播放参数 |
 
 **返回值：** 无
 
@@ -375,10 +376,10 @@ native.play();
 
 **参数：**
 
-| 参数名    | 类型               | 必填  | 说明                 |
-| ------ | ---------------- | --- | ------------------ |
-| id     | string \| number | 否   | 播放器 ID 或下标，不传则停止所有 |
-| params | any              | 否   | 停止参数               |
+| 参数名    | 类型        | 必填     | 说明   |
+| ------ | --------- | ------ | ---- |
+| id     | string \\ | number | 否    |
+| params | any       | 否      | 停止参数 |
 
 **返回值：** 无
 
@@ -438,10 +439,10 @@ native.exitfullscreen();
 
 **参数：**
 
-| 参数名   | 类型               | 必填  | 默认值   | 说明                 |
-| ----- | ---------------- | --- | ----- | ------------------ |
-| id    | string \| number | 否   | -     | 播放器 ID 或下标，不传则销毁所有 |
-| force | boolean          | 否   | false | 是否强制销毁（关闭插件进程）     |
+| 参数名   | 类型        | 必填     | 默认值   | 说明             |
+| ----- | --------- | ------ | ----- | -------------- |
+| id    | string \\ | number | 否     | -              |
+| force | boolean   | 否      | false | 是否强制销毁（关闭插件进程） |
 
 **返回值：** 无
 
@@ -683,17 +684,13 @@ native.init({
 ### 6.3 插件启动、展示异常？
 
 1. 打开系统任务管理器 ---> 详细信息
-
 2. 找到 cefsimple.exe 进程，并结束进程（可能有多个，需全部结束）
-
 3. 或者找到插件安装目录下的 kill_cefsimple.bat 文件，并双击
-
 4. 刷新WEB页面，EZUIKitNative会尝试拉起插件，或直接双击cefsimple.exe启动插件
 
 ---
 
 ## 七、注意事项
 
-当前EZUIKitNative为实验室特性，请结合业务场景进行充分的系统测试
-
+**当前EZUIKitNative为实验室特性，请结合业务场景进行充分的系统测试**
 如有问题，请及时联系技术支持或查阅完整 API 文档
