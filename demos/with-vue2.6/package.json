@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.18.1",
-    "ezuikit-js": "8.2.5-beta.3",
+    "ezuikit-js": "8.2.5",
     "vue": "2.6.14",
     "vue-router": "3"
   },
