@@ -34,7 +34,7 @@ THE SOFTWARE.
 ---
 
 Name: @ezuikit/player-theme
-Version: 2.1.0-beta.9
+Version: 2.1.0-beta.10
 License: MIT
 Private: false
 Description: player theme
@@ -382,17 +382,20 @@ SOFTWARE.
 ---
 
 Name: @ezuikit/player-plugin-record
-Version: 8.2.0
+Version: 8.2.5-beta.8
 License: MIT
 Private: false
-Description: 萤石ezopne协议播放器录制插件
+Description: 萤石码流本地录制插件
+Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-plugin-record.git
+Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-plugin-record#readme
 Author: Ezviz-OpenBiz
 
 ---
 
 Name: @ezuikit/player-ezopen
-Version: 8.2.5-beta.2
+Version: 8.2.5
 License: MIT
 Private: false
 Description: 萤石ezopne协议播放器
+Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-ezopen.git
 Author: Ezviz-OpenBiz

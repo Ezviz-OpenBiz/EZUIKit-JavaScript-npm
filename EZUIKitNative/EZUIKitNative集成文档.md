@@ -80,6 +80,20 @@ import EZUIKit from "ezuikit-js";
 <div id="players-container"></div>
 ```
 
+##### 2、在HTML的header标签中增加title标签
+
+**本地插件通过title确认目标页面，请务必确保你的页面已经设置了title（内容可以自定义），否则会导致插件无法正常显示**
+
+```javascript
+<head>
+    <meta charset="UTF-8">
+    <!-- 必须添加该title -->
+    <title>EZUIKitNative 示例</title>
+    <script src="./ezuikit.js"></script>
+    // ...
+</head>
+```
+
 ### 2.3 创建实例
 
 创建实例时传入希望让插件跟随的锚点，支持节点id或DOM元素
@@ -100,30 +114,31 @@ const native = new EZUIKit.EZUIKitNative({
 
 基于2.3创建的播放器示例进行初始化播放
 
+初始化播放需要在插件连接成功之后执行，否则指令无法成功发送给插件
+
 ```javascript
-native.init({
-    layout: {
-        col: 4,  // 列数
-        row: 4   // 行数
-    },
-    deviceList: [
-        {
-            id: 'player0',
-            width: '100%',
-            height: '100%',
-            template: 'pcLive',
-            url: 'ezopen://open.ys7.com/设备序列号/通道号.live',
-            accessToken: 'your_access_token',
-            handleSuccess: () => {
-                console.log('播放成功');
-            },
-            handleError: (res) => {
-                console.error('播放失败', res);
-            }
-        }
-        // ... 更多设备
-    ]
-});
+native.eventEmitter.on('connect', (res) => {
+    if (res.code !== 0) {
+        console.log(`插件连接断开: ${JSON.stringify(res)}`, 'error');
+    } else {
+        console.log(`插件连接成功`, 'success');
+        // 初始化播放器
+        native.init({
+            layout: { col: 2, row: 2 },
+            deviceList: [
+                {
+                    id: 'player0',
+                    width: '100%',
+                    height: '100%',
+                    template: 'pcLive',
+                    url: 'ezopen://open.ys7.com/设备序列号/1.live',
+                    accessToken: 'your_access_token',
+                    staticPath: './ezuikit_static'
+                  }
+             ]
+         });
+     }
+})
 ```
 
 **完整示例**
@@ -133,11 +148,12 @@ native.init({
 <html>
 <head>
     <meta charset="UTF-8">
+    <!-- 必须添加该title -->
     <title>EZUIKitNative 示例</title>
     <script src="./ezuikit.js"></script>
     <style>
         #players-container {
-            width: 100%;
+            width: 100vw;
             height: 100vh;
             background-color: #000;
         }
@@ -152,21 +168,28 @@ native.init({
             container: "players-container"
         });
 
-        // 初始化播放器
-        native.init({
-            layout: { col: 2, row: 2 },
-            deviceList: [
-                {
-                    id: 'player0',
-                    width: '100%',
-                    height: '100%',
-                    template: 'pcLive',
-                    url: 'ezopen://open.ys7.com/设备序列号/1.live',
-                    accessToken: 'your_access_token',
-                    staticPath: './ezuikit_static'
-                }
-            ]
-        });
+        native.eventEmitter.on('connect', (res) => {
+            if (res.code !== 0) {
+                console.log(`插件连接断开: ${JSON.stringify(res)}`, 'error');
+            } else {
+                console.log(`插件连接成功`, 'success');
+                // 初始化播放器
+                native.init({
+                       layout: { col: 2, row: 2 },
+                       deviceList: [
+                           {
+                               id: 'player0',
+                               width: '100%',
+                               height: '100%',
+                               template: 'pcLive',
+                               url: 'ezopen://open.ys7.com/设备序列号/1.live',
+                               accessToken: 'your_access_token',
+                               staticPath: './ezuikit_static'
+                           }
+                       ]
+                   });
+               }
+           })
     </script>
 </body>
 </html>
