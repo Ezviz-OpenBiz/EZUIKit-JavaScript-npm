@@ -171,7 +171,7 @@ SOFTWARE.
 ---
 
 Name: @ezuikit/control-talk
-Version: 0.0.2
+Version: 0.0.3
 License: null
 Private: false
 Description: talk
@@ -382,17 +382,20 @@ SOFTWARE.
 ---
 
 Name: @ezuikit/player-plugin-record
-Version: 8.2.0
+Version: 8.2.5-beta.8
 License: MIT
 Private: false
-Description: 萤石ezopne协议播放器录制插件
+Description: 萤石码流本地录制插件
+Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-plugin-record.git
+Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-plugin-record#readme
 Author: Ezviz-OpenBiz
 
 ---
 
 Name: @ezuikit/player-ezopen
-Version: 8.2.5-beta.3
+Version: 8.2.5
 License: MIT
 Private: false
 Description: 萤石ezopne协议播放器
+Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-ezopen.git
 Author: Ezviz-OpenBiz

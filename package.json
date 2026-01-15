@@ -23,7 +23,7 @@
   ],
   "author": "Ezviz-OpenBiz",
   "dependencies": {
-    "@ezuikit/player-ezopen": "8.2.5-beta.3",
+    "@ezuikit/player-ezopen": "8.2.5",
     "@ezuikit/utils-collect": "0.1.1",
     "@ezuikit/utils-i18n": "2.0.0",
     "@ezuikit/utils-logger": "2.0.0",
