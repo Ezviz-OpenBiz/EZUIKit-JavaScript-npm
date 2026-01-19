@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0" />
+    <title>轻应用巡检组件demo</title>
+    <script src="./ezuikit.js"></script>
+    <style>
+        .btns {
+            display: flex;
+            align-items: center;
+            margin: 10px;
+        }
+
+        .btns>div {
+            cursor: default;
+            margin: 0 10px;
+        }
+
+        .btns>.btn {
+            cursor: pointer;
+        }
+
+        .device-item {
+            width: 320px;
+        }
+
+        .pagenation {
+            display: flex;
+            align-items: center;
+            margin: 10px;
+        }
+
+        .pagenation>div {
+            cursor: default;
+        }
+
+        .pageIndex {
+            margin: 0 10px;
+        }
+
+        .device-list {
+            width: 100vw;
+            /* display: flex;
+            flex-wrap: wrap; */
+        }
+
+        .device-list>div {
+            margin: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-wrap">
+        <div class="btns" style="border: 2px solid #aaaaaa;padding: 10px;">
+            <span>每页窗口数：</span>
+            <select id="pageSize">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="4" selected>4</option>
+                <option value="9">9</option>
+                <option value="12">12</option>
+                <option value="16">16</option>
+            </select>
+            <div class="init btn">
+                <button id="init">初始化</button>
+                <button id="stopAll">全部暂停</button>
+                <button id="playAll">全部播放</button>
+                <button id="muteAll">全部静音</button>
+                <button id="unmuteAll">全部取消静音</button>
+                <button id="destroy">全部销毁</button>
+                <button id="startTurn">开始轮询</button>
+                <button id="stopTurn">结束轮询</button>
+            </div>
+            <span>轮询间隔：</span>
+            <select id="delay">
+                <option value="10000" selected>10s</option>
+                <option value="30000">30s</option>
+                <option value="60000">60s</option>
+                <option value="120000">120s</option>
+                <option value="300000">300s</option>
+            </select>
+            <!-- <input type="checkbox" id="loop" checked />循环翻页 -->
+            <input type="checkbox" id="decoderType" checked />使用硬解
+        </div>
+        <div class="pagenation" style="border: 2px solid #aaaaaa;padding: 10px;">
+            <div class="lastPage btn">
+                <button id="lastPage">上一页</button>
+            </div>
+            <div class="pageIndex" id="pageIndex"></div>
+            <div class="nextPage btn">
+                <button id="nextPage">下一页</button>
+            </div>
+            <div style="margin-left: 24px;">
+                <label for="imgUrl">背景图URL：</label>
+                <input id="imgUrl" name="imgUrl"
+                    value="https://resource.eziot.com/group1/M00/01/81/CtwQE2fAG8-AFmzKAAyoySEX8s4767.png"
+                    style="width: 300px" />
+                <button id="setImgUrl">设置背景图片</button>
+            </div>
+        </div>
+        <div style="margin: 0 10px 10px;">设备列表:</div>
+        <div class="device-list" id="device-list"></div>
+        <div style="margin: 10px;">播放窗口:</div>
+        <div class="player-list" id="player"></div>
+    </div>
+
+    <script>
+        let pageIndex = 0; // 页面下标
+        let pageSize = 4; // 每页画面数量
+        let isInited = false; // 是否初始化
+        const deviceList = [ // 设备列表
+            {
+                width: 600,
+                height: 400,
+                accessToken: 'at.0n740g5w9szzp2u82jxmotdqcbs0esju-3ns4icvezp-109cmdt-hry8vkq',
+                staticPath: "./ezuikit_static",
+                url: 'ezopen://open.ys7.com/BA5918431/1.rec',
+                template: 'pcRec'
+            },
+            {
+                width: 600,
+                height: 400,
+                accessToken: 'at.0n740g5w9szzp2u82jxmotdqcbs0esju-3ns4icvezp-109cmdt-hry8vkq',
+                url: 'ezopen://open.ys7.com/J70807475/1.rec',
+                staticPath: "./ezuikit_static",
+                template: 'pcRec',
+                timeLineClickable: false,
+                onTimeLineClick: (clickTime, nowTime) => {
+                    console.log(clickTime, nowTime);
+                }
+            },
+            {
+                width: 600,
+                height: 400,
+                accessToken: 'at.0n740g5w9szzp2u82jxmotdqcbs0esju-3ns4icvezp-109cmdt-hry8vkq',
+                staticPath: "./ezuikit_static",
+                url: 'ezopen://open.ys7.com/BC7799091/1.live',
+                template: 'pcLive'
+            },
+            {
+                width: 600,
+                height: 400,
+                accessToken: 'at.0n740g5w9szzp2u82jxmotdqcbs0esju-3ns4icvezp-109cmdt-hry8vkq',
+                staticPath: "./ezuikit_static",
+                url: 'ezopen://open.ys7.com/BC7900686/1.live',
+                template: 'pcLive'
+            },
+            {
+                width: 600,
+                height: 400,
+                accessToken: 'at.0n740g5w9szzp2u82jxmotdqcbs0esju-3ns4icvezp-109cmdt-hry8vkq',
+                staticPath: "./ezuikit_static",
+                url: 'ezopen://open.ys7.com/BC7900686/1.live',
+                template: 'pcLive'
+            },
+            {
+                width: 600,
+                height: 400,
+                accessToken: 'at.0n740g5w9szzp2u82jxmotdqcbs0esju-3ns4icvezp-109cmdt-hry8vkq',
+                staticPath: "./ezuikit_static",
+                url: 'ezopen://open.ys7.com/J15283664/1.live',
+                template: 'pcLive'
+            },
+            {
+                width: 600,
+                height: 400,
+                accessToken: 'at.0n740g5w9szzp2u82jxmotdqcbs0esju-3ns4icvezp-109cmdt-hry8vkq',
+                staticPath: "./ezuikit_static",
+                url: 'ezopen://open.ys7.com/J63640856/1.live',
+                template: 'pcLive'
+            },
+            {
+                width: 600,
+                height: 400,
+                accessToken: 'at.0n740g5w9szzp2u82jxmotdqcbs0esju-3ns4icvezp-109cmdt-hry8vkq',
+                staticPath: "./ezuikit_static",
+                url: 'ezopen://open.ys7.com/BB9480953/1.rec',
+                template: 'pcRec'
+            },
+            {
+                width: 600,
+                height: 400,
+                accessToken: 'at.0n740g5w9szzp2u82jxmotdqcbs0esju-3ns4icvezp-109cmdt-hry8vkq',
+                staticPath: "./ezuikit_static",
+                url: 'ezopen://open.ys7.com/BC3055114/1.live',
+                template: 'pcLive'
+            },
+            {
+                width: 600,
+                height: 400,
+                accessToken: 'at.0n740g5w9szzp2u82jxmotdqcbs0esju-3ns4icvezp-109cmdt-hry8vkq',
+                staticPath: "./ezuikit_static",
+                url: 'ezopen://open.ys7.com/D03819945/1.rec',
+                template: 'pcRec'
+            },
+        ];
+        let players = []; // 播放器实例列表
+        let delay = 10000; // 轮询间隔时间
+        let autoTurn = false; // 轮询
+        let loop = true; // 循环翻页
+        let decoderType = true; // 使用硬解
+        let inspect = null;
+        let imgUrl = 'https://resource.eziot.com/group1/M00/01/81/CtwQE2fAG8-AFmzKAAyoySEX8s4767.png';
+        document.getElementById('pageIndex').innerHTML = '1 / ' + (Number.isInteger(deviceList.length / pageSize) ? (deviceList.length / pageSize) : Math.ceil(deviceList.length / pageSize));
+
+        deviceList.map((item, index) => {
+            const $DOM = document.createElement('div');
+            $DOM.id = 'device-item-' + index;
+            $DOM.className = 'device-item';
+            $DOM.innerHTML = item.url;
+            $DOM.addEventListener('click', () => {
+                console.log(item);
+                if (inspect) {
+                    inspect.initPlayer(index)
+                }
+            })
+            document.getElementById('device-list').appendChild($DOM);
+        })
+
+        // 初始化播放器
+        document.getElementById('init').addEventListener('click', () => {
+            if (!isInited) {
+                inspect = new EZUIKit.EZUIKitInspectionUI(document.getElementById('player'), {
+                    pageSize,
+                    autoPlay: true,
+                    list: deviceList,
+                    autoTurn: autoTurn,
+                    // delay: 5000,
+                    loop: loop,
+                    imgUrl,
+                    onScreenSelect: (index, item) => {
+                        console.log("选中屏幕：", index, item);
+                    },
+                    onPageChange: (res) => {
+                        if (res.code > -1) {
+                            pageIndex = res.data.pageIndex;
+                            pageSize = res.data.pageSize;
+                            document.getElementById('pageIndex').innerHTML = pageIndex + 1 + ' / ' + (Number.isInteger(deviceList.length / pageSize) ? (deviceList.length / pageSize) : Math.ceil(deviceList.length / pageSize));
+                        } else {
+                            console.log(res)
+                        }
+                    }
+                })
+                isInited = true;
+                window.inspect = inspect;
+            }
+        })
+
+        // 上一页
+        document.getElementById('lastPage').addEventListener('click', () => {
+            window.inspect.lastPage();
+        })
+
+        // 下一页
+        document.getElementById('nextPage').addEventListener('click', () => {
+            window.inspect.nextPage();
+        })
+
+        // 修改分页大小
+        document.getElementById('pageSize').addEventListener('change', (e) => {
+            const size = parseInt(e.target.value);
+            pageSize = size;
+            document.getElementById('pageSize').value = size;
+            document.getElementById('pageIndex').innerHTML = '1 / ' + (Number.isInteger(deviceList.length / pageSize) ? (deviceList.length / pageSize) : Math.ceil(deviceList.length / pageSize));
+            window.inspect?.destroy(true);
+            document.getElementById("player").innerHTML = '';
+            isInited = false;
+        })
+
+        // 全部暂停
+        document.getElementById('stopAll').addEventListener('click', () => {
+            window.inspect.stopAll();
+        })
+
+        // 全部播放
+        document.getElementById('playAll').addEventListener('click', () => {
+            window.inspect.playAll();
+        })
+
+        // 全部静音
+        document.getElementById('muteAll').addEventListener('click', () => {
+            window.inspect.muteAll();
+        })
+
+        // 全部取消静音
+        document.getElementById('unmuteAll').addEventListener('click', () => {
+            window.inspect.unmuteAll();
+        })
+
+        // 销毁所有播放器
+        document.getElementById('destroy').addEventListener('click', () => {
+            window.inspect.destroy();
+            window.inspect = null;
+            pageIndex = 0;
+            document.getElementById('pageIndex').innerHTML = '1 / ' + (Number.isInteger(deviceList.length / pageSize) ? (deviceList.length / pageSize) : Math.ceil(deviceList.length / pageSize));
+            isInited = false;
+        })
+
+        // 开始轮询
+        document.getElementById("startTurn").addEventListener('click', () => {
+            autoTurn = true;
+            window.inspect.startTurn();
+        })
+
+        // 结束轮询
+        document.getElementById("stopTurn").addEventListener('click', () => {
+            autoTurn = false;
+            window.inspect.stopTurn();
+        })
+
+        // 轮询时间间隔
+        document.getElementById('delay').addEventListener('change', (e) => {
+            delay = parseInt(e.target.value);
+            window.inspect.setDelay(delay);
+        })
+
+        // 循环翻页
+        document.getElementById('loop')?.addEventListener('change', (e) => {
+            loop = e.target.checked;
+            window.inspect.setLoop(loop);
+        })
+
+        // 使用硬解
+        document.getElementById('decoderType').addEventListener('change', (e) => {
+            decoderType = e.target.checked;
+            deviceList.map(item => {
+                item.decoderType = decoderType ? "v3" : "v1";
+            })
+        })
+
+        // 设置背景图片
+        document.getElementById("setImgUrl").addEventListener('click', () => {
+            imgUrl = document.getElementById('imgUrl').value;
+            window.inspect?.setBackground(imgUrl);
+        })
+    </script>
+</body>
+
+</html>
