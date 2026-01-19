@@ -54,3 +54,7 @@ Chrome 浏览器单页面 WebGL 上下文数量有限（一般为 16 个），�
 ## 云录制
 
 [云录制](./cloudRecord.md)的播放必须有 `spaceId`
+
+## 音频自动播放
+浏览器本身限制，防止意外地打扰到用户
+https://developer.mozilla.org/zh-CN/docs/Web/Media/Guides/Autoplay
