@@ -131,7 +131,7 @@ alpha（功能测试）、beta（集成测试）为我们的非正式版本，�
 > 如果使用 uniapp + vue3 ，可参考 demos => [with-uniapp-vue3](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-uniapp-vue3)
 
 > 如果使用 uniapp + vue2 ，可参考 demos => [with-uniapp-vue2](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-uniapp-vue2)
- 
+
 > 如果使用 docker + nginx ，可参考 demos => [with-docker-nginx](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/demos/with-docker-nginx)
 
 #### tips
@@ -242,8 +242,8 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.hd.live<br/>
 初始化参数 url 值为：<br/> ezopen://open.ys7.com/${设备序列号}/{通道号}.cloud.rec?begin=yyyyMMddhhmmss 视频 ezopen 协议播放地址 详见：<a href="https://open.ys7.com/help/23" target="_blank">ezopen 协议</a> </td><td>Y</td></tr>
 
 <tr><td>audio</td><td>boolean</td><td>是否默认开启声音 true：打开（默认） false：关闭    </td><td>N</td></tr>
-<tr><td>width</td><td>int</td><td>视频宽度，默认值为容器容器DOM宽度    </td><td>Y</td></tr>
-<tr><td>height</td><td>int</td><td>视频高度，默认值为容器容器DOM高度</td><td>Y</td></tr>
+<tr><td>width</td><td>number/string</td><td>视频窗口宽度，默认值为容器容器DOM宽度, @sine 8.2.x 开始支持字符串，可以是 style 样式支持的值</td><td>N</td></tr>
+<tr><td>height</td><td>number/string</td><td>视频窗口高度，默认值为容器容器DOM高度，@sine 8.2.x 开始支持字符串，可以是 style 样式支持的值</td><td>N</td></tr>
 <tr><td>staticPath</td><td>string</td><td>设置静态资源地址, 自定义可以自行下载 `ezuikit_static`放置在自己的服务器下， 设置 {staticPath: "/ezuikit_static"} </td><td>N</td></tr>
 <tr><td>template</td><td>String</td><td>
 
@@ -251,7 +251,6 @@ ezopen://open.ys7.com/${设备序列号}/{通道号}.hd.live<br/>
 <tr><th>模板值</th><th>描述</th></tr>
 
 <tr><td>simple</td><td>极简版 *固定模板 仅包含视频播放窗口，创建实例后通过方法集控制视频播<br />放相关功能</td></tr>
-
 
 <tr><td>security</td><td>安防版(预览回放);  *固定模板 包含视频窗口，叠加了录制，全屏控件，<br />标清/高清切换，预览录制切换控件*</td></tr>
 <tr><td>voice</td><td>语音版;  *固定模板 包含视频窗口，叠加了录制，全屏控件，语音播报，语音<br />对讲控件*</td></tr>
@@ -443,14 +442,14 @@ player.eventEmitter.on("volumeChange", ({ data }) => {
 #### 全屏
 
 ```js
-player.fullScreen(); // 8.2.0 开始移除 
+player.fullScreen(); // 8.2.0 开始移除
 player.fullscreen(); // 8.2.0 新增
 ```
 
 #### 取消全屏
 
 ```js
-player.cancelFullScreen(); // 8.2.0 开始移除 
+player.cancelFullScreen(); // 8.2.0 开始移除
 player.exitFullscreen(); // 8.2.0 新增
 ```
 
@@ -490,7 +489,7 @@ options 参数说明
 > 可用于在播放中切换模板主题，请切换播放地址成功后调用
 
 ```js
-player.Theme.changeTheme(template); // 8.2.0 开始移除 
+player.Theme.changeTheme(template); // 8.2.0 开始移除
 
 player.changeTheme(template); // 8.2.0 新增
 
@@ -777,8 +776,6 @@ player.eventEmitter.on(EZUIKitPlayer.EVENTS.fullscreenChange, (info) => {
 });
 ```
 
-
-
 #### 首帧渲染事件
 
 首帧渲染事件 `EZUIKitPlayer.EVENTS.firstFrameDisplay`
@@ -936,7 +933,7 @@ player.eventEmitter.on(
   (list) => {
     // {data: {"width": number,"height":number}}
     console.log("list", list);
-  }
+  },
 );
 ```
 
@@ -1165,7 +1162,7 @@ player.eventEmitter.on(
   (widthType) => {
     // ...
     console.log("timeWidthChange", widthType); // 0 | 1 | 2 | 3
-  }
+  },
 );
 ```
 
