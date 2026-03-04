@@ -291,7 +291,7 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 <tr><td><a href="./cloudRecord.md">spaceId</a></td><td> number</td><td> 云录制空间 ID (仅云录制生效) @sine 8.2.0 </td><td>N</td></tr>
 <tr><td>timeLineOptions</td><td> Object </td><td><code>{ 
               showCoverFold: true, // 是否展示移动端卡片 默认 true @sine 8.2.1 <br/>
-              showTimeWidthBtn: true, // 是否展示移动端时间刻度宽度 默认 true @sine 8.2.1
+              showTimeWidthBtn: true, // 是否展示移动端时间刻度宽度 默认 true， @sine 8.2.1
 }</code></td><td>N</td></tr>
 
 <tr><td>speedOptions</td><td> Object </td><td><code>
@@ -301,6 +301,7 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
   <br/>
  }
 </code></td><td>N</td></tr>
+<tr><td>dblClickFullscreen</td><td> boolean </td><td>是否支持双击全屏，默认 true, @sine 8.2.0</td><td>N</td></tr>
 </table>
 
 ### 方法调用
