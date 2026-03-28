@@ -9,8 +9,8 @@ dependencies:
     specifier: ^3.6.5
     version: 3.42.0
   ezuikit-js:
-    specifier: 8.2.5
-    version: 8.2.5
+    specifier: 8.2.7-beta.2
+    version: 8.2.7-beta.2
   vue:
     specifier: ^2.7
     version: 2.7.16
@@ -1154,14 +1154,14 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: true
 
-  /@ezuikit/player-ezopen@8.2.5-beta.3:
-    resolution: {integrity: sha512-JyWUFGDduSyMBLGKYVynL9EGRvBRAd33BH6xZG6HEy/IFi+jj5rpxdY731KSc3EIxzZaMRMKMzSmK2gC9SohXA==}
+  /@ezuikit/player-ezopen@8.2.7-beta.1:
+    resolution: {integrity: sha512-5YhIQebB8IpNEtnsyrRAg0yR+ihrrcMSrM0iR0OTdCyzyw+e1rt/Btk5+6CkU6sJY+i4cUP8aOrLHl7l52T07w==}
     dependencies:
-      '@ezuikit/player-plugin-record': 8.2.0
+      '@ezuikit/player-plugin-record': 8.2.5-beta.8
       '@ezuikit/utils-i18n': 2.0.0
       '@ezuikit/utils-logger': 2.0.0
       '@ezuikit/utils-service': 1.0.1
-      '@ezuikit/utils-tools': 2.0.1
+      '@ezuikit/utils-tools': 2.0.3
       dayjs: 1.11.13
       deepmerge: 4.3.1
       eventemitter3: 5.0.1
@@ -1169,8 +1169,8 @@ packages:
       ua-parser-js: 1.0.37
     dev: false
 
-  /@ezuikit/player-plugin-record@8.2.0:
-    resolution: {integrity: sha512-5T+1pSw83FmZDrpcNrDRQOf0vv3a3flnwWWZ8N42ZZENtATeMUAXXu2LkmnrLpsRmSVBELIX13adEqnAk1k39A==}
+  /@ezuikit/player-plugin-record@8.2.5-beta.8:
+    resolution: {integrity: sha512-sKiD/4mUF2/G8MCfVP+5mi9uegymnN0v9pta9ApuDcLIaMRorea4jFc13VFOoQRAwbZpFu6cP0PmSB+KyxT1jQ==}
     dev: false
 
   /@ezuikit/utils-collect@0.1.1:
@@ -1198,12 +1198,8 @@ packages:
     resolution: {integrity: sha512-mujPtXIhZnuJrJySu1/Z6X90sMJQStZydurZcfetMCH6pqIYN4P+1w6+P8PCTR6k4LJp5nY9+eNnKa7AZ8OBKA==}
     dev: false
 
-  /@ezuikit/utils-tools@2.0.1:
-    resolution: {integrity: sha512-zr+fXIiYP3/4Gp3aSASHhOvkymrRxo+G5Owhxzj/jBq4osifgq8kpDCC399VWEpZvwWUuY4AJENkqq2IC+Qfrw==}
-    dev: false
-
-  /@ezuikit/utils-tools@2.0.2:
-    resolution: {integrity: sha512-Iay08gfn7URRJ0L16TkEYo8QcBENPN7LLs0O3Cv8Dxfm13rQMN4h03TbzARv/dDGAkKa910CIQ2bKG2QKIZ3nw==}
+  /@ezuikit/utils-tools@2.0.3:
+    resolution: {integrity: sha512-YvUGDU1ikjSc5YjQLh6kQWGBOpqkOczb3HiocWm7FOk9grW6IAGd3RbRu0e+XyWT20nefcEpbIhRwOYsTejjnA==}
     dev: false
 
   /@hapi/hoek@9.3.0:
@@ -3538,14 +3534,14 @@ packages:
       - supports-color
     dev: true
 
-  /ezuikit-js@8.2.5:
-    resolution: {integrity: sha512-UHjNo1oX9qPG1ZApPaRaHdk6Qogb7NDJIRh/8ChnhKvjJ/PVZum9HkvB/wWA5XN2XbXonmL92vJ2WNtSQx+Wkw==}
+  /ezuikit-js@8.2.7-beta.2:
+    resolution: {integrity: sha512-XnCIwZJ8CSJVvkKu6GmK+PUAx/QvtXYrhsuspm9NdHdxuZPXB9/90ln13DLrXwiuwZaBwj/MPYI8ocfAEWZ4ZA==}
     dependencies:
-      '@ezuikit/player-ezopen': 8.2.5-beta.3
+      '@ezuikit/player-ezopen': 8.2.7-beta.1
       '@ezuikit/utils-collect': 0.1.1
       '@ezuikit/utils-i18n': 2.0.0
       '@ezuikit/utils-logger': 2.0.0
-      '@ezuikit/utils-tools': 2.0.2
+      '@ezuikit/utils-tools': 2.0.3
       '@juggle/resize-observer': 3.4.0
       '@skax/delegate': 4.0.2
       abortcontroller-polyfill: 1.7.8

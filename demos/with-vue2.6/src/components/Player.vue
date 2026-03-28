@@ -25,7 +25,6 @@
 import { EZUIKitPlayer } from "ezuikit-js/ezuikit.js";
 var player = null;
 
-
 export default {
   name: "Player",
   props: {
@@ -48,7 +47,7 @@ export default {
       player = new EZUIKitPlayer({
         id: "video-container", // 视频容器ID
         accessToken:
-          "at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3",
+          "at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0mefajp-pd25qljk",
         url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
         template: "pcLive",
@@ -56,7 +55,7 @@ export default {
         handleError: (error) => {
           console.error("handleError", error);
         },
-        // quality: 6, // 
+        // quality: 6, //
         language: "en", // zh | en
         // staticPath: "./ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
         decoderType: "auto",
@@ -139,60 +138,58 @@ export default {
       window.player = player;
     },
     play() {
-      if(player)
+      if (player)
         player.play().then((data) => {
           console.log("play 获取 数据", data);
         });
     },
     stop() {
-      if(player)
+      if (player)
         player.stop().then((data) => {
           console.log("stop 获取 数据", data);
         });
     },
     getOSDTime() {
-      if(player)
-      player.getOSDTime().then((data) => {
-        console.log("getOSDTime 获取 数据", data);
-      });
+      if (player)
+        player.getOSDTime().then((data) => {
+          console.log("getOSDTime 获取 数据", data);
+        });
     },
     capturePicture() {
-      if(player)
-      player.capturePicture(
-        `${new Date().getTime()}`
-      ).then((data) => {
-        console.log("capturePicture 获取 数据", data);
-      });
+      if (player)
+        player.capturePicture(`${new Date().getTime()}`).then((data) => {
+          console.log("capturePicture 获取 数据", data);
+        });
     },
     openSound() {
-      if(player) player.openSound()
+      if (player) player.openSound();
     },
     closeSound() {
-      if(player) player.closeSound()
+      if (player) player.closeSound();
     },
     startSave() {
-      if(player)
+      if (player)
         player.startSave(`${new Date().getTime()}`).then((data) => {
           console.log("startSave 获取 数据", data);
         });
     },
     stopSave() {
-      if(player)
+      if (player)
         player.stopSave().then((data) => {
           console.log("promise 获取 数据", data);
         });
     },
     startTalk() {
-      if(player) player.startTalk();
+      if (player) player.startTalk();
     },
     stopTalk() {
-      if(player) player.stopTalk();
+      if (player) player.stopTalk();
     },
     fullscreen() {
-      if(player) player.fullscreen(); // 8.2.0 新增, 老版本使用 fullScreen()
+      if (player) player.fullscreen(); // 8.2.0 新增, 老版本使用 fullScreen()
     },
     destroy() {
-      if(player) {
+      if (player) {
         player.destroy().then((data) => {
           console.log("promise 获取 数据", data);
         });
