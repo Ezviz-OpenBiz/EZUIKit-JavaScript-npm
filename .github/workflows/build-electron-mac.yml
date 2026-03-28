@@ -2,9 +2,7 @@ name: build-electron-mac
 
 on:
   push:
-    branches: ["main", "develop"]
-  pull_request:
-    branches: ["main"]
+    branches: ["v8.2.x"]
 
 jobs:
   build:
