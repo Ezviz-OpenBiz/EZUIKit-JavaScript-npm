@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { EZUIKitPlayer } from "ezuikit-js";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 
 interface IPlayer {
   play: Function;
@@ -20,11 +20,6 @@ interface IPlayer {
 }
 
 let player: IPlayer;
-
-const accessToken = ref(
-  "at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0mefajp-pd25qljkk"
-);
-const url = ref("ezopen://open.ys7.com/BC7799091/1.hd.live");
 
 const play = () => {
   if (player) player.play()
@@ -104,8 +99,9 @@ const init = () => {
   //     var accessToken = res.data.accessToken;
   player = new EZUIKitPlayer({
     id: "video-container", // 视频容器ID
-    accessToken: accessToken.value,
-    url: url.value,
+    accessToken:
+      "at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3",
+    url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
     // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
     template: "pcLive",
     // width: 600,
@@ -120,7 +116,7 @@ const init = () => {
     //   { level: 0, name: "流畅", streamTypeIn: 1 },
     //   { level: 1, name: "标清", streamTypeIn: 1 },
     // ],
-    staticPath: "./ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值. 默认使用CDN静态资源 "https://openstatic.ys7.com/ezuikit_js/v{version}/ezuikit_static",
+    // staticPath: "./ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
     scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
     env: {
       // https://open.ys7.com/help/1772?h=domain
@@ -128,6 +124,7 @@ const init = () => {
       // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
       domain: "https://open.ys7.com",
     },
+    // staticPath: "https://openstatic.ys7.com/ezuikit_js/v8.1.9/ezuikit_static",
     // 日志打印设置
     loggerOptions: {
       // player.setLoggerOptions(options)
@@ -206,28 +203,7 @@ onMounted(() => {
 <template>
   <div class="hello-ezuikit-js">
     <div>
-
       <div id="video-container" style="height: 400px"></div>
-    </div>
-    <div style="margin-bottom: 12px">
-      <label style="display: flex; margin-bottom: 8px">
-        url:
-        <input
-          v-model="url"
-          type="text"
-          placeholder="请输入播放地址"
-          style="width: 100%"
-        />
-      </label>
-      <label style="display: flex; margin-bottom: 8px">
-        accessToken:
-        <input
-          v-model="accessToken"
-          type="text"
-          placeholder="请输入 accessToken"
-          style="width: 100%"
-        />
-      </label>
     </div>
     <div>
       <button @click="init">init</button>

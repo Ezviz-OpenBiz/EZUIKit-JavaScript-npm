@@ -3,35 +3,6 @@
     <div>
       <div id="video-container" style="height: 400px"></div>
     </div>
-    <div style="margin-bottom: 12px">
-        <label style="display: block; margin-bottom: 8px">
-          url:
-          <input
-            v-model="url"
-            type="text"
-            placeholder="请输入播放地址"
-            style="width: 100%"
-          />
-        </label>
-        <label style="display: block; margin-bottom: 8px">
-          accessToken:
-          <input
-            v-model="accessToken"
-            type="text"
-            placeholder="请输入 accessToken"
-            style="width: 100%"
-          />
-        </label>
-        <label style="display: block">
-          staticPath:
-          <input
-            v-model="staticPath"
-            type="text"
-            placeholder="可选，本地静态资源路径"
-            style="width: 100%"
-          />
-        </label>
-      </div>
     <div>
       <button v-on:click="init">init</button>
       <button v-on:click="stop">stop</button>
@@ -59,14 +30,6 @@ export default {
   props: {
     msg: String,
   },
-  data() {
-    return {
-      accessToken:
-        "at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0mefajp-pd25qljkk",
-      url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
-      staticPath: "./ezuikit_static" // 可选，本地静态资源路径，如果不设置默认使用线上资源,
-    };
-  },
   mounted() {
     this.init();
   },
@@ -83,9 +46,9 @@ export default {
       //   });
       player = new EZUIKitPlayer({
         id: "video-container", // 视频容器ID
-        accessToken: this.accessToken,
-        url: this.url,
-        staticPath: this.staticPath || undefined,
+        accessToken:
+          "at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3",
+        url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
         template: "pcLive",
         height: 400,

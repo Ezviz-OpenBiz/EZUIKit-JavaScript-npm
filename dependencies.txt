@@ -6,7 +6,7 @@ Description: Inject style tag to document head.
 Repository: git+https://github.com/egoist/style-inject.git
 Homepage: https://github.com/egoist/style-inject#readme
 Author: EGOIST <0x142857@gmail.com>
-License Text:
+License Copyright:
 ===
 
 The MIT License (MIT)
@@ -34,7 +34,7 @@ THE SOFTWARE.
 ---
 
 Name: @ezuikit/player-theme
-Version: 2.1.2-beta.8
+Version: 2.1.0-beta.11
 License: MIT
 Private: false
 Description: player theme
@@ -45,13 +45,13 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: eventemitter3
-Version: 5.0.4
+Version: 5.0.1
 License: MIT
 Private: false
 Description: EventEmitter3 focuses on performance while maintaining a Node.js AND browser compatible interface.
 Repository: git://github.com/primus/eventemitter3.git
 Author: Arnout Kazemier
-License Text:
+License Copyright:
 ===
 
 The MIT License (MIT)
@@ -86,7 +86,7 @@ Description: picker component for js framework, support mobile and pc
 Repository: git+https://github.com/freeshineit/picker.git
 Homepage: https://github.com/freeshineit/picker#readme
 Author: ShineShao <xiaoshaoqq@gmail.com>
-License Text:
+License Copyright:
 ===
 
 MIT License
@@ -143,7 +143,7 @@ Description: drag scroll component for js framework, support mobile and pc
 Repository: git+https://github.com/freeshineit/drag-scroll.git
 Homepage: https://github.com/freeshineit/drag-scroll#readme
 Author: ShineShao <xiaoshaoqq@gmail.com>
-License Text:
+License Copyright:
 ===
 
 The MIT License (MIT)
@@ -188,24 +188,15 @@ Author: Ezviz-OpenBiz
 
 ---
 
-Name: @ezuikit/control-aichat
-Version: 0.0.1
-License: null
-Private: false
-Description: AI video search chat control
-Author: Ezviz-OpenBiz
-
----
-
 Name: dayjs
-Version: 1.11.19
+Version: 1.11.13
 License: MIT
 Private: false
 Description: 2KB immutable date time library alternative to Moment.js with the same modern API 
 Repository: https://github.com/iamkun/dayjs.git
 Homepage: https://day.js.org
 Author: iamkun
-License Text:
+License Copyright:
 ===
 
 MIT License
@@ -372,7 +363,7 @@ Contributors:
   yuanyang <work_yuanyang@163.com>
   Yun Young-jin <yupmin@yupmin-office-macmini.local>
   Zach Bjornson <zbbjornson@gmail.com>
-License Text:
+License Copyright:
 ===
 
 MIT License
@@ -400,20 +391,17 @@ SOFTWARE.
 ---
 
 Name: @ezuikit/player-plugin-record
-Version: 8.2.5-beta.8
+Version: 8.2.0
 License: MIT
 Private: false
-Description: 萤石码流本地录制插件
-Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-plugin-record.git
-Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-plugin-record#readme
+Description: 萤石ezopne协议播放器录制插件
 Author: Ezviz-OpenBiz
 
 ---
 
 Name: @ezuikit/player-ezopen
-Version: 9.0.1-beta.2
+Version: 8.2.5-beta.2
 License: MIT
 Private: false
 Description: 萤石ezopne协议播放器
-Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-ezopen.git
 Author: Ezviz-OpenBiz
