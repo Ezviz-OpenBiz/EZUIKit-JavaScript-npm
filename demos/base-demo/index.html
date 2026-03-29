@@ -24,6 +24,29 @@
         <div id="video-container"></div>
       </div>
       <div>
+        <input
+          type="text"
+          placeholder="请输入 url"
+          id="url"
+          value="ezopen://open.ys7.com/BC7799091/1.hd.live"
+          style="width: 400px"
+        />
+        <input
+          type="text"
+          id="accessToken"
+          placeholder="请输入 accessToken"
+          value="at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0mefajp-pd25qljkk"
+          style="width: 400px"
+        />
+        <input
+          type="text"
+          id="staticPath"
+          placeholder="请输入解码静态资源路径"
+          value="./ezuikit_static"
+          style="width: 400px"
+        />
+      </div>
+      <div>
         <button class="init">出初始化(init)</button>
         <button class="play">play</button>
         <button class="stop">stop</button>
@@ -55,6 +78,11 @@
         }
 
         document.querySelector(".init").addEventListener("click", () => {
+
+          const url = (document.getElementById("url").value).trim();
+          const accessToken = (document.getElementById("accessToken").value).trim();
+          const staticPath = (document.getElementById("staticPath").value).trim();
+
           if (player) {
             destroy();
           }
@@ -65,10 +93,9 @@
           //     var accessToken = res.data.accessToken;
           player = new EZUIKit.EZUIKitPlayer({
             id: "video-container", // 视频容器ID
-            accessToken:
-              "at.1kqmxdqsb2dpac9s8d2wmmri7e789uru-1vz4v9hgfm-00ce14w-yoyh9wn93",
-            url: "ezopen://open.ys7.com/BA5551167/1.cloud.rec?begin=20251214000000&end=20251214235959",
-            template: "pcRec", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
+            accessToken: accessToken,
+            url: url,
+            template: "pcLive", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
             // width: 600, // 8.2.0 版本开始支持 style 里面宽的值(如 "100%" 或 '100vw' 或 "600px" 或 600 或 "1em" 等等)
             height: 400,
             language: "en", // zh | en
@@ -99,7 +126,7 @@
              * 默认值 1
              */
             streamInfoCBType: 1,
-            // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+            staticPath: staticPath, // "./ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
             // v8.1.10
             // 自定义清晰度 默认 null, 如果有值 sdk 内部不在进行获取, null 默认使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取
             // videoLevelList: [
