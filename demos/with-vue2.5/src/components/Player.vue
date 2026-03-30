@@ -62,9 +62,9 @@ export default {
   data() {
     return {
       accessToken:
-        "at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0mefajp-pd25qljkk",
+        "at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0mefajp-pd25qljk",
       url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
-      staticPath: "./ezuikit_static" // 可选，本地静态资源路径，如果不设置默认使用线上资源,
+      staticPath: ''  //"./ezuikit_static" // 可选，本地静态资源路径，如果不设置默认使用线上资源,
     };
   },
   mounted() {
@@ -85,7 +85,6 @@ export default {
         id: "video-container", // 视频容器ID
         accessToken: this.accessToken,
         url: this.url,
-        staticPath: this.staticPath || undefined,
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
         template: "pcLive",
         height: 400,
@@ -94,7 +93,7 @@ export default {
         },
         // quality: 6, // 
         language: "en", // zh | en
-        // staticPath: "./ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+        staticPath: this.staticPath || undefined, // "./ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
         decoderType: "v3",
         scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
         env: {

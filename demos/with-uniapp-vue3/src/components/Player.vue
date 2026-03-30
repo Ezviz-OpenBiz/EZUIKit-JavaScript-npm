@@ -148,7 +148,7 @@
 		//     var accessToken = res.data.accessToken;
 		player = new EZUIKitPlayer({
 			id: "video-container", // 视频容器ID
-			accessToken: "at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3",
+			accessToken: "at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0mefajp-pd25qljk",
 			url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
 			// simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
 			template: "mobileLive",
@@ -258,7 +258,6 @@
 			<div id="video-container" style="width: 100%;height: 300px"></div>
 		</div>
 		<div>
-			<button @click="setWaterMarkFont">setWaterMarkFont</button>
 			<button @click="init">init</button>
 			<button @click="stop">stop</button>
 			<button @click="play">play</button>
@@ -267,6 +266,7 @@
 			<button @click="startSave">startSave</button>
 			<button @click="stopSave">stopSave</button>
 			<button @click="capturePicture">capturePicture</button>
+			<button @click="setWaterMarkFont">setWaterMarkFont</button>
 			<button @click="fullscreen">fullscreen</button>
 			<button @click="getOSDTime">getOSDTime</button>
 			<button @click="startTalk">startTalk</button>
