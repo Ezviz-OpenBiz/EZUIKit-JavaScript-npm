@@ -13,7 +13,6 @@ docs
 stats.html
 .DS_Store
 .idea
-.vscode
 .setting
 build/
 .next/
