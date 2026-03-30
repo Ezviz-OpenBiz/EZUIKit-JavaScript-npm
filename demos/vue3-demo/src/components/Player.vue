@@ -22,9 +22,10 @@ interface IPlayer {
 let player: IPlayer;
 
 const accessToken = ref(
-  "at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0mefajp-pd25qljkk"
+  "at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0mefajp-pd25qljk"
 );
 const url = ref("ezopen://open.ys7.com/BC7799091/1.hd.live");
+const staticPath = ref("");
 
 const play = () => {
   if (player) player.play()
@@ -120,7 +121,7 @@ const init = () => {
     //   { level: 0, name: "流畅", streamTypeIn: 1 },
     //   { level: 1, name: "标清", streamTypeIn: 1 },
     // ],
-    staticPath: "./ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值. 默认使用CDN静态资源 "https://openstatic.ys7.com/ezuikit_js/v{version}/ezuikit_static",
+    staticPath: staticPath.value,  // || "./ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值. 默认使用CDN静态资源 "https://openstatic.ys7.com/ezuikit_js/v{version}/ezuikit_static",
     scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
     env: {
       // https://open.ys7.com/help/1772?h=domain
@@ -206,7 +207,6 @@ onMounted(() => {
 <template>
   <div class="hello-ezuikit-js">
     <div>
-
       <div id="video-container" style="height: 400px"></div>
     </div>
     <div style="margin-bottom: 12px">
@@ -225,6 +225,15 @@ onMounted(() => {
           v-model="accessToken"
           type="text"
           placeholder="请输入 accessToken"
+          style="width: 100%"
+        />
+      </label>
+      <label style="display: flex; margin-bottom: 8px">
+        staticPath:
+        <input
+          v-model="staticPath"
+          type="text"
+          placeholder="请输入 staticPath"
           style="width: 100%"
         />
       </label>
