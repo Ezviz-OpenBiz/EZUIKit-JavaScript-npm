@@ -399,8 +399,19 @@ SOFTWARE.
 
 ---
 
+Name: @ezuikit/player-plugin-record
+Version: 9.0.3-beta.1
+License: MIT
+Private: false
+Description: 萤石码流本地录制插件
+Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-plugin-record.git
+Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-plugin-record#readme
+Author: Ezviz-OpenBiz
+
+---
+
 Name: @ezuikit/player-ezopen
-Version: 9.0.3-beta.4
+Version: 9.0.4-beta.2
 License: MIT
 Private: false
 Description: 萤石ezopne协议播放器
