@@ -34,7 +34,7 @@ THE SOFTWARE.
 ---
 
 Name: @ezuikit/player-theme
-Version: 2.1.4-beta.3
+Version: 2.1.4-beta.1
 License: MIT
 Private: false
 Description: player theme
@@ -198,7 +198,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: dayjs
-Version: 1.11.19
+Version: 1.11.20
 License: MIT
 Private: false
 Description: 2KB immutable date time library alternative to Moment.js with the same modern API 
