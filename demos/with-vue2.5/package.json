@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "vue": "^2.5.17",
-    "ezuikit-js": "9.0.2"
+    "ezuikit-js": "9.0.7-beta.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",

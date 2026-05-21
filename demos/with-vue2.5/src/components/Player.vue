@@ -64,7 +64,7 @@ export default {
       accessToken:
         "at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0mefajp-pd25qljk",
       url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
-      staticPath: ''  //"./ezuikit_static" // 可选，本地静态资源路径，如果不设置默认使用线上资源,
+      staticPath: './ezuikit_static'  //"./ezuikit_static" // 可选，本地静态资源路径，如果不设置默认使用线上资源,
     };
   },
   mounted() {
@@ -81,6 +81,7 @@ export default {
       //   .then((res) => {
       //     var accessToken = res.data.accessToken;
       //   });
+      console.warn("init player with url ", this.staticPath);
       player = new EZUIKitPlayer({
         id: "video-container", // 视频容器ID
         accessToken: this.accessToken,
@@ -93,7 +94,6 @@ export default {
         },
         // quality: 6, // 
         language: "en", // zh | en
-        staticPath: this.staticPath || undefined, // "./ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
         decoderType: "v3",
         scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
         env: {
@@ -103,6 +103,7 @@ export default {
           domain: "https://open.ys7.com",
         },
         // staticPath:"https://openstatic.ys7.com/ezuikit_js/v8.1.9/ezuikit_static",
+        staticPath: this.staticPath || undefined, // "./ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
         // 日志打印设置
         loggerOptions: {
           // player.setLoggerOptions(options)

@@ -646,12 +646,40 @@
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.28.5"
 
-"@ezuikit/player-ezopen@9.0.2-beta.4":
-  version "9.0.2-beta.4"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-9.0.2-beta.4.tgz#360d60f518ba3e7cc19cf553d95380697a1e3e7d"
-  integrity sha512-CYPshflJBt2rEF6LEA+0lZG1oXT8yyMYY2hXBU1zo3xjhtPK7yPQnTbvkPksoLo4dF1ouXheqnCK60RKATtxCA==
+"@ezuikit/control-aichat@0.1.0-beta.3":
+  version "0.1.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@ezuikit/control-aichat/-/control-aichat-0.1.0-beta.3.tgz#71f0afe51b32ac037ef48ed37be5bed49db66d1d"
+  integrity sha512-OxcVQXYicX7i+PV1OsasoEtTFya52nXDj3cH+T89MNv3ErzStzpJP3kJ7wtxSWtHeHe3r/N8eis9Mr+k+NbgSQ==
   dependencies:
-    "@ezuikit/player-plugin-record" "8.2.5-beta.8"
+    "@ezuikit/utils-i18n" "^2.0.0"
+
+"@ezuikit/control-alarm-message@0.0.1-beta.2":
+  version "0.0.1-beta.2"
+  resolved "https://registry.yarnpkg.com/@ezuikit/control-alarm-message/-/control-alarm-message-0.0.1-beta.2.tgz#4bd414d40474cdd18badb2d193f2315c89b60e9b"
+  integrity sha512-LnlqI4LToBM2HWJM/D1yzvgDALUjkuyYt4YPYRVMoSW6vzm0B+rBBmrHp4gFyMvJ0FHvadumenMp+xXeggLYwQ==
+  dependencies:
+    eventemitter3 "^5.0.1"
+
+"@ezuikit/control-broadcast@0.1.0-beta.3":
+  version "0.1.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@ezuikit/control-broadcast/-/control-broadcast-0.1.0-beta.3.tgz#ec9f8e15fe74451f1b586d4705d96fa311f53e15"
+  integrity sha512-Ch8Dj6MgR/RHSc1ZV4xITU9RB0QkjY3XGNspVfFOSN6ufUAriCl4s5ZzcMUPfE0TEXN+9J5y5IWJ7HibTP218Q==
+  dependencies:
+    "@ezuikit/utils-i18n" "^2.0.0"
+
+"@ezuikit/control-talk@0.1.0-beta.3":
+  version "0.1.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@ezuikit/control-talk/-/control-talk-0.1.0-beta.3.tgz#9d21eaf6022bb2c7c470b837948b5e33caf6302c"
+  integrity sha512-OuZDDAMsvQZuDFHEoO8bypJcrjxHS52tcUaheaLjCGffXyUK3PzpGUUJo6KT7GZi2YRWp8gXkDtabFI/3cYROg==
+  dependencies:
+    "@ezuikit/utils-i18n" "^2.0.0"
+
+"@ezuikit/player-ezopen@9.0.5-beta.7":
+  version "9.0.5-beta.7"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-9.0.5-beta.7.tgz#54b38267497d38269e63efa40dba7071e7542245"
+  integrity sha512-oQx0dAPYCvf5jGTCeMJCjEK7oJFy2P4IdXg0CIa1bcJdVOI97m9WpS33F9zGZ4NPQ4H3yrJWSdBVkEfuZTcvLA==
+  dependencies:
+    "@ezuikit/player-plugin-record" "9.0.3-beta.1"
     "@ezuikit/utils-i18n" "2.0.0"
     "@ezuikit/utils-logger" "2.0.0"
     "@ezuikit/utils-service" "1.0.1"
@@ -662,10 +690,10 @@
     screenfull "^5.2.0"
     ua-parser-js "1.0.37"
 
-"@ezuikit/player-plugin-record@8.2.5-beta.8":
-  version "8.2.5-beta.8"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-plugin-record/-/player-plugin-record-8.2.5-beta.8.tgz#d63a2f02dadcb12e37d85432b62ffe1eb7246729"
-  integrity sha512-sKiD/4mUF2/G8MCfVP+5mi9uegymnN0v9pta9ApuDcLIaMRorea4jFc13VFOoQRAwbZpFu6cP0PmSB+KyxT1jQ==
+"@ezuikit/player-plugin-record@9.0.3-beta.1":
+  version "9.0.3-beta.1"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-plugin-record/-/player-plugin-record-9.0.3-beta.1.tgz#9255dcf69b1ce66559f18065881ce3036edb48ff"
+  integrity sha512-qsQSAuqg9XwugNfvuc6F6YKWoFhO8IQVyxmtpWrrwF8anWp2Egz7t0ZObv4Bh9sHabFu9ct8A5eLtwF/XCkk3w==
 
 "@ezuikit/utils-collect@0.1.1":
   version "0.1.1"
@@ -676,6 +704,13 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@ezuikit/utils-i18n/-/utils-i18n-2.0.0.tgz#41dceba7b09043e1a5baffce36ca0e0de36c7cc4"
   integrity sha512-gMkfdwFTRk3bAkUVWRGPyEsQl4aIImBpQp732aSSHA75LFPi1MmdaB2Xf34OeC+4v+Anpbt75vviCpUrKPMKlQ==
+  dependencies:
+    deepmerge "^4.3.1"
+
+"@ezuikit/utils-i18n@^2.0.0":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@ezuikit/utils-i18n/-/utils-i18n-2.0.1.tgz#e4a5d0b921763ab5554cedc02fb8e058f4640802"
+  integrity sha512-846z2bDpCxioTBO3KG8Uw8QUFa6hzquSzmZKWPO6fjT3P4v6zNnXRz+Z3JCPlXnc4eesi03A+JmMAU6m5KI4gg==
   dependencies:
     deepmerge "^4.3.1"
 
@@ -3468,12 +3503,16 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.1.tgz#8d172c064867f235c0c84a596806d279bf4bcc07"
   integrity sha512-Wrk35e8ydCKDj/ArClo1VrPVmN8zph5V4AtHwIuHhvMXsKf73UT3BOD+azBIW+3wOJ4FhEH7zyaJCFvChjYvMA==
 
-ezuikit-js@9.0.2:
-  version "9.0.2"
-  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-9.0.2.tgz#1481a5f5975080bc04b7b24c7bd24fb387a715b0"
-  integrity sha512-7vH3y6j0IptZZTOH5CDhU2GXM67E8Cs4kySgUbZ4Po2m7VbdhCOP9IKcxPXs9VhpCNlED8E0A7Zqd0SN3pvHgw==
+ezuikit-js@9.0.7-beta.1:
+  version "9.0.7-beta.1"
+  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-9.0.7-beta.1.tgz#abed51ad99761f2bdcde5b3c448247b93c7b05d7"
+  integrity sha512-hkYZ0g528RifkM1NGRZTTTq0EQuQkwAqUImHq/TNXUvKXO1lmwhoiphPiIIN/SxmGuNiSzhgs1Xs5mx90LcGkw==
   dependencies:
-    "@ezuikit/player-ezopen" "9.0.2-beta.4"
+    "@ezuikit/control-aichat" "0.1.0-beta.3"
+    "@ezuikit/control-alarm-message" "0.0.1-beta.2"
+    "@ezuikit/control-broadcast" "0.1.0-beta.3"
+    "@ezuikit/control-talk" "0.1.0-beta.3"
+    "@ezuikit/player-ezopen" "9.0.5-beta.7"
     "@ezuikit/utils-collect" "0.1.1"
     "@ezuikit/utils-i18n" "2.0.0"
     "@ezuikit/utils-logger" "2.0.0"
