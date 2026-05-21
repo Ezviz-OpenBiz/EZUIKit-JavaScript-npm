@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   ezuikit-js:
-    specifier: 9.0.2
-    version: 9.0.2
+    specifier: 9.0.7-beta.1
+    version: 9.0.7-beta.1
   react:
     specifier: ^17
     version: 17.0.2
@@ -1721,10 +1721,34 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: false
 
-  /@ezuikit/player-ezopen@9.0.2-beta.4:
-    resolution: {integrity: sha512-CYPshflJBt2rEF6LEA+0lZG1oXT8yyMYY2hXBU1zo3xjhtPK7yPQnTbvkPksoLo4dF1ouXheqnCK60RKATtxCA==}
+  /@ezuikit/control-aichat@0.1.0-beta.3:
+    resolution: {integrity: sha512-OxcVQXYicX7i+PV1OsasoEtTFya52nXDj3cH+T89MNv3ErzStzpJP3kJ7wtxSWtHeHe3r/N8eis9Mr+k+NbgSQ==}
     dependencies:
-      '@ezuikit/player-plugin-record': 8.2.5-beta.8
+      '@ezuikit/utils-i18n': 2.0.0
+    dev: false
+
+  /@ezuikit/control-alarm-message@0.0.1-beta.2:
+    resolution: {integrity: sha512-LnlqI4LToBM2HWJM/D1yzvgDALUjkuyYt4YPYRVMoSW6vzm0B+rBBmrHp4gFyMvJ0FHvadumenMp+xXeggLYwQ==}
+    dependencies:
+      eventemitter3: 5.0.1
+    dev: false
+
+  /@ezuikit/control-broadcast@0.1.0-beta.3:
+    resolution: {integrity: sha512-Ch8Dj6MgR/RHSc1ZV4xITU9RB0QkjY3XGNspVfFOSN6ufUAriCl4s5ZzcMUPfE0TEXN+9J5y5IWJ7HibTP218Q==}
+    dependencies:
+      '@ezuikit/utils-i18n': 2.0.0
+    dev: false
+
+  /@ezuikit/control-talk@0.1.0-beta.3:
+    resolution: {integrity: sha512-OuZDDAMsvQZuDFHEoO8bypJcrjxHS52tcUaheaLjCGffXyUK3PzpGUUJo6KT7GZi2YRWp8gXkDtabFI/3cYROg==}
+    dependencies:
+      '@ezuikit/utils-i18n': 2.0.0
+    dev: false
+
+  /@ezuikit/player-ezopen@9.0.5-beta.7:
+    resolution: {integrity: sha512-oQx0dAPYCvf5jGTCeMJCjEK7oJFy2P4IdXg0CIa1bcJdVOI97m9WpS33F9zGZ4NPQ4H3yrJWSdBVkEfuZTcvLA==}
+    dependencies:
+      '@ezuikit/player-plugin-record': 9.0.3-beta.1
       '@ezuikit/utils-i18n': 2.0.0
       '@ezuikit/utils-logger': 2.0.0
       '@ezuikit/utils-service': 1.0.1
@@ -1736,8 +1760,8 @@ packages:
       ua-parser-js: 1.0.37
     dev: false
 
-  /@ezuikit/player-plugin-record@8.2.5-beta.8:
-    resolution: {integrity: sha512-sKiD/4mUF2/G8MCfVP+5mi9uegymnN0v9pta9ApuDcLIaMRorea4jFc13VFOoQRAwbZpFu6cP0PmSB+KyxT1jQ==}
+  /@ezuikit/player-plugin-record@9.0.3-beta.1:
+    resolution: {integrity: sha512-qsQSAuqg9XwugNfvuc6F6YKWoFhO8IQVyxmtpWrrwF8anWp2Egz7t0ZObv4Bh9sHabFu9ct8A5eLtwF/XCkk3w==}
     dev: false
 
   /@ezuikit/utils-collect@0.1.1:
@@ -2780,6 +2804,7 @@ packages:
 
   /@ungap/structured-clone@1.3.0:
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+    deprecated: Potential CWE-502 - Update to 1.3.1 or higher
     dev: false
 
   /@webassemblyjs/ast@1.14.1:
@@ -5149,10 +5174,14 @@ packages:
       - supports-color
     dev: false
 
-  /ezuikit-js@9.0.2:
-    resolution: {integrity: sha512-7vH3y6j0IptZZTOH5CDhU2GXM67E8Cs4kySgUbZ4Po2m7VbdhCOP9IKcxPXs9VhpCNlED8E0A7Zqd0SN3pvHgw==}
+  /ezuikit-js@9.0.7-beta.1:
+    resolution: {integrity: sha512-hkYZ0g528RifkM1NGRZTTTq0EQuQkwAqUImHq/TNXUvKXO1lmwhoiphPiIIN/SxmGuNiSzhgs1Xs5mx90LcGkw==}
     dependencies:
-      '@ezuikit/player-ezopen': 9.0.2-beta.4
+      '@ezuikit/control-aichat': 0.1.0-beta.3
+      '@ezuikit/control-alarm-message': 0.0.1-beta.2
+      '@ezuikit/control-broadcast': 0.1.0-beta.3
+      '@ezuikit/control-talk': 0.1.0-beta.3
+      '@ezuikit/player-ezopen': 9.0.5-beta.7
       '@ezuikit/utils-collect': 0.1.1
       '@ezuikit/utils-i18n': 2.0.0
       '@ezuikit/utils-logger': 2.0.0
