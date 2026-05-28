@@ -34,12 +34,23 @@ THE SOFTWARE.
 ---
 
 Name: @ezuikit/player-theme
-Version: 2.1.4-beta.1
+Version: 3.0.2-beta.3
 License: MIT
 Private: false
 Description: player theme
 Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-theme.git
 Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-theme#readme
+Author: Ezviz-OpenBiz
+
+---
+
+Name: @ezuikit/control-aichat
+Version: 0.1.0-beta.6
+License: null
+Private: false
+Description: AI video search chat control
+Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git
+Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme
 Author: Ezviz-OpenBiz
 
 ---
@@ -79,12 +90,12 @@ SOFTWARE.
 ---
 
 Name: @skax/picker
-Version: 1.1.7
+Version: 1.1.8
 License: MIT
 Private: false
 Description: picker component for js framework, support mobile and pc
 Repository: git+https://github.com/freeshineit/picker.git
-Homepage: https://github.com/freeshineit/picker#readme
+Homepage: https://freeshineit.github.io/picker/
 Author: ShineShao <xiaoshaoqq@gmail.com>
 License Text:
 ===
@@ -113,22 +124,33 @@ SOFTWARE.
 
 ---
 
-Name: @ezuikit/control-date-picker
-Version: 1.0.5
+Name: @ezuikit/control-zoom
+Version: 1.0.0-beta.4
 License: null
 Private: false
-Description: date picker control for ezviz
+Description: zoom control for ezviz
 Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git
 Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme
 Author: Ezviz-OpenBiz
 
 ---
 
-Name: @ezuikit/control-time-line
-Version: 1.0.7
+Name: @ezuikit/control-ptz
+Version: 1.0.0-beta.5
 License: null
 Private: false
-Description: time line control for ezviz
+Description: ptz control for ezviz
+Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git
+Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme
+Author: Ezviz-OpenBiz
+
+---
+
+Name: @ezuikit/control-date-picker
+Version: 2.0.0-beta.4
+License: null
+Private: false
+Description: date picker control for ezviz
 Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git
 Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme
 Author: Ezviz-OpenBiz
@@ -170,35 +192,52 @@ SOFTWARE.
 
 ---
 
+Name: @ezuikit/control-time-line
+Version: 2.0.0-beta.4
+License: null
+Private: false
+Description: time line control for ezviz
+Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git
+Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme
+Author: Ezviz-OpenBiz
+
+---
+
 Name: @ezuikit/control-talk
-Version: 0.0.3
+Version: 0.1.0-beta.3
 License: null
 Private: false
 Description: talk
+Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git
+Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme
 Author: Ezviz-OpenBiz
 
 ---
 
 Name: @ezuikit/control-broadcast
-Version: 0.0.1
+Version: 0.1.0-beta.3
 License: null
 Private: false
 Description: broadcast voice control
+Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git
+Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme
 Author: Ezviz-OpenBiz
 
 ---
 
-Name: @ezuikit/control-aichat
-Version: 0.0.1
-License: null
+Name: @ezuikit/control-alarm-message
+Version: 0.0.1-beta.2
+License: MIT
 Private: false
-Description: AI video search chat control
+Description: alarm message list control
+Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git
+Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme
 Author: Ezviz-OpenBiz
 
 ---
 
 Name: dayjs
-Version: 1.11.20
+Version: 1.11.21
 License: MIT
 Private: false
 Description: 2KB immutable date time library alternative to Moment.js with the same modern API 
@@ -411,9 +450,8 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/player-ezopen
-Version: 9.0.4-beta.2
+Version: 9.0.5-beta.6
 License: MIT
 Private: false
 Description: 萤石ezopne协议播放器
-Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-ezopen.git
 Author: Ezviz-OpenBiz

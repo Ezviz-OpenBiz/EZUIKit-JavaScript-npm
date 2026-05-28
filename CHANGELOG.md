@@ -1,257 +1,30 @@
-### v9.0.5（2026-05-06）
+### v9.0.7-beta.2
+
+- 新增 `aiChat` 配置（对象），透传给内部 AIChat 实例，支持自定义容器、嵌入模式等
+  - 用法：`new EZUIKitPlayer({ aiChat: { container: '#x', embed: true } })`
+  - 不传时行为不变
+- 升级 `@ezuikit/control-aichat` 到 `0.1.0-beta.5`（支持 `embed` 模式）
+
+### v8.2.0
+
+- 弃用 `download` 参数，如果是控件请初始化设置 `capturePictureOptions: {type: 'download'}`
+- 弃用 `audio` 参数，如果想设置请初始时设置 `muted: boolean` 或 `volumeOptions: {muted: boolean}`, 后者优先级高, 默认 有声音
+
+### v8.1.10 （2025-05-20）
 
 #### Feat
 
-- 轻应用插件优化
+- 优化取流逻辑
+
+- 弃用 `host`，`host` 默认从播放地址中获取
 
 #### Fixed
 
-- 修复了一些问题
-
-### v9.0.4（2026-4-23）
-
-#### Feat
-
-- 支持加密设备在初始化后设置密钥
-
-- 抗锯齿接口新增梯度平滑模式
-
-### v9.0.3（2026-04-10）
-
-#### Feat
-
-- 硬解模式支持带水印录制
-
-- 电子放大后截图展示放大区域
-
-- 支持鼠标滚动缩放时间轴
-
-#### Fixed
-
-- 部分设备录制文件声音异常修复
-
-### v9.0.2（2026-03-30）
-
-#### Feat
-
-- 支持 hls 直播流播放
-
-#### Fix
-
-- 取消广播初始化获取麦克风权限
-
-### v9.0.1（2026-03-25）
-
-#### Feat
-
-- 支持取流超时取流链路异常断开重试
-
-#### Fix
-
-- 优化了取流失败返回的错误码
-
-### v9.0.0（2026-03-18）
-
-#### Feat
-
-- 轻应用AI云存储重磅发布！
-
-#### Fix
-
-- 优化了H5端主题展示效果
-
-### v8.2.7(2026-01-28)
-
-#### Feat
-
-- 支持云广播语音下发
-
-- 支持录制语音下发至设备
-
-#### Fix
-
-- 小屏幕尺寸下底部按钮折叠异常问题
-
-### v8.2.6(2026-01-15)
-
-#### Feat
-
-- 轻应用本地插件EZUIKitNative重磅发布！(实验特性)
-
-#### Fix
-
-- 修复部分设备回放模式下录制没有声音的问题
-
-### v8.2.5 (2026-01-14)
-
-#### Feat
-
-- 画面内容区增加 `ResizeObserver`  避免内容区域展示不全
-
-#### Fix
-
-- 修复Safari@13浏览器中日期兼容问题
-
-- 修复 `More` 控件展示导致死循
-
-### v8.2.4 (2025-12-30)
-
-#### Feat
-
-- 云存储和云录制支持8倍和16倍播放速度
-
-#### Fix
-
-- 兼容UI上一些小问题
-
-- 修复Safari浏览器中日历显示问题
-
-### v8.2.3 (2025-12-20)
-
-#### Fix
-
-- 修复对讲小权限问题
-
-### v8.2.2 (2025-12-16)
-
-#### Fix
-
-- 更新依赖，修复安装问题
-
-### v8.2.1 (2025-12-15)
-
-#### Feat
-
-- 国标设备支持seek
-
-- 国标设备时间轴同步交互优化
-
-- 备用机房地址缓存优化
-
-- 重构日历组件，支持展示当前月份的日期是否有录像（仅播放所在月， 后续会支持展示月）
-
-- 移动端时间轴支持图片懒加载和配置是否展示卡片 `timeLineOptions.showCoverFold`
-
-- 支持canvas截图
-
-#### Fix
-
-- 修复一些已知问题
-
-### v8.2.0 (2025-11-24)
-
-#### Feat
-
-- 新的 UI 交互优化
-
-- 初始化 `width` 支持 style 的[width](https://developer.mozilla.org/zh-CN/docs/Web/CSS/width)属性值和 `height` 支持 style 的
-  [height](https://developer.mozilla.org/zh-CN/docs/Web/CSS/height)属性值
-
-- 更新 `resize` 逻辑，宽高支持 style 相同属性值
-
-- 移除 `browserFullscreen` 和 `exitBrowserFullscreen` api, 统一使用`fullscreen` 和 `exitFullscreen`
-
-- 支持移动端（手机浏览器，pad 浏览器）全屏后旋转后保持全屏状态
-
-- 支持双击全屏，可以初始化时使用`dblClickFullscreen: false` 禁用双击全屏
-
-- 支持自定义回放倍速 
-
-- 更新监听方式, `player.eventEmitter.on` -> `player.on`
-
-- 新增主题控件的交互变化事件
-
-- 更新 `changePlayUrl` api, 不再提供切换主题参数, 切换主题请使用 `player.changeTheme("themeId")`
-
-- 移除 `Theme` 实例, 切换主题请使用 `player.changeTheme`
-
-- 移除 `Zoom` 实例
-
-- 更新消息提示 UI 交互
-
-- 移动端时间轴支持展示片段封面和支持调节时间宽度
-
-- 默认支持云录制播放
-
-- 支持三种画面填充模式
-
-#### Fixed
-
-- 修复移动端浏览器调用 api 全屏样式问题。
-
-### v8.1.16(2025-09-22)
-
-#### Feat
-
-- 支持显示码流信息
-  
-  - 分辨率
-  
-  - 丢包率
-  
-  - 码率
-  
-  - 帧率
-  
-  - 编码信息
-  
-  - 码流封装
-  
-  - 卡顿比
-
-- 发起对讲回调结果优化
-
-### v8.1.15(2025-09-10)
-
-- 部分设备支持“自动”清晰度
-
-- 修复了一些小 bug
-
-### v8.1.14(2025-08-22)
-
-#### Feat
-
-- 支持初始化前单独获取必要参数，提高初始化速度
-
-#### Fixed
-
-- 修复 NVR 设备指定通道对讲没声音的问题
-
-### v8.1.13(2025-07-29)
-
-#### Feat
-
-- 支持私有云环境使用
-
-#### Fixed
-
-- 修复云台在某些情况下一直转动的问题
-
-- 优化部分场景下 UI 换行的问题
-
-### v8.1.12 (2025-07-02)
-
-#### Feat
-
-- 优化对讲模块逻辑
-
-- 修复了一些取流问题
-
-### v8.1.10 (2025-04-27)
-
-#### Feat
-
-- 优化取流逻辑，
-
-- 弃用 `host`, `host` 默认从播放地址中获取
-
-- 新增初始化 `videoLevelList` 参数进行自定义清晰度列表
-
-#### Fixed
-
-- 修复 `autoplay` 为 false 时， 不能播放问题
+- 修复 `autoplay` 为 false 时， 不能播放
 
 - 修复多窗口下对讲回调只会触发最后初始化的播放器
+
+- 修复
 
 ### v8.1.9 (2025-04-16)
 
@@ -263,9 +36,9 @@
 
 #### Fixed
 
-- 修复调用录制 api, ui 没有同步问题
-- 修复调用对讲 api, ui 没有同步问题
-- 修复了一些小 bug [issues #178](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/178), [issues #199](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/199), [issues #206](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/206),
+- 修复调用录制api, ui 没有同步问题
+- 修复调用对讲api, ui 没有同步问题
+- 修复了一些小bug [issues #178](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/178), [issues #199](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/199), [issues #206](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/206),
 
 ## v8.1.8（2025-03-19）
 
@@ -277,7 +50,7 @@
 
 #### Fixed
 
-- 修复部分 AR 设备获取标签信息报错
+- 修复部分AR设备获取标签信息报错
 
 ## v8.1.7（2025-03-05）
 
@@ -297,9 +70,9 @@
 
 #### Fixed
 
-- 修复了 token 为空时本地缓存地址依然可以播放的问题
+- 修复了token为空时本地缓存地址依然可以播放的问题
 
-- 修复了一些小 bug
+- 修复了一些小bug
 
 ## v8.1.5（2025-01-15）
 
@@ -313,15 +86,15 @@
 
 - 修复了多实例场景下，画面之间声音状态互相干扰的问题
 
-- 修复了一些其他小 bug
+- 修复了一些其他小bug
 
 ## v8.1.4（2025-01-07）
 
 #### Feat
 
-- 支持获取 AR 设备私有标签信息
+- 支持获取AR设备私有标签信息
 
-- 修复了一些回放时间轴的小 bug
+- 修复了一些回放时间轴的小bug
 
 ## v8.1.3 (2024-12-31)
 
@@ -332,8 +105,8 @@
 
 #### Fixed
 
-- 修复 destroy 销毁实例后，部分 dom、样式残留的问题
-- 修复了一些小 bug
+- 修复destroy销毁实例后，部分dom、样式残留的问题
+- 修复了一些小bug
 
 ## v8.1.2 (2024-12-13)
 
