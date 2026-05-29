@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "9.0.7-beta.2",
+  "version": "9.0.8-beta.1",
   "description": "ezuikit javascript for npm",
   "title": "ezuikit-js",
   "main": "index.js",
@@ -35,7 +35,7 @@
     "deepmerge": "^4.3.1",
     "formdata-polyfill": "^4.0.10",
     "screenfull": "^5.2.0",
-    "@ezuikit/control-aichat": "0.1.0-beta.6"
+    "@ezuikit/control-aichat": "0.1.0-beta.7"
   },
   "license": "ISC",
   "repository": {
