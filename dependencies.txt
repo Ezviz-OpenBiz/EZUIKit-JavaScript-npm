@@ -34,23 +34,12 @@ THE SOFTWARE.
 ---
 
 Name: @ezuikit/player-theme
-Version: 3.0.2-beta.3
+Version: 3.0.1-beta.4
 License: MIT
 Private: false
 Description: player theme
 Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-theme.git
 Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-theme#readme
-Author: Ezviz-OpenBiz
-
----
-
-Name: @ezuikit/control-aichat
-Version: 0.1.0-beta.7
-License: null
-Private: false
-Description: AI video search chat control
-Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git
-Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme
 Author: Ezviz-OpenBiz
 
 ---
@@ -125,7 +114,7 @@ SOFTWARE.
 ---
 
 Name: @ezuikit/control-zoom
-Version: 1.0.0-beta.4
+Version: 1.0.0-beta.3
 License: null
 Private: false
 Description: zoom control for ezviz
@@ -204,29 +193,34 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/control-talk
-Version: 0.1.0-beta.3
+Version: 0.0.3
 License: null
 Private: false
 Description: talk
-Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git
-Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme
 Author: Ezviz-OpenBiz
 
 ---
 
 Name: @ezuikit/control-broadcast
-Version: 0.1.0-beta.3
+Version: 0.0.1
 License: null
 Private: false
 Description: broadcast voice control
-Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls.git
-Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-controls#readme
+Author: Ezviz-OpenBiz
+
+---
+
+Name: @ezuikit/control-aichat
+Version: 0.0.1
+License: null
+Private: false
+Description: AI video search chat control
 Author: Ezviz-OpenBiz
 
 ---
 
 Name: @ezuikit/control-alarm-message
-Version: 0.0.1-beta.2
+Version: 0.0.1-beta.6
 License: MIT
 Private: false
 Description: alarm message list control
@@ -237,7 +231,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: dayjs
-Version: 1.11.21
+Version: 1.11.20
 License: MIT
 Private: false
 Description: 2KB immutable date time library alternative to Moment.js with the same modern API 
@@ -438,20 +432,10 @@ SOFTWARE.
 
 ---
 
-Name: @ezuikit/player-plugin-record
-Version: 9.0.3-beta.1
-License: MIT
-Private: false
-Description: 萤石码流本地录制插件
-Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-plugin-record.git
-Homepage: https://github.com/Ezviz-OpenBiz/EZUIKit-player-plugin-record#readme
-Author: Ezviz-OpenBiz
-
----
-
 Name: @ezuikit/player-ezopen
-Version: 9.0.5-beta.6
+Version: 9.0.4-beta.3
 License: MIT
 Private: false
 Description: 萤石ezopne协议播放器
+Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-ezopen.git
 Author: Ezviz-OpenBiz
