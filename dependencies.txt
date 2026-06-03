@@ -45,7 +45,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/control-aichat
-Version: 0.1.0-beta.7
+Version: 0.1.0-beta.8
 License: null
 Private: false
 Description: AI video search chat control
@@ -450,8 +450,9 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/player-ezopen
-Version: 9.0.5-beta.6
+Version: 9.0.5-beta.8
 License: MIT
 Private: false
 Description: 萤石ezopne协议播放器
+Repository: git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-ezopen.git
 Author: Ezviz-OpenBiz

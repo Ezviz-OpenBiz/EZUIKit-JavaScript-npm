@@ -1,10 +1,3 @@
-### v9.0.8
-
-- 新增 `aiChat` 配置（对象），透传给内部 AIChat 实例，支持自定义容器、嵌入模式等
-  - 用法：`new EZUIKitPlayer({ aiChat: { container: '#x', embed: true } })`
-  - 不传时行为不变
-- 升级 `@ezuikit/control-aichat` 到 `0.1.0-beta.5`（支持 `embed` 模式）
-
 ### v9.0.5（2026-05-06）
 
 #### Feat
