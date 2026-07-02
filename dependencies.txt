@@ -45,7 +45,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/control-aichat
-Version: 0.1.0-beta.8
+Version: 0.1.0-beta.9
 License: null
 Private: false
 Description: AI video search chat control
@@ -125,7 +125,7 @@ SOFTWARE.
 ---
 
 Name: @ezuikit/control-zoom
-Version: 1.0.0-beta.3
+Version: 1.0.0-beta.4
 License: null
 Private: false
 Description: zoom control for ezviz
@@ -237,7 +237,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: dayjs
-Version: 1.11.20
+Version: 1.11.21
 License: MIT
 Private: false
 Description: 2KB immutable date time library alternative to Moment.js with the same modern API 
