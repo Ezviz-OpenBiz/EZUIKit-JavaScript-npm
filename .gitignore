@@ -19,3 +19,6 @@ build/
 npm-debug.log*
 npm-error.log*
 yarn-debug.log*
+
+react-demo/ezuikit_static
+with-vue2.5/ezuikit_static
