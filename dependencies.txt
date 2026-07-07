@@ -34,7 +34,7 @@ THE SOFTWARE.
 ---
 
 Name: @ezuikit/player-theme
-Version: 3.0.2-beta.3
+Version: 3.1.0-beta.2
 License: MIT
 Private: false
 Description: player theme
@@ -147,7 +147,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/control-date-picker
-Version: 2.0.0-beta.4
+Version: 2.1.0-beta.1
 License: null
 Private: false
 Description: date picker control for ezviz
@@ -193,7 +193,7 @@ SOFTWARE.
 ---
 
 Name: @ezuikit/control-time-line
-Version: 2.0.0-beta.4
+Version: 2.1.0-beta.3
 License: null
 Private: false
 Description: time line control for ezviz
@@ -450,7 +450,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/player-ezopen
-Version: 9.0.5-beta.8
+Version: 9.0.6-beta.1
 License: MIT
 Private: false
 Description: 萤石ezopne协议播放器

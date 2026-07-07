@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "9.0.12",
+  "version": "9.0.14",
   "description": "ezuikit javascript for npm",
   "title": "ezuikit-js",
   "main": "index.js",
@@ -23,7 +23,7 @@
   ],
   "author": "Ezviz-OpenBiz",
   "dependencies": {
-    "@ezuikit/player-ezopen": "9.0.5-beta.8",
+    "@ezuikit/player-ezopen": "9.0.6-beta.1",
     "@ezuikit/utils-collect": "0.1.1",
     "@ezuikit/utils-i18n": "2.0.0",
     "@ezuikit/utils-logger": "2.0.0",
@@ -35,7 +35,7 @@
     "deepmerge": "^4.3.1",
     "formdata-polyfill": "^4.0.10",
     "screenfull": "^5.2.0",
-    "@ezuikit/control-aichat": "0.1.0-beta.8"
+    "@ezuikit/control-aichat": "0.1.0-beta.9"
   },
   "license": "ISC",
   "repository": {
