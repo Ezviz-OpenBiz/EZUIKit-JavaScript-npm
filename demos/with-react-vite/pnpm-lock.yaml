@@ -9,8 +9,8 @@ dependencies:
     specifier: ^2.5.1
     version: 2.5.1
   ezuikit-js:
-    specifier: 9.0.2
-    version: 9.0.2
+    specifier: 9.0.12
+    version: 9.0.12
   react:
     specifier: ^18.2.0
     version: 18.3.1
@@ -1324,10 +1324,16 @@ packages:
     dev: true
     optional: true
 
-  /@ezuikit/player-ezopen@9.0.2-beta.4:
-    resolution: {integrity: sha512-CYPshflJBt2rEF6LEA+0lZG1oXT8yyMYY2hXBU1zo3xjhtPK7yPQnTbvkPksoLo4dF1ouXheqnCK60RKATtxCA==}
+  /@ezuikit/control-aichat@0.1.0-beta.8:
+    resolution: {integrity: sha512-a/sgstO5sX6XiFYMsxnSmD6xUZLIP8w5N6JHTXYhSD185GpMeOXM0e8+JA1e67Lo9rki5CCDhauKHVhDTMuh7A==}
     dependencies:
-      '@ezuikit/player-plugin-record': 8.2.5-beta.8
+      '@ezuikit/utils-i18n': 2.0.0
+    dev: false
+
+  /@ezuikit/player-ezopen@9.0.5-beta.8:
+    resolution: {integrity: sha512-vKZxNom9IHhkWAaObWlydD9isqw4QdTTsTERnGjvSGZ/STTTSXS480kIeq9Lvb8cRwIb3qkrJY1bL1ZfD+ivPw==}
+    dependencies:
+      '@ezuikit/player-plugin-record': 9.0.3-beta.1
       '@ezuikit/utils-i18n': 2.0.0
       '@ezuikit/utils-logger': 2.0.0
       '@ezuikit/utils-service': 1.0.1
@@ -1339,8 +1345,8 @@ packages:
       ua-parser-js: 1.0.37
     dev: false
 
-  /@ezuikit/player-plugin-record@8.2.5-beta.8:
-    resolution: {integrity: sha512-sKiD/4mUF2/G8MCfVP+5mi9uegymnN0v9pta9ApuDcLIaMRorea4jFc13VFOoQRAwbZpFu6cP0PmSB+KyxT1jQ==}
+  /@ezuikit/player-plugin-record@9.0.3-beta.1:
+    resolution: {integrity: sha512-qsQSAuqg9XwugNfvuc6F6YKWoFhO8IQVyxmtpWrrwF8anWp2Egz7t0ZObv4Bh9sHabFu9ct8A5eLtwF/XCkk3w==}
     dev: false
 
   /@ezuikit/utils-collect@0.1.1:
@@ -1960,10 +1966,11 @@ packages:
     resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
     dev: false
 
-  /ezuikit-js@9.0.2:
-    resolution: {integrity: sha512-7vH3y6j0IptZZTOH5CDhU2GXM67E8Cs4kySgUbZ4Po2m7VbdhCOP9IKcxPXs9VhpCNlED8E0A7Zqd0SN3pvHgw==}
+  /ezuikit-js@9.0.12:
+    resolution: {integrity: sha512-PXDNGHcTfyBsKUCADWSTFEEQ0rQ7guputJZC71M/kKatbTD8mcRJBVWcBLf3bocc8tLdXaY8XNdAMAvVM6FGMA==}
     dependencies:
-      '@ezuikit/player-ezopen': 9.0.2-beta.4
+      '@ezuikit/control-aichat': 0.1.0-beta.8
+      '@ezuikit/player-ezopen': 9.0.5-beta.8
       '@ezuikit/utils-collect': 0.1.1
       '@ezuikit/utils-i18n': 2.0.0
       '@ezuikit/utils-logger': 2.0.0
