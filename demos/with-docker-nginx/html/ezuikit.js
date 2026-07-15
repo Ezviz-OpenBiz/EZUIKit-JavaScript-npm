@@ -1,5 +1,5 @@
 /*
-* ezuikit.js v9.0.15-beta.2
+* ezuikit.js v9.0.15
 * ezuikit javascript for npm
 * Copyright (c) 2026-07-15 Ezviz-OpenBiz
 * Released under the MIT License.

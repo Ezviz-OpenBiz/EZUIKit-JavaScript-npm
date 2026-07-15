@@ -83,7 +83,15 @@ const Player = () => {
         // videoLevelList: [
         //   { level: -1, name: "标清", streamTypeIn: 2 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
         //   { level: -2, name: "高清", streamTypeIn: 1 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
-        // ]
+        // ],
+        // // 回放列表弹框
+        // recListOptions: null,
+        // // 时间选择器
+        // timeOptions: null,
+        recordOptions: {
+          // 是否开启录制水印， 默认开启
+          enabledWatermarkRecord: false,
+        },
       });
 
       (window as any).player = player.current;
@@ -229,7 +237,7 @@ const Player = () => {
           <input
             ref={staticPathRef}
             placeholder="ezopen staticPath"
-            defaultValue="https://openstatic.ys7.com/ezuikit_js/v8.1.14/ezuikit_static"
+            defaultValue="https://openstatic.ys7.com/ezuikit_js/v9.0.15/ezuikit_static"
           />
         </div>
         <div className="form-item">

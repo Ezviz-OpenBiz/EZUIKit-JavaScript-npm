@@ -111,6 +111,7 @@ const init = () => {
     template: "pcLive",
     // width: 600,
     height: 400,
+    dpr: 2,
     // quality: 1, // 
     // language: "en", // zh | en
     handleError: (err: any) => {
@@ -154,7 +155,15 @@ const init = () => {
     // videoLevelList: [
     //   { level: -1, name: "标清", streamTypeIn: 2 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
     //   { level: -2, name: "高清", streamTypeIn: 1 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
-    // ]
+    // ],
+    // 回放列表弹框
+    // recListOptions: null,
+    // 时间选择器
+    // timeOptions: null,
+    recordOptions: {
+      // 是否开启录制水印， 默认开启
+      enabledWatermarkRecord: false,
+    },
   });
 
       // 8.1.x 事件监听
