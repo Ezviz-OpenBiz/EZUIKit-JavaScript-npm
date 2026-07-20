@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -62,13 +62,14 @@
         <button class="destroy">销毁</button>
       </div>
       <p style="font-style: italic">
-        播放多个视频，可初始化多个实例，参考：<a href="/multi.html">multi.html</a>
+        播放多个视频，可初始化多个实例，参考：<a href="/multi.html"
+          >multi.html</a
+        >
       </p>
     </div>
     <script>
       (function () {
         var player = null;
-
 
         function destroy() {
           if (player) {
@@ -78,10 +79,11 @@
         }
 
         document.querySelector(".init").addEventListener("click", () => {
-
-          const url = (document.getElementById("url").value).trim();
-          const accessToken = (document.getElementById("accessToken").value).trim();
-          const staticPath = (document.getElementById("staticPath").value).trim();
+          const url = document.getElementById("url").value.trim();
+          const accessToken = document
+            .getElementById("accessToken")
+            .value.trim();
+          const staticPath = document.getElementById("staticPath").value.trim();
 
           if (player) {
             destroy();
@@ -98,6 +100,7 @@
             template: "pcLive", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
             // width: 600, // 8.2.0 版本开始支持 style 里面宽的值(如 "100%" 或 '100vw' 或 "600px" 或 600 或 "1em" 等等)
             height: 400,
+            dpr: 2,
             language: "en", // zh | en
             // debugDownloadData: true, // 调试下载原始数据
             handleError: (error) => {
@@ -137,14 +140,22 @@
             //   { level: -1, name: "标清", streamTypeIn: 2 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
             //   { level: -2, name: "高清", streamTypeIn: 1 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
             // ]
-            timeLineOptions : {
+            timeLineOptions: {
               showCoverFold: true,
               showTimeWidthBtn: true,
-            }
+            },
+            // 回放列表弹框
+            // recListOptions: null,
+            // 时间选择器
+            // timeOptions: null,
+            recordOptions: {
+              // 是否开启录制水印， 默认开启
+              enabledWatermarkRecord: false,
+            },
           });
 
           window.player = player;
-          
+
           // 8.1.x 版本, 9.x.x 移除了 eventEmitter
           // player.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.videoInfo, (info) => {
           //   console.log("eventEmitter videoInfo", info);

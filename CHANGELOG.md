@@ -1,3 +1,14 @@
+
+### v9.0.15 (2026-07-15)
+
+### Feat
+
+- 支持自定义是否录制水印 `recordOptions.enabledWatermarkRecord`
+
+### Fixed
+
+- 修复录制问题
+
 ### v9.0.12（2026-06-29）
 
 #### Feat

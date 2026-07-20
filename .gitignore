@@ -20,5 +20,6 @@ npm-debug.log*
 npm-error.log*
 yarn-debug.log*
 
-react-demo/ezuikit_static
-with-vue2.5/ezuikit_static
+demos/react-demo/ezuikit_static
+demos/with-vue2.5/ezuikit_static
+demos/with-docker-nginx/html/ezuikit_static

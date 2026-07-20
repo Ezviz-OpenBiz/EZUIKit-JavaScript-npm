@@ -8,7 +8,7 @@ on:
 
 permissions:
   id-token: write  # Required for OIDC
-  contents: read
+  contents: write
 
 # 任务，定义个changelog 的任务
 jobs:
@@ -95,3 +95,36 @@ jobs:
       # 发布npm 发布前执行了prepublishOnly
       - name: Publish npm
         run: npm publish --tag ${{ steps.determine_tag.outputs.tag }} --access public
+
+      - name: Build Release.txt
+        run: echo ${{ github.sha }} > Release.txt
+      - name: Test
+        run: cat Release.txt
+      # 打包 dist 为自定义压缩包
+      - name: Create release archive
+        run: |
+          PKG_NAME=$(node -p "require('./package.json').name")
+          VERSION=$(node -p "require('./package.json').version")
+          ARCHIVE_NAME="${PKG_NAME}-${VERSION}"
+
+          # 创建包含 ezuikit_static 和 package.json 的 zip 包
+          zip -r "${ARCHIVE_NAME}.zip" ezuikit_static/ ezuikit.js index.js index.mjs package.json
+
+          # 创建包含 ezuikit_static 和 package.json 的 tar.gz 包
+          tar -czf "${ARCHIVE_NAME}.tar.gz" ezuikit_static/ ezuikit.js index.js index.mjs package.json
+
+          echo "archive_name=${ARCHIVE_NAME}" >> "$GITHUB_OUTPUT"
+        id: archive
+
+      # 自动创建 GitHub Release
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          generate_release_notes: true
+          prerelease: ${{ steps.determine_tag.outputs.tag != 'latest' }}
+          files: |
+            ${{ steps.archive.outputs.archive_name }}.zip
+            ${{ steps.archive.outputs.archive_name }}.tar.gz
+            Release.txt

@@ -45,7 +45,7 @@ export default {
       player = new EZUIKitPlayer({
         id: "video-container", // 视频容器ID
         accessToken:
-          "at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0mefajp-pd25qljk",
+          "at.649xp0dn45kx407tcli30ecnm734ei-45id8avdta-0zt7m6d-9pzi8ppan",
         url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
         template: "mobileLive",
@@ -53,6 +53,7 @@ export default {
         width: windowWidth || 375,
         height: 300,
         audio: false,
+        dpr: 2,
         enableSharedArrayBufferGuide: false,
         talkChannelNo: 0,
         useHardDev: true,
@@ -97,7 +98,15 @@ export default {
         // videoLevelList: [
         //   { level: -1, name: "标清", streamTypeIn: 2 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
         //   { level: -2, name: "高清", streamTypeIn: 1 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
-        // ]
+        // ],
+        // 回放列表弹框
+        // recListOptions: null,
+        // 时间选择器
+        // timeOptions: null,
+        recordOptions: {
+          // 是否开启录制水印， 默认开启
+          enabledWatermarkRecord: false,
+        },
       });
 
       player.eventEmitter.on(EZUIKitPlayer.EVENTS.videoInfo, (info) => {

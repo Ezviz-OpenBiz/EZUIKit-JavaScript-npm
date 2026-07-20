@@ -50,6 +50,7 @@ const Player = () => {
           template,
           staticPath, // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
           language, // zh | en
+          dpr: 2,
           // quality: 4, // 
           // isCloudRecord: true, // 如果是云录制的播放 需要这个值，是必须的
           scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
@@ -85,7 +86,15 @@ const Player = () => {
           // videoLevelList: [
           //   { level: -1, name: "标清", streamTypeIn: 2 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
           //   { level: -2, name: "高清", streamTypeIn: 1 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
-          // ]
+          // ],
+          // 回放列表弹框
+          // recListOptions: null,
+          // 时间选择器
+          // timeOptions: null,
+          recordOptions: {
+            // 是否开启录制水印， 默认开启
+            enabledWatermarkRecord: false,
+          },
         });
       }
 

@@ -64,7 +64,7 @@ export default {
       accessToken:
         "at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0mefajp-pd25qljk",
       url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
-      staticPath: './ezuikit_static'  //"./ezuikit_static" // 可选，本地静态资源路径，如果不设置默认使用线上资源,
+      staticPath: 'https://openstatic.ys7.com/ezuikit_js/v9.0.15/ezuikit_static'  //"./ezuikit_static" // 可选，本地静态资源路径，如果不设置默认使用线上资源,
     };
   },
   mounted() {
@@ -93,6 +93,7 @@ export default {
           console.error("handleError", error);
         },
         // quality: 6, // 
+        // dpr: 2,
         language: "en", // zh | en
         decoderType: "v3",
         scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
@@ -129,7 +130,15 @@ export default {
         // videoLevelList: [
         //   { level: -1, name: "标清", streamTypeIn: 2 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
         //   { level: -2, name: "高清", streamTypeIn: 1 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
-        // ]
+        // ],
+        // 回放列表弹框
+        // recListOptions: null,
+        // 时间选择器
+        // timeOptions: null,
+        recordOptions: {
+          // 是否开启录制水印， 默认开启
+          enabledWatermarkRecord: false,
+        },
       });
 
       console.warn("init player", player);
