@@ -1,6 +1,9 @@
+---
 # EZUIKitNative
 
 > 最新更新时间：2026.06.24 | 版本：v9.0.12
+> 本地修订：2026.07.17，修正自定义 render 示例的画格根布局、视频槽位和覆盖层样式，避免组合使用 `containerStyle` 与 `cellTemplate` 时视频黑屏。
+> 原始来源：[Ezviz-OpenBiz/EZUIKit-JavaScript-npm](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/EZUIKitNative/EZUIKitNative%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
 
 ## 一、EZUIKitNative 介绍
 
@@ -502,6 +505,15 @@ native.openSound(0);
 | **ElementHandle**            | 操作 cell 内某个子元素（querySelector 命中）的链式 API         |
 | **NodeListHandle**           | 操作 cell 内一组子元素（querySelectorAll 命中）的链式 API      |
 
+> **布局约束（模板根）：** `cellTemplate` 的根元素必须是占满画格的定位容器，至少设置 `position: relative; width: 100%; height: 100%; box-sizing: border-box;`。SDK 会将视频槽位及其播放器元素绝对定位并铺满该根容器；标题、按钮等自定义内容应作为 `z-index` 大于 0 的覆盖层。
+>
+> **布局约束（containerStyle）：** `containerStyle` 只能放**不影响 `#player-container` grid 布局尺寸**的属性。SDK 按“父页 `#players-container` rect × dpr ÷ (col × row)”决定 canvas 内在 buffer 分辨率，如果 CEF 内嵌页的 `#player-container` 因下列属性缩小或变形，实际 cell 显示 rect 会小于 canvas 内在 buffer，视频会画到越界区被裁掉，屏幕上呈现黑屏：
+>
+> - 允许：`background` / `background-image` / `border-radius` / `box-shadow` / `filter`（不影响布局尺寸）
+> - 禁用：`padding` / `gap` / `border` / `margin`（会让 grid 内容区缩小或撑破容器 100% 尺寸）
+>
+> 如果需要在画格之间做视觉分隔，请把边框/间距样式放到 `cellTemplate.css` 的 `.cell`（或自定义子元素）上，不要放到 `containerStyle`。
+
 ### 5.2 render 配置
 
 ```typescript
@@ -521,29 +533,49 @@ type CellTemplateFn = (item: EZUIKitPlayerParams, index: number) => CellTemplate
 
 ### 5.3 cellTemplate 对象形式（所有 cell 共享模板）
 
+> `containerStyle` 只放 background 等**不影响布局**的属性，参见 §5.1 布局约束；画格边框/间距请放到 `.cell` 上（对 SDK canvas 内在 buffer 无影响）。
+
 ```javascript
 const native = new EZUIKit.EZUIKitNative({
   container: 'players-container',
   render: {
-    containerStyle: 'background: #1e3a8a; padding: 8px;',
+    containerStyle: 'background: #1e3a8a;',
     cellTemplate: {
       template: `
         <div class="cell">
           <header class="title">设备 {index} - {id}</header>
           <div data-ezuikit-video></div>
-          <footer>
+          <footer class="toolbar">
             <button data-action="snap" type="button">截图</button>
             <button data-action="select:click" type="button">选中</button>
           </footer>
         </div>
       `,
       css: `
-        .cell { border: 1px solid #333; }
+        .cell {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+          overflow: hidden;
+          border: 1px solid #333;
+        }
         .cell.selected { border-color: #ff5722; }
-        .cell .title { background: #222; color: #fff; padding: 4px; }
+        .cell .title,
+        .cell .toolbar {
+          position: absolute;
+          left: 0;
+          right: 0;
+          z-index: 1;
+          padding: 4px;
+          color: #fff;
+          background: rgba(34, 34, 34, 0.85);
+        }
+        .cell .title { top: 0; }
+        .cell .toolbar { bottom: 0; }
       `,
       action: {
-        snap: (ctx) => console.log('截图', ctx.index),
+        snap: (ctx) => native.capturePicture(ctx.index, { download: true }),
         'select:click': (ctx) => native.cell(ctx.index).selectOnly('selected'),
       },
     },
@@ -567,9 +599,22 @@ const native = new EZUIKit.EZUIKitNative({
         </div>
       `,
       css: `
+        .cell {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+          overflow: hidden;
+        }
         .odd { background: #1a1a2e; }
         .even { background: #16213e; }
-        .badge { position: absolute; top: 4px; left: 4px; color: #fff; }
+        .badge {
+          position: absolute;
+          top: 4px;
+          left: 4px;
+          z-index: 1;
+          color: #fff;
+        }
       `,
     }),
   },
@@ -668,14 +713,34 @@ action key 支持后缀 `:click` 或 `:dblclick` 来显式区分：
 render: {
   cellTemplate: {
     template: `
-      <button data-action="select:click" type="button">单击选中</button>
-      <button data-action="fullscreen:dblclick" type="button">双击全屏</button>
-      <div data-action="hover" data-zone="header">单双击都响应的区域</div>
+      <div class="cell">
+        <div data-ezuikit-video></div>
+        <div class="action-bar" data-action="hover" data-zone="header">
+          <button data-action="select:click" type="button">单击选中</button>
+          <button data-action="fullscreen:dblclick" type="button">双击全屏</button>
+        </div>
+      </div>
+    `,
+    css: `
+      .cell {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+      .action-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+      }
     `,
     action: {
       'select:click': (ctx) => native.cell(ctx.index).selectOnly('selected'),
       'fullscreen:dblclick': (ctx) => native.fullscreen(ctx.index),
-      'hover': (ctx) => console.log('zone=', ctx.data.zone, 'type=', ctx.event.type),
+      hover: (ctx) => console.log('zone=', ctx.data.zone, 'type=', ctx.event.type),
     },
   },
 }
@@ -711,22 +776,43 @@ template: '<div>设备 {id}</div>';
 // <div>设备 &lt;script&gt;alert(1)&lt;/script&gt;</div>  ✅ 安全
 ```
 
+> **说明：** 上述 `template` 仅用于展示占位符转义结果，不是可独立运行的完整 `cellTemplate`。完整模板仍须遵循 §5.1 的根布局约束并包含 `[data-ezuikit-video]`。
+>
 > **业务方需注意**：使用 `setHtmlUnsafe` 时不会 escape,要自行确保内容安全。
 
 ### 5.8 视频槽位 `[data-ezuikit-video]`
 
-模板里**必须含 `[data-ezuikit-video]` 元素作为视频画格槽位**,SDK 把 ezuikit 创建的 canvas/video 嵌入到该位置（保留槽位元素自身的 class / style）。
+模板里**必须含 `[data-ezuikit-video]` 元素作为视频画格槽位**,SDK 把 ezuikit 创建的 canvas/video 嵌入到该位置。SDK 基础样式会将视频槽位及播放器元素绝对定位并铺满整个 cell，因此不要使用 `flex: 1`、普通文档流或 `height: calc(...)` 调整视频区域；标题、菜单、按钮应使用绝对定位覆盖在视频之上。
+
+> **canvas 内在 buffer 尺寸契约：** SDK 用父页 `#players-container` rect × dpr ÷ (col × row) 计算 canvas 内在 buffer 分辨率（WebGL/wasm 渲染的目标尺寸），并按此值创建 `EZUIKitPlayer(width, height)`。业务方必须保证 CEF 内嵌页里 `.ezuikit-cell` 实际显示 rect 与该值一致——即**不要通过 `containerStyle` 的 padding/gap 或 `#player-container` 的 margin/border 让 grid 内容区缩小**，否则视频会画到 canvas 内在坐标系里超出 CSS 显示区的部分被裁掉，屏幕呈现黑屏。`.cell` 上的 border 只影响视频槽位在 cell 内的显示 rect（scale 会自动跟随），不影响 canvas 内在 buffer，属于安全属性。
 
 ```html
-<!-- 推荐：精确控制视频位置 -->
+<!-- 推荐：视频铺满画格，标题作为覆盖层 -->
 <div class="cell">
-  <header>标题栏</header>
-  <div data-ezuikit-video style="width: 100%; height: calc(100% - 32px);"></div>
+  <header class="cell-title">标题栏</header>
+  <div data-ezuikit-video></div>
 </div>
+
+<style>
+  .cell {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .cell-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
+</style>
 
 <!-- 降级：缺失槽位时,视频元素会附加到 cell 根末尾,控制台告警 -->
 <div class="cell">
-  <header>标题栏</header>
+  <header class="cell-title">标题栏</header>
   <!-- 没写 [data-ezuikit-video] -->
 </div>
 ```
@@ -744,7 +830,7 @@ const native = new EZUIKit.EZUIKitNative({
     { id: 'cam-3', url: 'ezopen://open.ys7.com/AZ3754172/2.live', accessToken: 'at.xxx', template: 'pcLive' },
   ],
   render: {
-    containerStyle: 'background: #0f172a; padding: 4px; gap: 4px;',
+    containerStyle: 'background: #0f172a;',
     cellTemplate: {
       template: `
         <div class="cell">
@@ -752,7 +838,7 @@ const native = new EZUIKit.EZUIKitNative({
             <span class="title">{id}</span>
             <span class="badge">#{index}</span>
           </header>
-          <div data-ezuikit-video class="cell-video"></div>
+          <div data-ezuikit-video></div>
           <footer class="cell-footer">
             <button data-action="select:click" type="button">选中</button>
             <button data-action="fullscreen:dblclick" type="button">全屏</button>
@@ -761,12 +847,43 @@ const native = new EZUIKit.EZUIKitNative({
         </div>
       `,
       css: `
-        .cell { display: flex; flex-direction: column; border: 1px solid #334155; border-radius: 4px; overflow: hidden; }
+        .cell {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+          overflow: hidden;
+          border: 1px solid #334155;
+          border-radius: 4px;
+        }
         .cell.selected { border-color: #f59e0b; border-width: 2px; }
-        .cell-header { display: flex; justify-content: space-between; padding: 4px 8px; background: #1e293b; color: #fff; }
-        .cell-video { flex: 1; }
-        .cell-footer { display: flex; gap: 4px; padding: 4px; background: #0f172a; }
-        .cell-footer button { color: #fff; background: #334155; border: none; padding: 2px 8px; cursor: pointer; }
+        .cell-header,
+        .cell-footer {
+          position: absolute;
+          left: 0;
+          right: 0;
+          z-index: 1;
+          display: flex;
+          padding: 4px 8px;
+          color: #fff;
+        }
+        .cell-header {
+          top: 0;
+          justify-content: space-between;
+          background: rgba(30, 41, 59, 0.88);
+        }
+        .cell-footer {
+          bottom: 0;
+          gap: 4px;
+          background: rgba(15, 23, 42, 0.88);
+        }
+        .cell-footer button {
+          color: #fff;
+          background: #334155;
+          border: none;
+          padding: 2px 8px;
+          cursor: pointer;
+        }
       `,
       action: {
         'select:click': (ctx) => {
@@ -811,7 +928,7 @@ EZUIKitNative 直接继承 EventBus,在实例上使用 `on` / `off` / `once` 方
 | `launchFailed`   | 插件唤起失败(重试用尽后) | `{ code: -3, msg, attempts }`                                |
 | `websocket`      | 内嵌播放页面连接状态变化 | `{ type, code, timestamp }` code=0 就绪, -1 关闭, -2 异常    |
 | `capturePicture` | 截图完成                 | `{ code, data: { fileName, base64 } }`                       |
-| `stopSave`       | 录制停止                 | `{ code, data: { url } }`                                    |
+| `stopSave`       | 录制停止                 | `{ code, data: { url } }                                     |
 
 更多播放器事件详见：[EZUIKitPlayer 事件文档](https://open.ys7.com/help/4275)
 
@@ -922,11 +1039,14 @@ native.off('connect', handler);
 ### 7.6 自定义渲染 cellTemplate 注意事项（v9.0.10 新增）
 
 1. **模板必须含 `[data-ezuikit-video]` 视频槽位**,缺失时视频会降级到 cell 根末尾并控制台告警
-2. **HTML 模板的安全性由业务方负责**,占位符 `{index}` `{id}` 自动 escape,但 `setHtmlUnsafe` 不会 escape,业务方自行确保内容安全
-3. **不要在 cellTemplate 中放 form / anchor 跳转标签**,SDK 内部对点击只阻止冒泡不阻止默认行为,如要阻止默认行为请用 `<button type="button">` 或 `href="javascript:void(0)"`
-4. **action key 后缀 `:click` `:dblclick` 用于区分单双击**,无后缀时单双击都会触发
-5. **读 API 是异步的**(`hasClass` / `getAttr` / `getText` 返回 Promise),写 API 是同步链式（实际通过 microtask 聚合下发）
-6. **读 API 强制要求单 cell target**,`cell('all').getText(...)` 会抛错,需 `cell(0).getText(...)`
+2. **模板根元素必须占满画格并建立定位上下文**,至少设置 `position: relative; width: 100%; height: 100%; box-sizing: border-box;`
+3. **视频槽位由 SDK 绝对定位并铺满模板根元素**,不要用 `flex: 1`、普通文档流或 `height: calc(...)` 控制其尺寸；标题、按钮等应使用绝对定位并设置 `z-index > 0` 作为覆盖层
+4. **`containerStyle` 只能放不影响 grid 布局尺寸的属性**：允许 `background` / `background-image` / `border-radius` / `box-shadow` / `filter`；禁用 `padding` / `gap` / `border` / `margin`。SDK 按父页 rect / (col × row) 决定 canvas 内在 buffer 分辨率,这些禁用属性会让 `#player-container` grid 内容区小于父页 rect,导致视频画到越界区被裁光呈现黑屏。画格边框/间距请放到 `cellTemplate.css` 的 `.cell` 上（`.cell` 上的 border 是安全属性）
+5. **HTML 模板的安全性由业务方负责**,占位符 `{index}` `{id}` 自动 escape,但 `setHtmlUnsafe` 不会 escape,业务方自行确保内容安全
+6. **不要在 cellTemplate 中放 form / anchor 跳转标签**,SDK 内部对点击只阻止冒泡不阻止默认行为,如要阻止默认行为请用 `<button type="button">` 或 `href="javascript:void(0)"`
+7. **action key 后缀 `:click` `:dblclick` 用于区分单双击**,无后缀时单双击都会触发
+8. **读 API 是异步的**(`hasClass` / `getAttr` / `getText` 返回 Promise),写 API 是同步链式（实际通过 microtask 聚合下发）
+9. **读 API 强制要求单 cell target**,`cell('all').getText(...)` 会抛错,需 `cell(0).getText(...)`
 
 ### 7.7 浏览器缩放下画格错位（v9.0.10 修复）
 
