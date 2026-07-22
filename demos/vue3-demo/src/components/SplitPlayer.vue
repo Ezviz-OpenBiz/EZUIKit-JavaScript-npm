@@ -42,8 +42,8 @@ const accessToken = ref(
 
 // 替换新的播放地址
 const urls = ref([
-    // "ezopen://open.ys7.com/G17974613/1.live",
-    // "ezopen://open.ys7.com/G17974613/1.hd.live",
+    // "ezopen://open.ys7.com/G1797461/1.live",
+    // "ezopen://open.ys7.com/G1797461/1.hd.live",
     // "ezopen://open.ys7.com/GV241431/1.live",
     // "ezopen://open.ys7.com/GV241431/1.hd.live",
     // "ezopen://open.ys7.com/BC779909/1.live",
