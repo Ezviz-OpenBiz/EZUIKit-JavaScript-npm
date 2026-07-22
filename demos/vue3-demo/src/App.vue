@@ -1,11 +1,12 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import Player from "./components/Player.vue";
+// import Player from "./components/Player.vue";
+import SplitPlayer from "./components/SplitPlayer.vue";
 </script>
 
 <template>
-    <Player />
+    <SplitPlayer />
 </template>
 
 <style scoped>
