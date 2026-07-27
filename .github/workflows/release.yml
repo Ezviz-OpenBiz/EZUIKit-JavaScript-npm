@@ -7,7 +7,7 @@ on:
       - "v*"
 
 permissions:
-  id-token: write  # Required for OIDC
+  id-token: write # Required for OIDC
   contents: read
 
 # 任务，定义个changelog 的任务
@@ -63,10 +63,9 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           registry-url: https://registry.npmjs.org
 
-      - run: npm install -g npm@latest
       # 安装依赖
       - name: npm Install dependencies
         run: npm install
