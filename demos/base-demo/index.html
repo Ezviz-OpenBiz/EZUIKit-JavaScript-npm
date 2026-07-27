@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -39,13 +39,14 @@
         <button class="destroy">销毁</button>
       </div>
       <p style="font-style: italic">
-        播放多个视频，可初始化多个实例，参考：<a href="/multi.html">multi.html</a>
+        播放多个视频，可初始化多个实例，参考：<a href="/multi.html"
+          >multi.html</a
+        >
       </p>
     </div>
     <script>
       (function () {
         var player = null;
-
 
         function destroy() {
           if (player) {
@@ -90,6 +91,7 @@
               name: "ezuikit",
               showTime: true,
             },
+            // sdkType: "custom",
             // 视频流的信息回调类型
             /**
              * 打开流信息回调，监听 streamInfoCB 事件
@@ -110,14 +112,14 @@
             //   { level: -1, name: "标清", streamTypeIn: 2 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
             //   { level: -2, name: "高清", streamTypeIn: 1 }, // 8.1.17 开始 当 level 的值小于 0时， 不在向设备发送指令，仅根据 streamTypeIn 切换码流 （请保证 streamTypeIn 对应的码流存在）
             // ]
-            timeLineOptions : {
+            timeLineOptions: {
               showCoverFold: true,
               showTimeWidthBtn: true,
-            }
+            },
           });
 
           window.player = player;
-          
+
           // 8.1.x 版本, 9.x.x 移除了 eventEmitter
           // player.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.videoInfo, (info) => {
           //   console.log("eventEmitter videoInfo", info);
