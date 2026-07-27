@@ -30,9 +30,10 @@ const Player = () => {
         url: urlRef.current.value, // "ezopen://open.ys7.com/BB9480953/1.hd.live",
         accessToken: accessTokenRef.current.value, // "at.2ec3m7dga2v59cps6rv0d1haa2vqsjka-1lbu5f5hyi-1j9rleq-npvuluse",
         height,
-        template: "pcLive",
+        template: "pcRec",
         language: "zh", // zh | en
-        // quality: 1, // 
+        // sdkType: "custom",
+        // quality: 1, //
         // isCloudRecord: true, // 如果是云录制的播放需要这个值(8.1.x)是必须的. 8.2.0 开始默认支持云录制，不需要此参数
         scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
         env: {
