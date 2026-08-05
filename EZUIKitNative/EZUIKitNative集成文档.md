@@ -1,6 +1,6 @@
 # EZUIKitNative
 
-> 最新更新时间：2026.06.24 | 版本：v9.0.12
+> 最新更新时间：2026.08.05 | 版本：v9.0.16
 > 本地修订：2026.07.17，修正自定义 render 示例的画格根布局、视频槽位和覆盖层样式，避免组合使用 `containerStyle` 与 `cellTemplate` 时视频黑屏。
 > 原始来源：[Ezviz-OpenBiz/EZUIKit-JavaScript-npm](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/EZUIKitNative/EZUIKitNative%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
 
@@ -40,8 +40,8 @@ EZUIKitNative 是一个基于本地插件的多画面视频播放器解决方案
 ### 2.0 准备工作
 
 - 访问 [GitHub - 轻应用 EZUIKit](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/EZUIKitNative)，获取本地插件安装包【CEFBrowserSetup.exe】并完成安装
-- 或直接[下载插件安装包](https://izhstatic.ys7.com/vasp-openweb/1782457199500_CEFBrowserSetup.exe)，并完成安装
-- 确保轻应用升级到 v9.0.12 及以上版本
+- 或直接[下载插件安装包](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/EZUIKitNative)，找到最新版本下载并完成安装
+- 确保轻应用升级到 v9.0.16 及以上版本
 
 ### 2.1 引入 SDK
 

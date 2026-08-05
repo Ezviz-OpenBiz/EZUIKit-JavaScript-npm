@@ -23,4 +23,4 @@ yarn-debug.log*
 demos/react-demo/ezuikit_static
 demos/with-vue2.5/ezuikit_static
 demos/with-docker-nginx/html/ezuikit_static
-*.exe
+
