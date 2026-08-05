@@ -40,8 +40,8 @@ EZUIKitNative 是一个基于本地插件的多画面视频播放器解决方案
 ### 2.0 准备工作
 
 - 访问 [GitHub - 轻应用 EZUIKit](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/EZUIKitNative)，获取本地插件安装包【CEFBrowserSetup.exe】并完成安装
-- 或直接[下载插件安装包](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/tree/master/EZUIKitNative)，找到最新版本下载并完成安装
-- 确保轻应用升级到 v9.0.16 及以上版本
+- 或查看[插件下载页](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/EZUIKitNative/CEFDownload.md)，选择对应版本下载并完成安装
+- 确保轻应用 SDK 使用最新版本
 
 ### 2.1 引入 SDK
 
