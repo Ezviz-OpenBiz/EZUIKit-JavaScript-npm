@@ -228,7 +228,7 @@ new EZUIKit.EZUIKitNative(options)
 | ---------- | ---------------------------------------------- | ------------------------------ | ------------------ | ---- |
 | container  | 插件跟随锚点                                   | `HTMLElement \| string`        | -                  | 是   |
 | mode       | 播放模式：0-不使用插件,1-自动,2-强制使用插件   | `number`                       | 2                  | 否   |
-| autoPlay   | 是否自动播放                                   | `boolean`                      | false              | 否   |
+| autoplay   | 是否自动播放（老命名 `autoPlay` 已废弃，仍兼容但会打 warn，请使用小 p `autoplay`） | `boolean`                      | false              | 否   |
 | layout     | 布局配置                                       | `{ col: number, row: number }` | { col: 4, row: 4 } | 否   |
 | deviceList | 设备列表                                       | `Array`                        | []                 | 否   |
 | **render** | **自定义渲染配置（v9.0.10 新增），详见第五章** | `RenderOptions`                | undefined          | 否   |
@@ -375,23 +375,30 @@ native.exitfullscreen(id?)
 native.exitfullscreen(); // 退出全屏
 ```
 
-### 4.8 destroy(id?, force?) - 销毁播放器
+### 4.8 destroyPlayer(id?) / destroy() - 销毁 API（v1.3 拆分）
 
-```
-native.destroy(id?, force?)
-```
+v1.3 起把 `destroy(id?)` 拆分为两个语义清晰的 API，避免"漏传 id 关插件"的破坏性误用：
 
-销毁播放器实例。
+| API | 作用 | CEF 主进程 |
+| --- | --- | :---: |
+| `native.destroyPlayer(id?)` | 传 `id` 销毁单路；不传销毁全部播放器 | **保留常驻**（可再 `init` 恢复）|
+| `native.destroy()` | 彻底销毁 SDK + CEF 主进程 | **关闭**（cefsimple.exe 退出）|
 
-| 参数  | 类型               | 必填 | 说明                                  |
-| ----- | ------------------ | ---- | ------------------------------------- |
-| id    | `string \| number` | 否   | 播放器 id 或下标,不传则销毁所有       |
-| force | `boolean`          | 否   | 是否强制销毁(关闭 CEF 窗口并断开连接) |
+**老 `destroy(id)` 传参调用仍兼容**，内部转发到 `destroyPlayer(id)` 并打 `console.warn` 提示 deprecated，计划后续 minor 版本移除。
 
 ```javascript
-native.destroy(0); // 销毁指定播放器
-native.destroy(); // 销毁所有播放器
-native.destroy(undefined, true); // 强制销毁并关闭插件
+// 销毁单个播放器（保留 CEF，可再 init 恢复）
+native.destroyPlayer('player0');
+native.destroyPlayer(0);
+
+// 销毁所有播放器（保留 CEF）
+native.destroyPlayer();
+
+// 彻底销毁 SDK + CEF 主进程
+native.destroy();
+
+// 老代码兼容（会打 deprecated warn，效果同 destroyPlayer('player0')）
+native.destroy('player0');
 ```
 
 ### 4.9 reload() - 重新加载
@@ -467,24 +474,56 @@ const text = await native.cell(2).find('.title').getText();
 
 ### 4.13 其他 API 透传调用
 
+未在 EZUIKitNative 类上显式定义的方法，通过内置 Proxy 自动转发给指定播放器实例。业务方无需关心跨进程通信细节。
+
+**调用签名**：
+
 ```
-native[api](id, params)
+native[method](id?, ...params)
 ```
 
-EZUIKitNative 实例支持透传调用指定播放器的 API。未在类上定义的方法会自动转发给对应播放器实例。
+- 第一个参数 `id`：播放器 id（string）或下标（number）。**不传则对所有播放器执行**
+- 后续参数透传给 EZUIKitPlayer 对应方法
+
+**常用可透传方法**：
+
+| 方法 | 说明 |
+| --- | --- |
+| `pause(id?)` | 暂停取流，画面冻结在最后一帧（区别于 `stop` 黑屏） |
+| `resume(id?)` | 恢复播放，无缝续播 |
+| `capturePicture(id?, opts?)` | 截图 |
+| `startSave(id?, opts?)` | 开始录像 |
+| `stopSave(id?)` | 停止录像 |
+| `openSound(id?)` | 开启声音 |
+| `closeSound(id?)` | 关闭声音 |
+| `changePlayUrl(id?, opts)` | 切换播放地址 |
+| `enableZoom(id?)` | 开启电子放大 |
+| `closeZoom(id?)` | 关闭电子放大 |
+
+**调用示例**：
 
 ```javascript
-// 调用 id 为 "player2" 的播放器的 changePlayUrl 方法
-native.changePlayUrl('player2', { url: 'ezopen://open.ys7.com/AZ3754171/1.live' });
+// 单个视频控制（下标 0，也支持传 id 字符串）
+native.play(0);           // 播放
+native.pause(0);          // 暂停（保留最后一帧，不清 canvas）
+native.resume(0);         // 恢复播放
+native.stop(0);           // 停止（释放解码器 + canvas 黑屏）
 
-// 截图
-native.capturePicture(0, { download: true });
+// 通过播放器 id 调用
+native.pause('player0');
+native.capturePicture('player0', { download: true });
 
-// 开启声音
-native.openSound(0);
+// 不传 id → 对所有播放器执行
+native.pause();           // 所有路暂停
+native.openSound();       // 所有路开声音
+
+// 切换播放地址
+native.changePlayUrl('player0', { url: 'ezopen://open.ys7.com/AZ3754171/1.live' });
 ```
 
-更多 API 详见：[EZUIKitPlayer API 文档](https://open.ys7.com/help/4275)
+> **`pause` vs `stop` 差异**：`pause` 只暂停取流、画面冻结在最后一帧、`resume` 可无缝续播；`stop` 会释放解码器并清空 canvas，恢复播放需重新调 `play`。
+
+完整 EZUIKitPlayer API 列表参见：[EZUIKitPlayer API 文档](https://open.ys7.com/help/4275)
 
 ## 五、自定义渲染（v9.0.10 新增）
 
