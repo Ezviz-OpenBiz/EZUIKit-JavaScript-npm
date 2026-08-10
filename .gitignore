@@ -10,6 +10,8 @@ compiled
 .awcache
 .rpt2_cache
 docs
+
+release
 stats.html
 .DS_Store
 .idea
