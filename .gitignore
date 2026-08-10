@@ -12,6 +12,7 @@ compiled
 docs
 
 release
+.pnpm-store
 stats.html
 .DS_Store
 .idea
