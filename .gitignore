@@ -24,6 +24,7 @@ npm-error.log*
 yarn-debug.log*
 
 *.map
+**/*.map
 
 demos/react-demo/ezuikit_static
 demos/with-vue2.5/ezuikit_static
