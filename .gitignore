@@ -23,6 +23,8 @@ npm-debug.log*
 npm-error.log*
 yarn-debug.log*
 
+*.map
+
 demos/react-demo/ezuikit_static
 demos/with-vue2.5/ezuikit_static
 demos/with-docker-nginx/html/ezuikit_static
