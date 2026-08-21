@@ -47,36 +47,53 @@
       /**
        * 视频分享 iframe 示例
        *
-       * 使用方式：
-       * 1. 将本文件及 ezuikit.js、ezuikit_static 部署到你自己的服务器
-       * 2. 由你的后端接口动态下发 url、accessToken、playbackRange（避免暴露在前端源码中）
-       * 3. 在需要嵌入的页面通过 <iframe src="https://your-server/share-iframe.html?params..."> 引用
+       * 本页面演示如何创建一个可被 iframe 嵌入的视频分享播放页。
        *
-       * 下面演示从 URL 参数中读取配置（实际项目建议改为从后端接口获取）
+       * 安全要点：
+       * - accessToken、播放地址、播放区间等敏感信息不应硬编码在前端，也不应通过 URL 参数传递
+       * - 推荐做法：部署此页面到你自己的服务器，通过你自己的后端 API 下发播放配置
+       * - 后端根据分享 ID 鉴权后返回 url、accessToken、playbackRange，前端拿到后初始化播放器
+       *
+       * 使用方式：
+       * 1. 参考本文件改造，将 fetchShareConfig() 替换为调用你自己的后端接口
+       * 2. 将改造后的页面与 ezuikit.js、ezuikit_static 一起部署到你的服务器
+       * 3. 在需要嵌入的页面通过 <iframe src="https://your-server/share.html?id=xxx"> 引用
        */
-      var params = new URLSearchParams(window.location.search);
-      var url = params.get('url') || '';
-      var accessToken = params.get('accessToken') || '';
-      var begin = params.get('begin') || '';
-      var end = params.get('end') || '';
 
-      if (!url || !accessToken) {
-        document.getElementById('player').innerHTML =
-          '<p style="color:#fff;text-align:center;padding:40px;">缺少参数：请通过 URL 传入 url、accessToken（以及可选的 begin、end）</p>';
-      } else {
+      /**
+       * 模拟从后端获取分享配置
+       * 实际项目中替换为你自己的接口，例如：
+       * fetch('/api/share/config?id=' + shareId, { headers: { Authorization: '...' } })
+       */
+      function fetchShareConfig() {
+        // ===== 替换为你的后端接口调用 =====
+        return Promise.resolve({
+          url: 'ezopen://open.ys7.com/{deviceSerial}/{channelNo}.rec?begin=YYYYMMDDhhmmss&end=YYYYMMDDhhmmss',
+          accessToken: 'your_access_token',
+          playbackRange: {
+            begin: '20260819103500', // 区间开始时间 YYYYMMDDhhmmss
+            end: '20260819104500', // 区间结束时间 YYYYMMDDhhmmss
+          },
+        });
+      }
+
+      fetchShareConfig().then(function (config) {
         var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || document.documentElement.clientWidth <= 820;
 
-        var options = {
+        var player = new EZUIKit.EZUIKitPlayer({
           id: 'player',
-          url: url,
-          accessToken: accessToken,
+          url: config.url,
+          accessToken: config.accessToken,
           staticPath: './ezuikit_static',
+
+          // 播放区间 —— 限制回放只能在该时间范围内播放
+          playbackRange: config.playbackRange,
 
           width: isMobile ? document.documentElement.clientWidth : 800,
           height: isMobile ? (document.documentElement.clientWidth * 9) / 16 : 450,
           language: 'zh',
 
-          // themeData 自定义工具栏（精简版，适合嵌入场景）
+          // 精简工具栏（适合嵌入场景）
           themeData: {
             autoFocus: 0,
             header: {
@@ -91,10 +108,10 @@
             },
           },
 
-          // 移动端扩展：时间轴 + 片段进度条
+          // 移动端扩展控件
           mobileExtendOptions: isMobile ? { controls: ['timeLine', 'segmentProgress'] } : null,
 
-          // 关闭不需要的控件（嵌入场景精简 UI）
+          // 关闭不需要的控件
           dateOptions: null,
           ptzOptions: null,
           talkOptions: null,
@@ -106,20 +123,13 @@
           globalFullscreenOptions: null,
           alarmMessageOptions: null,
           dblClickFullscreen: false,
-        };
+        });
 
-        // 播放区间（可选）—— 限制回放只能在该时间范围内播放
-        if (begin && end) {
-          options.playbackRange = { begin: begin, end: end };
-        }
-
-        var player = new EZUIKit.EZUIKitPlayer(options);
-
-        // 监听播放区间结束事件
+        // 播放区间结束回调
         player.on('playbackEnd', function (data) {
           console.log('播放区间结束', data.reason, data.range);
         });
-      }
+      });
     </script>
   </body>
 </html>
