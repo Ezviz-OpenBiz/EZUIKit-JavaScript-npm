@@ -1279,3 +1279,59 @@ player.eventEmitter.on(EZUIKitPlayer.EVENTS.date.recStartTimeChange, () => {
 <!-- | getPtzStatus        | boolean                                                                                                   | N 示时间                 | -->
 <!-- | getVideoLevel       | boolean                                                                                                   | N 示时间                 | -->
 <!-- | getVideoLevelList   | boolean                                                                                                   | N 示时间                 | -->
+
+## 视频分享 iframe 接入指南
+
+适用场景：将录像片段以 iframe 形式嵌入第三方页面（如 H5 分享链接、工单系统、消息卡片等），限制用户只能观看指定时间区间内的回放。
+
+### 核心参数
+
+| 参数 | 类型 | 说明 |
+| --- | --- | --- |
+| `playbackRange` | `{ begin: string, end: string }` | 播放区间，格式 YYYYMMDDhhmmss（14 位），必须同一天且 begin < end |
+| `mobileExtendOptions` | `{ controls: string[] }` | 移动端扩展控件，分享场景推荐 `['timeLine', 'segmentProgress']` |
+
+### 如何创建你自己的 iframe 分享页
+
+1. 将 `demos/base-demo/share-iframe.html` 作为模板，连同 `ezuikit.js` 和 `ezuikit_static/` 部署到你的服务器
+2. 将 demo 中的 `fetchShareConfig()` 替换为调用你自己的后端接口——后端根据分享 ID 鉴权后返回 `url`、`accessToken`、`playbackRange`
+3. 在需要嵌入的页面使用 `<iframe src="https://your-server/share.html?id=xxx"></iframe>` 引用
+
+**安全要点：** `accessToken`、播放地址、播放区间等信息应由后端接口动态下发，不要硬编码在前端源码中，也不要通过 URL 参数明文传递。
+
+### 代码示例
+
+```js
+// 初始化播放器（配置从后端接口获取）
+var player = new EZUIKit.EZUIKitPlayer({
+  id: 'player',
+  url: config.url,                    // 后端下发
+  accessToken: config.accessToken,    // 后端下发
+  staticPath: './ezuikit_static',
+  playbackRange: {
+    begin: '20260819103500',          // 后端下发，区间开始
+    end: '20260819104500',            // 后端下发，区间结束
+  },
+  mobileExtendOptions: { controls: ['timeLine', 'segmentProgress'] },
+  // 关闭不需要的控件
+  dateOptions: null,
+  ptzOptions: null,
+  talkOptions: null,
+  recListOptions: null,
+  recordOptions: null,
+  capturePictureOptions: null,
+  definitionOptions: null,
+  deviceOptions: null,
+  globalFullscreenOptions: null,
+  alarmMessageOptions: null,
+});
+
+// 监听播放区间结束
+player.on('playbackEnd', function (data) {
+  // data.reason: 'reachRangeEnd'（播到区间末端）| 'noMoreSegment'（区间内无更多录像）
+  // data.range: { begin, end }
+  console.log('播放结束', data.reason);
+});
+```
+
+完整示例参考：<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/share-iframe.html" target="_blank">demos/base-demo/share-iframe.html</a>
