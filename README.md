@@ -194,6 +194,10 @@ const player = new EZUIKitPlayer({
 
 &emsp;&emsp;&emsp;&emsp;<b>单页面多实例(视频多窗口)：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/multi.html" target="_blank">单页面多实例(视频多窗口)示例</a>
 
+> 5. 视频分享场景（iframe 嵌入、播放区间约束），可以参考：
+
+&emsp;&emsp;&emsp;&emsp;<b>视频分享 iframe：</b> <a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/share-iframe.html" target="_blank">视频分享 iframe 示例</a>
+
 #### 附录： 初始化参数说明
 
 <table>
@@ -382,6 +386,9 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 <tr><td>quality</td><td>0 | 1 | 2 | 3 | 4 | 5 | 6 | pp | qp</td><td>预览初始化支持指定清晰度进行播放, 默认 undefined (v8.1.5版本及以上支持)， 0: 流畅； 1: 标清; 2: 高清; 3: 超清; 4: 极清; 5: 3K; 6: 4K ; "pp"： "性能优先 (Performance Priority)"; "qp": "画质优先(Quality Priority)"。</td><td>N</td></tr>
 <tr><td>loggerOptions</td><td> {name: string, level: "INFO" | "LOG" | "WARN" | "ERROR" , showTime: boolean}</td><td>本地日志设置， 默认值 {name: "ezuikit", level: "INFO", showTime: true}, 支持动态设置请参考 <a href="#日志设置">setLoggerOptions(options)</a> (v8.1.9版本及以上支持)</td><td>N</td></tr>
 <tr><td>streamInfoCBType</td><td>  0 | 1 </td><td>  流信息回调类型，监听 streamInfoCB 事件, 0 : 每次都回调（会影响性能）, 1 : 只回调一次, 默认值 1 (v8.1.9版本及以上支持)</td><td>N</td></tr>
+<tr><td>playbackRange</td><td>{ begin: string, end: string }</td><td>播放区间约束（视频分享片段播放），begin 和 end 格式为 YYYYMMDDhhmmss（14 位），必须在同一天且 begin &lt; end。设置后回放将被约束在该区间内：时间轴、进度条、seek 操作均受区间限制，播放到区间末端自动触发 playbackEnd 事件。示例：<code>{ begin: '20260819103500', end: '20260819104500' }</code> (v9.0.18-beta.1 及以上支持)</td><td>N</td></tr>
+<tr><td>segmentProgressOptions</td><td>Object | null</td><td>片段进度条控件配置，配合 playbackRange 使用时在移动端展示线性进度条。设为 null 关闭。需配合 mobileExtendOptions.controls 包含 'segmentProgress' 使用 (v9.0.18-beta.1 及以上支持)</td><td>N</td></tr>
+<tr><td>mobileExtendOptions</td><td>{ controls: string[] }</td><td>移动端扩展控件配置，controls 数组可选值：'timeLine'（时间轴）、'segmentProgress'（片段进度条）、'date'（日期选择）、'time'（时间选择）、'rec'（回放类型切换）、'ptz'（云台）。示例：<code>{ controls: ['timeLine', 'segmentProgress'] }</code> (v9.0.17 及以上支持)</td><td>N</td></tr>
 </table>
 
 ### 方法调用
@@ -911,6 +918,20 @@ seek 事件 `EZUIKitPlayer.EVENTS.seek`， 仅支持回放
 // 监听seek事件
 player.eventEmitter.on(EZUIKitPlayer.EVENTS.seek, () => {
   // ...
+});
+```
+
+#### 播放区间结束事件
+
+播放区间结束事件 `playbackEnd`，仅在设置了 `playbackRange` 时触发（v9.0.18-beta.1 及以上支持）
+
+播放到区间末端或区间内已无后续录像片段时触发，回调参数包含 `reason`（结束原因）和 `range`（当前区间配置）。
+
+```js
+// 监听播放区间结束事件
+player.on('playbackEnd', (data) => {
+  console.log('播放结束', data.reason); // 'reachRangeEnd' | 'noMoreSegment'
+  console.log('播放区间', data.range);  // { begin: '20260819103500', end: '20260819104500' }
 });
 ```
 
