@@ -12,8 +12,8 @@ dependencies:
     specifier: ^3.18.1
     version: 3.47.0
   ezuikit-js:
-    specifier: 9.0.15
-    version: 9.0.15
+    specifier: 9.0.19
+    version: 9.0.19
   vue:
     specifier: 2.6.14
     version: 2.6.14
@@ -1176,20 +1176,20 @@ packages:
       '@babel/helper-validator-identifier': 7.28.5
     dev: true
 
-  /@ezuikit/control-aichat@0.1.0-beta.9:
-    resolution: {integrity: sha512-saXmuuZLFL1y/vbyLnLv7uFshblN8VAP7miXbqZCXTLgxktK/2Op9aqaGJ+qjE0dVq/RwsPP9iuW/6AOfFKyBQ==}
+  /@ezuikit/control-aichat@0.1.1-beta.1:
+    resolution: {integrity: sha512-vj5u4QnxGIbeVN1kIyDTifV1gFUTd4Pnz5JeAA8OlYexY0FcHCaKNarXDIBFVJwppAxdkrXMW6AuAlURr2lfUw==}
     dependencies:
       '@ezuikit/utils-i18n': 2.0.1
     dev: false
 
-  /@ezuikit/player-ezopen@9.0.6:
-    resolution: {integrity: sha512-OFte0kcwJAaL5YwMijzStei0MB6aj1IssiMNdMaZFnx1b+bApUKxx6ku5XUpwZeISkMY6me2lVceF0RzOkNhKQ==}
+  /@ezuikit/player-ezopen@9.0.8-beta.1:
+    resolution: {integrity: sha512-1bIAc3n5DEueYM5qOJz1nPCGHmRRm2e1xGVvCNWeBTqMshSDyLCxNcAFA0f5z3IzI9uA9A57HliSkULR0xoA/g==}
     dependencies:
-      '@ezuikit/player-plugin-record': 9.1.0
+      '@ezuikit/player-plugin-record': 9.2.0-beta.1
       '@ezuikit/utils-i18n': 2.0.1
       '@ezuikit/utils-logger': 2.0.1
-      '@ezuikit/utils-service': 1.0.1
-      '@ezuikit/utils-tools': 2.0.5
+      '@ezuikit/utils-service': 2.0.0
+      '@ezuikit/utils-tools': 2.0.6
       dayjs: 1.11.21
       deepmerge: 4.3.1
       eventemitter3: 5.0.4
@@ -1197,10 +1197,10 @@ packages:
       ua-parser-js: 1.0.37
     dev: false
 
-  /@ezuikit/player-plugin-record@9.1.0:
-    resolution: {integrity: sha512-wG2o4fCLPdLUFt8Z78PPYfuv2yKUqx68txDc81XmonCG6wWx9r1wVQ9iDa5d+XbuQKC5DJs6z7HxO4S5OuJ+rg==}
+  /@ezuikit/player-plugin-record@9.2.0-beta.1:
+    resolution: {integrity: sha512-SA7IlSckKfoW73QhW9CjirnSRQHYYgstLIAhWzbL9/rvhj0AJ84NgvzRfySN10pkk7lZ485XQQwyBJgZFbz/6w==}
     dependencies:
-      '@ezuikit/utils-tools': 2.0.5
+      '@ezuikit/utils-tools': 2.0.6
     dev: false
 
   /@ezuikit/utils-collect@0.1.1:
@@ -1217,19 +1217,14 @@ packages:
     resolution: {integrity: sha512-AeLLR9ZQJkSJFfCicpkVBcnOE4zyQMp4W4997sTEGyF3k3I8Upkfn4Cye2A44MIphdw6eytKlaJp6H4joSafQw==}
     dev: false
 
-  /@ezuikit/utils-service@1.0.1:
-    resolution: {integrity: sha512-iNjYuU7AScBJxvKBM9PjiGI2y64QJNPT/H1Fy/Y7ZIAlw4DO//TP+x50qCho+i+EOUpWLtOqBQvtRb7a0O4X4Q==}
+  /@ezuikit/utils-service@2.0.0:
+    resolution: {integrity: sha512-CBCPMw3uwd/vCh/YS+fZPMJrmg0LmCPO5bVkAon6VxjJJxwpVNcVb15sNbZyGR52JYt3wq7UEhnqHMprHnCSEA==}
     dependencies:
-      '@ezuikit/utils-tools': 1.1.0
-      dayjs: 1.11.21
+      '@ezuikit/utils-tools': 2.0.6
     dev: false
 
-  /@ezuikit/utils-tools@1.1.0:
-    resolution: {integrity: sha512-mujPtXIhZnuJrJySu1/Z6X90sMJQStZydurZcfetMCH6pqIYN4P+1w6+P8PCTR6k4LJp5nY9+eNnKa7AZ8OBKA==}
-    dev: false
-
-  /@ezuikit/utils-tools@2.0.5:
-    resolution: {integrity: sha512-7SR3kKQdColQ+Rz/PPaLzHi8Yv3RuhFUh3iMymonlO95OJSZBgjaTSX5QNeTnZIi57soNVoHByR4tS/JbMA4Wg==}
+  /@ezuikit/utils-tools@2.0.6:
+    resolution: {integrity: sha512-1XUk8IY28FpspjzgbbVEfcsRiwKx9l5ltjOYw9RYh3BK2XAKv2B2N+79RCQ1qfmjLVsHLx2H8xTwSJECSWcnqg==}
     dev: false
 
   /@hapi/address@2.1.4:
@@ -4482,15 +4477,15 @@ packages:
     engines: {'0': node >=0.6.0}
     dev: true
 
-  /ezuikit-js@9.0.15:
-    resolution: {integrity: sha512-rBZlaNEobYABg7ra6ZTz8eJ0BL/p3WhLSya1UCXmsxOltbwYKnb87v1fno3mVN3em6Ql9vY9hIVl/jxHlE5IUg==}
+  /ezuikit-js@9.0.19:
+    resolution: {integrity: sha512-Z1zStp1vNoHKXeF8Cx8JNGAjDsH0Uep4cKivFBsvKIFp3qHzd4Av51TI2IoHRixFLpBWCzRnD+iDXO3V68GiYg==}
     dependencies:
-      '@ezuikit/control-aichat': 0.1.0-beta.9
-      '@ezuikit/player-ezopen': 9.0.6
+      '@ezuikit/control-aichat': 0.1.1-beta.1
+      '@ezuikit/player-ezopen': 9.0.8-beta.1
       '@ezuikit/utils-collect': 0.1.1
       '@ezuikit/utils-i18n': 2.0.1
       '@ezuikit/utils-logger': 2.0.1
-      '@ezuikit/utils-tools': 2.0.5
+      '@ezuikit/utils-tools': 2.0.6
       '@juggle/resize-observer': 3.4.0
       '@skax/delegate': 4.0.2
       abortcontroller-polyfill: 1.7.8

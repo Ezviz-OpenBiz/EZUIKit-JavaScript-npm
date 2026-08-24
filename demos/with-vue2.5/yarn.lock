@@ -653,12 +653,12 @@
   dependencies:
     "@ezuikit/utils-i18n" "^2.0.1"
 
-"@ezuikit/player-ezopen@9.0.7-beta.4":
-  version "9.0.7-beta.4"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-9.0.7-beta.4.tgz#92147021901ec928e21dacde5679e5a2408d001c"
-  integrity sha512-obr6jinQSmM1qVsveDQ3yC/rWcJnAfQXUkkpre/oLBpwI3TopZ888627FdPO7t7P4G2ixoD5Jx34VPKpL1q5zg==
+"@ezuikit/player-ezopen@9.0.8-beta.1":
+  version "9.0.8-beta.1"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-9.0.8-beta.1.tgz#408c551fba35babdcde5f431a96563edbb128056"
+  integrity sha512-1bIAc3n5DEueYM5qOJz1nPCGHmRRm2e1xGVvCNWeBTqMshSDyLCxNcAFA0f5z3IzI9uA9A57HliSkULR0xoA/g==
   dependencies:
-    "@ezuikit/player-plugin-record" "9.1.1-beta.1"
+    "@ezuikit/player-plugin-record" "9.2.0-beta.1"
     "@ezuikit/utils-i18n" "^2.0.1"
     "@ezuikit/utils-logger" "^2.0.1"
     "@ezuikit/utils-service" "2.0.0"
@@ -669,10 +669,10 @@
     screenfull "^5.2.0"
     ua-parser-js "1.0.37"
 
-"@ezuikit/player-plugin-record@9.1.1-beta.1":
-  version "9.1.1-beta.1"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-plugin-record/-/player-plugin-record-9.1.1-beta.1.tgz#48df02b75254e44896e6ab6e1ac6f892891fc3fa"
-  integrity sha512-T76aR7Gdaoo0+b4/mJ3grrWjVglE6po5O1ZY6CcGjJkX73XRoUl9szCB3iy/7ENQwruSgI+U2co29ghpCY5SWw==
+"@ezuikit/player-plugin-record@9.2.0-beta.1":
+  version "9.2.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-plugin-record/-/player-plugin-record-9.2.0-beta.1.tgz#18e230f27e78c7d8745572f3c9d5083ca02c38bd"
+  integrity sha512-SA7IlSckKfoW73QhW9CjirnSRQHYYgstLIAhWzbL9/rvhj0AJ84NgvzRfySN10pkk7lZ485XQQwyBJgZFbz/6w==
   dependencies:
     "@ezuikit/utils-tools" "^2.0.6"
 
@@ -3471,13 +3471,13 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.1.tgz#8d172c064867f235c0c84a596806d279bf4bcc07"
   integrity sha512-Wrk35e8ydCKDj/ArClo1VrPVmN8zph5V4AtHwIuHhvMXsKf73UT3BOD+azBIW+3wOJ4FhEH7zyaJCFvChjYvMA==
 
-ezuikit-js@9.0.17-beta.1:
-  version "9.0.17-beta.1"
-  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-9.0.17-beta.1.tgz#65c26d9dacbb0a5b6c385f21b94fa60e919dabe9"
-  integrity sha512-+mQNaerxURQ8P8/EZS+kKiPZnUL9NfyU+vrhYJDHSve8r2ryvMxM3tutTKQSsFnZfyDa2MofLlDkSg85BpVmAA==
+ezuikit-js@9.0.19:
+  version "9.0.19"
+  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-9.0.19.tgz#6943a0c9046c544032cd42c01b120e8c6e09067f"
+  integrity sha512-Z1zStp1vNoHKXeF8Cx8JNGAjDsH0Uep4cKivFBsvKIFp3qHzd4Av51TI2IoHRixFLpBWCzRnD+iDXO3V68GiYg==
   dependencies:
     "@ezuikit/control-aichat" "0.1.1-beta.1"
-    "@ezuikit/player-ezopen" "9.0.7-beta.4"
+    "@ezuikit/player-ezopen" "9.0.8-beta.1"
     "@ezuikit/utils-collect" "0.1.1"
     "@ezuikit/utils-i18n" "2.0.1"
     "@ezuikit/utils-logger" "2.0.1"

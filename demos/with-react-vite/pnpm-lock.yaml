@@ -9,8 +9,8 @@ dependencies:
     specifier: ^2.5.1
     version: 2.5.1
   ezuikit-js:
-    specifier: 9.0.17-beta.1
-    version: 9.0.17-beta.1
+    specifier: 9.0.19
+    version: 9.0.19
   react:
     specifier: ^18.2.0
     version: 18.3.1
@@ -1330,10 +1330,10 @@ packages:
       '@ezuikit/utils-i18n': 2.0.1
     dev: false
 
-  /@ezuikit/player-ezopen@9.0.7-beta.4:
-    resolution: {integrity: sha512-obr6jinQSmM1qVsveDQ3yC/rWcJnAfQXUkkpre/oLBpwI3TopZ888627FdPO7t7P4G2ixoD5Jx34VPKpL1q5zg==}
+  /@ezuikit/player-ezopen@9.0.8-beta.1:
+    resolution: {integrity: sha512-1bIAc3n5DEueYM5qOJz1nPCGHmRRm2e1xGVvCNWeBTqMshSDyLCxNcAFA0f5z3IzI9uA9A57HliSkULR0xoA/g==}
     dependencies:
-      '@ezuikit/player-plugin-record': 9.1.1-beta.1
+      '@ezuikit/player-plugin-record': 9.2.0-beta.1
       '@ezuikit/utils-i18n': 2.0.1
       '@ezuikit/utils-logger': 2.0.1
       '@ezuikit/utils-service': 2.0.0
@@ -1345,8 +1345,8 @@ packages:
       ua-parser-js: 1.0.37
     dev: false
 
-  /@ezuikit/player-plugin-record@9.1.1-beta.1:
-    resolution: {integrity: sha512-T76aR7Gdaoo0+b4/mJ3grrWjVglE6po5O1ZY6CcGjJkX73XRoUl9szCB3iy/7ENQwruSgI+U2co29ghpCY5SWw==}
+  /@ezuikit/player-plugin-record@9.2.0-beta.1:
+    resolution: {integrity: sha512-SA7IlSckKfoW73QhW9CjirnSRQHYYgstLIAhWzbL9/rvhj0AJ84NgvzRfySN10pkk7lZ485XQQwyBJgZFbz/6w==}
     dependencies:
       '@ezuikit/utils-tools': 2.0.6
     dev: false
@@ -1963,11 +1963,11 @@ packages:
     resolution: {integrity: sha512-mlsTRyGaPBjPedk6Bvw+aqbsXDtoAyAzm5MO7JgU+yVRyMQ5O8bD4Kcci7BS85f93veegeCPkL8R4GLClnjLFw==}
     dev: false
 
-  /ezuikit-js@9.0.17-beta.1:
-    resolution: {integrity: sha512-+mQNaerxURQ8P8/EZS+kKiPZnUL9NfyU+vrhYJDHSve8r2ryvMxM3tutTKQSsFnZfyDa2MofLlDkSg85BpVmAA==}
+  /ezuikit-js@9.0.19:
+    resolution: {integrity: sha512-Z1zStp1vNoHKXeF8Cx8JNGAjDsH0Uep4cKivFBsvKIFp3qHzd4Av51TI2IoHRixFLpBWCzRnD+iDXO3V68GiYg==}
     dependencies:
       '@ezuikit/control-aichat': 0.1.1-beta.1
-      '@ezuikit/player-ezopen': 9.0.7-beta.4
+      '@ezuikit/player-ezopen': 9.0.8-beta.1
       '@ezuikit/utils-collect': 0.1.1
       '@ezuikit/utils-i18n': 2.0.1
       '@ezuikit/utils-logger': 2.0.1
