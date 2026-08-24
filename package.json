@@ -1,6 +1,6 @@
 {
   "name": "ezuikit-js",
-  "version": "9.0.18-beta.1",
+  "version": "9.0.19-beta.1",
   "description": "ezuikit javascript for npm",
   "title": "ezuikit-js",
   "main": "index.js",
@@ -23,7 +23,7 @@
   ],
   "author": "Ezviz-OpenBiz",
   "dependencies": {
-    "@ezuikit/player-ezopen": "9.0.7-beta.7",
+    "@ezuikit/player-ezopen": "9.0.8-beta.1",
     "@ezuikit/utils-collect": "0.1.1",
     "@ezuikit/utils-i18n": "2.0.1",
     "@ezuikit/utils-logger": "2.0.1",

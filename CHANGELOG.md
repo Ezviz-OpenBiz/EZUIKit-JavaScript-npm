@@ -1,10 +1,30 @@
+### v9.0.19 (2026-08-24)
+
+#### Feat
+
+- 新增播放区间功能 `playbackRange`（视频分享片段播放）
+
+- 新增片段进度条控件 `segmentProgress`
+
+- 新增 `playbackEnd` 事件（播放区间播放结束回调）
+
+- 新增视频分享 iframe 示例 `demos/base-demo/share-iframe.html`
+
+- 新增支持 `LL-HLS` 的倍速播放
+
+#### Fixed
+
+- 修复回放定位失效检测阈值过小导致偶现播放头弹到区间末端的问题
+
+- 修复清晰度切换问题
+
 ### v9.0.17 (2026-08-10)
 
-### Feat
+#### Feat
 
-- 支持海康 LL-HLS 流播放（直播/萤石回放）， 回放需要 `accessToken`
+- 支持海康 `LL-HLS` 流播放（直播/萤石回放）， 回放需要 `accessToken`
 
-### FIxed
+#### FIxed
 
 - 修复样式类名缺少前缀
 
@@ -12,11 +32,11 @@
 
 ### v9.0.15 (2026-07-15)
 
-### Feat
+#### Feat
 
 - 支持自定义是否录制水印 `recordOptions.enabledWatermarkRecord`
 
-### Fixed
+#### Fixed
 
 - 修复录制问题
 
