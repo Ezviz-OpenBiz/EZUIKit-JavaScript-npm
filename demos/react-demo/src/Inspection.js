@@ -5,6 +5,8 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.player = null;
+        this.playerRef = React.createRef();
+        this.inspection = null;
         this.state = {
             deviceList: [
                 {
@@ -29,16 +31,27 @@ class App extends React.Component {
     }
 
     init = () => {
-        console.log(document.getElementById('player'), this.state.deviceList);
-        const inspection = new EZUIKit.EZUIKitInspectionUI(this.playerRef.current, { list: this.state.deviceList, pageSize: 2 })
+        if (this.inspection) {
+            this.inspection.destroy();
+            this.inspection = null;
+        }
+        this.inspection = new EZUIKit.EZUIKitInspectionUI(this.playerRef.current, { list: this.state.deviceList, pageSize: 2 })
     };
+
+    componentWillUnmount() {
+        // 组件卸载时销毁巡检实例，避免内存泄漏
+        if (this.inspection) {
+            this.inspection.destroy();
+            this.inspection = null;
+        }
+    }
 
     render() {
         return (
             <div className="demo">
                 <h2>视频模式使用示例：</h2>
                 <div>
-                    <div id="player"></div>
+                    <div id="player" ref={this.playerRef}></div>
                 </div>
                 <div>
                     <button onClick={this.init}>init</button>

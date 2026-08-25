@@ -92,6 +92,7 @@
           width: isMobile ? document.documentElement.clientWidth : 800,
           height: isMobile ? (document.documentElement.clientWidth * 9) / 16 : 450,
           language: 'zh',
+          scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
 
           // 精简工具栏（适合嵌入场景）
           themeData: {
@@ -126,8 +127,16 @@
         });
 
         // 播放区间结束回调
-        player.on('playbackEnd', function (data) {
+        player.on(EZUIKit.EZUIKitPlayer.EVENTS.playbackEnd, function (data) {
           console.log('播放区间结束', data.reason, data.range);
+        });
+
+        // 页面卸载前销毁播放器，避免内存泄漏
+        window.addEventListener('beforeunload', function () {
+          if (player) {
+            player.destroy();
+            player = null;
+          }
         });
       });
     </script>

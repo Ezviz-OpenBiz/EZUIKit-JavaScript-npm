@@ -70,6 +70,13 @@ export default {
   mounted() {
     this.init();
   },
+  beforeDestroy() {
+    // 组件销毁前销毁播放器实例，避免内存泄漏
+    if (player) {
+      player.destroy();
+      player = null;
+    }
+  },
   methods: {
     init() {
       if (player) {

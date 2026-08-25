@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
   <title>Document</title>
-  <!-- 适用 8.1.x -->
+  <!-- 云录制回放示例：8.2.0+ 默认支持云录制，无需 isCloudRecord 参数 -->
   <script src="../ezuikit.js"></script>
 </head>
 
@@ -25,6 +25,7 @@
       <button onClick="startSave()">开始录制</button>
       <button onClick="stopSave()">结束录制</button>
       <button onClick="fullscreen()">全屏</button>
+      <button onClick="destroy()">销毁</button>
     </div>
   </div>
   <script>
@@ -41,8 +42,7 @@
       template: "pcRec",
       width: 600,
       height: 400,
-      // 云录制必须要传的
-      isCloudRecord: true, // 适用 8.1.x 云录制, 8.2.0 开始默认支持云录制
+      scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
       env: {
         // https://open.ys7.com/help/1772?h=domain
         // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
@@ -110,6 +110,17 @@
         console.log("promise 获取 数据", data);
       });
     }
+
+    // 销毁播放器时务必调用 destroy() 并将引用置为 null，避免内存泄漏
+    function destroy() {
+      if (player) {
+        player.destroy();
+        player = null;
+      }
+    }
+
+    // 页面卸载前销毁播放器
+    window.addEventListener("beforeunload", destroy);
   </script>
 </body>
 

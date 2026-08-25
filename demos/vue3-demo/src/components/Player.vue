@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { EZUIKitPlayer } from "ezuikit-js";
-import { onMounted, ref } from "vue";
+import { onMounted, onBeforeUnmount, ref } from "vue";
 
 interface IPlayer {
   play: Function;
@@ -15,8 +15,7 @@ interface IPlayer {
   stopTalk: Function;
   fullscreen: Function;
   destroy: Function;
-  eventEmitter: any;
-  on: any // eventEmitter
+  on: any; // 8.2.0+ 事件监听
 }
 
 let player: IPlayer;
@@ -210,6 +209,11 @@ const init = () => {
 
 onMounted(() => {
   init();
+});
+
+onBeforeUnmount(() => {
+  // 组件卸载时销毁播放器，避免内存泄漏
+  destroy();
 });
 </script>
 

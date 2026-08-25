@@ -53,6 +53,7 @@
                     "at.740rax9011b1oasg264ewfjy6ojtt53e-4ub963f7w6-1nwtus1-ivo3rfns3",
                 url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
                 template: "mobileLive", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
+                scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
                 plugin: ["talk"], // 加载插件，talk-对讲
                 width: width,
                 height: (width * 9) / 16,
@@ -82,14 +83,14 @@
                 // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
             });
 
-            player.eventEmitter.on(
+            player.on(
                 EZUIKit.EZUIKitPlayer.EVENTS.videoInfo,
                 (info) => {
                     console.log("videoinfo", info);
                 },
             );
 
-            player.eventEmitter.on(
+            player.on(
                 EZUIKit.EZUIKitPlayer.EVENTS.audioInfo,
                 (info) => {
                     console.log("audioInfo", info);
@@ -97,13 +98,13 @@
             );
             // 首帧渲染成功
             // first frame display
-            player.eventEmitter.on(
+            player.on(
                 EZUIKit.EZUIKitPlayer.EVENTS.firstFrameDisplay,
                 () => {
                     console.log("firstFrameDisplay ");
                 },
             );
-            player.eventEmitter.on(
+            player.on(
                 EZUIKit.EZUIKitPlayer.EVENTS.streamInfoCB,
                 (info) => {
                     console.log("streamInfoCB ", info);

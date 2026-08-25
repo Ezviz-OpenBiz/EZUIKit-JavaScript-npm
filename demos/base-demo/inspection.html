@@ -199,6 +199,14 @@
                 template: 'pcRec'
             },
         ];
+        // 为每个设备补充公共配置：
+        // scaleMode: 1 等比适配，避免画面拉伸变形
+        // env.domain 默认 https://open.ys7.com, 私有化部署或海外环境请配置对应的 domain
+        // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
+        deviceList.forEach((item) => {
+            item.scaleMode = 1;
+            item.env = { domain: "https://open.ys7.com" };
+        });
         let players = []; // 播放器实例列表
         let delay = 10000; // 轮询间隔时间
         let autoTurn = false; // 轮询

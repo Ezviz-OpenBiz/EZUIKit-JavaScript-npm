@@ -25,6 +25,7 @@
       <button onClick="ezopenStartTalk()">开始对讲</button>
       <button onClick="ezopenStopTalk()">结束对讲</button>
       <button onClick="fullscreen()">全屏</button>
+      <button onClick="destroy()">销毁</button>
     </div>
     <p style="font-style: italic;">播放多个视频，可初始化多个实例，参考：/demos/base-demo/multi-demo</p>
   </div>
@@ -76,12 +77,6 @@
         console.log("promise 获取 数据", data)
       })
     }
-    function getOSDTime2() {
-      var getOSDTimePromise = player2.getOSDTime();
-      getOSDTimePromise.then((data) => {
-        console.log("promise 获取 数据", data)
-      })
-    }
     function capturePicture() {
       var capturePicturePromise = player.capturePicture();
       capturePicturePromise.then((data) => {
@@ -118,6 +113,15 @@
     function ezopenStopTalk() {
       player.stopTalk();
     }
+    // 销毁播放器时务必调用 destroy() 并将引用置为 null，避免内存泄漏
+    function destroy() {
+      if (player) {
+        player.destroy();
+        player = null;
+      }
+    }
+    // 页面卸载前销毁播放器
+    window.addEventListener("beforeunload", destroy);
   </script>
 </body>
 

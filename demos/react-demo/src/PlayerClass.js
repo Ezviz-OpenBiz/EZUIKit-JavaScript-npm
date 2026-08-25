@@ -12,6 +12,14 @@ class Player extends React.Component {
     this.init();
   }
 
+  componentWillUnmount() {
+    // 组件卸载时销毁播放器，避免内存泄漏
+    if (player) {
+      player.destroy();
+      player = null;
+    }
+  }
+
   init = () => {
     // fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
     // .then(response => response.json())

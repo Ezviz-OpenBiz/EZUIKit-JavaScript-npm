@@ -152,7 +152,7 @@
         id: "main"
       })
 
-      mainPlayer.eventEmitter.on(EZUIKit.EZUIKitPlayer.EVENTS.firstFrameDisplay, () => {
+      mainPlayer.on(EZUIKit.EZUIKitPlayer.EVENTS.firstFrameDisplay, () => {
         setTimeout(() => {
           mainPlayer.capturePicture().then(res => {
             Array.from(document.querySelectorAll(".sub-container"))[selectedIndex].appendChild(cover)

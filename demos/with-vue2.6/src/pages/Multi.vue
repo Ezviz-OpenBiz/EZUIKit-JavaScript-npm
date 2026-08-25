@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { EZUIKitPlayer } from "ezuikit-js/ezuikit.js";
+import { EZUIKitPlayer } from "ezuikit-js";
 
 export default {
   name: "Multi",
@@ -82,6 +82,7 @@ export default {
         ...options,
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
         template: "simple",
+        scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
         handleError: (error) => {
           console.error("handleError", error);
         },
@@ -131,7 +132,7 @@ export default {
         id: "main",
       });
 
-      this.mainPlayer.eventEmitter.on(
+      this.mainPlayer.on(
         EZUIKitPlayer.EVENTS.firstFrameDisplay,
         () => {
           setTimeout(() => {

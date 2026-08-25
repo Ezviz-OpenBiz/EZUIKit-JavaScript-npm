@@ -30,8 +30,15 @@ export default {
   props: {
     msg: String,
   },
-  mounted: () => {
+  mounted() {
     console.group("mounted 组件挂载完毕状态===============》");
+  },
+  beforeDestroy() {
+    // 组件销毁前销毁播放器实例，避免内存泄漏
+    if (player) {
+      player.destroy();
+      player = null;
+    }
   },
   methods: {
     init() {
@@ -109,23 +116,23 @@ export default {
         },
       });
 
-      player.eventEmitter.on(EZUIKitPlayer.EVENTS.videoInfo, (info) => {
+      player.on(EZUIKitPlayer.EVENTS.videoInfo, (info) => {
         console.log("videoinfo", info);
       });
 
-      player.eventEmitter.on(EZUIKitPlayer.EVENTS.audioInfo, (info) => {
+      player.on(EZUIKitPlayer.EVENTS.audioInfo, (info) => {
         console.log("audioInfo", info);
       });
 
       // 首帧渲染成功
       // first frame display
-      player.eventEmitter.on(
+      player.on(
         EZUIKitPlayer.EVENTS.firstFrameDisplay,
         () => {
           console.log("firstFrameDisplay ");
         }
       );
-      player.eventEmitter.on(
+      player.on(
         EZUIKitPlayer.EVENTS.streamInfoCB,
         (info) => {
           console.log("streamInfoCB ", info);

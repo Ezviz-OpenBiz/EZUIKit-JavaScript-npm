@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { EZUIKitPlayer } from "ezuikit-js";
 import { isMobile } from "./utils";
 
@@ -11,6 +11,17 @@ const Player = () => {
   const accessTokenRef = useRef();
   /** @type {React.MutableRefObject<HTMLInputElement>} */
   const staticPathRef = useRef();
+
+  // 组件卸载时销毁播放器，避免内存泄漏
+  useEffect(
+    () => () => {
+      if (player.current) {
+        player.current.destroy();
+        player.current = null;
+      }
+    },
+    []
+  );
 
   const initPlayer = useCallback(() => {
     if (document.getElementById("player-container")) {

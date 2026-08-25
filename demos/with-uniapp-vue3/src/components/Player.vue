@@ -3,7 +3,8 @@
 		EZUIKitPlayer
 	} from "ezuikit-js";
 	import {
-		onMounted
+		onMounted,
+		onBeforeUnmount
 	} from "vue";
 
 	interface IPlayer {
@@ -20,7 +21,7 @@
 		fullscreen: Function;
 		destroy: Function;
 		setWaterMarkFont: Function;
-		eventEmitter: any;
+		on: any; // 8.2.0+ 事件监听
 	}
 
 	let player: IPlayer;
@@ -236,20 +237,20 @@
 			},
 		});
 
-		player.eventEmitter.on(EZUIKitPlayer.EVENTS.videoInfo, (info: any) => {
+		player.on(EZUIKitPlayer.EVENTS.videoInfo, (info: any) => {
 			console.log("videoinfo", info);
 		});
 
-		player.eventEmitter.on(EZUIKitPlayer.EVENTS.audioInfo, (info: any) => {
+		player.on(EZUIKitPlayer.EVENTS.audioInfo, (info: any) => {
 			console.log("audioInfo", info);
 		});
 
 		// 首帧渲染成功
 		// first frame display
-		player.eventEmitter.on(EZUIKitPlayer.EVENTS.firstFrameDisplay, () => {
+		player.on(EZUIKitPlayer.EVENTS.firstFrameDisplay, () => {
 			console.log("firstFrameDisplay ");
 		});
-		player.eventEmitter.on(EZUIKitPlayer.EVENTS.streamInfoCB, (info: any) => {
+		player.on(EZUIKitPlayer.EVENTS.streamInfoCB, (info: any) => {
 			console.log("streamInfoCB ", info);
 		});
 		window.player = player;
@@ -258,6 +259,14 @@
 
 	onMounted(() => {
 		init();
+	});
+
+	onBeforeUnmount(() => {
+		// 组件卸载时销毁播放器，避免内存泄漏
+		if (player) {
+			player.destroy();
+			player = null;
+		}
 	});
 </script>
 

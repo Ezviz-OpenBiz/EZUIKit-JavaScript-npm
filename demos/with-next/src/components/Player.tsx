@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { EZUIKitPlayer } from "ezuikit-js";
 import { isMobile } from "./utils";
 
@@ -12,6 +12,17 @@ const Player = () => {
   const domainRef = useRef<HTMLInputElement>(null);
   const languageRef = useRef<HTMLSelectElement>(null);
   const templateRef = useRef<HTMLSelectElement>(null);
+
+  // 组件卸载时销毁播放器，避免内存泄漏
+  useEffect(
+    () => () => {
+      if (player.current) {
+        player.current.destroy();
+        player.current = null;
+      }
+    },
+    []
+  );
 
   const initPlayer = useCallback(() => {
     if (document.getElementById("player-container")) {
@@ -100,14 +111,14 @@ const Player = () => {
 
       // player.current;
 
-      player.current.eventEmitter.on(
+      player.current.on(
         EZUIKitPlayer.EVENTS.videoInfo,
         (info: any) => {
           console.log("videoinfo", info);
         },
       );
 
-      player.current.eventEmitter.on(
+      player.current.on(
         EZUIKitPlayer.EVENTS.audioInfo,
         (info: any) => {
           console.log("audioInfo", info);
@@ -116,13 +127,13 @@ const Player = () => {
 
       // 首帧渲染成功
       // first frame display
-      player.current.eventEmitter.on(
+      player.current.on(
         EZUIKitPlayer.EVENTS.firstFrameDisplay,
         () => {
           console.log("firstFrameDisplay ");
         },
       );
-      player.current.eventEmitter.on(
+      player.current.on(
         EZUIKitPlayer.EVENTS.streamInfoCB,
         (info: any) => {
           console.log("streamInfoCB ", info);

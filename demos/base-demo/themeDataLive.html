@@ -237,7 +237,11 @@
     }
 
     function destroy() {
-      if (player) player.destroy();
+      // 销毁播放器时务必调用 destroy() 并将引用置为 null，避免内存泄漏
+      if (player) {
+        player.destroy();
+        player = null;
+      }
     }
 
     function flattenToNested(obj) {
