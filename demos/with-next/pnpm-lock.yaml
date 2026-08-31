@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   ezuikit-js:
-    specifier: 9.0.19
-    version: 9.0.19
+    specifier: 9.0.20-beta.1
+    version: 9.0.20-beta.1
   next:
     specifier: '15'
     version: 15.3.1(react-dom@18.3.1)(react@18.3.1)
@@ -1781,8 +1781,8 @@ packages:
     resolution: {integrity: sha512-mlsTRyGaPBjPedk6Bvw+aqbsXDtoAyAzm5MO7JgU+yVRyMQ5O8bD4Kcci7BS85f93veegeCPkL8R4GLClnjLFw==}
     dev: false
 
-  /ezuikit-js@9.0.19:
-    resolution: {integrity: sha512-Z1zStp1vNoHKXeF8Cx8JNGAjDsH0Uep4cKivFBsvKIFp3qHzd4Av51TI2IoHRixFLpBWCzRnD+iDXO3V68GiYg==}
+  /ezuikit-js@9.0.20-beta.1:
+    resolution: {integrity: sha512-EdFqW+VwtTjZoyzdSPD9sgZIIWHHA9cXOM6e5YFCXJ75gt3dLJZTDNcvhPngnVgmGDkfHICrrspesKYSTL5/hw==}
     dependencies:
       '@ezuikit/control-aichat': 0.1.1-beta.1
       '@ezuikit/player-ezopen': 9.0.8-beta.1
