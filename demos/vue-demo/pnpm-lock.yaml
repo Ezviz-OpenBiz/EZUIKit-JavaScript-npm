@@ -9,8 +9,8 @@ dependencies:
     specifier: ^3.6.5
     version: 3.42.0
   ezuikit-js:
-    specifier: 9.0.20-beta.1
-    version: 9.0.20-beta.1
+    specifier: 9.0.20
+    version: 9.0.20
   vue:
     specifier: ^2.7
     version: 2.7.16
@@ -3537,8 +3537,8 @@ packages:
       - supports-color
     dev: true
 
-  /ezuikit-js@9.0.20-beta.1:
-    resolution: {integrity: sha512-EdFqW+VwtTjZoyzdSPD9sgZIIWHHA9cXOM6e5YFCXJ75gt3dLJZTDNcvhPngnVgmGDkfHICrrspesKYSTL5/hw==}
+  /ezuikit-js@9.0.20:
+    resolution: {integrity: sha512-6XwwHrmGc1UleFr7B3PIGvzegXfAwFmA9yh65Vgzjf72ayGuHlrryRkABW00och7kU/SXVAJ+xiZIia7rx5X8Q==}
     dependencies:
       '@ezuikit/control-aichat': 0.1.1-beta.1
       '@ezuikit/player-ezopen': 9.0.8-beta.1

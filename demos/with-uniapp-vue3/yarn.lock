@@ -2893,10 +2893,10 @@ exsolve@^1.0.7:
   resolved "https://registry.yarnpkg.com/exsolve/-/exsolve-1.0.7.tgz#3b74e4c7ca5c5f9a19c3626ca857309fa99f9e9e"
   integrity sha512-VO5fQUzZtI6C+vx4w/4BWJpg3s/5l+6pRQEHzFRM8WFi4XffSP1Z+4qi7GbjWbvRQEbdIco5mIMq+zX4rPuLrw==
 
-ezuikit-js@9.0.20-beta.1:
-  version "9.0.20-beta.1"
-  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-9.0.20-beta.1.tgz#bc6197a0dc2a68dfd473de9b1978bc197e5b5981"
-  integrity sha512-EdFqW+VwtTjZoyzdSPD9sgZIIWHHA9cXOM6e5YFCXJ75gt3dLJZTDNcvhPngnVgmGDkfHICrrspesKYSTL5/hw==
+ezuikit-js@9.0.20:
+  version "9.0.20"
+  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-9.0.20.tgz#5ed545f20920e58d469b66fa73ef3a671928547d"
+  integrity sha512-6XwwHrmGc1UleFr7B3PIGvzegXfAwFmA9yh65Vgzjf72ayGuHlrryRkABW00och7kU/SXVAJ+xiZIia7rx5X8Q==
   dependencies:
     "@ezuikit/control-aichat" "0.1.1-beta.1"
     "@ezuikit/player-ezopen" "9.0.8-beta.1"
