@@ -2,7 +2,7 @@
 
 #### Feat
 
-- 支持萤石 `LL-HLS` 回放倍速切换 (需要 `accessToken`)
+- 支持萤石 HLS 流本地录制
 
 #### Fix
 
