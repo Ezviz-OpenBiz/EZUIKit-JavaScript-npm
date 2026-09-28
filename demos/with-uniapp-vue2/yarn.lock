@@ -1201,16 +1201,16 @@
   dependencies:
     "@ezuikit/utils-i18n" "^2.0.1"
 
-"@ezuikit/player-ezopen@9.0.8-beta.1":
-  version "9.0.8-beta.1"
-  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-9.0.8-beta.1.tgz#408c551fba35babdcde5f431a96563edbb128056"
-  integrity sha512-1bIAc3n5DEueYM5qOJz1nPCGHmRRm2e1xGVvCNWeBTqMshSDyLCxNcAFA0f5z3IzI9uA9A57HliSkULR0xoA/g==
+"@ezuikit/player-ezopen@9.0.9-beta.5":
+  version "9.0.9-beta.5"
+  resolved "https://registry.yarnpkg.com/@ezuikit/player-ezopen/-/player-ezopen-9.0.9-beta.5.tgz#9aee224a768fcdc64b64bafec94d19d8fac58662"
+  integrity sha512-sM7joGejhhhuG6bJb1J0LuVvawVOXsqLjMtec40H3Ba9VysB4R+f8skyZaDyoKIMIpKNNcNo0SojitNrdgzpjg==
   dependencies:
     "@ezuikit/player-plugin-record" "9.2.0-beta.1"
     "@ezuikit/utils-i18n" "^2.0.1"
-    "@ezuikit/utils-logger" "^2.0.1"
+    "@ezuikit/utils-logger" "^2.1.0"
     "@ezuikit/utils-service" "2.0.0"
-    "@ezuikit/utils-tools" "^2.0.6"
+    "@ezuikit/utils-tools" "^2.0.7"
     dayjs "^1.11.10"
     deepmerge "^4.3.1"
     eventemitter3 "^5.0.1"
@@ -1236,10 +1236,10 @@
   dependencies:
     deepmerge "^4.3.1"
 
-"@ezuikit/utils-logger@2.0.1", "@ezuikit/utils-logger@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@ezuikit/utils-logger/-/utils-logger-2.0.1.tgz#5493ec1e388a55b14e557581cb382edcae71cfdc"
-  integrity sha512-AeLLR9ZQJkSJFfCicpkVBcnOE4zyQMp4W4997sTEGyF3k3I8Upkfn4Cye2A44MIphdw6eytKlaJp6H4joSafQw==
+"@ezuikit/utils-logger@2.1.0", "@ezuikit/utils-logger@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@ezuikit/utils-logger/-/utils-logger-2.1.0.tgz#d65b0277cc35a4e7f2596e7d135e5a4fd653dc3f"
+  integrity sha512-Kj/vTddGWhRhOApo/QmesxqEPxkSwhwakQGZx3b3xLI8Dou2NMg8iNA+9aXU4jT5uT13TmdCn0oMC8Kbq6BMGQ==
 
 "@ezuikit/utils-service@2.0.0":
   version "2.0.0"
@@ -1248,7 +1248,12 @@
   dependencies:
     "@ezuikit/utils-tools" "^2.0.5"
 
-"@ezuikit/utils-tools@2.0.6", "@ezuikit/utils-tools@^2.0.5", "@ezuikit/utils-tools@^2.0.6":
+"@ezuikit/utils-tools@2.0.7", "@ezuikit/utils-tools@^2.0.7":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@ezuikit/utils-tools/-/utils-tools-2.0.7.tgz#96053009c89a894242deda4e1bd2bfed9c229603"
+  integrity sha512-phxKRP17FunG0cwLLK951V18x96EzwO5XSfZ+FfI4jv8agbujV5HtY709lpXM0H5j4XC7pZryT70wjdRFASQgA==
+
+"@ezuikit/utils-tools@^2.0.5", "@ezuikit/utils-tools@^2.0.6":
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/@ezuikit/utils-tools/-/utils-tools-2.0.6.tgz#a0d984f362ed9cfdc582b9426c5d651471acab08"
   integrity sha512-1XUk8IY28FpspjzgbbVEfcsRiwKx9l5ltjOYw9RYh3BK2XAKv2B2N+79RCQ1qfmjLVsHLx2H8xTwSJECSWcnqg==
@@ -5451,17 +5456,17 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.1.tgz#8d172c064867f235c0c84a596806d279bf4bcc07"
   integrity sha512-Wrk35e8ydCKDj/ArClo1VrPVmN8zph5V4AtHwIuHhvMXsKf73UT3BOD+azBIW+3wOJ4FhEH7zyaJCFvChjYvMA==
 
-ezuikit-js@9.0.20:
-  version "9.0.20"
-  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-9.0.20.tgz#5ed545f20920e58d469b66fa73ef3a671928547d"
-  integrity sha512-6XwwHrmGc1UleFr7B3PIGvzegXfAwFmA9yh65Vgzjf72ayGuHlrryRkABW00och7kU/SXVAJ+xiZIia7rx5X8Q==
+ezuikit-js@9.0.23-beta.1:
+  version "9.0.23-beta.1"
+  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-9.0.23-beta.1.tgz#0a50050f0afd5d72ba89a3e39dfd2cbbac845aa7"
+  integrity sha512-lZsVRx1RldC3meT+7bOoI5fh6ynxGf6IJalGZN+Rf6NkKOsKXKSYT5vOz6HrLUjv0miZTcveiREl2V2feLT39g==
   dependencies:
     "@ezuikit/control-aichat" "0.1.1-beta.1"
-    "@ezuikit/player-ezopen" "9.0.8-beta.1"
+    "@ezuikit/player-ezopen" "9.0.9-beta.5"
     "@ezuikit/utils-collect" "0.1.1"
     "@ezuikit/utils-i18n" "2.0.1"
-    "@ezuikit/utils-logger" "2.0.1"
-    "@ezuikit/utils-tools" "2.0.6"
+    "@ezuikit/utils-logger" "2.1.0"
+    "@ezuikit/utils-tools" "2.0.7"
     "@juggle/resize-observer" "^3.4.0"
     "@skax/delegate" "4.0.2"
     abortcontroller-polyfill "^1.7.5"
