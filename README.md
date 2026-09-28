@@ -564,16 +564,17 @@ player.changePlayUrl(options).then(() => {
 
 options 参数说明
 
-| 参数名       | 类型    | 是否必选 | 默认值       | 描述                                                            |
+| 参数名        |  类型    | 是否必选  | 默认值       | 描述                                                            |
 | :----------- | :------ | :------- | :----------- | :-------------------------------------------------------------- |
 | type         | String  | Y        | 无           | 播放地址类型，"live":预览，"rec"：回放；“cloud.rec”：云存储回放 |
 | deviceSerial | String  | Y        | 无           | 设备序列号,存在英文字母的设备序列号，字母需为大写               |
 | channelNo    | int     | Y        | 无           | 通道号                                                          |
-| accessToken  | String  | N        | 初始化时获取 | 授权过程获取的 access_token                                     |
-| hd           | boolean | N        | 初始化时获取 | 是否为高清 true-主码流（高清） false-子码流(标清)               |
-| validCode    | String  | N        | 初始化时获取 | 设备验证码（加密设备播放需要输入验证码）                        |
-| begin        | String  | N        | 初始化时获取 | type 类型为回放有效，开始时间 格式为“YYYYMMDDHHmmss”            |
-| end          | String  | N        | 初始化时获取 | type 类型为回放有效，结束时间 格式为 “YYYYMMDDHHmmss”           |
+| accessToken  | String  | N        | 初始化时获取  | 授权过程获取的 access_token                                     |
+| hd           | boolean | N        | 初始化时获取  | 是否为高清 true-主码流（高清） false-子码流(标清)               |
+| validCode    | String  | N        | 初始化时获取  | 设备验证码（加密设备播放需要输入验证码）                        |
+| begin        | String  | N        | 初始化时获取  | type 类型为回放有效，开始时间 格式为“YYYYMMDDHHmmss”            |
+| end          | String  | N        | 初始化时获取  | type 类型为回放有效，结束时间 格式为 “YYYYMMDDHHmmss”           |
+| videoLevel   | [0, 6]  | N        | 无。         | 切换预览时同时切换清晰度，仅预览/直播支持           |
 
 #### 切换模板主题
 

@@ -2,9 +2,11 @@
 
 #### Feat
 
-- 支持 webtransport 取流 （ezopen 协议）
+- 支持 `webtransport` 取流 （ezopen 协议）
 
-- 日历切换月份，获取当前月的回放时间列表， 并在日历上展示点
+- 日历切换月份，获取当前月的回放时间列表，并在日历上展示点
+
+- `changePlayUrl` 支持切换预览时同时切换清晰度 `changePlayUrl({url: "...", videoLevel: 1})`
 
 #### Fixed
 
