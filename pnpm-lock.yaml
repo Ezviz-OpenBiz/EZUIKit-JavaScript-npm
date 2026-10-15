@@ -12,8 +12,8 @@ importers:
         specifier: 0.1.1-beta.1
         version: 0.1.1-beta.1
       '@ezuikit/player-ezopen':
-        specifier: 9.0.9-beta.5
-        version: 9.0.9-beta.5
+        specifier: 9.0.10-alpha.4
+        version: 9.0.10-alpha.4
       '@ezuikit/utils-collect':
         specifier: 0.1.1
         version: 0.1.1
@@ -53,8 +53,8 @@ packages:
   '@ezuikit/control-aichat@0.1.1-beta.1':
     resolution: {integrity: sha512-vj5u4QnxGIbeVN1kIyDTifV1gFUTd4Pnz5JeAA8OlYexY0FcHCaKNarXDIBFVJwppAxdkrXMW6AuAlURr2lfUw==}
 
-  '@ezuikit/player-ezopen@9.0.9-beta.5':
-    resolution: {integrity: sha512-sM7joGejhhhuG6bJb1J0LuVvawVOXsqLjMtec40H3Ba9VysB4R+f8skyZaDyoKIMIpKNNcNo0SojitNrdgzpjg==}
+  '@ezuikit/player-ezopen@9.0.10-alpha.4':
+    resolution: {integrity: sha512-qAtbJXo2b5Kj+sBFk01BcnktwEzNKtIz8P4Ew0P0jHhbUW0SS6gJ5CD4IwNS0YKlspyD8Q4fgGxdzStXLQpdoA==}
 
   '@ezuikit/player-plugin-record@9.2.0-beta.1':
     resolution: {integrity: sha512-SA7IlSckKfoW73QhW9CjirnSRQHYYgstLIAhWzbL9/rvhj0AJ84NgvzRfySN10pkk7lZ485XQQwyBJgZFbz/6w==}
@@ -126,7 +126,7 @@ snapshots:
     dependencies:
       '@ezuikit/utils-i18n': 2.0.1
 
-  '@ezuikit/player-ezopen@9.0.9-beta.5':
+  '@ezuikit/player-ezopen@9.0.10-alpha.4':
     dependencies:
       '@ezuikit/player-plugin-record': 9.2.0-beta.1
       '@ezuikit/utils-i18n': 2.0.1
