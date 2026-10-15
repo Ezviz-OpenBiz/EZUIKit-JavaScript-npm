@@ -34,7 +34,7 @@ THE SOFTWARE.
 ---
 
 Name: @ezuikit/player-theme
-Version: 3.1.4-beta.2
+Version: 3.1.8-beta.3
 License: MIT
 Private: false
 Description: player theme
@@ -136,7 +136,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/control-ptz
-Version: 1.0.0
+Version: 2.0.0-beta.1
 License: null
 Private: false
 Description: ptz control for ezviz
@@ -147,7 +147,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/control-modal
-Version: 0.0.1
+Version: 0.0.2
 License: MIT
 Private: false
 Description: draggable modal dialog control for ezviz
@@ -158,7 +158,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/control-virtual-scroll
-Version: 0.0.1
+Version: 0.0.2
 License: MIT
 Private: false
 Description: high performance fixed-height virtual scroll list for ezviz
@@ -169,7 +169,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/control-rec-list-modal
-Version: 0.0.1
+Version: 0.0.2
 License: MIT
 Private: false
 Description: recording list modal control for ezviz
@@ -248,7 +248,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/control-talk
-Version: 0.1.0
+Version: 0.1.1
 License: null
 Private: false
 Description: talk
@@ -450,7 +450,7 @@ SOFTWARE.
 ---
 
 Name: dayjs
-Version: 1.11.21
+Version: 1.11.23
 License: MIT
 Private: false
 Description: 2KB immutable date time library alternative to Moment.js with the same modern API 
@@ -496,7 +496,7 @@ Author: Ezviz-OpenBiz
 ---
 
 Name: @ezuikit/player-ezopen
-Version: 9.0.8-beta.1
+Version: 9.0.10-alpha.4
 License: MIT
 Private: false
 Description: 萤石ezopne协议播放器
