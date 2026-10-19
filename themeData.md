@@ -203,4 +203,6 @@ interface ThemeData {
 
 ### 配置示例
 
-<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/themeData.html" target="_blank">本地主题配置示例</a>
+<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/themeDataLive.html" target="_blank">预览（直播）本地主题配置示例</a>
+
+<a href="https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/blob/master/demos/base-demo/themeDataRec.html" target="_blank">回放本地主题配置示例</a>
