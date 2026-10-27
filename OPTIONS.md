@@ -75,7 +75,7 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 <tr><td>playbackRange</td><td>{ begin: string, end: string }</td><td>播放区间约束（视频分享片段播放），begin 和 end 格式为 YYYYMMDDhhmmss（14 位），必须在同一天且 begin &lt; end。设置后回放将被约束在该区间内：时间轴、进度条、seek 操作均受区间限制，播放到区间末端自动触发 playbackEnd 事件。示例：<code>{ begin: '20260819103500', end: '20260819104500' }</code> (v9.0.18-beta.1 及以上支持)</td><td>N</td></tr>
 <tr><td>segmentProgressOptions</td><td>Object | null</td><td>片段进度条控件配置，配合 playbackRange 使用时在移动端展示线性进度条。设为 null 关闭。需配合 mobileExtendOptions.controls 包含 'segmentProgress' 使用 (v9.0.18-beta.1 及以上支持)</td><td>N</td></tr>
 <tr><td>mobileExtendOptions</td><td>{ controls: string[] }</td><td>移动端扩展控件配置，controls 数组可选值：'timeLine'（时间轴）、'segmentProgress'（片段进度条）、'date'（日期选择）、'time'（时间选择）、'rec'（回放类型切换）、'ptz'（云台）。示例：<code>{ controls: ['timeLine', 'segmentProgress'] }</code> (v9.0.17 及以上支持)</td><td>N</td></tr>
-<tr><td>webtransport</td><td>jsdecoder | webtransport</td><td> 取流传输客户端， 默认 jsdecoder  (v9.0.23 及以上支持)</td><td>N</td></tr>
+<tr><td>transport</td><td>jsdecoder | webtransport</td><td> 取流传输客户端， 默认 jsdecoder  (v9.0.23 及以上支持)</td><td>N</td></tr>
 <tr><td>decoderType</td><td> auto | v1 | v3</td><td>指定解码类型，(v1: 软解， v3: 硬件)， 默认 auto</td><td>N</td></tr>
 <tr><td>speedOptions</td><td><a href="./theme-docs/speedOptions.md" target="_blank">Object</a></td><td>自定义倍速列表  (v8.2.4 及以上支持)</td><td>N</td></tr>
 </table>
