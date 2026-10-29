@@ -78,4 +78,5 @@ themeData将主题数据本地化，设置本地数据，需要删除template参
 <tr><td>transport</td><td>jsdecoder | webtransport</td><td> 取流传输客户端， 默认 jsdecoder  (v9.0.23 及以上支持)</td><td>N</td></tr>
 <tr><td>decoderType</td><td> auto | v1 | v3</td><td>指定解码类型，(v1: 软解， v3: 硬件)， 默认 auto</td><td>N</td></tr>
 <tr><td>speedOptions</td><td><a href="./theme-docs/speedOptions.md" target="_blank">Object</a></td><td>自定义倍速列表  (v8.2.4 及以上支持)</td><td>N</td></tr>
+<tr><td>forceStreamSwitch</td><td>boolean</td><td>不支持子码流  (v9.0.25 及以上支持)， 默认 true</td><td>N</td></tr>
 </table>
