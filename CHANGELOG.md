@@ -8,6 +8,8 @@
 
 - 修复初始化第一次取流失败， 重试成功后画面黑的bug
 
+- 修复部分 win11 系统下新版 chrome(156) 本地带水印录制失败的bug
+
 - 更新[画面尺寸渲染逻辑](./CANVAS_SIZE.md)，修复画面模糊问题,  [issues #460](https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm/issues/460)
 
 ### v9.0.24
