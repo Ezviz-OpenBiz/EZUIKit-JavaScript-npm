@@ -12,8 +12,8 @@ importers:
         specifier: 0.1.1-beta.1
         version: 0.1.1-beta.1
       '@ezuikit/player-ezopen':
-        specifier: 9.0.11-beta.7
-        version: 9.0.11-beta.7
+        specifier: 9.2.0-beta.5
+        version: 9.2.0-beta.5
       '@ezuikit/utils-collect':
         specifier: 0.1.1
         version: 0.1.1
@@ -53,11 +53,11 @@ packages:
   '@ezuikit/control-aichat@0.1.1-beta.1':
     resolution: {integrity: sha512-vj5u4QnxGIbeVN1kIyDTifV1gFUTd4Pnz5JeAA8OlYexY0FcHCaKNarXDIBFVJwppAxdkrXMW6AuAlURr2lfUw==}
 
-  '@ezuikit/player-ezopen@9.0.11-beta.7':
-    resolution: {integrity: sha512-QtwxQoRFlz8Nd/GM9Ndl4s9Sp5V1r9SqUudHeFWxdrc+/OSYt4qWZwrZMOdRFQYcbShSOnaTiY79oXIfO4N4bw==}
+  '@ezuikit/player-ezopen@9.2.0-beta.5':
+    resolution: {integrity: sha512-NH3LdPkVn7s3A+B+GvfbbWdSqVY3DN7Lz2EQqvnPm/BVXx88Ze5TBbjTkiJPhlgOaOGmssqQ19/ylzedw3Nk1g==}
 
-  '@ezuikit/player-plugin-record@9.2.0-beta.1':
-    resolution: {integrity: sha512-SA7IlSckKfoW73QhW9CjirnSRQHYYgstLIAhWzbL9/rvhj0AJ84NgvzRfySN10pkk7lZ485XQQwyBJgZFbz/6w==}
+  '@ezuikit/player-plugin-record@9.3.0-beta.1':
+    resolution: {integrity: sha512-qkzwxuwT4UyyYs9dI2d3PbTsYhHRpyWrZtI4T/npbKU740muwoRPpehT1o5WBPyln1CHSTwjM87GmIEx5b5EIQ==}
 
   '@ezuikit/utils-collect@0.1.1':
     resolution: {integrity: sha512-BgEOnTtAq8rQRBAKv5rLXbQLGOnfOZ6NS0QTmiviey80JbMJlxrLiqmjL5lxvkm4JtCcXCtSgPA4tskQKN4eDA==}
@@ -126,9 +126,9 @@ snapshots:
     dependencies:
       '@ezuikit/utils-i18n': 2.0.1
 
-  '@ezuikit/player-ezopen@9.0.11-beta.7':
+  '@ezuikit/player-ezopen@9.2.0-beta.5':
     dependencies:
-      '@ezuikit/player-plugin-record': 9.2.0-beta.1
+      '@ezuikit/player-plugin-record': 9.3.0-beta.1
       '@ezuikit/utils-i18n': 2.0.1
       '@ezuikit/utils-logger': 2.1.0
       '@ezuikit/utils-service': 2.0.0
@@ -139,7 +139,7 @@ snapshots:
       screenfull: 5.2.0
       ua-parser-js: 1.0.37
 
-  '@ezuikit/player-plugin-record@9.2.0-beta.1':
+  '@ezuikit/player-plugin-record@9.3.0-beta.1':
     dependencies:
       '@ezuikit/utils-tools': 2.0.7
 
