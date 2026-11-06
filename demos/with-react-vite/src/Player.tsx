@@ -58,7 +58,7 @@ const Player = () => {
         height,
         template,
         staticPath, // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
-        // quality: 1, // 
+        // quality: 1, //
         language, // zh | en
         // isCloudRecord: true, // 如果是云录制的播放 需要这个值，是必须的, 8.2.0 开始 默认支持
         scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
@@ -248,7 +248,7 @@ const Player = () => {
           <input
             ref={staticPathRef}
             placeholder="ezopen staticPath"
-            defaultValue="https://openstatic.ys7.com/ezuikit_js/v9.0.15/ezuikit_static"
+            defaultValue=""
           />
         </div>
         <div className="form-item">

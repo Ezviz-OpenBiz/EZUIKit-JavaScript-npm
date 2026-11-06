@@ -52,7 +52,7 @@ export default {
       player = new EZUIKitPlayer({
         id: "video-container", // 视频容器ID
         accessToken:
-          "at.649xp0dn45kx407tcli30ecnm734ei-45id8avdta-0zt7m6d-9pzi8ppan",
+          "at.6gcdy9jo55ad4exsc772ih1n5z2fe-6bhw84r96q-1d76ple-bnoahojhq",
         url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
         // simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
         template: "mobileLive",
@@ -67,7 +67,7 @@ export default {
         handleError: (error) => {
           console.error("handleError", error);
         },
-        // quality: 1, // 
+        // quality: 1, //
         // language: "en", // zh | en
         // staticPath: "/ezuikit_static", // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
         // isCloudRecord: true, // 如果是云录制的播放 需要这个值，是必须的, 8.2.0 开始 默认支持

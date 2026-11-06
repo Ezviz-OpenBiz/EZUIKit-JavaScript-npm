@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       ezuikit-js:
-        specifier: 9.0.25-beta.2
-        version: 9.0.25-beta.2
+        specifier: 9.0.26-beta.1
+        version: 9.0.26-beta.1
       vue:
         specifier: 3.4.37
         version: 3.4.37(typescript@5.9.3)
@@ -209,8 +209,8 @@ packages:
   '@ezuikit/utils-service@2.0.0':
     resolution: {integrity: sha512-CBCPMw3uwd/vCh/YS+fZPMJrmg0LmCPO5bVkAon6VxjJJxwpVNcVb15sNbZyGR52JYt3wq7UEhnqHMprHnCSEA==}
 
-  '@ezuikit/utils-tools@2.0.7':
-    resolution: {integrity: sha512-phxKRP17FunG0cwLLK951V18x96EzwO5XSfZ+FfI4jv8agbujV5HtY709lpXM0H5j4XC7pZryT70wjdRFASQgA==}
+  '@ezuikit/utils-tools@2.0.9':
+    resolution: {integrity: sha512-GokUQiYNHG8cJkqU4OAJD2Dm3pXiFHvlYTYm+aw3HMTAdeERSpAgGQuWX6PHhy9GaaOiZunC5c1oRfQPnZfyfQ==}
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -270,79 +270,66 @@ packages:
     resolution: {integrity: sha512-dgU1CvUuE2IkaJBAeuAbxpDdMHAdZBT5oth5u22DtuoMg4gXXYr2+Sm30RigPJG1F2VEoiGJUziGLuIh9+jPxA==}
     cpu: [arm]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-arm-musleabihf@4.67.5':
     resolution: {integrity: sha512-rdgJcJig2VngYlcTCRQw2BA8kLWM6QwDFe9uLFo81lya0jPC1r8wZu92sAvTUIv48GWlkRVi6/fpsa5CoFSKoQ==}
     cpu: [arm]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-arm64-gnu@4.67.5':
     resolution: {integrity: sha512-+jtCiQnrEFHWAUAcUpP7wppb1p6HKOgBP3mXx75cEYpDF2Y5MEqBky2HNz+osFuVx5uX44gnMTmbe5RJauzn6A==}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-arm64-musl@4.67.5':
     resolution: {integrity: sha512-heflX7ENhL8eHmLcUxDEHCSK8CKLyPprysb2JGoSTh5Ip7nHrzIRc+2USyxul3nxi98H8pGxJIEDEpURlS1X5A==}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-loong64-gnu@4.67.5':
     resolution: {integrity: sha512-rRtNU0zBfRHkJ8pscHN9qRtUYLq8Rao4EX7aVWvKcFmJUANkCCXFRU7ovNBEMhpEONyUEB/3DRVDXwDDguSfHA==}
     cpu: [loong64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-loong64-musl@4.67.5':
     resolution: {integrity: sha512-/6auyi9yj8MD/Q+8P+f2ay57jQ7a0j7Yp1JK86pecH6ZnRViQZ5GOjoRSjGArFeTSHFznRbM2QPQcBgDPyNMfQ==}
     cpu: [loong64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-ppc64-gnu@4.67.5':
     resolution: {integrity: sha512-Hsc0vlt+vPvqzUkHKffWKf3YE/yexrY+yeFf7IsUvDC6PV7YGCsA/gJvPa+WJdgxGJnwuoO1HmLkbahaLKabYQ==}
     cpu: [ppc64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-ppc64-musl@4.67.5':
     resolution: {integrity: sha512-Jx5TMMSPJwHY7F/JwPdS6nuBwny2ECRK+EsAJV5HZrfiddeSS6ZrohkLkFZm3rjqBUuQ4FPX5gGMtakUuQO6fQ==}
     cpu: [ppc64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-riscv64-gnu@4.67.5':
     resolution: {integrity: sha512-fGWcq2lo/XCqAkBLOokg66D/z+MUouryB8i+QdU9RR6O5knG7rucc0WFPqWYL1Wk/wuiJouDfmyBxmZKRM9bag==}
     cpu: [riscv64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-musl@4.67.5':
     resolution: {integrity: sha512-JwO/Ys3jybc0UW3V5XO2CMnp0RhvoczDDQTgAEE1IctT+HRY3W5parIIWLUpmAK4gHSeeYJofm2iQPFA62K6ag==}
     cpu: [riscv64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-s390x-gnu@4.67.5':
     resolution: {integrity: sha512-vVD4iqel6J6A1xAJlb4mxEO9i1wOJ4/SkcKoDKAuK/wqEBPOA7/P5dDyZvNx46ocHwOUwzo3WjhTdKqET9kEAg==}
     cpu: [s390x]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-x64-gnu@4.67.5':
     resolution: {integrity: sha512-HmEfNh5Cdd/NHxgqwMzKnjlvicQQA+D+w+vQXDJSV0x/aHiQSjVwh1Th5RoA7QsMieIaxibt/5iJq68BraTSUg==}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-x64-musl@4.67.5':
     resolution: {integrity: sha512-NfmALpbe009nYzZ2QqlSW6nzbGddXpqk3nwualrIr+4QflQCTGMzt3QKK20yARiAnSV9fJdM5WNwIYUf31x3uA==}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-openbsd-x64@4.67.5':
     resolution: {integrity: sha512-ngcE7Udpy/iJ3lexVhYcbpUV2OJIakRGus3snc6K52BnAAJetDBG1Ku5Eh3CECtnW3mpBYWg5VCD4tTaOXKOVQ==}
@@ -516,8 +503,8 @@ packages:
   eventemitter3@5.0.4:
     resolution: {integrity: sha512-mlsTRyGaPBjPedk6Bvw+aqbsXDtoAyAzm5MO7JgU+yVRyMQ5O8bD4Kcci7BS85f93veegeCPkL8R4GLClnjLFw==}
 
-  ezuikit-js@9.0.25-beta.2:
-    resolution: {integrity: sha512-rm82mj643tn3K4UutY3p4Hq96tq6pcjCJp7Hvu9Nb9pgIbuh8xccj9oPfqLEq9Pd3fahMtK5GXNr2NBuS5XbeA==}
+  ezuikit-js@9.0.26-beta.1:
+    resolution: {integrity: sha512-qoZ+tQ92wMUK5oJPtlwUXjuux/LtGKWbJD9sK5Tv1mn7V3EQp1OmfgDaUwWyri8vXgsvG1UXnPcKIiRRJHURVw==}
 
   fetch-blob@3.2.0:
     resolution: {integrity: sha512-7yAQpD2UMJzLi1Dqv7qFYnPbaPx7ZfFK6PiIxQ4PfkGPyNyl2Ugx+a/umUonmKqjhM4DnfbMvdX6otXq83soQQ==}
@@ -763,7 +750,7 @@ snapshots:
       '@ezuikit/utils-i18n': 2.0.1
       '@ezuikit/utils-logger': 2.1.0
       '@ezuikit/utils-service': 2.0.0
-      '@ezuikit/utils-tools': 2.0.7
+      '@ezuikit/utils-tools': 2.0.9
       dayjs: 1.11.23
       deepmerge: 4.3.1
       eventemitter3: 5.0.4
@@ -772,7 +759,7 @@ snapshots:
 
   '@ezuikit/player-plugin-record@9.3.0-beta.1':
     dependencies:
-      '@ezuikit/utils-tools': 2.0.7
+      '@ezuikit/utils-tools': 2.0.9
 
   '@ezuikit/utils-collect@0.1.1': {}
 
@@ -784,9 +771,9 @@ snapshots:
 
   '@ezuikit/utils-service@2.0.0':
     dependencies:
-      '@ezuikit/utils-tools': 2.0.7
+      '@ezuikit/utils-tools': 2.0.9
 
-  '@ezuikit/utils-tools@2.0.7': {}
+  '@ezuikit/utils-tools@2.0.9': {}
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
@@ -1067,14 +1054,14 @@ snapshots:
 
   eventemitter3@5.0.4: {}
 
-  ezuikit-js@9.0.25-beta.2:
+  ezuikit-js@9.0.26-beta.1:
     dependencies:
       '@ezuikit/control-aichat': 0.1.1-beta.1
       '@ezuikit/player-ezopen': 9.2.0-beta.5
       '@ezuikit/utils-collect': 0.1.1
       '@ezuikit/utils-i18n': 2.0.1
       '@ezuikit/utils-logger': 2.1.0
-      '@ezuikit/utils-tools': 2.0.7
+      '@ezuikit/utils-tools': 2.0.9
       '@juggle/resize-observer': 3.4.0
       '@skax/delegate': 4.0.2
       abortcontroller-polyfill: 1.7.8

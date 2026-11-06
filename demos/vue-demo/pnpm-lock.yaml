@@ -9,8 +9,8 @@ dependencies:
     specifier: ^3.6.5
     version: 3.42.0
   ezuikit-js:
-    specifier: 9.0.25-beta.2
-    version: 9.0.25-beta.2
+    specifier: 9.0.26-beta.1
+    version: 9.0.26-beta.1
   vue:
     specifier: ^2.7
     version: 2.7.16
@@ -1167,7 +1167,7 @@ packages:
       '@ezuikit/utils-i18n': 2.0.1
       '@ezuikit/utils-logger': 2.1.0
       '@ezuikit/utils-service': 2.0.0
-      '@ezuikit/utils-tools': 2.0.7
+      '@ezuikit/utils-tools': 2.0.9
       dayjs: 1.11.21
       deepmerge: 4.3.1
       eventemitter3: 5.0.4
@@ -1178,7 +1178,7 @@ packages:
   /@ezuikit/player-plugin-record@9.3.0-beta.1:
     resolution: {integrity: sha512-qkzwxuwT4UyyYs9dI2d3PbTsYhHRpyWrZtI4T/npbKU740muwoRPpehT1o5WBPyln1CHSTwjM87GmIEx5b5EIQ==}
     dependencies:
-      '@ezuikit/utils-tools': 2.0.7
+      '@ezuikit/utils-tools': 2.0.9
     dev: false
 
   /@ezuikit/utils-collect@0.1.1:
@@ -1198,11 +1198,11 @@ packages:
   /@ezuikit/utils-service@2.0.0:
     resolution: {integrity: sha512-CBCPMw3uwd/vCh/YS+fZPMJrmg0LmCPO5bVkAon6VxjJJxwpVNcVb15sNbZyGR52JYt3wq7UEhnqHMprHnCSEA==}
     dependencies:
-      '@ezuikit/utils-tools': 2.0.7
+      '@ezuikit/utils-tools': 2.0.9
     dev: false
 
-  /@ezuikit/utils-tools@2.0.7:
-    resolution: {integrity: sha512-phxKRP17FunG0cwLLK951V18x96EzwO5XSfZ+FfI4jv8agbujV5HtY709lpXM0H5j4XC7pZryT70wjdRFASQgA==}
+  /@ezuikit/utils-tools@2.0.9:
+    resolution: {integrity: sha512-GokUQiYNHG8cJkqU4OAJD2Dm3pXiFHvlYTYm+aw3HMTAdeERSpAgGQuWX6PHhy9GaaOiZunC5c1oRfQPnZfyfQ==}
     dev: false
 
   /@hapi/hoek@9.3.0:
@@ -3537,15 +3537,15 @@ packages:
       - supports-color
     dev: true
 
-  /ezuikit-js@9.0.25-beta.2:
-    resolution: {integrity: sha512-rm82mj643tn3K4UutY3p4Hq96tq6pcjCJp7Hvu9Nb9pgIbuh8xccj9oPfqLEq9Pd3fahMtK5GXNr2NBuS5XbeA==}
+  /ezuikit-js@9.0.26-beta.1:
+    resolution: {integrity: sha512-qoZ+tQ92wMUK5oJPtlwUXjuux/LtGKWbJD9sK5Tv1mn7V3EQp1OmfgDaUwWyri8vXgsvG1UXnPcKIiRRJHURVw==}
     dependencies:
       '@ezuikit/control-aichat': 0.1.1-beta.1
       '@ezuikit/player-ezopen': 9.2.0-beta.5
       '@ezuikit/utils-collect': 0.1.1
       '@ezuikit/utils-i18n': 2.0.1
       '@ezuikit/utils-logger': 2.1.0
-      '@ezuikit/utils-tools': 2.0.7
+      '@ezuikit/utils-tools': 2.0.9
       '@juggle/resize-observer': 3.4.0
       '@skax/delegate': 4.0.2
       abortcontroller-polyfill: 1.7.8

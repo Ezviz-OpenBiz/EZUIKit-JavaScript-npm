@@ -73,17 +73,17 @@ const ThemePlayer = () => {
       language: languageRef.current?.value,
       // 自定义控件布局，也可以改用内置模板: template: "pcLive"
       // Custom control layout. You can also use a built-in template instead: template: "pcLive"
-      themeData: {
-        autoFocus: 3, // 控件无操作 3 秒后自动隐藏 (seconds), 0 表示一直展示
-        header: { btnList: [] },
-        footer: {
-          btnList: [
-            { iconId: "play", part: "left" },
-            { iconId: "volume", part: "left" },
-            { iconId: "fullscreen", part: "right" },
-          ],
-        },
-      },
+      // themeData: {
+      //   autoFocus: 3, // 控件无操作 3 秒后自动隐藏 (seconds), 0 表示一直展示
+      //   header: { btnList: [] },
+      //   footer: {
+      //     btnList: [
+      //       { iconId: "play", part: "left" },
+      //       { iconId: "volume", part: "left" },
+      //       { iconId: "fullscreen", part: "right" },
+      //     ],
+      //   },
+      // },
     };
     theme.current = new Theme(options);
     const t = theme.current;

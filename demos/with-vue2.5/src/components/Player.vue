@@ -62,9 +62,9 @@ export default {
   data() {
     return {
       accessToken:
-        "at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0mefajp-pd25qljk",
+        "at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0efajp-pd25qljk",
       url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
-      staticPath: 'https://openstatic.ys7.com/ezuikit_js/v9.0.15/ezuikit_static'  //"./ezuikit_static" // 可选，本地静态资源路径，如果不设置默认使用线上资源,
+      staticPath: ''//"./ezuikit_static" // 可选，本地静态资源路径，如果不设置默认使用线上资源,
     };
   },
   mounted() {
@@ -99,7 +99,7 @@ export default {
         handleError: (error) => {
           console.error("handleError", error);
         },
-        // quality: 6, // 
+        // quality: 6, //
         // dpr: 2,
         language: "en", // zh | en
         decoderType: "v3",

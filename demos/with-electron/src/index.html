@@ -22,6 +22,8 @@
       <div>
         <div id="video-container"></div>
       </div>
+      <div> url : <input style="width: 500px" id="url" value="ezopen://open.ys7.com/BC7799091/1.hd.live" />  </div>
+      <div> accessToken : <input id="accessToken" style="width: 500px" value="at.6gcdy9jo55ad4exsc772ih1acln5z2fe-6bhw84r96q-1d76ple-bnoahojhq" />  </div>
       <div>
         <button class="init">出初始化(init)</button>
         <button class="play">play</button>
@@ -54,21 +56,23 @@
             destroy();
           }
 
+          const url = document.getElementById("url").value
+          const accessToken = document.getElementById("accessToken").value
+
           // fetch('https://open.ys7.com/jssdk/ezopen/demo/token')
           //   .then(response => response.json())
           //   .then(res => {
           //     var accessToken = res.data.accessToken;
           player = new EZUIKit.EZUIKitPlayer({
             id: "video-container", // 视频容器ID
-            accessToken:
-              "ra.c6wqy0gzcm1f6ryr5sh2vdqr7zo7zu26-1ovtzabpog-1rbv9vr-urpfpktwb",
-            url: "ezopen://open.ys7.com/BC7900686/1.live",
+            accessToken:accessToken,
+            url: url,
             template: "pcLive", // simple: 极简版; pcLive: 预览; pcRec: 回放; security: 安防版; voice: 语音版;
             scaleMode: 1, // 默认 0 完全填充窗口，会有拉伸 1: 等比适配 2: 等比完全填充窗口, 超出隐藏 @sine 8.2.0
             //   plugin: ["talk"], // 加载插件，talk-对讲
             // width: 600,
             height: 400,
-            // quality: 1, // 
+            // quality: 1, //
             language: "en", // zh | en
             // debugDownloadData: true,
             handleError: (error) => {
