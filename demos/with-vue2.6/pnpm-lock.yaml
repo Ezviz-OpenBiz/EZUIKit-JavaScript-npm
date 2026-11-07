@@ -15,8 +15,8 @@ importers:
         specifier: ^3.18.1
         version: 3.51.0
       ezuikit-js:
-        specifier: 9.0.26-beta.1
-        version: 9.0.26-beta.1
+        specifier: 9.0.26
+        version: 9.0.26
       vue:
         specifier: 2.6.14
         version: 2.6.14
@@ -2195,8 +2195,8 @@ packages:
     resolution: {integrity: sha512-11Ndz7Nv+mvAC1j0ktTa7fAb0vLyGGX+rMHNBYQviQDGU0Hw7lhctJANqbPhu9nV9/izT/IntTgZ7Im/9LJs9g==}
     engines: {'0': node >=0.6.0}
 
-  ezuikit-js@9.0.26-beta.1:
-    resolution: {integrity: sha512-qoZ+tQ92wMUK5oJPtlwUXjuux/LtGKWbJD9sK5Tv1mn7V3EQp1OmfgDaUwWyri8vXgsvG1UXnPcKIiRRJHURVw==}
+  ezuikit-js@9.0.26:
+    resolution: {integrity: sha512-Q2gRq5LKu+bXX/lw/pbMeiqO04iltvPklgaJbaQSGWSjpO6VtBXB0o4xbegr7WcuhydhqcSTEXxU33OioP2Z+g==}
 
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
@@ -7596,7 +7596,7 @@ snapshots:
 
   extsprintf@1.3.0: {}
 
-  ezuikit-js@9.0.26-beta.1:
+  ezuikit-js@9.0.26:
     dependencies:
       '@ezuikit/control-aichat': 0.1.1-beta.1
       '@ezuikit/player-ezopen': 9.2.0-beta.5

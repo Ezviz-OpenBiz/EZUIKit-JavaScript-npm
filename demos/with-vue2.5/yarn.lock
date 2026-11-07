@@ -3481,10 +3481,10 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.1.tgz#8d172c064867f235c0c84a596806d279bf4bcc07"
   integrity sha512-Wrk35e8ydCKDj/ArClo1VrPVmN8zph5V4AtHwIuHhvMXsKf73UT3BOD+azBIW+3wOJ4FhEH7zyaJCFvChjYvMA==
 
-ezuikit-js@9.0.26-beta.1:
-  version "9.0.26-beta.1"
-  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-9.0.26-beta.1.tgz#0145b9a955cd26bc8ae0eceee002c7ebc227c079"
-  integrity sha512-qoZ+tQ92wMUK5oJPtlwUXjuux/LtGKWbJD9sK5Tv1mn7V3EQp1OmfgDaUwWyri8vXgsvG1UXnPcKIiRRJHURVw==
+ezuikit-js@9.0.26:
+  version "9.0.26"
+  resolved "https://registry.yarnpkg.com/ezuikit-js/-/ezuikit-js-9.0.26.tgz#b05e4d5def4bf97887f01e6a6cb435aa7b3deb91"
+  integrity sha512-Q2gRq5LKu+bXX/lw/pbMeiqO04iltvPklgaJbaQSGWSjpO6VtBXB0o4xbegr7WcuhydhqcSTEXxU33OioP2Z+g==
   dependencies:
     "@ezuikit/control-aichat" "0.1.1-beta.1"
     "@ezuikit/player-ezopen" "9.2.0-beta.5"

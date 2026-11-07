@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       ezuikit-js:
-        specifier: 9.0.26-beta.1
-        version: 9.0.26-beta.1
+        specifier: 9.0.26
+        version: 9.0.26
       react:
         specifier: ^17
         version: 17.0.2
@@ -2551,8 +2551,8 @@ packages:
     resolution: {integrity: sha512-Bdcs4+3qlpVlx2NRn6fgX2Ue2/gGRaPeawebgclM0ERSCqDpA+owF1fdPwjJUTAJWMTuAaxjDf+hzb0/4eKvvw==}
     engines: {node: '>= 0.10.0'}
 
-  ezuikit-js@9.0.26-beta.1:
-    resolution: {integrity: sha512-qoZ+tQ92wMUK5oJPtlwUXjuux/LtGKWbJD9sK5Tv1mn7V3EQp1OmfgDaUwWyri8vXgsvG1UXnPcKIiRRJHURVw==}
+  ezuikit-js@9.0.26:
+    resolution: {integrity: sha512-Q2gRq5LKu+bXX/lw/pbMeiqO04iltvPklgaJbaQSGWSjpO6VtBXB0o4xbegr7WcuhydhqcSTEXxU33OioP2Z+g==}
 
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
@@ -8670,7 +8670,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ezuikit-js@9.0.26-beta.1:
+  ezuikit-js@9.0.26:
     dependencies:
       '@ezuikit/control-aichat': 0.1.1-beta.1
       '@ezuikit/player-ezopen': 9.2.0-beta.5
