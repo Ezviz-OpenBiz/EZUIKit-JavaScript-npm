@@ -12,8 +12,8 @@ importers:
         specifier: 0.1.1-beta.1
         version: 0.1.1-beta.1
       '@ezuikit/player-ezopen':
-        specifier: 9.2.0-beta.5
-        version: 9.2.0-beta.5
+        specifier: 9.2.0-beta.6
+        version: 9.2.0-beta.6
       '@ezuikit/utils-collect':
         specifier: 0.1.1
         version: 0.1.1
@@ -24,11 +24,8 @@ importers:
         specifier: 2.1.0
         version: 2.1.0
       '@ezuikit/utils-tools':
-        specifier: 2.0.7
-        version: 2.0.7
-      '@juggle/resize-observer':
-        specifier: ^3.4.0
-        version: 3.4.0
+        specifier: 2.0.9
+        version: 2.0.9
       '@skax/delegate':
         specifier: 4.0.2
         version: 4.0.2
@@ -53,8 +50,8 @@ packages:
   '@ezuikit/control-aichat@0.1.1-beta.1':
     resolution: {integrity: sha512-vj5u4QnxGIbeVN1kIyDTifV1gFUTd4Pnz5JeAA8OlYexY0FcHCaKNarXDIBFVJwppAxdkrXMW6AuAlURr2lfUw==}
 
-  '@ezuikit/player-ezopen@9.2.0-beta.5':
-    resolution: {integrity: sha512-NH3LdPkVn7s3A+B+GvfbbWdSqVY3DN7Lz2EQqvnPm/BVXx88Ze5TBbjTkiJPhlgOaOGmssqQ19/ylzedw3Nk1g==}
+  '@ezuikit/player-ezopen@9.2.0-beta.6':
+    resolution: {integrity: sha512-jfhio+4D1yUu2258sbIwTJzQ17uH/gpbOhdTXgG5AEbEkmq9rMTTPc/4fwEe4uCQqxpKgV5Lbz0cS027TrLsUg==}
 
   '@ezuikit/player-plugin-record@9.3.0-beta.1':
     resolution: {integrity: sha512-qkzwxuwT4UyyYs9dI2d3PbTsYhHRpyWrZtI4T/npbKU740muwoRPpehT1o5WBPyln1CHSTwjM87GmIEx5b5EIQ==}
@@ -71,11 +68,8 @@ packages:
   '@ezuikit/utils-service@2.0.0':
     resolution: {integrity: sha512-CBCPMw3uwd/vCh/YS+fZPMJrmg0LmCPO5bVkAon6VxjJJxwpVNcVb15sNbZyGR52JYt3wq7UEhnqHMprHnCSEA==}
 
-  '@ezuikit/utils-tools@2.0.7':
-    resolution: {integrity: sha512-phxKRP17FunG0cwLLK951V18x96EzwO5XSfZ+FfI4jv8agbujV5HtY709lpXM0H5j4XC7pZryT70wjdRFASQgA==}
-
-  '@juggle/resize-observer@3.4.0':
-    resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
+  '@ezuikit/utils-tools@2.0.9':
+    resolution: {integrity: sha512-GokUQiYNHG8cJkqU4OAJD2Dm3pXiFHvlYTYm+aw3HMTAdeERSpAgGQuWX6PHhy9GaaOiZunC5c1oRfQPnZfyfQ==}
 
   '@skax/delegate@4.0.2':
     resolution: {integrity: sha512-8imP+fGESjlbU4mFhZMEuR3/qmYVtqQjXXzZ/C/imbzKqyaMWYpEDqQXNf6yGHzWHUJhZwn5AWNm645U1GjQsQ==}
@@ -126,13 +120,13 @@ snapshots:
     dependencies:
       '@ezuikit/utils-i18n': 2.0.1
 
-  '@ezuikit/player-ezopen@9.2.0-beta.5':
+  '@ezuikit/player-ezopen@9.2.0-beta.6':
     dependencies:
       '@ezuikit/player-plugin-record': 9.3.0-beta.1
       '@ezuikit/utils-i18n': 2.0.1
       '@ezuikit/utils-logger': 2.1.0
       '@ezuikit/utils-service': 2.0.0
-      '@ezuikit/utils-tools': 2.0.7
+      '@ezuikit/utils-tools': 2.0.9
       dayjs: 1.11.23
       deepmerge: 4.3.1
       eventemitter3: 5.0.4
@@ -141,7 +135,7 @@ snapshots:
 
   '@ezuikit/player-plugin-record@9.3.0-beta.1':
     dependencies:
-      '@ezuikit/utils-tools': 2.0.7
+      '@ezuikit/utils-tools': 2.0.9
 
   '@ezuikit/utils-collect@0.1.1': {}
 
@@ -153,11 +147,9 @@ snapshots:
 
   '@ezuikit/utils-service@2.0.0':
     dependencies:
-      '@ezuikit/utils-tools': 2.0.7
+      '@ezuikit/utils-tools': 2.0.9
 
-  '@ezuikit/utils-tools@2.0.7': {}
-
-  '@juggle/resize-observer@3.4.0': {}
+  '@ezuikit/utils-tools@2.0.9': {}
 
   '@skax/delegate@4.0.2': {}
 
