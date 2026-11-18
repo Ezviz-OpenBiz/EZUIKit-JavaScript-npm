@@ -21,7 +21,7 @@ interface IPlayer {
 let player: IPlayer;
 
 const accessToken = ref(
-  "at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0mefajp-pd25qljk"
+  "YOUR_ACCESS_TOKEN"
 );
 const url = ref("ezopen://open.ys7.com/BC7799091/1.hd.live");
 const staticPath = ref("");

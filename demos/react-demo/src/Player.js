@@ -39,7 +39,7 @@ const Player = () => {
       player.current = new EZUIKitPlayer({
         id: "player-container",
         url: urlRef.current.value, // "ezopen://open.ys7.com/BB9480953/1.hd.live",
-        accessToken: accessTokenRef.current.value, // "at.2ec3m7dga2v59cps6rv0d1haa2vqsjka-1lbu5f5hyi-1j9rleq-npvuluse",
+        accessToken: accessTokenRef.current.value, // "YOUR_ACCESS_TOKEN",
         height,
         template: "pcLive",
         language: "zh", // zh | en
@@ -203,7 +203,7 @@ const Player = () => {
           type="text"
           ref={accessTokenRef}
           style={{ width: 500 }}
-          defaultValue="at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3"
+          defaultValue="YOUR_ACCESS_TOKEN"
         />
       </div>
       <div>

@@ -75,7 +75,7 @@ import { EZUIKitPlayer } from "ezuikit-js";
 const player = new EZUIKitPlayer({
   id: "video-container", // 视频容器ID
   accessToken:
-    "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
+    "YOUR_ACCESS_TOKEN",
   url: "ezopen://open.ys7.com/BD3957004/1.live",
   width: 600,
   height: 400,
@@ -96,7 +96,7 @@ const player = new EZUIKitPlayer({
   width: 600,
   height: 400,
   accessToken:
-    "at.3bvmj4ycamlgdwgw1ig1jruma0wpohl6-48zifyb39c-13t5am6-yukyi86mz",
+    "YOUR_ACCESS_TOKEN",
   url: "ezopen://open.ys7.com/BD3957004/1.rec",
 });
 ```

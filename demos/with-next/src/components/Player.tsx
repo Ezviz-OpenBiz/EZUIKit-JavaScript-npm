@@ -243,7 +243,7 @@ const Player = () => {
         <div className="form-item">
           <label>accessToken</label>
           {/* prettier-ignore */}
-          <input ref={accessTokenRef} placeholder="ezopen accessToken" defaultValue="at.d525oyj8d7bwohb40ssn3266cfq2mwi2-8hgpypehn9-1fafaty-ea2fxbc1" />
+          <input ref={accessTokenRef} placeholder="ezopen accessToken" defaultValue="YOUR_ACCESS_TOKEN" />
         </div>
         <div className="form-item">
           <label>staticPath</label>

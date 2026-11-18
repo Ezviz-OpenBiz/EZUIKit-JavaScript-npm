@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       accessToken:
-        "at.daz914gk2cnsdm748wt7r6im1ww50d8q-9o0d9tbx2h-0efajp-pd25qljk",
+        "YOUR_ACCESS_TOKEN",
       url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
       staticPath: ''//"./ezuikit_static" // 可选，本地静态资源路径，如果不设置默认使用线上资源,
     };

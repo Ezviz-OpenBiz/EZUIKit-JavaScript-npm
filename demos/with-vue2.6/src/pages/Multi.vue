@@ -45,19 +45,19 @@ export default {
           url: "ezopen://open.ys7.com/BC7799090/1.live",
           id: "right1",
           accessToken:
-            "at.ao9rmhn824rnxeao5ck7fm4e1j2x7zey-4g4qudp8vd-1vumcfo-t28imym6",
+            "YOUR_ACCESS_TOKEN",
         },
         {
           url: "ezopen://open.ys7.com/BF6985117/1.live",
           id: "right2",
           accessToken:
-            "at.ao9rmhn824rnxeao5ck7fm4e1j2x7zey-4g4qudp8vd-1vumcfo-t28imym6",
+            "YOUR_ACCESS_TOKEN",
         },
         {
           url: "ezopen://open.ys7.com/C69625500/1.live",
           id: "right3",
           accessToken:
-            "at.ao9rmhn824rnxeao5ck7fm4e1j2x7zey-4g4qudp8vd-1vumcfo-t28imym6",
+            "YOUR_ACCESS_TOKEN",
         },
       ],
       selectedIndex: 0,

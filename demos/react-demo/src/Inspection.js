@@ -12,14 +12,14 @@ class App extends React.Component {
                 {
                     width: 600,
                     height: 400,
-                    accessToken: 'at.79xun36c3txmf3j452p1vc8ubaaf9r0q-361vhe7edi-1cekmll-f541jowsm',
+                    accessToken: 'YOUR_ACCESS_TOKEN',
                     url: 'ezopen://open.ys7.com/C69625501/1.live',
                     template: 'pcLive'
                 },
                 {
                     width: 600,
                     height: 400,
-                    accessToken: 'at.79xun36c3txmf3j452p1vc8ubaaf9r0q-361vhe7edi-1cekmll-f541jowsm',
+                    accessToken: 'YOUR_ACCESS_TOKEN',
                     url: 'ezopen://open.ys7.com/BC7799091/1.live',
                     template: 'pcLive'
                 }

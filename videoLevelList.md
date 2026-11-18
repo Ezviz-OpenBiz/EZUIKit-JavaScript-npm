@@ -32,10 +32,10 @@ interface VideoLevel{
 ### 查询列表
 
 请求 http 接口查询：[/api/service/device/capacity/video/quality]
-<!-- https://open.ys7.com/api/service/device/capacity/video/quality?accessToken=ra.dngskvuq8fyiv7vy8v34vq391ime66zn-1lc2iw4l7p-05oxx55-unjdfvpas&deviceSerial=FU4877853&channelNo=1 -->
+<!-- https://open.ys7.com/api/service/device/capacity/video/quality?accessToken=YOUR_ACCESS_TOKEN&deviceSerial=FU4877853&channelNo=1 -->
 
 ```bash
-curl 'https://open.ys7.com/api/service/device/capacity/video/quality?accessToken=at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3&deviceSerial=BC7799091&channelNo=1' \
+curl 'https://open.ys7.com/api/service/device/capacity/video/quality?accessToken=YOUR_ACCESS_TOKEN&deviceSerial=BC7799091&channelNo=1' \
   -H 'Accept: */*' \
   -H 'Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7' \
   -H 'Cache-Control: no-cache' \

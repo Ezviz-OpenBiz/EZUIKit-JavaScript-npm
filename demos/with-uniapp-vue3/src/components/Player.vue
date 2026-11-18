@@ -149,7 +149,7 @@
 		//     var accessToken = res.data.accessToken;
 		player = new EZUIKitPlayer({
 			id: "video-container", // 视频容器ID
-			accessToken: "at.6gcdy9jo55ad4exsc772ih1acln5z2fe-hw84r96q-1d76ple-bnoahojhq",
+			accessToken: "YOUR_ACCESS_TOKEN",
 			url: "ezopen://open.ys7.com/BC7799091/1.hd.live",
 			// simple: 极简版; pcLive: pc直播; pcRec: pc回放; mobileLive: 移动端直播; mobileRec: 移动端回放;security: 安防版; voice: 语音版;
 			template: "mobileLive",

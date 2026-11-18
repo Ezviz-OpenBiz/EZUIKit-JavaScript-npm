@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       url: "ezopen://open.ys7.com/BC7799091/1.live",
-      accessToken: "at.9uoaxo0k3e5dinq8bretm18e5l37k1l6-26lx1qcvcc-1neesaz-kh9hqvqc3",
+      accessToken: "YOUR_ACCESS_TOKEN",
       template: "pcLive",
       width: "100%",
       height: 400,
